@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { toNonEmptyArray } from "@effect-app/core/Array"
 import type * as Cause from "effect/Cause"
-import * as Eff from "effect/Effect"
+import * as Effect from "effect/Effect"
+import * as Either from "effect/Either"
 import * as Opt from "effect/Option"
 import type { NonEmptyArray } from "effect/ReadonlyArray"
+import * as ReadonlyArray from "effect/ReadonlyArray"
 import type { Concurrency, NoInfer } from "effect/Types"
 import "./builtin.js"
-import { Either, pipe, ReadonlyArray } from "effect"
-import type { Effect } from "effect/Effect"
+import { pipe } from "effect"
 import type { LazyArg } from "effect/Function"
 import type { Option } from "effect/Option"
 
@@ -36,13 +37,13 @@ const installFluentExtensions = () => {
         ? Opt.andThen(this, arg)
         : Either.isEither(this)
         ? Either.andThen(this, arg)
-        : Eff.andThen(this, arg)
+        : Effect.andThen(this, arg)
     }
   })
   Object.defineProperty(Object.prototype, "tap", {
     ...settings,
     value(arg: any) {
-      return Opt.isOption(this) ? Opt.tap(this, arg) : Eff.tap(this, arg)
+      return Opt.isOption(this) ? Opt.tap(this, arg) : Effect.tap(this, arg)
     }
   })
 
@@ -53,7 +54,7 @@ const installFluentExtensions = () => {
         ? Opt.map(this, arg)
         : Either.isEither(this)
         ? Either.map(this, arg)
-        : Eff.map(this, arg)
+        : Effect.map(this, arg)
     }
   })
 
@@ -67,7 +68,7 @@ const installFluentExtensions = () => {
   Object.defineProperty(Object.prototype, "forEachEffect", {
     ...settings,
     value(arg: () => any) {
-      return Eff.forEach(this, arg)
+      return Effect.forEach(this, arg)
     }
   })
 
@@ -130,15 +131,15 @@ declare module "effect/Option" {
 
 declare module "effect/Either" {
   export interface Left<out E, out A> {
-    andThen<E1, A, E2, B>(this: Either<E1, A>, f: (a: A) => Either<E2, B>): Either<E1 | E2, B>
-    andThen<E1, A, E2, B>(this: Either<E1, A>, f: Either<E2, B>): Either<E1 | E2, B>
-    map<E, A, B>(this: Either<E, A>, f: (a: A) => B): Either<E, B>
+    andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: (a: A) => Either.Either<E2, B>): Either.Either<E1 | E2, B>
+    andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: Either.Either<E2, B>): Either.Either<E1 | E2, B>
+    map<E, A, B>(this: Either.Either<E, A>, f: (a: A) => B): Either.Either<E, B>
     get right(): A | undefined
   }
   export interface Right<out E, out A> {
-    andThen<E1, A, E2, B>(this: Either<E1, A>, f: (a: A) => Either<E2, B>): Either<E1 | E2, B>
-    andThen<E1, A, E2, B>(this: Either<E1, A>, f: Either<E2, B>): Either<E1 | E2, B>
-    map<E, A, B>(this: Either<E, A>, f: (a: A) => B): Either<E, B>
+    andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: (a: A) => Either.Either<E2, B>): Either.Either<E1 | E2, B>
+    andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: Either.Either<E2, B>): Either.Either<E1 | E2, B>
+    map<E, A, B>(this: Either.Either<E, A>, f: (a: A) => B): Either.Either<E, B>
     get left(): E | undefined
   }
 }
@@ -147,22 +148,22 @@ declare global {
   // interface Iterable<T> {
   //   forEachEffect<A, R, E, B>(
   //     this: Iterable<A>,
-  //     f: (a: A, i: number) => Effect<R, E, B>,
+  //     f: (a: A, i: number) => Effect.Effect<R, E, B>,
   //     options?: {
   //       readonly concurrency?: Concurrency | undefined
   //       readonly batching?: boolean | "inherit" | undefined
   //       readonly discard?: false | undefined
   //     }
-  //   ): Effect<R, E, Array<B>>
+  //   ): Effect.Effect<R, E, Array<B>>
   //   forEachEffect<A, R, E, B>(
   //     this: Iterable<A>,
-  //     f: (a: A, i: number) => Effect<R, E, B>,
+  //     f: (a: A, i: number) => Effect.Effect<R, E, B>,
   //     options: {
   //       readonly concurrency?: Concurrency | undefined
   //       readonly batching?: boolean | "inherit" | undefined
   //       readonly discard: true
   //     }
-  //   ): Effect<R, E, void>
+  //   ): Effect.Effect<R, E, void>
   // }
 
   interface ReadonlyArray<T> {
@@ -173,22 +174,22 @@ declare global {
     filterMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Array<B>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options?: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard?: false | undefined
       }
-    ): Effect<R, E, Array<B>>
+    ): Effect.Effect<R, E, Array<B>>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard: true
       }
-    ): Effect<R, E, void>
+    ): Effect.Effect<R, E, void>
 
     pipe<A, B>(this: A, ab: (a: A) => B): B
     pipe<A, B, C>(this: A, ab: (a: A) => B, bc: (b: B) => C): C
@@ -434,22 +435,22 @@ declare global {
     filterMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Array<B>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options?: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard?: false | undefined
       }
-    ): Effect<R, E, Array<B>>
+    ): Effect.Effect<R, E, Array<B>>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard: true
       }
-    ): Effect<R, E, void>
+    ): Effect.Effect<R, E, void>
 
     pipe<A, B>(this: A, ab: (a: A) => B): B
     pipe<A, B, C>(this: A, ab: (a: A) => B, bc: (b: B) => C): C
@@ -690,112 +691,112 @@ declare global {
   interface Set<T> {
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options?: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard?: false | undefined
       }
-    ): Effect<R, E, Array<B>>
+    ): Effect.Effect<R, E, Array<B>>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard: true
       }
-    ): Effect<R, E, void>
+    ): Effect.Effect<R, E, void>
   }
   interface ReadonlySet<T> {
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options?: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard?: false | undefined
       }
-    ): Effect<R, E, Array<B>>
+    ): Effect.Effect<R, E, Array<B>>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard: true
       }
-    ): Effect<R, E, void>
+    ): Effect.Effect<R, E, void>
   }
   interface Map<K, V> {
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options?: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard?: false | undefined
       }
-    ): Effect<R, E, Array<B>>
+    ): Effect.Effect<R, E, Array<B>>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard: true
       }
-    ): Effect<R, E, void>
+    ): Effect.Effect<R, E, void>
   }
   interface ReadonlyMap<K, V> {
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options?: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard?: false | undefined
       }
-    ): Effect<R, E, Array<B>>
+    ): Effect.Effect<R, E, Array<B>>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
+      f: (a: A, i: number) => Effect.Effect<R, E, B>,
       options: {
         readonly concurrency?: Concurrency | undefined
         readonly batching?: boolean | "inherit" | undefined
         readonly discard: true
       }
-    ): Effect<R, E, void>
+    ): Effect.Effect<R, E, void>
   }
 }
 
 declare module "effect/Cause" {
   export interface YieldableError {
     andThen<A, R, E, X>(
-      this: Effect<R, E, A>,
+      this: Effect.Effect<R, E, A>,
       f: (a: NoInfer<A>) => X
-    ): [X] extends [Effect<infer R1, infer E1, infer A1>] ? Effect<R | R1, E | E1, A1>
-      : [X] extends [Promise<infer A1>] ? Effect<R, UnknownException | E, A1>
-      : Effect<R, E, X>
+    ): [X] extends [Effect.Effect<infer R1, infer E1, infer A1>] ? Effect.Effect<R | R1, E | E1, A1>
+      : [X] extends [Promise<infer A1>] ? Effect.Effect<R, UnknownException | E, A1>
+      : Effect.Effect<R, E, X>
 
     andThen<A, R, E, X>(
-      this: Effect<R, E, A>,
+      this: Effect.Effect<R, E, A>,
       f: X
-    ): [X] extends [Effect<infer R1, infer E1, infer A1>] ? Effect<R | R1, E | E1, A1>
-      : [X] extends [Promise<infer A1>] ? Effect<R, UnknownException | E, A1>
-      : Effect<R, E, X>
+    ): [X] extends [Effect.Effect<infer R1, infer E1, infer A1>] ? Effect.Effect<R | R1, E | E1, A1>
+      : [X] extends [Promise<infer A1>] ? Effect.Effect<R, UnknownException | E, A1>
+      : Effect.Effect<R, E, X>
     tap<A, R, E, X>(
-      this: Effect<R, E, A>,
+      this: Effect.Effect<R, E, A>,
       f: (a: NoInfer<A>) => X
-    ): [X] extends [Effect<infer R1, infer E1, infer _A1>] ? Effect<R | R1, E | E1, A>
-      : [X] extends [Promise<infer _A1>] ? Effect<R, UnknownException | E, A>
-      : Effect<R, E, A>
+    ): [X] extends [Effect.Effect<infer R1, infer E1, infer _A1>] ? Effect.Effect<R | R1, E | E1, A>
+      : [X] extends [Promise<infer _A1>] ? Effect.Effect<R, UnknownException | E, A>
+      : Effect.Effect<R, E, A>
     tap<A, R, E, X>(
-      this: Effect<R, E, A>,
+      this: Effect.Effect<R, E, A>,
       f: X
-    ): [X] extends [Effect<infer R1, infer E1, infer _A1>] ? Effect<R | R1, E | E1, A>
-      : [X] extends [Promise<infer _A1>] ? Effect<R, UnknownException | E, A>
-      : Effect<R, E, A>
+    ): [X] extends [Effect.Effect<infer R1, infer E1, infer _A1>] ? Effect.Effect<R | R1, E | E1, A>
+      : [X] extends [Promise<infer _A1>] ? Effect.Effect<R, UnknownException | E, A>
+      : Effect.Effect<R, E, A>
   }
 }
 

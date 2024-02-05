@@ -1,6 +1,6 @@
 // ets_tracing: off
 
-import type { Either } from "effect/Either"
+import type * as Either from "effect/Either"
 import * as A from "./Array.js"
 import type { Predicate, Refinement } from "./Function.js"
 import * as O from "./Option.js"
@@ -56,7 +56,7 @@ export function values<V>(r: Dictionary<V>): ReadonlyArray<V> {
   return Object
     .keys(r)
     .sort()
-    .map((s) => r[s]!)
+    .map((s) => r[s])
 }
 
 /**
@@ -77,7 +77,7 @@ export function collect_<A, B>(
 ): ReadonlyArray<B> {
   const out: Array<B> = []
   for (const key of keys(r)) {
-    out.push(f(key, r[key]!))
+    out.push(f(key, r[key]))
   }
   return out
 }
@@ -178,7 +178,7 @@ export function modifyAt_<A>(
     return O.none
   }
   const out: MutableRecord<string, A> = Object.assign({}, r)
-  out[k] = f(r[k]!)
+  out[k] = f(r[k])
   return O.some(out)
 }
 
@@ -207,14 +207,14 @@ export function pop_<A>(
  * Lookup the value for a key in a record
  */
 export function lookup_<A>(r: Dictionary<A>, k: string): O.Option<A> {
-  return Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]!) : O.none
+  return Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]) : O.none
 }
 
 /**
  * Lookup the value for a key in a record
  */
 export function lookup(k: string): <A>(r: Dictionary<A>) => O.Option<A> {
-  return (r) => (Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]!) : O.none)
+  return (r) => (Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]) : O.none)
 }
 
 /**
@@ -241,7 +241,7 @@ export function mapWithIndex_<A, B>(
   const out: MutableRecord<string, B> = {}
   const keys = Object.keys(fa)
   for (const key of keys) {
-    out[key] = f(key, fa[key]!)
+    out[key] = f(key, fa[key])
   }
   return out
 }
@@ -282,8 +282,8 @@ export function reduceWithIndex_<A, B>(
   const keys = Object.keys(fa).sort()
   const len = keys.length
   for (let i = 0; i < len; i++) {
-    const k = keys[i]!
-    out = f(k, out, fa[k]!)
+    const k = keys[i]
+    out = f(k, out, fa[k])
   }
   return out
 }
@@ -314,8 +314,8 @@ export function reduceRightWithIndex_<A, B>(
   const keys = Object.keys(fa).sort()
   const len = keys.length
   for (let i = len - 1; i >= 0; i--) {
-    const k = keys[i]!
-    out = f(k, fa[k]!, out)
+    const k = keys[i]
+    out = f(k, fa[k], out)
   }
   return out
 }
@@ -331,7 +331,7 @@ export function singleton<A>(k: string, a: A): Dictionary<A> {
  * Partition a record using f that also consumes the entry key
  */
 export function partitionMapWithIndex<A, B, C>(
-  f: (key: string, a: A) => Either<B, C>
+  f: (key: string, a: A) => Either.Either<B, C>
 ): (fa: Dictionary<A>) => readonly [Dictionary<B>, Dictionary<C>] {
   return (fa) => partitionMapWithIndex_(fa, f)
 }
@@ -341,13 +341,13 @@ export function partitionMapWithIndex<A, B, C>(
  */
 export function partitionMapWithIndex_<A, B, C>(
   fa: Dictionary<A>,
-  f: (key: string, a: A) => Either<B, C>
+  f: (key: string, a: A) => Either.Either<B, C>
 ): readonly [Dictionary<B>, Dictionary<C>] {
   const left: MutableRecord<string, B> = {}
   const right: MutableRecord<string, C> = {}
   const keys = Object.keys(fa)
   for (const key of keys) {
-    const e = f(key, fa[key]!)
+    const e = f(key, fa[key])
     switch (e._tag) {
       case "Left":
         left[key] = e.left
@@ -394,7 +394,7 @@ export function partitionWithIndex_<A>(
   const right: MutableRecord<string, A> = {}
   const keys = Object.keys(fa)
   for (const key of keys) {
-    const a = fa[key]!
+    const a = fa[key]
     if (predicateWithIndex(key, a)) {
       right[key] = a
     } else {
@@ -426,7 +426,7 @@ export function filterMapWithIndex_<A, B>(
   const r: MutableRecord<string, B> = {}
   const keys = Object.keys(fa)
   for (const key of keys) {
-    const optionB = f(key, fa[key]!)
+    const optionB = f(key, fa[key])
     if (O.isSome(optionB)) {
       r[key] = optionB.value
     }
@@ -468,7 +468,7 @@ export function filterWithIndex_<A>(
   let changed = false
   for (const key in fa) {
     if (Object.prototype.hasOwnProperty.call(fa, key)) {
-      const a = fa[key]!
+      const a = fa[key]
       if (predicateWithIndex(key, a)) {
         out[key] = a
       } else {
@@ -491,7 +491,7 @@ export function every<A>(predicate: Predicate<A>): (r: Dictionary<A>) => boolean
  */
 export function every_<A>(r: Dictionary<A>, predicate: Predicate<A>): boolean {
   for (const k in r) {
-    if (!predicate(r[k]!)) {
+    if (!predicate(r[k])) {
       return false
     }
   }
@@ -510,7 +510,7 @@ export function some<A>(predicate: (a: A) => boolean): (r: Dictionary<A>) => boo
  */
 export function some_<A>(r: Dictionary<A>, predicate: (a: A) => boolean): boolean {
   for (const k in r) {
-    if (predicate(r[k]!)) {
+    if (predicate(r[k])) {
       return true
     }
   }
@@ -524,7 +524,7 @@ export const compact = <A>(fa: Dictionary<O.Option<A>>): Dictionary<A> => {
   const r: MutableRecord<string, A> = {}
   const keys = Object.keys(fa)
   for (const key of keys) {
-    const optionA = fa[key]!
+    const optionA = fa[key]
     if (O.isSome(optionA)) {
       r[key] = optionA.value
     }
@@ -536,13 +536,13 @@ export const compact = <A>(fa: Dictionary<O.Option<A>>): Dictionary<A> => {
  * Separate the record entries
  */
 export const separate = <A, B>(
-  fa: Dictionary<Either<A, B>>
+  fa: Dictionary<Either.Either<A, B>>
 ): readonly [Dictionary<A>, Dictionary<B>] => {
   const left: MutableRecord<string, A> = {}
   const right: MutableRecord<string, B> = {}
   const keys = Object.keys(fa)
   for (const key of keys) {
-    const e = fa[key]!
+    const e = fa[key]
     switch (e._tag) {
       case "Left":
         left[key] = e.left
@@ -611,18 +611,18 @@ export const partition_: {
  * Partition & map record entries
  */
 export const partitionMap: {
-  <A, B, C>(f: (a: A) => Either<B, C>): (
+  <A, B, C>(f: (a: A) => Either.Either<B, C>): (
     fa: Dictionary<A>
   ) => readonly [Dictionary<B>, Dictionary<C>]
-  <A, B, C>(f: (a: A) => Either<B, C>): (
+  <A, B, C>(f: (a: A) => Either.Either<B, C>): (
     fa: Dictionary<A>
   ) => readonly [Dictionary<B>, Dictionary<C>]
-} = <A, B, C>(f: (a: A) => Either<B, C>) => (fa: Dictionary<A>) => partitionMap_(fa, f)
+} = <A, B, C>(f: (a: A) => Either.Either<B, C>) => (fa: Dictionary<A>) => partitionMap_(fa, f)
 
 /**
  * Partition & map record entries
  */
-export const partitionMap_ = <A, B, C>(fa: Dictionary<A>, f: (a: A) => Either<B, C>) =>
+export const partitionMap_ = <A, B, C>(fa: Dictionary<A>, f: (a: A) => Either.Either<B, C>) =>
   partitionMapWithIndex_(fa, (_, a: A) => f(a))
 
 /**

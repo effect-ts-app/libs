@@ -31,9 +31,9 @@ export function unifyChunk<X extends Chunk<any>>(
  * @tsplus unify effect/data/Either.Left
  * @tsplus unify effect/data/Either.Right
  */
-export function unifyEither<X extends Either<any, any>>(
+export function unifyEither<X extends Either.Either<any, any>>(
   self: X
-): Either<
+): Either.Either<
   X extends Either.Left<infer EX, any> ? EX : X extends Either.Right<infer EX, any> ? EX : never,
   X extends Either.Right<any, infer AX> ? AX : X extends Either.Left<any, infer AX> ? AX : never
 > {

@@ -1,8 +1,8 @@
 // ets_tracing: off
 
+import type * as Either from "effect/Either"
 import { not } from "effect/Predicate"
 import { identity } from "./Function.js"
-
 import { Option } from "./Option.js"
 
 /**
@@ -349,9 +349,9 @@ export function elem<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => boolean {
 export function partitionMap<B, C>(
   EB: Equivalence<B>,
   EC: Equivalence<C>
-): <A>(f: (a: A) => Either<B, C>) => (set: Set<A>) => readonly [Set<B>, Set<C>] {
+): <A>(f: (a: A) => Either.Either<B, C>) => (set: Set<A>) => readonly [Set<B>, Set<C>] {
   const pm = partitionMap_(EB, EC)
-  return <A>(f: (a: A) => Either<B, C>) => (set: Set<A>) => pm(set, f)
+  return <A>(f: (a: A) => Either.Either<B, C>) => (set: Set<A>) => pm(set, f)
 }
 
 /**
@@ -360,8 +360,8 @@ export function partitionMap<B, C>(
 export function partitionMap_<B, C>(
   EB: Equivalence<B>,
   EC: Equivalence<C>
-): <A>(set: Set<A>, f: (a: A) => Either<B, C>) => readonly [Set<B>, Set<C>] {
-  return <A>(set: Set<A>, f: (a: A) => Either<B, C>) => {
+): <A>(set: Set<A>, f: (a: A) => Either.Either<B, C>) => readonly [Set<B>, Set<C>] {
+  return <A>(set: Set<A>, f: (a: A) => Either.Either<B, C>) => {
     const values = set.values()
     let e: Next<A>
     const left = new Set<B>()
@@ -540,7 +540,7 @@ export function compact<A>(E: Equivalence<A>): (fa: Set<Option<A>>) => Set<A> {
 export function separate<E, A>(
   EE: Equivalence<E>,
   EA: Equivalence<A>
-): (fa: Set<Either<E, A>>) => readonly [Set<E>, Set<A>] {
+): (fa: Set<Either.Either<E, A>>) => readonly [Set<E>, Set<A>] {
   return (fa) => {
     const elemEE = elem_(EE)
     const elemEA = elem_(EA)

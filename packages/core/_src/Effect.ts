@@ -3,6 +3,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 import * as Def from "effect/Deferred"
+import * as Either from "effect/Either"
 import * as Fiber from "effect/Fiber"
 import { Option } from "effect/Option"
 import { curry, pipe } from "./Function.js"

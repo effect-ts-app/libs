@@ -18,11 +18,6 @@ import { None, Some } from "effect/Option"
 /**
  * @tsplus global
  */
-import { Either, Left, Right } from "effect/Either"
-
-/**
- * @tsplus global
- */
 import { Predicate, Refinement } from "effect/Predicate"
 
 /**

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type * as Either from "effect/Either"
 import type { Dictionary } from "./Dictionary.js"
 import * as D from "./Dictionary.js"
 
@@ -8,7 +9,7 @@ export * from "./utils/effectify.js"
 export * from "./utils/extend.js"
 // codegen:end
 
-export const unsafeRight = <E, A>(ei: Either<E, A>) => {
+export const unsafeRight = <E, A>(ei: Either.Either<E, A>) => {
   if (ei.isLeft()) {
     console.error(ei.left)
     throw ei.left

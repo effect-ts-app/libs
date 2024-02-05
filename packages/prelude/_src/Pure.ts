@@ -160,7 +160,11 @@ export function logMany<W>(w: Iterable<W>): PureLogT<W> {
 export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
   self: Effect<FixEnv<R, W3, S1, S3>, E, A>,
   s: S4
-): Effect<Exclude<R, { env: PureEnv<W3, S1, S3> }>, never, readonly [Chunk<W3>, Either.Either<E, readonly [S3, A]>]> {
+): Effect<
+  Exclude<R, { env: PureEnv<W3, S1, S3> }>,
+  never,
+  readonly [Chunk<W3>, Either.Either<E, readonly [S3, A]>]
+> {
   const a = self
     .flatMap((x) =>
       castTag<W3, S1, S3>()
