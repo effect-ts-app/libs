@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.114.3
+
+### Patch Changes
+
+- 6806433: sideeffects
+
 ## 0.114.2
 
 ### Patch Changes
