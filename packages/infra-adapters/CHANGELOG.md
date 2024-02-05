@@ -1,5 +1,13 @@
 # @effect-app/infra-adapters
 
+## 0.111.12
+
+### Patch Changes
+
+- Updated dependencies [fb25eb5]
+  - @effect-app/fluent-extensions@0.116.4
+  - @effect-app/prelude@0.143.4
+
 ## 0.111.11
 
 ### Patch Changes
