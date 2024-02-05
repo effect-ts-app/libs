@@ -1,5 +1,12 @@
 # @effect-app/prelude
 
+## 0.143.6
+
+### Patch Changes
+
+- Updated dependencies [cf3080b]
+  - @effect-app/fluent-extensions@0.116.6
+
 ## 0.143.5
 
 ### Patch Changes

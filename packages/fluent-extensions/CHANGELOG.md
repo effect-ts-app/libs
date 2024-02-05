@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.116.6
+
+### Patch Changes
+
+- cf3080b: force loading with side effects
+
 ## 0.116.5
 
 ### Patch Changes
