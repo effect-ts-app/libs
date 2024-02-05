@@ -24,7 +24,44 @@ const settings = {
  * useful in e.g frontend projects that do not use tsplus, but still has the most useful extensions installed.
  */
 const installFluentExtensions = () => {
-  // effects
+  // somehow individual prototypes don't stick in vite, so we still do some global ;/
+  // we should however not do `map` as it breaks fast-check, etc
+
+  Object.defineProperty(Object.prototype, "andThen", {
+    ...settings,
+    value(arg: any) {
+      return Opt.isOption(this)
+        ? Opt.andThen(this, arg)
+        : Either.isEither(this)
+        ? Either.andThen(this, arg)
+        : Effect.andThen(this, arg)
+    }
+  })
+  Object.defineProperty(Object.prototype, "tap", {
+    ...settings,
+    value(arg: any) {
+      return Opt.isOption(this) ? Opt.tap(this, arg) : Effect.tap(this, arg)
+    }
+  })
+
+  // Object.defineProperty(Object.prototype, "map", {
+  //   ...settings,
+  //   value(arg: any) {
+  //     return Opt.isOption(this)
+  //       ? Opt.map(this, arg)
+  //       : Either.isEither(this)
+  //       ? Either.map(this, arg)
+  //       : Effect.map(this, arg)
+  //   }
+  // })
+
+  Object.defineProperty(Object.prototype, "getOrElse", {
+    ...settings,
+    value(arg: () => any) {
+      return Opt.getOrElse(this, arg)
+    }
+  }) // individual
+   // effects
   ;[
     ...[Effect.unit, Effect.fail(1), Effect.step(Effect.unit), Cause.empty, Config.succeed(1), Context.Tag()].map((
       effect
