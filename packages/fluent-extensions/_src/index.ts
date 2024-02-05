@@ -2,6 +2,7 @@
 import { toNonEmptyArray } from "@effect-app/core/Array"
 import * as Cause from "effect/Cause"
 import * as Config from "effect/Config"
+import * as Context from "effect/Context"
 import * as Effect from "effect/Effect"
 import * as Either from "effect/Either"
 import * as Opt from "effect/Option"
@@ -25,9 +26,9 @@ const settings = {
 const installFluentExtensions = () => {
   // effects
   ;[
-    ...[Effect.unit, Effect.fail(1), Effect.step(Effect.unit), Cause.empty, Config.succeed(1)].map((effect) =>
-      Object.getPrototypeOf(effect)
-    ),
+    ...[Effect.unit, Effect.fail(1), Effect.step(Effect.unit), Cause.empty, Config.succeed(1), Context.Tag()].map((
+      effect
+    ) => Object.getPrototypeOf(effect)),
     StructuralClass.prototype,
     Class.prototype,
     EffectPrototype, // get's spread into many
