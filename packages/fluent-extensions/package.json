@@ -1,7 +1,8 @@
 {
   "name": "@effect-app/fluent-extensions",
-  "version": "0.117.0",
+  "version": "0.116.6",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
@@ -71,7 +72,7 @@
   "scripts": {
     "watch": "pnpm build:tsc -w",
     "build:tsc": "pnpm clean-dist && effect-app-cli packagejson tsc --build",
-    "build": "pnpm build:tsc && pnpm build2:cjs",
+    "build": "pnpm build:tsc && pnpm build2:cjs && echo {} > dist/package.json",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
     "watch2": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc -w",
     "clean": "rm -rf dist && rm -rf _cjs",

@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 0.116.12
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/fluent-extensions@0.116.6
+  - @effect-app/prelude@0.143.8
+  - @effect-app/vue@0.116.12
+
 ## 0.116.11
 
 ### Patch Changes

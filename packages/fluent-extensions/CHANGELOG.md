@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.116.6
+
+### Patch Changes
+
+- pjson workaround
+
 ## 0.117.0
 
 ### Minor Changes
