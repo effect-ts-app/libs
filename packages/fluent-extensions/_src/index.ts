@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { toNonEmptyArray } from "@effect-app/core/Array"
-import type * as Cause from "effect/Cause"
+import * as Cause from "effect/Cause"
+import * as Config from "effect/Config"
 import * as Effect from "effect/Effect"
 import * as Either from "effect/Either"
 import * as Opt from "effect/Option"
@@ -9,6 +10,7 @@ import * as ReadonlyArray from "effect/ReadonlyArray"
 import type { Concurrency, NoInfer } from "effect/Types"
 import "./builtin.js"
 import { pipe } from "effect"
+import { Class, CommitPrototype, EffectPrototype, StructuralClass, StructuralCommitPrototype } from "effect/Effectable"
 import type { LazyArg } from "effect/Function"
 import type { Option } from "effect/Option"
 
@@ -21,6 +23,114 @@ const settings = {
  * useful in e.g frontend projects that do not use tsplus, but still has the most useful extensions installed.
  */
 const installFluentExtensions = () => {
+  // effects
+  ;[
+    ...[Effect.unit, Effect.fail(1), Effect.step(Effect.unit), Cause.empty, Config.succeed(1)].map((effect) =>
+      Object.getPrototypeOf(effect)
+    ),
+    StructuralClass.prototype,
+    Class.prototype,
+    EffectPrototype, // get's spread into many
+    CommitPrototype,
+    StructuralCommitPrototype
+    // STM.fail(1) // Stream?
+  ]
+    .forEach((effect) => {
+      Object.assign(effect, {
+        andThen(arg: any): any {
+          return Effect.andThen(this as any, arg)
+        },
+        tap(arg: any): any {
+          return Effect.tap(this as any, arg)
+        },
+        map(arg: any): any {
+          return Effect.map(this as any, arg)
+        }
+      })
+      // Object.defineProperty(effect, "andThen", {
+      //   ...settings,
+      //   value(arg: any) {
+      //     return Effect.andThen(this, arg)
+      //   }
+      // })
+      // Object.defineProperty(effect, "tap", {
+      //   ...settings,
+      //   value(arg: any) {
+      //     return Effect.tap(this, arg)
+      //   }
+      // })
+      // Object.defineProperty(effect, "map", {
+      //   ...settings,
+      //   value(arg: any) {
+      //     return Effect.map(this, arg)
+      //   }
+      // })
+    })
+
+  const opt = Object.getPrototypeOf(Object.getPrototypeOf(Opt.none()))
+  Object.assign(opt, {
+    andThen(arg: any): any {
+      return Opt.andThen(this as any, arg)
+    },
+    tap(arg: any): any {
+      return Opt.tap(this as any, arg)
+    },
+    map(arg: any): any {
+      return Opt.map(this as any, arg)
+    },
+    getOrElse(arg: () => any): any {
+      return Opt.getOrElse(this as any, arg)
+    }
+  })
+  // Object.defineProperty(opt, "andThen", {
+  //   ...settings,
+  //   value(arg: any) {
+  //     return Opt.andThen(this, arg)
+  //   }
+  // })
+  // Object.defineProperty(opt, "tap", {
+  //   ...settings,
+  //   value(arg: any) {
+  //     return Opt.tap(this, arg)
+  //   }
+  // })
+  // Object.defineProperty(opt, "map", {
+  //   ...settings,
+  //   value(arg: any) {
+  //     return Opt.map(this, arg)
+  //   }
+  // })
+  // Object
+  //   .defineProperty(opt, "getOrElse", {
+  //     ...settings,
+  //     value(arg: () => any) {
+  //       return Opt.getOrElse(this, arg)
+  //     }
+  //   })
+
+  const either = Object.getPrototypeOf(Object.getPrototypeOf(Either.left(1)))
+  Object.assign(either, {
+    andThen(arg: any): any {
+      return Either.andThen(this as any, arg)
+    },
+    map(arg: any): any {
+      return Either.map(this as any, arg)
+    }
+  })
+  // Object.defineProperty(either, "andThen", {
+  //   ...settings,
+  //   value(arg: any) {
+  //     return Either.andThen(this, arg)
+  //   }
+  // })
+  // Object.defineProperty(either, "map", {
+  //   ...settings,
+  //   value(arg: any) {
+  //     return Either.map(this, arg)
+  //   }
+  // })
+
+  // built-ins
   // pipe on Object seems to interfeir with some libraries like undici
   Object
     .defineProperty(Array.prototype, "pipe", {
@@ -29,73 +139,7 @@ const installFluentExtensions = () => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         return pipe(this, ...args as [any])
       }
-    }) // effects
-  ;[
-    Object.getPrototypeOf(Effect.unit),
-    Object.getPrototypeOf(Effect.fail(1)),
-    Object.getPrototypeOf(Effect.step(Effect.unit))
-  ]
-    .forEach((effect) => {
-      Object.defineProperty(effect, "andThen", {
-        ...settings,
-        value(arg: any) {
-          return Effect.andThen(this, arg)
-        }
-      })
-      Object.defineProperty(effect, "tap", {
-        ...settings,
-        value(arg: any) {
-          return Effect.tap(this, arg)
-        }
-      })
-      Object.defineProperty(effect, "map", {
-        ...settings,
-        value(arg: any) {
-          return Effect.map(this, arg)
-        }
-      })
     })
-
-  const opt = Object.getPrototypeOf(Object.getPrototypeOf(Opt.none()))
-  Object.defineProperty(opt, "andThen", {
-    ...settings,
-    value(arg: any) {
-      return Opt.andThen(this, arg)
-    }
-  })
-  Object.defineProperty(opt, "tap", {
-    ...settings,
-    value(arg: any) {
-      return Opt.tap(this, arg)
-    }
-  })
-  Object.defineProperty(opt, "map", {
-    ...settings,
-    value(arg: any) {
-      return Opt.map(this, arg)
-    }
-  })
-  Object
-    .defineProperty(opt, "getOrElse", {
-      ...settings,
-      value(arg: () => any) {
-        return Opt.getOrElse(this, arg)
-      }
-    })
-
-  const either = Object.getPrototypeOf(Object.getPrototypeOf(Either.left(1)))
-  Object.defineProperty(either, "andThen", {
-    ...settings,
-    value(arg: any) {
-      return Either.andThen(this, arg)
-    }
-  })
-  Object.defineProperty(either, "map", {
-    ...settings,
-    value(arg: any) {
-      return Either.map(this, arg)
-    }
-  })
   ;[Array.prototype, Map.prototype, Set.prototype]
     .forEach((proto) =>
       Object.defineProperty(proto, "forEachEffect", {
