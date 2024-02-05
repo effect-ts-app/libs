@@ -20,7 +20,8 @@ const settings = {
  * useful in e.g frontend projects that do not use tsplus, but still has the most useful extensions installed.
  */
 const installFluentExtensions = () => {
-  Object.defineProperty(Object.prototype, "pipe", {
+  // pipe on Object seems to interfeir with some libraries like undici
+  Object.defineProperty(Array.prototype, "pipe", {
     ...settings,
     value(...args: [any, ...any[]]) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -143,7 +144,52 @@ declare module "effect/Either" {
 }
 
 declare global {
-  interface Object {
+  // interface Iterable<T> {
+  //   forEachEffect<A, R, E, B>(
+  //     this: Iterable<A>,
+  //     f: (a: A, i: number) => Effect<R, E, B>,
+  //     options?: {
+  //       readonly concurrency?: Concurrency | undefined
+  //       readonly batching?: boolean | "inherit" | undefined
+  //       readonly discard?: false | undefined
+  //     }
+  //   ): Effect<R, E, Array<B>>
+  //   forEachEffect<A, R, E, B>(
+  //     this: Iterable<A>,
+  //     f: (a: A, i: number) => Effect<R, E, B>,
+  //     options: {
+  //       readonly concurrency?: Concurrency | undefined
+  //       readonly batching?: boolean | "inherit" | undefined
+  //       readonly discard: true
+  //     }
+  //   ): Effect<R, E, void>
+  // }
+
+  interface ReadonlyArray<T> {
+    get toNonEmpty(): Option<NonEmptyArray<T>>
+    findFirstMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Option<B>
+    findFirstMap<A, B extends A>(this: Iterable<A>, refinement: (a: A, i: number) => a is B): Option<B>
+    findFirstMap<A>(this: Iterable<A>, predicate: (a: A, i: number) => boolean): Option<A>
+    filterMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Array<B>
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options?: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard?: false | undefined
+      }
+    ): Effect<R, E, Array<B>>
+    forEachEffect<A, R, E, B>(
+      this: Iterable<A>,
+      f: (a: A, i: number) => Effect<R, E, B>,
+      options: {
+        readonly concurrency?: Concurrency | undefined
+        readonly batching?: boolean | "inherit" | undefined
+        readonly discard: true
+      }
+    ): Effect<R, E, void>
+
     pipe<A, B>(this: A, ab: (a: A) => B): B
     pipe<A, B, C>(this: A, ab: (a: A) => B, bc: (b: B) => C): C
     pipe<A, B, C, D>(this: A, ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D): D
@@ -380,52 +426,6 @@ declare global {
       st: (s: S) => T
     ): T
   }
-  // interface Iterable<T> {
-  //   forEachEffect<A, R, E, B>(
-  //     this: Iterable<A>,
-  //     f: (a: A, i: number) => Effect<R, E, B>,
-  //     options?: {
-  //       readonly concurrency?: Concurrency | undefined
-  //       readonly batching?: boolean | "inherit" | undefined
-  //       readonly discard?: false | undefined
-  //     }
-  //   ): Effect<R, E, Array<B>>
-  //   forEachEffect<A, R, E, B>(
-  //     this: Iterable<A>,
-  //     f: (a: A, i: number) => Effect<R, E, B>,
-  //     options: {
-  //       readonly concurrency?: Concurrency | undefined
-  //       readonly batching?: boolean | "inherit" | undefined
-  //       readonly discard: true
-  //     }
-  //   ): Effect<R, E, void>
-  // }
-
-  interface ReadonlyArray<T> {
-    get toNonEmpty(): Option<NonEmptyArray<T>>
-    findFirstMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Option<B>
-    findFirstMap<A, B extends A>(this: Iterable<A>, refinement: (a: A, i: number) => a is B): Option<B>
-    findFirstMap<A>(this: Iterable<A>, predicate: (a: A, i: number) => boolean): Option<A>
-    filterMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Array<B>
-    forEachEffect<A, R, E, B>(
-      this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
-      options?: {
-        readonly concurrency?: Concurrency | undefined
-        readonly batching?: boolean | "inherit" | undefined
-        readonly discard?: false | undefined
-      }
-    ): Effect<R, E, Array<B>>
-    forEachEffect<A, R, E, B>(
-      this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
-      options: {
-        readonly concurrency?: Concurrency | undefined
-        readonly batching?: boolean | "inherit" | undefined
-        readonly discard: true
-      }
-    ): Effect<R, E, void>
-  }
   interface Array<T> {
     get toNonEmpty(): Option<NonEmptyArray<T>>
     findFirstMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Option<B>
@@ -450,6 +450,242 @@ declare global {
         readonly discard: true
       }
     ): Effect<R, E, void>
+
+    pipe<A, B>(this: A, ab: (a: A) => B): B
+    pipe<A, B, C>(this: A, ab: (a: A) => B, bc: (b: B) => C): C
+    pipe<A, B, C, D>(this: A, ab: (a: A) => B, bc: (b: B) => C, cd: (c: C) => D): D
+    pipe<A, B, C, D, E>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E
+    ): E
+    pipe<A, B, C, D, E, F>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F
+    ): F
+    pipe<A, B, C, D, E, F, G>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G
+    ): G
+    pipe<A, B, C, D, E, F, G, H>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H
+    ): H
+    pipe<A, B, C, D, E, F, G, H, I>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I
+    ): I
+    pipe<A, B, C, D, E, F, G, H, I, J>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I,
+      ij: (i: I) => J
+    ): J
+    pipe<A, B, C, D, E, F, G, H, I, J, K>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I,
+      ij: (i: I) => J,
+      jk: (j: J) => K
+    ): K
+    pipe<A, B, C, D, E, F, G, H, I, J, K, L>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I,
+      ij: (i: I) => J,
+      jk: (j: J) => K,
+      kl: (k: K) => L
+    ): L
+    pipe<A, B, C, D, E, F, G, H, I, J, K, L, M>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I,
+      ij: (i: I) => J,
+      jk: (j: J) => K,
+      kl: (k: K) => L,
+      lm: (l: L) => M
+    ): M
+    pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I,
+      ij: (i: I) => J,
+      jk: (j: J) => K,
+      kl: (k: K) => L,
+      lm: (l: L) => M,
+      mn: (m: M) => N
+    ): N
+    pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I,
+      ij: (i: I) => J,
+      jk: (j: J) => K,
+      kl: (k: K) => L,
+      lm: (l: L) => M,
+      mn: (m: M) => N,
+      no: (n: N) => O
+    ): O
+    pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I,
+      ij: (i: I) => J,
+      jk: (j: J) => K,
+      kl: (k: K) => L,
+      lm: (l: L) => M,
+      mn: (m: M) => N,
+      no: (n: N) => O,
+      op: (o: O) => P
+    ): P
+    pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I,
+      ij: (i: I) => J,
+      jk: (j: J) => K,
+      kl: (k: K) => L,
+      lm: (l: L) => M,
+      mn: (m: M) => N,
+      no: (n: N) => O,
+      op: (o: O) => P,
+      pq: (p: P) => Q
+    ): Q
+    pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I,
+      ij: (i: I) => J,
+      jk: (j: J) => K,
+      kl: (k: K) => L,
+      lm: (l: L) => M,
+      mn: (m: M) => N,
+      no: (n: N) => O,
+      op: (o: O) => P,
+      pq: (p: P) => Q,
+      qr: (q: Q) => R
+    ): R
+    pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I,
+      ij: (i: I) => J,
+      jk: (j: J) => K,
+      kl: (k: K) => L,
+      lm: (l: L) => M,
+      mn: (m: M) => N,
+      no: (n: N) => O,
+      op: (o: O) => P,
+      pq: (p: P) => Q,
+      qr: (q: Q) => R,
+      rs: (r: R) => S
+    ): S
+    pipe<A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T>(
+      this: A,
+      ab: (a: A) => B,
+      bc: (b: B) => C,
+      cd: (c: C) => D,
+      de: (d: D) => E,
+      ef: (e: E) => F,
+      fg: (f: F) => G,
+      gh: (g: G) => H,
+      hi: (h: H) => I,
+      ij: (i: I) => J,
+      jk: (j: J) => K,
+      kl: (k: K) => L,
+      lm: (l: L) => M,
+      mn: (m: M) => N,
+      no: (n: N) => O,
+      op: (o: O) => P,
+      pq: (p: P) => Q,
+      qr: (q: Q) => R,
+      rs: (r: R) => S,
+      st: (s: S) => T
+    ): T
   }
   interface Set<T> {
     forEachEffect<A, R, E, B>(
