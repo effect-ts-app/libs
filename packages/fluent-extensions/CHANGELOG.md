@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.114.2
+
+### Patch Changes
+
+- f28cec3: fix
+
 ## 0.114.1
 
 ### Patch Changes
