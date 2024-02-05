@@ -131,7 +131,7 @@ export const TaggedClass: <Self>() => <Tag extends string, Fields extends S.Stru
   fields: Fields
 ) => EnhancedClass<
   Schema.Context<Fields[keyof Fields]>,
-  Simplify<FromStruct<Fields>>,
+  Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
   Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
   Simplify<ToStructConstructor<Fields>>,
   Self,
