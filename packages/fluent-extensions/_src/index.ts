@@ -389,10 +389,10 @@ declare global {
 
   interface ReadonlyArray<T> {
     get toNonEmpty(): Option<NonEmptyArray<T>>
-    findFirstMap<A, B>(self: Iterable<A>, f: (a: A, i: number) => Option<B>): Option<B>
-    findFirstMap<A, B extends A>(self: Iterable<A>, refinement: (a: A, i: number) => a is B): Option<B>
-    findFirstMap<A>(self: Iterable<A>, predicate: (a: A, i: number) => boolean): Option<A>
-    filterMap<A, B>(self: Iterable<A>, f: (a: A, i: number) => Option<B>): Array<B>
+    findFirstMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Option<B>
+    findFirstMap<A, B extends A>(this: Iterable<A>, refinement: (a: A, i: number) => a is B): Option<B>
+    findFirstMap<A>(this: Iterable<A>, predicate: (a: A, i: number) => boolean): Option<A>
+    filterMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Array<B>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
       f: (a: A, i: number) => Effect<R, E, B>,
@@ -414,10 +414,10 @@ declare global {
   }
   interface Array<T> {
     get toNonEmpty(): Option<NonEmptyArray<T>>
-    findFirstMap<A, B>(self: Iterable<A>, f: (a: A, i: number) => Option<B>): Option<B>
-    findFirstMap<A, B extends A>(self: Iterable<A>, refinement: (a: A, i: number) => a is B): Option<B>
-    findFirstMap<A>(self: Iterable<A>, predicate: (a: A, i: number) => boolean): Option<A>
-    filterMap<A, B>(self: Iterable<A>, f: (a: A, i: number) => Option<B>): Array<B>
+    findFirstMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Option<B>
+    findFirstMap<A, B extends A>(this: Iterable<A>, refinement: (a: A, i: number) => a is B): Option<B>
+    findFirstMap<A>(this: Iterable<A>, predicate: (a: A, i: number) => boolean): Option<A>
+    filterMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Array<B>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
       f: (a: A, i: number) => Effect<R, E, B>,
