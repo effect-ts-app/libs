@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.121.0
+
+### Minor Changes
+
+- e6c8452: remove global Either
+
 ## 0.120.0
 
 ### Minor Changes
