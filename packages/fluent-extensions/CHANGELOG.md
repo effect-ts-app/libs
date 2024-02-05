@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.116.2
+
+### Patch Changes
+
+- 67d4ec9: improve prototype enhancement
+
 ## 0.116.1
 
 ### Patch Changes
