@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { toNonEmptyArray } from "@effect-app/core/Array"
 import * as Cause from "effect/Cause"
 import * as Config from "effect/Config"
 import * as Context from "effect/Context"
 import * as Effect from "effect/Effect"
 import * as Either from "effect/Either"
-import * as Opt from "effect/Option"
+import * as Option from "effect/Option"
 import type { NonEmptyArray } from "effect/ReadonlyArray"
 import * as ReadonlyArray from "effect/ReadonlyArray"
 import type { Concurrency, NoInfer } from "effect/Types"
@@ -13,7 +12,9 @@ import "./builtin.js"
 import { pipe } from "effect"
 import { Class, CommitPrototype, EffectPrototype, StructuralClass, StructuralCommitPrototype } from "effect/Effectable"
 import type { LazyArg } from "effect/Function"
-import type { Option } from "effect/Option"
+
+const toNonEmptyArray = <A>(a: ReadonlyArray<A>) =>
+  a.length ? Option.some(a as ReadonlyArray.NonEmptyReadonlyArray<A>) : Option.none
 
 const settings = {
   enumerable: false,
@@ -30,8 +31,8 @@ const installFluentExtensions = () => {
   Object.defineProperty(Object.prototype, "andThen", {
     ...settings,
     value(arg: any) {
-      return Opt.isOption(this)
-        ? Opt.andThen(this, arg)
+      return Option.isOption(this)
+        ? Option.andThen(this, arg)
         : Either.isEither(this)
         ? Either.andThen(this, arg)
         : Effect.andThen(this, arg)
@@ -40,15 +41,15 @@ const installFluentExtensions = () => {
   Object.defineProperty(Object.prototype, "tap", {
     ...settings,
     value(arg: any) {
-      return Opt.isOption(this) ? Opt.tap(this, arg) : Effect.tap(this, arg)
+      return Option.isOption(this) ? Option.tap(this, arg) : Effect.tap(this, arg)
     }
   })
 
   // Object.defineProperty(Object.prototype, "map", {
   //   ...settings,
   //   value(arg: any) {
-  //     return Opt.isOption(this)
-  //       ? Opt.map(this, arg)
+  //     return Option.isOption(this)
+  //       ? Option.map(this, arg)
   //       : Either.isEither(this)
   //       ? Either.map(this, arg)
   //       : Effect.map(this, arg)
@@ -58,7 +59,7 @@ const installFluentExtensions = () => {
   Object.defineProperty(Object.prototype, "getOrElse", {
     ...settings,
     value(arg: () => any) {
-      return Opt.getOrElse(this, arg)
+      return Option.getOrElse(this, arg)
     }
   }) // individual
    // effects
@@ -105,44 +106,44 @@ const installFluentExtensions = () => {
       // })
     })
 
-  const opt = Object.getPrototypeOf(Object.getPrototypeOf(Opt.none()))
+  const opt = Object.getPrototypeOf(Object.getPrototypeOf(Option.none()))
   Object.assign(opt, {
     andThen(arg: any): any {
-      return Opt.andThen(this as any, arg)
+      return Option.andThen(this as any, arg)
     },
     tap(arg: any): any {
-      return Opt.tap(this as any, arg)
+      return Option.tap(this as any, arg)
     },
     map(arg: any): any {
-      return Opt.map(this as any, arg)
+      return Option.map(this as any, arg)
     },
     getOrElse(arg: () => any): any {
-      return Opt.getOrElse(this as any, arg)
+      return Option.getOrElse(this as any, arg)
     }
   })
   // Object.defineProperty(opt, "andThen", {
   //   ...settings,
   //   value(arg: any) {
-  //     return Opt.andThen(this, arg)
+  //     return Option.andThen(this, arg)
   //   }
   // })
   // Object.defineProperty(opt, "tap", {
   //   ...settings,
   //   value(arg: any) {
-  //     return Opt.tap(this, arg)
+  //     return Option.tap(this, arg)
   //   }
   // })
   // Object.defineProperty(opt, "map", {
   //   ...settings,
   //   value(arg: any) {
-  //     return Opt.map(this, arg)
+  //     return Option.map(this, arg)
   //   }
   // })
   // Object
   //   .defineProperty(opt, "getOrElse", {
   //     ...settings,
   //     value(arg: () => any) {
-  //       return Opt.getOrElse(this, arg)
+  //       return Option.getOrElse(this, arg)
   //     }
   //   })
 
@@ -283,11 +284,11 @@ declare global {
   // }
 
   interface ReadonlyArray<T> {
-    get toNonEmpty(): Option<NonEmptyArray<T>>
-    findFirstMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Option<B>
-    findFirstMap<A, B extends A>(this: Iterable<A>, refinement: (a: A, i: number) => a is B): Option<B>
-    findFirstMap<A>(this: Iterable<A>, predicate: (a: A, i: number) => boolean): Option<A>
-    filterMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Array<B>
+    get toNonEmpty(): Option.Option<NonEmptyArray<T>>
+    findFirstMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option.Option<B>): Option.Option<B>
+    findFirstMap<A, B extends A>(this: Iterable<A>, refinement: (a: A, i: number) => a is B): Option.Option<B>
+    findFirstMap<A>(this: Iterable<A>, predicate: (a: A, i: number) => boolean): Option.Option<A>
+    filterMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option.Option<B>): Array<B>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
       f: (a: A, i: number) => Effect.Effect<R, E, B>,
@@ -544,11 +545,11 @@ declare global {
     ): T
   }
   interface Array<T> {
-    get toNonEmpty(): Option<NonEmptyArray<T>>
-    findFirstMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Option<B>
-    findFirstMap<A, B extends A>(this: Iterable<A>, refinement: (a: A, i: number) => a is B): Option<B>
-    findFirstMap<A>(this: Iterable<A>, predicate: (a: A, i: number) => boolean): Option<A>
-    filterMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option<B>): Array<B>
+    get toNonEmpty(): Option.Option<NonEmptyArray<T>>
+    findFirstMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option.Option<B>): Option.Option<B>
+    findFirstMap<A, B extends A>(this: Iterable<A>, refinement: (a: A, i: number) => a is B): Option.Option<B>
+    findFirstMap<A>(this: Iterable<A>, predicate: (a: A, i: number) => boolean): Option.Option<A>
+    filterMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option.Option<B>): Array<B>
     forEachEffect<A, R, E, B>(
       this: Iterable<A>,
       f: (a: A, i: number) => Effect.Effect<R, E, B>,
