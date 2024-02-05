@@ -22,55 +22,89 @@ const settings = {
  */
 const installFluentExtensions = () => {
   // pipe on Object seems to interfeir with some libraries like undici
-  Object.defineProperty(Array.prototype, "pipe", {
-    ...settings,
-    value(...args: [any, ...any[]]) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      return pipe(this, ...args as [any])
-    }
-  })
+  Object
+    .defineProperty(Array.prototype, "pipe", {
+      ...settings,
+      value(...args: [any, ...any[]]) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        return pipe(this, ...args as [any])
+      }
+    }) // effects
+  ;[
+    Object.getPrototypeOf(Effect.unit),
+    Object.getPrototypeOf(Effect.fail(1)),
+    Object.getPrototypeOf(Effect.step(Effect.unit))
+  ]
+    .forEach((effect) => {
+      Object.defineProperty(effect, "andThen", {
+        ...settings,
+        value(arg: any) {
+          return Effect.andThen(this, arg)
+        }
+      })
+      Object.defineProperty(effect, "tap", {
+        ...settings,
+        value(arg: any) {
+          return Effect.tap(this, arg)
+        }
+      })
+      Object.defineProperty(effect, "map", {
+        ...settings,
+        value(arg: any) {
+          return Effect.map(this, arg)
+        }
+      })
+    })
 
-  Object.defineProperty(Object.prototype, "andThen", {
+  const opt = Object.getPrototypeOf(Object.getPrototypeOf(Opt.none()))
+  Object.defineProperty(opt, "andThen", {
     ...settings,
     value(arg: any) {
-      return Opt.isOption(this)
-        ? Opt.andThen(this, arg)
-        : Either.isEither(this)
-        ? Either.andThen(this, arg)
-        : Effect.andThen(this, arg)
+      return Opt.andThen(this, arg)
     }
   })
-  Object.defineProperty(Object.prototype, "tap", {
+  Object.defineProperty(opt, "tap", {
     ...settings,
     value(arg: any) {
-      return Opt.isOption(this) ? Opt.tap(this, arg) : Effect.tap(this, arg)
+      return Opt.tap(this, arg)
     }
   })
-
-  Object.defineProperty(Object.prototype, "map", {
+  Object.defineProperty(opt, "map", {
     ...settings,
     value(arg: any) {
-      return Opt.isOption(this)
-        ? Opt.map(this, arg)
-        : Either.isEither(this)
-        ? Either.map(this, arg)
-        : Effect.map(this, arg)
+      return Opt.map(this, arg)
     }
   })
+  Object
+    .defineProperty(opt, "getOrElse", {
+      ...settings,
+      value(arg: () => any) {
+        return Opt.getOrElse(this, arg)
+      }
+    })
 
-  Object.defineProperty(Object.prototype, "getOrElse", {
+  const either = Object.getPrototypeOf(Object.getPrototypeOf(Either.left(1)))
+  Object.defineProperty(either, "andThen", {
     ...settings,
-    value(arg: () => any) {
-      return Opt.getOrElse(this, arg)
+    value(arg: any) {
+      return Either.andThen(this, arg)
     }
   })
-
-  Object.defineProperty(Object.prototype, "forEachEffect", {
+  Object.defineProperty(either, "map", {
     ...settings,
-    value(arg: () => any) {
-      return Effect.forEach(this, arg)
+    value(arg: any) {
+      return Either.map(this, arg)
     }
   })
+  ;[Array.prototype, Map.prototype, Set.prototype]
+    .forEach((proto) =>
+      Object.defineProperty(proto, "forEachEffect", {
+        ...settings,
+        value(arg: () => any) {
+          return Effect.forEach(this, arg)
+        }
+      })
+    )
 
   Object.defineProperty(Array.prototype, "findFirstMap", {
     ...settings,
