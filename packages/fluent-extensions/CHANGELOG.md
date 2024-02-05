@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.114.1
+
+### Patch Changes
+
+- 6de437e: fix type
+
 ## 0.114.0
 
 ### Minor Changes
