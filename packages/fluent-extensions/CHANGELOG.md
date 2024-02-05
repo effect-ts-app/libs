@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.115.1
+
+### Patch Changes
+
+- 39cc9b0: pipe
+
 ## 0.115.0
 
 ### Minor Changes
