@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.177.3
+
+### Patch Changes
+
+- acbbe35: override extend, transformOrFail and transformOrFailFrom to return EnhancedClass
+
 ## 0.177.2
 
 ### Patch Changes
