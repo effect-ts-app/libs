@@ -21,13 +21,8 @@ const settings = {
   configurable: true,
   writable: true
 }
-/**
- * useful in e.g frontend projects that do not use tsplus, but still has the most useful extensions installed.
- */
-const installFluentExtensions = () => {
-  // somehow individual prototypes don't stick in vite, so we still do some global ;/
-  // we should however not do `map` as it breaks fast-check, etc
 
+const globalHack = () => {
   Object.defineProperty(Object.prototype, "andThen", {
     ...settings,
     value(arg: any) {
@@ -61,8 +56,18 @@ const installFluentExtensions = () => {
     value(arg: () => any) {
       return Option.getOrElse(this, arg)
     }
-  }) // individual
-   // effects
+  })
+}
+
+/**
+ * useful in e.g frontend projects that do not use tsplus, but still has the most useful extensions installed.
+ */
+const installFluentExtensions = () => {
+  // somehow individual prototypes don't stick in vite, so we still do some global ;/
+  // we should however not do `map` as it breaks fast-check, etc
+
+  // individual
+  // effects
   ;[
     ...[Effect.unit, Effect.fail(1), Effect.step(Effect.unit), Cause.empty, Config.succeed(1), Context.Tag()].map((
       effect
@@ -225,6 +230,17 @@ export function patch() {
 }
 
 patch()
+
+let patchedGlobal = false
+export function patchGlobal() {
+  if (patchedGlobal) {
+    return
+  }
+
+  globalHack()
+
+  patchedGlobal = true
+}
 
 export {}
 
