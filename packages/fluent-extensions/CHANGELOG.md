@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.117.0
+
+### Minor Changes
+
+- e1c9d4c: extract global
+
 ## 0.116.6
 
 ### Patch Changes
