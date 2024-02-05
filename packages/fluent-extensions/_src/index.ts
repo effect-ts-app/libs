@@ -22,6 +22,7 @@ const settings = {
   writable: true
 }
 
+// When loaded with vite, the effect prototype changes do not work, somehow it seems modules are copied, or frozen, or something.
 const globalHack = () => {
   Object.defineProperty(Object.prototype, "andThen", {
     ...settings,
@@ -241,6 +242,8 @@ export function patchGlobal() {
 
   patchedGlobal = true
 }
+
+patchGlobal()
 
 export {}
 
