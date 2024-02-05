@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.113.13
+
+### Patch Changes
+
+- e66dbfc: pipe, findFirstMap, filterMap
+
 ## 0.113.12
 
 ### Patch Changes
