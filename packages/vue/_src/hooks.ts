@@ -2,6 +2,7 @@
 import { Done, Initial, Loading } from "@effect-app/prelude/client"
 import type { ApiConfig, FetchResponse } from "@effect-app/prelude/client"
 import { InterruptedException } from "effect/Cause"
+import * as Either from "effect/Either"
 import { FiberFailureCauseId, isFiberFailure } from "effect/Runtime"
 import * as swrv from "swrv"
 import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
@@ -247,13 +248,13 @@ export const useMutation: {
     (
       i: I,
       abortSignal?: AbortSignal
-    ) => Promise<Either<E, A>>
+    ) => Promise<Either.Either<E, A>>
   ]
   <E, A>(self: { handler: Effect<ApiConfig | HttpClient.Default, E, A> }): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
       abortSignal?: AbortSignal
-    ) => Promise<Either<E, A>>
+    ) => Promise<Either.Either<E, A>>
   ]
 } = <I, E, A>(
   self: {
@@ -262,7 +263,7 @@ export const useMutation: {
 ) => {
   const state: Ref<MutationResult<E, A>> = ref<MutationResult<E, A>>({ _tag: "Initial" }) as any
 
-  function handleExit(exit: Exit<E, A>): Effect<never, never, Either<E, A>> {
+  function handleExit(exit: Exit<E, A>): Effect<never, never, Either.Either<E, A>> {
     return Effect.sync(() => {
       if (exit.isSuccess()) {
         state.value = { _tag: "Success", data: exit.value }

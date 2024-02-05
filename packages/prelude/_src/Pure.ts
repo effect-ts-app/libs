@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import * as Either from "effect/Either"
 import type { ServiceTagged } from "./service.js"
 
 const S1 = Symbol()
@@ -159,7 +160,7 @@ export function logMany<W>(w: Iterable<W>): PureLogT<W> {
 export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
   self: Effect<FixEnv<R, W3, S1, S3>, E, A>,
   s: S4
-): Effect<Exclude<R, { env: PureEnv<W3, S1, S3> }>, never, readonly [Chunk<W3>, Either<E, readonly [S3, A]>]> {
+): Effect<Exclude<R, { env: PureEnv<W3, S1, S3> }>, never, readonly [Chunk<W3>, Either.Either<E, readonly [S3, A]>]> {
   const a = self
     .flatMap((x) =>
       castTag<W3, S1, S3>()
@@ -169,11 +170,11 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
         .map(
           (
             { log, state }
-          ) => tuple(log, Either.right(tuple(state, x)) as Either<E, readonly [S3, A]>)
+          ) => tuple(log, Either.right(tuple(state, x)) as Either.Either<E, readonly [S3, A]>)
         )
     )
     .catchAll(
-      (err) => tagg.map((env) => tuple(env.env.log, Either.left(err) as Either<E, readonly [S3, A]>))
+      (err) => tagg.map((env) => tuple(env.env.log, Either.left(err) as Either.Either<E, readonly [S3, A]>))
     )
   return a
     .provide(tagg.makeLayer({ env: makePureEnv<W3, S3, S4>(s) as any }) as any)
@@ -372,7 +373,7 @@ export const Pure: PureOps = {
 //   function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
 //     self: Effect<FixEnv<R, W3, S1, S3>, E, A>,
 //     s: S4
-//   ): Effect<Exclude<R, { env: PureEnv<W3, S1, S3>}>, never, readonly [Chunk<W3>, Either<E, readonly [S3, A]>]> {
+//   ): Effect<Exclude<R, { env: PureEnv<W3, S1, S3>}>, never, readonly [Chunk<W3>, Either.Either<E, readonly [S3, A]>]> {
 //     return self.flatMap(x =>
 //       Effect.serviceWithEffect(tag, ({ env: _ }) =>
 //         Effect.all({ log: _.log.get, state: _.state.get })
@@ -380,12 +381,12 @@ export const Pure: PureOps = {
 //       ).map(
 //         (
 //           { log, state }
-//         ) => tuple(log, Either.right(tuple(state, x)) as Either<E, readonly [S3, A]>)
+//         ) => tuple(log, Either.right(tuple(state, x)) as Either.Either<E, readonly [S3, A]>)
 //       )
 //     ).catchAll(
 //       err =>
 //         accessLog.map(log =>
-//           tuple(log, Either.left(err) as Either<E, readonly [S3, A]>)
+//           tuple(log, Either.left(err) as Either.Either<E, readonly [S3, A]>)
 //         )
 //     ).provideService(tag, { env: makePureEnv<W3, S3, S4>(s) as any }) as any
 //   }

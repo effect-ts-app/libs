@@ -93,7 +93,21 @@ const installFluentExtensions = () => {
   })
 }
 
-installFluentExtensions()
+let patched = false
+
+export function patch() {
+  if (patched) {
+    return
+  }
+
+  installFluentExtensions()
+
+  patched = true
+}
+
+patch()
+
+export {}
 
 declare module "effect/Option" {
   export interface None<out A> {
@@ -366,26 +380,26 @@ declare global {
       st: (s: S) => T
     ): T
   }
-  interface Iterable<T> {
-    forEachEffect<A, R, E, B>(
-      this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
-      options?: {
-        readonly concurrency?: Concurrency | undefined
-        readonly batching?: boolean | "inherit" | undefined
-        readonly discard?: false | undefined
-      }
-    ): Effect<R, E, Array<B>>
-    forEachEffect<A, R, E, B>(
-      this: Iterable<A>,
-      f: (a: A, i: number) => Effect<R, E, B>,
-      options: {
-        readonly concurrency?: Concurrency | undefined
-        readonly batching?: boolean | "inherit" | undefined
-        readonly discard: true
-      }
-    ): Effect<R, E, void>
-  }
+  // interface Iterable<T> {
+  //   forEachEffect<A, R, E, B>(
+  //     this: Iterable<A>,
+  //     f: (a: A, i: number) => Effect<R, E, B>,
+  //     options?: {
+  //       readonly concurrency?: Concurrency | undefined
+  //       readonly batching?: boolean | "inherit" | undefined
+  //       readonly discard?: false | undefined
+  //     }
+  //   ): Effect<R, E, Array<B>>
+  //   forEachEffect<A, R, E, B>(
+  //     this: Iterable<A>,
+  //     f: (a: A, i: number) => Effect<R, E, B>,
+  //     options: {
+  //       readonly concurrency?: Concurrency | undefined
+  //       readonly batching?: boolean | "inherit" | undefined
+  //       readonly discard: true
+  //     }
+  //   ): Effect<R, E, void>
+  // }
 
   interface ReadonlyArray<T> {
     get toNonEmpty(): Option<NonEmptyArray<T>>

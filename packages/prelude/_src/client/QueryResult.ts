@@ -1,13 +1,14 @@
 // TODO: Convert to effect/core
 
 /* eslint-disable @typescript-eslint/ban-types */
+import * as Either from "effect/Either"
 
 export class Initial extends Data.TaggedClass("Initial")<{}> {}
 
 export class Loading extends Data.TaggedClass("Loading")<{}> {}
 
 export class Refreshing<E, A> extends Data.TaggedClass("Refreshing")<{
-  readonly current: Either<E, A>
+  readonly current: Either.Either<E, A>
   readonly previous: Option<A>
 }> {
   static succeed<A, E = never>(a: A) {
@@ -25,7 +26,7 @@ export class Refreshing<E, A> extends Data.TaggedClass("Refreshing")<{
 }
 
 export class Done<E, A> extends Data.TaggedClass("Done")<{
-  readonly current: Either<E, A>
+  readonly current: Either.Either<E, A>
   readonly previous: Option<A>
 }> {
   static succeed<A, E = never>(this: void, a: A) {

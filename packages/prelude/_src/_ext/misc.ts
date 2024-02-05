@@ -1,3 +1,4 @@
+import * as Either from "effect/Either"
 import type { Option } from "effect/Option"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
@@ -26,7 +27,7 @@ export function encaseMaybeInEffect_<E, A>(
 export function encaseMaybeEither_<E, A>(
   o: Option<A>,
   onError: LazyArg<E>
-): Either<E, A> {
+): Either.Either<E, A> {
   return o.match({ onNone: () => Either.left(onError()), onSome: Either.right })
 }
 
