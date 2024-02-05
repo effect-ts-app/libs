@@ -1,18 +1,90 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArbitraryHookId } from "@effect/schema/Arbitrary"
+import type { ParseOptions } from "@effect/schema/AST"
 import { EquivalenceHookId } from "@effect/schema/Equivalence"
 import { PrettyHookId } from "@effect/schema/Pretty"
 import type { FromStruct, Schema, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
+import type { Effect } from "effect"
 import type { Mutable, Simplify } from "effect/Types"
 import omit from "lodash/omit.js"
 import pick from "lodash/pick.js"
+import type { ParseResult } from "./index.js"
 import { AST } from "./schema.js"
 
 export interface EnhancedClass<R, I, A, C, Self, Fields, Inherited>
   extends S.Class<R, I, A, C, Self, Fields, Inherited>, PropsExtensions<Fields>
 {
+  readonly extend: <Extended>() => <FieldsB extends S.StructFields>(
+    fields: FieldsB
+  ) => [unknown] extends [Extended] ? MissingSelfGeneric<"Base.extend">
+    : EnhancedClass<
+      R | Schema.Context<FieldsB[keyof FieldsB]>,
+      Simplify<Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
+      Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+      Simplify<Omit<C, keyof FieldsB> & ToStructConstructor<FieldsB>>,
+      Extended,
+      Simplify<Omit<Fields, keyof FieldsB> & FieldsB>,
+      Self
+    >
+
+  readonly transformOrFail: <Transformed>() => <
+    FieldsB extends S.StructFields,
+    R2,
+    R3
+  >(
+    fields: FieldsB,
+    decode: (
+      input: A,
+      options: ParseOptions,
+      ast: AST.Transform
+    ) => Effect.Effect<R2, ParseResult.ParseIssue, Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+    encode: (
+      input: Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+      options: ParseOptions,
+      ast: AST.Transform
+    ) => Effect.Effect<R3, ParseResult.ParseIssue, A>
+  ) => [unknown] extends [Transformed] ? MissingSelfGeneric<"Base.transform">
+    : EnhancedClass<
+      R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
+      I,
+      Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+      Simplify<Omit<C, keyof FieldsB> & ToStructConstructor<FieldsB>>,
+      Transformed,
+      Simplify<Omit<Fields, keyof FieldsB> & FieldsB>,
+      Self
+    >
+
+  readonly transformOrFailFrom: <Transformed>() => <
+    FieldsB extends S.StructFields,
+    R2,
+    R3
+  >(
+    fields: FieldsB,
+    decode: (
+      input: I,
+      options: ParseOptions,
+      ast: AST.Transform
+    ) => Effect.Effect<R2, ParseResult.ParseIssue, Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
+    encode: (
+      input: Simplify<Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
+      options: ParseOptions,
+      ast: AST.Transform
+    ) => Effect.Effect<R3, ParseResult.ParseIssue, I>
+  ) => [unknown] extends [Transformed] ? MissingSelfGeneric<"Base.transformFrom">
+    : EnhancedClass<
+      R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
+      I,
+      Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+      Simplify<Omit<C, keyof FieldsB> & ToStructConstructor<FieldsB>>,
+      Transformed,
+      Simplify<Omit<Fields, keyof FieldsB> & FieldsB>,
+      Self
+    >
 }
+
+type MissingSelfGeneric<Usage extends string, Params extends string = ""> =
+  `Missing \`Self\` generic - use \`class Self extends ${Usage}<Self>()(${Params}{ ... })\``
 
 export interface PropsExtensions<Fields> {
   include: <NewProps extends S.StructFields>(
