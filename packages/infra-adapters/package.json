@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect/platform": "^0.43.7",
+    "@effect/platform": "^0.43.9",
     "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240204124243",
     "@effect-app/core": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",
