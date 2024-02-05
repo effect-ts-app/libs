@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.177.5
+
+### Patch Changes
+
+- bc98aeb: fix TaggedClass
+
 ## 0.177.4
 
 ### Patch Changes
