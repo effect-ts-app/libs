@@ -5,7 +5,7 @@
   "type": "module",
   "dependencies": {
     "@effect/platform": "^0.43.9",
-    "@effect/schema": "npm:@effect-app/schema-fork@0.0.0-20240204124243",
+    "@effect/schema": "^0.61.5",
     "@effect-app/core": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/prelude": "workspace:*",
