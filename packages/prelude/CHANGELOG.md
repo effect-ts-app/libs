@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.144.0
+
+### Minor Changes
+
+- d740bf6: use schema as patch instead
+
+### Patch Changes
+
+- Updated dependencies [d740bf6]
+  - @effect-app/schema@0.178.0
+  - @effect-app/fluent-extensions@0.118.1
+
 ## 0.143.11
 
 ### Patch Changes

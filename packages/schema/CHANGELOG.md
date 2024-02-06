@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.178.0
+
+### Minor Changes
+
+- d740bf6: use schema as patch instead
+
 ## 0.177.5
 
 ### Patch Changes
