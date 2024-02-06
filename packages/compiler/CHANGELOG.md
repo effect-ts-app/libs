@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.58.0
+
+### Minor Changes
+
+- bump
+
 ## 0.57.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.44.0
+
+### Minor Changes
+
+- bump
+
 ## 0.43.0
 
 ### Minor Changes

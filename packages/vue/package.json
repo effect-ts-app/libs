@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/vue",
-  "version": "0.117.0",
+  "version": "0.118.0",
   "license": "MIT",
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
@@ -12,7 +12,6 @@
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
-    "@fp-ts/optic": "^0.22.0",
     "@formatjs/intl": "^2.10.0",
     "effect": "^2.2.3",
     "query-string": "^8.2.0",
