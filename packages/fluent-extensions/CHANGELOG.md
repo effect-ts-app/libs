@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.118.0
+
+### Minor Changes
+
+- 028af99: move the extensions to effect for vite to be happy
+
 ## 0.117.4
 
 ### Patch Changes
