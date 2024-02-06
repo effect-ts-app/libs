@@ -24,7 +24,7 @@
     "@faker-js/faker": "^8.4.0",
     "@types/node": "~20.11.16",
     "@types/uuid": "^9.0.8",
-    "@types/validator": "^13.11.8",
+    "@types/validator": "^13.11.9",
     "fast-check": "~3.15.1",
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124",

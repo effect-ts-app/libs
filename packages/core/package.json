@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8",
-    "@types/validator": "^13.11.8",
+    "@types/validator": "^13.11.9",
     "@babel/cli": "^7.23.9",
     "ts-toolbelt": "^9.6.0",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124",
