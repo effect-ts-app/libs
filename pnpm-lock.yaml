@@ -25,6 +25,9 @@ patchedDependencies:
   date-fns@2.29.3:
     hash: g5hqt5bhnjezqo5vnkpprfkba4
     path: patches/date-fns@2.29.3.patch
+  effect@2.2.3:
+    hash: z6slub6xjj5g2cb4c6ofumgcjq
+    path: patches/effect@2.2.3.patch
   eslint-plugin-codegen@0.17.0:
     hash: 3ogk7peuefdu45q3hbzcgdiuna
     path: patches/eslint-plugin-codegen@0.17.0.patch
@@ -263,7 +266,7 @@ importers:
         version: 4.0.0
       effect:
         specifier: ^2.2.3
-        version: 2.2.3
+        version: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -376,7 +379,7 @@ importers:
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
         specifier: ^2.2.3
-        version: 2.2.3
+        version: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -476,7 +479,7 @@ importers:
         version: 4.0.0
       effect:
         specifier: ^2.2.3
-        version: 2.2.3
+        version: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
       express-oauth2-jwt-bearer:
         specifier: ^1.6.0
         version: 1.6.0
@@ -573,7 +576,7 @@ importers:
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.3)
       effect:
         specifier: ^2.2.3
-        version: 2.2.3
+        version: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
       query-string:
         specifier: ^8.2.0
         version: 8.2.0
@@ -664,7 +667,7 @@ importers:
         version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
         specifier: ^2.2.3
-        version: 2.2.3
+        version: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -734,7 +737,7 @@ importers:
         version: 4.0.0
       effect:
         specifier: ^2.2.3
-        version: 2.2.3
+        version: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -801,7 +804,7 @@ importers:
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.3)
       effect:
         specifier: ^2.2.3
-        version: 2.2.3
+        version: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
       query-string:
         specifier: ^8.2.0
         version: 8.2.0
@@ -1641,7 +1644,7 @@ packages:
       effect: workspace:^
       fast-check: ^3.13.2
     dependencies:
-      effect: 2.2.3
+      effect: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
       fast-check: 3.15.1(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
 
@@ -1665,7 +1668,7 @@ packages:
       effect: ^2.2.3
     dependencies:
       '@effect/platform': 0.43.9(@effect-app/schema-fork@0.0.0-20240204124243)(effect@2.2.3)
-      effect: 2.2.3
+      effect: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
     dev: false
 
   /@effect/platform@0.43.9(@effect-app/schema-fork@0.0.0-20240204124243)(effect@2.2.3):
@@ -1675,7 +1678,7 @@ packages:
       effect: ^2.2.3
     dependencies:
       '@effect/schema': /@effect-app/schema-fork@0.0.0-20240204124243(effect@2.2.3)(fast-check@3.15.1)
-      effect: 2.2.3
+      effect: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
@@ -1686,7 +1689,7 @@ packages:
     peerDependencies:
       effect: ^2.0.0
     dependencies:
-      effect: 2.2.3
+      effect: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
     dev: false
 
   /@esbuild/android-arm64@0.19.5:
@@ -1987,7 +1990,7 @@ packages:
       effect: ^2.0.0
     dependencies:
       '@effect/typeclass': 0.22.0(effect@2.2.3)
-      effect: 2.2.3
+      effect: 2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq)
     dev: false
     patched: true
 
@@ -4473,9 +4476,10 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /effect@2.2.3:
+  /effect@2.2.3(patch_hash=z6slub6xjj5g2cb4c6ofumgcjq):
     resolution: {integrity: sha512-9h1YbGAjmT0A6HLseMmp1OI7VIg8Ee1go+FVjilDvNAWoxvlzudu/eYSo3lqJz1/TjUxj115AytTmI3CeuaUCA==}
     dev: false
+    patched: true
 
   /electron-to-chromium@1.4.525:
     resolution: {integrity: sha512-GIZ620hDK4YmIqAWkscG4W6RwY6gOx1y5J6f4JUQwctiJrqH2oxZYU4mXHi35oV32tr630UcepBzSBGJ/WYcZA==}
