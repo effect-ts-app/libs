@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.145.1
+
+### Patch Changes
+
+- 871cccf: remove cpy
+
 ## 0.145.0
 
 ### Minor Changes
