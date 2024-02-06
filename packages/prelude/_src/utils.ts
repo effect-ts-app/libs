@@ -97,7 +97,7 @@ export const clone = <A extends Object>(original: A, copy: A) => {
 
 export const copy = <A extends Object>(
   original: A,
-  copy: Partial<Omit<A, keyof Equal | keyof Clone>>
+  copy: Partial<A>
 ): A => {
   return clone(original, { ...original, ...copy })
 }
@@ -114,7 +114,7 @@ export const $clone = <A extends Object>({ subject: original }: ObjectOps<A>, co
  */
 export const $copy = <A extends Object>(
   { subject: original }: ObjectOps<A>,
-  _copy: Partial<Omit<A, keyof Equal | keyof Clone>>
+  _copy: Partial<A>
 ): A => {
   return copy(original, _copy)
 }
