@@ -6,7 +6,6 @@ settings:
 
 overrides:
   date-fns: ^2.29.3
-  http-proxy: npm:http-proxy-node16@1.0.0
 
 patchedDependencies:
   '@effect/language-service@0.0.19':
@@ -44,9 +43,6 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
-      http-proxy:
-        specifier: npm:http-proxy-node16@1.0.0
-        version: /http-proxy-node16@1.0.0
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.16)
@@ -5043,10 +5039,6 @@ packages:
       through: 2.3.8
     dev: true
 
-  /eventemitter3@4.0.7:
-    resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
-    dev: false
-
   /events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
@@ -5773,17 +5765,6 @@ packages:
       debug: 4.3.4(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
-
-  /http-proxy-node16@1.0.0:
-    resolution: {integrity: sha512-ng78rAwFWM/Jvdfh+N5GPy92VcrpyxLlskj1LwFX+nm+mqb4N5fu9VK2ehq+4pka8eoR3wXhdHbRprrgih5qiA==}
-    engines: {node: '>=8.0.0'}
-    dependencies:
-      eventemitter3: 4.0.7
-      follow-redirects: 1.15.2
-      requires-port: 1.0.0
-    transitivePeerDependencies:
-      - debug
-    dev: false
 
   /http2-wrapper@2.2.0:
     resolution: {integrity: sha512-kZB0wxMo0sh1PehyjJUWRFEd99KC5TLjZ2cULC4f9iqJBAmKQQXEICjxl5iPJRwP40dpeHFqqhm7tYCvODpqpQ==}
@@ -8171,10 +8152,6 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
     dev: true
-
-  /requires-port@1.0.0:
-    resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
-    dev: false
 
   /resolve-alpn@1.2.1:
     resolution: {integrity: sha512-0a1F4l73/ZFZOakJnQ3FvkJ2+gSTQWz/r2KE5OdDY0TxPm5h4GkqkWWfM47T7HsbnOtcJVEF4epCVy6u7Q3K+g==}

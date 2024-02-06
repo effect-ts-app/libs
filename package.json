@@ -46,12 +46,10 @@
     "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
   },
   "resolutions": {
-    "date-fns": "^2.29.3",
-    "http-proxy": "npm:http-proxy-node16@1.0.0"
+    "date-fns": "^2.29.3"
   },
   "dependencies": {
     "cross-env": "^7.0.3",
-    "http-proxy": "npm:http-proxy-node16@^1.0.3",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
