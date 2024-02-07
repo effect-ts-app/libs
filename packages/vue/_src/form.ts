@@ -258,7 +258,7 @@ export function getMetadataFromSchema(
     jschema = JSONSchema.make(S.make(realSelf)) as any
   } catch (err) {
     jschema = {}
-    console.warn("error getting jsonschema from ", err, ast)
+    // console.warn("error getting jsonschema from ", err, ast)
   }
   if (jschema["$ref"] && jschema["$ref"].startsWith("#/$defs/")) {
     // todo filter ref/defs?
