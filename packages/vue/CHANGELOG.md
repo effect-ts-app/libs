@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.118.3
+
+### Patch Changes
+
+- 9bfb380: disable console warn
+- Updated dependencies [9bfb380]
+  - @effect-app/vue@0.118.3
+
 ## 0.118.2
 
 ### Patch Changes
