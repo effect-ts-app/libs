@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.120.0
+
+### Minor Changes
+
+- 9d31709: fix unimplemented Runtime
+
 ## 0.119.0
 
 ### Minor Changes
