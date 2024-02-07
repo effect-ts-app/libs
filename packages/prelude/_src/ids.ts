@@ -1,7 +1,8 @@
 import { brandedStringId, withDefaults } from "@effect-app/prelude/schema"
-import type { ConstructorPropertyDescriptor, StringIdBrand } from "@effect-app/prelude/schema"
+import type { StringIdBrand } from "@effect-app/prelude/schema"
 import type { B } from "@effect-app/schema/schema"
 import type { Simplify } from "effect/Types"
+import { extendM } from "./utils.js"
 
 export interface RequestIdBrand extends StringIdBrand {
   readonly RequestId: unique symbol
@@ -12,14 +13,18 @@ export interface RequestIdBrand extends StringIdBrand {
  */
 export type RequestId = NonEmptyString255
 // a request id may be made from a span id, which does not comply with StringId schema.
-export const RequestId = Object
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  .assign(Object.create(NonEmptyString255) as {}, NonEmptyString255 as Schema<never, string, NonEmptyString255>, {
-    make: StringId.make as () => NonEmptyString255,
-    withDefault: StringId.withDefault as unknown as
-      & Schema<never, string, NonEmptyString255>
-      & ConstructorPropertyDescriptor<never, string, NonEmptyString255>
-  })
+export const RequestId = extendM(
+  Object
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    .assign(Object.create(NonEmptyString255) as {}, NonEmptyString255 as Schema<never, string, NonEmptyString255>),
+  (s) => {
+    const make = StringId.make as () => NonEmptyString255
+    return ({
+      make,
+      withDefault: S.withDefaultConstructor(s, make)
+    })
+  }
+)
   .pipe(withDefaults)
 
 export interface UserProfileIdBrand extends Simplify<B.Brand<"UserProfileId"> & StringIdBrand> {}
