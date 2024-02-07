@@ -66,8 +66,8 @@ importers:
         specifier: ^0.88.10
         version: 0.88.10
       '@effect-app/cli':
-        specifier: ^0.42.1
-        version: 0.42.1
+        specifier: ^0.43.0
+        version: link:packages/cli
       '@effect-app/compiler':
         specifier: workspace:*
         version: link:packages/compiler
@@ -437,8 +437,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@azure/service-bus':
-        specifier: ^7.9.3
-        version: 7.9.3
+        specifier: ^7.9.4
+        version: 7.9.4
       '@effect-app/core':
         specifier: workspace:*
         version: link:../core
@@ -507,8 +507,8 @@ importers:
         specifier: workspace:*
         version: link:../compiler
       '@sentry/node':
-        specifier: ^7.99.0
-        version: 7.99.0
+        specifier: ^7.100.1
+        version: 7.100.1
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
@@ -583,8 +583,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@azure/service-bus':
-        specifier: ^7.9.3
-        version: 7.9.3
+        specifier: ^7.9.4
+        version: 7.9.4
       '@types/connect':
         specifier: ^3.4.38
         version: 3.4.38
@@ -854,11 +854,17 @@ packages:
     dependencies:
       tslib: 2.5.0
 
-  /@azure/core-amqp@4.1.0:
-    resolution: {integrity: sha512-tjnviDypSAgjGBZCPw+sH7vDWz27N+z0xtQewp7+xH17/eb67VH4sApl3XHuxVBro6Y6pOfxCDpqFenOoGWz6Q==}
+  /@azure/abort-controller@2.0.0:
+    resolution: {integrity: sha512-RP/mR/WJchR+g+nQFJGOec+nzeN/VvjlwbinccoqfhTsTHbb8X5+mLDp48kHT0ueyum0BNSwGm0kX0UZuIqTGg==}
     engines: {node: '>=18.0.0'}
     dependencies:
-      '@azure/abort-controller': 1.1.0
+      tslib: 2.5.0
+
+  /@azure/core-amqp@4.2.0:
+    resolution: {integrity: sha512-+G6/+GK1X4sWWittxhhOMM3BTd9+BtjquCrEKyw0ruQEwMnmIuN1S5Vey/J8rpbzPSZ1nNnPANlg5F7C0iWVpw==}
+    engines: {node: '>=18.0.0'}
+    dependencies:
+      '@azure/abort-controller': 2.0.0
       '@azure/core-auth': 1.4.0
       '@azure/core-util': 1.1.1
       '@azure/logger': 1.0.3
@@ -962,12 +968,12 @@ packages:
     dependencies:
       tslib: 2.5.0
 
-  /@azure/service-bus@7.9.3:
-    resolution: {integrity: sha512-6g37YpVTzRHI75BkYPiB4zqbYhQHM1Jvd+sNfRCbXeRW5FLsWoXgFVTw3Jv5kkMMX1pUNtrkaQhEoeTwtm5v3w==}
+  /@azure/service-bus@7.9.4:
+    resolution: {integrity: sha512-LxFx6gVpMmxfVpTUEN4++CfXejGCCFvuFNSBovz70upmvZ/urBmqQoPOriXwezEQtaEo/NlFMIjR9AnJDmQIdA==}
     engines: {node: '>=18.0.0'}
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/core-amqp': 4.1.0
+      '@azure/core-amqp': 4.2.0
       '@azure/core-auth': 1.4.0
       '@azure/core-client': 1.6.1
       '@azure/core-paging': 1.4.0
@@ -1629,13 +1635,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@effect-app/cli@0.42.1:
-    resolution: {integrity: sha512-4Eh+gWCix9YVrNMq3QJiytwHMeyEUrapL7cOCWodMtd5ZLvAnug63N/SL12m7/Cuo6D+RPV+mo6qMy59ZKcmgQ==}
-    hasBin: true
-    dependencies:
-      node-watch: 0.7.4
-    dev: true
 
   /@effect-app/typescript@5.4.0-tsplus.20240124:
     resolution: {integrity: sha512-fxM5CqvD/+NiKvKE7S5HfnSjE3qK80MUcLZo9qx+kBmnFTU1T0YafEiPPKpIUiKqdBBSyO4b2QkaYI7FiK4Rsw==}
@@ -2405,43 +2404,43 @@ packages:
       - debug
     dev: false
 
-  /@sentry-internal/tracing@7.99.0:
-    resolution: {integrity: sha512-z3JQhHjoM1KdM20qrHwRClKJrNLr2CcKtCluq7xevLtXHJWNAQQbafnWD+Aoj85EWXBzKt9yJMv2ltcXJ+at+w==}
+  /@sentry-internal/tracing@7.100.1:
+    resolution: {integrity: sha512-+u9RRf5eL3StiyiRyAHZmdkAR7GTSGx4Mt4Lmi5NEtCcWlTGZ1QgW2r8ZbhouVmTiJkjhQgYCyej3cojtazeJg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.99.0
-      '@sentry/types': 7.99.0
-      '@sentry/utils': 7.99.0
+      '@sentry/core': 7.100.1
+      '@sentry/types': 7.100.1
+      '@sentry/utils': 7.100.1
     dev: true
 
-  /@sentry/core@7.99.0:
-    resolution: {integrity: sha512-vOAtzcAXEUtS/oW7wi3wMkZ3hsb5Ch96gKyrrj/mXdOp2zrcwdNV6N9/pawq2E9P/7Pw8AXw4CeDZztZrjQLuA==}
+  /@sentry/core@7.100.1:
+    resolution: {integrity: sha512-f+ItUge/o9AjlveQq0ZUbQauKlPH1FIJbC1TRaYLJ4KNfOdrsh8yZ29RmWv0cFJ/e+FGTr603gWpRPObF5rM8Q==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.99.0
-      '@sentry/utils': 7.99.0
+      '@sentry/types': 7.100.1
+      '@sentry/utils': 7.100.1
     dev: true
 
-  /@sentry/node@7.99.0:
-    resolution: {integrity: sha512-34wYtLddnPcQ8qvKq62AfxowaMFw+GMUZGv7fIs9FxeBqqqn6Ckl0gFCTADudIIBQ3rSbmN7sHJIXdyiQv+pcw==}
+  /@sentry/node@7.100.1:
+    resolution: {integrity: sha512-jB6tBLr7BpgdE2SlYZu343vvpa5jMFnqyFlprr+jdDu/ayNF4idB0qFwQe8p4C6LI6M/MNDRLVOgPBiCjjZSpw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.99.0
-      '@sentry/core': 7.99.0
-      '@sentry/types': 7.99.0
-      '@sentry/utils': 7.99.0
+      '@sentry-internal/tracing': 7.100.1
+      '@sentry/core': 7.100.1
+      '@sentry/types': 7.100.1
+      '@sentry/utils': 7.100.1
     dev: true
 
-  /@sentry/types@7.99.0:
-    resolution: {integrity: sha512-94qwOw4w40sAs5mCmzcGyj8ZUu/KhnWnuMZARRq96k+SjRW/tHFAOlIdnFSrt3BLPvSOK7R3bVAskZQ0N4FTmA==}
+  /@sentry/types@7.100.1:
+    resolution: {integrity: sha512-fLM+LedHuKzOd8IhXBqaQuym+AA519MGjeczBa5kGakes/BbAsUMwsNfjsKQedp7Kh44RgYF99jwoRPK2oDrXw==}
     engines: {node: '>=8'}
     dev: true
 
-  /@sentry/utils@7.99.0:
-    resolution: {integrity: sha512-cYZy5WNTkWs5GgggGnjfGqC44CWir0pAv4GVVSx0fsup4D4pMKBJPrtub15f9uC+QkUf3vVkqwpBqeFxtmJQTQ==}
+  /@sentry/utils@7.100.1:
+    resolution: {integrity: sha512-Ve6dXr1o6xiBe3VCoJgiutmBKrugryI65EZAbYto5XI+t+PjiLLf9wXtEMF24ZrwImo4Lv3E9Uqza+fWkEbw6A==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.99.0
+      '@sentry/types': 7.100.1
     dev: true
 
   /@sideway/address@4.1.4:
@@ -7092,6 +7091,7 @@ packages:
   /node-watch@0.7.4:
     resolution: {integrity: sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==}
     engines: {node: '>=6'}
+    dev: false
 
   /nodemon@3.0.3:
     resolution: {integrity: sha512-7jH/NXbFPxVaMwmBCC2B9F/V6X1VkEdNgx3iu9jji8WxWcvhMWkmhNWhI5077zknOnZnBzba9hZP6bCPJLSReQ==}
