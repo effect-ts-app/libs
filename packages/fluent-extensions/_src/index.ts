@@ -10,7 +10,6 @@ import type { LazyArg } from "effect/Function"
 
 // we had to put the patches inside effect, for it to work with vite
 import "effect/fluentExtensions"
-import type { Exit, Fiber, FiberId } from "effect"
 
 export {}
 
@@ -74,88 +73,88 @@ declare module "effect/Cause" {
   }
 }
 
-declare module "effect/Runtime" {
-  export interface Runtime<in R> {
-    /**
-     * Executes the effect using the provided Scheduler or using the global
-     * Scheduler if not provided
-     *
-     * @since 2.0.0
-     * @category execution
-     */
-    runFork<R, E, A>(
-      this: Runtime<R>,
-      self: Effect.Effect<R, E, A>,
-      options?: RunForkOptions
-    ): Fiber.RuntimeFiber<E, A>
+// declare module "effect/Runtime" {
+//   export interface Runtime<in R> {
+//     /**
+//      * Executes the effect using the provided Scheduler or using the global
+//      * Scheduler if not provided
+//      *
+//      * @since 2.0.0
+//      * @category execution
+//      */
+//     runFork<R, E, A>(
+//       this: Runtime<R>,
+//       self: Effect.Effect<R, E, A>,
+//       options?: RunForkOptions
+//     ): Fiber.RuntimeFiber<E, A>
 
-    /**
-     * Executes the effect synchronously returning the exit.
-     *
-     * This method is effectful and should only be invoked at the edges of your
-     * program.
-     *
-     * @since 2.0.0
-     * @category execution
-     */
-    runSyncExit<R, E, A>(this: Runtime<R>, effect: Effect.Effect<R, E, A>): Exit.Exit<E, A>
+//     /**
+//      * Executes the effect synchronously returning the exit.
+//      *
+//      * This method is effectful and should only be invoked at the edges of your
+//      * program.
+//      *
+//      * @since 2.0.0
+//      * @category execution
+//      */
+//     runSyncExit<R, E, A>(this: Runtime<R>, effect: Effect.Effect<R, E, A>): Exit.Exit<E, A>
 
-    /**
-     * Executes the effect synchronously throwing in case of errors or async boundaries.
-     *
-     * This method is effectful and should only be invoked at the edges of your
-     * program.
-     *
-     * @since 2.0.0
-     * @category execution
-     */
-    runSync<R, E, A>(this: Runtime<R>, effect: Effect.Effect<R, E, A>): A
+//     /**
+//      * Executes the effect synchronously throwing in case of errors or async boundaries.
+//      *
+//      * This method is effectful and should only be invoked at the edges of your
+//      * program.
+//      *
+//      * @since 2.0.0
+//      * @category execution
+//      */
+//     runSync<R, E, A>(this: Runtime<R>, effect: Effect.Effect<R, E, A>): A
 
-    /**
-     * Executes the effect asynchronously, eventually passing the exit value to
-     * the specified callback.
-     *
-     * This method is effectful and should only be invoked at the edges of your
-     * program.
-     *
-     * @since 2.0.0
-     * @category execution
-     */
-    runCallback<R, E, A>(
-      this: Runtime<R>,
-      effect: Effect.Effect<R, E, A>,
-      options?: RunCallbackOptions<E, A> | undefined
-    ): (fiberId?: FiberId.FiberId | undefined, options?: RunCallbackOptions<E, A> | undefined) => void
+//     /**
+//      * Executes the effect asynchronously, eventually passing the exit value to
+//      * the specified callback.
+//      *
+//      * This method is effectful and should only be invoked at the edges of your
+//      * program.
+//      *
+//      * @since 2.0.0
+//      * @category execution
+//      */
+//     runCallback<R, E, A>(
+//       this: Runtime<R>,
+//       effect: Effect.Effect<R, E, A>,
+//       options?: RunCallbackOptions<E, A> | undefined
+//     ): (fiberId?: FiberId.FiberId | undefined, options?: RunCallbackOptions<E, A> | undefined) => void
 
-    /**
-     * Runs the `Effect`, returning a JavaScript `Promise` that will be resolved
-     * with the value of the effect once the effect has been executed, or will be
-     * rejected with the first error or exception throw by the effect.
-     *
-     * This method is effectful and should only be used at the edges of your
-     * program.
-     *
-     * @since 2.0.0
-     * @category execution
-     */
-    runPromise<R, E, A>(this: Runtime<R>, effect: Effect.Effect<R, E, A>): Promise<A>
+//     /**
+//      * Runs the `Effect`, returning a JavaScript `Promise` that will be resolved
+//      * with the value of the effect once the effect has been executed, or will be
+//      * rejected with the first error or exception throw by the effect.
+//      *
+//      * This method is effectful and should only be used at the edges of your
+//      * program.
+//      *
+//      * @since 2.0.0
+//      * @category execution
+//      */
+//     runPromise<R, E, A>(this: Runtime<R>, effect: Effect.Effect<R, E, A>): Promise<A>
 
-    /**
-     * Runs the `Effect`, returning a JavaScript `Promise` that will be resolved
-     * with the `Exit` state of the effect once the effect has been executed.
-     *
-     * This method is effectful and should only be used at the edges of your
-     * program.
-     *
-     * @since 2.0.0
-     * @category execution
-     */
-    runPromiseExit<R, E, A>(
-      this: Runtime<R>,
-      effect: Effect.Effect<R, E, A>
-    ): Promise<Exit.Exit<E, A>>
-  }
-}
+//     /**
+//      * Runs the `Effect`, returning a JavaScript `Promise` that will be resolved
+//      * with the `Exit` state of the effect once the effect has been executed.
+//      *
+//      * This method is effectful and should only be used at the edges of your
+//      * program.
+//      *
+//      * @since 2.0.0
+//      * @category execution
+//      */
+//     runPromiseExit<R, E, A>(
+//       this: Runtime<R>,
+//       effect: Effect.Effect<R, E, A>
+//     ): Promise<Exit.Exit<E, A>>
+//   }
+// }
 
 declare module "effect/Option" {
   export interface None<out A> {
