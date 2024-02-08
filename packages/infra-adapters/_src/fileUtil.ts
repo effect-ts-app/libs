@@ -45,7 +45,8 @@ export function tempFile_(
   data: Data,
   options?: Options
 ) {
-  return Effect.sync(() => path.join(os.tmpdir(), folder, `${prefix}-` + crypto.randomUUID()))
+  return Effect
+    .sync(() => path.join(os.tmpdir(), folder, `${prefix}-` + crypto.randomUUID()))
     .flatMap((fp) =>
       Effect
         .tryPromise(() => fs.writeFile(fp, data, options))

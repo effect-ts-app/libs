@@ -4,13 +4,13 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect/platform": "^0.43.9",
-    "@effect/schema": "^0.61.5",
+    "@effect/platform": "^0.43.11",
+    "@effect/schema": "^0.61.7",
     "@effect-app/core": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "effect": "^2.2.3",
+    "effect": "^2.2.5",
     "@fp-ts/optic": "^0.22.0",
     "query-string": "^8.2.0"
   },
