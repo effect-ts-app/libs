@@ -8,6 +8,21 @@
   - @effect-app/prelude@0.145.3
   - @effect-app/vue@0.118.4
 
+## 0.119.0
+
+### Minor Changes
+
+- 0c47b83: update packages
+
+### Patch Changes
+
+- Updated dependencies [0c47b83]
+  - @effect-app/fluent-extensions@0.121.0
+  - @effect-app/prelude@0.146.0
+  - @effect-app/schema@0.180.0
+  - @effect-app/core@0.123.0
+  - @effect-app/vue@0.119.0
+
 ## 0.118.3
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/prelude",
-  "version": "0.145.3",
+  "version": "0.146.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
