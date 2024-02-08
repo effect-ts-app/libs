@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.124.0
+
+### Minor Changes
+
+- c29b6ff: bump
+
 ## 0.123.0
 
 ### Minor Changes

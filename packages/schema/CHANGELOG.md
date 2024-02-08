@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.181.0
+
+### Minor Changes
+
+- c29b6ff: bump
+
+### Patch Changes
+
+- Updated dependencies [c29b6ff]
+  - @effect-app/core@0.124.0
+
 ## 0.180.0
 
 ### Minor Changes
