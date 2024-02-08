@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  date-fns: ^2.29.3
+  date-fns: ^2.30.0
 
 patchedDependencies:
   '@effect/language-service@0.0.19':
@@ -23,9 +23,9 @@ patchedDependencies:
   '@typescript-eslint/scope-manager@6.21.0':
     hash: nrjotwpevdhz7eyb6bwy6orwfq
     path: patches/@typescript-eslint__scope-manager@6.21.0.patch
-  date-fns@2.29.3:
+  date-fns@2.30.0:
     hash: g5hqt5bhnjezqo5vnkpprfkba4
-    path: patches/date-fns@2.29.3.patch
+    path: patches/date-fns@2.30.0.patch
   effect@2.2.5:
     hash: stxvlqvrg45n746jfl6ddh5nqq
     path: patches/effect@2.2.5.patch
@@ -192,8 +192,8 @@ importers:
         specifier: ^3.4.6
         version: 3.4.6(@effect-app/typescript@5.4.0-tsplus.20240124)
       vite:
-        specifier: ^5.0.12
-        version: 5.0.12(@types/node@20.11.16)
+        specifier: ^5.1.0
+        version: 5.1.0(@types/node@20.11.16)
       vitest:
         specifier: ^1.2.2
         version: 1.2.2(@types/node@20.11.16)
@@ -229,8 +229,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
       vite:
-        specifier: ^5.0.12
-        version: 5.0.12(@types/node@20.11.16)
+        specifier: ^5.1.0
+        version: 5.1.0(@types/node@20.11.16)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.9
@@ -373,8 +373,8 @@ importers:
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.5)
       date-fns:
-        specifier: ^2.29.3
-        version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
+        specifier: ^2.30.0
+        version: 2.30.0(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
         specifier: ^2.2.5
         version: 2.2.5(patch_hash=stxvlqvrg45n746jfl6ddh5nqq)
@@ -661,8 +661,8 @@ importers:
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.2.5)
       date-fns:
-        specifier: ^2.29.3
-        version: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
+        specifier: ^2.30.0
+        version: 2.30.0(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
         specifier: ^2.2.5
         version: 2.2.5(patch_hash=stxvlqvrg45n746jfl6ddh5nqq)
@@ -829,8 +829,8 @@ importers:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vite:
-        specifier: ^5.0.12
-        version: 5.0.12(@types/node@20.11.16)
+        specifier: ^5.1.0
+        version: 5.1.0(@types/node@20.11.16)
       vitest:
         specifier: ^1.2.2
         version: 1.2.2(@types/node@20.11.16)
@@ -1274,6 +1274,12 @@ packages:
     dependencies:
       regenerator-runtime: 0.13.11
     dev: true
+
+  /@babel/runtime@7.23.9:
+    resolution: {integrity: sha512-0CX6F+BI2s9dkUqr08KFrAIZgNFj75rdBU/DjCyYLIaV/quFjkk6T+EJ2LkZHyZTbEV4L5p97mNkUsHl2wLFAw==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.14.1
 
   /@babel/template@7.22.15:
     resolution: {integrity: sha512-QPErUVm4uyJa60rkI73qneDacvdvzxshT3kksGqlGWYdOTIUOwJ7RDUL8sGqslY1uXWSL6xMFKEXDS3ox2uF0w==}
@@ -3964,7 +3970,7 @@ packages:
     hasBin: true
     dependencies:
       chalk: 4.1.2
-      date-fns: 2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
+      date-fns: 2.30.0(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       lodash: 4.17.21
       rxjs: 7.8.1
       shell-quote: 1.8.1
@@ -4099,9 +4105,11 @@ packages:
       stream-transform: 2.1.3
     dev: true
 
-  /date-fns@2.29.3(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4):
-    resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
+  /date-fns@2.30.0(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4):
+    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
+    dependencies:
+      '@babel/runtime': 7.23.9
     patched: true
 
   /debug@2.6.9:
@@ -7715,6 +7723,15 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: false
+
+  /postcss@8.4.35:
+    resolution: {integrity: sha512-u5U8qYpBCpN13BsiEB0CbR1Hhh4Gc0zLFuedrHJKMctHCHAGrMdG0PRM/KErzAL3CU6/eckEtmHNB3x6e3c0vA==}
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: 3.3.7
+      picocolors: 1.0.0
+      source-map-js: 1.0.2
 
   /precinct@8.3.1:
     resolution: {integrity: sha512-pVppfMWLp2wF68rwHqBIpPBYY8Kd12lDhk8LVQzOwqllifVR15qNFyod43YLyFpurKRZQKnE7E4pofAagDOm2Q==}
@@ -8105,6 +8122,9 @@ packages:
   /regenerator-runtime@0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
     dev: true
+
+  /regenerator-runtime@0.14.1:
+    resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
 
   /regexp.prototype.flags@1.5.1:
     resolution: {integrity: sha512-sy6TXMN+hnP/wMy+ISxg3krXx7BAtWVO4UouuCN/ziM9UEne0euamVNafDfvC83bRNr95y0V5iijeDQFUNpvrg==}
@@ -9454,7 +9474,7 @@ packages:
       debug: 4.3.4(supports-color@5.5.0)
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.12(@types/node@20.11.16)
+      vite: 5.1.0(@types/node@20.11.16)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -9466,8 +9486,8 @@ packages:
       - terser
     dev: true
 
-  /vite@5.0.12(@types/node@20.11.16):
-    resolution: {integrity: sha512-4hsnEkG3q0N4Tzf1+t6NdN9dg/L3BM+q8SWgbSPnJvrgH2kgdyzfVJwbR1ic69/4uMJJ/3dqDZZE5/WwqW8U1w==}
+  /vite@5.1.0(@types/node@20.11.16):
+    resolution: {integrity: sha512-STmSFzhY4ljuhz14bg9LkMTk3d98IO6DIArnTY6MeBwiD1Za2StcQtz7fzOUnRCqrHSD5+OS2reg4HOz1eoLnw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -9496,7 +9516,7 @@ packages:
     dependencies:
       '@types/node': 20.11.16
       esbuild: 0.19.5
-      postcss: 8.4.33
+      postcss: 8.4.35
       rollup: 4.4.1
     optionalDependencies:
       fsevents: 2.3.3
@@ -9545,7 +9565,7 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.2
-      vite: 5.0.12(@types/node@20.11.16)
+      vite: 5.1.0(@types/node@20.11.16)
       vite-node: 1.2.2(@types/node@20.11.16)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
