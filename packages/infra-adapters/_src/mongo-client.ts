@@ -16,7 +16,7 @@ const makeMongoClient = (url: string, dbName?: string) => withClient(url).map((x
 
 export interface MongoClient extends Effect.Success<ReturnType<typeof makeMongoClient>> {}
 
-export const MongoClient = Tag<MongoClient>()
+export const MongoClient = GenericTag<MongoClient>("@services/MongoClient")
 
 export const MongoClientLive = (mongoUrl: string, dbName?: string) =>
   makeMongoClient(mongoUrl, dbName)

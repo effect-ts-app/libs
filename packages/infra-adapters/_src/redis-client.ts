@@ -15,50 +15,50 @@ export const makeRedisClient = (makeClient: () => Client) =>
 
       function get(key: string) {
         return Effect
-          .async<never, ConnectionException, Option<string>>((res) => {
+          .async<Option<string>, ConnectionException>((res) => {
             client.get(key, (err, v) =>
               err
                 ? res(new ConnectionException(err))
                 : res(Effect.sync(() => Option.fromNullable(v))))
           })
-          .uninterruptible
+          .uninterruptible;
       }
 
       function set(key: string, val: string) {
         return Effect
-          .async<never, ConnectionException, void>((res) => {
+          .async<void, ConnectionException>((res) => {
             client.set(key, val, (err) =>
               err
                 ? res(new ConnectionException(err))
                 : res(Effect.sync(() => void 0)))
           })
-          .uninterruptible
+          .uninterruptible;
       }
 
       function hset(key: string, field: string, value: string) {
         return Effect
-          .async<never, ConnectionException, void>((res) => {
+          .async<void, ConnectionException>((res) => {
             client.hset(key, field, value, (err) =>
               err
                 ? res(new ConnectionException(err))
                 : res(Effect.sync(() => void 0)))
           })
-          .uninterruptible
+          .uninterruptible;
       }
 
       function hget(key: string, field: string) {
         return Effect
-          .async<never, ConnectionException, Option<string>>((res) => {
+          .async<Option<string>, ConnectionException>((res) => {
             client.hget(key, field, (err, v) =>
               err
                 ? res(new ConnectionException(err))
                 : res(Effect.sync(() => Option.fromNullable(v))))
           })
-          .uninterruptible
+          .uninterruptible;
       }
       function hmgetAll(key: string) {
         return Effect
-          .async<never, ConnectionException, Option<{ [key: string]: string }>>(
+          .async<Option<{ [key: string]: string }>, ConnectionException>(
             (res) => {
               client.hgetall(key, (err, v) =>
                 err
@@ -66,7 +66,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
                   : res(Effect.sync(() => Option.fromNullable(v))))
             }
           )
-          .uninterruptible
+          .uninterruptible;
       }
 
       return {
@@ -83,7 +83,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
     .acquireRelease(
       (cl) =>
         Effect
-          .async<never, Error, void>((res) => {
+          .async<void, Error>((res) => {
             cl.client.quit((err) => res(err ? Effect.fail(err) : Effect.unit))
           })
           .uninterruptible
@@ -92,7 +92,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
 
 export interface RedisClient extends Effect.Success<ReturnType<typeof makeRedisClient>> {}
 
-export const RedisClient = Tag<RedisClient>()
+export const RedisClient = GenericTag<RedisClient>("@services/RedisClient")
 
 export const RedisClientLayer = (storageUrl: string) =>
   makeRedisClient(makeRedis(storageUrl))

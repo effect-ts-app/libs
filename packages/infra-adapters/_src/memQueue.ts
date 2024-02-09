@@ -5,7 +5,7 @@ import * as Q from "effect/Queue"
  * @tsplus companion MemQueue.Ops
  */
 export class MemQueue extends TagClass<MemQueue, {
-  getOrCreateQueue: (k: string) => Effect<never, never, Queue<string>>
+  getOrCreateQueue: (k: string) => Effect<Queue<string>>
 }>() {}
 
 /**
