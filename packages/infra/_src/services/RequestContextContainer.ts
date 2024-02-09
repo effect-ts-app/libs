@@ -22,21 +22,17 @@ export class RequestContextContainer extends TagClass<RequestContextContainer, {
           : Effect.sync(() => Option.none)
       )
   }
+  static readonly live = Effect
+    .sync(() => new RequestContext({ name: NonEmptyString255("_root_"), rootId: RequestId("_root_"), locale: "en" }))
+    .andThen(FiberRef.make<RequestContext>)
+    .map((ref) => ({
+      requestContext: ref.get,
+      update: (f: (a: RequestContext) => RequestContext) =>
+        ref.getAndUpdate(f).tap((rc) => Effect.annotateCurrentSpan(rc.spanAttributes)),
+      start: (a: RequestContext) => ref.set(a).andThen(a.restoreStoreId)
+    }))
+    .toLayerScoped(this)
 }
-
-/**
- * @tsplus static RequestContextContainer.Ops live
- */
-export const live = Effect
-  .sync(() => new RequestContext({ name: NonEmptyString255("_root_"), rootId: RequestId("_root_"), locale: "en" }))
-  .andThen(FiberRef.make<RequestContext>)
-  .map((ref) => ({
-    requestContext: ref.get,
-    update: (f: (a: RequestContext) => RequestContext) =>
-      ref.getAndUpdate(f).tap((rc) => Effect.annotateCurrentSpan(rc.spanAttributes)),
-    start: (a: RequestContext) => ref.set(a).andThen(a.restoreStoreId)
-  }))
-  .toLayerScoped(RequestContextContainer)
 
 /** @tsplus static RequestContext.Ops Tag */
 export const RCTag = GenericTag<RequestContext>("@services/RCTag")

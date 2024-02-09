@@ -25,16 +25,13 @@ export class ContextMapContainer extends TagClass<ContextMapContainer, {
           : Effect.sync(() => Option.none)
       )
   }
-}
 
-/**
- * @tsplus static ContextMapContainer.Ops live
- */
-export const live = Effect
-  .sync(() => makeContextMap())
-  .andThen(FiberRef.make<ContextMap>)
-  .map((ref) => new ContextMapContainer({ get: ref.get, start: ContextMap.Make.flatMap((_) => ref.set(_)) }))
-  .toLayerScoped(ContextMapContainer)
+  static readonly live = Effect
+    .sync(() => makeContextMap())
+    .andThen(FiberRef.make<ContextMap>)
+    .map((ref) => new ContextMapContainer({ get: ref.get, start: ContextMap.Make.flatMap((_) => ref.set(_)) }))
+    .toLayerScoped(this)
+}
 
 /** @tsplus static ContextMap.Ops Tag */
 export const RCTag = GenericTag<ContextMap>("@services/RCTag")
