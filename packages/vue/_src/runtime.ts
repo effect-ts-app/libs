@@ -27,7 +27,13 @@ export function makeAppRuntime<R, E, A>(layer: Layer<A, E, R>) {
     const runtime = yield* $(Effect.runtime<A>().scoped.provide(env))
 
     return {
-      runtime,
+      runtime: Object.assign(runtime, {
+        runPromise: Runtime.runPromise(runtime),
+        runPromiseExit: Runtime.runPromiseExit(runtime),
+        runSync: Runtime.runSync(runtime),
+        runSyncExit: Runtime.runSyncExit(runtime),
+        runFork: Runtime.runFork(runtime)
+      }),
       clean: scope.close(Exit.unit)
     }
   })
