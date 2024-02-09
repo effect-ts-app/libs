@@ -3,7 +3,7 @@
 /**
  * @tsplus global
  */
-import { Data } from "effect/Data"
+import { Data } from "@effect-app/core/Data"
 
 /**
  * @tsplus global
@@ -148,7 +148,7 @@ import { Scope } from "effect/Scope"
 /**
  * @tsplus global
  */
-import { Context, Tag } from "effect/Context"
+import { Context, GenericTag, Tag } from "effect/Context"
 
 /**
  * @tsplus global

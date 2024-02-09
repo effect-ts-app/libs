@@ -86,6 +86,16 @@
         "default": "./_cjs/Chunk.cjs"
       }
     },
+    "./Data": {
+      "import": {
+        "types": "./dist/Data.d.ts",
+        "default": "./dist/Data.js"
+      },
+      "require": {
+        "types": "./dist/Data.d.ts",
+        "default": "./_cjs/Data.cjs"
+      }
+    },
     "./Dictionary": {
       "import": {
         "types": "./dist/Dictionary.d.ts",
