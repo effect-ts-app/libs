@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.183.1
+
+### Patch Changes
+
+- d17dc32: fix
+
 ## 0.183.0
 
 ### Minor Changes
