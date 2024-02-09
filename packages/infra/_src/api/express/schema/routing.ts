@@ -14,11 +14,11 @@ export type Request<
 > = REST.ReqRes<any, unknown, ReqA> & {
   method: REST.SupportedMethods
   path: PPath
-  Cookie?: REST.ReqRes<any, Record<string, string>, CookieA>
-  Path?: REST.ReqRes<any, Record<string, string>, PathA>
-  Body?: REST.ReqRes<any, unknown, BodyA>
-  Query?: REST.ReqRes<any, Record<string, string>, QueryA>
-  Headers?: REST.ReqRes<any, Record<string, string>, HeaderA>
+  Cookie?: REST.ReqRes<CookieA, Record<string, string>, any>
+  Path?: REST.ReqRes<PathA, Record<string, string>, any>
+  Body?: REST.ReqRes<BodyA, unknown, any>
+  Query?: REST.ReqRes<QueryA, Record<string, string>, any>
+  Headers?: REST.ReqRes<HeaderA, Record<string, string>, any>
   Tag: Tag<M, M>
 }
 
@@ -34,7 +34,7 @@ export interface RouteRequestHandler<
   PPath extends `/${string}`
 > {
   Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, PPath>
-  Response?: REST.ReqRes<any, unknown, ResA> // | REST.ReqResSchemed<unknown, ResA>
+  Response?: REST.ReqRes<ResA, unknown, any> // | REST.ReqResSchemed<unknown, ResA>
   ResponseOpenApi?: any
 }
 
@@ -121,7 +121,7 @@ export function makeRouteDescriptor<
 //   e: RouteDescriptor<any, any, any, any, any, any, ResA, any>
 // ) {
 //   const jsonSchema_ = OpenApi.for
-//   const jsonSchema = <E, A>(r: REST.ReqRes<any, E, A>) => jsonSchema_(r)
+//   const jsonSchema = <E, A>(r: REST.ReqRes<A, E, any>) => jsonSchema_(r)
 //   const { Request: Req, Response: Res_, ResponseOpenApi } = e.handler
 //   const r = ResponseOpenApi ?? Res_
 //   const Res = r ? S.extractSchema(r) : S.Void

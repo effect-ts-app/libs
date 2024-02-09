@@ -149,9 +149,9 @@ export function fetchApi3S<RequestA, RequestE, ResponseE = unknown, ResponseA = 
   Response
 }: {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Request: REST.RequestSchemed<RequestE, RequestA>
+  Request: REST.RequestSchemed<RequestA, RequestE>
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Response: REST.ReqRes<any, ResponseE, ResponseA>
+  Response: REST.ReqRes<ResponseA, ResponseE, any>
 }) {
   return fetchApi2S(Request, Response)(
     Request.method,
@@ -164,15 +164,16 @@ export function fetchApi3SE<RequestA, RequestE, ResponseE = unknown, ResponseA =
   Response
 }: {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Request: REST.RequestSchemed<RequestE, RequestA>
+  Request: REST.RequestSchemed<RequestA, RequestE>
   // eslint-disable-next-line @typescript-eslint/ban-types
-  Response: REST.ReqRes<any, ResponseE, ResponseA>
+  Response: REST.ReqRes<ResponseA, ResponseE, any>
 }) {
   const a = fetchApi2S(Request, Response)(
     Request.method,
     new Path(Request.path)
   )
-  return (req: RequestA) => a(req).flatMap(mapResponseM((_) => Response.encode(_)))
+  const encode = S.encode(Response)
+  return (req: RequestA) => a(req).flatMap(mapResponseM((_) => encode(_)))
 }
 
 export function makePathWithQuery(
@@ -227,19 +228,23 @@ export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<A, E, R>) {
       headers: Effect.sync(() => r.headers),
       status: Effect.sync(() => r.status)
     })
-  };
+  }
 }
 export type FetchResponse<T> = { body: T; headers: Headers; status: number }
 
 export const EmptyResponse = Object.freeze({ body: null, headers: {}, status: 404 })
 export const EmptyResponseM = Effect.sync(() => EmptyResponse)
 const EmptyResponseMThunk_ = constant(EmptyResponseM)
-export function EmptyResponseMThunk<T>(): Effect<Readonly<{
-  body: null | T
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  headers: {}
-  status: 404
-}>, never, unknown> {
+export function EmptyResponseMThunk<T>(): Effect<
+  Readonly<{
+    body: null | T
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    headers: {}
+    status: 404
+  }>,
+  never,
+  unknown
+> {
   return EmptyResponseMThunk_()
 }
 

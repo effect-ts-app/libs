@@ -7,7 +7,7 @@ export class RequestContextParent extends TaggedClass<
 >()("RequestContext", {
   id: RequestId,
   name: NonEmptyString255,
-  userProfile: struct({ sub: UserProfileId }).optional(),
+  userProfile: S.optional(struct({ sub: UserProfileId })),
   locale: literal("en", "de"),
   createdAt: S.Date.withDefault
 }) {}
@@ -23,8 +23,8 @@ export class RequestContext extends TaggedClass<
   ...RequestContextParent.omit("id"),
   id: RequestId.withDefault,
   rootId: RequestId,
-  parent: RequestContextParent.optional(),
-  namespace: NonEmptyString255.optional()
+  parent: S.optional(RequestContextParent),
+  namespace: S.optional(NonEmptyString255)
   // ...RequestContextParent.omit("id").extend({
   //   id: RequestId.withDefault,
   //   rootId: RequestId,

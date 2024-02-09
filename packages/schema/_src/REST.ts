@@ -762,21 +762,21 @@ export function makeRequest<
 //   }
 // }
 
-export type ReqRes<R, From, To> = S.Schema<To, From, R>
+export type ReqRes<To, From, R> = S.Schema<To, From, R>
 // export type ReqResSchemed<E, A> = {
 //   new(...args: any[]): any
 //   encodeSync: ReturnType<typeof P.decodeUnknownSync>
 //   Model: ReqRes<any, E, A>
 // }
 
-export type RequestSchemed<E, A> = ReqRes<any, E, A> & { // ReqResSchemed<E, A> & {
+export type RequestSchemed<A, E> = ReqRes<A, E, any> & { // ReqResSchemed<E, A> & {
   method: Methods.Rest
   path: string
 }
 
 /** @deprecated No-Op */
-export function extractSchema<ResE, ResA>(
-  Res: ReqRes<any, ResE, ResA> // | ReqResSchemed<ResE, ResA>
+export function extractSchema<ResA, ResE>(
+  Res: ReqRes<ResA, ResE, any> // | ReqResSchemed<ResE, ResA>
 ) {
   return Res
 }

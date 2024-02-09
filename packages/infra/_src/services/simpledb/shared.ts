@@ -34,7 +34,8 @@ export class SerializedDBRecord extends S.Class<SerializedDBRecord>()({
 }) {}
 
 // unknown -> string -> SDB?
-export function makeSerialisedDBRecord(s: Schema<never, any>) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function makeSerialisedDBRecord(s: Schema<any>) {
   return S.struct({
     version: S.number,
     timestamp: S.Date,

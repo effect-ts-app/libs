@@ -785,9 +785,12 @@ importers:
       '@effect-app/vue':
         specifier: workspace:*
         version: 'link:'
+      '@effect/platform':
+        specifier: ^0.29.0
+        version: 0.29.1(@effect/schema@0.62.0)(effect@2.3.0)
       '@effect/platform-browser':
         specifier: ^0.29.0
-        version: 0.29.0(@effect/platform@0.44.0)(effect@2.3.0)
+        version: 0.29.0(@effect/platform@0.29.1)(effect@2.3.0)
       '@effect/schema':
         specifier: ^0.62.0
         version: 0.62.0(patch_hash=2wjp4ycyvsquox4tyd7umjgwgi)(effect@2.3.0)(fast-check@3.15.1)
@@ -1655,14 +1658,27 @@ packages:
     dev: true
     patched: true
 
-  /@effect/platform-browser@0.29.0(@effect/platform@0.44.0)(effect@2.3.0):
+  /@effect/platform-browser@0.29.0(@effect/platform@0.29.1)(effect@2.3.0):
     resolution: {integrity: sha512-p9Pcc41tzMbYRxGWvCoZFAxIfPve+lY+gr6n4u66lbyHx9Ph+xB7WkLwjTabJVCRaMtEefugawDHWqeooTUMwQ==}
     peerDependencies:
       '@effect/platform': ^0.44.0
       effect: ^2.3.0
     dependencies:
-      '@effect/platform': 0.44.0(@effect/schema@0.62.0)(effect@2.3.0)
+      '@effect/platform': 0.29.1(@effect/schema@0.62.0)(effect@2.3.0)
       effect: 2.3.0(patch_hash=ftlmyxzqduootop6bbmblgmfby)
+    dev: false
+
+  /@effect/platform@0.29.1(@effect/schema@0.62.0)(effect@2.3.0):
+    resolution: {integrity: sha512-54NyT02Zn7DdIepOROT25hpW8P1qNkKlzDZHWn9vI2pXr8KvlnaBwzxUjrsQ76FZLy/22kXufUKltWcLMkHxPg==}
+    peerDependencies:
+      '@effect/schema': ^0.47.3
+      effect: 2.0.0-next.54
+    dependencies:
+      '@effect/schema': 0.62.0(patch_hash=2wjp4ycyvsquox4tyd7umjgwgi)(effect@2.3.0)(fast-check@3.15.1)
+      effect: 2.3.0(patch_hash=ftlmyxzqduootop6bbmblgmfby)
+      find-my-way: 7.7.0
+      multipasta: 0.1.21
+      path-browserify: 1.0.1
     dev: false
 
   /@effect/platform@0.44.0(@effect/schema@0.62.0)(effect@2.3.0):
@@ -5286,6 +5302,15 @@ packages:
       fast-querystring: 1.1.2
     dev: false
 
+  /find-my-way@7.7.0:
+    resolution: {integrity: sha512-+SrHpvQ52Q6W9f3wJoJBbAQULJuNEEQwBvlvYwACDhBTLOTMiQ0HYWh4+vC3OivGP2ENcTI1oKlFA2OepJNjhQ==}
+    engines: {node: '>=14'}
+    dependencies:
+      fast-deep-equal: 3.1.3
+      fast-querystring: 1.1.2
+      safe-regex2: 2.0.0
+    dev: false
+
   /find-root@1.1.0:
     resolution: {integrity: sha512-NKfW6bec6GfKc0SGx1e07QZY9PE99u0Bft/0rzSD5k3sO/vwkVUpDUKVm5Gpp5Ue3YfShPFTX2070tDs5kB9Ng==}
     dev: true
@@ -8231,6 +8256,11 @@ packages:
       signal-exit: 3.0.7
     dev: true
 
+  /ret@0.2.2:
+    resolution: {integrity: sha512-M0b3YWQs7R3Z917WRQy1HHA7Ba7D8hvZg6UE5mLykJxQVE2ju0IXbGlaHPPlkY+WN7wFP+wUMXmBFA0aV6vYGQ==}
+    engines: {node: '>=4'}
+    dev: false
+
   /retry@0.12.0:
     resolution: {integrity: sha512-9LkiTwjUh6rT555DtE9rTX+BKByPfrMzEAtnlEtdEwr3Nkffwiihqe2bWADg+OQRjt9gl6ICdmB/ZFDCGAtSow==}
     engines: {node: '>= 4'}
@@ -8318,6 +8348,12 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.2.1
       is-regex: 1.1.4
+
+  /safe-regex2@2.0.0:
+    resolution: {integrity: sha512-PaUSFsUaNNuKwkBijoAPHAK6/eM6VirvyPWlZ7BAQy4D+hCvh4B6lIG+nPdhbFfIbP+gTGBcrdsOaUs0F+ZBOQ==}
+    dependencies:
+      ret: 0.2.2
+    dev: false
 
   /safe-stable-stringify@2.4.1:
     resolution: {integrity: sha512-dVHE6bMtS/bnL2mwualjc6IxEv1F+OCUpA46pKUj6F8uDbUM0jCCulPqRNPSnWwGNKx5etqMjZYdXtrm5KJZGA==}

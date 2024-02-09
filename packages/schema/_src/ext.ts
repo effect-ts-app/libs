@@ -52,7 +52,7 @@ export const defaultSet = <S extends Schema<ReadonlySet<any>, any, any>>(s: S) =
 /**
  * @tsplus getter effect/schema/Schema withDefaults
  */
-export const withDefaults = <Self extends S.Schema<any>>(s: Self) => {
+export const withDefaults = <Self extends S.Schema<any, any, never>>(s: Self) => {
   const a = Object.assign(S.decodeSync(s) as WithDefaults<Self>, s)
   Object.setPrototypeOf(a, Object.getPrototypeOf(s))
   return a
@@ -64,7 +64,7 @@ export const literal = <Literals extends ReadonlyArray<AST.LiteralValue>>(
   ...literals: Literals
 ) => Object.assign(S.literal(...literals) as Schema<Literals[number]>, { literals })
 
-export type WithDefaults<Self extends S.Schema<any, any>> = (
+export type WithDefaults<Self extends S.Schema<any, any, never>> = (
   i: S.Schema.From<Self>,
   options?: AST.ParseOptions
 ) => S.Schema.To<Self>

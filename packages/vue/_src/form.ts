@@ -21,7 +21,7 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
 }
 
 export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, To extends Record<PropertyKey, any>>(
-  fields: Schema<never, From, To>
+  fields: Schema<To, From, never>
 ) {
   const ast = "struct" in fields ? (fields.struct as typeof fields).ast : fields.ast
   // // todo: or look at from?
@@ -76,9 +76,9 @@ function buildFieldInfo(
   property: S.AST.PropertySignature
 ): FieldInfo<any> {
   const propertyKey = property.name
-  const schema = S.make<never, unknown, unknown>(property.type)
+  const schema = S.make<unknown, unknown, never>(property.type)
   const metadata = getMetadataFromSchema(property.type) // TODO
-  const parse = schema.decodeUnknownEither
+  const parse = S.decodeUnknownEither(schema)
 
   const nullable = S.AST.isUnion(property.type) && property.type.types.includes(S.null.ast)
   const realSelf = nullable && S.AST.isUnion(property.type)
@@ -202,15 +202,15 @@ export const buildFormFromSchema = <
   OnSubmitA
 >(
   s: Schema<
-    never,
+    To,
     From,
-    To
+    never
   >,
   state: Ref<From>,
   onSubmit: (a: To) => Promise<OnSubmitA>
 ) => {
   const fields = buildFieldInfoFromFields(s)
-  const parse = s.decodeSync
+  const parse = S.decodeSync(s)
   const isDirty = ref(false)
   const isValid = ref(true)
 

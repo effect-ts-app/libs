@@ -5,6 +5,7 @@
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
   "dependencies": {
+    "@effect/platform": "^0.29.0",
     "@effect/platform-browser": "^0.29.0",
     "@effect/schema": "^0.62.0",
     "@effect-app/core": "workspace:*",

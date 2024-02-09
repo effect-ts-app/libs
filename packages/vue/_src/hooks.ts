@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Done, Initial, Loading } from "@effect-app/prelude/client"
 import type { ApiConfig, FetchResponse } from "@effect-app/prelude/client"
+import type * as HttpClient from "@effect/platform/Http/Client"
 import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
 import { FiberFailureCauseId, isFiberFailure } from "effect/Runtime"
@@ -54,7 +55,7 @@ function swrToQuery<E, A>(
 }
 
 export function useMutate<E, A>(
-  self: { handler: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>; mapPath: string }
+  self: { handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>; mapPath: string }
 ) {
   const fn = () =>
     run.value(self.handler).then((_) => _.body).catch((_) => {
@@ -67,7 +68,7 @@ export function useMutate<E, A>(
 
 export function useMutateWithArg<Arg, E, A>(
   self: {
-    handler: (arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>
+    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
     mapPath: (arg: Arg) => string
   }
 ) {
@@ -84,14 +85,14 @@ export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
 
 export function useSafeQuery<E, A>(
   self: {
-    handler: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>
+    handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
     mapPath: string
   },
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
 ): readonly [ComputedRef<QueryResult<E, A>>, ComputedRef<A | undefined>, () => Promise<void>, IResponse<A, E>]
 export function useSafeQuery<Arg, E, A>(
   self: {
-    handler: (arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>
+    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
     mapPath: (arg: Arg) => string
   },
   arg: Arg | WatchSource<Arg>,
@@ -99,10 +100,10 @@ export function useSafeQuery<Arg, E, A>(
 ): readonly [ComputedRef<QueryResult<E, A>>, ComputedRef<A | undefined>, () => Promise<void>, IResponse<A, E>]
 export function useSafeQuery(
   self: any, // {
-  //   handler: (arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>
+  //   handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
   //   mapPath: (arg: Arg) => string
   // } | {
-  //   handler: Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>
+  //   handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
   //   mapPath: string
   // },
   arg?: any, // Arg | WatchSource<Arg> | swrv.IConfig<A, fetcherFn<A>> | undefined,
@@ -114,7 +115,7 @@ export function useSafeQuery(
 }
 
 export function useSafeQueryWithArg_<Arg, E, A>(
-  self: (arg: Arg) => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>,
+  self: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>,
   mapPath: (arg: Arg) => string,
   arg: Arg | WatchSource<Arg>,
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
@@ -132,7 +133,7 @@ export function useSafeQueryWithArg_<Arg, E, A>(
 
 export function useSafeQuery_<E, A>(
   key: string | WatchSource<string>,
-  self: () => Effect<ApiConfig | HttpClient.Default, E, FetchResponse<A>>,
+  self: () => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>,
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
 ) {
   // const [result, latestSuccess, execute] = make(self)
@@ -192,7 +193,7 @@ export function useSafeQuery_<E, A>(
   return tuple(result, latestSuccess, () => swr.mutate(), swr)
 }
 
-export function make<R, E, A>(self: Effect<R, E, FetchResponse<A>>) {
+export function make<R, E, A>(self: Effect<FetchResponse<A>, E, R>) {
   const result = shallowRef(new Initial() as QueryResult<E, A>)
 
   const execute = Effect
@@ -243,14 +244,14 @@ export type MutationResult<E, A> = MutationInitial | MutationLoading | MutationS
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
 export const useMutation: {
-  <I, E, A>(self: { handler: (i: I) => Effect<ApiConfig | HttpClient.Default, E, A> }): readonly [
+  <I, E, A>(self: { handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.Client.Default> }): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
       i: I,
       abortSignal?: AbortSignal
     ) => Promise<Either.Either<E, A>>
   ]
-  <E, A>(self: { handler: Effect<ApiConfig | HttpClient.Default, E, A> }): readonly [
+  <E, A>(self: { handler: Effect<A, E, ApiConfig | HttpClient.Client.Default> }): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
       abortSignal?: AbortSignal
@@ -258,12 +259,14 @@ export const useMutation: {
   ]
 } = <I, E, A>(
   self: {
-    handler: ((i: I) => Effect<ApiConfig | HttpClient.Default, E, A>) | Effect<ApiConfig | HttpClient.Default, E, A>
+    handler:
+      | ((i: I) => Effect<A, E, ApiConfig | HttpClient.Client.Default>)
+      | Effect<A, E, ApiConfig | HttpClient.Client.Default>
   }
 ) => {
   const state: Ref<MutationResult<E, A>> = ref<MutationResult<E, A>>({ _tag: "Initial" }) as any
 
-  function handleExit(exit: Exit<E, A>): Effect<never, never, Either.Either<E, A>> {
+  function handleExit(exit: Exit<A, E>): Effect<Either.Either<E, A>, never, never> {
     return Effect.sync(() => {
       if (exit.isSuccess()) {
         state.value = { _tag: "Success", data: exit.value }
@@ -289,7 +292,7 @@ export const useMutation: {
   }
 
   const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
-    let effect: Effect<ApiConfig | HttpClient.Default, E, A>
+    let effect: Effect<A, E, ApiConfig | HttpClient.Client.Default>
     let abortSignal: AbortSignal | undefined
     if (Effect.isEffect(self.handler)) {
       effect = self.handler as any
