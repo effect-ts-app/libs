@@ -67,9 +67,9 @@ export const replaceIfDefined = lazyGetter(<S, A>(l: Lens<S, A>) => {
 export const modifyM = lazyGetter(<S, A>(l: Lens<S, A>) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const f: {
-    <R, E>(s: S, f: (a: A) => Effect<R, E, A>): Effect<R, E, S>
-    <R, E>(f: (a: A) => Effect<R, E, A>): (s: S) => Effect<R, E, S>
-  } = dual(2, <R, E>(a: S, mod: (b: A) => Effect<R, E, A>) =>
+    <R, E>(s: S, f: (a: A) => Effect<A, E, R>): Effect<S, E, R>
+    <R, E>(f: (a: A) => Effect<A, E, R>): (s: S) => Effect<S, E, R>
+  } = dual(2, <R, E>(a: S, mod: (b: A) => Effect<A, E, R>) =>
     Effect.gen(function*($) {
       const b = yield* $(mod(l.get(a)))
       return l.replace(b)(a)
@@ -85,14 +85,14 @@ export const modify2M = lazyGetter(<S, A>(l: Lens<S, A>) => {
   const f: {
     <R, E, Evt extends readonly any[]>(
       s: S,
-      f: (a: A) => Effect<R, E, readonly [A, ...Evt]>
-    ): Effect<R, E, readonly [S, ...Evt]>
+      f: (a: A) => Effect<readonly [A, ...Evt], E, R>
+    ): Effect<readonly [S, ...Evt], E, R>
     <R, E, Evt extends readonly any[]>(
-      f: (a: A) => Effect<R, E, readonly [A, ...Evt]>
-    ): (s: S) => Effect<R, E, readonly [A, ...Evt]>
+      f: (a: A) => Effect<readonly [A, ...Evt], E, R>
+    ): (s: S) => Effect<readonly [A, ...Evt], E, R>
   } = dual(
     2,
-    <R, E, Evt extends readonly any[]>(a: S, mod: (b: A) => Effect<R, E, readonly [A, ...Evt]>) =>
+    <R, E, Evt extends readonly any[]>(a: S, mod: (b: A) => Effect<readonly [A, ...Evt], E, R>) =>
       Effect.gen(function*($) {
         const [b, evt] = yield* $(mod(l.get(a)))
         return [l.replace(b)(a), evt] as const
