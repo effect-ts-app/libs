@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.122.6
+
+### Patch Changes
+
+- 92601a5: add runtime ext
+- Updated dependencies [92601a5]
+  - @effect-app/vue@0.122.6
+
 ## 0.122.5
 
 ### Patch Changes
