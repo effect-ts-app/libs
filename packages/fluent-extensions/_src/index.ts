@@ -31,13 +31,13 @@ declare module "effect/Effect" {
     tap<A, X, E, R>(
       this: Effect<A, E, R>,
       f: (a: NoInfer<A>) => X
-    ): [X] extends [Effect<infer _A1, infer E1, infer R1>] ? Effect<R | R1, E | E1, A>
+    ): [X] extends [Effect<infer _A1, infer E1, infer R1>] ? Effect<A, E | E1, R | R1>
       : [X] extends [Promise<infer _A1>] ? Effect<A, Cause.UnknownException | E, R>
       : Effect<A, E, R>
     tap<A, X, E, R>(
       this: Effect<A, E, R>,
       f: X
-    ): [X] extends [Effect<infer _A1, infer E1, infer R1>] ? Effect<R | R1, E | E1, A>
+    ): [X] extends [Effect<infer _A1, infer E1, infer R1>] ? Effect<A, E | E1, R | R1>
       : [X] extends [Promise<infer _A1>] ? Effect<A, Cause.UnknownException | E, R>
       : Effect<A, E, R>
   }
@@ -61,13 +61,13 @@ declare module "effect/Cause" {
     tap<A, X, E, R>(
       this: Effect.Effect<A, E, R>,
       f: (a: NoInfer<A>) => X
-    ): [X] extends [Effect.Effect<infer _A1, infer E1, infer R1>] ? Effect.Effect<R | R1, E | E1, A>
+    ): [X] extends [Effect.Effect<infer _A1, infer E1, infer R1>] ? Effect.Effect<A, E | E1, R | R1>
       : [X] extends [Promise<infer _A1>] ? Effect.Effect<R, UnknownException | E, A>
       : Effect.Effect<A, E, R>
     tap<A, X, E, R>(
       this: Effect.Effect<A, E, R>,
       f: X
-    ): [X] extends [Effect.Effect<infer _A1, infer E1, infer R1>] ? Effect.Effect<R | R1, E | E1, A>
+    ): [X] extends [Effect.Effect<infer _A1, infer E1, infer R1>] ? Effect.Effect<A, E | E1, R | R1>
       : [X] extends [Promise<infer _A1>] ? Effect.Effect<R, UnknownException | E, A>
       : Effect.Effect<A, E, R>
   }
