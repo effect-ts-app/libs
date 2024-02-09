@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.125.0
+
+### Minor Changes
+
+- update to latest Effect "minor"
+
 ## 0.124.0
 
 ### Minor Changes
