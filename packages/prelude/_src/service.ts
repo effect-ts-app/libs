@@ -39,9 +39,12 @@ export function make<T extends ServiceTagged<any>, I = T>(_: Tag<I, T>, t: Omit<
 export const TagTypeId: TagTypeIdOriginal = Symbol.for("effect/Context/Tag") as unknown as TagTypeIdOriginal
 export type TagTypeId = typeof TagTypeId
 
-export function assignTag<Id, Service = Id>(key?: unknown) {
+let i = 0
+const randomId = () => "unknown-service-" + i++
+
+export function assignTag<Id, Service = Id>(key?: string) {
   return <S extends object>(cls: S): S & Tag<Id, Service> => {
-    const tag = GenericTag<Id, Service>(key)
+    const tag = GenericTag<Id, Service>(key ?? randomId())
     const t = Object.assign(cls, Object.getPrototypeOf(tag), tag)
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 4 // TODO
@@ -55,10 +58,10 @@ export function assignTag<Id, Service = Id>(key?: unknown) {
       }
     })
     return t
-  };
+  }
 }
 
-export function TagClass<Id, ServiceImpl, Service = Id>(key?: unknown) {
+export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
   const c: { new(service: ServiceImpl): Readonly<ServiceImpl> } = class {
     constructor(service: ServiceImpl) {
       Object.assign(this, service)
@@ -72,7 +75,7 @@ export function TagClass<Id, ServiceImpl, Service = Id>(key?: unknown) {
 export const TagClassMake = <Id, Service = Id>() =>
 <ServiceImpl, R, E>(
   make: Effect<ServiceImpl, E, R>,
-  key?: unknown
+  key?: string
 ) => {
   const c: {
     new(service: ServiceImpl): Readonly<ServiceImpl>
@@ -96,7 +99,7 @@ export const TagClassMake = <Id, Service = Id>() =>
   return assignTag<Id, Service>(key)(c)
 }
 
-export function TagClassLegacy<Id, Service = Id>(key?: unknown) {
+export function TagClassLegacy<Id, Service = Id>(key?: string) {
   abstract class TagClassLegacy {}
 
   return assignTag<Id, Service>(key)(TagClassLegacy)
