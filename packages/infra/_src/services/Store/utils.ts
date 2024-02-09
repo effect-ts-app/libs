@@ -9,11 +9,10 @@ import { codeFilter3_ } from "./codeFilter.js"
 
 export const makeETag = <E extends PersistenceModelType<Id>, Id extends string>(
   { _etag, ...e }: E
-): E =>
-  (({
-    ...e,
-    _etag: objectHash(e)
-  }) as any)
+): E => (({
+  ...e,
+  _etag: objectHash(e)
+}) as any)
 export const makeUpdateETag =
   (type: string) => <E extends PersistenceModelType<Id>, Id extends string>(e: E, current: Option<E>) =>
     Effect.gen(function*($) {

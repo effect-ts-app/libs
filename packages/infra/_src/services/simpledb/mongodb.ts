@@ -102,5 +102,5 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         return { version, data: record } as CachedRecord<A>
       })
     }
-  };
+  }
 }

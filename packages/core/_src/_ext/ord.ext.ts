@@ -22,7 +22,7 @@ export function uniqArray<A>(E: Equivalence<A>) {
     const length = self.length
     let i = 0
     for (; i < length; i = i + 1) {
-      const a = self[i]!
+      const a = self[i]
       if (!includes(result, a)) {
         result.push(a)
       }
@@ -34,7 +34,7 @@ export function uniqArray<A>(E: Equivalence<A>) {
 function arrayIncludes<A>(E: Equivalence<A>) {
   return (array: Array<A>, value: A): boolean => {
     for (let i = 0; i < array.length; i = i + 1) {
-      const element = array[i]!
+      const element = array[i]
       if (E(element, value)) {
         return true
       }
@@ -73,7 +73,7 @@ export function uniq<A>(E: Equivalence<A>) {
 export function elem<A>(E: Equivalence<A>, value: A) {
   return (self: Chunk<A>): boolean => {
     for (let i = 0; i < self.length; i++) {
-      if (E(self.unsafeGet(i)!, value)) {
+      if (E(self.unsafeGet(i), value)) {
         return true
       }
     }

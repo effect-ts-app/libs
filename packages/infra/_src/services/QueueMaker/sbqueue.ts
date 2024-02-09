@@ -111,8 +111,8 @@ export function makeServiceBusQueue<
               .forkDaemonReportQueue
           )
         })
-    } satisfies QueueBase<Evt, DrainEvt>;
-  });
+    } satisfies QueueBase<Evt, DrainEvt>
+  })
 }
 
 /**

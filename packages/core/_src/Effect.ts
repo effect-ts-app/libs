@@ -121,7 +121,7 @@ export function ifDiff_<I, R, E, A>(
 }
 
 export function ifDiff<I, R, E, A>(n: I, orig: I) {
-  return (f: (i: I) => Effect<A, E, R>) => ifDiff_(n, orig, f);
+  return (f: (i: I) => Effect<A, E, R>) => ifDiff_(n, orig, f)
 }
 
 // NOTE: await extension doesnt work via tsplus somehow
@@ -144,7 +144,7 @@ export function modifyWithPermitWithEffect<A>(ref: Ref<A>, semaphore: Semaphore)
         .flatMap(mod)
         .tap(([, _]) => ref.set(_))
         .map(([_]) => _)
-    );
+    )
 }
 
 /**

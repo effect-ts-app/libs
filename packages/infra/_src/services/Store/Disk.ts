@@ -142,8 +142,8 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
           }
           return s
         })
-    };
-  });
+    }
+  })
 }
 
 export function DiskStoreLayer(config: StorageConfig, dir: string) {

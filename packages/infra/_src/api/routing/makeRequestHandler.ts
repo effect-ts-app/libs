@@ -95,13 +95,17 @@ export function makeRequestHandler<
     r2: Effect<HttpServerResponse, ValidationError | ResE | MiddlewareE, R>
   ) => Effect<HttpServerResponse, never, RErr | R>,
   middlewareLayer?: Layer<PR, MiddlewareE, R2>
-): Effect<HttpServerResponse, HttpRequestError, | HttpRouteContext
-| HttpServerRequest
-| RequestContextContainer
-| ContextMapContainer
-| RErr
-| Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>
-| R2> {
+): Effect<
+  HttpServerResponse,
+  HttpRequestError,
+  | HttpRouteContext
+  | HttpServerRequest
+  | RequestContextContainer
+  | ContextMapContainer
+  | RErr
+  | Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>
+  | R2
+> {
   const { Request, Response, h: handle } = handler
 
   const response: REST.ReqRes<any, any, any> = Response ? Response : Void
@@ -154,13 +158,15 @@ export function makeRequestHandler<
           .annotateLogs({
             method: req.method,
             path: req.originalUrl,
-            ...(settings.verbose ? {
+            ...(settings.verbose
+              ? {
                 reqPath: pars.params.$$.pretty,
                 reqQuery: pars.query.$$.pretty,
                 reqBody: pretty(pars.body),
                 reqCookies: pretty(pars.cookies),
                 reqHeaders: pretty(pars.headers)
-              } : undefined)
+              }
+              : undefined)
           })
           .andThen(
             Effect.suspend(() => {
@@ -251,9 +257,11 @@ export function makeRequestHandler<
                 method: req.method,
                 path: req.originalUrl,
                 statusCode: res.status.toString(),
-                ...(settings.verbose ? {
+                ...(settings.verbose
+                  ? {
                     resHeaders: pretty(res.headers)
-                  } : undefined)
+                  }
+                  : undefined)
               })
           )
 
@@ -265,5 +273,5 @@ export function makeRequestHandler<
           handler.name
         )
       })
-    );
+    )
 }

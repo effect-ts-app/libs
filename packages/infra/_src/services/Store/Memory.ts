@@ -134,7 +134,8 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
           }),
       batchSet: (items: readonly [PM, ...PM[]]) =>
         pipe(
-          Effect.sync(() => items)
+          Effect
+            .sync(() => items)
             // align with CosmosDB
             .filterOrDieMessage((_) => _.length <= 100, "BatchSet: a batch may not exceed 100 items")
             .andThen(batchSet)

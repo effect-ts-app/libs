@@ -433,8 +433,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
           }
           return s
         })
-    };
-  });
+    }
+  })
 }
 
 export function CosmosStoreLayer(cfg: StorageConfig) {

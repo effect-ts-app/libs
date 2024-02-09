@@ -164,10 +164,20 @@ export function makeRepo<
               (S.make(_._tag === "Transform" ? _.from : _) as unknown as Schema<T, From>)
                 .pipe(S.pick("id"))
             ))
-            : _.ast._tag === "Transform"
-            ? (S.make(_.ast.from) as unknown as Schema<T, From>)
-              .pipe(S.pick("id"))
-            : _.pipe(S.pick("id"))
+            : _
+                .ast
+                ._tag === "Transform"
+            ? (S
+              .make(
+                _
+                  .ast
+                  .from
+              ) as unknown as Schema<T, From>)
+              .pipe(S
+                .pick("id"))
+            : _
+              .pipe(S
+                .pick("id"))
         )
         const encodeId = flow(i.encode, Effect.provide(rctx))
         function findE(_id: T["id"]) {
@@ -269,7 +279,7 @@ export function makeRepo<
         return r
       })
         // .withSpan("Repository.make [effect-app/infra]", { attributes: { "repository.model_name": name } })
-        .withLogSpan("Repository.make: " + name);
+        .withLogSpan("Repository.make: " + name)
     }
 
     return {
@@ -277,7 +287,7 @@ export function makeRepo<
       where,
       query: QueryBuilder.make<PM>()
     }
-  };
+  }
 }
 
 /**
@@ -388,7 +398,7 @@ export function makeStore<
     }
 
     return makeStore
-  };
+  }
 }
 
 export interface Repos<
@@ -476,7 +486,7 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
     return assignTag<Service>()(Cls) as any
-  };
+  }
 }
 
 export const RepositoryDefaultImpl = <Service>() => {
@@ -523,5 +533,5 @@ export const RepositoryDefaultImpl = <Service>() => {
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
     return assignTag<Service>()(Cls) as any // impl is missing, but its marked protected
-  };
+  }
 }

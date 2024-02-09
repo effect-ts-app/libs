@@ -424,7 +424,7 @@ export function withHeaders(
             ...headers
           })(r)
         )
-      );
+      )
 }
 
 export function withPathHeaders(

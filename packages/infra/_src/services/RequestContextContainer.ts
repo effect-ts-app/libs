@@ -49,7 +49,8 @@ export const spanAttributes = (ctx: RequestContext) => ({
   "request.name": ctx.name,
   "request.locale": ctx.locale,
   "request.namespace": ctx.namespace,
-  ...(ctx.userProfile?.sub ? {
+  ...(ctx.userProfile?.sub
+    ? {
       "request.user.sub": ctx
         .userProfile
         .sub,
@@ -57,5 +58,6 @@ export const spanAttributes = (ctx: RequestContext) => ({
           .userProfile
         ? ctx.userProfile.roles
         : undefined
-    } : {})
+    }
+    : {})
 })

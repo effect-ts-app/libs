@@ -28,8 +28,11 @@ export function reportNonInterruptedFailure(context?: Record<string, unknown>) {
     inp
       .exit
       .flatMap((result) =>
-        result.match({ onFailure: (cause) => report(cause).map(() => result), onSuccess: () => Effect.sync(() => result) })
-      );
+        result.match({
+          onFailure: (cause) => report(cause).map(() => result),
+          onSuccess: () => Effect.sync(() => result)
+        })
+      )
 }
 
 export function reportNonInterruptedFailureCause(context?: Record<string, unknown>) {
@@ -38,5 +41,5 @@ export function reportNonInterruptedFailureCause(context?: Record<string, unknow
       return (cause as Cause<never>).failCause
     }
     return reportQueueError(cause, context)
-  };
+  }
 }

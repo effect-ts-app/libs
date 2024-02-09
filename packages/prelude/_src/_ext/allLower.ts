@@ -40,7 +40,7 @@ export function allLower_<T extends Record<string, Tag<any, any> | Effect<any, a
       return prev
     }, {} as any),
     { concurrency: "inherit" }
-  ) as any as Effect<LowerServices<T>, ValuesE<T>, ValuesR<T>>;
+  ) as any as Effect<LowerServices<T>, ValuesE<T>, ValuesR<T>>
 }
 
 /**

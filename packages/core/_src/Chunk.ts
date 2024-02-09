@@ -24,7 +24,7 @@ export function findFirstMap<A, B>(
     const ass = as.toReadonlyArray
     const len = ass.length
     for (let i = 0; i < len; i++) {
-      const v = f(ass[i]!)
+      const v = f(ass[i])
       if (v.isSome()) {
         return v
       }
@@ -70,7 +70,7 @@ export function uniq<A>(E: Equivalence<A>) {
 export function elem<A>(E: Equivalence<A>, value: A) {
   return (self: Chunk.Chunk<A>): boolean => {
     for (let i = 0; i < self.length; i++) {
-      if (E(self.unsafeGet(i)!, value)) {
+      if (E(self.unsafeGet(i), value)) {
         return true
       }
     }

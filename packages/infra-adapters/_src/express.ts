@@ -315,15 +315,19 @@ export function match(method: Methods): {
   >(
     path: PathParams,
     ...handlers: Handlers
-  ): Effect<void, never, | ExpressEnv
-  | _R<
-    {
-      [k in keyof Handlers]: [Handlers[k]] extends [
-        EffectRequestHandler<infer R, any, any, any, any, any>
-      ] ? Effect<void, never, R>
-        : never
-    }[number]
-  >>
+  ): Effect<
+    void,
+    never,
+    | ExpressEnv
+    | _R<
+      {
+        [k in keyof Handlers]: [Handlers[k]] extends [
+          EffectRequestHandler<infer R, any, any, any, any, any>
+        ] ? Effect<void, never, R>
+          : never
+      }[number]
+    >
+  >
 } {
   return function(path, ...handlers) {
     return expressRuntime(
@@ -392,29 +396,37 @@ export function use<
   Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
 >(
   ...handlers: Handlers
-): Effect<void, never, | ExpressEnv
-| _R<
-  {
-    [k in keyof Handlers]: [Handlers[k]] extends [
-      EffectRequestHandler<infer R, any, any, any, any, any>
-    ] ? Effect<void, never, R>
-      : never
-  }[number]
->>
+): Effect<
+  void,
+  never,
+  | ExpressEnv
+  | _R<
+    {
+      [k in keyof Handlers]: [Handlers[k]] extends [
+        EffectRequestHandler<infer R, any, any, any, any, any>
+      ] ? Effect<void, never, R>
+        : never
+    }[number]
+  >
+>
 export function use<
   Handlers extends NonEmptyArray<EffectRequestHandler<any, any, any, any, any, any>>
 >(
   path: PathParams,
   ...handlers: Handlers
-): Effect<void, never, | ExpressEnv
-| _R<
-  {
-    [k in keyof Handlers]: [Handlers[k]] extends [
-      EffectRequestHandler<infer R, any, any, any, any, any>
-    ] ? Effect<void, never, R>
-      : never
-  }[number]
->>
+): Effect<
+  void,
+  never,
+  | ExpressEnv
+  | _R<
+    {
+      [k in keyof Handlers]: [Handlers[k]] extends [
+        EffectRequestHandler<infer R, any, any, any, any, any>
+      ] ? Effect<void, never, R>
+        : never
+    }[number]
+  >
+>
 export function use(...args: any[]) {
   return withExpressApp((app) => {
     if (typeof args[0] === "function") {

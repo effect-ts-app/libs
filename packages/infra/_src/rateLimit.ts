@@ -47,7 +47,7 @@ export function SEM_withPermitsDuration(permits: number, duration: Duration) {
                 )
             )
       )
-  };
+  }
 }
 
 /**
@@ -132,5 +132,5 @@ export function naiveRateLimit(
               .forEachEffect(forEachItem, { concurrency: n })
               .flatMap(forEachBatch)
           )
-      ));
+      ))
 }

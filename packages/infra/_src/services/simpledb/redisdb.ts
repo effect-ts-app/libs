@@ -166,7 +166,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function getIdxLockKey(index: Index) {
       return `v${schemaVersion}.locks.${getIndexName(type, index.doc)}_${index.key}`
     }
-  };
+  }
 
   function hmSetRec(key: string, val: RedisSerializedDBRecord) {
     const enc = RedisSerializedDBRecord.encodeSync(val)
@@ -188,7 +188,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           )
         })
         .uninterruptible
-    );
+    )
   }
 }
 

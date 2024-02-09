@@ -92,6 +92,6 @@ export function makeMemQueue<
               .forkScoped
           )
         })
-    } satisfies QueueBase<Evt, DrainEvt>;
-  });
+    } satisfies QueueBase<Evt, DrainEvt>
+  })
 }

@@ -87,7 +87,7 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
  * @tsplus pipeable effect/io/Effect catchAllMap
  */
 export function catchAllMap<E, A2>(f: (e: E) => A2) {
-  return <R, A>(self: Effect<A, E, R>): Effect<A2 | A, never, R> => self.catchAll((err) => Effect.sync(() => f(err)));
+  return <R, A>(self: Effect<A, E, R>): Effect<A2 | A, never, R> => self.catchAll((err) => Effect.sync(() => f(err)))
 }
 
 /**
@@ -108,7 +108,7 @@ export function annotateLogs(kvps: Record<string, string>) {
             )
           )
         )
-      );
+      )
 }
 
 /**

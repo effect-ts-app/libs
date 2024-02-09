@@ -43,9 +43,9 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
           // const { trackEvent } = yield* $(AiContextService)
           // trackEvent(event)
           return ret
-        });
+        })
       }
-    };
+    }
   })
 
 /**

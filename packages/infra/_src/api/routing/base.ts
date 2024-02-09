@@ -51,8 +51,10 @@ export type RouteMatch<
   // ReqA extends PathA & QueryA & BodyA,
   // ResA,
   // PR = never
-  Effect<// RouteDescriptor<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, SupportedErrors, Methods>
-  HttpRoute<Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>, HttpRequestError>>
+  Effect<
+    // RouteDescriptor<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, SupportedErrors, Methods>
+    HttpRoute<Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>, HttpRequestError>
+  >
 
 export interface ReqHandler<
   Req,
@@ -222,7 +224,7 @@ export function parseRequestParams<
           path: path.value!,
           query: query.value!
         }))
-      });
+      })
 }
 
 // // eslint-disable-next-line @typescript-eslint/no-explicit-any

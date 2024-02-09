@@ -69,7 +69,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .flatMap((serialised) => storage.set(getRecordName(type, record.id), serialised))
         .map(() => ({ version, data: record } as CachedRecord<A>))
     }
-  };
+  }
 }
 
 function bogusLock() {

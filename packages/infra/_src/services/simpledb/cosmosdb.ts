@@ -144,5 +144,5 @@ WHERE (
         return { version, data: record } as CachedRecord<A>
       })
     }
-  };
+  }
 }

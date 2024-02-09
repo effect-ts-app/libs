@@ -21,7 +21,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
                 ? res(new ConnectionException(err))
                 : res(Effect.sync(() => Option.fromNullable(v))))
           })
-          .uninterruptible;
+          .uninterruptible
       }
 
       function set(key: string, val: string) {
@@ -32,7 +32,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
                 ? res(new ConnectionException(err))
                 : res(Effect.sync(() => void 0)))
           })
-          .uninterruptible;
+          .uninterruptible
       }
 
       function hset(key: string, field: string, value: string) {
@@ -43,7 +43,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
                 ? res(new ConnectionException(err))
                 : res(Effect.sync(() => void 0)))
           })
-          .uninterruptible;
+          .uninterruptible
       }
 
       function hget(key: string, field: string) {
@@ -54,7 +54,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
                 ? res(new ConnectionException(err))
                 : res(Effect.sync(() => Option.fromNullable(v))))
           })
-          .uninterruptible;
+          .uninterruptible
       }
       function hmgetAll(key: string) {
         return Effect
@@ -66,7 +66,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
                   : res(Effect.sync(() => Option.fromNullable(v))))
             }
           )
-          .uninterruptible;
+          .uninterruptible
       }
 
       return {

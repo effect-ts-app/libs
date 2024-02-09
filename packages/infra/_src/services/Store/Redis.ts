@@ -78,8 +78,8 @@ function makeRedisStore({ prefix }: StorageConfig) {
           }
           return s
         })
-    };
-  });
+    }
+  })
 }
 export function RedisStoreLayer(cfg: StorageConfig) {
   return makeRedisStore(cfg)

@@ -143,7 +143,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function getIdxName(type: string, id: string) {
       return `${dir}/v${schemaVersion}.${getIndexName(type, id)}.json`
     }
-  };
+  }
 }
 
 function lockFile(fileName: string) {
