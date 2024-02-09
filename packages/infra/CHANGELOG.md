@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.170.6
+
+### Patch Changes
+
+- e90cab0: untsp
+
 ## 0.170.5
 
 ### Patch Changes
