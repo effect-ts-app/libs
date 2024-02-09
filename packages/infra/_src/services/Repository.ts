@@ -74,17 +74,13 @@ export function projectEffect<
   S = PM
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  map: Effect<
-    R,
-    E,
-    {
-      filter?: Filter<PM> | undefined
-      collect?: ((t: PM) => Option<S>) | undefined
-      limit?: number | undefined
-      skip?: number | undefined
-    }
-  >
-): Effect<R, E, S[]>
+  map: Effect<{
+    filter?: Filter<PM> | undefined
+    collect?: ((t: PM) => Option<S>) | undefined
+    limit?: number | undefined
+    skip?: number | undefined
+  }, E, R>
+): Effect<S[], E, R>
 export function projectEffect<
   T extends { id: unknown },
   PM extends PersistenceModelType<string>,
@@ -96,17 +92,13 @@ export function projectEffect<
   S = PM
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  map: Effect<
-    R,
-    E,
-    {
-      filter?: QueryBuilder<PM> | undefined
-      collect?: ((t: PM) => Option<S>) | undefined
-      limit?: number | undefined
-      skip?: number | undefined
-    }
-  >
-): Effect<R, E, Pick<PM, U>[]>
+  map: Effect<{
+    filter?: QueryBuilder<PM> | undefined
+    collect?: ((t: PM) => Option<S>) | undefined
+    limit?: number | undefined
+    skip?: number | undefined
+  }, E, R>
+): Effect<Pick<PM, U>[], E, R>
 export function projectEffect<
   T extends { id: unknown },
   PM extends PersistenceModelType<string>,
@@ -118,18 +110,14 @@ export function projectEffect<
   S = Pick<PM, U>
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  map: Effect<
-    R,
-    E,
-    {
-      filter?: Filter<PM> | undefined
-      select?: NonEmptyReadonlyArray<U> | undefined
-      collect?: ((t: PM) => Option<S>) | undefined
-      limit?: number | undefined
-      skip?: number | undefined
-    }
-  >
-): Effect<R, E, S[]> {
+  map: Effect<{
+    filter?: Filter<PM> | undefined
+    select?: NonEmptyReadonlyArray<U> | undefined
+    collect?: ((t: PM) => Option<S>) | undefined
+    limit?: number | undefined
+    skip?: number | undefined
+  }, E, R>
+): Effect<S[], E, R> {
   // TODO: a projection that gets sent to the db instead.
   return map.flatMap((f) =>
     self
@@ -157,7 +145,7 @@ export function project<
     limit?: number
     skip?: number
   }
-): Effect<never, never, S[]>
+): Effect<S[]>
 export function project<
   T extends { id: unknown },
   PM extends PersistenceModelType<string>,
@@ -172,7 +160,7 @@ export function project<
     limit?: number
     skip?: number
   }
-): Effect<never, never, Pick<PM, U>[]>
+): Effect<Pick<PM, U>[]>
 export function project<
   T extends { id: unknown },
   PM extends PersistenceModelType<string>,
@@ -189,7 +177,7 @@ export function project<
     limit?: number
     skip?: number
   }
-): Effect<never, never, S[]> {
+): Effect<S[]> {
   return self.projectEffect(Effect.sync(() => map))
 }
 
@@ -225,7 +213,7 @@ export function queryEffect<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
+  map: Effect<{ filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
 ) {
   return map.flatMap((f) =>
     (f.filter ? self.utils.filter(f) : self.utils.all)
@@ -247,8 +235,8 @@ export function queryOneEffect<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter?: Filter<PM> }>
-): Effect<R, E | NotFoundError<ItemType>, T>
+  map: Effect<{ filter?: Filter<PM> }, E, R>
+): Effect<T, E | NotFoundError<ItemType>, R>
 export function queryOneEffect<
   T extends { id: unknown },
   PM extends PersistenceModelType<string>,
@@ -260,8 +248,8 @@ export function queryOneEffect<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter?: Filter<PM>; collect: (t: T) => Option<S> }>
-): Effect<R, E | NotFoundError<ItemType>, S>
+  map: Effect<{ filter?: Filter<PM>; collect: (t: T) => Option<S> }, E, R>
+): Effect<S, E | NotFoundError<ItemType>, R>
 export function queryOneEffect<
   T extends { id: unknown },
   PM extends PersistenceModelType<string>,
@@ -273,8 +261,8 @@ export function queryOneEffect<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter?: Filter<PM>; collect?: (t: T) => Option<S> }>
-): Effect<R, E | NotFoundError<ItemType>, S> {
+  map: Effect<{ filter?: Filter<PM>; collect?: (t: T) => Option<S> }, E, R>
+): Effect<S, E | NotFoundError<ItemType>, R> {
   return map.flatMap((f) =>
     (f.filter ? self.utils.filter({ filter: f.filter, limit: 1 }) : self.utils.all)
       .flatMap((_) => self.utils.parseMany(_))
@@ -316,7 +304,7 @@ export function queryOne<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: { filter?: Filter<PM>; collect: (t: T) => Option<S> }
-): Effect<never, NotFoundError<ItemType>, S>
+): Effect<S, NotFoundError<ItemType>>
 export function queryOne<
   T extends { id: unknown },
   PM extends PersistenceModelType<string>,
@@ -325,7 +313,7 @@ export function queryOne<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: { filter?: Filter<PM> }
-): Effect<never, NotFoundError<ItemType>, T>
+): Effect<T, NotFoundError<ItemType>>
 export function queryOne<
   T extends { id: unknown },
   PM extends PersistenceModelType<string>,
@@ -352,15 +340,11 @@ export function queryAndSaveOnePureEffect<
   S extends T = T
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  map: Effect<R, E, { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }>
-): <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, S, S2>, E2, A>) => Effect<
-  | R
-  | Exclude<R2, {
-    env: PureEnv<Evt, S, S2>
-  }>,
-  InvalidStateError | OptimisticConcurrencyException | E | E2 | NotFoundError<ItemType>,
-  A
->
+  map: Effect<{ filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
+): <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, S, S2>>) => Effect<A, InvalidStateError | OptimisticConcurrencyException | E | E2 | NotFoundError<ItemType>, | R
+| Exclude<R2, {
+  env: PureEnv<Evt, S, S2>
+}>>
 export function queryAndSaveOnePureEffect<
   T extends { id: unknown },
   PM extends PersistenceModelType<string>,
@@ -370,15 +354,11 @@ export function queryAndSaveOnePureEffect<
   E
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  map: Effect<R, E, { filter: Filter<PM> }>
-): <R2, A, E2, T2 extends T>(pure: Effect<FixEnv<R2, Evt, T, T2>, E2, A>) => Effect<
-  | R
-  | Exclude<R2, {
-    env: PureEnv<Evt, T, T2>
-  }>,
-  InvalidStateError | OptimisticConcurrencyException | E | E2 | NotFoundError<ItemType>,
-  A
->
+  map: Effect<{ filter: Filter<PM> }, E, R>
+): <R2, A, E2, T2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>) => Effect<A, InvalidStateError | OptimisticConcurrencyException | E | E2 | NotFoundError<ItemType>, | R
+| Exclude<R2, {
+  env: PureEnv<Evt, T, T2>
+}>>
 export function queryAndSaveOnePureEffect(
   self: any,
   map: any
@@ -400,12 +380,12 @@ export function queryAndSaveOnePure<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }
-): <R2, A, E2, S2>(pure: Effect<FixEnv<R2, Evt, S, S2>, E2, A>) => Effect<
+): <R2, A, E2, S2>(pure: Effect<A, E2, FixEnv<R2, Evt, S, S2>>) => Effect<
+  A,
+  InvalidStateError | OptimisticConcurrencyException | E2 | NotFoundError<ItemType>,
   Exclude<R2, {
     env: PureEnv<Evt, S, S2>
-  }>,
-  InvalidStateError | OptimisticConcurrencyException | E2 | NotFoundError<ItemType>,
-  A
+  }>
 >
 export function queryAndSaveOnePure<
   T extends { id: unknown },
@@ -415,12 +395,12 @@ export function queryAndSaveOnePure<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: { filter: Filter<PM> }
-): <R2, A, E2, T2>(pure: Effect<FixEnv<R2, Evt, T, T2>, E2, A>) => Effect<
+): <R2, A, E2, T2>(pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>) => Effect<
+  A,
+  InvalidStateError | OptimisticConcurrencyException | E2 | NotFoundError<ItemType>,
   Exclude<R2, {
     env: PureEnv<Evt, T, T2>
-  }>,
-  InvalidStateError | OptimisticConcurrencyException | E2 | NotFoundError<ItemType>,
-  A
+  }>
 >
 export function queryAndSaveOnePure(
   self: any,
@@ -442,11 +422,11 @@ export function queryAndSavePureEffect<
   S extends T = T
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>
+  map: Effect<{ filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
 ) {
-  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, S[], S2[]>, E2, A>) =>
+  return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, S[], S2[]>>) =>
     queryEffect(self, map)
-      .flatMap((_) => self.saveManyWithPure_(_, pure))
+      .flatMap((_) => self.saveManyWithPure_(_, pure));
 }
 
 /**
@@ -474,8 +454,8 @@ export function saveManyWithPure<
   Evt,
   ItemType extends string
 >(self: RepositoryBaseC<T, PM, Evt, ItemType>) {
-  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>) =>
-  (items: Iterable<S1>) => saveManyWithPure_(self, items, pure)
+  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>) =>
+  (items: Iterable<S1>) => saveManyWithPure_(self, items, pure);
 }
 
 /**
@@ -487,8 +467,8 @@ export function byIdAndSaveWithPure<
   Evt,
   ItemType extends string
 >(self: RepositoryBaseC<T, PM, Evt, ItemType>, id: T["id"]) {
-  return <R, A, E, S2 extends T>(pure: Effect<FixEnv<R, Evt, T, S2>, E, A>) =>
-    get(self, id).flatMap((item) => saveWithPure_(self, item, pure))
+  return <R, A, E, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, T, S2>>) =>
+    get(self, id).flatMap((item) => saveWithPure_(self, item, pure));
 }
 
 /**
@@ -502,9 +482,9 @@ export function handleByIdAndSaveWithPure<
   ItemType extends string
 >(self: RepositoryBaseC<T, PM, Evt, ItemType>) {
   return <Req extends { id: T["id"] }, Context, R, A, E, S2 extends T>(
-    pure: (req: Req, ctx: Context) => Effect<FixEnv<R, Evt, T, S2>, E, A>
+    pure: (req: Req, ctx: Context) => Effect<A, E, FixEnv<R, Evt, T, S2>>
   ) =>
-  (req: Req, ctx: Context) => byIdAndSaveWithPure(self, req.id)(pure(req, ctx))
+  (req: Req, ctx: Context) => byIdAndSaveWithPure(self, req.id)(pure(req, ctx));
 }
 
 /**
@@ -523,7 +503,7 @@ export function saveManyWithPure_<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   items: Iterable<S1>,
-  pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>
+  pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>
 ) {
   return saveAllWithEffectInt(
     self,
@@ -547,7 +527,7 @@ export function saveWithPure_<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   item: S1,
-  pure: Effect<FixEnv<R, Evt, S1, S2>, E, A>
+  pure: Effect<A, E, FixEnv<R, Evt, S1, S2>>
 ) {
   return saveAllWithEffectInt(
     self,
@@ -568,7 +548,7 @@ export function saveAllWithEffectInt<
   A
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
-  gen: Effect<R, E, readonly [Iterable<P>, Iterable<Evt>, A]>
+  gen: Effect<readonly [Iterable<P>, Iterable<Evt>, A], E, R>
 ) {
   return gen
     .flatMap(
@@ -590,12 +570,12 @@ export function queryAndSavePureEffectBatched<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   // TODO: think about collectPM, collectE, and collect(Parsed)
-  map: Effect<R, E, { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }>,
+  map: Effect<{ filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>,
   batchSize = 100
 ) {
-  return <R2, A, E2, S2 extends T>(pure: Effect<FixEnv<R2, Evt, S[], S2[]>, E2, A>) =>
+  return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, S[], S2[]>>) =>
     queryEffect(self, map)
-      .flatMap((_) => self.saveManyWithPureBatched_(_, pure, batchSize))
+      .flatMap((_) => self.saveManyWithPureBatched_(_, pure, batchSize));
 }
 
 /**
@@ -625,8 +605,8 @@ export function saveManyWithPureBatched<
   Evt,
   ItemType extends string
 >(self: RepositoryBaseC<T, PM, Evt, ItemType>, batchSize = 100) {
-  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>) =>
-  (items: Iterable<S1>) => saveManyWithPureBatched_(self, items, pure, batchSize)
+  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>) =>
+  (items: Iterable<S1>) => saveManyWithPureBatched_(self, items, pure, batchSize);
 }
 
 /**
@@ -645,7 +625,7 @@ export function saveManyWithPureBatched_<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   items: Iterable<S1>,
-  pure: Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>,
+  pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>,
   batchSize = 100
 ) {
   return items
@@ -662,8 +642,8 @@ const anyDSL = makeDSL<any, any, any>()
 
 export type AllDSL<T, Evt> =
   & (<R, A, E, S1 extends T, S2 extends T>(
-    pure: (dsl: PureDSL<S1[], S2[], Evt>) => Effect<R, E, A>
-  ) => Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>)
+    pure: (dsl: PureDSL<S1[], S2[], Evt>) => Effect<A, E, R>
+  ) => Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>)
   & AllDSLExt<T, Evt>
 
 /**
@@ -671,11 +651,11 @@ export type AllDSL<T, Evt> =
  */
 export interface AllDSLExt<T, Evt> {
   modify: <R, E, A, S1 extends T, S2 extends T>(
-    pure: (items: S1[], dsl: PureDSL<S1[], S2[], Evt>) => Effect<R, E, A>
-  ) => Effect<FixEnv<R, Evt, S1[], S2[]>, E, A>
+    pure: (items: S1[], dsl: PureDSL<S1[], S2[], Evt>) => Effect<A, E, R>
+  ) => Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>
   update: <R, E, S1 extends T, S2 extends T>(
-    pure: (items: S1[], log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<R, E, S2[]>
-  ) => Effect<FixEnv<R, Evt, S1[], S2[]>, E, S2[]>
+    pure: (items: S1[], log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<S2[], E, R>
+  ) => Effect<S2[], E, FixEnv<R, Evt, S1[], S2[]>>
 }
 
 export function makeAllDSL<T, Evt>() {
@@ -685,8 +665,8 @@ export function makeAllDSL<T, Evt>() {
 
 export type OneDSL<T, Evt> =
   & (<R, A, E, S1 extends T, S2 extends T>(
-    pure: (dsl: PureDSL<S1, S2, Evt>) => Effect<FixEnv<R, Evt, S1, S2>, E, A>
-  ) => Effect<FixEnv<R, Evt, S1, S2>, E, A>)
+    pure: (dsl: PureDSL<S1, S2, Evt>) => Effect<A, E, FixEnv<R, Evt, S1, S2>>
+  ) => Effect<A, E, FixEnv<R, Evt, S1, S2>>)
   & OneDSLExt<T, Evt>
 
 /**
@@ -694,11 +674,11 @@ export type OneDSL<T, Evt> =
  */
 export interface OneDSLExt<T, Evt> {
   modify: <R, E, A, S1 extends T, S2 extends T>(
-    pure: (items: S1, dsl: PureDSL<S1, S2, Evt>) => Effect<FixEnv<R, Evt, S1, S2>, E, A>
-  ) => Effect<FixEnv<R, Evt, S1, S2> | PureEnvEnv<Evt, S1, S1>, E, A>
+    pure: (items: S1, dsl: PureDSL<S1, S2, Evt>) => Effect<A, E, FixEnv<R, Evt, S1, S2>>
+  ) => Effect<A, E, FixEnv<R, Evt, S1, S2> | PureEnvEnv<Evt, S1, S1>>
   update: <R, E, S1 extends T, S2 extends T>(
-    pure: (items: S1, log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<FixEnv<R, Evt, S1, S2>, E, S2>
-  ) => Effect<FixEnv<R, Evt, S1, S2>, E, S2>
+    pure: (items: S1, log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<S2, E, FixEnv<R, Evt, S1, S2>>
+  ) => Effect<S2, E, FixEnv<R, Evt, S1, S2>>
 }
 
 /**
@@ -733,8 +713,8 @@ export function makeDSL<S1, S2, Evt>() {
     pure: (
       items: S1,
       dsl: PureDSL<S1, S2, Evt>
-    ) => Effect<R, E, A>
-  ): Effect<FixEnv<R, Evt, S1, S2>, E, A> {
+    ) => Effect<A, E, R>
+  ): Effect<A, E, FixEnv<R, Evt, S1, S2>> {
     return dsl.get.flatMap((items) => pure(items, dsl)) as any
   }
 
@@ -745,8 +725,8 @@ export function makeDSL<S1, S2, Evt>() {
     pure: (
       items: S1,
       log: (...evt: Evt[]) => PureLogT<Evt>
-    ) => Effect<R, E, S2>
-  ): Effect<FixEnv<R, Evt, S1, S2>, E, S2> {
+    ) => Effect<S2, E, R>
+  ): Effect<S2, E, FixEnv<R, Evt, S1, S2>> {
     return dsl.get.flatMap((items) => pure(items, dsl.log).tap(dsl.set)) as any
   }
 
@@ -755,8 +735,8 @@ export function makeDSL<S1, S2, Evt>() {
     A,
     E
   >(
-    pure: (dsl: PureDSL<S1, S2, Evt>) => Effect<R, E, A>
-  ): Effect<FixEnv<R, Evt, S1, S2>, E, A> {
+    pure: (dsl: PureDSL<S1, S2, Evt>) => Effect<A, E, R>
+  ): Effect<A, E, FixEnv<R, Evt, S1, S2>> {
     return pure(AnyPureDSL) as any
   }
 
@@ -771,14 +751,14 @@ export function makeDSL<S1, S2, Evt>() {
 
 export interface DSLExt<S1, S2, Evt> extends ReturnType<typeof makeDSL<S1, S2, Evt>> {}
 
-export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
+export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effect<A, E, R>) {
   return (items: Iterable<T>) => Effect.sync(() => items.toNonEmptyArray).flatMapOpt(fn)
 }
 
 /**
  * @tsplus fluent Iterable ifAny
  */
-export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<R, E, A>) {
+export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<A, E, R>) {
   return Effect.sync(() => items.toNonEmptyArray).flatMapOpt(fn)
 }
 

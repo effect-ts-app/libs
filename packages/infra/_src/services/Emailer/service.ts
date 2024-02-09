@@ -7,7 +7,7 @@ import type sgMail from "@sendgrid/mail"
  * @tsplus companion Emailer.Ops
  */
 export class Emailer extends TagClass<Emailer, {
-  sendMail: (msg: EmailMsgOptionalFrom) => Effect<never, Error | ResponseError, void>
+  sendMail: (msg: EmailMsgOptionalFrom) => Effect<void, Error | ResponseError>
 }>() {}
 
 export interface SendgridConfig {

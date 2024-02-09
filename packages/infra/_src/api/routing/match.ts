@@ -8,7 +8,7 @@ import type { RequestHandler } from "./base.js"
 import { makeRequestHandler } from "./makeRequestHandler.js"
 import type { Middleware } from "./makeRequestHandler.js"
 
-export const RouteDescriptors = Tag<Ref<RouteDescriptorAny[]>>()
+export const RouteDescriptors = GenericTag<Ref<RouteDescriptorAny[]>>("@services/RouteDescriptors")
 
 export function match<
   R,
@@ -49,8 +49,8 @@ export function match<
   errorHandler: <R>(
     req: HttpServerRequest,
     res: HttpServerResponse,
-    r2: Effect<R, ValidationError | MiddlewareE | ResE, HttpServerResponse>
-  ) => Effect<RErr | R, never, HttpServerResponse>,
+    r2: Effect<HttpServerResponse, ValidationError | MiddlewareE | ResE, R>
+  ) => Effect<HttpServerResponse, never, RErr | R>,
   middleware?: Middleware<
     R,
     M,
@@ -71,7 +71,7 @@ export function match<
     Config
   >
 ) {
-  let middlewareLayer: Layer<R2, MiddlewareE, PR> | undefined = undefined
+  let middlewareLayer: Layer<PR, MiddlewareE, R2> | undefined = undefined
   if (middleware) {
     const { handler, makeRequestLayer } = middleware(requestHandler)
     requestHandler = handler as any // todo

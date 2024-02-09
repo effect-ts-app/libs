@@ -28,8 +28,8 @@ export function makeServiceBusQueue<
 >(
   _queueName: string,
   queueDrainName: string,
-  schema: S.Schema<never, EvtE, Evt>,
-  drainSchema: S.Schema<never, DrainEvtE, DrainEvt>
+  schema: S.Schema<Evt, EvtE>,
+  drainSchema: S.Schema<DrainEvt, DrainEvtE>
 ) {
   const wireSchema = struct({
     body: schema,
@@ -48,7 +48,7 @@ export function makeServiceBusQueue<
 
     return {
       makeDrain: <DrainE, DrainR>(
-        handleEvent: (ks: DrainEvt) => Effect<DrainR, DrainE, void>
+        handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>
       ) =>
         Effect.gen(function*($) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -111,8 +111,8 @@ export function makeServiceBusQueue<
               .forkDaemonReportQueue
           )
         })
-    } satisfies QueueBase<Evt, DrainEvt>
-  })
+    } satisfies QueueBase<Evt, DrainEvt>;
+  });
 }
 
 /**

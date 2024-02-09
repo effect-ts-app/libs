@@ -6,11 +6,11 @@ import { RequestContext } from "../RequestContext.js"
  * @tsplus companion RequestContextContainer.Ops
  */
 export class RequestContextContainer extends TagClass<RequestContextContainer, {
-  requestContext: Effect<never, never, RequestContext>
-  update: (f: (rc: RequestContext) => RequestContext) => Effect<never, never, RequestContext>
-  start: (f: RequestContext) => Effect<never, never, void>
+  requestContext: Effect<RequestContext>
+  update: (f: (rc: RequestContext) => RequestContext) => Effect<RequestContext>
+  start: (f: RequestContext) => Effect<void>
 }>() {
-  static get get(): Effect<RequestContextContainer, never, RequestContext> {
+  static get get(): Effect<RequestContext, never, RequestContextContainer> {
     return RequestContextContainer.flatMap((_) => _.requestContext)
   }
   static get getOption() {
@@ -39,7 +39,7 @@ export const live = Effect
   .toLayerScoped(RequestContextContainer)
 
 /** @tsplus static RequestContext.Ops Tag */
-export const RCTag = Tag<RequestContext>()
+export const RCTag = GenericTag<RequestContext>("@services/RCTag")
 
 /**
  * @tsplus getter RequestContext spanAttributes
@@ -49,8 +49,7 @@ export const spanAttributes = (ctx: RequestContext) => ({
   "request.name": ctx.name,
   "request.locale": ctx.locale,
   "request.namespace": ctx.namespace,
-  ...ctx.userProfile?.sub
-    ? {
+  ...(ctx.userProfile?.sub ? {
       "request.user.sub": ctx
         .userProfile
         .sub,
@@ -58,6 +57,5 @@ export const spanAttributes = (ctx: RequestContext) => ({
           .userProfile
         ? ctx.userProfile.roles
         : undefined
-    }
-    : {}
+    } : {})
 })

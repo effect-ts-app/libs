@@ -6,9 +6,9 @@ import type { ParseIssue } from "@effect/schema/ParseResult"
 import { jwtDecode, type JwtDecodeOptions } from "jwt-decode"
 
 export const parseJwt = <R, I, A>(
-  schema: Schema<R, I, A>,
+  schema: Schema<A, I, R>,
   options?: JwtDecodeOptions | undefined
-): Schema<R, string, A> =>
+): Schema<A, string, R> =>
   S
     .transformOrFail(
       S.string,
@@ -18,7 +18,7 @@ export const parseJwt = <R, I, A>(
           try: () => jwtDecode(s, options),
           catch: (e: any) => ParseResult.type(ast, s, e?.message)
         }),
-      (_): Effect<never, ParseIssue, string> => {
+      (_): Effect<string, ParseIssue> => {
         throw new Error("not implemented")
       }
     )

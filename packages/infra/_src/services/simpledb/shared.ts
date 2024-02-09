@@ -74,8 +74,8 @@ export function makeMap<TKey, T>() {
 
 export interface EffectMap<TKey, T> {
   [Symbol.iterator](): IterableIterator<[TKey, T]>
-  find: (k: TKey) => Effect<never, never, Option<T>>
-  set: (k: TKey, v: T) => Effect<never, never, void>
+  find: (k: TKey) => Effect<Option<T>>
+  set: (k: TKey, v: T) => Effect<void>
 }
 
 // export function encodeOnlyWhenStrictMatch<A, E>(

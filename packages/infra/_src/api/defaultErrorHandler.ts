@@ -7,7 +7,7 @@ const logRequestError = logError("Request")
 export function defaultBasicErrorHandler<R>(
   _req: express.Request,
   res: express.Response,
-  r2: Effect<R, ValidationError, void>
+  r2: Effect<void, ValidationError, R>
 ) {
   const sendError = (code: number) => (body: unknown) => Effect.sync(() => res.status(code).send(body))
   return r2
@@ -30,7 +30,7 @@ const optimisticConcurrencySchedule = Schedule.once
 export function defaultErrorHandler<R>(
   req: express.Request,
   res: express.Response,
-  r2: Effect<R, SupportedErrors, void>
+  r2: Effect<void, SupportedErrors, R>
 ) {
   const r3 = req.method === "PATCH"
     ? r2.retry(optimisticConcurrencySchedule)

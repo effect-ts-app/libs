@@ -10,10 +10,10 @@ import { ContextMap, makeContextMap } from "./service.js"
  * @tsplus companion ContextMapContainer.Ops
  */
 export class ContextMapContainer extends TagClass<ContextMapContainer, {
-  get: Effect<never, never, ContextMap>
-  start: Effect<never, never, void>
+  get: Effect<ContextMap>
+  start: Effect<void>
 }>() {
-  static get get(): Effect<ContextMapContainer, never, ContextMap> {
+  static get get(): Effect<ContextMap, never, ContextMapContainer> {
     return ContextMapContainer.flatMap((_) => _.get)
   }
   static get getOption() {
@@ -37,4 +37,4 @@ export const live = Effect
   .toLayerScoped(ContextMapContainer)
 
 /** @tsplus static ContextMap.Ops Tag */
-export const RCTag = Tag<ContextMap>()
+export const RCTag = GenericTag<ContextMap>("@services/RCTag")

@@ -54,7 +54,7 @@ export type Middleware<
     Context,
     Config
   >
-  makeRequestLayer: Layer<R2, MiddlewareE, PR>
+  makeRequestLayer: Layer<PR, MiddlewareE, R2>
 }
 
 export function makeRequestHandler<
@@ -92,20 +92,16 @@ export function makeRequestHandler<
   errorHandler: <R>(
     req: HttpServerRequest,
     res: HttpServerResponse,
-    r2: Effect<R, ValidationError | ResE | MiddlewareE, HttpServerResponse>
-  ) => Effect<RErr | R, never, HttpServerResponse>,
-  middlewareLayer?: Layer<R2, MiddlewareE, PR>
-): Effect<
-  | HttpRouteContext
-  | HttpServerRequest
-  | RequestContextContainer
-  | ContextMapContainer
-  | RErr
-  | Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>
-  | R2,
-  HttpRequestError,
-  HttpServerResponse
-> {
+    r2: Effect<HttpServerResponse, ValidationError | ResE | MiddlewareE, R>
+  ) => Effect<HttpServerResponse, never, RErr | R>,
+  middlewareLayer?: Layer<PR, MiddlewareE, R2>
+): Effect<HttpServerResponse, HttpRequestError, | HttpRouteContext
+| HttpServerRequest
+| RequestContextContainer
+| ContextMapContainer
+| RErr
+| Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>
+| R2> {
   const { Request, Response, h: handle } = handler
 
   const response: REST.ReqRes<any, any, any> = Response ? Response : Void
@@ -158,15 +154,13 @@ export function makeRequestHandler<
           .annotateLogs({
             method: req.method,
             path: req.originalUrl,
-            ...settings.verbose
-              ? {
+            ...(settings.verbose ? {
                 reqPath: pars.params.$$.pretty,
                 reqQuery: pars.query.$$.pretty,
                 reqBody: pretty(pars.body),
                 reqCookies: pretty(pars.cookies),
                 reqHeaders: pretty(pars.headers)
-              }
-              : undefined
+              } : undefined)
           })
           .andThen(
             Effect.suspend(() => {
@@ -189,9 +183,9 @@ export function makeRequestHandler<
                         .setStatus(r === undefined ? 204 : 200)
                     )
                 ) as Effect<
-                  Exclude<R, EnforceNonEmptyRecord<M>>,
+                  HttpServerResponse,
                   ValidationError | ResE,
-                  HttpServerResponse
+                  Exclude<R, EnforceNonEmptyRecord<M>>
                 >
 
               // Commands should not be interruptable.
@@ -200,9 +194,9 @@ export function makeRequestHandler<
                 ? r.provide(middlewareLayer)
                 // PR is not relevant here
                 : (r as Effect<
-                  Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>,
+                  HttpServerResponse,
                   ResE | MiddlewareE | ValidationError,
-                  HttpServerResponse
+                  Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>
                 >)
               return errorHandler(
                 req,
@@ -257,11 +251,9 @@ export function makeRequestHandler<
                 method: req.method,
                 path: req.originalUrl,
                 statusCode: res.status.toString(),
-                ...settings.verbose
-                  ? {
+                ...(settings.verbose ? {
                     resHeaders: pretty(res.headers)
-                  }
-                  : undefined
+                  } : undefined)
               })
           )
 
@@ -273,5 +265,5 @@ export function makeRequestHandler<
           handler.name
         )
       })
-    )
+    );
 }

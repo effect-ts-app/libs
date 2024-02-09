@@ -12,8 +12,8 @@ import type { Version } from "./simpledb.js"
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect<REncode, never, EA>,
-    decode: (d: EA) => Effect<RDecode, EDecode, A>,
+    encode: (record: A) => Effect<EA, never, REncode>,
+    decode: (d: EA) => Effect<A, EDecode, RDecode>,
     schemaVersion: string,
     makeIndexKey: (r: A) => Index,
     dir = "./data.js"
@@ -143,7 +143,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function getIdxName(type: string, id: string) {
       return `${dir}/v${schemaVersion}.${getIndexName(type, id)}.json`
     }
-  }
+  };
 }
 
 function lockFile(fileName: string) {

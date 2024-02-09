@@ -51,11 +51,8 @@ export type RouteMatch<
   // ReqA extends PathA & QueryA & BodyA,
   // ResA,
   // PR = never
-  Effect<
-    never,
-    never,
-    HttpRoute<Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>, HttpRequestError> // RouteDescriptor<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, SupportedErrors, Methods>
-  >
+  Effect<// RouteDescriptor<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, SupportedErrors, Methods>
+  HttpRoute<Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>, HttpRequestError>>
 
 export interface ReqHandler<
   Req,
@@ -67,7 +64,7 @@ export interface ReqHandler<
   CTX = any,
   Context = any
 > {
-  h: (r: Req, ctx: CTX) => Effect<R, E, Res>
+  h: (r: Req, ctx: CTX) => Effect<Res, E, R>
   Request: ReqSchema
   Response: ResSchema
   ResponseOpenApi: any
@@ -85,7 +82,7 @@ export type Extr<T> = T extends { Model: S.Schema<any, any, any> } ? T["Model"]
 export type ResFromSchema<ResSchema> = S.Schema.To<Extr<ResSchema>>
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
-  Effect<infer R, any, any>
+  Effect<any, any, infer R>
 ] ? R
   : never
 
@@ -142,7 +139,7 @@ export function parseRequestParams<
           .exit
           .flatMap((_) =>
             _.isFailure() && !_.cause.isFailure()
-              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
+              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError>)
               : Effect.sync(() =>
                 _.isSuccess()
                   ? { _tag: "Success" as const, value: _.value }
@@ -154,7 +151,7 @@ export function parseRequestParams<
           .exit
           .flatMap((_) =>
             _.isFailure() && !_.cause.isFailure()
-              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
+              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError>)
               : Effect.sync(() =>
                 _.isSuccess()
                   ? { _tag: "Success" as const, value: _.value }
@@ -166,7 +163,7 @@ export function parseRequestParams<
           .exit
           .flatMap((_) =>
             _.isFailure() && !_.cause.isFailure()
-              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
+              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError>)
               : Effect.sync(() =>
                 _.isSuccess()
                   ? { _tag: "Success" as const, value: _.value }
@@ -178,7 +175,7 @@ export function parseRequestParams<
           .exit
           .flatMap((_) =>
             _.isFailure() && !_.cause.isFailure()
-              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
+              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError>)
               : Effect.sync(() =>
                 _.isSuccess()
                   ? { _tag: "Success" as const, value: _.value }
@@ -190,7 +187,7 @@ export function parseRequestParams<
           .exit
           .flatMap((_) =>
             _.isFailure() && !_.cause.isFailure()
-              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError, never>)
+              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError>)
               : Effect.sync(() =>
                 _.isSuccess()
                   ? { _tag: "Success" as const, value: _.value }
@@ -225,7 +222,7 @@ export function parseRequestParams<
           path: path.value!,
           query: query.value!
         }))
-      })
+      });
 }
 
 // // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -300,7 +297,7 @@ export function makeRequestParsers<
   const ph = Effect.sync(() =>
     Option
       .fromNullable(Request.Headers)
-      .map((s) => s as unknown as Schema<never, any, any>)
+      .map((s) => s as unknown as Schema<any>)
       .map(S.decodeUnknown)
   )
   const parseHeaders = (u: unknown) => ph.flatMapOpt((d) => d(u))
@@ -308,7 +305,7 @@ export function makeRequestParsers<
   const pq = Effect.sync(() =>
     Option
       .fromNullable(Request.Query)
-      .map((s) => s as unknown as Schema<never, any, any>)
+      .map((s) => s as unknown as Schema<any>)
       .map(S.decodeUnknown)
   )
   const parseQuery = (u: unknown) => pq.flatMapOpt((d) => d(u))
@@ -316,7 +313,7 @@ export function makeRequestParsers<
   const pb = Effect.sync(() =>
     Option
       .fromNullable(Request.Body)
-      .map((s) => s as unknown as Schema<never, any, any>)
+      .map((s) => s as unknown as Schema<any>)
       .map(S.decodeUnknown)
   )
   const parseBody = (u: unknown) => pb.flatMapOpt((d) => d(u))
@@ -324,7 +321,7 @@ export function makeRequestParsers<
   const pp = Effect.sync(() =>
     Option
       .fromNullable(Request.Path)
-      .map((s) => s as unknown as Schema<never, any, any>)
+      .map((s) => s as unknown as Schema<any>)
       .map(S.decodeUnknown)
   )
   const parsePath = (u: unknown) => pp.flatMapOpt((d) => d(u))
@@ -332,7 +329,7 @@ export function makeRequestParsers<
   const pc = Effect.sync(() =>
     Option
       .fromNullable(Request.Cookie)
-      .map((s) => s as unknown as Schema<never, any, any>)
+      .map((s) => s as unknown as Schema<any>)
       .map(S.decodeUnknown)
   )
   const parseCookie = (u: unknown) => pc.flatMapOpt((d) => d(u))
@@ -346,7 +343,7 @@ export function makeRequestParsers<
   }
 }
 
-type Decode<A> = (u: unknown) => Effect<never, unknown, A>
+type Decode<A> = (u: unknown) => Effect<A, unknown>
 
 export interface RequestParsers<
   PathA extends StructFields,
@@ -402,7 +399,7 @@ export interface RequestHandlerBase<
   Config
 > {
   adaptResponse?: any
-  h: (i: PathA & QueryA & BodyA & {}) => Effect<R, ResE, ResA>
+  h: (i: PathA & QueryA & BodyA & {}) => Effect<ResA, ResE, R>
   Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, PPath>
   Response: REST.ReqRes<any, any, any>
   ResponseOpenApi?: any
@@ -427,7 +424,7 @@ export interface RequestHandler<
   Config
 > {
   adaptResponse?: any
-  h: (i: PathA & QueryA & BodyA & {}, ctx: any /* TODO */) => Effect<R, ResE, ResA>
+  h: (i: PathA & QueryA & BodyA & {}, ctx: any /* TODO */) => Effect<ResA, ResE, R>
   Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, PPath> & Config
   Response: REST.ReqRes<any, any, any>
   ResponseOpenApi?: any
@@ -450,7 +447,7 @@ export interface RequestHandlerOrig<
   PPath extends `/${string}`
 > {
   adaptResponse?: any
-  h: (i: PathA & QueryA & BodyA & {}) => Effect<R, ResE, ResA>
+  h: (i: PathA & QueryA & BodyA & {}) => Effect<ResA, ResE, R>
   Request: Request<M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, PPath>
   Response: REST.ReqRes<any, any, any>
   name: string

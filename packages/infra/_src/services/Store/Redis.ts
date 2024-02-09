@@ -12,7 +12,7 @@ function makeRedisStore({ prefix }: StorageConfig) {
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
         name: string,
-        seed?: Effect<R, E, Iterable<PM>>,
+        seed?: Effect<Iterable<PM>, E, R>,
         _config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
@@ -78,8 +78,8 @@ function makeRedisStore({ prefix }: StorageConfig) {
           }
           return s
         })
-    }
-  })
+    };
+  });
 }
 export function RedisStoreLayer(cfg: StorageConfig) {
   return makeRedisStore(cfg)

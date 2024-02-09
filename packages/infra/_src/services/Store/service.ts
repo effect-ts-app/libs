@@ -72,27 +72,27 @@ export interface FilterArgs<PM extends PersistenceModelType<unknown>, U extends 
 
 export type FilterFunc<PM extends PersistenceModelType<unknown>> = <U extends keyof PM = never>(
   args: FilterArgs<PM, U>
-) => Effect<never, never, (U extends undefined ? PM : Pick<PM, U>)[]>
+) => Effect<(U extends undefined ? PM : Pick<PM, U>)[]>
 
 export interface Store<PM extends PersistenceModelType<Id>, Id> {
-  all: Effect<never, never, PM[]>
+  all: Effect<PM[]>
   filter: FilterFunc<PM>
   /** @deprecated */
   filterJoinSelect: <T extends object>(
     filter: FilterJoinSelect
-  ) => Effect<never, never, (T & { _rootId: string })[]>
-  find: (id: Id) => Effect<never, never, Option<PM>>
-  set: (e: PM) => Effect<never, OptimisticConcurrencyException, PM>
+  ) => Effect<(T & { _rootId: string })[]>
+  find: (id: Id) => Effect<Option<PM>>
+  set: (e: PM) => Effect<PM, OptimisticConcurrencyException>
   batchSet: (
     items: NonEmptyReadonlyArray<PM>
-  ) => Effect<never, OptimisticConcurrencyException, NonEmptyReadonlyArray<PM>>
+  ) => Effect<NonEmptyReadonlyArray<PM>, OptimisticConcurrencyException>
   bulkSet: (
     items: NonEmptyReadonlyArray<PM>
-  ) => Effect<never, OptimisticConcurrencyException, NonEmptyReadonlyArray<PM>>
+  ) => Effect<NonEmptyReadonlyArray<PM>, OptimisticConcurrencyException>
   /**
    * Requires the PM type, not Id, because various stores may need to calculate e.g partition keys.
    */
-  remove: (e: PM) => Effect<never, never, void>
+  remove: (e: PM) => Effect<void>
 }
 
 /**
@@ -102,9 +102,9 @@ export interface Store<PM extends PersistenceModelType<Id>, Id> {
 export class StoreMaker extends TagClass<StoreMaker, {
   make: <PM extends PersistenceModelType<Id>, Id extends string, R = never, E = never>(
     name: string,
-    seed?: Effect<R, E, Iterable<PM>>,
+    seed?: Effect<Iterable<PM>, E, R>,
     config?: StoreConfig<PM>
-  ) => Effect<R, E, Store<PM, Id>>
+  ) => Effect<Store<PM, Id>, E, R>
 }>() {
 }
 

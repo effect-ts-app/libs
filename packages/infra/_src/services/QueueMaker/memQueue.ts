@@ -18,8 +18,8 @@ export function makeMemQueue<
 >(
   queueName: string,
   queueDrainName: string,
-  schema: S.Schema<never, EvtE, Evt>,
-  drainSchema: S.Schema<never, DrainEvtE, DrainEvt>
+  schema: S.Schema<Evt, EvtE>,
+  drainSchema: S.Schema<DrainEvt, DrainEvtE>
 ) {
   return Effect.gen(function*($) {
     const mem = yield* $(MemQueue)
@@ -53,7 +53,7 @@ export function makeMemQueue<
           )
         }),
       makeDrain: <DrainE, DrainR>(
-        handleEvent: (ks: DrainEvt) => Effect<DrainR, DrainE, void>
+        handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>
       ) =>
         Effect.gen(function*($) {
           const silenceAndReportError = reportNonInterruptedFailure({ name: "MemQueue.drain." + queueDrainName })
@@ -92,6 +92,6 @@ export function makeMemQueue<
               .forkScoped
           )
         })
-    } satisfies QueueBase<Evt, DrainEvt>
-  })
+    } satisfies QueueBase<Evt, DrainEvt>;
+  });
 }

@@ -12,7 +12,7 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
   namespace: string,
   dir: string,
   name: string,
-  seed?: Effect<R, E, Iterable<PM>>,
+  seed?: Effect<Iterable<PM>, E, R>,
   defaultValues?: Partial<PM>
 ) {
   return Effect.gen(function*($) {
@@ -102,7 +102,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, R, E>(
         name: string,
-        seed?: Effect<R, E, Iterable<PM>>,
+        seed?: Effect<Iterable<PM>, E, R>,
         config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
@@ -142,8 +142,8 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
           }
           return s
         })
-    }
-  })
+    };
+  });
 }
 
 export function DiskStoreLayer(config: StorageConfig, dir: string) {

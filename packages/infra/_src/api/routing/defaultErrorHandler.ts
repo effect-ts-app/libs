@@ -30,7 +30,7 @@ const logRequestError = logError("Request")
 export function defaultBasicErrorHandler<R>(
   _req: HttpServerRequest,
   res: HttpServerResponse,
-  r2: Effect<R, ValidationError, HttpServerResponse>
+  r2: Effect<HttpServerResponse, ValidationError, R>
 ) {
   const sendError = (code: number) => (body: unknown) =>
     Effect.sync(() => res.setBody(HttpBody.unsafeJson(body)).setStatus(code))
@@ -54,12 +54,12 @@ const optimisticConcurrencySchedule = Schedule.once
 export function defaultErrorHandler<R>(
   req: HttpServerRequest,
   res: HttpServerResponse,
-  r2: Effect<R, SupportedErrors | JWTError, HttpServerResponse>
+  r2: Effect<HttpServerResponse, SupportedErrors | JWTError, R>
 ) {
   const r3 = req.method === "PATCH"
     ? r2.retry(optimisticConcurrencySchedule)
     : r2
-  const sendError = <R, From, To>(code: number, schema: Schema<R, From, To>) => (body: To) =>
+  const sendError = <R, From, To>(code: number, schema: Schema<To, From, R>) => (body: To) =>
     schema
       .encode(body)
       .orDie
