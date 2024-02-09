@@ -62,7 +62,7 @@ export const withDefaults = <Self extends S.Schema<any>>(s: Self) => {
 
 export const literal = <Literals extends ReadonlyArray<AST.LiteralValue>>(
   ...literals: Literals
-) => Object.assign(S.literal(...literals) as Schema<never, Literals[number]>, { literals })
+) => Object.assign(S.literal(...literals) as Schema<Literals[number]>, { literals })
 
 export type WithDefaults<Self extends S.Schema<any, any>> = (
   i: S.Schema.From<Self>,

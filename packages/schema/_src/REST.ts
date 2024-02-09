@@ -8,6 +8,7 @@ import type * as Methods from "./Methods.js"
 import type { FromStruct, Schema, StructFields, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
 import { GenericTag } from "effect/Context"
+import type * as Context from "effect/Context"
 import type { Simplify } from "effect/Types"
 import type { AST } from "./schema.js"
 
@@ -67,9 +68,9 @@ export interface QueryRequest<
   PPath extends `/${string}`
 > extends
   S.Class<
-    never,
     Simplify<FromStruct<Fields>>,
     Simplify<ToStruct<Fields>>,
+    never,
     Simplify<ToStructConstructor<Fields>>,
     M,
     Fields,
@@ -82,7 +83,7 @@ export interface QueryRequest<
   Headers: Headers
   path: PPath
   method: Methods.ReadMethods
-  Tag: Tag<M, M>
+  Tag: Context.Tag<M, M>
   [reqBrand]: typeof reqBrand
 }
 
@@ -97,9 +98,9 @@ export interface BodyRequest<
   PPath extends `/${string}`
 > extends
   S.Class<
-    never,
     Simplify<FromStruct<Fields>>,
     Simplify<ToStruct<Fields>>,
+    never,
     Simplify<ToStructConstructor<Fields>>,
     M,
     Fields,
@@ -112,7 +113,7 @@ export interface BodyRequest<
   Headers: Headers
   path: PPath
   method: Methods.WriteMethods
-  Tag: Tag<M, M>
+  Tag: Context.Tag<M, M>
   [reqBrand]: typeof reqBrand
 }
 
@@ -510,9 +511,9 @@ export interface Request<
   Method extends SupportedMethods
 > extends
   S.Class<
-    never,
-    Simplify<FromStruct<Fields>>,
     Simplify<ToStruct<Fields>>,
+    Simplify<FromStruct<Fields>>,
+    never,
     Simplify<ToStruct<Fields>>,
     M,
     Fields,

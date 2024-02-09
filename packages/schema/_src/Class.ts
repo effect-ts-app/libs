@@ -12,20 +12,21 @@ import pick from "lodash/pick.js"
 import type { ParseResult } from "./index.js"
 import { AST } from "./schema.js"
 
-export interface EnhancedClass<R, I, A, C, Self, Fields, Inherited>
-  extends S.Class<R, I, A, C, Self, Fields, Inherited>, PropsExtensions<Fields>
+export interface EnhancedClass<A, I, R, C, Self, Fields, Inherited = {}, Proto = {}>
+  extends S.Class<A, I, R, C, Self, Fields, Inherited, Proto>, PropsExtensions<Fields>
 {
   readonly extend: <Extended>() => <FieldsB extends S.StructFields>(
     fields: FieldsB
   ) => [unknown] extends [Extended] ? MissingSelfGeneric<"Base.extend">
     : EnhancedClass<
-      R | Schema.Context<FieldsB[keyof FieldsB]>,
-      Simplify<Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
       Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+      Simplify<Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
+      R | Schema.Context<FieldsB[keyof FieldsB]>,
       Simplify<Omit<C, keyof FieldsB> & ToStructConstructor<FieldsB>>,
       Extended,
       Simplify<Omit<Fields, keyof FieldsB> & FieldsB>,
-      Self
+      Self,
+      Proto
     >
 
   readonly transformOrFail: <Transformed>() => <
@@ -46,13 +47,14 @@ export interface EnhancedClass<R, I, A, C, Self, Fields, Inherited>
     ) => Effect.Effect<A, ParseResult.ParseIssue, R3>
   ) => [unknown] extends [Transformed] ? MissingSelfGeneric<"Base.transform">
     : EnhancedClass<
-      R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
-      I,
       Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+      I,
+      R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
       Simplify<Omit<C, keyof FieldsB> & ToStructConstructor<FieldsB>>,
       Transformed,
       Simplify<Omit<Fields, keyof FieldsB> & FieldsB>,
-      Self
+      Self,
+      Proto
     >
 
   readonly transformOrFailFrom: <Transformed>() => <
@@ -73,13 +75,14 @@ export interface EnhancedClass<R, I, A, C, Self, Fields, Inherited>
     ) => Effect.Effect<I, ParseResult.ParseIssue, R3>
   ) => [unknown] extends [Transformed] ? MissingSelfGeneric<"Base.transformFrom">
     : EnhancedClass<
-      R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
-      I,
       Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+      I,
+      R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
       Simplify<Omit<C, keyof FieldsB> & ToStructConstructor<FieldsB>>,
       Transformed,
       Simplify<Omit<Fields, keyof FieldsB> & FieldsB>,
-      Self
+      Self,
+      Proto
     >
 }
 
