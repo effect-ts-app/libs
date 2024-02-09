@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.183.2
+
+### Patch Changes
+
+- 8290a87: fix
+
 ## 0.183.1
 
 ### Patch Changes
