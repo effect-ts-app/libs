@@ -1,5 +1,91 @@
 # @effect-app/vue
 
+## 0.122.6
+
+### Patch Changes
+
+- 92601a5: add runtime ext
+- Updated dependencies [92601a5]
+  - @effect-app/vue@0.122.6
+
+## 0.122.5
+
+### Patch Changes
+
+- Updated dependencies [c497ff3]
+  - @effect-app/schema@0.183.4
+  - @effect-app/fluent-extensions@0.124.4
+  - @effect-app/prelude@0.149.5
+  - @effect-app/vue@0.122.5
+
+## 0.122.4
+
+### Patch Changes
+
+- Updated dependencies [3c4251e]
+  - @effect-app/prelude@0.149.4
+  - @effect-app/vue@0.122.4
+
+## 0.122.3
+
+### Patch Changes
+
+- Updated dependencies [65f8b7b]
+  - @effect-app/schema@0.183.3
+  - @effect-app/fluent-extensions@0.124.3
+  - @effect-app/prelude@0.149.3
+  - @effect-app/vue@0.122.3
+
+## 0.122.2
+
+### Patch Changes
+
+- Updated dependencies [8290a87]
+  - @effect-app/schema@0.183.2
+  - @effect-app/fluent-extensions@0.124.2
+  - @effect-app/prelude@0.149.2
+  - @effect-app/vue@0.122.2
+
+## 0.122.1
+
+### Patch Changes
+
+- Updated dependencies [d17dc32]
+  - @effect-app/schema@0.183.1
+  - @effect-app/fluent-extensions@0.124.1
+  - @effect-app/prelude@0.149.1
+  - @effect-app/vue@0.122.1
+
+## 0.122.0
+
+### Minor Changes
+
+- e5cdd42: update packages
+
+### Patch Changes
+
+- Updated dependencies [e5cdd42]
+  - @effect-app/fluent-extensions@0.124.0
+  - @effect-app/prelude@0.149.0
+  - @effect-app/schema@0.183.0
+  - @effect-app/core@0.126.0
+  - @effect-app/vue@0.122.0
+
+## 0.121.0
+
+### Minor Changes
+
+- update to latest Effect "minor"
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/fluent-extensions@0.123.0
+  - @effect-app/prelude@0.148.0
+  - @effect-app/schema@0.182.0
+  - @effect-app/core@0.125.0
+  - @effect-app/vue@0.121.0
+
 ## 0.120.0
 
 ### Minor Changes

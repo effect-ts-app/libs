@@ -26,19 +26,19 @@ export function makeLiveRecordCache() {
 export interface RecordCache extends ReturnType<typeof makeLiveRecordCache> {}
 
 // module tag
-export const RecordCache = Tag<RecordCache>()
+export const RecordCache = GenericTag<RecordCache>("@services/RecordCache")
 
 export const LiveRecordCache = Effect.sync(() => makeLiveRecordCache()).toLayer(RecordCache)
 
-const getM = <T>(type: string) => <R, E, A>(eff: (m: EffectMap<string, CachedRecord<T>>) => Effect<R, E, A>) =>
+const getM = <T>(type: string) => <R, E, A>(eff: (m: EffectMap<string, CachedRecord<T>>) => Effect<A, E, R>) =>
   Effect.gen(function*($) {
     const { get } = yield* $(RecordCache)
     return yield* $(get<T>(type).flatMap(eff))
   })
 
 export function find<R, RDecode, EDecode, E, EA, A>(
-  tryRead: (id: string) => Effect<R, E, Option<CachedRecord<EA>>>,
-  decode: (d: EA) => Effect<RDecode, EDecode, A>,
+  tryRead: (id: string) => Effect<Option<CachedRecord<EA>>, E, R>,
+  decode: (d: EA) => Effect<A, EDecode, RDecode>,
   type: string
 ) {
   const getCache = getM<A>(type)
@@ -63,7 +63,7 @@ export function find<R, RDecode, EDecode, E, EA, A>(
 }
 
 export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey>>(
-  save: (r: A, version: Option<Version>) => Effect<R, E, CachedRecord<A>>,
+  save: (r: A, version: Option<Version>) => Effect<CachedRecord<A>, E, R>,
   type: string
 ) {
   const getCache = getM<A>(type)
@@ -79,9 +79,9 @@ export function storeDirectly<R, E, TKey extends string, A extends DBRecord<TKey
 }
 
 export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<TKey>>(
-  tryRead: (id: string) => Effect<R, E, Option<CachedRecord<EA>>>,
-  save: (r: A, version: Option<Version>) => Effect<R, E, CachedRecord<A>>,
-  lock: (id: string) => Effect<R2 | Scope, E2, unknown>,
+  tryRead: (id: string) => Effect<Option<CachedRecord<EA>>, E, R>,
+  save: (r: A, version: Option<Version>) => Effect<CachedRecord<A>, E, R>,
+  lock: (id: string) => Effect<unknown, E2, R2 | Scope>,
   type: string
 ) {
   const getCache = getM<A>(type)

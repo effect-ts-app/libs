@@ -14,7 +14,7 @@ export const reportQueueError = <E>(cause: Cause<E>, extras?: Record<string, unk
  *
  * @tsplus getter effect/io/Effect forkDaemonReportQueue
  */
-export function forkDaemonReportQueue<R, E, A>(self: Effect<R, E, A>) {
+export function forkDaemonReportQueue<R, E, A>(self: Effect<A, E, R>) {
   return self.tapErrorCause(reportNonInterruptedFailureCause({})).fork.daemonChildren
 }
 
@@ -24,19 +24,19 @@ export const reportFatalQueueError = reportError(
 
 export function reportNonInterruptedFailure(context?: Record<string, unknown>) {
   const report = reportNonInterruptedFailureCause(context)
-  return <R, E, A>(inp: Effect<R, E, A>): Effect<R, never, Exit<E, A>> =>
+  return <R, E, A>(inp: Effect<A, E, R>): Effect<Exit<A, E>, never, R> =>
     inp
       .exit
       .flatMap((result) =>
         result.match({ onFailure: (cause) => report(cause).map(() => result), onSuccess: () => Effect.sync(() => result) })
-      )
+      );
 }
 
 export function reportNonInterruptedFailureCause(context?: Record<string, unknown>) {
-  return <E>(cause: Cause<E>): Effect<never, never, void> => {
+  return <E>(cause: Cause<E>): Effect<void> => {
     if (cause.isInterrupted()) {
       return (cause as Cause<never>).failCause
     }
     return reportQueueError(cause, context)
-  }
+  };
 }

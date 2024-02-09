@@ -7,7 +7,7 @@ export interface References {
   ref: Ref<Map<string, SubSchema>>
 }
 
-export const References = Tag<References>()
+export const References = GenericTag<References>("@services/References")
 
 export class UnsupportedOperation {
   readonly _tag = "UnsupportedOperation"
@@ -22,7 +22,7 @@ export interface ConfigExtensionMeta {
   openapiMeta?: any
 }
 
-export type Schema = Effect<References, never, JSONSchema | SubSchema>
+export type Schema = Effect<JSONSchema | SubSchema, never, References>
 
 export const SchemaURI = "SchemaURI" as const
 export type SchemaURI = typeof SchemaURI

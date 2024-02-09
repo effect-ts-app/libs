@@ -15,7 +15,7 @@ function makeInternalRequestContext(name: string) {
   })
 }
 
-const withRequestSpan = <R, E, A>(f: Effect<R, E, A>) =>
+const withRequestSpan = <R, E, A>(f: Effect<A, E, R>) =>
   RequestContextContainer
     .get
     .andThen((ctx) =>
@@ -50,7 +50,7 @@ const RequestContextStartLive = (requestContext: RequestContext | string) =>
 /**
  * @tsplus fluent effect/io/Effect setupRequestContext
  */
-export function setupRequestContext<R, E, A>(self: Effect<R, E, A>, requestContext: RequestContext | string) {
+export function setupRequestContext<R, E, A>(self: Effect<A, E, R>, requestContext: RequestContext | string) {
   return self
     .pipe(withRequestSpan)
     .provide(RequestContextStartLive(requestContext))
@@ -62,7 +62,7 @@ const UpdateRequestContextLive = (f: (rc: RequestContext) => RequestContext) =>
 /**
  * @tsplus fluent effect/io/Effect updateRequestContext
  */
-export function updateRequestContext<R, E, A>(self: Effect<R, E, A>, f: (rc: RequestContext) => RequestContext) {
+export function updateRequestContext<R, E, A>(self: Effect<A, E, R>, f: (rc: RequestContext) => RequestContext) {
   return self
     // .provideServiceEffect(RequestContext.Tag, RequestContextContainer.get)
     .provide(UpdateRequestContextLive(f))

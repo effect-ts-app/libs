@@ -5,20 +5,20 @@ export const OperationId = StringId
 
 @useClassFeaturesForSchema
 export class OperationProgress extends ExtendedClass<
-  OperationProgress.From,
-  OperationProgress
+  OperationProgress,
+  OperationProgress.From
 >()({
   completed: NonNegativeInt,
   total: NonNegativeInt
 }) {}
 
 @useClassFeaturesForSchema
-export class Success extends ExtendedTaggedClass<Success.From, Success>()("Success", {
+export class Success extends ExtendedTaggedClass<Success, Success.From>()("Success", {
   message: nullable(NonEmptyString2k).withDefault
 }) {}
 
 @useClassFeaturesForSchema
-export class Failure extends ExtendedTaggedClass<Failure.From, Failure>()("Failure", {
+export class Failure extends ExtendedTaggedClass<Failure, Failure.From>()("Failure", {
   message: nullable(NonEmptyString2k).withDefault
 }) {}
 
@@ -26,10 +26,10 @@ export const OperationResult = S.union(Success, Failure)
 export type OperationResult = Schema.To<typeof OperationResult>
 
 @useClassFeaturesForSchema
-export class Operation extends ExtendedClass<Operation.From, Operation>()({
+export class Operation extends ExtendedClass<Operation, Operation.From>()({
   id: OperationId,
-  progress: OperationProgress.optional(),
-  result: OperationResult.optional(),
+  progress: S.optional(OperationProgress),
+  result: S.optional(OperationResult),
   createdAt: S.Date.withDefault,
   updatedAt: nullable(S.Date).withDefault
 }) {}

@@ -7,7 +7,7 @@ export const makeCosmosClient = (url: string, dbName: string) =>
 
 export interface CosmosClient extends Effect.Success<ReturnType<typeof makeCosmosClient>> {}
 
-export const CosmosClient = Tag<CosmosClient>()
+export const CosmosClient = GenericTag<CosmosClient>("@services/CosmosClient")
 
 export const db = CosmosClient.map((_) => _.db)
 

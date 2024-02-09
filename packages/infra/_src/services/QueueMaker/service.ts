@@ -4,11 +4,11 @@ import type { ContextMapContainer } from "../Store/ContextMapContainer.js"
 
 export interface QueueBase<Evt, DrainEvt> {
   makeDrain: <DrainE, DrainR>(
-    makeHandleEvent: (ks: DrainEvt) => Effect<DrainR, DrainE, void>
-  ) => Effect<Scope | RequestContextContainer | ContextMapContainer | DrainR, never, void>
+    makeHandleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>
+  ) => Effect<void, never, Scope | RequestContextContainer | ContextMapContainer | DrainR>
   publish: (
     ...messages: NonEmptyReadonlyArray<Evt>
-  ) => Effect<never, never, void>
+  ) => Effect<void>
 }
 
 /**

@@ -70,7 +70,7 @@ export interface AnyOps<T> {
 /**
  * @tsplus fluent effect/io/Effect debug
  */
-export function Effect_debug<R, E, A>(self: Effect<R, E, A>, name: string) {
+export function Effect_debug<R, E, A>(self: Effect<A, E, R>, name: string) {
   return self.tap((a) => {
     let r: string | A = a
     try {
@@ -83,7 +83,7 @@ export function Effect_debug<R, E, A>(self: Effect<R, E, A>, name: string) {
 /**
  * @tsplus fluent effect/io/Effect debugUnsafe
  */
-export function Effect_debugUnsafe<R, E, A>(self: Effect<R, E, A>, name: string) {
+export function Effect_debugUnsafe<R, E, A>(self: Effect<A, E, R>, name: string) {
   return self.tap((a) => Effect.sync(() => console.log(name, a)))
 }
 
@@ -278,11 +278,11 @@ export function RecordPretty<TT extends object>(o: ObjectOps<TT>) {
 }
 
 export function makeAzureFriendly(path: string) {
-  return path.replace(/\//g, "___SL@SH___")
+  return path.replace(/\//g, "___SL@SH___");
 }
 
 export function undoAzureFriendly<T extends string>(path: T): T {
-  return path.replace(/___SL@SH___/g, "/") as T
+  return path.replace(/___SL@SH___/g, "/") as T;
 }
 
 export function arrayMove<T>(

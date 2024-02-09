@@ -1,5 +1,17 @@
 # @effect-app/cli
 
+## 0.46.0
+
+### Minor Changes
+
+- e5cdd42: update packages
+
+## 0.45.0
+
+### Minor Changes
+
+- update to latest Effect "minor"
+
 ## 0.44.0
 
 ### Minor Changes

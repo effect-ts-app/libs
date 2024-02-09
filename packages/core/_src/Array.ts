@@ -251,7 +251,7 @@ export function ChunkToNonEmptyReadonlyArray<A>(c: Chunk<A>) {
 /**
  * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffect
  */
-export function ext_NAforEach<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A) => Effect<R, E, B>) {
+export function ext_NAforEach<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A) => Effect<B, E, R>) {
   return T.forEach(as, f).map((_) => _.toNonEmptyArray.value!)
 }
 

@@ -33,7 +33,7 @@
  * @tsplus pipeable effect/io/Effect/Semaphore withPermitsDuration
  */
 export function SEM_withPermitsDuration(permits: number, duration: Duration) {
-  return (self: Semaphore): <R, E, A>(effect: Effect<R, E, A>) => Effect<R, E, A> => {
+  return (self: Semaphore): <R, E, A>(effect: Effect<A, E, R>) => Effect<A, E, R> => {
     return (effect) =>
       Effect.uninterruptibleMask(
         (restore) =>
@@ -47,7 +47,7 @@ export function SEM_withPermitsDuration(permits: number, duration: Duration) {
                 )
             )
       )
-  }
+  };
 }
 
 /**
@@ -56,8 +56,8 @@ export function SEM_withPermitsDuration(permits: number, duration: Duration) {
  */
 export function batchPar<R, E, A, R2, E2, A2, T>(
   n: number,
-  forEachItem: (item: T, iWithinBatch: number, batchI: number) => Effect<R, E, A>,
-  forEachBatch: (a: NonEmptyArray<A>, i: number) => Effect<R2, E2, A2>
+  forEachItem: (item: T, iWithinBatch: number, batchI: number) => Effect<A, E, R>,
+  forEachBatch: (a: NonEmptyArray<A>, i: number) => Effect<A2, E2, R2>
 ) {
   return (items: Iterable<T>) =>
     items
@@ -77,8 +77,8 @@ export function batchPar<R, E, A, R2, E2, A2, T>(
  */
 export function batch<R, E, A, R2, E2, A2, T>(
   n: number,
-  forEachItem: (item: T, iWithinBatch: number, batchI: number) => Effect<R, E, A>,
-  forEachBatch: (a: NonEmptyArray<A>, i: number) => Effect<R2, E2, A2>
+  forEachItem: (item: T, iWithinBatch: number, batchI: number) => Effect<A, E, R>,
+  forEachBatch: (a: NonEmptyArray<A>, i: number) => Effect<A2, E2, R2>
 ) {
   return (items: Iterable<T>) =>
     items
@@ -120,8 +120,8 @@ export function naiveRateLimit(
   d: DUR
 ) {
   return <T>(items: Iterable<T>) => (<R, E, A, R2, E2, A2>(
-    forEachItem: (i: T) => Effect<R, E, A>,
-    forEachBatch: (a: A[]) => Effect<R2, E2, A2>
+    forEachItem: (i: T) => Effect<A, E, R>,
+    forEachBatch: (a: A[]) => Effect<A2, E2, R2>
   ) =>
     items
       .chunk(n)
@@ -132,5 +132,5 @@ export function naiveRateLimit(
               .forEachEffect(forEachItem, { concurrency: n })
               .flatMap(forEachBatch)
           )
-      ))
+      ));
 }

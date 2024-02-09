@@ -13,8 +13,8 @@ const ttl = 10 * 1000
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect<REncode, never, EA>,
-    decode: (d: EA) => Effect<RDecode, EDecode, A>,
+    encode: (record: A) => Effect<EA, never, REncode>,
+    decode: (d: EA) => Effect<A, EDecode, RDecode>,
     schemaVersion: string,
     makeIndexKey: (r: A) => Index
   ) => {
@@ -166,13 +166,13 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
     function getIdxLockKey(index: Index) {
       return `v${schemaVersion}.locks.${getIndexName(type, index.doc)}_${index.key}`
     }
-  }
+  };
 
   function hmSetRec(key: string, val: RedisSerializedDBRecord) {
     const enc = RedisSerializedDBRecord.encodeSync(val)
     return RedisClient.flatMap(({ client }) =>
       Effect
-        .async<never, ConnectionException, void>((res) => {
+        .async<void, ConnectionException>((res) => {
           client.hmset(
             key,
             "version",
@@ -188,7 +188,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
           )
         })
         .uninterruptible
-    )
+    );
   }
 }
 

@@ -14,8 +14,8 @@ const parseSDB = SerializedDBRecord.decodeUnknown
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect<REncode, never, EA>,
-    decode: (d: EA) => Effect<RDecode, EDecode, A>
+    encode: (record: A) => Effect<EA, never, REncode>,
+    decode: (d: EA) => Effect<A, EDecode, RDecode>
   ) => {
     return {
       find: simpledb.find(find, decode, type),
@@ -69,7 +69,7 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         .flatMap((serialised) => storage.set(getRecordName(type, record.id), serialised))
         .map(() => ({ version, data: record } as CachedRecord<A>))
     }
-  }
+  };
 }
 
 function bogusLock() {

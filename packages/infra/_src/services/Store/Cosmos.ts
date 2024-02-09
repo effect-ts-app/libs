@@ -30,7 +30,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
     return {
       make: <Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
         name: string,
-        seed?: Effect<R, E, Iterable<PM>>,
+        seed?: Effect<Iterable<PM>, E, R>,
         config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
@@ -433,8 +433,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
           }
           return s
         })
-    }
-  })
+    };
+  });
 }
 
 export function CosmosStoreLayer(cfg: StorageConfig) {

@@ -24,11 +24,7 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
           yield* $(Effect.logDebug("Sending email").annotateLogs("msg", inspect(renderedMsg, false, 5)))
 
           const ret = yield* $(
-            Effect.async<
-              never,
-              Error | sgMail.ResponseError,
-              [sgMail.ClientResponse, Record<string, unknown>]
-            >(
+            Effect.async<[sgMail.ClientResponse, Record<string, unknown>], Error | sgMail.ResponseError>(
               (cb) =>
                 void sgMail.send(renderedMsg, false, (err, result) =>
                   err
@@ -47,9 +43,9 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
           // const { trackEvent } = yield* $(AiContextService)
           // trackEvent(event)
           return ret
-        })
+        });
       }
-    }
+    };
   })
 
 /**

@@ -12,20 +12,21 @@ import pick from "lodash/pick.js"
 import type { ParseResult } from "./index.js"
 import { AST } from "./schema.js"
 
-export interface EnhancedClass<R, I, A, C, Self, Fields, Inherited>
-  extends S.Class<R, I, A, C, Self, Fields, Inherited>, PropsExtensions<Fields>
+export interface EnhancedClass<A, I, R, C, Self, Fields, Inherited = {}, Proto = {}>
+  extends S.Class<A, I, R, C, Self, Fields, Inherited, Proto>, PropsExtensions<Fields>
 {
   readonly extend: <Extended>() => <FieldsB extends S.StructFields>(
     fields: FieldsB
   ) => [unknown] extends [Extended] ? MissingSelfGeneric<"Base.extend">
     : EnhancedClass<
-      R | Schema.Context<FieldsB[keyof FieldsB]>,
-      Simplify<Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
       Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+      Simplify<Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
+      R | Schema.Context<FieldsB[keyof FieldsB]>,
       Simplify<Omit<C, keyof FieldsB> & ToStructConstructor<FieldsB>>,
       Extended,
       Simplify<Omit<Fields, keyof FieldsB> & FieldsB>,
-      Self
+      Self,
+      Proto
     >
 
   readonly transformOrFail: <Transformed>() => <
@@ -38,21 +39,22 @@ export interface EnhancedClass<R, I, A, C, Self, Fields, Inherited>
       input: A,
       options: ParseOptions,
       ast: AST.Transform
-    ) => Effect.Effect<R2, ParseResult.ParseIssue, Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+    ) => Effect.Effect<Omit<A, keyof FieldsB> & ToStruct<FieldsB>, ParseResult.ParseIssue, R2>,
     encode: (
       input: Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
       options: ParseOptions,
       ast: AST.Transform
-    ) => Effect.Effect<R3, ParseResult.ParseIssue, A>
+    ) => Effect.Effect<A, ParseResult.ParseIssue, R3>
   ) => [unknown] extends [Transformed] ? MissingSelfGeneric<"Base.transform">
     : EnhancedClass<
-      R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
-      I,
       Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+      I,
+      R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
       Simplify<Omit<C, keyof FieldsB> & ToStructConstructor<FieldsB>>,
       Transformed,
       Simplify<Omit<Fields, keyof FieldsB> & FieldsB>,
-      Self
+      Self,
+      Proto
     >
 
   readonly transformOrFailFrom: <Transformed>() => <
@@ -65,21 +67,22 @@ export interface EnhancedClass<R, I, A, C, Self, Fields, Inherited>
       input: I,
       options: ParseOptions,
       ast: AST.Transform
-    ) => Effect.Effect<R2, ParseResult.ParseIssue, Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
+    ) => Effect.Effect<Omit<I, keyof FieldsB> & FromStruct<FieldsB>, ParseResult.ParseIssue, R2>,
     encode: (
       input: Simplify<Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
       options: ParseOptions,
       ast: AST.Transform
-    ) => Effect.Effect<R3, ParseResult.ParseIssue, I>
+    ) => Effect.Effect<I, ParseResult.ParseIssue, R3>
   ) => [unknown] extends [Transformed] ? MissingSelfGeneric<"Base.transformFrom">
     : EnhancedClass<
-      R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
-      I,
       Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+      I,
+      R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
       Simplify<Omit<C, keyof FieldsB> & ToStructConstructor<FieldsB>>,
       Transformed,
       Simplify<Omit<Fields, keyof FieldsB> & FieldsB>,
-      Self
+      Self,
+      Proto
     >
 }
 
@@ -110,13 +113,12 @@ export function include_<
 export const Class: <Self>() => <Fields extends S.StructFields>(
   fields: Fields
 ) => EnhancedClass<
-  Schema.Context<Fields[keyof Fields]>,
-  Simplify<FromStruct<Fields>>,
   Simplify<ToStruct<Fields>>,
+  Simplify<FromStruct<Fields>>,
+  Schema.Context<Fields[keyof Fields]>,
   Simplify<ToStructConstructor<Fields>>,
   Self,
-  Fields,
-  {}
+  Fields
 > = () => (fields) => {
   const cls = S.Class as any
   return class extends cls()(fields) {
@@ -130,9 +132,9 @@ export const TaggedClass: <Self>() => <Tag extends string, Fields extends S.Stru
   tag: Tag,
   fields: Fields
 ) => EnhancedClass<
-  Schema.Context<Fields[keyof Fields]>,
-  Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
   Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
+  Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
+  Schema.Context<Fields[keyof Fields]>,
   Simplify<ToStructConstructor<Fields>>,
   Self,
   Fields,
@@ -146,13 +148,13 @@ export const TaggedClass: <Self>() => <Tag extends string, Fields extends S.Stru
   } as any
 }
 
-export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields>(
+export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.StructFields>(
   fields: Fields
 ) =>
   & EnhancedClass<
-    Schema.Context<Fields[keyof Fields]>,
-    SelfFrom,
     Simplify<ToStruct<Fields>>,
+    SelfFrom,
+    Schema.Context<Fields[keyof Fields]>,
     Simplify<ToStructConstructor<Fields>>,
     Self,
     Fields,
@@ -160,20 +162,20 @@ export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields
   >
   & {
     readonly structFrom: Schema<
-      Schema.Context<Fields[keyof Fields]>,
+      Simplify<ToStruct<Fields>>,
       Simplify<FromStruct<Fields>>,
-      Simplify<ToStruct<Fields>>
+      Schema.Context<Fields[keyof Fields]>
     >
   } = Class as any
 
-export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fields extends S.StructFields>(
+export const ExtendedTaggedClass: <Self, SelfFrom>() => <Tag extends string, Fields extends S.StructFields>(
   tag: Tag,
   fields: Fields
 ) =>
   & EnhancedClass<
-    Schema.Context<Fields[keyof Fields]>,
-    SelfFrom,
     Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
+    SelfFrom,
+    Schema.Context<Fields[keyof Fields]>,
     Simplify<ToStructConstructor<Fields>>,
     Self,
     Fields,
@@ -181,9 +183,9 @@ export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fie
   >
   & {
     readonly structFrom: Schema<
-      Schema.Context<Fields[keyof Fields]>,
+      Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
       Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
-      Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>
+      Schema.Context<Fields[keyof Fields]>
     >
   } = TaggedClass as any
 
@@ -282,8 +284,8 @@ export function FromClassBase<T>() {
 export function FromClass<Cls>() {
   return FromClassBase<
     S.Schema.From<
-      Cls extends { structFrom: S.Schema<any, any> } ? Cls["structFrom"]
-        : Cls extends { struct: S.Schema<any, any> } ? Cls["struct"]
+      Cls extends { structFrom: S.Schema<any, any, any> } ? Cls["structFrom"]
+        : Cls extends { struct: S.Schema<any, any, any> } ? Cls["struct"]
         : never
     >
   >()

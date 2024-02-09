@@ -158,10 +158,10 @@ export function foldHttpError<A, B, ErrorBody>(
 }
 
 export interface HttpHeaders extends Record<string, string> {}
-export const HttpHeaders = Tag<HttpHeaders>()
+export const HttpHeaders = GenericTag<HttpHeaders>("@services/HttpHeaders")
 const accessHttpHeaders_ = Effect.contextWith((env: Context<never>) => env.getOption(HttpHeaders))
 export function accessHttpHeadersM<R, E, A>(
-  eff: (h: Option<HttpHeaders>) => Effect<R, E, A>
+  eff: (h: Option<HttpHeaders>) => Effect<A, E, R>
 ) {
   return accessHttpHeaders_.flatMap(eff)
 }
@@ -177,11 +177,11 @@ export interface HttpOps {
     responseType: Resp,
     headers: Record<string, string>,
     body: RequestBodyTypes[Req][M]
-  ): Effect<never, HttpError<string>, Response<ResponseTypes[Resp][M]>>
+  ): Effect<Response<ResponseTypes[Resp][M]>, HttpError<string>>
 }
 
 export interface Http extends HttpOps {}
-export const Http = Tag<HttpOps>()
+export const Http = GenericTag<HttpOps>("@services/Http")
 // const accessHttp = Effect.accessService(Http)
 
 export type RequestF = <
@@ -195,9 +195,9 @@ export type RequestF = <
   responseType: Resp,
   body?: RequestBodyTypes[Req][M]
 ) => Effect<
-  RequestEnv,
+  Response<ResponseTypes[Resp][M]>,
   HttpError<string>,
-  Response<ResponseTypes[Resp][M]>
+  RequestEnv
 >
 
 export type RequestMiddleware = (request: RequestF) => RequestF
@@ -206,11 +206,11 @@ export interface MiddlewareStack {
   stack: RequestMiddleware[] // todo; is optional.
 }
 
-export const MiddlewareStack = Tag<MiddlewareStack>()
+export const MiddlewareStack = GenericTag<MiddlewareStack>("@services/MiddlewareStack")
 
 const accessMiddlewareStack_ = Effect.contextWith((env: Context<never>) => env.getOption(MiddlewareStack))
 export function accessMiddlewareStackM<R, E, A>(
-  eff: (h: Option<MiddlewareStack>) => Effect<R, E, A>
+  eff: (h: Option<MiddlewareStack>) => Effect<A, E, R>
 ) {
   return accessMiddlewareStack_.flatMap(eff)
 }
@@ -254,7 +254,7 @@ export function requestInner<
   requestType: Req,
   responseType: Resp,
   body: RequestBodyTypes[Req][M]
-): Effect<RequestEnv, HttpError<string>, Response<ResponseTypes[Resp][M]>> {
+): Effect<Response<ResponseTypes[Resp][M]>, HttpError<string>, RequestEnv> {
   return accessHttpHeadersM((headers) =>
     Http.flatMap((h) =>
       h.request<M, Req, Resp>(
@@ -277,9 +277,9 @@ export function request<Req extends RequestType, Resp extends ResponseType>(
   url: string,
   body?: RequestBodyTypes[Req]["GET"]
 ) => Effect<
-  RequestEnv,
+  Response<ResponseTypes[Resp]["GET"]>,
   HttpError<string>,
-  Response<ResponseTypes[Resp]["GET"]>
+  RequestEnv
 >
 export function request<Req extends RequestType, Resp extends ResponseType>(
   method: "DELETE",
@@ -289,9 +289,9 @@ export function request<Req extends RequestType, Resp extends ResponseType>(
   url: string,
   body?: RequestBodyTypes[Req]["DELETE"]
 ) => Effect<
-  RequestEnv,
+  Response<ResponseTypes[Resp]["DELETE"]>,
   HttpError<string>,
-  Response<ResponseTypes[Resp]["DELETE"]>
+  RequestEnv
 >
 export function request<
   M extends Method,
@@ -305,9 +305,9 @@ export function request<
   url: string,
   body: RequestBodyTypes[Req][M]
 ) => Effect<
-  RequestEnv,
+  Response<ResponseTypes[Resp][M]>,
   HttpError<string>,
-  Response<ResponseTypes[Resp][M]>
+  RequestEnv
 >
 export function request<
   M extends Method,
@@ -321,9 +321,9 @@ export function request<
   url: string,
   body: RequestBodyTypes[Req][M]
 ) => Effect<
-  RequestEnv,
+  Response<ResponseTypes[Resp][M]>,
   HttpError<string>,
-  Response<ResponseTypes[Resp][M]>
+  RequestEnv
 > {
   return (url, body) =>
     accessMiddlewareStackM((s) =>
@@ -413,8 +413,8 @@ export const delBinaryGetBinary =
 export function withHeaders(
   headers: Record<string, string>,
   replace = false
-): <R, E, A>(eff: Effect<R, E, A>) => Effect<R, E, A> {
-  return <R, E, A>(eff: Effect<R, E, A>) =>
+): <R, E, A>(eff: Effect<A, E, R>) => Effect<A, E, R> {
+  return <R, E, A>(eff: Effect<A, E, R>) =>
     replace
       ? Effect.contextWithEffect((r: Context<R>) => eff.provide(Context.add(HttpHeaders, headers)(r)))
       : Effect.contextWithEffect((r: Context<R>) =>
@@ -424,7 +424,7 @@ export function withHeaders(
             ...headers
           })(r)
         )
-      )
+      );
 }
 
 export function withPathHeaders(

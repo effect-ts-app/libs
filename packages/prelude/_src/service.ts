@@ -39,9 +39,12 @@ export function make<T extends ServiceTagged<any>, I = T>(_: Tag<I, T>, t: Omit<
 export const TagTypeId: TagTypeIdOriginal = Symbol.for("effect/Context/Tag") as unknown as TagTypeIdOriginal
 export type TagTypeId = typeof TagTypeId
 
-export function assignTag<Id, Service = Id>(key?: unknown) {
+let i = 0
+const randomId = () => "unknown-service-" + i++
+
+export function assignTag<Id, Service = Id>(key?: string) {
   return <S extends object>(cls: S): S & Tag<Id, Service> => {
-    const tag = Tag<Id, Service>(key)
+    const tag = GenericTag<Id, Service>(key ?? randomId())
     const t = Object.assign(cls, Object.getPrototypeOf(tag), tag)
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 4 // TODO
@@ -58,7 +61,7 @@ export function assignTag<Id, Service = Id>(key?: unknown) {
   }
 }
 
-export function TagClass<Id, ServiceImpl, Service = Id>(key?: unknown) {
+export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
   const c: { new(service: ServiceImpl): Readonly<ServiceImpl> } = class {
     constructor(service: ServiceImpl) {
       Object.assign(this, service)
@@ -71,13 +74,13 @@ export function TagClass<Id, ServiceImpl, Service = Id>(key?: unknown) {
 
 export const TagClassMake = <Id, Service = Id>() =>
 <ServiceImpl, R, E>(
-  make: Effect<R, E, ServiceImpl>,
-  key?: unknown
+  make: Effect<ServiceImpl, E, R>,
+  key?: string
 ) => {
   const c: {
     new(service: ServiceImpl): Readonly<ServiceImpl>
-    toLayer: () => Layer<R, E, Service>
-    toLayerScoped: () => Layer<Exclude<R, Scope>, E, Service>
+    toLayer: () => Layer<Service, E, R>
+    toLayerScoped: () => Layer<Service, E, Exclude<R, Scope>>
   } = class {
     constructor(service: ServiceImpl) {
       Object.assign(this, service)
@@ -96,7 +99,7 @@ export const TagClassMake = <Id, Service = Id>() =>
   return assignTag<Id, Service>(key)(c)
 }
 
-export function TagClassLegacy<Id, Service = Id>(key?: unknown) {
+export function TagClassLegacy<Id, Service = Id>(key?: string) {
   abstract class TagClassLegacy {}
 
   return assignTag<Id, Service>(key)(TagClassLegacy)

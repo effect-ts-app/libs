@@ -15,9 +15,9 @@ export * from "effect/Effect"
  * @tsplus fluent effect/io/Effect flatMapOpt
  */
 export function flatMapOption<R, E, A, R2, E2, A2>(
-  self: Effect<R, E, Option<A>>,
-  fm: (a: A) => Effect<R2, E2, A2>
-): Effect<R | R2, E | E2, Option<A2>> {
+  self: Effect<Option<A>, E, R>,
+  fm: (a: A) => Effect<A2, E2, R2>
+): Effect<Option<A2>, E | E2, R | R2> {
   return self.flatMap((d) =>
     d.match({
       onNone: () => Effect.sync(() => Option.none),
@@ -31,9 +31,9 @@ export function flatMapOption<R, E, A, R2, E2, A2>(
  * @tsplus fluent effect/io/Effect tapOpt
  */
 export function tapOption<R, E, A, R2, E2, A2>(
-  self: Effect<R, E, Option<A>>,
-  fm: (a: A) => Effect<R2, E2, A2>
-): Effect<R | R2, E | E2, Option<A>> {
+  self: Effect<Option<A>, E, R>,
+  fm: (a: A) => Effect<A2, E2, R2>
+): Effect<Option<A>, E | E2, R | R2> {
   return self.flatMap((d) =>
     d.match({
       onNone: () => Effect.sync(() => Option.none),
@@ -47,8 +47,8 @@ export function tapOption<R, E, A, R2, E2, A2>(
  * @tsplus fluent effect/io/Effect zipRightOpt
  */
 export function zipRightOption<R, E, A, R2, E2, A2>(
-  self: Effect<R, E, Option<A>>,
-  fm: Effect<R2, E2, A2>
+  self: Effect<Option<A>, E, R>,
+  fm: Effect<A2, E2, R2>
 ) {
   return self.flatMap((d) =>
     d.match({
@@ -63,9 +63,9 @@ export function zipRightOption<R, E, A, R2, E2, A2>(
  * @tsplus fluent effect/io/Effect mapOpt
  */
 export function mapOption<R, E, A, A2>(
-  self: Effect<R, E, Option<A>>,
+  self: Effect<Option<A>, E, R>,
   fm: (a: A) => A2
-): Effect<R, E, Option<A2>> {
+): Effect<Option<A2>, E, R> {
   return self.map((d) =>
     d.match({
       onNone: () => Option.none,
@@ -81,7 +81,7 @@ export function tryCatchPromiseWithInterrupt<E, A>(
   promise: LazyArg<Promise<A>>,
   onReject: (reason: unknown) => E,
   canceller: () => void
-): Effect<never, E, A> {
+): Effect<A, E> {
   return Effect.asyncEither((resolve) => {
     promise()
       .then((x) => pipe(x, Effect.succeed, resolve))
@@ -95,7 +95,7 @@ export function tryCatchPromiseWithInterrupt<E, A>(
  * taps the Effect, returning A.
  */
 export function tupleTap<A, B, R, E, C>(
-  f: (b: B) => (a: A) => Effect<R, E, C>
+  f: (b: B) => (a: A) => Effect<C, E, R>
 ) {
   return (t: readonly [A, B]) => Effect.sync(() => t[0]).tap(f(t[1]))
 }
@@ -104,24 +104,24 @@ export function tupleTap<A, B, R, E, C>(
  * Takes [A, B], applies it to an Effect function,
  * taps the Effect, returning A.
  */
-export function tupleTap_<A, B, R, E, C>(f: (a: A, b: B) => Effect<R, E, C>) {
+export function tupleTap_<A, B, R, E, C>(f: (a: A, b: B) => Effect<C, E, R>) {
   return tupleTap(curry(f))
 }
 
-export function ifDiffR<I, R, E, A>(f: (i: I) => Effect<R, E, A>) {
+export function ifDiffR<I, R, E, A>(f: (i: I) => Effect<A, E, R>) {
   return (n: I, orig: I) => ifDiff_(n, orig, f)
 }
 
 export function ifDiff_<I, R, E, A>(
   n: I,
   orig: I,
-  f: (i: I) => Effect<R, E, A>
+  f: (i: I) => Effect<A, E, R>
 ) {
   return n !== orig ? f(n) : Effect.unit
 }
 
 export function ifDiff<I, R, E, A>(n: I, orig: I) {
-  return (f: (i: I) => Effect<R, E, A>) => ifDiff_(n, orig, f)
+  return (f: (i: I) => Effect<A, E, R>) => ifDiff_(n, orig, f);
 }
 
 // NOTE: await extension doesnt work via tsplus somehow
@@ -137,20 +137,20 @@ export const await_ = Def.await
  */
 export function modifyWithPermitWithEffect<A>(ref: Ref<A>, semaphore: Semaphore) {
   const withPermit = semaphore.withPermits(1)
-  return <R, E, A2>(mod: (a: A) => Effect<R, E, readonly [A2, A]>) =>
+  return <R, E, A2>(mod: (a: A) => Effect<readonly [A2, A], E, R>) =>
     withPermit(
       ref
         .get
         .flatMap(mod)
         .tap(([, _]) => ref.set(_))
         .map(([_]) => _)
-    )
+    );
 }
 
 /**
  * @tsplus getter Iterable joinAll
  * @tsplus static effect/io/Effect.Ops joinAll
  */
-export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<E, A>>): Effect<never, E, readonly A[]> {
+export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<A, E>>): Effect<readonly A[], E> {
   return Fiber.join(Fiber.all(fibers))
 }

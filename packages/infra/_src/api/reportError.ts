@@ -9,7 +9,7 @@ import { logError, reportError } from "../errorReporter.js"
  *
  * @tsplus getter effect/io/Effect forkDaemonReportRequest
  */
-export function forkDaemonReportRequest<R, E, A>(self: Effect<R, E, A>) {
+export function forkDaemonReportRequest<R, E, A>(self: Effect<A, E, R>) {
   return self
     .tapErrorCause(reportError("Request"))
     .fork
@@ -25,7 +25,7 @@ export function forkDaemonReportRequest<R, E, A>(self: Effect<R, E, A>) {
  *
  * @tsplus getter effect/io/Effect forkDaemonReportRequestUnexpected
  */
-export function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<R, E, A>) {
+export function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<A, E, R>) {
   return self
     .tapErrorCause((cause) =>
       cause.isInterruptedOnly() || cause.isDie()

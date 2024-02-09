@@ -57,7 +57,7 @@ function logQuery(f: FilterArgs<any, any>, defaultValues?: any) {
 export function makeMemoryStoreInt<Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
   modelName: string,
   namespace: string,
-  seed?: Effect<R, E, Iterable<PM>>,
+  seed?: Effect<Iterable<PM>, E, R>,
   _defaultValues?: Partial<PM>
 ) {
   return Effect.gen(function*($) {
@@ -166,7 +166,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
 export const makeMemoryStore = () => ({
   make: <Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
     modelName: string,
-    seed?: Effect<R, E, Iterable<PM>>,
+    seed?: Effect<Iterable<PM>, E, R>,
     config?: StoreConfig<PM>
   ) =>
     Effect.gen(function*($) {

@@ -23,15 +23,15 @@ export abstract class RepositoryBaseC<
   ItemType extends string
 > {
   abstract readonly itemType: ItemType
-  abstract readonly find: (id: T["id"]) => Effect<never, never, Opt<T>>
-  abstract readonly all: Effect<never, never, T[]>
+  abstract readonly find: (id: T["id"]) => Effect<Opt<T>>
+  abstract readonly all: Effect<T[]>
   abstract readonly saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<never, InvalidStateError | OptimisticConcurrencyException, void>
+  ) => Effect<void, InvalidStateError | OptimisticConcurrencyException>
   abstract readonly utils: {
-    parseMany: (a: readonly PM[]) => Effect<never, never, readonly T[]>
-    all: Effect<never, never, PM[]>
+    parseMany: (a: readonly PM[]) => Effect<readonly T[]>
+    all: Effect<PM[]>
     filter: FilterFunc<PM>
     // count: (filter?: Filter<PM>) => Effect<never, never, NonNegativeInt>
   }
@@ -39,7 +39,7 @@ export abstract class RepositoryBaseC<
   abstract readonly removeAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<never, never, void>
+  ) => Effect<void>
 }
 
 export abstract class RepositoryBaseC1<
@@ -91,7 +91,7 @@ export function makeRepo<
     T extends { id: unknown }
   >(
     name: ItemType,
-    schema: S.Schema<R, From, T>,
+    schema: S.Schema<T, From, R>,
     mapFrom: (pm: Omit<PM, "_etag">) => From,
     mapTo: (e: From, etag: string | undefined) => PM
   ) => {
@@ -116,14 +116,14 @@ export function makeRepo<
 
     function make<RInitial = never, E = never, R2 = never>(
       args: [Evt] extends [never] ? {
-          makeInitial?: Effect<RInitial, E, readonly T[]>
+          makeInitial?: Effect<readonly T[], E, RInitial>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
           }
         }
         : {
-          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-          makeInitial?: Effect<RInitial, E, readonly T[]>
+          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+          makeInitial?: Effect<readonly T[], E, RInitial>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
           }
@@ -161,19 +161,11 @@ export function makeRepo<
           _.ast._tag === "Union"
             // we need to get the TypeLiteral, incase of class it's behind a transform...
             ? S.union(..._.ast.types.map((_) =>
-              (S.make(_._tag === "Transform" ? _.from : _) as unknown as Schema<
-                never,
-                From,
-                T
-              >)
+              (S.make(_._tag === "Transform" ? _.from : _) as unknown as Schema<T, From>)
                 .pipe(S.pick("id"))
             ))
             : _.ast._tag === "Transform"
-            ? (S.make(_.ast.from) as unknown as Schema<
-              never,
-              From,
-              T
-            >)
+            ? (S.make(_.ast.from) as unknown as Schema<T, From>)
               .pipe(S.pick("id"))
             : _.pipe(S.pick("id"))
         )
@@ -277,7 +269,7 @@ export function makeRepo<
         return r
       })
         // .withSpan("Repository.make [effect-app/infra]", { attributes: { "repository.model_name": name } })
-        .withLogSpan("Repository.make: " + name)
+        .withLogSpan("Repository.make: " + name);
     }
 
     return {
@@ -285,7 +277,7 @@ export function makeRepo<
       where,
       query: QueryBuilder.make<PM>()
     }
-  }
+  };
 }
 
 /**
@@ -346,7 +338,7 @@ export function makeStore<
     T extends { id: unknown }
   >(
     name: ItemType,
-    schema: S.Schema<R, E, T>,
+    schema: S.Schema<T, E, R>,
     mapTo: (e: E, etag: string | undefined) => PM
   ) => {
     function encodeToPM() {
@@ -366,7 +358,7 @@ export function makeStore<
     }
 
     function makeStore<RInitial = never, EInitial = never>(
-      makeInitial?: Effect<RInitial, EInitial, readonly T[]>,
+      makeInitial?: Effect<readonly T[], EInitial, RInitial>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
       }
@@ -396,7 +388,7 @@ export function makeStore<
     }
 
     return makeStore
-  }
+  };
 }
 
 export interface Repos<
@@ -408,43 +400,35 @@ export interface Repos<
 > {
   make<RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
-        makeInitial?: Effect<RInitial, E, readonly T[]>
+        makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
         }
       }
       : {
-        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-        makeInitial?: Effect<RInitial, E, readonly T[]>
+        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+        makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
         }
       }
-  ): Effect<
-    StoreMaker | ContextMapContainer | R | RInitial | R2,
-    E,
-    Repository<T, PM, Evt, ItemType>
-  >
+  ): Effect<Repository<T, PM, Evt, ItemType>, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
   makeWith<Out, RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
-        makeInitial?: Effect<RInitial, E, readonly T[]>
+        makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
         }
       }
       : {
-        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<R2, never, void>
-        makeInitial?: Effect<RInitial, E, readonly T[]>
+        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+        makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
         }
       },
     f: (r: Repository<T, PM, Evt, ItemType>) => Out
-  ): Effect<
-    StoreMaker | ContextMapContainer | R | RInitial | R2,
-    E,
-    Out
-  >
+  ): Effect<Out, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
   /** @deprecated use `query` instead */
   readonly where: ReturnType<typeof makeWhere<PM>>
   readonly query: ReturnType<typeof QueryBuilder.make<PM>>
@@ -460,7 +444,7 @@ export const RepositoryBaseImpl = <Service>() => {
   >() =>
   <ItemType extends string, R, From extends { id: string }, T extends { id: unknown }>(
     itemType: ItemType,
-    schema: S.Schema<R, From, T>,
+    schema: S.Schema<T, From, R>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
@@ -492,7 +476,7 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
     return assignTag<Service>()(Cls) as any
-  }
+  };
 }
 
 export const RepositoryDefaultImpl = <Service>() => {
@@ -502,7 +486,7 @@ export const RepositoryDefaultImpl = <Service>() => {
   >() =>
   <ItemType extends string, R, From extends { id: string }, T extends { id: unknown }>(
     itemType: ItemType,
-    schema: S.Schema<R, From, T>,
+    schema: S.Schema<T, From, R>,
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new(
@@ -539,5 +523,5 @@ export const RepositoryDefaultImpl = <Service>() => {
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
     return assignTag<Service>()(Cls) as any // impl is missing, but its marked protected
-  }
+  };
 }

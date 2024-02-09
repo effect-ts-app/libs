@@ -1,16 +1,16 @@
 {
   "name": "@effect-app/infra-adapters",
-  "version": "0.115.0",
+  "version": "0.117.5",
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect/platform": "^0.43.11",
-    "@effect/schema": "^0.61.7",
+    "@effect/platform": "^0.44.1",
+    "@effect/schema": "^0.62.1",
     "@effect-app/core": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/prelude": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "effect": "^2.2.5",
+    "effect": "^2.3.1",
     "@fp-ts/optic": "^0.22.0",
     "query-string": "^8.2.0"
   },

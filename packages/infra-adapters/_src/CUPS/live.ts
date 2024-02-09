@@ -95,8 +95,8 @@ function getAvailablePrinters(host?: string) {
     return [...stdout.matchAll(/device for (\w+):/g)]
       .map((_) => _[1])
       .filter(Predicate.isNotNullable)
-      .map((_) => NonEmptyString255(_))
-  })
+      .map((_) => NonEmptyString255(_));
+  });
 }
 
 function* buildListArgs(config?: { host?: string | undefined }) {

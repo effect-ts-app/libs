@@ -4,6 +4,6 @@ export function makeCodec<
   From,
   To extends { id: Id },
   Id
->(self: S.Schema<never, From, To>) {
+>(self: S.Schema<To, From>) {
   return [S.decodeSync(self), S.encodeSync(self)] as const
 }

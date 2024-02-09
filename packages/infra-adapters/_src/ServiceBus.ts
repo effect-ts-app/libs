@@ -15,7 +15,7 @@ function makeClient(url: string) {
   )
 }
 
-const Client = Tag<ServiceBusClient>()
+const Client = GenericTag<ServiceBusClient>("@services/Client")
 export const LiveServiceBusClient = (url: string) => makeClient(url).toLayerScoped(Client)
 
 function makeSender(queueName: string) {
@@ -29,7 +29,7 @@ function makeSender(queueName: string) {
     )
   })
 }
-export const Sender = Tag<ServiceBusSender>()
+export const Sender = GenericTag<ServiceBusSender>("@services/Sender")
 
 export function LiveSender(queueName: string) {
   return makeSender(queueName).toLayerScoped(Sender)
@@ -47,7 +47,7 @@ function makeReceiver(queueName: string) {
   })
 }
 
-export const Receiver = Tag<ServiceBusReceiver>()
+export const Receiver = GenericTag<ServiceBusReceiver>("@services/Receiver")
 export function LiveReceiver(queueName: string) {
   return makeReceiver(queueName).toLayerScoped(Receiver)
 }
@@ -91,7 +91,7 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
   })
 }
 
-const SubscribeTag = Tag<Effect.Success<ReturnType<typeof subscribe>>>()
+const SubscribeTag = GenericTag<Effect.Success<ReturnType<typeof subscribe>>>("@services/SubscribeTag")
 
 export function Subscription<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
   return subscribe(hndlr).toLayerScoped(SubscribeTag)
@@ -103,11 +103,11 @@ export interface MessageHandlers<RMsg, RErr> {
    *
    * @param message - A message received from Service Bus.
    */
-  processMessage(message: ServiceBusReceivedMessage): Effect<RMsg, never, void>
+  processMessage(message: ServiceBusReceivedMessage): Effect<void, never, RMsg>
   /**
    * Handler that processes errors that occur during receiving.
    * @param args - The error and additional context to indicate where
    * the error originated.
    */
-  processError(args: ProcessErrorArgs): Effect<RErr, never, void>
+  processError(args: ProcessErrorArgs): Effect<void, never, RErr>
 }

@@ -1,5 +1,83 @@
 # @effect-app/infra
 
+## 0.170.5
+
+### Patch Changes
+
+- Updated dependencies [c497ff3]
+  - @effect-app/schema@0.183.4
+  - @effect-app/fluent-extensions@0.124.4
+  - @effect-app/infra-adapters@0.117.5
+  - @effect-app/prelude@0.149.5
+
+## 0.170.4
+
+### Patch Changes
+
+- Updated dependencies [3c4251e]
+  - @effect-app/prelude@0.149.4
+  - @effect-app/infra-adapters@0.117.4
+
+## 0.170.3
+
+### Patch Changes
+
+- Updated dependencies [65f8b7b]
+  - @effect-app/schema@0.183.3
+  - @effect-app/fluent-extensions@0.124.3
+  - @effect-app/infra-adapters@0.117.3
+  - @effect-app/prelude@0.149.3
+
+## 0.170.2
+
+### Patch Changes
+
+- Updated dependencies [8290a87]
+  - @effect-app/schema@0.183.2
+  - @effect-app/fluent-extensions@0.124.2
+  - @effect-app/infra-adapters@0.117.2
+  - @effect-app/prelude@0.149.2
+
+## 0.170.1
+
+### Patch Changes
+
+- Updated dependencies [d17dc32]
+  - @effect-app/schema@0.183.1
+  - @effect-app/fluent-extensions@0.124.1
+  - @effect-app/infra-adapters@0.117.1
+  - @effect-app/prelude@0.149.1
+
+## 0.170.0
+
+### Minor Changes
+
+- e5cdd42: update packages
+
+### Patch Changes
+
+- Updated dependencies [e5cdd42]
+  - @effect-app/fluent-extensions@0.124.0
+  - @effect-app/infra-adapters@0.117.0
+  - @effect-app/prelude@0.149.0
+  - @effect-app/schema@0.183.0
+  - @effect-app/core@0.126.0
+
+## 0.169.0
+
+### Minor Changes
+
+- update to latest Effect "minor"
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/fluent-extensions@0.123.0
+  - @effect-app/infra-adapters@0.116.0
+  - @effect-app/prelude@0.148.0
+  - @effect-app/schema@0.182.0
+  - @effect-app/core@0.125.0
+
 ## 0.168.0
 
 ### Minor Changes

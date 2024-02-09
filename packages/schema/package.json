@@ -1,12 +1,12 @@
 {
   "name": "@effect-app/schema",
-  "version": "0.181.0",
+  "version": "0.183.4",
   "license": "MIT",
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect/schema": "^0.61.7",
-    "effect": "^2.2.5",
+    "@effect/schema": "^0.62.1",
+    "effect": "^2.3.1",
     "cross-fetch": "^4.0.0",
     "nanoid": "^5.0.5",
     "lodash": "^4.17.21",

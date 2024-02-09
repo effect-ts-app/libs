@@ -34,7 +34,8 @@ export class SerializedDBRecord extends S.Class<SerializedDBRecord>()({
 }) {}
 
 // unknown -> string -> SDB?
-export function makeSerialisedDBRecord(s: Schema<never, any>) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function makeSerialisedDBRecord(s: Schema<any>) {
   return S.struct({
     version: S.number,
     timestamp: S.Date,
@@ -74,8 +75,8 @@ export function makeMap<TKey, T>() {
 
 export interface EffectMap<TKey, T> {
   [Symbol.iterator](): IterableIterator<[TKey, T]>
-  find: (k: TKey) => Effect<never, never, Option<T>>
-  set: (k: TKey, v: T) => Effect<never, never, void>
+  find: (k: TKey) => Effect<Option<T>>
+  set: (k: TKey, v: T) => Effect<void>
 }
 
 // export function encodeOnlyWhenStrictMatch<A, E>(

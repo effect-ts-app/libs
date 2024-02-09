@@ -7,7 +7,8 @@ import type * as Methods from "./Methods.js"
 
 import type { FromStruct, Schema, StructFields, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
-import { Tag } from "effect/Context"
+import { GenericTag } from "effect/Context"
+import type * as Context from "effect/Context"
 import type { Simplify } from "effect/Types"
 import type { AST } from "./schema.js"
 
@@ -17,7 +18,7 @@ export type AnyRecord = Record<string, any>
 
 export type AnyRecordSchema = S.Schema<AnyRecord, AnyRecord>
 
-const RequestTag = Tag<never, never>()
+const RequestTag = GenericTag<never, never>("@services/RequestTag")
 
 export { Methods }
 
@@ -67,9 +68,9 @@ export interface QueryRequest<
   PPath extends `/${string}`
 > extends
   S.Class<
-    never,
-    Simplify<FromStruct<Fields>>,
     Simplify<ToStruct<Fields>>,
+    Simplify<FromStruct<Fields>>,
+    never,
     Simplify<ToStructConstructor<Fields>>,
     M,
     Fields,
@@ -82,7 +83,7 @@ export interface QueryRequest<
   Headers: Headers
   path: PPath
   method: Methods.ReadMethods
-  Tag: Tag<M, M>
+  Tag: Context.Tag<M, M>
   [reqBrand]: typeof reqBrand
 }
 
@@ -97,9 +98,9 @@ export interface BodyRequest<
   PPath extends `/${string}`
 > extends
   S.Class<
-    never,
-    Simplify<FromStruct<Fields>>,
     Simplify<ToStruct<Fields>>,
+    Simplify<FromStruct<Fields>>,
+    never,
     Simplify<ToStructConstructor<Fields>>,
     M,
     Fields,
@@ -112,7 +113,7 @@ export interface BodyRequest<
   Headers: Headers
   path: PPath
   method: Methods.WriteMethods
-  Tag: Tag<M, M>
+  Tag: Context.Tag<M, M>
   [reqBrand]: typeof reqBrand
 }
 
@@ -510,9 +511,9 @@ export interface Request<
   Method extends SupportedMethods
 > extends
   S.Class<
-    never,
-    Simplify<FromStruct<Fields>>,
     Simplify<ToStruct<Fields>>,
+    Simplify<FromStruct<Fields>>,
+    never,
     Simplify<ToStruct<Fields>>,
     M,
     Fields,
@@ -761,21 +762,21 @@ export function makeRequest<
 //   }
 // }
 
-export type ReqRes<R, From, To> = S.Schema<R, From, To>
+export type ReqRes<To, From, R> = S.Schema<To, From, R>
 // export type ReqResSchemed<E, A> = {
 //   new(...args: any[]): any
 //   encodeSync: ReturnType<typeof P.decodeUnknownSync>
 //   Model: ReqRes<any, E, A>
 // }
 
-export type RequestSchemed<E, A> = ReqRes<any, E, A> & { // ReqResSchemed<E, A> & {
+export type RequestSchemed<A, E> = ReqRes<A, E, any> & { // ReqResSchemed<E, A> & {
   method: Methods.Rest
   path: string
 }
 
 /** @deprecated No-Op */
-export function extractSchema<ResE, ResA>(
-  Res: ReqRes<any, ResE, ResA> // | ReqResSchemed<ResE, ResA>
+export function extractSchema<ResA, ResE>(
+  Res: ReqRes<ResA, ResE, any> // | ReqResSchemed<ResE, ResA>
 ) {
   return Res
 }

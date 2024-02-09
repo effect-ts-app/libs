@@ -1,15 +1,15 @@
 {
   "name": "@effect-app/compiler",
-  "version": "0.59.0",
+  "version": "0.61.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
     "@rollup/pluginutils": "^5.1.0",
-    "vite": "^5.1.0"
+    "vite": "^5.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",
-    "@types/node": "~20.11.16",
+    "@types/node": "~20.11.17",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124",

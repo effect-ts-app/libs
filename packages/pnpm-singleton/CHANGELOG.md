@@ -1,5 +1,17 @@
 # @effect-app/pnpm-singleton
 
+## 0.49.0
+
+### Minor Changes
+
+- e5cdd42: update packages
+
+## 0.48.0
+
+### Minor Changes
+
+- update to latest Effect "minor"
+
 ## 0.47.0
 
 ### Minor Changes

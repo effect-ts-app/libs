@@ -33,7 +33,7 @@ export const responseWithJsonBody = (
  */
 export const schemaJsonBody = <R, To, From, A, B>(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema<R, From, To>
+  schema: Schema<To, From, R>
 ) => {
   return client.mapEffect((_) => _.json.flatMap(schema.decodeUnknown))
 }
@@ -43,7 +43,7 @@ export const schemaJsonBody = <R, To, From, A, B>(
  */
 export const schemaJsonBodyUnsafe = <To, From, A, B>(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema<never, From, To>
+  schema: Schema<To, From>
 ) => {
   return client.mapEffect((_) => _.json.map(schema.decodeUnknownSync))
 }
@@ -63,7 +63,7 @@ export const schemaJson = <
   B
 >(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema<R, From, To>
+  schema: Schema<To, From, R>
 ) => {
   return client.mapEffect((_) => _.responseWithJsonBody.flatMap(schema.decodeUnknown))
 }
@@ -83,7 +83,7 @@ export const schemaJsonUnsafe = <
   B
 >(
   client: HttpClient<A, B, ClientResponse>,
-  schema: Schema<R, From, To>
+  schema: Schema<To, From, R>
 ) => {
   return client.mapEffect((_) => _.responseWithJsonBody.flatMap(schema.decodeUnknown))
 }

@@ -18,8 +18,8 @@ const setup = (type: string, indexes: IndexDescription[]) =>
 export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>() {
   return <REncode, RDecode, EDecode>(
     type: string,
-    encode: (record: A) => Effect<REncode, never, EA>,
-    decode: (d: EA) => Effect<RDecode, EDecode, A>,
+    encode: (record: A) => Effect<EA, never, REncode>,
+    decode: (d: EA) => Effect<A, EDecode, RDecode>,
     // schemaVersion: string,
     indexes: IndexDescription[]
   ) => {
@@ -102,5 +102,5 @@ export function createContext<TKey extends string, EA, A extends DBRecord<TKey>>
         return { version, data: record } as CachedRecord<A>
       })
     }
-  }
+  };
 }

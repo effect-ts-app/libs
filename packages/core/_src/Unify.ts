@@ -10,9 +10,9 @@ import type { Chunk, Either, Option } from "./Prelude.js"
 export function unifyEffect<X extends { readonly [EffectTypeId]: Effect.VarianceStruct<any, any, any> }>(
   self: X
 ): Effect<
-  [X] extends [{ readonly [EffectTypeId]: { _R: (_: never) => infer R } }] ? R : never,
+  [X] extends [{ readonly [EffectTypeId]: { _A: (_: never) => infer A } }] ? A : never,
   [X] extends [{ readonly [EffectTypeId]: { _E: (_: never) => infer E } }] ? E : never,
-  [X] extends [{ readonly [EffectTypeId]: { _A: (_: never) => infer A } }] ? A : never
+  [X] extends [{ readonly [EffectTypeId]: { _R: (_: never) => infer R } }] ? R : never
 > {
   return self as any
 }
