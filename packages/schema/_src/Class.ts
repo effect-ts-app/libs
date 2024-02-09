@@ -113,13 +113,12 @@ export function include_<
 export const Class: <Self>() => <Fields extends S.StructFields>(
   fields: Fields
 ) => EnhancedClass<
-  Schema.Context<Fields[keyof Fields]>,
-  Simplify<FromStruct<Fields>>,
   Simplify<ToStruct<Fields>>,
+  Simplify<FromStruct<Fields>>,
+  Schema.Context<Fields[keyof Fields]>,
   Simplify<ToStructConstructor<Fields>>,
   Self,
-  Fields,
-  {}
+  Fields
 > = () => (fields) => {
   const cls = S.Class as any
   return class extends cls()(fields) {
@@ -133,9 +132,9 @@ export const TaggedClass: <Self>() => <Tag extends string, Fields extends S.Stru
   tag: Tag,
   fields: Fields
 ) => EnhancedClass<
-  Schema.Context<Fields[keyof Fields]>,
-  Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
   Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
+  Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
+  Schema.Context<Fields[keyof Fields]>,
   Simplify<ToStructConstructor<Fields>>,
   Self,
   Fields,
@@ -149,13 +148,13 @@ export const TaggedClass: <Self>() => <Tag extends string, Fields extends S.Stru
   } as any
 }
 
-export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields>(
+export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.StructFields>(
   fields: Fields
 ) =>
   & EnhancedClass<
-    Schema.Context<Fields[keyof Fields]>,
-    SelfFrom,
     Simplify<ToStruct<Fields>>,
+    SelfFrom,
+    Schema.Context<Fields[keyof Fields]>,
     Simplify<ToStructConstructor<Fields>>,
     Self,
     Fields,
@@ -169,14 +168,14 @@ export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields
     >
   } = Class as any
 
-export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fields extends S.StructFields>(
+export const ExtendedTaggedClass: <Self, SelfFrom>() => <Tag extends string, Fields extends S.StructFields>(
   tag: Tag,
   fields: Fields
 ) =>
   & EnhancedClass<
-    Schema.Context<Fields[keyof Fields]>,
-    SelfFrom,
     Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
+    SelfFrom,
+    Schema.Context<Fields[keyof Fields]>,
     Simplify<ToStructConstructor<Fields>>,
     Self,
     Fields,
@@ -285,8 +284,8 @@ export function FromClassBase<T>() {
 export function FromClass<Cls>() {
   return FromClassBase<
     S.Schema.From<
-      Cls extends { structFrom: S.Schema<any, any> } ? Cls["structFrom"]
-        : Cls extends { struct: S.Schema<any, any> } ? Cls["struct"]
+      Cls extends { structFrom: S.Schema<any, any, any> } ? Cls["structFrom"]
+        : Cls extends { struct: S.Schema<any, any, any> } ? Cls["struct"]
         : never
     >
   >()
