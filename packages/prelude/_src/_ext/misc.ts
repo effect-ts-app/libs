@@ -2,7 +2,7 @@ import * as Either from "effect/Either"
 import type { Option } from "effect/Option"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
-  Effect<infer R, any, any>
+  Effect<any, any, infer R>
 ] ? R
   : never
 
@@ -17,7 +17,7 @@ export type _E<T extends Effect<any, any, any>> = [T] extends [
 export function encaseMaybeInEffect_<E, A>(
   o: Option<A>,
   onError: LazyArg<E>
-): Effect<never, E, A> {
+): Effect<A, E> {
   return o.match({ onNone: () => Effect.fail(onError()), onSome: Effect.succeed })
 }
 
@@ -35,7 +35,7 @@ export function encaseMaybeEither_<E, A>(
  * @tsplus getter effect/io/Effect toNullable
  */
 export function toNullable<R, E, A>(
-  self: Effect<R, E, Option<A>>
+  self: Effect<Option<A>, E, R>
 ) {
   return self.map((_) => _.getOrNull)
 }
@@ -44,9 +44,9 @@ export function toNullable<R, E, A>(
  * @tsplus fluent effect/io/Effect scope
  */
 export function scope<R, E, A, R2, E2, A2>(
-  scopedEffect: Effect<R | Scope, E, A>,
-  effect: Effect<R2, E2, A2>
-): Effect<Exclude<R | R2, Scope>, E | E2, A2> {
+  scopedEffect: Effect<A, E, R | Scope>,
+  effect: Effect<A2, E2, R2>
+): Effect<A2, E | E2, Exclude<R | R2, Scope>> {
   return scopedEffect.zipRight(effect).scoped
 }
 
@@ -54,9 +54,9 @@ export function scope<R, E, A, R2, E2, A2>(
  * @tsplus fluent effect/io/Effect flatMapScoped
  */
 export function flatMapScoped<R, E, A, R2, E2, A2>(
-  scopedEffect: Effect<R | Scope, E, A>,
-  effect: (a: A) => Effect<R2, E2, A2>
-): Effect<Exclude<R | R2, Scope>, E | E2, A2> {
+  scopedEffect: Effect<A, E, R | Scope>,
+  effect: (a: A) => Effect<A2, E2, R2>
+): Effect<A2, E | E2, Exclude<R | R2, Scope>> {
   return scopedEffect.flatMap(effect).scoped
 }
 
@@ -87,7 +87,7 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
  * @tsplus pipeable effect/io/Effect catchAllMap
  */
 export function catchAllMap<E, A2>(f: (e: E) => A2) {
-  return <R, A>(self: Effect<R, E, A>): Effect<R, never, A2 | A> => self.catchAll((err) => Effect.sync(() => f(err)))
+  return <R, A>(self: Effect<A, E, R>): Effect<A2 | A, never, R> => self.catchAll((err) => Effect.sync(() => f(err)));
 }
 
 /**
@@ -95,7 +95,7 @@ export function catchAllMap<E, A2>(f: (e: E) => A2) {
  * @tsplus static effect/io/Effect.Ops annotateLogs
  */
 export function annotateLogs(kvps: Record<string, string>) {
-  return <R, E, A>(effect: Effect<R, E, A>): Effect<R, E, A> =>
+  return <R, E, A>(effect: Effect<A, E, R>): Effect<A, E, R> =>
     FiberRef
       .currentLogAnnotations
       .get
@@ -108,7 +108,7 @@ export function annotateLogs(kvps: Record<string, string>) {
             )
           )
         )
-      )
+      );
 }
 
 /**
@@ -152,10 +152,10 @@ export function flow<Args extends readonly any[], B, C>(f: (...args: Args) => B,
 export const client: {
   <A, B, C, R, E>(
     client: HttpClient<A, B, C>,
-    req: Effect<R, E, ClientRequest>
-  ): Effect<A | R, B | E, C>
-  <A, B, C>(client: HttpClient<A, B, C>, req: ClientRequest): Effect<A, B, C>
-} = (client: HttpClient<any, any, any>, req: Effect<any, any, ClientRequest> | ClientRequest) =>
+    req: Effect<ClientRequest, E, R>
+  ): Effect<C, B | E, A | R>
+  <A, B, C>(client: HttpClient<A, B, C>, req: ClientRequest): Effect<C, B, A>
+} = (client: HttpClient<any, any, any>, req: Effect<ClientRequest, any, any> | ClientRequest) =>
   Effect.isEffect(req)
     ? req.flatMap(client)
     : client(req)

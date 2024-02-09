@@ -51,7 +51,7 @@ const getClient = HttpClient.flatMap((defaultClient) =>
         .catchTag(
           "ResponseError",
           (err) => {
-            const toError = <R, From, To>(s: Schema<R, From, To>) =>
+            const toError = <R, From, To>(s: Schema<To, From, R>) =>
               err.response.json.flatMap((_) => s.decodeUnknown(_).catchAll(() => Effect.fail(err))).flatMap(Effect.fail)
 
             // opposite of api's `defaultErrorHandler`
@@ -118,8 +118,8 @@ export function fetchApi(
 }
 
 export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, ResponseFrom, ResponseTo>(
-  request: Schema<RequestR, RequestFrom, RequestTo>,
-  response: Schema<ResponseR, ResponseFrom, ResponseTo>
+  request: Schema<RequestTo, RequestFrom, RequestR>,
+  response: Schema<ResponseTo, ResponseFrom, ResponseR>
 ) {
   const encodeRequest = request.encode
   const decRes = response.decodeUnknown
@@ -220,33 +220,29 @@ export function mapResponse<T, A>(map: (t: T) => A) {
   }
 }
 
-export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<R, E, A>) {
-  return (r: FetchResponse<T>): Effect<R, E, FetchResponse<A>> => {
+export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<A, E, R>) {
+  return (r: FetchResponse<T>): Effect<FetchResponse<A>, E, R> => {
     return Effect.all({
       body: map(r.body),
       headers: Effect.sync(() => r.headers),
       status: Effect.sync(() => r.status)
     })
-  }
+  };
 }
 export type FetchResponse<T> = { body: T; headers: Headers; status: number }
 
 export const EmptyResponse = Object.freeze({ body: null, headers: {}, status: 404 })
 export const EmptyResponseM = Effect.sync(() => EmptyResponse)
 const EmptyResponseMThunk_ = constant(EmptyResponseM)
-export function EmptyResponseMThunk<T>(): Effect<
-  unknown,
-  never,
-  Readonly<{
-    body: null | T
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    headers: {}
-    status: 404
-  }>
-> {
+export function EmptyResponseMThunk<T>(): Effect<Readonly<{
+  body: null | T
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  headers: {}
+  status: 404
+}>, never, unknown> {
   return EmptyResponseMThunk_()
 }
 
-export function getBody<R, E, A>(eff: Effect<R, E, FetchResponse<A | null>>) {
+export function getBody<R, E, A>(eff: Effect<FetchResponse<A | null>, E, R>) {
   return eff.flatMap((r) => r.body === null ? Effect.die("Not found") : Effect.sync(() => r.body))
 }

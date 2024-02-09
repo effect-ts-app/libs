@@ -1,5 +1,5 @@
-export type Service<T> = T extends Effect<any, any, infer S> ? S : T extends Tag<any, infer S> ? S : never
-export type ServiceR<T> = T extends Effect<infer R, any, any> ? R : T extends Tag<infer R, any> ? R : never
+export type Service<T> = T extends Effect<infer S, any, any> ? S : T extends Tag<any, infer S> ? S : never
+export type ServiceR<T> = T extends Effect<any, any, infer R> ? R : T extends Tag<infer R, any> ? R : never
 export type ServiceE<T> = T extends Effect<any, infer E, any> ? E : never
 export type Values<T> = T extends { [s: string]: infer S } ? Service<S> : never
 export type ValuesR<T> = T extends { [s: string]: infer S } ? ServiceR<S> : never
@@ -40,7 +40,7 @@ export function allLower_<T extends Record<string, Tag<any, any> | Effect<any, a
       return prev
     }, {} as any),
     { concurrency: "inherit" }
-  ) as any as Effect<ValuesR<T>, ValuesE<T>, LowerServices<T>>
+  ) as any as Effect<LowerServices<T>, ValuesE<T>, ValuesR<T>>;
 }
 
 /**
@@ -58,7 +58,7 @@ export function allLowerWith_<T extends Record<string, Tag<any, any> | Effect<an
  */
 export function allLowerWithEffect_<T extends Record<string, Tag<any, any> | Effect<any, any, any>>, R, E, A>(
   services: T,
-  fn: (services: LowerServices<T>) => Effect<R, E, A>
+  fn: (services: LowerServices<T>) => Effect<A, E, R>
 ) {
   return allLower_(services).flatMap(fn)
 }

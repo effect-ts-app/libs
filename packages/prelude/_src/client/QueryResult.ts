@@ -114,7 +114,7 @@ export const { fail, succeed } = Done
  * @tsplus getter effect/io/Effect asQueryResult
  */
 export function queryResult<R, E, A>(
-  self: Effect<R, E, A>
-): Effect<R, never, QueryResult<E, A>> {
+  self: Effect<A, E, R>
+): Effect<QueryResult<E, A>, never, R> {
   return self.match({ onFailure: fail, onSuccess: succeed })
 }

@@ -41,7 +41,7 @@ export type TagTypeId = typeof TagTypeId
 
 export function assignTag<Id, Service = Id>(key?: unknown) {
   return <S extends object>(cls: S): S & Tag<Id, Service> => {
-    const tag = Tag<Id, Service>(key)
+    const tag = GenericTag<Id, Service>(key)
     const t = Object.assign(cls, Object.getPrototypeOf(tag), tag)
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 4 // TODO
@@ -55,7 +55,7 @@ export function assignTag<Id, Service = Id>(key?: unknown) {
       }
     })
     return t
-  }
+  };
 }
 
 export function TagClass<Id, ServiceImpl, Service = Id>(key?: unknown) {
@@ -71,13 +71,13 @@ export function TagClass<Id, ServiceImpl, Service = Id>(key?: unknown) {
 
 export const TagClassMake = <Id, Service = Id>() =>
 <ServiceImpl, R, E>(
-  make: Effect<R, E, ServiceImpl>,
+  make: Effect<ServiceImpl, E, R>,
   key?: unknown
 ) => {
   const c: {
     new(service: ServiceImpl): Readonly<ServiceImpl>
-    toLayer: () => Layer<R, E, Service>
-    toLayerScoped: () => Layer<Exclude<R, Scope>, E, Service>
+    toLayer: () => Layer<Service, E, R>
+    toLayerScoped: () => Layer<Service, E, Exclude<R, Scope>>
   } = class {
     constructor(service: ServiceImpl) {
       Object.assign(this, service)

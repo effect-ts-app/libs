@@ -16,7 +16,7 @@ export type RequestId = NonEmptyString255
 export const RequestId = extendM(
   Object
     // eslint-disable-next-line @typescript-eslint/ban-types
-    .assign(Object.create(NonEmptyString255) as {}, NonEmptyString255 as Schema<never, string, NonEmptyString255>),
+    .assign(Object.create(NonEmptyString255) as {}, NonEmptyString255 as Schema<NonEmptyString255, string>),
   (s) => {
     const make = StringId.make as () => NonEmptyString255
     return ({
