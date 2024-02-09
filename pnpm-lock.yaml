@@ -12,7 +12,7 @@ patchedDependencies:
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
   '@effect/schema@0.62.0':
-    hash: ghhcv2qemqmstgqnc6eitpy4tq
+    hash: 2wjp4ycyvsquox4tyd7umjgwgi
     path: patches/@effect__schema@0.62.0.patch
   '@fp-ts/optic@0.22.0':
     hash: 2yuoegl5dhwsslauskmjxbvoeu
@@ -459,7 +459,7 @@ importers:
         version: 0.44.0(@effect/schema@0.62.0)(effect@2.3.0)
       '@effect/schema':
         specifier: ^0.62.0
-        version: 0.62.0(patch_hash=ghhcv2qemqmstgqnc6eitpy4tq)(effect@2.3.0)(fast-check@3.15.1)
+        version: 0.62.0(patch_hash=2wjp4ycyvsquox4tyd7umjgwgi)(effect@2.3.0)(fast-check@3.15.1)
       '@faker-js/faker':
         specifier: ^8.4.1
         version: 8.4.1
@@ -568,7 +568,7 @@ importers:
         version: 0.44.0(@effect/schema@0.62.0)(effect@2.3.0)
       '@effect/schema':
         specifier: ^0.62.0
-        version: 0.62.0(patch_hash=ghhcv2qemqmstgqnc6eitpy4tq)(effect@2.3.0)(fast-check@3.15.1)
+        version: 0.62.0(patch_hash=2wjp4ycyvsquox4tyd7umjgwgi)(effect@2.3.0)(fast-check@3.15.1)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.3.0)
@@ -656,7 +656,7 @@ importers:
         version: 0.44.0(@effect/schema@0.62.0)(effect@2.3.0)
       '@effect/schema':
         specifier: ^0.62.0
-        version: 0.62.0(patch_hash=ghhcv2qemqmstgqnc6eitpy4tq)(effect@2.3.0)(fast-check@3.15.1)
+        version: 0.62.0(patch_hash=2wjp4ycyvsquox4tyd7umjgwgi)(effect@2.3.0)(fast-check@3.15.1)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.3.0)
@@ -726,7 +726,7 @@ importers:
         version: link:../core
       '@effect/schema':
         specifier: ^0.62.0
-        version: 0.62.0(patch_hash=ghhcv2qemqmstgqnc6eitpy4tq)(effect@2.3.0)(fast-check@3.15.1)
+        version: 0.62.0(patch_hash=2wjp4ycyvsquox4tyd7umjgwgi)(effect@2.3.0)(fast-check@3.15.1)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -790,7 +790,7 @@ importers:
         version: 0.29.0(@effect/platform@0.44.0)(effect@2.3.0)
       '@effect/schema':
         specifier: ^0.62.0
-        version: 0.62.0(patch_hash=ghhcv2qemqmstgqnc6eitpy4tq)(effect@2.3.0)(fast-check@3.15.1)
+        version: 0.62.0(patch_hash=2wjp4ycyvsquox4tyd7umjgwgi)(effect@2.3.0)(fast-check@3.15.1)
       '@formatjs/intl':
         specifier: ^2.10.0
         version: 2.10.0(@effect-app/typescript@5.4.0-tsplus.20240124)
@@ -1671,14 +1671,14 @@ packages:
       '@effect/schema': ^0.62.0
       effect: ^2.3.0
     dependencies:
-      '@effect/schema': 0.62.0(patch_hash=ghhcv2qemqmstgqnc6eitpy4tq)(effect@2.3.0)(fast-check@3.15.1)
+      '@effect/schema': 0.62.0(patch_hash=2wjp4ycyvsquox4tyd7umjgwgi)(effect@2.3.0)(fast-check@3.15.1)
       effect: 2.3.0(patch_hash=ftlmyxzqduootop6bbmblgmfby)
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
     dev: false
 
-  /@effect/schema@0.62.0(patch_hash=ghhcv2qemqmstgqnc6eitpy4tq)(effect@2.3.0)(fast-check@3.15.1):
+  /@effect/schema@0.62.0(patch_hash=2wjp4ycyvsquox4tyd7umjgwgi)(effect@2.3.0)(fast-check@3.15.1):
     resolution: {integrity: sha512-woPL7gQ4eSoSfI8fbqVRBhKJvZSjdTWT0kvkRyrQ7zTAxFIykVYn3i3j0Y6Fv5Yb6p7TQBAjksrCyq5rb9bQOw==}
     peerDependencies:
       effect: ^2.3.0
