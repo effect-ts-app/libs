@@ -119,7 +119,7 @@ export function prefixedStringId<Brand extends StringId>() {
       StringIdArb()(fc).map(
         (x) => (pref + x.substring(0, 50 - pref.length)) as Brand
       )
-    const s: S.Schema<never, string, string & Brand> = StringId
+    const s: S.Schema<string & Brand, string> = StringId
       .pipe(
         S.filter((x: StringId): x is Brand => x.startsWith(pref), { arbitrary: arb, title: name })
       )
@@ -142,17 +142,17 @@ export function prefixedStringId<Brand extends StringId>() {
         withDefault: S.withDefaultConstructor(schema, make)
       })
     )
-  }
+  };
 }
 
 export const brandedStringId = <
   Brand extends StringIdBrand
 >() =>
   withDefaults(
-    Object.assign(Object.create(StringId), StringId) as S.Schema<never, string, string & Brand> & {
+    Object.assign(Object.create(StringId), StringId) as S.Schema<string & Brand, string> & {
       make: () => string & Brand
       withDefault: S.ConstructorPropertyDescriptor<never, string, string & Brand>
-    } & WithDefaults<S.Schema<never, string, string & Brand>>
+    } & WithDefaults<S.Schema<string & Brand, string>>
   )
 
 export interface PrefixedStringUtils<

@@ -7,7 +7,7 @@ import type * as Methods from "./Methods.js"
 
 import type { FromStruct, Schema, StructFields, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
-import { Tag } from "effect/Context"
+import { GenericTag } from "effect/Context"
 import type { Simplify } from "effect/Types"
 import type { AST } from "./schema.js"
 
@@ -17,7 +17,7 @@ export type AnyRecord = Record<string, any>
 
 export type AnyRecordSchema = S.Schema<AnyRecord, AnyRecord>
 
-const RequestTag = Tag<never, never>()
+const RequestTag = GenericTag<never, never>("@services/RequestTag")
 
 export { Methods }
 
@@ -761,7 +761,7 @@ export function makeRequest<
 //   }
 // }
 
-export type ReqRes<R, From, To> = S.Schema<R, From, To>
+export type ReqRes<R, From, To> = S.Schema<To, From, R>
 // export type ReqResSchemed<E, A> = {
 //   new(...args: any[]): any
 //   encodeSync: ReturnType<typeof P.decodeUnknownSync>

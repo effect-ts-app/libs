@@ -38,12 +38,12 @@ export interface EnhancedClass<R, I, A, C, Self, Fields, Inherited>
       input: A,
       options: ParseOptions,
       ast: AST.Transform
-    ) => Effect.Effect<R2, ParseResult.ParseIssue, Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
+    ) => Effect.Effect<Omit<A, keyof FieldsB> & ToStruct<FieldsB>, ParseResult.ParseIssue, R2>,
     encode: (
       input: Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
       options: ParseOptions,
       ast: AST.Transform
-    ) => Effect.Effect<R3, ParseResult.ParseIssue, A>
+    ) => Effect.Effect<A, ParseResult.ParseIssue, R3>
   ) => [unknown] extends [Transformed] ? MissingSelfGeneric<"Base.transform">
     : EnhancedClass<
       R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
@@ -65,12 +65,12 @@ export interface EnhancedClass<R, I, A, C, Self, Fields, Inherited>
       input: I,
       options: ParseOptions,
       ast: AST.Transform
-    ) => Effect.Effect<R2, ParseResult.ParseIssue, Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
+    ) => Effect.Effect<Omit<I, keyof FieldsB> & FromStruct<FieldsB>, ParseResult.ParseIssue, R2>,
     encode: (
       input: Simplify<Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
       options: ParseOptions,
       ast: AST.Transform
-    ) => Effect.Effect<R3, ParseResult.ParseIssue, I>
+    ) => Effect.Effect<I, ParseResult.ParseIssue, R3>
   ) => [unknown] extends [Transformed] ? MissingSelfGeneric<"Base.transformFrom">
     : EnhancedClass<
       R | Schema.Context<FieldsB[keyof FieldsB]> | R2 | R3,
@@ -160,9 +160,9 @@ export const ExtendedClass: <SelfFrom, Self>() => <Fields extends S.StructFields
   >
   & {
     readonly structFrom: Schema<
-      Schema.Context<Fields[keyof Fields]>,
+      Simplify<ToStruct<Fields>>,
       Simplify<FromStruct<Fields>>,
-      Simplify<ToStruct<Fields>>
+      Schema.Context<Fields[keyof Fields]>
     >
   } = Class as any
 
@@ -181,9 +181,9 @@ export const ExtendedTaggedClass: <SelfFrom, Self>() => <Tag extends string, Fie
   >
   & {
     readonly structFrom: Schema<
-      Schema.Context<Fields[keyof Fields]>,
+      Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
       Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
-      Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>
+      Schema.Context<Fields[keyof Fields]>
     >
   } = TaggedClass as any
 
