@@ -68,8 +68,8 @@ export interface QueryRequest<
   PPath extends `/${string}`
 > extends
   S.Class<
-    Simplify<FromStruct<Fields>>,
     Simplify<ToStruct<Fields>>,
+    Simplify<FromStruct<Fields>>,
     never,
     Simplify<ToStructConstructor<Fields>>,
     M,
@@ -98,8 +98,8 @@ export interface BodyRequest<
   PPath extends `/${string}`
 > extends
   S.Class<
-    Simplify<FromStruct<Fields>>,
     Simplify<ToStruct<Fields>>,
+    Simplify<FromStruct<Fields>>,
     never,
     Simplify<ToStructConstructor<Fields>>,
     M,
