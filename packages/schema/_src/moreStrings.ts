@@ -151,7 +151,7 @@ export const brandedStringId = <
   withDefaults(
     Object.assign(Object.create(StringId), StringId) as S.Schema<string & Brand, string> & {
       make: () => string & Brand
-      withDefault: S.ConstructorPropertyDescriptor<never, string, string & Brand>
+      withDefault: S.ConstructorPropertyDescriptor<string, string & Brand, never>
     } & WithDefaults<S.Schema<string & Brand, string>>
   )
 
