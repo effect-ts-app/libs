@@ -3,7 +3,7 @@
 /**
  * @tsplus global
  */
-import { Data } from "@effect-app/core/Data"
+import { Data } from "effect"
 
 /**
  * @tsplus global
