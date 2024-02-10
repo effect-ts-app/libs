@@ -1,5 +1,20 @@
 # @effect-app/prelude
 
+## 0.150.0
+
+### Minor Changes
+
+- 83b5bb6: fix option
+- 87753e4: improve prelude export
+
+### Patch Changes
+
+- Updated dependencies [83b5bb6]
+- Updated dependencies [87753e4]
+  - @effect-app/core@0.127.0
+  - @effect-app/fluent-extensions@0.125.1
+  - @effect-app/schema@0.183.6
+
 ## 0.149.6
 
 ### Patch Changes

@@ -1,5 +1,21 @@
 # @effect-app/vue
 
+## 0.123.0
+
+### Minor Changes
+
+- 83b5bb6: fix option
+
+### Patch Changes
+
+- Updated dependencies [83b5bb6]
+- Updated dependencies [87753e4]
+  - @effect-app/prelude@0.150.0
+  - @effect-app/core@0.127.0
+  - @effect-app/vue@0.123.0
+  - @effect-app/fluent-extensions@0.125.1
+  - @effect-app/schema@0.183.6
+
 ## 0.122.7
 
 ### Patch Changes

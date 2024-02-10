@@ -1,5 +1,12 @@
 # @effect-app/core
 
+## 0.127.0
+
+### Minor Changes
+
+- 83b5bb6: fix option
+- 87753e4: improve prelude export
+
 ## 0.126.1
 
 ### Patch Changes
