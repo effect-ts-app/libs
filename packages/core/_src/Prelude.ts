@@ -28,7 +28,7 @@ export namespace Effect {
   export type Error<T extends Effect<any, any, any>> = EFFECT.Effect.Error<T>
   export type Context<T extends Effect<any, any, any>> = EFFECT.Effect.Context<T>
 }
-export type Effect<A, E, R> = EFFECT.Effect<A, E, R>
+export type Effect<out A, out E = never, out R = never> = EFFECT.Effect<A, E, R>
 
 export namespace Layer {
   // @ts-ignore
@@ -37,7 +37,7 @@ export namespace Layer {
   export type Error<T extends Layer<never, any, any>> = LAYER.Layer.Error<T>
   export type Context<T extends Layer<never, any, any>> = LAYER.Layer.Context<T>
 }
-export type Layer<ROut, E, RIn> = LAYER.Layer<ROut, E, RIn>
+export type Layer<in ROut, out E = never, out RIn = never> = LAYER.Layer<ROut, E, RIn>
 
 export namespace Either {
   // @ts-expect-error abc
@@ -109,9 +109,3 @@ export namespace ReadonlySet {
  * @tsplus type ets/ReadonlySet
  */
 export type ReadonlySet<A> = SET.Set<A>
-
-export namespace Optic {
-  // @ts-expect-error
-  export * from "@effect-app/core/Optic"
-}
-export type Lens<S, A> = LNS.Lens<S, A>
