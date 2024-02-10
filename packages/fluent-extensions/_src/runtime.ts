@@ -34,18 +34,29 @@ export const installFluentRuntimeExtensions = <R>(runtime: Runtime<R>) => {
 
 // Put the following in the project, where RT is the default runtime context available
 /*
-import type * as Runtime from "effect/Runtime"
-import type * as Fiber from "effect/Fiber"
-import type { RT } from "./effect-runtime"
-
 declare module "effect/Effect" {
-  export interface Effect<R, E, A> {
-    get runPromise(this: Effect<RT, E, A>): Promise<A>
-    get runSync(this: Effect<RT, E, A>): A
-    runFork<E, A>(
-      this: Effect<RT, E, A>,
+  export interface Effect<A, E, R> {
+    // @ts-expect-error meh
+    get runPromise(this: Effect<A, E, RT>): Promise<A>
+    // @ts-expect-error meh
+    get runSync(this: Effect<A, E, RT>): A
+    runFork<A, E>(
+      this: Effect<A, E, RT>,
       options?: Runtime.RunForkOptions,
-    ): Fiber.RuntimeFiber<E, A>
+    ): Fiber.RuntimeFiber<A, E>
+  }
+}
+
+declare module "effect/Cause" {
+  export interface YieldableError {
+    // @ts-expect-error meh
+    get runPromise(this: Effect<never, typeof this, RT>): Promise<never>
+    // @ts-expect-error meh
+    get runSync(this: Effect<never, typeof this, RT>): never
+    runFork<A, E>(
+      this: Effect<A, E, RT>,
+      options?: Runtime.RunForkOptions,
+    ): Fiber.RuntimeFiber<A, E>
   }
 }
 */
