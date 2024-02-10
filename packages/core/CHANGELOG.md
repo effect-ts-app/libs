@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.131.1
+
+### Patch Changes
+
+- 27e6867: improve utilities
+
 ## 0.131.0
 
 ### Minor Changes
