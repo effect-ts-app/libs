@@ -28,7 +28,7 @@ import { flow, LazyArg, pipe, tuple, tupled } from "@effect-app/core/Function"
 /**
  * @tsplus global
  */
-import { NonEmptySet, ROSet } from "@effect-app/core/Prelude"
+import { NonEmptySet, ReadonlySet } from "@effect-app/core/Prelude"
 
 /**
  * @tsplus global

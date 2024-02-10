@@ -13,6 +13,6 @@ export * as NonEmptySet from "@effect-app/core/NonEmptySet"
 export {} from "@effect-app/core/Option"
 // export * as Schema from "@effect-app/prelude/schema"
 export * as Set from "@effect-app/core/Set"
-export * as ROSet from "@effect-app/core/Set"
+export * as ReadonlySet from "@effect-app/core/Set"
 
-export * as ROArray from "@effect-app/core/Array"
+export * as ReadonlyArray from "@effect-app/core/Array"

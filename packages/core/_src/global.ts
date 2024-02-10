@@ -29,7 +29,7 @@ declare global {
   interface Set<T> {}
 
   /**
-   * @tsplus type ets/ROSet
+   * @tsplus type ets/ReadonlySet
    * @tsplus type ets/Set
    * @tsplus type Iterable
    */

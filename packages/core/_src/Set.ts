@@ -9,11 +9,11 @@ import { Option } from "./Option.js"
  * @tsplus fluent ets/Set find
  */
 export function find_<A, B extends A>(
-  as: ROSet<A>,
+  as: ReadonlySet<A>,
   refinement: Refinement<A, B>
 ): B | undefined
-export function find_<A>(set: ROSet<A>, predicate: Predicate<A>): A | undefined
-export function find_<A>(set: ROSet<A>, predicate: Predicate<A>) {
+export function find_<A>(set: ReadonlySet<A>, predicate: Predicate<A>): A | undefined
+export function find_<A>(set: ReadonlySet<A>, predicate: Predicate<A>) {
   return [...set].find(predicate)
 }
 
@@ -21,11 +21,11 @@ export function find_<A>(set: ROSet<A>, predicate: Predicate<A>) {
  * @tsplus fluent ets/Set findFirst
  */
 export function findFirst_<A, B extends A>(
-  set: ROSet<A>,
+  set: ReadonlySet<A>,
   refinement: Refinement<A, B>
 ): Option<B>
-export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Option<A>
-export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Option<A> {
+export function findFirst_<A>(set: ReadonlySet<A>, predicate: Predicate<A>): Option<A>
+export function findFirst_<A>(set: ReadonlySet<A>, predicate: Predicate<A>): Option<A> {
   return Option.fromNullable([...set].find(predicate))
 }
 
@@ -33,7 +33,7 @@ export function findFirst_<A>(set: ROSet<A>, predicate: Predicate<A>): Option<A>
  * @tsplus fluent ets/Set findFirstMap
  */
 export function findFirstMap_<A, B>(
-  set: ROSet<A>,
+  set: ReadonlySet<A>,
   f: (a: A) => Option<B>
 ): Option<B> {
   return [...set].findFirstMap(f)

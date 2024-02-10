@@ -8,10 +8,10 @@ export * as Utils from "./utils.js"
 // for app land, it may make sense to create an app/prelude?
 export * from "@effect-app/core/Prelude"
 
-export { Chunk, Effect, Either, Option, Order } from "@effect-app/core/Prelude"
+export { Chunk, Effect, Either, Option, Order, ReadonlyArray } from "@effect-app/core/Prelude"
 
 export * from "effect"
 
 export * as S from "@effect-app/prelude/schema"
 
-export { Set as ROSet } from "@effect-app/core/Prelude"
+export { Set as ReadonlySet } from "@effect-app/core/Prelude"

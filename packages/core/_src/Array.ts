@@ -1,4 +1,4 @@
-import * as ROArray from "effect/ReadonlyArray"
+import * as ReadonlyArray from "effect/ReadonlyArray"
 import { identity } from "./Function.js"
 import * as Option from "./Option.js"
 
@@ -19,18 +19,19 @@ export function toArray<A>(
 }
 
 /** @tsplus getter ReadonlyArray flatten */
-export const flane: <A>(self: NonEmptyReadonlyArray<NonEmptyReadonlyArray<A>>) => NonEmptyArray<A> = ROArray.flatten
+export const flane: <A>(self: NonEmptyReadonlyArray<NonEmptyReadonlyArray<A>>) => NonEmptyArray<A> =
+  ReadonlyArray.flatten
 
 /** @tsplus getter ReadonlyArray flatten */
-export const fla: <A>(self: ReadonlyArray<ReadonlyArray<A>>) => Array<A> = ROArray.flatten
+export const fla: <A>(self: ReadonlyArray<ReadonlyArray<A>>) => Array<A> = ReadonlyArray.flatten
 
 /** @tsplus pipeable ReadonlyArray sortBy */
 export const sortByne: <B>(
   ...orders: ReadonlyArray<Order<B>>
-) => <A extends B>(as: readonly [A, ...A[]]) => [A, ...A[]] = ROArray.sortBy as any
+) => <A extends B>(as: readonly [A, ...A[]]) => [A, ...A[]] = ReadonlyArray.sortBy as any
 
 /** @tsplus pipeable Iterable sortBy */
-export const sortBy: <B>(...orders: readonly Order<B>[]) => <A extends B>(self: Iterable<A>) => A[] = ROArray
+export const sortBy: <B>(...orders: readonly Order<B>[]) => <A extends B>(self: Iterable<A>) => A[] = ReadonlyArray
   .sortBy as any
 
 /**
@@ -96,7 +97,7 @@ export const { isArray } = Array
  * @tsplus fluent NonEmptyArray findFirstMap
  * @tsplus fluent NonEmptyArrayReadonlyArray findFirstMap
  */
-export const findFirstMap = ROArray.findFirst
+export const findFirstMap = ReadonlyArray.findFirst
 
 /**
  * @tsplus static effect/data/ReadonlyArray.Ops findLastMap
@@ -107,7 +108,7 @@ export const findFirstMap = ROArray.findFirst
  * @tsplus fluent NonEmptyArray findLastMap
  * @tsplus fluent NonEmptyArrayReadonlyArray findLastMap
  */
-export const findLastMap = ROArray.findLast
+export const findLastMap = ReadonlyArray.findLast
 
 /**
  * @tsplus static effect/data/ReadonlyArray/NonEmptyArray.Ops fromArray
@@ -132,7 +133,7 @@ export function NEROArrayFromArray<T>(ar: ReadonlyArray<T>) {
 export function sortByO<A>(
   ords: Option.Option<NonEmptyReadonlyArray<Order<A>>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
-  return ords.match({ onNone: () => identity, onSome: (_) => ROArray.sortBy(..._) })
+  return ords.match({ onNone: () => identity, onSome: (_) => ReadonlyArray.sortBy(..._) })
 }
 
 /**

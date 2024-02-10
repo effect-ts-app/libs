@@ -93,7 +93,7 @@ import {
   // Queue,
   Record,
   // Ref,
-  ROSet,
+  ReadonlySet,
   // Schedule,
   S,
   // Semaphore,

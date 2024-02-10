@@ -12,6 +12,7 @@ import type * as EITHER from "effect/Either"
 import type * as O from "effect/Option"
 import type * as ORD from "effect/Order"
 // eslint-disable-next-line @phaphoso/dprint/dprint
+// @ts-ignore
 import type * as ARR from "@effect-app/core/Array"
 
 export namespace Effect {
@@ -61,7 +62,7 @@ export namespace NonEmptySet {
 /** @tsplus type ets/NonEmptySet */
 export type NonEmptySet<A> = NS.NonEmptySet<A>
 
-export namespace ROArray {
+export namespace ReadonlyArray {
   // @ts-expect-error
   export * from "@effect-app/core/Array"
 }
@@ -71,7 +72,7 @@ export namespace ROArray {
  * @tsplus companion effect/data/ReadonlyArray.Ops
  * @tsplus companion effect/data/ReadonlyArray.Ops
  */
-export type ROArray<A> = ReadonlyArray<A>
+export type ReadonlyArray<A> = globalThis.ReadonlyArray<A>
 
 // export namespace ReadonlyArray {
 //   // @ts-expect-error
@@ -87,15 +88,15 @@ export namespace Set {
 /** @tsplus type ets/Set */
 export type Set<A> = SET.Set<A>
 
-export namespace ROSet {
+export namespace ReadonlySet {
   // @ts-expect-error
   export * from "@effect-app/core/Set"
 }
 /**
  * @tsplus type ets/Set
- * @tsplus type ets/ROSet
+ * @tsplus type ets/ReadonlySet
  */
-export type ROSet<A> = SET.Set<A>
+export type ReadonlySet<A> = SET.Set<A>
 
 export namespace Optic {
   // @ts-expect-error
