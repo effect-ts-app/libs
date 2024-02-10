@@ -188,7 +188,7 @@ export type LowerServices<T extends Record<string, Tag<any, any> | Effect<any, a
 /**
  * @tsplus static effect/io/Effect.Ops allLower
  */
-export function allLower_<T extends Record<string, Tag<any, any> | Effect<any, any, any>>>(
+export function allLower<T extends Record<string, Tag<any, any> | Effect<any, any, any>>>(
   services: T
 ) {
   return Effect.all(
@@ -204,19 +204,19 @@ export function allLower_<T extends Record<string, Tag<any, any> | Effect<any, a
 /**
  * @tsplus static effect/io/Effect.Ops allLowerWith
  */
-export function allLowerWith_<T extends Record<string, Tag<any, any> | Effect<any, any, any>>, A>(
+export function allLowerWith<T extends Record<string, Tag<any, any> | Effect<any, any, any>>, A>(
   services: T,
   fn: (services: LowerServices<T>) => A
 ) {
-  return allLower_(services).map(fn)
+  return allLower(services).map(fn)
 }
 
 /**
  * @tsplus static effect/io/Effect.Ops allLowerWithEffect
  */
-export function allLowerWithEffect_<T extends Record<string, Tag<any, any> | Effect<any, any, any>>, R, E, A>(
+export function allLowerWithEffect<T extends Record<string, Tag<any, any> | Effect<any, any, any>>, R, E, A>(
   services: T,
   fn: (services: LowerServices<T>) => Effect<A, E, R>
 ) {
-  return allLower_(services).flatMap(fn)
+  return allLower(services).flatMap(fn)
 }

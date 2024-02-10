@@ -1,18 +1,15 @@
-// TODO: Export order seems to be important? Somehow some cyclics?
-export * as Effect from "@effect-app/core/Effect"
-export * as Optic from "@fp-ts/optic"
-export * as Chunk from "effect/Chunk"
-export * as Either from "effect/Either"
-export * as Option from "effect/Option"
+import "@effect-app/fluent-extensions"
 
-export * as Order from "effect/Order"
+export * as Record from "@effect-app/core/Object"
+export * as Fnc from "./Function.js"
+export * as Utils from "./utils.js"
 
-export {} from "@effect-app/core/Effect"
-// export * as EffectOption from "@effect-app/core/EffectOption"
-export * as NonEmptySet from "@effect-app/core/NonEmptySet"
-export {} from "@effect-app/core/Option"
-// export * as Schema from "@effect-app/prelude/schema"
-export * as Set from "@effect-app/core/Set"
-export * as ReadonlySet from "@effect-app/core/Set"
+// we cannot export types colliding with namespaces from .ts files, only from .d.ts files with custom .js trick, applied in @effect-app/core
+// for app land, it may make sense to create an app/prelude?
+export * from "./Prelude.js"
 
-export * as ReadonlyArray from "@effect-app/core/Array"
+export { Chunk, Effect, Either, Option, Order, ReadonlyArray } from "./Prelude.js"
+
+export * from "effect"
+
+export { Set as ReadonlySet } from "./Prelude.js"

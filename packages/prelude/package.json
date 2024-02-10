@@ -60,16 +60,6 @@
         "default": "./_cjs/Config/SecretURL.cjs"
       }
     },
-    "./Function": {
-      "import": {
-        "types": "./dist/Function.d.ts",
-        "default": "./dist/Function.js"
-      },
-      "require": {
-        "types": "./dist/Function.d.ts",
-        "default": "./_cjs/Function.cjs"
-      }
-    },
     "./Inputify.type": {
       "import": {
         "types": "./dist/Inputify.type.d.ts",
