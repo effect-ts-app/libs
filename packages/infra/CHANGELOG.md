@@ -1,5 +1,22 @@
 # @effect-app/infra
 
+## 0.171.0
+
+### Minor Changes
+
+- 38bff6b: refactor: enable repo exts on Repo class.
+
+### Patch Changes
+
+- 988ed1d: update packages
+- Updated dependencies [38bff6b]
+- Updated dependencies [988ed1d]
+  - @effect-app/fluent-extensions@0.125.0
+  - @effect-app/infra-adapters@0.117.6
+  - @effect-app/prelude@0.149.6
+  - @effect-app/core@0.126.1
+  - @effect-app/schema@0.183.5
+
 ## 0.170.6
 
 ### Patch Changes

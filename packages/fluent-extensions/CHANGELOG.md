@@ -1,5 +1,18 @@
 # @effect-app/fluent-extensions
 
+## 0.125.0
+
+### Minor Changes
+
+- 38bff6b: refactor: enable repo exts on Repo class.
+
+### Patch Changes
+
+- 988ed1d: update packages
+- Updated dependencies [988ed1d]
+  - @effect-app/core@0.126.1
+  - @effect-app/schema@0.183.5
+
 ## 0.124.4
 
 ### Patch Changes
