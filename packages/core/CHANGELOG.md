@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.129.0
+
+### Minor Changes
+
+- b2d3e53: consolidate
+
 ## 0.128.2
 
 ### Patch Changes
