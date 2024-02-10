@@ -19,7 +19,7 @@ import type * as LAYER from "effect/Layer"
 import type * as O from "effect/Option"
 import type * as ORD from "effect/Order"
 
-export type { NonEmptyArray } from "@effect-app/core/Array"
+export type { NonEmptyArray, NonEmptyReadonlyArray } from "@effect-app/core/Array"
 
 export namespace Effect {
   // @ts-expect-error abc
