@@ -3,6 +3,7 @@
 
 import "./global.js"
 
+import type * as ARR from "@effect-app/core/Array"
 import type * as EFFECT from "@effect-app/core/Effect"
 import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as SET from "@effect-app/core/Set"
@@ -11,9 +12,6 @@ import type * as CNK from "effect/Chunk"
 import type * as EITHER from "effect/Either"
 import type * as O from "effect/Option"
 import type * as ORD from "effect/Order"
-// eslint-disable-next-line @phaphoso/dprint/dprint
-// @ts-ignore
-import type * as ARR from "@effect-app/core/Array"
 
 export namespace Effect {
   // @ts-expect-error abc
@@ -74,19 +72,17 @@ export namespace ReadonlyArray {
  */
 export type ReadonlyArray<A> = globalThis.ReadonlyArray<A>
 
-// export namespace ReadonlyArray {
-//   // @ts-expect-error
-//   export * from "@effect-app/core/Array"
-// }
-// /** @tsplus type Array */
-// export type ReadonlyArray<A> = A.Array<A>
-
-export namespace Set {
+export namespace NonEmptyReadonlyArray {
   // @ts-expect-error
-  export * from "@effect-app/core/Set"
+  export * from "@effect-app/core/Array"
 }
-/** @tsplus type ets/Set */
-export type Set<A> = SET.Set<A>
+/**
+ * @tsplus type NonEmptyReadonlyArray
+ * @tsplus type Iterable
+ * @tsplus companion effect/data/NonEmptyReadonlyArray.Ops
+ * @tsplus companion effect/data/NonEmptyReadonlyArray.Ops
+ */
+export type NonEmptyReadonlyArray<A> = ARR.NonEmptyReadonlyArray<A>
 
 export namespace ReadonlySet {
   // @ts-expect-error

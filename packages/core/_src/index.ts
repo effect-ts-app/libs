@@ -11,5 +11,3 @@ export * from "./Prelude.js"
 export { Chunk, Effect, Either, Option, Order, ReadonlyArray } from "./Prelude.js"
 
 export * from "effect"
-
-export { Set as ReadonlySet } from "./Prelude.js"
