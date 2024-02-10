@@ -1,6 +1,8 @@
 {
   "importMap": {
+    "^(.*)/packages/prelude/_src/(.*)\\.[cm]?[tj]s$": "effect-app/$2",
     "^(.*)/packages/(.*)/_src/(.*)\\.[cm]?[tj]s$": "@effect-app/$2/$3",
+    "^(.*)/node_modules/@effect-app/prelude/_src/(.*)\\.[cm]?[tj]s$": "effect-app/$2",
     "^(.*)/node_modules/@effect-app/(.*)/_src/(.*)\\.[cm]?[tj]s$": "@effect-app/$2/$3",
     ".pnpm/[^\/]*/node_modules/(.*)": "$1"
   }
