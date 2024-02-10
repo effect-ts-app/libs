@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.47.0
+
+### Minor Changes
+
+- c8a07bc: fix path
+
 ## 0.46.0
 
 ### Minor Changes

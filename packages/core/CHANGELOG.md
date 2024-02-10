@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.131.0
+
+### Minor Changes
+
+- c8a07bc: fix path
+
 ## 0.130.0
 
 ### Minor Changes

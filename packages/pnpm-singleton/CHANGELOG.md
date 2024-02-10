@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.50.0
+
+### Minor Changes
+
+- c8a07bc: fix path
+
 ## 0.49.0
 
 ### Minor Changes

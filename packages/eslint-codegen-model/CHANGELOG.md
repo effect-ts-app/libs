@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.46.0
+
+### Minor Changes
+
+- c8a07bc: fix path
+
 ## 0.45.1
 
 ### Patch Changes

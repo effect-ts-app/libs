@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.62.0
+
+### Minor Changes
+
+- c8a07bc: fix path
+
 ## 0.61.0
 
 ### Minor Changes

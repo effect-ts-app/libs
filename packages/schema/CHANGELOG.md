@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.184.0
+
+### Minor Changes
+
+- c8a07bc: fix path
+
+### Patch Changes
+
+- Updated dependencies [c8a07bc]
+  - @effect-app/core@0.131.0
+
 ## 0.183.14
 
 ### Patch Changes
