@@ -15,7 +15,7 @@ export const parseOpt = <E, A>(t: REST.ReqRes<A, E, never>) => {
   const dec = flow(S.decodeUnknownEither(t), (x) =>
     x._tag === "Right"
       ? Option.some(x.right)
-      : Option.none)
+      : Option.none())
   return dec
 }
 
@@ -23,7 +23,7 @@ export const parseOptUnknown = <E, A>(t: REST.ReqRes<A, E, never>) => {
   const dec = flow(S.decodeUnknownEither(t), (x) =>
     x._tag === "Right"
       ? Option.some(x.right)
-      : Option.none)
+      : Option.none())
   return dec
 }
 

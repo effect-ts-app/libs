@@ -19,7 +19,7 @@ export class RequestContextContainer extends TagClass<RequestContextContainer, {
       .flatMap((requestContext) =>
         requestContext.isSome()
           ? requestContext.value.requestContext.map(Option.some)
-          : Effect.sync(() => Option.none)
+          : Effect.sync(() => Option.none())
       )
   }
   static readonly live = Effect

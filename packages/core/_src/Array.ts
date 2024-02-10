@@ -113,14 +113,14 @@ export const findLastMap = ROArray.findLast
  * @tsplus static effect/data/ReadonlyArray/NonEmptyArray.Ops fromArray
  */
 export function NEAFromArray<T>(ar: Array<T>) {
-  return ar.length ? Option.some(ar as NonEmptyArray<T>) : Option.none
+  return ar.length ? Option.some(ar as NonEmptyArray<T>) : Option.none()
 }
 
 /**
  * @tsplus static effect/data/ReadonlyArray/NonEmptyReadonlyArray.Ops fromArray
  */
 export function NEROArrayFromArray<T>(ar: ReadonlyArray<T>) {
-  return ar.length ? Option.some(ar as NonEmptyReadonlyArray<T>) : Option.none
+  return ar.length ? Option.some(ar as NonEmptyReadonlyArray<T>) : Option.none()
 }
 
 /**
@@ -218,7 +218,7 @@ export function toChunk<T>(items: Iterable<T>) {
  * @tsplus getter effect/data/ReadonlyArray toNonEmpty
  */
 export const toNonEmptyArray = <A>(a: ReadonlyArray<A>) =>
-  a.length ? Option.some(a as NonEmptyReadonlyArray<A>) : Option.none
+  a.length ? Option.some(a as NonEmptyReadonlyArray<A>) : Option.none()
 
 /**
  * @tsplus getter Iterable toArray

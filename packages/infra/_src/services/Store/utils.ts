@@ -39,23 +39,23 @@ export const makeUpdateETag =
 export function codeFilter<E extends { id: string }, NE extends E>(filter: Filter<NE>) {
   return (x: E) =>
     filter.type === "new-kid"
-      ? codeFilter3_(filter.build(), x) ? Option.some(x as unknown as NE) : Option.none
+      ? codeFilter3_(filter.build(), x) ? Option.some(x as unknown as NE) : Option.none()
       : filter.type === "startsWith"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ? lowercaseIfString((x as any)[filter.by]).startsWith(filter.value.toLowerCase())
         ? Option.some(x as unknown as NE)
-        : Option.none
+        : Option.none()
       : filter.type === "endsWith"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ? lowercaseIfString((x as any)[filter.by]).endsWith(filter.value.toLowerCase())
         ? Option.some(x as unknown as NE)
-        : Option.none
+        : Option.none()
       : filter.type === "contains"
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       ? lowercaseIfString((x as any)[filter.by]).includes(filter.value.toLowerCase())
         ? Option.some(x as unknown as NE)
-        : Option.none
+        : Option.none()
       : filter.type === "join_find"
       ? filter.keys.some((k) => {
           const value = get(x, k) as Record<string, unknown>[]
@@ -66,7 +66,7 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
           )
         })
         ? Option.some(x as unknown as NE)
-        : Option.none
+        : Option.none()
       // TODO: support mixed or/and
       : filter.mode === "or"
       ? filter
@@ -110,7 +110,7 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
             }
           })
         ? Option.some(x as unknown as NE)
-        : Option.none
+        : Option.none()
       : filter
           .where
           .every((p) => {
@@ -160,7 +160,7 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
             }
           })
       ? Option.some(x as unknown as NE)
-      : Option.none
+      : Option.none()
 }
 
 export function codeFilterJoinSelect<E extends { id: string }, NE>(
@@ -178,10 +178,10 @@ export function codeFilterJoinSelect<E extends { id: string }, NE>(
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               compare((v as any)[filter.valueKey], filter.value)
                 ? Option.some({ ...v, _rootId: x.id })
-                : Option.none
+                : Option.none()
             )
           )
-          : Option.none
+          : Option.none()
       })
       .flatMap((_) => _)
 }

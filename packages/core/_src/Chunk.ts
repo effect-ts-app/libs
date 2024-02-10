@@ -29,7 +29,7 @@ export function findFirstMap<A, B>(
         return v
       }
     }
-    return Option.none
+    return Option.none()
   }
 }
 

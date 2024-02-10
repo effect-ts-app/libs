@@ -54,7 +54,7 @@ const make = Effect.sync((): Operations => {
                   .flatMap((_) =>
                     typeof _ === "object" && _ !== null && "message" in _ && NonEmptyString2k.is(_.message)
                       ? Option.some(_.message)
-                      : Option.none
+                      : Option.none()
                   )
                   .value ?? null
             })

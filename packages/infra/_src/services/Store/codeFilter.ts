@@ -67,7 +67,7 @@ export const codeFilterStatement = <E>(p: FilterR, x: E) => {
 //         return codeFilterStatement(p, x)
 //       })
 //     ? Option.some(x as unknown as NE)
-//     : Option.none
+//     : Option.none()
 
 // export const and = <E extends { id: string }, NE extends E>(filters: readonly FilterResult[], x: E): Option<NE> =>
 //   filters
@@ -84,7 +84,7 @@ export const codeFilterStatement = <E>(p: FilterR, x: E) => {
 //         return codeFilterStatement(p, x)
 //       })
 //     ? Option.some(x as unknown as NE)
-//     : Option.none
+//     : Option.none()
 
 // // TODO: how to handle and/or outside scopes.
 // // TODO: the scopes are not about and every, or some.. they're about logical grouping. It's a logical group + and/or etc.

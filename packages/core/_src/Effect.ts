@@ -21,7 +21,7 @@ export function flatMapOption<R, E, A, R2, E2, A2>(
 ): Effect<Option<A2>, E | E2, R | R2> {
   return self.flatMap((d) =>
     d.match({
-      onNone: () => Effect.sync(() => Option.none),
+      onNone: () => Effect.sync(() => Option.none()),
       onSome: (_) => fm(_).map(Option.some)
     })
   )
@@ -37,7 +37,7 @@ export function tapOption<R, E, A, R2, E2, A2>(
 ): Effect<Option<A>, E | E2, R | R2> {
   return self.flatMap((d) =>
     d.match({
-      onNone: () => Effect.sync(() => Option.none),
+      onNone: () => Effect.sync(() => Option.none()),
       onSome: (_) => fm(_).map(() => Option.some(_))
     })
   )
@@ -53,7 +53,7 @@ export function zipRightOption<R, E, A, R2, E2, A2>(
 ) {
   return self.flatMap((d) =>
     d.match({
-      onNone: () => Effect.sync(() => Option.none),
+      onNone: () => Effect.sync(() => Option.none()),
       onSome: (_) => fm.map(() => Option.some(_))
     })
   )
@@ -69,7 +69,7 @@ export function mapOption<R, E, A, A2>(
 ): Effect<Option<A2>, E, R> {
   return self.map((d) =>
     d.match({
-      onNone: () => Option.none,
+      onNone: () => Option.none(),
       onSome: (_) => Option.some(fm(_))
     })
   )

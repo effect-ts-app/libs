@@ -129,31 +129,31 @@ export function makeRouteDescriptor<
 //   // TODO: use the path vs body etc serialisation also in the Client.
 //   const makeReqQuerySchema = Effect.sync(() => Option.fromNullable(Req.Query)).flatMap((_) =>
 //     _.match({
-//       onNone: () => Effect.sync(() => Option.none),
+//       onNone: () => Effect.sync(() => Option.none()),
 //       onSome: (_) => jsonSchema(_).map(Option.some)
 //     })
 //   )
 //   const makeReqHeadersSchema = Effect.sync(() => Option.fromNullable(Req.Headers)).flatMap((_) =>
 //     _.match({
-//       onNone: () => Effect.sync(() => Option.none),
+//       onNone: () => Effect.sync(() => Option.none()),
 //       onSome: (_) => jsonSchema(_).map(Option.some)
 //     })
 //   )
 //   const makeReqCookieSchema = Effect.sync(() => Option.fromNullable(Req.Cookie)).flatMap((_) =>
 //     _.match({
-//       onNone: () => Effect.sync(() => Option.none),
+//       onNone: () => Effect.sync(() => Option.none()),
 //       onSome: (_) => jsonSchema(_).map(Option.some)
 //     })
 //   )
 //   const makeReqPathSchema = Effect.sync(() => Option.fromNullable(Req.Path)).flatMap((_) =>
 //     _.match({
-//       onNone: () => Effect.sync(() => Option.none),
+//       onNone: () => Effect.sync(() => Option.none()),
 //       onSome: (_) => jsonSchema(_).map(Option.some)
 //     })
 //   )
 //   const makeReqBodySchema = Effect.sync(() => Option.fromNullable(Req.Body)).flatMap((_) =>
 //     _.match({
-//       onNone: () => Effect.sync(() => Option.none),
+//       onNone: () => Effect.sync(() => Option.none()),
 //       onSome: (_) => jsonSchema(_).map(Option.some)
 //     })
 //   )
@@ -164,7 +164,7 @@ export function makeRouteDescriptor<
 //   function makeParameters(inn: ParameterLocation) {
 //     return (a: Option<JSONSchema | SubSchema>) => {
 //       return a
-//         .flatMap((o) => (isObjectSchema(o) ? Option.some(o) : Option.none))
+//         .flatMap((o) => (isObjectSchema(o) ? Option.some(o) : Option.none()))
 //         .map((x) => {
 //           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 //           return Object.keys(x.properties!).map((p) => {

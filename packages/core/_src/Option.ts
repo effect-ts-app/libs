@@ -4,16 +4,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { getOrUndefined as value, Option } from "effect/Option"
 
-import * as O from "effect/Option"
-
 export * from "effect/Option"
 
 export { Option as Opt } from "effect/Option"
-
-/**
- * @tsplus static effect/data/Option.Ops none
- */
-export const none = O.none()
 
 /**
  * @tsplus getter effect/data/Option value
@@ -38,7 +31,7 @@ export const toBool = Option.match({
 /**
  * @tsplus static effect/data/Option.Ops fromBool
  */
-export const fromBool = (b: boolean) => (b ? Option.some(true) : Option.none)
+export const fromBool = (b: boolean) => (b ? Option.some(true) : Option.none())
 
 /**
  * Access property, unwrapping Options along the path
@@ -81,7 +74,7 @@ export function partial<ARGS extends any[], A>(
       return Option.some(f(raisePartial)(...args))
     } catch (e) {
       if (e instanceof PartialException) {
-        return Option.none
+        return Option.none()
       }
       throw e
     }

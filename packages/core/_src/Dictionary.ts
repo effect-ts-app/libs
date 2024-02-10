@@ -146,7 +146,7 @@ export function updateAt_<A>(
   a: A
 ): O.Option<Dictionary<A>> {
   if (!hasOwnProperty(r, k)) {
-    return O.none
+    return O.none()
   }
   if (r[k] === a) {
     return O.some(r)
@@ -175,7 +175,7 @@ export function modifyAt_<A>(
   f: (a: A) => A
 ): O.Option<Dictionary<A>> {
   if (!hasOwnProperty(r, k)) {
-    return O.none
+    return O.none()
   }
   const out: MutableRecord<string, A> = Object.assign({}, r)
   out[k] = f(r[k])
@@ -200,21 +200,21 @@ export function pop_<A>(
 ): O.Option<readonly [A, Dictionary<A>]> {
   const deleteAtk = deleteAt(k)
   const oa = lookup_(r, k)
-  return O.isNone(oa) ? O.none : O.some(tuple(oa.value, deleteAtk(r)))
+  return O.isNone(oa) ? O.none() : O.some(tuple(oa.value, deleteAtk(r)))
 }
 
 /**
  * Lookup the value for a key in a record
  */
 export function lookup_<A>(r: Dictionary<A>, k: string): O.Option<A> {
-  return Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]) : O.none
+  return Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]) : O.none()
 }
 
 /**
  * Lookup the value for a key in a record
  */
 export function lookup(k: string): <A>(r: Dictionary<A>) => O.Option<A> {
-  return (r) => (Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]) : O.none)
+  return (r) => (Object.prototype.hasOwnProperty.call(r, k) ? O.some(r[k]) : O.none())
 }
 
 /**

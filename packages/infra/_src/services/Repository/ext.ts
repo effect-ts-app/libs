@@ -668,7 +668,6 @@ export function saveWithEvents<
   return (events: Iterable<Evt>) => (...items: NonEmptyArray<T>) => self.saveAndPublish(items, events)
 }
 
-
 /**
  * @tsplus fluent Repository updateWithEffect
  */
