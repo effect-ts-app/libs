@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.131.3
+
+### Patch Changes
+
+- 8dd650f: never
+
 ## 0.131.2
 
 ### Patch Changes
