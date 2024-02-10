@@ -1,5 +1,18 @@
 # @effect-app/prelude
 
+## 0.152.0
+
+### Minor Changes
+
+- 525237e: rename @effect-app/prelude to effect-app
+
+### Patch Changes
+
+- Updated dependencies [525237e]
+  - @effect-app/core@0.130.0
+  - @effect-app/fluent-extensions@0.125.9
+  - @effect-app/schema@0.183.14
+
 ## 0.151.3
 
 ### Patch Changes

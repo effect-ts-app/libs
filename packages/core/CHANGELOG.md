@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.130.0
+
+### Minor Changes
+
+- 525237e: rename @effect-app/prelude to effect-app
+
 ## 0.129.3
 
 ### Patch Changes
