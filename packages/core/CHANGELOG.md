@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.129.3
+
+### Patch Changes
+
+- bump
+
 ## 0.129.2
 
 ### Patch Changes
