@@ -27,7 +27,7 @@
   "scripts": {
     "watch": "pnpm build:tsc -w",
     "build:tsc": "pnpm clean-dist && effect-app-cli packagejson tsc --build",
-    "build": "pnpm build:tsc && pnpm build2:cjs && mv -f ./dist/index.js ./dist/Prelude.js || echo 'no prelude' && mv -f ./_cjs/index.cjs ./_cjs/Prelude.cjs || echo 'no preludecjs'",
+    "build": "pnpm build:tsc && pnpm build2:cjs && mv -f ./dist/Prelude.code.js ./dist/Prelude.js || echo 'no prelude' && mv -f ./_cjs/Prelude.code.cjs ./_cjs/Prelude.cjs || echo 'no preludecjs'",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
     "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
     "clean": "rm -rf dist && rm -rf _cjs",
@@ -184,6 +184,16 @@
       "require": {
         "types": "./dist/Prelude.d.ts",
         "default": "./_cjs/Prelude.cjs"
+      }
+    },
+    "./Prelude.code": {
+      "import": {
+        "types": "./dist/Prelude.code.d.ts",
+        "default": "./dist/Prelude.code.js"
+      },
+      "require": {
+        "types": "./dist/Prelude.code.d.ts",
+        "default": "./_cjs/Prelude.code.cjs"
       }
     },
     "./Set": {
