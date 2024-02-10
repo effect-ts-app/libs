@@ -1,5 +1,5 @@
-import { S } from "@effect-app/prelude"
-import { RequestId, UserProfileId } from "@effect-app/prelude/ids"
+import { S } from "effect-app"
+import { RequestId, UserProfileId } from "effect-app/ids"
 
 @useClassFeaturesForSchema
 export class RequestContextParent extends TaggedClass<

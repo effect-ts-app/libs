@@ -1,4 +1,4 @@
-import { assertUnreachable, get } from "@effect-app/prelude/utils"
+import { assertUnreachable, get } from "effect-app/utils"
 import type { FilterR, FilterResult } from "./filterApi/query.js"
 import { compare, greaterThan, greaterThanExclusive, lowerThan, lowerThanExclusive } from "./utils.js"
 

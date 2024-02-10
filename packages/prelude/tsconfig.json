@@ -13,10 +13,10 @@
         "rootDir": "./_src",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
         // "paths": {
-        //     "@effect-app/prelude": [
+        //     "effect-app": [
         //         "./_src"
         //     ],
-        //     "@effect-app/prelude/*": [
+        //     "effect-app/*": [
         //         "./_src/*"
         //     ],
         // },

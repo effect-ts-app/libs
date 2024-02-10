@@ -11,7 +11,7 @@
     "@effect-app/core": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
-    "@effect-app/prelude": "workspace:*",
+    "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "express-oauth2-jwt-bearer": "^1.6.0",
     "@faker-js/faker": "^8.4.1",

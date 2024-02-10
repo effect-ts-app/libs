@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { CosmosClient, CosmosClientLayer } from "@effect-app/infra-adapters/cosmos-client"
-import { dropUndefinedT, omit, pick } from "@effect-app/prelude/utils"
+import { dropUndefinedT, omit, pick } from "effect-app/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
 import {
   buildCosmosQuery,

@@ -1,4 +1,4 @@
-import { RequestId } from "@effect-app/prelude/ids"
+import { RequestId } from "effect-app/ids"
 import { RequestContext } from "../RequestContext.js"
 import { RequestContextContainer } from "../services/RequestContextContainer.js"
 import { ContextMapContainer } from "../services/Store/ContextMapContainer.js"

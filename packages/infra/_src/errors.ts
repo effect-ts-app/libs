@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { makeFiberFailure } from "effect/Runtime"
 
-export * from "@effect-app/prelude/client/errors"
+export * from "effect-app/client/errors"
 
 /** @tsplus type CauseException */
 export class CauseException<E> extends Error {

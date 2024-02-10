@@ -1,5 +1,5 @@
-import { brandedStringId, withDefaults } from "@effect-app/prelude/schema"
-import type { StringIdBrand } from "@effect-app/prelude/schema"
+import { brandedStringId, withDefaults } from "effect-app/schema"
+import type { StringIdBrand } from "effect-app/schema"
 import type { B } from "@effect-app/schema/schema"
 import type { Simplify } from "effect/Types"
 import { extendM } from "./utils.js"

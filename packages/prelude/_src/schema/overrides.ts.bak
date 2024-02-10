@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { ReadonlySet } from "@effect-app/core/Prelude"
-import { arbitrary, type PositiveBrand, positiveExcludeZero, type PositiveExcludeZeroBrand } from "@effect-app/prelude/schema"
-import { brand, positive } from "@effect-app/prelude/schema"
+import { arbitrary, type PositiveBrand, positiveExcludeZero, type PositiveExcludeZeroBrand } from "effect-app/schema"
+import { brand, positive } from "effect-app/schema"
 import { number } from "effect/Equivalence"
 import { Arbitrary } from "fast-check"
 

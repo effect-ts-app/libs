@@ -1,4 +1,4 @@
-import { NonEmptyString255 } from "@effect-app/prelude/schema"
+import { NonEmptyString255 } from "effect-app/schema"
 import type { makeCUPS } from "./live.js"
 
 export const PrinterId = NonEmptyString255

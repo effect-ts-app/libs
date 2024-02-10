@@ -1,4 +1,4 @@
-import type { SupportedErrors, ValidationError } from "@effect-app/prelude/client/errors"
+import type { SupportedErrors, ValidationError } from "effect-app/client/errors"
 import type express from "express"
 import { logError } from "../errorReporter.js"
 

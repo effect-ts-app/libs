@@ -1,4 +1,4 @@
-import type { ApiConfig } from "@effect-app/prelude/client"
+import type { ApiConfig } from "effect-app/client"
 import type * as HttpClient from "@effect/platform/Http/Client"
 import type { Runtime } from "effect/Runtime"
 

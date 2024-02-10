@@ -1,4 +1,4 @@
-import { ApiConfig } from "@effect-app/prelude/client"
+import { ApiConfig } from "effect-app/client"
 import * as Scope from "effect/Scope"
 import { initRuntime } from "./internal.js"
 

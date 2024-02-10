@@ -6,7 +6,7 @@ import { SecretTypeId } from "effect/Secret"
 import type * as SecretURL from "../SecretURL.js"
 
 /** @internal */
-const SecretURLSymbolKey = "effect/Secret" // "@effect-app/prelude/COnfigSecretURL"
+const SecretURLSymbolKey = "effect/Secret" // "effect-app/COnfigSecretURL"
 
 /** @internal */
 export const proto = {

@@ -1,4 +1,4 @@
-import type { Operation, OperationId, OperationProgress } from "@effect-app/prelude/Operations"
+import type { Operation, OperationId, OperationProgress } from "effect-app/Operations"
 import * as Scope from "effect/Scope"
 
 /**

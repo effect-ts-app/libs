@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Update = Must return updated items
 // Modify = Must `set` updated items, and can return anything.
-import type { FixEnv } from "@effect-app/prelude/Pure"
+import type { FixEnv } from "effect-app/Pure"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../../errors.js"
 import { NotFoundError } from "../../errors.js"
 import type { Filter, PersistenceModelType } from "../../services/Store.js"

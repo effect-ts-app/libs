@@ -17,7 +17,7 @@ import { Config } from "effect/Config"
 /**
  * @tsplus global
  */
-import { SecretURL } from "@effect-app/prelude/Config/SecretURL"
+import { SecretURL } from "effect-app/Config/SecretURL"
 
 /**
  * @tsplus global
@@ -52,7 +52,7 @@ import { ClientRequest } from "@effect/platform/Http/ClientRequest"
 /**
  * @tsplus global
  */
-import { EffectCache, EffectRequest, HttpClient } from "@effect-app/prelude/Request"
+import { EffectCache, EffectRequest, HttpClient } from "effect-app/Request"
 
 /**
  * @tsplus global
@@ -64,12 +64,12 @@ import { RequestResolver } from "effect/RequestResolver"
 /**
  * @tsplus global
  */
-import { Pure, PureEnv, PureEnvEnv } from "@effect-app/prelude/Pure"
+import { Pure, PureEnv, PureEnvEnv } from "effect-app/Pure"
 
 /**
  * @tsplus global
  */
-import { exhaustiveMatch, exhaustiveMatch_, spread, spreadS } from "@effect-app/prelude/utils"
+import { exhaustiveMatch, exhaustiveMatch_, spread, spreadS } from "effect-app/utils"
 /**
  * @tsplus global
  */
@@ -99,12 +99,12 @@ import {
   // Semaphore,
   Utils
   // XPure,
-} from "@effect-app/prelude"
+} from "effect-app"
 
 /**
  * @tsplus global
  */
-import { assignTag, ServiceTagged, TagClass, TagClassMake } from "@effect-app/prelude/service"
+import { assignTag, ServiceTagged, TagClass, TagClassMake } from "effect-app/service"
 
 /**
  * @tsplus global

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Done, Initial, Loading } from "@effect-app/prelude/client"
-import type { ApiConfig, FetchResponse } from "@effect-app/prelude/client"
+import { Done, Initial, Loading } from "effect-app/client"
+import type { ApiConfig, FetchResponse } from "effect-app/client"
 import type * as HttpClient from "@effect/platform/Http/Client"
 import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
@@ -11,7 +11,7 @@ import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
 import { run } from "./internal.js"
 
-export { isFailed, isInitializing, isSuccess } from "@effect-app/prelude/client"
+export { isFailed, isInitializing, isSuccess } from "effect-app/client"
 
 type useSWRVType = {
   <Data, Error>(key: IKey): IResponse<Data, Error>

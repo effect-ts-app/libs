@@ -1,4 +1,4 @@
-import type { FixEnv, PureLogT } from "@effect-app/prelude/Pure"
+import type { FixEnv, PureLogT } from "effect-app/Pure"
 
 export interface PureDSL<S, S2, W> {
   get: ReturnType<typeof Pure.get<S>>

@@ -86,9 +86,6 @@ importers:
       '@effect-app/pnpm-singleton':
         specifier: workspace:*
         version: link:packages/pnpm-singleton
-      '@effect-app/prelude':
-        specifier: workspace:*
-        version: link:packages/prelude
       '@effect-app/schema':
         specifier: workspace:*
         version: link:packages/schema
@@ -125,6 +122,9 @@ importers:
       dprint:
         specifier: ^0.45.0
         version: 0.45.0
+      effect-app:
+        specifier: workspace:*
+        version: link:packages/prelude
       enhanced-resolve:
         specifier: ^5.15.0
         version: 5.15.0
@@ -448,9 +448,6 @@ importers:
       '@effect-app/infra-adapters':
         specifier: workspace:*
         version: link:../infra-adapters
-      '@effect-app/prelude':
-        specifier: workspace:*
-        version: link:../prelude
       '@effect-app/schema':
         specifier: workspace:*
         version: link:../schema
@@ -478,6 +475,9 @@ importers:
       effect:
         specifier: ^2.3.1
         version: 2.3.1(patch_hash=d4fjarortgoof2cift4jw5aidi)
+      effect-app:
+        specifier: workspace:*
+        version: link:../prelude
       express-oauth2-jwt-bearer:
         specifier: ^1.6.0
         version: 1.6.0
@@ -557,9 +557,6 @@ importers:
       '@effect-app/fluent-extensions':
         specifier: workspace:*
         version: link:../fluent-extensions
-      '@effect-app/prelude':
-        specifier: workspace:*
-        version: link:../prelude
       '@effect-app/schema':
         specifier: workspace:*
         version: link:../schema
@@ -575,6 +572,9 @@ importers:
       effect:
         specifier: ^2.3.1
         version: 2.3.1(patch_hash=d4fjarortgoof2cift4jw5aidi)
+      effect-app:
+        specifier: workspace:*
+        version: link:../prelude
       query-string:
         specifier: ^8.2.0
         version: 8.2.0
@@ -776,9 +776,6 @@ importers:
       '@effect-app/fluent-extensions':
         specifier: workspace:*
         version: link:../fluent-extensions
-      '@effect-app/prelude':
-        specifier: workspace:*
-        version: link:../prelude
       '@effect-app/schema':
         specifier: workspace:*
         version: link:../schema
@@ -800,6 +797,9 @@ importers:
       effect:
         specifier: ^2.3.1
         version: 2.3.1(patch_hash=d4fjarortgoof2cift4jw5aidi)
+      effect-app:
+        specifier: workspace:*
+        version: link:../prelude
       query-string:
         specifier: ^8.2.0
         version: 8.2.0

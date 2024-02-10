@@ -66,7 +66,7 @@
     "@effect-app/infra": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
     "@effect-app/pnpm-singleton": "workspace:*",
-    "@effect-app/prelude": "workspace:*",
+    "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@effect/language-service": "0.0.19",
     "@phaphoso/eslint-plugin-dprint": "^0.5.2",

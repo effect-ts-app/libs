@@ -1,5 +1,5 @@
 import { logError } from "@effect-app/infra/errorReporter"
-import type { SupportedErrors } from "@effect-app/prelude/client/errors"
+import type { SupportedErrors } from "effect-app/client/errors"
 import {
   InvalidStateError,
   NotFoundError,
@@ -7,7 +7,7 @@ import {
   OptimisticConcurrencyException,
   UnauthorizedError,
   ValidationError
-} from "@effect-app/prelude/client/errors"
+} from "effect-app/client/errors"
 import { HttpBody, HttpHeaders, type HttpServerRequest, type HttpServerResponse } from "../http.js"
 
 import type {

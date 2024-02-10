@@ -1,4 +1,4 @@
-import type { ObjectOps } from "@effect-app/prelude/utils"
+import type { ObjectOps } from "effect-app/utils"
 import { inspect } from "util"
 import { NotFoundError } from "../errors.js"
 

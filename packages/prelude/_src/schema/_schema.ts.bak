@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 import { identity } from "@effect-app/core/Function"
-import type { AnyError, Parser } from "@effect-app/prelude/schema"
+import type { AnyError, Parser } from "effect-app/schema"
 import {
   Guard,
   maxLengthIdentifier,
@@ -11,8 +11,8 @@ import {
   NonEmptyString255,
   NonEmptyString2k,
   nullableIdentifier
-} from "@effect-app/prelude/schema"
-import * as S from "@effect-app/prelude/schema"
+} from "effect-app/schema"
+import * as S from "effect-app/schema"
 import type { Faker } from "@faker-js/faker"
 import { fakerToArb, getFaker } from "../faker.js"
 
@@ -203,6 +203,6 @@ function mapValueType(type: "asNumber" | "asDate" | "normal") {
   return type === "asNumber" ? asNumber : type === "asDate" ? asDate : identity
 }
 
-export * from "@effect-app/prelude/schema"
+export * from "effect-app/schema"
 export * from "./overrides.js"
 export { array, nonEmptyArray, set } from "./overrides.js"

@@ -1,5 +1,5 @@
 {
-  "name": "@effect-app/prelude",
+  "name": "effect-app",
   "version": "0.151.3",
   "license": "MIT",
   "type": "module",

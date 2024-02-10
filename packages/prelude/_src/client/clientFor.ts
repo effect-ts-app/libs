@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { REST } from "@effect-app/prelude/schema"
-import * as utils from "@effect-app/prelude/utils"
+import { REST } from "effect-app/schema"
+import * as utils from "effect-app/utils"
 import { Path } from "path-parser"
 import type { ApiConfig } from "./config.js"
 import type { SupportedErrors } from "./errors.js"

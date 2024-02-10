@@ -44,7 +44,7 @@ import {
   useClassFeaturesForSchema,
   useClassNameForSchema,
   void_ as Void
-} from "@effect-app/prelude/schema"
+} from "effect-app/schema"
 
 // nonEmptyArray,
 // arbitrary,

@@ -1,6 +1,6 @@
 import { reportError } from "@effect-app/infra/errorReporter"
-import type { OperationProgress } from "@effect-app/prelude/Operations"
-import { Failure, Operation, OperationId, Success } from "@effect-app/prelude/Operations"
+import type { OperationProgress } from "effect-app/Operations"
+import { Failure, Operation, OperationId, Success } from "effect-app/Operations"
 import { Operations } from "./service.js"
 
 const reportAppError = reportError("Operations.Cleanup")

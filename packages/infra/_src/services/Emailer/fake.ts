@@ -1,4 +1,4 @@
-import { pretty } from "@effect-app/prelude/utils"
+import { pretty } from "effect-app/utils"
 import { Emailer } from "./service.js"
 
 const makeFake = Effect
