@@ -1,5 +1,12 @@
 # @effect-app/schema
 
+## 0.184.6
+
+### Patch Changes
+
+- Updated dependencies [fc86a75]
+  - @effect-app/core@0.131.6
+
 ## 0.184.5
 
 ### Patch Changes
