@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.131.7
+
+### Patch Changes
+
+- dc45062: fix
+
 ## 0.131.6
 
 ### Patch Changes
