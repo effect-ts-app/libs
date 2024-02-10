@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.129.2
+
+### Patch Changes
+
+- 0d02cbd: fix index.js
+
 ## 0.129.1
 
 ### Patch Changes
