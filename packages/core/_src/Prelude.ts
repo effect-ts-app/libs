@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * For namespace * exports to work, there must be a matching and USED `import type * as ` from the same file
  * We need to handle the real exports separately in another file (Prelude.code.ts)
@@ -32,9 +33,9 @@ export type Effect<A, E, R> = EFFECT.Effect<A, E, R>
 export namespace Layer {
   // @ts-ignore
   export * from "effect/Layer"
-  export type Success<T extends Layer<any, any, any>> = LAYER.Layer.Success<T>
-  export type Error<T extends Layer<any, any, any>> = LAYER.Layer.Error<T>
-  export type Context<T extends Layer<any, any, any>> = LAYER.Layer.Context<T>
+  export type Success<T extends Layer<never, any, any>> = LAYER.Layer.Success<T>
+  export type Error<T extends Layer<never, any, any>> = LAYER.Layer.Error<T>
+  export type Context<T extends Layer<never, any, any>> = LAYER.Layer.Context<T>
 }
 export type Layer<ROut, E, RIn> = LAYER.Layer<ROut, E, RIn>
 
