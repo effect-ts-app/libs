@@ -516,6 +516,36 @@
         "default": "./_cjs/services/Repository.cjs"
       }
     },
+    "./services/Repository/dsl": {
+      "import": {
+        "types": "./dist/services/Repository/dsl.d.ts",
+        "default": "./dist/services/Repository/dsl.js"
+      },
+      "require": {
+        "types": "./dist/services/Repository/dsl.d.ts",
+        "default": "./_cjs/services/Repository/dsl.cjs"
+      }
+    },
+    "./services/Repository/ext": {
+      "import": {
+        "types": "./dist/services/Repository/ext.d.ts",
+        "default": "./dist/services/Repository/ext.js"
+      },
+      "require": {
+        "types": "./dist/services/Repository/ext.d.ts",
+        "default": "./_cjs/services/Repository/ext.cjs"
+      }
+    },
+    "./services/Repository/service": {
+      "import": {
+        "types": "./dist/services/Repository/service.d.ts",
+        "default": "./dist/services/Repository/service.js"
+      },
+      "require": {
+        "types": "./dist/services/Repository/service.d.ts",
+        "default": "./_cjs/services/Repository/service.cjs"
+      }
+    },
     "./services/RepositoryBase": {
       "import": {
         "types": "./dist/services/RepositoryBase.d.ts",

@@ -13,6 +13,7 @@ import "effect/fluentExtensions"
 
 export {}
 
+// TODO: add map for Effect, as it's needed for http routes and incase something returns unknown etc
 declare module "effect/Effect" {
   export interface Effect<A, E, R> {
     andThen<A, X, E, R>(
