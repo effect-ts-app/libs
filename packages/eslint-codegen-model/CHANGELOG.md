@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.45.1
+
+### Patch Changes
+
+- 200a840: address
+
 ## 0.45.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.128.2
+
+### Patch Changes
+
+- 200a840: address
+
 ## 0.128.1
 
 ### Patch Changes

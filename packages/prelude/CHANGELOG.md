@@ -1,5 +1,15 @@
 # @effect-app/prelude
 
+## 0.150.3
+
+### Patch Changes
+
+- 200a840: address
+- Updated dependencies [200a840]
+  - @effect-app/core@0.128.2
+  - @effect-app/fluent-extensions@0.125.4
+  - @effect-app/schema@0.183.9
+
 ## 0.150.2
 
 ### Patch Changes
