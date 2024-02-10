@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.128.0
+
+### Minor Changes
+
+- add missing change
+
 ## 0.127.0
 
 ### Minor Changes
