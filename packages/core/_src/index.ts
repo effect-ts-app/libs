@@ -1,4 +1,5 @@
 // TODO: Export order seems to be important? Somehow some cyclics?
+export * as Effect from "@effect-app/core/Effect"
 export * as Optic from "@fp-ts/optic"
 export * as Chunk from "effect/Chunk"
 export * as Either from "effect/Either"

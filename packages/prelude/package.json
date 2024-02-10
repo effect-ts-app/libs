@@ -120,16 +120,6 @@
         "default": "./_cjs/Widen.type.cjs"
       }
     },
-    "./_ext/allLower": {
-      "import": {
-        "types": "./dist/_ext/allLower.d.ts",
-        "default": "./dist/_ext/allLower.js"
-      },
-      "require": {
-        "types": "./dist/_ext/allLower.d.ts",
-        "default": "./_cjs/_ext/allLower.cjs"
-      }
-    },
     "./_ext/date": {
       "import": {
         "types": "./dist/_ext/date.d.ts",
