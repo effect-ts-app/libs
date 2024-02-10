@@ -1,23 +1,42 @@
+/**
+ * For namespace * exports to work, there must be a matching and USED `import type * as ` from the same file
+ * We need to handle the real exports separately in another file (Prelude.code.ts)
+ * and post build move the other file as .js counter part of this d.ts file.
+ */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable unused-imports/no-unused-imports */
 
 import "./global.js"
 
-import type * as ARR from "@effect-app/core/Array"
 import type * as EFFECT from "@effect-app/core/Effect"
 import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as SET from "@effect-app/core/Set"
 import type * as LNS from "@fp-ts/optic"
 import type * as CNK from "effect/Chunk"
 import type * as EITHER from "effect/Either"
+import type * as LAYER from "effect/Layer"
 import type * as O from "effect/Option"
 import type * as ORD from "effect/Order"
+
+export type { NonEmptyArray } from "@effect-app/core/Array"
 
 export namespace Effect {
   // @ts-expect-error abc
   export * from "@effect-app/core/Effect"
+  export type Success<T extends Effect<any, any, any>> = EFFECT.Effect.Success<T>
+  export type Error<T extends Effect<any, any, any>> = EFFECT.Effect.Error<T>
+  export type Context<T extends Effect<any, any, any>> = EFFECT.Effect.Context<T>
 }
 export type Effect<A, E, R> = EFFECT.Effect<A, E, R>
+
+export namespace Layer {
+  // @ts-ignore
+  export * from "effect/Layer"
+  export type Success<T extends Layer<any, any, any>> = LAYER.Layer.Success<T>
+  export type Error<T extends Layer<any, any, any>> = LAYER.Layer.Error<T>
+  export type Context<T extends Layer<any, any, any>> = LAYER.Layer.Context<T>
+}
+export type Layer<ROut, E, RIn> = LAYER.Layer<ROut, E, RIn>
 
 export namespace Either {
   // @ts-expect-error abc
@@ -72,17 +91,13 @@ export namespace ReadonlyArray {
  */
 export type ReadonlyArray<A> = globalThis.ReadonlyArray<A>
 
-export namespace NonEmptyReadonlyArray {
-  // @ts-expect-error
-  export * from "@effect-app/core/Array"
-}
-/**
- * @tsplus type NonEmptyReadonlyArray
- * @tsplus type Iterable
- * @tsplus companion effect/data/NonEmptyReadonlyArray.Ops
- * @tsplus companion effect/data/NonEmptyReadonlyArray.Ops
- */
-export type NonEmptyReadonlyArray<A> = ARR.NonEmptyReadonlyArray<A>
+// /**
+//  * @tsplus type NonEmptyReadonlyArray
+//  * @tsplus type Iterable
+//  * @tsplus companion effect/data/NonEmptyReadonlyArray.Ops
+//  * @tsplus companion effect/data/NonEmptyReadonlyArray.Ops
+//  */
+// export type NonEmptyReadonlyArray<A> = ARR.NonEmptyReadonlyArray<A>
 
 export namespace ReadonlySet {
   // @ts-expect-error
