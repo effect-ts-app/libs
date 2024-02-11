@@ -78,11 +78,11 @@ export const TagMake = <Id>() =>
     toLayer: () => Layer<Id, E, R>
     toLayerScoped: () => Layer<Id, E, Exclude<R, Scope>>
   } = class {
-    static toLayer() {
+    static toLayer = () => {
       return make.toLayer(this as any)
     }
 
-    static toLayerScoped() {
+    static toLayerScoped = () => {
       return make.toLayerScoped(this as any)
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -105,10 +105,10 @@ export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
       Object.assign(this, service)
     }
     static _key?: string
-    static toLayer<E, R>(eff: Effect<ServiceImpl, E, R>) {
+    static toLayer = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
       return eff.map((_) => new this(_)).toLayer(this as any)
     }
-    static toLayerScoped<E, R>(eff: Effect<ServiceImpl, E, R>) {
+    static toLayerScoped = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
       return eff.map((_) => new this(_)).toLayerScoped(this as any)
     }
     static get key() {
@@ -138,16 +138,16 @@ export const TagClassMake = <Id, Service = Id>() =>
       Object.assign(this, service)
     }
     static _key: string
-    static make() {
+    static make = () => {
       return make.andThen((_) => new this(_))
     }
     // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
-    static toLayer() {
-      return make.toLayer(this as any)
+    static toLayer = () => {
+      return this.make().toLayer(this as any)
     }
 
-    static toLayerScoped() {
-      return make.toLayerScoped(this as any)
+    static toLayerScoped = () => {
+      return this.make().toLayerScoped(this as any)
     }
 
     static get key() {
@@ -173,10 +173,10 @@ export function TagClassId<Id, ServiceImpl>() {
       constructor(service: ServiceImpl) {
         Object.assign(this, service)
       }
-      static toLayer<E, R>(eff: Effect<ServiceImpl, E, R>) {
+      static toLayer = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
         return eff.map((_) => new this(_)).toLayer(this as any)
       }
-      static toLayerScoped<E, R>(eff: Effect<ServiceImpl, E, R>) {
+      static toLayerScoped = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
         return eff.map((_) => new this(_)).toLayerScoped(this as any)
       }
     } as any
@@ -203,16 +203,16 @@ export const TagClassMakeId = <Id>() =>
     constructor(service: ServiceImpl) {
       Object.assign(this, service)
     }
-    static make() {
+    static make = () => {
       return make.andThen((_) => new this(_))
     }
     // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
-    static toLayer() {
-      return make.toLayer(this as any)
+    static toLayer = () => {
+      return this.make().toLayer(this as any)
     }
 
-    static toLayerScoped() {
-      return make.toLayerScoped(this as any)
+    static toLayerScoped = () => {
+      return this.make().toLayerScoped(this as any)
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any
