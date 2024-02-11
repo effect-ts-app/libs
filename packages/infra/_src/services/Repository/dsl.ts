@@ -53,23 +53,15 @@ export interface OneDSLExt<T, Evt> {
   update: <R, E, S1 extends T, S2 extends T>(
     pure: (items: S1, log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<S2, E, FixEnv<R, Evt, S1, S2>>
   ) => Effect<S2, E, FixEnv<R, Evt, S1, S2>>
-}
+  updateWithOne: <T, Evt, S1 extends T, S2 extends T>(
+    self: OneDSL<T, Evt>,
+    upd: (item: S1) => S2
+  ) => Effect<S2, never, PureEnvEnv<Evt, S1, S2>>
 
-/**
- * @tsplus fluent DSLExt updateWith
- */
-export function updateWithOne<T, Evt, S1 extends T, S2 extends T>(self: OneDSL<T, Evt>, upd: (item: S1) => S2) {
-  return self.update((_: S1) => Effect.sync(() => upd(_)))
-}
-
-/**
- * @tsplus fluent DSLExt updateWith
- */
-export function updateWith<T, Evt, S1 extends T, S2 extends T>(
-  self: AllDSL<T, Evt>,
-  upd: (item: S1[]) => S2[]
-) {
-  return self.update((_: S1[]) => Effect.sync(() => upd(_)))
+  updateWith: <T, Evt, S1 extends T, S2 extends T>(
+    self: AllDSL<T, Evt>,
+    upd: (item: S1[]) => S2[]
+  ) => Effect<S2[], never, PureEnvEnv<Evt, S1[], S2[]>>
 }
 
 export function makeOneDSL<T, Evt>(): OneDSL<T, Evt> {
@@ -114,11 +106,24 @@ export function makeDSL<S1, S2, Evt>() {
     return pure(AnyPureDSL) as any
   }
 
+  function updateWithOne<T, Evt, S1 extends T, S2 extends T>(self: OneDSL<T, Evt>, upd: (item: S1) => S2) {
+    return self.update((_: S1) => Effect.sync(() => upd(_)))
+  }
+
+  function updateWith<T, Evt, S1 extends T, S2 extends T>(
+    self: AllDSL<T, Evt>,
+    upd: (item: S1[]) => S2[]
+  ) {
+    return self.update((_: S1[]) => Effect.sync(() => upd(_)))
+  }
+
   return Object.assign(
     withDSL,
     {
       modify,
-      update
+      update,
+      updateWithOne,
+      updateWith
     }
   )
 }

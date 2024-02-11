@@ -9,7 +9,7 @@ import { NotFoundError } from "../errors.js"
  * @tsplus fluent Array getFirstById
  * @tsplus fluent ReadonlyArray getFirstById
  */
-export function getFirstById_<A extends { id: unknown }, Type extends string>(
+export function getFirstById<A extends { id: unknown }, Type extends string>(
   a: Iterable<A>,
   id: A["id"],
   type: Type

@@ -256,25 +256,25 @@ export function modifyM<W, R, E, A, S2, S3>(
 /**
  * @tsplus static Pure.Ops updateWith
  */
-export function update<S2, S3>(upd: (s: S2) => S3) {
+export function updateWith<S2, S3>(upd: (s: S2) => S3) {
   return modify((_: S2) => {
     const r = upd(_)
     return tuple(r, r)
   })
 }
 
-export type FixEnv<R, W, S, S2> =
-  | Exclude<R, PureEnvEnv<any, any, any>>
-  | PureEnvEnv<W, S, S2>
-
 /**
  * @tsplus static Pure.Ops updateWithEffect
  */
-export function updateM<W, R, E, S2, S3>(
+export function updateWithEffect<W, R, E, S2, S3>(
   upd: (s: S2, log: (evt: W) => PureLogT<W>) => Effect<S3, E, FixEnv<R, W, S2, S3>>
 ): Effect<S3, E, FixEnv<R, W, S2, S3>> {
   return modifyM((_: S2) => upd(_, Pure.log).map((_) => tuple(_, _)))
 }
+
+export type FixEnv<R, W, S, S2> =
+  | Exclude<R, PureEnvEnv<any, any, any>>
+  | PureEnvEnv<W, S, S2>
 
 // export function getMA<W, S, A>(self: (s: S) => A): Pure<W, S, never, never, A> {
 //   return Effect.accessM((_: PureState<S>) => Ref.get(_.state).map(self))
