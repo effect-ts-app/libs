@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.131.8
+
+### Patch Changes
+
+- 7db0be1: dual copy/clone
+
 ## 0.131.7
 
 ### Patch Changes

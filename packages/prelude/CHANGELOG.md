@@ -1,5 +1,15 @@
 # @effect-app/prelude
 
+## 0.154.2
+
+### Patch Changes
+
+- 7db0be1: dual copy/clone
+- Updated dependencies [7db0be1]
+  - @effect-app/core@0.131.8
+  - @effect-app/fluent-extensions@0.126.9
+  - @effect-app/schema@0.185.1
+
 ## 0.154.1
 
 ### Patch Changes
