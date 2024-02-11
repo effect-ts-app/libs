@@ -1,5 +1,19 @@
 # @effect-app/prelude
 
+## 0.155.0
+
+### Minor Changes
+
+- 71dbfc3: update packages
+- 1cc7ee7: cleanup service tags
+
+### Patch Changes
+
+- Updated dependencies [71dbfc3]
+  - @effect-app/fluent-extensions@0.127.0
+  - @effect-app/schema@0.186.0
+  - @effect-app/core@0.132.0
+
 ## 0.154.3
 
 ### Patch Changes
