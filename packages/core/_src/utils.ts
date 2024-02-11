@@ -3,6 +3,7 @@
 import type { Clone } from "@fp-ts/optic"
 import { cloneTrait } from "@fp-ts/optic"
 import type * as Either from "effect/Either"
+import { dual } from "effect/Function"
 import type { Types } from "effect/Match"
 import get from "lodash/get.js"
 import omit_ from "lodash/omit.js"
@@ -575,20 +576,21 @@ export function Effect_debugUnsafe<R, E, A>(self: Effect<A, E, R>, name: string)
   return self.tap((a) => Effect.sync(() => console.log(name, a)))
 }
 
-export const clone = <A extends Object>(original: A, copy: A) => {
-  if (cloneTrait in (original as any)) {
-    const originalWithClone = original as A & Clone
-    return originalWithClone[cloneTrait](copy)
+export const clone = dual<
+  <A extends Object>(f: NoInfer<A>) => (self: A) => A,
+  <A extends Object>(self: A, f: A) => A
+>(2, (self, f) => {
+  if (cloneTrait in (self as any)) {
+    const selfWithClone = self as typeof self & Clone
+    return selfWithClone[cloneTrait](f)
   }
-  return Object.setPrototypeOf(copy, Object.getPrototypeOf(original)) as A
-}
+  return Object.setPrototypeOf(f, Object.getPrototypeOf(self)) as typeof self
+})
 
-export const copy = <A extends Object>(
-  original: A,
-  copy: Partial<A>
-): A => {
-  return clone(original, { ...original, ...copy })
-}
+export const copy = dual<
+  <A extends Object>(f: Partial<NoInfer<A>>) => (self: A) => A,
+  <A extends Object>(self: A, f: Partial<A>) => A
+>(2, (self, f) => clone(self, { ...self, ...f }))
 
 /**
  * @tsplus fluent Object.Ops clone
