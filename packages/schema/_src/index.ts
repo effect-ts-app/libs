@@ -3,7 +3,8 @@ export { Class, TaggedClass } from "./Class.js"
 export * as REST from "./REST.js"
 export { Delete, Get, Patch, Post, Put, Req } from "./REST.js"
 
-export { array, boolean, Date, fromBrand, literal, nullable, number, readonlyMap, readonlySet } from "./ext.js"
+export { fromBrand, nominal } from "./brand.js"
+export { array, boolean, Date, literal, nullable, number, readonlyMap, readonlySet } from "./ext.js"
 export { Int } from "./numbers.js"
 
 export * from "./email.js"

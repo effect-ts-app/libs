@@ -1,7 +1,8 @@
 import * as S from "@effect/schema/Schema"
 import type * as B from "effect/Brand"
 import type { Simplify } from "effect/Types"
-import { fromBrand, nominal, withDefaults } from "./ext.js"
+import { fromBrand, nominal } from "./brand.js"
+import { withDefaults } from "./ext.js"
 
 const nonEmptyString = S.string.pipe(S.nonEmpty({ title: "NonEmptyString" }))
 

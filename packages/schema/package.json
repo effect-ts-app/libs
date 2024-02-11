@@ -133,6 +133,16 @@
         "default": "./_cjs/arbitrary.cjs"
       }
     },
+    "./brand": {
+      "import": {
+        "types": "./dist/brand.d.ts",
+        "default": "./dist/brand.js"
+      },
+      "require": {
+        "types": "./dist/brand.d.ts",
+        "default": "./_cjs/brand.cjs"
+      }
+    },
     "./email": {
       "import": {
         "types": "./dist/email.d.ts",
