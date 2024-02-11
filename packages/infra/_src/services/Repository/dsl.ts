@@ -30,6 +30,9 @@ export interface AllDSLExt<T, Evt> {
   update: <R, E, S1 extends T, S2 extends T>(
     pure: (items: S1[], log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<S2[], E, R>
   ) => Effect<S2[], E, FixEnv<R, Evt, S1[], S2[]>>
+  updateWith: <S1 extends T, S2 extends T>(
+    upd: (item: S1[]) => S2[]
+  ) => Effect<S2[], never, PureEnvEnv<Evt, S1[], S2[]>>
 }
 
 export function makeAllDSL<T, Evt>() {
