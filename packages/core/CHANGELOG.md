@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.131.9
+
+### Patch Changes
+
+- 8577c90: copy with callback
+
 ## 0.131.8
 
 ### Patch Changes
