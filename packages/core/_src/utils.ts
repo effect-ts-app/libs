@@ -3,7 +3,7 @@
 import type { Clone } from "@fp-ts/optic"
 import { cloneTrait } from "@fp-ts/optic"
 import type * as Either from "effect/Either"
-import { dual } from "effect/Function"
+import { dual, isFunction } from "effect/Function"
 import type { Types } from "effect/Match"
 import get from "lodash/get.js"
 import omit_ from "lodash/omit.js"
@@ -588,9 +588,15 @@ export const clone = dual<
 })
 
 export const copy = dual<
-  <A extends Object>(f: Partial<NoInfer<A>>) => (self: A) => A,
-  <A extends Object>(self: A, f: Partial<A>) => A
->(2, (self, f) => clone(self, { ...self, ...f }))
+  {
+    <A extends Object>(f: (a: A) => Partial<NoInfer<A>>): (self: A) => A
+    <A extends Object>(f: Partial<NoInfer<A>>): (self: A) => A
+  },
+  {
+    <A extends Object>(self: A, f: (a: A) => Partial<A>): A
+    <A extends Object>(self: A, f: Partial<A>): A
+  }
+>(2, <A>(self: A, f: Partial<A> | ((a: A) => Partial<A>)) => clone(self, { ...self, ...isFunction(f) ? f(self) : f }))
 
 /**
  * @tsplus fluent Object.Ops clone
