@@ -141,11 +141,11 @@ export const TagClassMake = <Id, Service = Id>() =>
     static make = make.andThen((_) => new this(_))
     // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
     static toLayer = () => {
-      return this.make().toLayer(this as any)
+      return this.make.toLayer(this as any)
     }
 
     static toLayerScoped = () => {
-      return this.make().toLayerScoped(this as any)
+      return this.make.toLayerScoped(this as any)
     }
 
     static get key() {
@@ -204,11 +204,11 @@ export const TagClassMakeId = <Id>() =>
     static make = make.andThen((_) => new this(_))
     // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
     static toLayer = () => {
-      return this.make().toLayer(this as any)
+      return this.make.toLayer(this as any)
     }
 
     static toLayerScoped = () => {
-      return this.make().toLayerScoped(this as any)
+      return this.make.toLayerScoped(this as any)
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any
