@@ -102,6 +102,10 @@ export class RepositoryBaseC3<
 
   readonly log = (evt: Evt) => AnyPureDSL.log(evt)
 
+  removeById(id: T["id"]) {
+    return this.get(id).andThen((_) => this.removeAndPublish([_]))
+  }
+
   // TODO: project inside the db.
   projectEffect<
     T extends { id: unknown },
@@ -939,6 +943,7 @@ export type GetRepoType<T> = T extends { type: infer R } ? R : never
 export interface RepoFunctions<T extends { id: unknown }, PM extends { id: string }, Evt, ItemType, Service> {
   all: Effect<readonly T[], never, Service>
   find: (id: T["id"]) => Effect<Option<T>, never, Service>
+  removeById: (id: T["id"]) => Effect<void, NotFoundError<ItemType>, Service>
   saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
@@ -960,9 +965,9 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
 
 const makeRepoFunctions = (tag: any) => {
   const { all } = Effect.serviceConstants(tag) as any
-  const { find, get, query, removeAndPublish, save, saveAndPublish } = Effect.serviceFunctions(tag) as any
+  const { find, get, query, removeAndPublish, removeById, save, saveAndPublish } = Effect.serviceFunctions(tag) as any
 
-  return { all, find, saveAndPublish, removeAndPublish, save, get, query }
+  return { all, find, removeById, saveAndPublish, removeAndPublish, save, get, query }
 }
 
 export const RepositoryBaseImpl = <Service>() => {
