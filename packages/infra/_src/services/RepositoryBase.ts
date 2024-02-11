@@ -938,7 +938,7 @@ export type GetRepoType<T> = T extends { type: infer R } ? R : never
 
 export interface RepoFunctions<T extends { id: unknown }, PM extends { id: string }, Evt, ItemType, Service> {
   all: Effect<readonly T[], never, Service>
-  find: (id: T["id"]) => Effect<T | null, never, Service>
+  find: (id: T["id"]) => Effect<Option<T>, never, Service>
   saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
