@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.185.0
+
+### Minor Changes
+
+- ac55751: brand bundle fix
+
 ## 0.184.7
 
 ### Patch Changes
