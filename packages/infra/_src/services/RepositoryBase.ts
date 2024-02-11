@@ -303,11 +303,7 @@ export class RepositoryBaseC3<
     )
   }
 
-  /**
-   * @tsplus fluent Repository query
-   */
   query<S = T>(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
     // TODO: think about collectPM, collectE, and collect(Parsed)
     map: { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
   ) {
@@ -777,8 +773,8 @@ export function makeRepo<
 
     return {
       make,
-      where,
-      query: QueryBuilder.make<PM>()
+      Where: where,
+      Query: QueryBuilder.make<PM>()
     }
   }
 }
@@ -933,12 +929,41 @@ export interface Repos<
     f: (r: Repository<T, PM, Evt, ItemType>) => Out
   ): Effect<Out, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
   /** @deprecated use `query` instead */
-  readonly where: ReturnType<typeof makeWhere<PM>>
-  readonly query: ReturnType<typeof QueryBuilder.make<PM>>
+  readonly Where: ReturnType<typeof makeWhere<PM>>
+  readonly Query: ReturnType<typeof QueryBuilder.make<PM>>
   readonly type: Repository<T, PM, Evt, ItemType>
 }
 
 export type GetRepoType<T> = T extends { type: infer R } ? R : never
+
+export interface RepoFunctions<T extends { id: unknown }, PM extends { id: string }, Evt, ItemType, Service> {
+  all: Effect<readonly T[], never, Service>
+  find: (id: T["id"]) => Effect<T | null, never, Service>
+  saveAndPublish: (
+    items: Iterable<T>,
+    events?: Iterable<Evt>
+  ) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
+  removeAndPublish: (
+    items: Iterable<T>,
+    events?: Iterable<Evt>
+  ) => Effect<void, never, Service>
+  save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
+  get: (id: T["id"]) => Effect<T, NotFoundError<ItemType>, Service>
+
+  query: <S = T>(map: {
+    filter?: Filter<PM>
+    collect?: (t: T) => Option<S>
+    limit?: number
+    skip?: number
+  }) => Effect<S[], never, never>
+}
+
+const makeRepoFunctions = (tag: any) => {
+  const { all } = Effect.serviceConstants(tag) as any
+  const { find, get, query, removeAndPublish, save, saveAndPublish } = Effect.serviceFunctions(tag) as any
+
+  return { all, find, saveAndPublish, removeAndPublish, save, get, query }
+}
 
 export const RepositoryBaseImpl = <Service>() => {
   return <
@@ -959,6 +984,7 @@ export const RepositoryBaseImpl = <Service>() => {
         Evt,
         ItemType
       >
+      & RepoFunctions<T, PM, Evt, ItemType, Service>
     : never =>
   {
     const mkRepo = makeRepo<PM, Evt>()(
@@ -974,11 +1000,12 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly make = mkRepo.make
       static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
-      static readonly where = makeWhere<PM>()
-      static readonly query = QueryBuilder.make<PM>()
+      static readonly Where = makeWhere<PM>()
+      static readonly Query = QueryBuilder.make<PM>()
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
-    return assignTag<Service>()(Cls) as any
+
+    return assignTag<Service>()(Object.assign(Cls, makeRepoFunctions(Cls))) as any
   }
 }
 
@@ -1003,6 +1030,7 @@ export const RepositoryDefaultImpl = <Service>() => {
         Evt,
         ItemType
       >
+      & RepoFunctions<T, PM, Evt, ItemType, Service>
     : never =>
   {
     const mkRepo = makeRepo<PM, Evt>()(
@@ -1020,11 +1048,11 @@ export const RepositoryDefaultImpl = <Service>() => {
       static readonly make = mkRepo.make
       static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
-      static readonly where = makeWhere<PM>()
-      static readonly query = QueryBuilder.make<PM>()
+      static readonly Where = makeWhere<PM>()
+      static readonly Query = QueryBuilder.make<PM>()
 
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
-    return assignTag<Service>()(Cls) as any // impl is missing, but its marked protected
+    return assignTag<Service>()(Object.assign(Cls, makeRepoFunctions(Cls))) as any // impl is missing, but its marked protected
   }
 }
