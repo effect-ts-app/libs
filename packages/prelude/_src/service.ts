@@ -138,9 +138,7 @@ export const TagClassMake = <Id, Service = Id>() =>
       Object.assign(this, service)
     }
     static _key: string
-    static make = () => {
-      return make.andThen((_) => new this(_))
-    }
+    static make = make.andThen((_) => new this(_))
     // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
     static toLayer = () => {
       return this.make().toLayer(this as any)
@@ -203,9 +201,7 @@ export const TagClassMakeId = <Id>() =>
     constructor(service: ServiceImpl) {
       Object.assign(this, service)
     }
-    static make = () => {
-      return make.andThen((_) => new this(_))
-    }
+    static make = make.andThen((_) => new this(_))
     // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
     static toLayer = () => {
       return this.make().toLayer(this as any)
