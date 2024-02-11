@@ -108,15 +108,10 @@ export class RepositoryBaseC3<
 
   // TODO: project inside the db.
   projectEffect<
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
-    Evt,
-    ItemType extends string,
     R,
     E,
     S = PM
   >(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
     map: Effect<
       {
         filter?: Filter<PM> | undefined
@@ -129,16 +124,11 @@ export class RepositoryBaseC3<
     >
   ): Effect<S[], E, R>
   projectEffect<
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
-    Evt,
-    ItemType extends string,
     R,
     E,
     U extends keyof PM,
     S = PM
   >(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
     map: Effect<
       {
         filter?: QueryBuilder<PM> | undefined
@@ -151,16 +141,11 @@ export class RepositoryBaseC3<
     >
   ): Effect<Pick<PM, U>[], E, R>
   projectEffect<
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
-    Evt,
-    ItemType extends string,
     R,
     E,
     U extends keyof PM,
     S = Pick<PM, U>
   >(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
     map: Effect<
       {
         filter?: Filter<PM> | undefined
@@ -182,10 +167,6 @@ export class RepositoryBaseC3<
     )
   }
 
-  /**
-   * TODO: project inside the db.
-   * @tsplus fluent Repository project
-   */
   project<S = PM>(
     map: {
       filter?: Filter<PM>
@@ -194,9 +175,7 @@ export class RepositoryBaseC3<
       skip?: number
     }
   ): Effect<S[]>
-  project<
-    U extends keyof PM
-  >(
+  project<U extends keyof PM>(
     map: {
       filter?: QueryBuilder<PM>
       select: NonEmptyReadonlyArray<U>
@@ -219,31 +198,17 @@ export class RepositoryBaseC3<
     return this.projectEffect(Effect.sync(() => map))
   }
 
-  /**
-   * TODO: count inside the db.
-   * @tsplus fluent Repository project
-   */
-  count(
-    filter?: Filter<PM>
-  ) {
+  count(filter?: Filter<PM>) {
     return this
       .projectEffect(Effect.sync(() => ({ filter })))
       .map((_) => NonNegativeInt(_.length))
   }
 
-  /**
-   * @tsplus fluent Repository queryEffect
-   */
   queryEffect<
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
-    Evt,
-    ItemType extends string,
     R,
     E,
     S = T
   >(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
     // TODO: think about collectPM, collectE, and collect(Parsed)
     map: Effect<{ filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
   ) {
@@ -254,44 +219,23 @@ export class RepositoryBaseC3<
     )
   }
 
-  /**
-   * @tsplus fluent Repository queryOneEffect
-   */
-  queryOneEffect<
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
-    Evt,
-    ItemType extends string,
-    R,
-    E
-  >(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
+  queryOneEffect<R, E>(
     // TODO: think about collectPM, collectE, and collect(Parsed)
     map: Effect<{ filter?: Filter<PM> }, E, R>
   ): Effect<T, E | NotFoundError<ItemType>, R>
   queryOneEffect<
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
-    Evt,
-    ItemType extends string,
     R,
     E,
     S = T
   >(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
     // TODO: think about collectPM, collectE, and collect(Parsed)
     map: Effect<{ filter?: Filter<PM>; collect: (t: T) => Option<S> }, E, R>
   ): Effect<S, E | NotFoundError<ItemType>, R>
   queryOneEffect<
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
-    Evt,
-    ItemType extends string,
     R,
     E,
     S = T
   >(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
     // TODO: think about collectPM, collectE, and collect(Parsed)
     map: Effect<{ filter?: Filter<PM>; collect?: (t: T) => Option<S> }, E, R>
   ): Effect<S, E | NotFoundError<ItemType>, R> {
@@ -314,9 +258,6 @@ export class RepositoryBaseC3<
     return this.queryEffect(Effect.sync(() => map))
   }
 
-  /**
-   * @tsplus fluent Repository queryOne
-   */
   queryOne<S = T>(
     map: { filter?: Filter<PM>; collect: (t: T) => Option<S> }
   ): Effect<S, NotFoundError<ItemType>>
@@ -368,9 +309,6 @@ export class RepositoryBaseC3<
         .flatMap((_) => saveWithPure_(this, _, pure))
   }
 
-  /**
-   * @tsplus fluent Repository queryAndSaveOnePure
-   */
   queryAndSaveOnePure<
     S extends T = T
   >(
@@ -397,9 +335,6 @@ export class RepositoryBaseC3<
     return this.queryAndSaveOnePureEffect(Effect.sync(() => map))
   }
 
-  /**
-   * @tsplus fluent Repository queryAndSavePureEffect
-   */
   queryAndSavePureEffect<
     R,
     E,
@@ -412,9 +347,6 @@ export class RepositoryBaseC3<
         .flatMap((_) => this.saveManyWithPure_(_, pure))
   }
 
-  /**
-   * @tsplus fluent Repository queryAndSavePure
-   */
   queryAndSavePure<
     S extends T = T
   >(
@@ -445,16 +377,11 @@ export class RepositoryBaseC3<
 
   saveManyWithPure_<
     R,
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
     A,
     E,
-    Evt,
     S1 extends T,
-    S2 extends T,
-    ItemType extends string
+    S2 extends T
   >(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
     items: Iterable<S1>,
     pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>
   ) {
@@ -466,16 +393,11 @@ export class RepositoryBaseC3<
 
   saveWithPure_<
     R,
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
     A,
     E,
-    Evt,
     S1 extends T,
-    S2 extends T,
-    ItemType extends string
+    S2 extends T
   >(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
     item: S1,
     pure: Effect<A, E, FixEnv<R, Evt, S1, S2>>
   ) {
@@ -488,16 +410,11 @@ export class RepositoryBaseC3<
   }
 
   saveAllWithEffectInt<
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
     P extends T,
-    Evt,
-    ItemType extends string,
     R,
     E,
     A
   >(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
     gen: Effect<readonly [Iterable<P>, Iterable<Evt>, A], E, R>
   ) {
     return gen
@@ -537,16 +454,11 @@ export class RepositoryBaseC3<
 
   saveManyWithPureBatched_<
     R,
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
     A,
     E,
-    Evt,
     S1 extends T,
-    S2 extends T,
-    ItemType extends string
+    S2 extends T
   >(
-    this: RepositoryBaseC<T, PM, Evt, ItemType>,
     items: Iterable<S1>,
     pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>,
     batchSize = 100
