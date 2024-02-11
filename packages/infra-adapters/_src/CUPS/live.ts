@@ -1,6 +1,6 @@
 import { pretty } from "@effect-app/core/utils"
-import { NonEmptyString255 } from "effect-app/schema"
 import cp from "child_process"
+import { NonEmptyString255 } from "effect-app/schema"
 import fs from "fs"
 import os from "os"
 import path from "path"
@@ -13,7 +13,7 @@ import type { PrinterId } from "./service.js"
  * @tsplus static CUPS.Ops Layer
  */
 export function CUPSLayer(cupsServer?: URL) {
-  return makeCUPS(cupsServer).toLayer(CUPS)
+  return CUPS.toLayer(makeCUPS(cupsServer))
 }
 
 export function makeCUPS(cupsServer?: URL) {

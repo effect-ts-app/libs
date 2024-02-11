@@ -1,4 +1,4 @@
-import { ContextMap, makeContextMap } from "./service.js"
+import { ContextMap } from "./service.js"
 
 // TODO: we have to create a new contextmap on every request.
 // we want to share one map during startup
@@ -9,10 +9,10 @@ import { ContextMap, makeContextMap } from "./service.js"
 /**
  * @tsplus companion ContextMapContainer.Ops
  */
-export class ContextMapContainer extends TagClass<ContextMapContainer, {
+export class ContextMapContainer extends TagClassId<ContextMapContainer, {
   get: Effect<ContextMap>
   start: Effect<void>
-}>() {
+}>()("effect-app/ContextMapContainer") {
   static get get(): Effect<ContextMap, never, ContextMapContainer> {
     return ContextMapContainer.flatMap((_) => _.get)
   }
@@ -26,10 +26,10 @@ export class ContextMapContainer extends TagClass<ContextMapContainer, {
       )
   }
 
-  static readonly live = Effect
-    .sync(() => makeContextMap())
-    .andThen(FiberRef.make<ContextMap>)
-    .map((ref) => new ContextMapContainer({ get: ref.get, start: ContextMap.Make.flatMap((_) => ref.set(_)) }))
+  static readonly live = ContextMap
+    .make
+    .flatMap(FiberRef.make<ContextMap>)
+    .map((ref) => new ContextMapContainer({ get: ref.get, start: ContextMap.make.flatMap((_) => ref.set(_)) }))
     .toLayerScoped(this)
 }
 

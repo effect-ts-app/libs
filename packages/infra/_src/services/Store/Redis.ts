@@ -82,7 +82,7 @@ function makeRedisStore({ prefix }: StorageConfig) {
   })
 }
 export function RedisStoreLayer(cfg: StorageConfig) {
-  return makeRedisStore(cfg)
-    .toLayer(StoreMaker)
+  return StoreMaker
+    .toLayer(makeRedisStore(cfg))
     .provide(RedisClientLayer(cfg.url.value))
 }

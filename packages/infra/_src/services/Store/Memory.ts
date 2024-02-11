@@ -206,4 +206,4 @@ export const makeMemoryStore = () => ({
     })
 })
 
-export const MemoryStoreLive = StoreMaker.makeLayer(makeMemoryStore())
+export const MemoryStoreLive = StoreMaker.toLayer(Effect.sync(() => makeMemoryStore()))

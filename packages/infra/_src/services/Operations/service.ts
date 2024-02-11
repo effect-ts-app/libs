@@ -5,21 +5,16 @@ import * as Scope from "effect/Scope"
  * @tsplus type Operations
  * @tsplus companion Operations.Ops
  */
-export class Operations extends TagClass<Operations.Id, {
+export class Operations extends TagClassId<Operations, {
   register: Effect<OperationId, never, Scope.Scope>
   update: (id: OperationId, progress: OperationProgress) => Effect<void>
   find: (id: OperationId) => Effect<Option<Operation>>
   cleanup: Effect<void>
-}, Operations>() {
+}>()("effect-app/Operations") {
   static readonly find = Effect.serviceFunctions(this).find
   static readonly update = Effect.serviceFunctions(this).update
   static readonly register = Effect.serviceConstants(this).register
   static readonly cleanup = Effect.serviceConstants(this).cleanup
-}
-export namespace Operations {
-  export interface Id {
-    readonly _: unique symbol
-  }
 }
 
 /**

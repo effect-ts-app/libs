@@ -6,7 +6,7 @@
  * https://github.com/microsoft/TypeScript/issues/52644
  */
 
-import type { TagTypeId as TagTypeIdOriginal } from "effect/Context"
+import type { Context } from "effect"
 
 export const ServiceTag = Symbol()
 export type ServiceTag = typeof ServiceTag
@@ -36,40 +36,87 @@ export function make<T extends ServiceTagged<any>, I = T>(_: Tag<I, T>, t: Omit<
   return t as T
 }
 
-export const TagTypeId: TagTypeIdOriginal = Symbol.for("effect/Context/Tag") as unknown as TagTypeIdOriginal
-export type TagTypeId = typeof TagTypeId
-
 let i = 0
 const randomId = () => "unknown-service-" + i++
 
-export function assignTag<Id, Service = Id>(key?: string) {
+export function assignTag<Id, Service = Id>(key?: string, creationError?: Error) {
   return <S extends object>(cls: S): S & Tag<Id, Service> => {
     const tag = GenericTag<Id, Service>(key ?? randomId())
-    const t = Object.assign(cls, Object.getPrototypeOf(tag), tag)
-    const limit = Error.stackTraceLimit
-    Error.stackTraceLimit = 4 // TODO
-    const creationError = new Error()
-    Error.stackTraceLimit = limit
+    let fields = tag
+    if (Reflect.ownKeys(cls).includes("key")) {
+      const { key, ...rest } = tag
+      fields = rest as any
+    }
+    const t = Object.assign(cls, Object.getPrototypeOf(tag), fields)
+    if (!creationError) {
+      const limit = Error.stackTraceLimit
+      Error.stackTraceLimit = 2
+      creationError = new Error()
+      Error.stackTraceLimit = limit
+    }
     // the stack is used to get the location of the tag definition, if a service is not found in the registry
     Object.defineProperty(t, "stack", {
       get() {
-        // remove one line as assignTag is generally used inside a class constructor function
-        return creationError.stack?.split("\n").slice(1).join("\n")
+        return creationError!.stack
       }
     })
     return t
   }
 }
 
+export const TagMake = <Id>() =>
+<ServiceImpl, R, E, const Key extends string>(
+  key: Key,
+  make: Effect<ServiceImpl, E, R>
+) => {
+  const limit = Error.stackTraceLimit
+  Error.stackTraceLimit = 2
+  const creationError = new Error()
+  Error.stackTraceLimit = limit
+  const c: {
+    new(): Context.TagClassShape<Key, ServiceImpl>
+    toLayer: () => Layer<Id, E, R>
+    toLayerScoped: () => Layer<Id, E, Exclude<R, Scope>>
+  } = class {
+    static toLayer() {
+      return make.toLayer(this as any)
+    }
+
+    static toLayerScoped() {
+      return make.toLayerScoped(this as any)
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any
+
+  return assignTag<Id, ServiceImpl>(key, creationError)(c)
+}
+
 export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
-  const c: { new(service: ServiceImpl): Readonly<ServiceImpl> } = class {
+  const limit = Error.stackTraceLimit
+  Error.stackTraceLimit = 2
+  const creationError = new Error()
+  Error.stackTraceLimit = limit
+  const c: {
+    new(service: ServiceImpl): Readonly<ServiceImpl>
+    toLayer: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, R>
+    toLayerScoped: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, Exclude<R, Scope>>
+  } = class {
     constructor(service: ServiceImpl) {
       Object.assign(this, service)
     }
-    // static readonly Id: Id
+    static _key?: string
+    static toLayer<E, R>(eff: Effect<ServiceImpl, E, R>) {
+      return eff.map((_) => new this(_)).toLayer(this as any)
+    }
+    static toLayerScoped<E, R>(eff: Effect<ServiceImpl, E, R>) {
+      return eff.map((_) => new this(_)).toLayerScoped(this as any)
+    }
+    static get key() {
+      return this._key ?? (this._key = key ?? creationError.stack?.split("\n")[2] ?? this.name)
+    }
   } as any
 
-  return assignTag<Id, Service>(key)(c)
+  return assignTag<Id, Service>(key, creationError)(c)
 }
 
 export const TagClassMake = <Id, Service = Id>() =>
@@ -77,13 +124,87 @@ export const TagClassMake = <Id, Service = Id>() =>
   make: Effect<ServiceImpl, E, R>,
   key?: string
 ) => {
+  const limit = Error.stackTraceLimit
+  Error.stackTraceLimit = 2
+  const creationError = new Error()
+  Error.stackTraceLimit = limit
   const c: {
     new(service: ServiceImpl): Readonly<ServiceImpl>
-    toLayer: () => Layer<Service, E, R>
-    toLayerScoped: () => Layer<Service, E, Exclude<R, Scope>>
+    toLayer: () => Layer<Id, E, R>
+    toLayerScoped: () => Layer<Id, E, Exclude<R, Scope>>
+    make: Effect<Id, E, R>
   } = class {
     constructor(service: ServiceImpl) {
       Object.assign(this, service)
+    }
+    static _key: string
+    static make() {
+      return make.andThen((_) => new this(_))
+    }
+    // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
+    static toLayer() {
+      return make.toLayer(this as any)
+    }
+
+    static toLayerScoped() {
+      return make.toLayerScoped(this as any)
+    }
+
+    static get key() {
+      return this._key ?? (this._key = key ?? creationError.stack?.split("\n")[2] ?? this.name)
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any
+
+  return assignTag<Id, Service>(key, creationError)(c)
+}
+
+export function TagClassId<Id, ServiceImpl>() {
+  return <const Key extends string>(key: Key) => {
+    const limit = Error.stackTraceLimit
+    Error.stackTraceLimit = 2
+    const creationError = new Error()
+    Error.stackTraceLimit = limit
+    const c: {
+      new(service: ServiceImpl): Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>
+      toLayer: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, R>
+      toLayerScoped: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, Exclude<R, Scope>>
+    } = class {
+      constructor(service: ServiceImpl) {
+        Object.assign(this, service)
+      }
+      static toLayer<E, R>(eff: Effect<ServiceImpl, E, R>) {
+        return eff.map((_) => new this(_)).toLayer(this as any)
+      }
+      static toLayerScoped<E, R>(eff: Effect<ServiceImpl, E, R>) {
+        return eff.map((_) => new this(_)).toLayerScoped(this as any)
+      }
+    } as any
+
+    return assignTag<Id, Id>(key, creationError)(c)
+  }
+}
+
+export const TagClassMakeId = <Id>() =>
+<ServiceImpl, R, E, const Key extends string>(
+  key: Key,
+  make: Effect<ServiceImpl, E, R>
+) => {
+  const limit = Error.stackTraceLimit
+  Error.stackTraceLimit = 2
+  const creationError = new Error()
+  Error.stackTraceLimit = limit
+  const c: {
+    new(service: ServiceImpl): Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>
+    toLayer: () => Layer<Id, E, R>
+    toLayerScoped: () => Layer<Id, E, Exclude<R, Scope>>
+    make: Effect<Id, E, R>
+  } = class {
+    constructor(service: ServiceImpl) {
+      Object.assign(this, service)
+    }
+    static make() {
+      return make.andThen((_) => new this(_))
     }
     // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
     static toLayer() {
@@ -96,24 +217,5 @@ export const TagClassMake = <Id, Service = Id>() =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any
 
-  return assignTag<Id, Service>(key)(c)
-}
-
-export function TagClassLegacy<Id, Service = Id>(key?: string) {
-  abstract class TagClassLegacy {}
-
-  return assignTag<Id, Service>(key)(TagClassLegacy)
-}
-
-/** @deprecated use `Id` of TagClass for unique id */
-export function ServiceTaggedClass<Id, Service = Id>() {
-  return <Key extends PropertyKey>(_: Key) => {
-    abstract class ServiceTaggedClassC {
-      static make = (t: Omit<Service, Key>) => {
-        return t as Service
-      }
-    }
-
-    return assignTag<Id, Service>()(ServiceTaggedClassC)
-  }
+  return assignTag<Id, Id>(key, creationError)(c)
 }

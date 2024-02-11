@@ -438,7 +438,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
 }
 
 export function CosmosStoreLayer(cfg: StorageConfig) {
-  return makeCosmosStore(cfg)
-    .toLayer(StoreMaker)
+  return StoreMaker
+    .toLayer(makeCosmosStore(cfg))
     .provide(CosmosClientLayer(cfg.url.value, cfg.dbName))
 }

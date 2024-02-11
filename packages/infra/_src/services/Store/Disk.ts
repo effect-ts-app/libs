@@ -147,6 +147,5 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
 }
 
 export function DiskStoreLayer(config: StorageConfig, dir: string) {
-  return makeDiskStore(config, dir)
-    .toLayer(StoreMaker)
+  return StoreMaker.toLayer(makeDiskStore(config, dir))
 }

@@ -5,11 +5,11 @@ import { RequestContext } from "../RequestContext.js"
  * @tsplus type RequestContextContainer
  * @tsplus companion RequestContextContainer.Ops
  */
-export class RequestContextContainer extends TagClass<RequestContextContainer, {
+export class RequestContextContainer extends TagClassId<RequestContextContainer, {
   requestContext: Effect<RequestContext>
   update: (f: (rc: RequestContext) => RequestContext) => Effect<RequestContext>
   start: (f: RequestContext) => Effect<void>
-}>() {
+}>()("effect-app/RequestContextContainer") {
   static get get(): Effect<RequestContext, never, RequestContextContainer> {
     return RequestContextContainer.flatMap((_) => _.requestContext)
   }
@@ -25,12 +25,14 @@ export class RequestContextContainer extends TagClass<RequestContextContainer, {
   static readonly live = Effect
     .sync(() => new RequestContext({ name: NonEmptyString255("_root_"), rootId: RequestId("_root_"), locale: "en" }))
     .andThen(FiberRef.make<RequestContext>)
-    .map((ref) => ({
-      requestContext: ref.get,
-      update: (f: (a: RequestContext) => RequestContext) =>
-        ref.getAndUpdate(f).tap((rc) => Effect.annotateCurrentSpan(rc.spanAttributes)),
-      start: (a: RequestContext) => ref.set(a).andThen(a.restoreStoreId)
-    }))
+    .map((ref) =>
+      new RequestContextContainer({
+        requestContext: ref.get,
+        update: (f: (a: RequestContext) => RequestContext) =>
+          ref.getAndUpdate(f).tap((rc) => Effect.annotateCurrentSpan(rc.spanAttributes)),
+        start: (a: RequestContext) => ref.set(a).andThen(a.restoreStoreId)
+      })
+    )
     .toLayerScoped(this)
 }
 

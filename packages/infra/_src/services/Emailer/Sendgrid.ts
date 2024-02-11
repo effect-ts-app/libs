@@ -9,7 +9,7 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
   Effect.sync(() => {
     sgMail.setApiKey(apiKey.value)
 
-    return {
+    return new Emailer({
       sendMail(msg_: EmailMsgOptionalFrom) {
         return Effect.gen(function*($) {
           const msg: EmailMsg = dropUndefinedT({
@@ -45,7 +45,7 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
           return ret
         })
       }
-    }
+    })
   })
 
 /**

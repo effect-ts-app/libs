@@ -104,7 +104,15 @@ import {
 /**
  * @tsplus global
  */
-import { assignTag, ServiceTagged, TagClass, TagClassMake } from "effect-app/service"
+import {
+  assignTag,
+  ServiceTagged,
+  TagClass,
+  TagClassId,
+  TagClassMake,
+  TagClassMakeId,
+  TagMake
+} from "effect-app/service"
 
 /**
  * @tsplus global
