@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.175.0
+
+### Minor Changes
+
+- 7c0536d: back to service functions
+
 ## 0.174.7
 
 ### Patch Changes
