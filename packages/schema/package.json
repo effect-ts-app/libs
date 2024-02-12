@@ -5,8 +5,8 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect/schema": "^0.62.2",
-    "effect": "^2.3.2",
+    "@effect/schema": "^0.62.3",
+    "effect": "^2.3.3",
     "cross-fetch": "^4.0.0",
     "nanoid": "^5.0.5",
     "lodash": "^4.17.21",
