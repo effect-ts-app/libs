@@ -93,7 +93,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       ([i, batch]) =>
                         Effect
                           .promise(() => bulk(batch.map(([, op]) => op)))
-                          .delay(Duration.makeMillis(i === 0 ? 0 : 1100))
+                          .delay(Duration.millis(i === 0 ? 0 : 1100))
                           .flatMap((responses) =>
                             Effect.gen(function*($) {
                               const r = responses.find((x) => x.statusCode === 412 || x.statusCode === 404)
@@ -417,7 +417,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       .bulkSet(a)
                       .orDie
                       // we delay extra here, so that initial creation between Companies/POs also have an interval between them.
-                      .delay(Duration.makeMillis(1100))
+                      .delay(Duration.millis(1100))
                   )
               )
             }

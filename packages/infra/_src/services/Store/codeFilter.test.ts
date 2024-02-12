@@ -48,7 +48,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("b", (_) => "b2"))
       ))
-      .toArray
   )
     .toEqual([somethings[1]])
 
@@ -57,7 +56,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("b", Filters.contains("b")))
       ))
-      .toArray
   )
     .toEqual([somethings[0], somethings[1]])
 
@@ -66,7 +64,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("b", Filters.contains("2")))
       ))
-      .toArray
   )
     .toEqual([somethings[1]])
 
@@ -75,7 +72,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("b", Filters.endsWith("b")))
       ))
-      .toArray
   )
     .toEqual([somethings[0]])
 
@@ -84,7 +80,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("b", Filters.endsWith("2")))
       ))
-      .toArray
   )
     .toEqual([somethings[1]])
 
@@ -93,7 +88,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("b", Filters.startsWith("b")))
       ))
-      .toArray
   )
     .toEqual([somethings[0], somethings[1]])
 
@@ -102,7 +96,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("b", Filters.startsWith("2")))
       ))
-      .toArray
   )
     .toEqual([])
 
@@ -111,7 +104,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("b", (_) => "b"))
       ))
-      .toArray
   )
     .toEqual([somethings[0]])
 
@@ -120,7 +112,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("c", Filters.includes("c")))
       ))
-      .toArray
   )
     .toEqual([somethings[0]])
 
@@ -129,7 +120,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("d.-1.a", (_) => "a5"))
       ))
-      .toArray
   )
     .toEqual([somethings[1]])
 
@@ -138,7 +128,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("d.-1.a", (_) => "a"))
       ))
-      .toArray
   )
     .toEqual([somethings[0]])
 
@@ -147,7 +136,6 @@ test("works", () => {
       .filterMap(codeFilter(
         somethingsWhere((_) => _("d.-1.a", Filters.isnt("a")))
       ))
-      .toArray
   )
     .toEqual([somethings[1]])
 })

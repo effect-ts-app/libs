@@ -5,6 +5,15 @@ import * as Chunk from "effect/Chunk"
 export * from "effect/Chunk"
 
 /**
+ * @tsplus getter Array toChunk
+ * @tsplus getter ReadonlyArray toChunk
+ * @tsplus getter Iterable toChunk
+ * @tsplus getter Iterator toChunk
+ * @tsplus getter Generator toChunk
+ */
+export const fromIterable = Chunk.fromIterable
+
+/**
  * @tsplus fluent effect/data/Chunk groupByT
  */
 export function groupByTChunk_<A, Key extends PropertyKey>(c: Chunk.Chunk<A>, f: (a: A) => Key) {

@@ -1027,6 +1027,11 @@
       "definitionKind": "const",
       "extensions": [
         {
+          "kind": "getter",
+          "typeName": "Iterable",
+          "name": "toChunk"
+        },
+        {
           "kind": "static",
           "typeName": "effect/data/Chunk.Ops",
           "name": "fromIterable"
@@ -10288,6 +10293,11 @@
           "name": "findFirst"
         },
         {
+          "kind": "fluent",
+          "typeName": "Iterable",
+          "name": "findFirstMap"
+        },
+        {
           "kind": "static",
           "typeName": "effect/data/ReadonlyArray.Ops",
           "name": "findFirst"
@@ -10318,6 +10328,11 @@
           "kind": "fluent",
           "typeName": "Iterable",
           "name": "findLast"
+        },
+        {
+          "kind": "fluent",
+          "typeName": "Iterable",
+          "name": "findLastMap"
         },
         {
           "kind": "static",
