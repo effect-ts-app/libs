@@ -1,4 +1,5 @@
 import * as ReadonlyArray from "effect/ReadonlyArray"
+import type { NoInfer } from "effect/Types"
 import { dual, identity } from "./Function.js"
 import * as Option from "./Option.js"
 
