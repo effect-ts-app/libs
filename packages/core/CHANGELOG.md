@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.134.0
+
+### Minor Changes
+
+- eddbf3c: cleanup ext
+
 ## 0.133.3
 
 ### Patch Changes
