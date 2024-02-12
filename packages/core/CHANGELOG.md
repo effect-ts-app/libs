@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.134.1
+
+### Patch Changes
+
+- 3c1cb25: fix noinfer
+
 ## 0.134.0
 
 ### Minor Changes
