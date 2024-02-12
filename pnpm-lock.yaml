@@ -11,9 +11,9 @@ patchedDependencies:
   '@effect/language-service@0.0.19':
     hash: izp2ue34jjv4swyrhg2ux4ha3e
     path: patches/@effect__language-service@0.0.19.patch
-  '@effect/schema@0.62.3':
-    hash: 2uflyfaiw7gy2thojjrrtq57eu
-    path: patches/@effect__schema@0.62.3.patch
+  '@effect/schema@0.62.4':
+    hash: gdxyn4gyzsd2buagq5law4dbvu
+    path: patches/@effect__schema@0.62.4.patch
   '@fp-ts/optic@0.22.0':
     hash: 2yuoegl5dhwsslauskmjxbvoeu
     path: patches/@fp-ts__optic@0.22.0.patch
@@ -254,8 +254,8 @@ importers:
   packages/core:
     dependencies:
       '@effect/platform':
-        specifier: ^0.44.4
-        version: 0.44.4(@effect/schema@0.62.3)(effect@2.3.3)
+        specifier: ^0.44.5
+        version: 0.44.5(@effect/schema@0.62.4)(effect@2.3.3)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.3.3)
@@ -367,8 +367,8 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.44.4
-        version: 0.44.4(@effect/schema@0.62.3)(effect@2.3.3)
+        specifier: ^0.44.5
+        version: 0.44.5(@effect/schema@0.62.4)(effect@2.3.3)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.3.3)
@@ -452,11 +452,11 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.44.4
-        version: 0.44.4(@effect/schema@0.62.3)(effect@2.3.3)
+        specifier: ^0.44.5
+        version: 0.44.5(@effect/schema@0.62.4)(effect@2.3.3)
       '@effect/schema':
-        specifier: ^0.62.3
-        version: 0.62.3(patch_hash=2uflyfaiw7gy2thojjrrtq57eu)(effect@2.3.3)(fast-check@3.15.1)
+        specifier: ^0.62.4
+        version: 0.62.4(patch_hash=gdxyn4gyzsd2buagq5law4dbvu)(effect@2.3.3)(fast-check@3.15.1)
       '@faker-js/faker':
         specifier: ^8.4.1
         version: 8.4.1
@@ -561,11 +561,11 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.44.4
-        version: 0.44.4(@effect/schema@0.62.3)(effect@2.3.3)
+        specifier: ^0.44.5
+        version: 0.44.5(@effect/schema@0.62.4)(effect@2.3.3)
       '@effect/schema':
-        specifier: ^0.62.3
-        version: 0.62.3(patch_hash=2uflyfaiw7gy2thojjrrtq57eu)(effect@2.3.3)(fast-check@3.15.1)
+        specifier: ^0.62.4
+        version: 0.62.4(patch_hash=gdxyn4gyzsd2buagq5law4dbvu)(effect@2.3.3)(fast-check@3.15.1)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.3.3)
@@ -652,11 +652,11 @@ importers:
         specifier: workspace:*
         version: link:../schema
       '@effect/platform':
-        specifier: ^0.44.4
-        version: 0.44.4(@effect/schema@0.62.3)(effect@2.3.3)
+        specifier: ^0.44.5
+        version: 0.44.5(@effect/schema@0.62.4)(effect@2.3.3)
       '@effect/schema':
-        specifier: ^0.62.3
-        version: 0.62.3(patch_hash=2uflyfaiw7gy2thojjrrtq57eu)(effect@2.3.3)(fast-check@3.15.1)
+        specifier: ^0.62.4
+        version: 0.62.4(patch_hash=gdxyn4gyzsd2buagq5law4dbvu)(effect@2.3.3)(fast-check@3.15.1)
       '@fp-ts/optic':
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.3.3)
@@ -725,8 +725,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@effect/schema':
-        specifier: ^0.62.3
-        version: 0.62.3(patch_hash=2uflyfaiw7gy2thojjrrtq57eu)(effect@2.3.3)(fast-check@3.15.1)
+        specifier: ^0.62.4
+        version: 0.62.4(patch_hash=gdxyn4gyzsd2buagq5law4dbvu)(effect@2.3.3)(fast-check@3.15.1)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -783,14 +783,14 @@ importers:
         specifier: workspace:*
         version: 'link:'
       '@effect/platform':
-        specifier: ^0.44.4
-        version: 0.44.4(@effect/schema@0.62.3)(effect@2.3.3)
+        specifier: ^0.44.5
+        version: 0.44.5(@effect/schema@0.62.4)(effect@2.3.3)
       '@effect/platform-browser':
-        specifier: ^0.29.4
-        version: 0.29.4(@effect/platform@0.44.4)(effect@2.3.3)
+        specifier: ^0.29.5
+        version: 0.29.5(@effect/platform@0.44.5)(effect@2.3.3)
       '@effect/schema':
-        specifier: ^0.62.3
-        version: 0.62.3(patch_hash=2uflyfaiw7gy2thojjrrtq57eu)(effect@2.3.3)(fast-check@3.15.1)
+        specifier: ^0.62.4
+        version: 0.62.4(patch_hash=gdxyn4gyzsd2buagq5law4dbvu)(effect@2.3.3)(fast-check@3.15.1)
       '@formatjs/intl':
         specifier: ^2.10.0
         version: 2.10.0(@effect-app/typescript@5.4.0-tsplus.20240124)
@@ -1658,31 +1658,31 @@ packages:
     dev: true
     patched: true
 
-  /@effect/platform-browser@0.29.4(@effect/platform@0.44.4)(effect@2.3.3):
-    resolution: {integrity: sha512-0GCcKheuVCasFxjooiYSAMTnkdhLhwODzzGCqNEYSXEg3rTj1HExCjs3UiY8EajcYbmyP1hUAXSYRlbLZs2jMQ==}
+  /@effect/platform-browser@0.29.5(@effect/platform@0.44.5)(effect@2.3.3):
+    resolution: {integrity: sha512-fsvu70FAkUH92odzWJII3BNI+wkEMz1Gq8pnByHR0fNKwXa23TVhMGgZlQZ1OCRnVex4A5qwWwuvvs6wjFY2SA==}
     peerDependencies:
-      '@effect/platform': ^0.44.4
+      '@effect/platform': ^0.44.5
       effect: ^2.3.3
     dependencies:
-      '@effect/platform': 0.44.4(@effect/schema@0.62.3)(effect@2.3.3)
+      '@effect/platform': 0.44.5(@effect/schema@0.62.4)(effect@2.3.3)
       effect: 2.3.3(patch_hash=6qkhwljniyysmghky2w7gjmpn4)
     dev: false
 
-  /@effect/platform@0.44.4(@effect/schema@0.62.3)(effect@2.3.3):
-    resolution: {integrity: sha512-ow/2iqb0aC+dUUQEh9ddq7uAzhEvhf/CLZp23rYzB1TsKpdtIUwhuh5+ObKq+d5Dw7tUeNDgRapQHQkriTfh1A==}
+  /@effect/platform@0.44.5(@effect/schema@0.62.4)(effect@2.3.3):
+    resolution: {integrity: sha512-dhbEyhAeapLAVyCok+rbFJZ4KnJPxjRRzfGF7Llgqo8nMb7kJ8Qhq+0kmPtz35ArFkfSw42pNkX2b8gCH9Uv9w==}
     peerDependencies:
-      '@effect/schema': ^0.62.3
+      '@effect/schema': ^0.62.4
       effect: ^2.3.3
     dependencies:
-      '@effect/schema': 0.62.3(patch_hash=2uflyfaiw7gy2thojjrrtq57eu)(effect@2.3.3)(fast-check@3.15.1)
+      '@effect/schema': 0.62.4(patch_hash=gdxyn4gyzsd2buagq5law4dbvu)(effect@2.3.3)(fast-check@3.15.1)
       effect: 2.3.3(patch_hash=6qkhwljniyysmghky2w7gjmpn4)
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
     dev: false
 
-  /@effect/schema@0.62.3(patch_hash=2uflyfaiw7gy2thojjrrtq57eu)(effect@2.3.3)(fast-check@3.15.1):
-    resolution: {integrity: sha512-kstVDXQGarDoOlb05tsszRDPrnudW+oHJ5ZJtCs8TOfR6WJOih1c24LTUSgAiyccENi/5lFC6CMFHcwroU8NDQ==}
+  /@effect/schema@0.62.4(patch_hash=gdxyn4gyzsd2buagq5law4dbvu)(effect@2.3.3)(fast-check@3.15.1):
+    resolution: {integrity: sha512-cxqkIrKqjFKZVCovUsnVQjVorp9C7lR9eE8CZJeOb8A07JFeAQTS1JO1r/IneDSvpuaWBhrCzJ+Gr4RJGfFa3A==}
     peerDependencies:
       effect: ^2.3.3
       fast-check: ^3.13.2

@@ -6,8 +6,8 @@
   "dependencies": {
     "@azure/cosmos": "^4.0.0",
     "@azure/service-bus": "^7.9.4",
-    "@effect/platform": "^0.44.4",
-    "@effect/schema": "^0.62.3",
+    "@effect/platform": "^0.44.5",
+    "@effect/schema": "^0.62.4",
     "@effect-app/core": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",

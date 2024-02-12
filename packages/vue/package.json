@@ -5,9 +5,9 @@
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
   "dependencies": {
-    "@effect/platform": "^0.44.4",
-    "@effect/platform-browser": "^0.29.4",
-    "@effect/schema": "^0.62.3",
+    "@effect/platform": "^0.44.5",
+    "@effect/platform-browser": "^0.29.5",
+    "@effect/schema": "^0.62.4",
     "@effect-app/core": "workspace:*",
     "effect-app": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",
