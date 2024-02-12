@@ -30,10 +30,6 @@ export const sortByne: <B>(
   ...orders: ReadonlyArray<Order<B>>
 ) => <A extends B>(as: readonly [A, ...A[]]) => [A, ...A[]] = ReadonlyArray.sortBy as any
 
-/** @tsplus pipeable Iterable sortBy */
-export const sortBy: <B>(...orders: readonly Order<B>[]) => <A extends B>(self: Iterable<A>) => A[] = ReadonlyArray
-  .sortBy as any
-
 /**
  * Remove duplicates from an array, keeping the first occurrence of an element.
  *
