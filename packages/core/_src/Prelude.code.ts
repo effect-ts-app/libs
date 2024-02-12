@@ -5,6 +5,7 @@ export * as Either from "effect/Either"
 export * as Layer from "effect/Layer"
 export * as Option from "effect/Option"
 export * as Order from "effect/Order"
+export * as Scope from "effect/Scope"
 
 export {} from "@effect-app/core/Effect"
 export * as NonEmptySet from "@effect-app/core/NonEmptySet"

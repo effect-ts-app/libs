@@ -17,6 +17,7 @@ import type * as EITHER from "effect/Either"
 import type * as LAYER from "effect/Layer"
 import type * as O from "effect/Option"
 import type * as ORD from "effect/Order"
+import type * as SCOPE from "effect/Scope"
 
 export type { NonEmptyArray, NonEmptyReadonlyArray } from "@effect-app/core/Array"
 
@@ -51,6 +52,13 @@ export namespace Order {
 }
 /** @tsplus type effect/data/Order */
 export type Order<A> = ORD.Order<A>
+
+export namespace Scope {
+  // @ts-expect-error abc
+  export * from "effect/Scope"
+}
+/** @tsplus type effect/data/Scope */
+export type Scope = SCOPE.Scope
 
 export namespace Option {
   // @ts-expect-error abc
