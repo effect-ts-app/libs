@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 0.130.0
+
+### Minor Changes
+
+- 3428493: add tanstack-query
+
+### Patch Changes
+
+- Updated dependencies [3428493]
+  - @effect-app/vue@0.130.0
+
 ## 0.129.5
 
 ### Patch Changes
