@@ -1,5 +1,15 @@
 # @effect-app/vue
 
+## 0.129.2
+
+### Patch Changes
+
+- 4848bc6: bump
+- Updated dependencies [4848bc6]
+  - @effect-app/fluent-extensions@0.130.2
+  - effect-app@0.158.2
+  - @effect-app/vue@0.129.2
+
 ## 0.129.1
 
 ### Patch Changes

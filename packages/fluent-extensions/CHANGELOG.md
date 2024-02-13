@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.130.2
+
+### Patch Changes
+
+- 4848bc6: bump
+
 ## 0.130.1
 
 ### Patch Changes
