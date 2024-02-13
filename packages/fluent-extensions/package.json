@@ -6,10 +6,10 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/platform": "^0.44.6",
+    "@effect/platform": "^0.44.7",
     "@fp-ts/optic": "^0.22.0",
     "date-fns": "^3.3.1",
-    "effect": "^2.3.4",
+    "effect": "^2.3.5",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.5",
     "path-parser": "^6.1.0",

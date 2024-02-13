@@ -5,19 +5,19 @@
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
   "dependencies": {
-    "@effect/platform": "^0.44.6",
-    "@effect/platform-browser": "^0.29.7",
-    "@effect/schema": "^0.62.5",
+    "@effect/platform": "^0.44.7",
+    "@effect/platform-browser": "^0.29.8",
+    "@effect/schema": "^0.62.6",
     "@effect-app/core": "workspace:*",
     "effect-app": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@formatjs/intl": "^2.10.0",
-    "effect": "^2.3.4",
+    "effect": "^2.3.5",
     "query-string": "^8.2.0",
     "swrv": "^1.0.4",
-    "vue": "^3.4.18"
+    "vue": "^3.4.19"
   },
   "devDependencies": {
     "@effect-app/compiler": "workspace:*",
