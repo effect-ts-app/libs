@@ -177,6 +177,7 @@ declare module "effect/Option" {
     tap<A, _>(this: Option<A>, f: (a: A) => Option<_>): Option<A>
     getOrElse<A, B>(this: Option<A>, onNone: LazyArg<B>): A | B
     map<A, B>(this: Option<A>, f: (a: A) => B): Option<B>
+    flatMap<A, B>(this: Option<A>, f: (a: A) => Option<B>): Option<B>
   }
   export interface Some<out A> {
     andThen<A, B>(this: Option<A>, f: (a: A) => Option<B>): Option<B>
@@ -184,6 +185,7 @@ declare module "effect/Option" {
     tap<A, _>(this: Option<A>, f: (a: A) => Option<_>): Option<A>
     getOrElse<A, B>(this: Option<A>, onNone: LazyArg<B>): A | B
     map<A, B>(this: Option<A>, f: (a: A) => B): Option<B>
+    flatMap<A, B>(this: Option<A>, f: (a: A) => Option<B>): Option<B>
   }
 }
 
@@ -192,12 +194,14 @@ declare module "effect/Either" {
     andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: (a: A) => Either.Either<E2, B>): Either.Either<E1 | E2, B>
     andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: Either.Either<E2, B>): Either.Either<E1 | E2, B>
     map<E, A, B>(this: Either.Either<E, A>, f: (a: A) => B): Either.Either<E, B>
+    flatMap<E1, A, E2, B>(this: Either<E1, A>, f: (a: A) => Either<E2, B>): Either<E1 | E2, B>
     get right(): A | undefined
   }
   export interface Right<out E, out A> {
     andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: (a: A) => Either.Either<E2, B>): Either.Either<E1 | E2, B>
     andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: Either.Either<E2, B>): Either.Either<E1 | E2, B>
     map<E, A, B>(this: Either.Either<E, A>, f: (a: A) => B): Either.Either<E, B>
+    flatMap<E1, A, E2, B>(this: Either<E1, A>, f: (a: A) => Either<E2, B>): Either<E1 | E2, B>
     get left(): E | undefined
   }
 }
