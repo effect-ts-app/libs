@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.129.3
+
+### Patch Changes
+
+- b525b4f: add orDie
+
 ## 0.129.2
 
 ### Patch Changes
