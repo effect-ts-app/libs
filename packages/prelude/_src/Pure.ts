@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Either from "effect/Either"
 import type { ServiceTagged } from "./service.js"
+import "@effect-app/fluent-extensions"
 
 const S1 = Symbol()
 const S2 = Symbol()
