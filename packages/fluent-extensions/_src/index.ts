@@ -10,6 +10,7 @@ import type { LazyArg } from "effect/Function"
 
 // we had to put the patches inside effect, for it to work with vite
 import "effect/fluentExtensions"
+import type { E, R } from "vitest/dist/reporters-1evA5lom.js"
 
 export {}
 
@@ -41,6 +42,8 @@ declare module "effect/Effect" {
     ): [X] extends [Effect<infer _A1, infer E1, infer R1>] ? Effect<A, E | E1, R | R1>
       : [X] extends [Promise<infer _A1>] ? Effect<A, Cause.UnknownException | E, R>
       : Effect<A, E, R>
+
+    get asUnit(): Effect<void, E, R>
   }
 }
 
@@ -71,6 +74,8 @@ declare module "effect/Cause" {
     ): [X] extends [Effect.Effect<infer _A1, infer E1, infer R1>] ? Effect.Effect<A, E | E1, R | R1>
       : [X] extends [Promise<infer _A1>] ? Effect.Effect<R, UnknownException | E, A>
       : Effect.Effect<A, E, R>
+
+    get asUnit(): Effect.Effect<void, E, R>
   }
 }
 

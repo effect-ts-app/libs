@@ -27,7 +27,7 @@ patchedDependencies:
     hash: g5hqt5bhnjezqo5vnkpprfkba4
     path: patches/date-fns@2.30.0.patch
   effect@2.3.4:
-    hash: psx555u4x742ak7efaavifd7tq
+    hash: q7j2mzmiicf2xwi5s2vrqnf4o4
     path: patches/effect@2.3.4.patch
   eslint-plugin-codegen@0.17.0:
     hash: 3ogk7peuefdu45q3hbzcgdiuna
@@ -264,7 +264,7 @@ importers:
         version: 4.0.0
       effect:
         specifier: ^2.3.4
-        version: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+        version: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -377,7 +377,7 @@ importers:
         version: 2.30.0(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
         specifier: ^2.3.4
-        version: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+        version: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -474,7 +474,7 @@ importers:
         version: 4.0.0
       effect:
         specifier: ^2.3.4
-        version: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+        version: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
       effect-app:
         specifier: workspace:*
         version: link:../prelude
@@ -571,7 +571,7 @@ importers:
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.3.4)
       effect:
         specifier: ^2.3.4
-        version: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+        version: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
       effect-app:
         specifier: workspace:*
         version: link:../prelude
@@ -665,7 +665,7 @@ importers:
         version: 2.30.0(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
       effect:
         specifier: ^2.3.4
-        version: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+        version: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -732,7 +732,7 @@ importers:
         version: 4.0.0
       effect:
         specifier: ^2.3.4
-        version: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+        version: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -796,7 +796,7 @@ importers:
         version: 2.10.0(@effect-app/typescript@5.4.0-tsplus.20240124)
       effect:
         specifier: ^2.3.4
-        version: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+        version: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
       effect-app:
         specifier: workspace:*
         version: link:../prelude
@@ -1665,7 +1665,7 @@ packages:
       effect: ^2.3.4
     dependencies:
       '@effect/platform': 0.44.6(@effect/schema@0.62.5)(effect@2.3.4)
-      effect: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+      effect: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
       multipasta: 0.1.21
     dev: false
 
@@ -1676,7 +1676,7 @@ packages:
       effect: ^2.3.4
     dependencies:
       '@effect/schema': 0.62.5(patch_hash=hp7gu2tfjvz7bidhtlbrypkafm)(effect@2.3.4)(fast-check@3.15.1)
-      effect: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+      effect: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
@@ -1688,7 +1688,7 @@ packages:
       effect: ^2.3.4
       fast-check: ^3.13.2
     dependencies:
-      effect: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+      effect: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
       fast-check: 3.15.1(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
     patched: true
@@ -1698,7 +1698,7 @@ packages:
     peerDependencies:
       effect: ^2.0.0
     dependencies:
-      effect: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+      effect: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
     dev: false
 
   /@esbuild/android-arm64@0.19.5:
@@ -1999,7 +1999,7 @@ packages:
       effect: ^2.0.0
     dependencies:
       '@effect/typeclass': 0.22.0(effect@2.3.4)
-      effect: 2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq)
+      effect: 2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4)
     dev: false
     patched: true
 
@@ -4487,7 +4487,7 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /effect@2.3.4(patch_hash=psx555u4x742ak7efaavifd7tq):
+  /effect@2.3.4(patch_hash=q7j2mzmiicf2xwi5s2vrqnf4o4):
     resolution: {integrity: sha512-ojmCOnql+5HzBEy6l78E9t4PiuFNxRwzzRulF5BGhFnnBbVlU/LieOm3V/2MHVK4SqK0F3YDFG69PQpFe/49UQ==}
     dev: false
     patched: true
