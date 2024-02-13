@@ -43,6 +43,7 @@ declare module "effect/Effect" {
       : Effect<A, E, R>
 
     get asUnit(): Effect<void, E, R>
+    get orDie(): Effect<A, never, R>
   }
 }
 
@@ -75,6 +76,7 @@ declare module "effect/Cause" {
       : Effect.Effect<A, E, R>
 
     get asUnit(): Effect.Effect<void, this, never>
+    get orDie(): Effect.Effect<never, never, never>
   }
 }
 
