@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.130.1
+
+### Patch Changes
+
+- 4019a89: add opts
+- Updated dependencies [4019a89]
+  - @effect-app/vue@0.130.1
+
 ## 0.130.0
 
 ### Minor Changes
