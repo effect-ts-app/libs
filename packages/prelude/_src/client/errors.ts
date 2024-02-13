@@ -18,7 +18,7 @@ export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<
 export class InvalidStateError extends TaggedError<InvalidStateError>()("InvalidStateError", {
   message: string
 }) {
-  constructor(messageOrObject: string | { message: string }, disableValidation = false) {
+  constructor(messageOrObject: string | { message: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
   }
 }
@@ -38,7 +38,7 @@ export class ValidationError extends TaggedError<ValidationError>()("ValidationE
 export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLoggedInError", {
   message: string.optional()
 }) {
-  constructor(messageOrObject?: string | { message?: string }, disableValidation = false) {
+  constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
   }
 }
@@ -51,7 +51,7 @@ export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLogged
 export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
   message: string.optional()
 }) {
-  constructor(messageOrObject?: string | { message?: string }, disableValidation = false) {
+  constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
   }
 }
@@ -61,7 +61,7 @@ export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
 export class UnauthorizedError extends TaggedError<UnauthorizedError>()("UnauthorizedError", {
   message: string.optional()
 }) {
-  constructor(messageOrObject?: string | { message?: string }, disableValidation = false) {
+  constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
   }
 }
@@ -82,7 +82,7 @@ export class OptimisticConcurrencyException extends TaggedError<OptimisticConcur
   readonly details?: OptimisticConcurrencyDetails
   constructor(
     args: OptimisticConcurrencyDetails | { message: string },
-    disableValidation = false
+    disableValidation?: boolean
   ) {
     super("message" in args ? args : { message: `Existing ${args.type} ${args.id} record changed` }, disableValidation)
     if (!("message" in args)) {
