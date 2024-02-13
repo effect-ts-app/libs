@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.130.3
+
+### Patch Changes
+
+- c31e783: fix ext
+
 ## 0.130.2
 
 ### Patch Changes
