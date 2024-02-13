@@ -794,6 +794,9 @@ importers:
       '@formatjs/intl':
         specifier: ^2.10.0
         version: 2.10.0(@effect-app/typescript@5.4.0-tsplus.20240124)
+      '@tanstack/vue-query':
+        specifier: ^5.20.5
+        version: 5.20.5(vue@3.4.19)
       effect:
         specifier: ^2.3.5
         version: 2.3.5(patch_hash=7flqffzzb5nemzq6gsay3plece)
@@ -2488,6 +2491,33 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
+  /@tanstack/match-sorter-utils@8.11.8:
+    resolution: {integrity: sha512-3VPh0SYMGCa5dWQEqNab87UpCMk+ANWHDP4ALs5PeEW9EpfTAbrezzaOk/OiM52IESViefkoAOYuxdoa04p6aA==}
+    engines: {node: '>=12'}
+    dependencies:
+      remove-accents: 0.4.2
+    dev: false
+
+  /@tanstack/query-core@5.20.5:
+    resolution: {integrity: sha512-T1W28gGgWn0A++tH3lxj3ZuUVZZorsiKcv+R50RwmPYz62YoDEkG4/aXHZELGkRp4DfrW07dyq2K5dvJ4Wl1aA==}
+    dev: false
+
+  /@tanstack/vue-query@5.20.5(vue@3.4.19):
+    resolution: {integrity: sha512-poIPV6T95tNUu945gqoSZy/JuzvmtIYZHoyfjqEiQRC2H1myTB6bQygdK7ZbDgFRWkJZrAgxdI2xv+nhjZeWIA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.1.2
+      vue: ^2.6.0 || ^3.3.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      '@tanstack/match-sorter-utils': 8.11.8
+      '@tanstack/query-core': 5.20.5
+      '@vue/devtools-api': 6.5.1
+      vue: 3.4.19(@effect-app/typescript@5.4.0-tsplus.20240124)
+      vue-demi: 0.14.7(vue@3.4.19)
+    dev: false
+
   /@tootallnate/once@2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
@@ -3060,6 +3090,10 @@ packages:
     dependencies:
       '@vue/compiler-dom': 3.4.19
       '@vue/shared': 3.4.19
+    dev: false
+
+  /@vue/devtools-api@6.5.1:
+    resolution: {integrity: sha512-+KpckaAQyfbvshdDW5xQylLni1asvNSGme1JFs8I1+/H5pHEhqUKMEQD/qn3Nx5+/nycBq11qAEi8lk+LXI2dA==}
     dev: false
 
   /@vue/reactivity-transform@3.3.4:
@@ -8148,6 +8182,10 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /remove-accents@0.4.2:
+    resolution: {integrity: sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==}
+    dev: false
+
   /require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
@@ -9608,6 +9646,21 @@ packages:
       - supports-color
       - terser
     dev: true
+
+  /vue-demi@0.14.7(vue@3.4.19):
+    resolution: {integrity: sha512-EOG8KXDQNwkJILkx/gPcoL/7vH+hORoBaKgGe+6W7VFMvCYJfmF2dGbvgDroVnI8LU7/kTu8mbjRZGBU1z9NTA==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.4.19(@effect-app/typescript@5.4.0-tsplus.20240124)
+    dev: false
 
   /vue@3.4.19(@effect-app/typescript@5.4.0-tsplus.20240124):
     resolution: {integrity: sha512-W/7Fc9KUkajFU8dBeDluM4sRGc/aa4YJnOYck8dkjgZoXtVsn3OeTGni66FV1l3+nvPA7VBFYtPioaGKUmEADw==}

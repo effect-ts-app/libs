@@ -5,24 +5,25 @@
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
   "dependencies": {
-    "@effect/platform": "^0.44.7",
-    "@effect/platform-browser": "^0.29.8",
-    "@effect/schema": "^0.62.6",
     "@effect-app/core": "workspace:*",
-    "effect-app": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
+    "@effect/platform": "^0.44.7",
+    "@effect/platform-browser": "^0.29.8",
+    "@effect/schema": "^0.62.6",
     "@formatjs/intl": "^2.10.0",
+    "@tanstack/vue-query": "^5.20.5",
     "effect": "^2.3.5",
+    "effect-app": "workspace:*",
     "query-string": "^8.2.0",
     "swrv": "^1.0.4",
     "vue": "^3.4.19"
   },
   "devDependencies": {
+    "@babel/cli": "^7.23.9",
     "@effect-app/compiler": "workspace:*",
     "@rollup/pluginutils": "^5.1.0",
-    "@babel/cli": "^7.23.9",
     "@types/node": "~20.11.17",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
@@ -86,6 +87,16 @@
       "require": {
         "types": "./dist/internal.d.ts",
         "default": "./_cjs/internal.cjs"
+      }
+    },
+    "./query": {
+      "import": {
+        "types": "./dist/query.d.ts",
+        "default": "./dist/query.js"
+      },
+      "require": {
+        "types": "./dist/query.d.ts",
+        "default": "./_cjs/query.cjs"
       }
     },
     "./routeParams": {
