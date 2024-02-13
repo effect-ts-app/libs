@@ -74,7 +74,7 @@ declare module "effect/Cause" {
       : [X] extends [Promise<infer _A1>] ? Effect.Effect<R, UnknownException | E, A>
       : Effect.Effect<A, E, R>
 
-    get asUnit(): Effect.Effect<never, this, never>
+    get asUnit(): Effect.Effect<void, this, never>
   }
 }
 
