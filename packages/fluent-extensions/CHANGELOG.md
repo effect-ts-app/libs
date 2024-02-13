@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.130.1
+
+### Patch Changes
+
+- 67571c9: map-fmap
+
 ## 0.130.0
 
 ### Minor Changes
