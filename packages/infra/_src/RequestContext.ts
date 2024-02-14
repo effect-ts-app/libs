@@ -1,7 +1,6 @@
 import { S } from "effect-app"
 import { RequestId, UserProfileId } from "effect-app/ids"
 
-@useClassFeaturesForSchema
 export class RequestContextParent extends TaggedClass<
   RequestContextParent
 >()("RequestContext", {
@@ -16,7 +15,6 @@ export class RequestContextParent extends TaggedClass<
  * @tsplus type RequestContext
  * @tsplus companion RequestContext.Ops
  */
-@useClassFeaturesForSchema
 export class RequestContext extends TaggedClass<
   RequestContext
 >()("RequestContext", {

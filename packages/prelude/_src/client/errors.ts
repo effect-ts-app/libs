@@ -1,7 +1,6 @@
 import { TaggedError } from "effect-app/schema"
 
 /** @tsplus type NotFoundError */
-@useClassFeaturesForSchema
 // eslint-disable-next-line unused-imports/no-unused-vars
 // @ts-expect-error type not used
 export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<ItemType>>()("NotFoundError", {
@@ -14,7 +13,6 @@ export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<
 }
 
 /** @tsplus type InvalidStateError */
-@useClassFeaturesForSchema
 export class InvalidStateError extends TaggedError<InvalidStateError>()("InvalidStateError", {
   message: string
 }) {
@@ -24,7 +22,6 @@ export class InvalidStateError extends TaggedError<InvalidStateError>()("Invalid
 }
 
 /** @tsplus type ValidationError */
-@useClassFeaturesForSchema
 export class ValidationError extends TaggedError<ValidationError>()("ValidationError", {
   errors: array(unknown) // meh
 }) {
@@ -34,7 +31,6 @@ export class ValidationError extends TaggedError<ValidationError>()("ValidationE
 }
 
 /** @tsplus type NotLoggedInError */
-@useClassFeaturesForSchema
 export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLoggedInError", {
   message: string.optional()
 }) {
@@ -47,7 +43,6 @@ export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLogged
  * The user carries a valid Userprofile, but there is a problem with the login none the less.
  */
 /** @tsplus type LoginError */
-@useClassFeaturesForSchema
 export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
   message: string.optional()
 }) {
@@ -57,7 +52,6 @@ export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
 }
 
 /** @tsplus type UnauthorizedError */
-@useClassFeaturesForSchema
 export class UnauthorizedError extends TaggedError<UnauthorizedError>()("UnauthorizedError", {
   message: string.optional()
 }) {
@@ -74,7 +68,6 @@ type OptimisticConcurrencyDetails = {
 }
 
 /** @tsplus type OptimisticConcurrencyException */
-@useClassFeaturesForSchema
 export class OptimisticConcurrencyException extends TaggedError<OptimisticConcurrencyException>()(
   "OptimisticConcurrencyException",
   { message: string }

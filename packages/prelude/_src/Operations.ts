@@ -3,7 +3,6 @@ import * as S from "./schema.js"
 export type OperationId = StringId
 export const OperationId = StringId
 
-@useClassFeaturesForSchema
 export class OperationProgress extends ExtendedClass<
   OperationProgress,
   OperationProgress.From
@@ -12,12 +11,10 @@ export class OperationProgress extends ExtendedClass<
   total: NonNegativeInt
 }) {}
 
-@useClassFeaturesForSchema
 export class Success extends ExtendedTaggedClass<Success, Success.From>()("Success", {
   message: nullable(NonEmptyString2k).withDefault
 }) {}
 
-@useClassFeaturesForSchema
 export class Failure extends ExtendedTaggedClass<Failure, Failure.From>()("Failure", {
   message: nullable(NonEmptyString2k).withDefault
 }) {}
@@ -25,7 +22,6 @@ export class Failure extends ExtendedTaggedClass<Failure, Failure.From>()("Failu
 export const OperationResult = S.union(Success, Failure)
 export type OperationResult = Schema.To<typeof OperationResult>
 
-@useClassFeaturesForSchema
 export class Operation extends ExtendedClass<Operation, Operation.From>()({
   id: OperationId,
   progress: S.optional(OperationProgress),
