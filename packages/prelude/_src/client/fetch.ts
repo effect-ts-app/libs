@@ -115,6 +115,7 @@ export function fetchApi(
             .make(method)(path)
             .jsonBody(body)
         ))
+        .scoped
         .withSpan("http.request", { attributes: { "http.method": method, "http.url": path } })
     )
 }
