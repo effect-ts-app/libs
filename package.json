@@ -59,7 +59,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.89.0",
-    "@effect-app/cli": "^0.47.0",
+    "@effect-app/cli": "^0.49.0",
     "@effect-app/compiler": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
@@ -101,7 +101,7 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124",
     "typescript-transform-paths": "^3.4.6",
-    "vite": "^5.1.1",
+    "vite": "^5.1.2",
     "vitest": "^1.2.2"
   }
 }
