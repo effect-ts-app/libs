@@ -17,7 +17,6 @@
     "effect": "^2.3.5",
     "effect-app": "workspace:*",
     "query-string": "^8.2.0",
-    "swrv": "^1.0.4",
     "vue": "^3.4.19"
   },
   "devDependencies": {
@@ -87,6 +86,16 @@
       "require": {
         "types": "./dist/internal.d.ts",
         "default": "./_cjs/internal.cjs"
+      }
+    },
+    "./mutate": {
+      "import": {
+        "types": "./dist/mutate.d.ts",
+        "default": "./dist/mutate.js"
+      },
+      "require": {
+        "types": "./dist/mutate.d.ts",
+        "default": "./_cjs/mutate.cjs"
       }
     },
     "./query": {

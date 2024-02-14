@@ -2,20 +2,44 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import type { QueryObserverOptions } from "@tanstack/vue-query"
+import type { QueryObserverOptions, QueryObserverResult, RefetchOptions } from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
-import { Cause, Effect, Either, Option, pipe, Runtime } from "effect-app"
+import { Cause, Effect, Either, Option, Runtime } from "effect-app"
 import { Done, Initial, isSuccess, Loading, Refreshing } from "effect-app/client"
 import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
 import type { HttpClient } from "effect-app/Request"
-import { computed, ref, type WatchSource } from "vue"
-import { run } from "./internal.js"
+import { computed, ref } from "vue"
+import type { ComputedRef, WatchSource } from "vue"
+import { makeQueryKey, run } from "./internal.js"
 
-// TODO: options
-// declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
-// declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
-// declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UseQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
-export const useSafeQuery = <I, A, E>(
+export function useSafeQuery<E, A>(
+  self: {
+    handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Default>
+    mapPath: string
+    name: string
+  },
+  options?: QueryObserverOptions<any, any, any> | undefined // TODO
+): readonly [
+  ComputedRef<QueryResult<E, A>>,
+  ComputedRef<A | undefined>,
+  (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>
+]
+export function useSafeQuery<Arg, E, A>(
+  self: {
+    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Default>
+    mapPath: (arg: Arg) => string
+    name: string
+  },
+  arg: Arg | WatchSource<Arg>,
+  options?: QueryObserverOptions<any, any, any> | undefined // TODO
+): readonly [
+  ComputedRef<QueryResult<E, A>>,
+  ComputedRef<A | undefined>,
+  (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>
+]
+export function useSafeQuery(
+  self: any,
+  /*
   q:
     | {
       handler: (
@@ -26,6 +50,7 @@ export const useSafeQuery = <I, A, E>(
         ApiConfig | HttpClient.Default
       >
       mapPath: (req: I) => string
+      name: string
     }
     | {
       handler: Effect<
@@ -34,6 +59,42 @@ export const useSafeQuery = <I, A, E>(
         ApiConfig | HttpClient.Default
       >
       mapPath: string
+      name: string
+    },
+  */
+  argOrOptions?: any,
+  options?: any
+) {
+  return Effect.isEffect(self.handler)
+    ? useSafeQuery_(self, undefined, argOrOptions)
+    : useSafeQuery_(self, argOrOptions, options)
+}
+
+// TODO: options
+// declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
+// declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
+// declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UseQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
+export const useSafeQuery_ = <I, A, E>(
+  q:
+    | {
+      handler: (
+        req: I
+      ) => Effect<
+        FetchResponse<A>,
+        E,
+        ApiConfig | HttpClient.Default
+      >
+      mapPath: (req: I) => string
+      name: string
+    }
+    | {
+      handler: Effect<
+        FetchResponse<A>,
+        E,
+        ApiConfig | HttpClient.Default
+      >
+      mapPath: string
+      name: string
     },
   arg?: I | WatchSource<I>,
   options: QueryObserverOptions<any, any, any> = {} // TODO
@@ -48,11 +109,12 @@ export const useSafeQuery = <I, A, E>(
       }
     } as any)
     : ref(arg)
+  const queryKey = makeQueryKey(q.name)
   const r = useQuery(
     Effect.isEffect(q.handler)
       ? {
         ...options,
-        queryKey: [computed(() => q.mapPath)],
+        queryKey,
         queryFn: () =>
           run
             .value(q.handler as any)
@@ -65,10 +127,10 @@ export const useSafeQuery = <I, A, E>(
       }
       : {
         ...options,
-        queryKey: [computed(() => (q.mapPath as any)(req.value))],
+        queryKey: [...queryKey, req],
         queryFn: () =>
           run
-            .value(q.handler(req.value))
+            .value((q.handler as any)(req.value))
             .then((_) => (_ as any).body)
             .catch((_) => {
               if (!Runtime.isFiberFailure(_)) throw _
@@ -77,25 +139,6 @@ export const useSafeQuery = <I, A, E>(
             })
       }
   )
-
-  function swrToQuery<E, A>(r: {
-    error: E | undefined
-    data: A | undefined
-    isValidating: boolean
-  }): QueryResult<E, A> {
-    if (r.error) {
-      return r.isValidating
-        ? Refreshing.fail<E, A>(r.error, r.data)
-        : Done.fail<E, A>(r.error, r.data)
-    }
-    if (r.data !== undefined) {
-      return r.isValidating
-        ? Refreshing.succeed<A, E>(r.data)
-        : Done.succeed<A, E>(r.data)
-    }
-
-    return r.isValidating ? new Loading() : new Initial()
-  }
 
   const result = computed(() =>
     swrToQuery({
@@ -115,4 +158,23 @@ export const useSafeQuery = <I, A, E>(
       : undefined
   })
   return [result, latestSuccess, r.refetch] as const
+}
+
+function swrToQuery<E, A>(r: {
+  error: E | undefined
+  data: A | undefined
+  isValidating: boolean
+}): QueryResult<E, A> {
+  if (r.error) {
+    return r.isValidating
+      ? Refreshing.fail<E, A>(r.error, r.data)
+      : Done.fail<E, A>(r.error, r.data)
+  }
+  if (r.data !== undefined) {
+    return r.isValidating
+      ? Refreshing.succeed<A, E>(r.data)
+      : Done.succeed<A, E>(r.data)
+  }
+
+  return r.isValidating ? new Loading() : new Initial()
 }

@@ -90,7 +90,8 @@ function clientFor_<M extends Requests>(models: M) {
       const meta = {
         Request,
         Response,
-        mapPath: Request.path
+        mapPath: Request.path,
+        name: requestName
       }
 
       const res = Response as Schema<any>

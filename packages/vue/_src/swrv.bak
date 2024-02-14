@@ -1,0 +1,196 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { tuple } from "@effect-app/core/Function"
+import type * as HttpClient from "@effect/platform/Http/Client"
+import { Cause, Effect, Exit, Fiber, Option } from "effect-app"
+import { Done, hasValue, Initial, isInitializing, isSuccess, Loading, queryResult, Refreshing } from "effect-app/client"
+import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
+import { InterruptedException } from "effect/Cause"
+import * as Either from "effect/Either"
+import { FiberFailureCauseId, isFiberFailure } from "effect/Runtime"
+import * as swrv from "swrv"
+import type { fetcherFn, IKey, IResponse } from "swrv/dist/types.js"
+import type { ComputedRef, Ref } from "vue"
+import { computed, ref, shallowRef } from "vue"
+import { run } from "./internal.js"
+
+// madness - workaround different import behavior on server and client
+const useSWRV = (swrv.default.default ? swrv.default.default : swrv.default) as unknown as useSWRVType
+export const mutate = (swrv.default.mutate ? swrv.default.mutate : swrv.mutate) as unknown as MutateType
+
+
+type useSWRVType = {
+  <Data, Error>(key: IKey): IResponse<Data, Error>
+  <Data, Error>(
+    key: IKey,
+    fn?: fetcherFn<Data>,
+    config?: swrv.IConfig<Data, fetcherFn<Data>>
+  ): IResponse<Data, Error>
+}
+type MutateType = {
+  <Data>(
+    key: string,
+    res: Data | Promise<Data>,
+    cache?: swrv.SWRVCache<Omit<IResponse<any, any>, "mutate">>,
+    ttl?: number
+  ): Promise<{
+    data: any
+    error: any
+    isValidating: any
+  }>
+}
+
+function swrToQuery<E, A>(
+  r: { error: E | undefined; data: A | undefined; isValidating: boolean }
+): QueryResult<E, A> {
+  if (r.error) {
+    return r.isValidating
+      ? Refreshing.fail<E, A>(r.error, r.data)
+      : Done.fail<E, A>(r.error, r.data)
+  }
+  if (r.data !== undefined) {
+    return r.isValidating
+      ? Refreshing.succeed<A, E>(r.data)
+      : Done.succeed<A, E>(r.data)
+  }
+
+  return r.isValidating ? new Loading() : new Initial()
+}
+
+
+export function useSafeQuery<E, A>(
+  self: {
+    handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
+    mapPath: string
+  },
+  config?: swrv.IConfig<A, fetcherFn<A>> | undefined
+): readonly [ComputedRef<QueryResult<E, A>>, ComputedRef<A | undefined>, () => Promise<void>, IResponse<A, E>]
+export function useSafeQuery<Arg, E, A>(
+  self: {
+    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
+    mapPath: (arg: Arg) => string
+  },
+  arg: Arg | WatchSource<Arg>,
+  config?: swrv.IConfig<A, fetcherFn<A>> | undefined
+): readonly [ComputedRef<QueryResult<E, A>>, ComputedRef<A | undefined>, () => Promise<void>, IResponse<A, E>]
+export function useSafeQuery(
+  self: any, // {
+  //   handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
+  //   mapPath: (arg: Arg) => string
+  // } | {
+  //   handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
+  //   mapPath: string
+  // },
+  arg?: any, // Arg | WatchSource<Arg> | swrv.IConfig<A, fetcherFn<A>> | undefined,
+  config?: any // swrv.IConfig<A, fetcherFn<A>> | undefined
+) {
+  return Effect.isEffect(self.handler)
+    ? useSafeQuery_(self.mapPath, () => self.handler, arg)
+    : useSafeQueryWithArg_(self.handler, self.mapPath, arg, config)
+}
+
+export function useSafeQueryWithArg_<Arg, E, A>(
+  self: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>,
+  mapPath: (arg: Arg) => string,
+  arg: Arg | WatchSource<Arg>,
+  config?: swrv.IConfig<A, fetcherFn<A>> | undefined
+) {
+  const arr = arg
+  const r: { value: Arg } = typeof arr === "function"
+    ? {
+      get value() {
+        return (arr as any)()
+      }
+    } as any
+    : ref(arg)
+  return useSafeQuery_(computed(() => mapPath(r.value)), () => self(r.value), config)
+}
+
+export function useSafeQuery_<E, A>(
+  key: string | WatchSource<string>,
+  self: () => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>,
+  config?: swrv.IConfig<A, fetcherFn<A>> | undefined
+) {
+  // const [result, latestSuccess, execute] = make(self)
+
+  // TODO: support with interruption
+  // const sem = Semaphore.unsafeMake(1)
+  // const lock = sem.withPermits(1)
+  // let fib: Fiber.FiberContext<E, FetchResponse<A>> | undefined = undefined
+  // const execute = self
+  // const runNew = execute.fork()
+  //   .tap(newFiber =>
+  //     Effect.sync(() => {
+  //       fib = newFiber
+  //     })
+  //   )
+
+  // const ex = lock(
+  //   Effect.suspend(() => {
+  //     return fib
+  //       ? Fiber.interrupt(fib).zipRight(runNew)
+  //       : runNew
+  //   })
+  // ).flatMap(Fiber.await)
+  // function execWithInterruption() {
+  //   return ex.provide(Layers)
+  //     .runPromise()
+  //     .catch(err => {
+  //       if (!Cause.isInterruptedException(err)) throw err
+  //       return undefined
+  //     })
+  // }
+
+  // const swr = useSWRV<A, E>(key, () => execWithInterruption().then(_ => _?.body as any)) // Effect.runPromise(self.provide(Layers))
+  const swr = useSWRV<A, E>(key, () =>
+    run
+      .value(self())
+      .then((_) => _.body)
+      .catch((_) => {
+        if (!isFiberFailure(_)) throw _
+        const cause = _[FiberFailureCauseId]
+        throw Cause.squash(cause)
+      }), config)
+  const result = computed(() =>
+    swrToQuery({ data: swr.data.value, error: swr.error.value, isValidating: swr.isValidating.value })
+  ) // ref<QueryResult<E, A>>()
+  const latestSuccess = computed(() => {
+    const value = result.value
+    return isSuccess(value)
+      ? Either.isRight(value.current)
+        ? value.current.right
+        : Option.isSome(value.previous)
+        ? value.previous.value
+        : undefined
+      : undefined
+  })
+
+  return tuple(result, latestSuccess, () => swr.mutate(), swr)
+}
+
+
+export function useMutate<E, A>(
+  self: { handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>; mapPath: string }
+) {
+  const fn = () =>
+    run.value(self.handler).then((_) => _.body).catch((_) => {
+      if (!isFiberFailure(_)) throw _
+      const cause = _[FiberFailureCauseId]
+      throw Cause.squash(cause)
+    })
+  return () => swrv.mutate(self.mapPath, fn)
+}
+
+export function useMutateWithArg<Arg, E, A>(
+  self: {
+    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
+    mapPath: (arg: Arg) => string
+  }
+) {
+  const fn = (arg: Arg) =>
+    run.value(self.handler(arg)).then((_) => _.body).catch((_) => {
+      if (!isFiberFailure(_)) throw _
+      const cause = _[FiberFailureCauseId]
+      throw Cause.squash(cause)
+    })
+  return (arg: Arg) => swrv.mutate(self.mapPath(arg), fn(arg))
+}

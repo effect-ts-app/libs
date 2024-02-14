@@ -809,9 +809,6 @@ importers:
       query-string:
         specifier: ^8.2.0
         version: 8.2.0
-      swrv:
-        specifier: ^1.0.4
-        version: 1.0.4(vue@3.4.19)
       vue:
         specifier: ^3.4.19
         version: 3.4.19(@effect-app/typescript@5.4.0-tsplus.20240124)
@@ -8899,14 +8896,6 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
-
-  /swrv@1.0.4(vue@3.4.19):
-    resolution: {integrity: sha512-zjEkcP8Ywmj+xOJW3lIT65ciY/4AL4e/Or7Gj0MzU3zBJNMdJiT8geVZhINavnlHRMMCcJLHhraLTAiDOTmQ9g==}
-    peerDependencies:
-      vue: '>=3.2.26 < 4'
-    dependencies:
-      vue: 3.4.19(@effect-app/typescript@5.4.0-tsplus.20240124)
-    dev: false
 
   /synckit@0.8.5:
     resolution: {integrity: sha512-L1dapNV6vu2s/4Sputv8xGsCdAVlb5nRDMFU/E27D44l5U6cw1g0dGd45uLc+OXjNMmF4ntiMdCimzcjFKQI8Q==}
