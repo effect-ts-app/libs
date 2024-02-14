@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.135.1
+
+### Patch Changes
+
+- 2859e8c: ret qry
+- Updated dependencies [2859e8c]
+  - @effect-app/vue@0.135.1
+
 ## 0.135.0
 
 ### Minor Changes
