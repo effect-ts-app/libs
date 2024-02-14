@@ -4,13 +4,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { QueryObserverOptions, QueryObserverResult, RefetchOptions } from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
-import { Cause, Effect, Either, Option, pipe, Runtime } from "effect-app"
+import { Cause, Effect, Either, Option, Runtime } from "effect-app"
 import { Done, Initial, isSuccess, Loading, Refreshing } from "effect-app/client"
 import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
 import type { HttpClient } from "effect-app/Request"
 import { computed, ref } from "vue"
 import type { ComputedRef, WatchSource } from "vue"
-import { run } from "./internal.js"
+import { makeQueryKey, run } from "./internal.js"
 
 export function useSafeQuery<E, A>(
   self: {
@@ -109,7 +109,7 @@ export const useSafeQuery_ = <I, A, E>(
       }
     } as any)
     : ref(arg)
-  const queryKey = pipe(q.name.split("/"), (split) => split.map((_) => "$" + _)).join("/").split(".")
+  const queryKey = makeQueryKey(q.name)
   const r = useQuery(
     Effect.isEffect(q.handler)
       ? {

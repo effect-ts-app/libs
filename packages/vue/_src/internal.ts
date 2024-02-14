@@ -1,6 +1,6 @@
 import type * as HttpClient from "@effect/platform/Http/Client"
 import type { Effect } from "effect-app"
-import { Runtime } from "effect-app"
+import { pipe, Runtime } from "effect-app"
 import type { ApiConfig } from "effect-app/client"
 
 export const run = {
@@ -14,3 +14,6 @@ export function initRuntime<A>(rt: Runtime.Runtime<A | ApiConfig | HttpClient.Cl
     return runPromise(self)
   }
 }
+
+export const makeQueryKey = (name: string) =>
+  pipe(name.split("/"), (split) => split.map((_) => "$" + _)).join("/").split(".")

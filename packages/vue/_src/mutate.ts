@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { tuple } from "@effect-app/core/Function"
 import type * as HttpClient from "@effect/platform/Http/Client"
+import { useQueryClient } from "@tanstack/vue-query"
 import { Cause, Effect, Exit, Fiber, Option } from "effect-app"
 import { hasValue, Initial, isInitializing, Loading, queryResult, Refreshing } from "effect-app/client"
 import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
@@ -8,7 +9,7 @@ import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
-import { run } from "./internal.js"
+import { makeQueryKey, run } from "./internal.js"
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
 
@@ -63,14 +64,14 @@ export type MutationResult<E, A> = MutationInitial | MutationLoading | MutationS
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
 export const useSafeMutation: {
-  <I, E, A>(self: { handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.Client.Default> }): readonly [
+  <I, E, A>(self: { handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.Client.Default>; name: string }): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
       i: I,
       abortSignal?: AbortSignal
     ) => Promise<Either.Either<E, A>>
   ]
-  <E, A>(self: { handler: Effect<A, E, ApiConfig | HttpClient.Client.Default> }): readonly [
+  <E, A>(self: { handler: Effect<A, E, ApiConfig | HttpClient.Client.Default>; name: string }): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
       abortSignal?: AbortSignal
@@ -81,8 +82,10 @@ export const useSafeMutation: {
     handler:
       | ((i: I) => Effect<A, E, ApiConfig | HttpClient.Client.Default>)
       | Effect<A, E, ApiConfig | HttpClient.Client.Default>
+    name: string
   }
 ) => {
+  const queryClient = useQueryClient()
   const state: Ref<MutationResult<E, A>> = ref<MutationResult<E, A>>({ _tag: "Initial" }) as any
 
   function handleExit(exit: Exit.Exit<A, E>): Effect<Either.Either<E, A>, never, never> {
@@ -127,6 +130,21 @@ export const useSafeMutation: {
           state.value = { _tag: "Loading" }
         })
         .andThen(effect)
+        .tap(() =>
+          Effect.suspend(() => {
+            const key = makeQueryKey(self.name)
+            const ns = key.filter((_) => _.startsWith("$"))
+            const nses: string[] = []
+            for (let i = 0; i < ns.length; i++) {
+              nses.push(ns.slice(0, i + 1).join("/"))
+            }
+            return Effect.promise(() => queryClient.invalidateQueries({ queryKey: [ns[0]] }))
+            // TODO: more efficient invalidation, including args etc
+            // return Effect.promise(() => queryClient.invalidateQueries({
+            //   predicate: (_) => nses.includes(_.queryKey.filter((_) => _.startsWith("$")).join("/"))
+            // }))
+          })
+        )
         .pipe(Effect.exit)
         .flatMap(handleExit)
         .pipe(Effect.fork)
