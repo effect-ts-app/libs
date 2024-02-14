@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.159.0
+
+### Minor Changes
+
+- 6145788: switch to tanstack-query
+
 ## 0.158.5
 
 ### Patch Changes
