@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.64.0
+
+### Minor Changes
+
+- m
+
 ## 0.63.0
 
 ### Minor Changes

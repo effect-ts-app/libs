@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.191.0
+
+### Minor Changes
+
+- m
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@0.139.0
+
 ## 0.190.0
 
 ### Minor Changes
