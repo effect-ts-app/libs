@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import type { QueryObserverOptions, QueryObserverResult, RefetchOptions } from "@tanstack/vue-query"
+import type { QueryObserverOptions, QueryObserverResult, RefetchOptions, UseQueryReturnType } from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
 import { Cause, Effect, Either, Option, Runtime } from "effect-app"
 import { Done, Initial, isSuccess, Loading, Refreshing } from "effect-app/client"
@@ -22,7 +22,8 @@ export function useSafeQuery<E, A>(
 ): readonly [
   ComputedRef<QueryResult<E, A>>,
   ComputedRef<A | undefined>,
-  (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>
+  (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>,
+  UseQueryReturnType<any, any>
 ]
 export function useSafeQuery<Arg, E, A>(
   self: {
@@ -35,7 +36,8 @@ export function useSafeQuery<Arg, E, A>(
 ): readonly [
   ComputedRef<QueryResult<E, A>>,
   ComputedRef<A | undefined>,
-  (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>
+  (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>,
+  UseQueryReturnType<any, any>
 ]
 export function useSafeQuery(
   self: any,
@@ -157,7 +159,7 @@ export const useSafeQuery_ = <I, A, E>(
         : undefined
       : undefined
   })
-  return [result, latestSuccess, r.refetch] as const
+  return [result, latestSuccess, r.refetch, r] as const
 }
 
 function swrToQuery<E, A>(r: {
