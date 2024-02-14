@@ -2,20 +2,79 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import type { QueryObserverOptions } from "@tanstack/vue-query"
+import type { QueryObserverOptions, QueryObserverResult, RefetchOptions } from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
 import { Cause, Effect, Either, Option, pipe, Runtime } from "effect-app"
 import { Done, Initial, isSuccess, Loading, Refreshing } from "effect-app/client"
 import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
 import type { HttpClient } from "effect-app/Request"
-import { computed, ref, type WatchSource } from "vue"
+import { computed, ref } from "vue"
+import type { ComputedRef, WatchSource } from "vue"
 import { run } from "./internal.js"
+
+export function useSafeQuery<E, A>(
+  self: {
+    handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Default>
+    mapPath: string
+    name: string
+  },
+  options?: QueryObserverOptions<any, any, any> | undefined // TODO
+): readonly [
+  ComputedRef<QueryResult<E, A>>,
+  ComputedRef<A | undefined>,
+  (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>
+]
+export function useSafeQuery<Arg, E, A>(
+  self: {
+    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Default>
+    mapPath: (arg: Arg) => string
+    name: string
+  },
+  arg: Arg | WatchSource<Arg>,
+  options?: QueryObserverOptions<any, any, any> | undefined // TODO
+): readonly [
+  ComputedRef<QueryResult<E, A>>,
+  ComputedRef<A | undefined>,
+  (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>
+]
+export function useSafeQuery(
+  self: any,
+  /*
+  q:
+    | {
+      handler: (
+        req: I
+      ) => Effect<
+        FetchResponse<A>,
+        E,
+        ApiConfig | HttpClient.Default
+      >
+      mapPath: (req: I) => string
+      name: string
+    }
+    | {
+      handler: Effect<
+        FetchResponse<A>,
+        E,
+        ApiConfig | HttpClient.Default
+      >
+      mapPath: string
+      name: string
+    },
+  */
+  argOrOptions?: any,
+  options?: any
+) {
+  return Effect.isEffect(self.handler)
+    ? useSafeQuery_(self, undefined, argOrOptions)
+    : useSafeQuery_(self, argOrOptions, options)
+}
 
 // TODO: options
 // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
 // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
 // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UseQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
-export const useSafeQuery = <I, A, E>(
+export const useSafeQuery_ = <I, A, E>(
   q:
     | {
       handler: (
