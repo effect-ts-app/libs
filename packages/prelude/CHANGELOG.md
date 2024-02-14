@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.162.2
+
+### Patch Changes
+
+- fix name
+
 ## 0.162.1
 
 ### Patch Changes

@@ -221,6 +221,7 @@ type RequestHandlers<R, E, M extends Requests> = {
       Request: REST.GetRequest<M[K]>
       Reponse: ExtractResponse<REST.GetResponse<M[K]>>
       mapPath: string
+      name: string
     }
     : {
       handler: (
