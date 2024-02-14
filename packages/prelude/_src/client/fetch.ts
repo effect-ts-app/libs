@@ -14,6 +14,8 @@ import {
   ValidationError
 } from "./errors.js"
 
+import { HttpClient, HttpClientRequest } from "../http.js"
+
 export type FetchError = HttpError<string>
 
 export class ResponseError {
@@ -21,7 +23,7 @@ export class ResponseError {
   constructor(public readonly error: unknown) {}
 }
 
-const getClient = HttpClient.flatMap((defaultClient) =>
+const getClient = HttpClient.Client.flatMap((defaultClient) =>
   ApiConfig
     .Tag
     .map(({ apiUrl, headers }) =>
@@ -102,14 +104,14 @@ export function fetchApi(
   return getClient
     .flatMap((client) =>
       (method === "GET"
-        ? client.request(ClientRequest.make(method)(path))
+        ? client.request(HttpClientRequest.make(method)(path))
         : body === undefined
         ? client.request(
-          ClientRequest
+          HttpClientRequest
             .make(method)(path)
         )
         : client.request(
-          ClientRequest
+          HttpClientRequest
             .make(method)(path)
             .jsonBody(body)
         ))

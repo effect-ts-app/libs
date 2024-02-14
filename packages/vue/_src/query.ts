@@ -7,14 +7,14 @@ import { useQuery } from "@tanstack/vue-query"
 import { Cause, Effect, Either, Option, Runtime } from "effect-app"
 import { Done, Initial, isSuccess, Loading, Refreshing } from "effect-app/client"
 import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
-import type { HttpClient } from "effect-app/Request"
+import type { HttpClient } from "effect-app/http"
 import { computed, ref } from "vue"
 import type { ComputedRef, WatchSource } from "vue"
 import { makeQueryKey, run } from "./internal.js"
 
 export function useSafeQuery<E, A>(
   self: {
-    handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Default>
+    handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
     mapPath: string
     name: string
   },
@@ -26,7 +26,7 @@ export function useSafeQuery<E, A>(
 ]
 export function useSafeQuery<Arg, E, A>(
   self: {
-    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Default>
+    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
     mapPath: (arg: Arg) => string
     name: string
   },
@@ -47,7 +47,7 @@ export function useSafeQuery(
       ) => Effect<
         FetchResponse<A>,
         E,
-        ApiConfig | HttpClient.Default
+        ApiConfig | HttpClient.Client.Default
       >
       mapPath: (req: I) => string
       name: string
@@ -56,7 +56,7 @@ export function useSafeQuery(
       handler: Effect<
         FetchResponse<A>,
         E,
-        ApiConfig | HttpClient.Default
+        ApiConfig | HttpClient.Client.Default
       >
       mapPath: string
       name: string
@@ -82,7 +82,7 @@ export const useSafeQuery_ = <I, A, E>(
       ) => Effect<
         FetchResponse<A>,
         E,
-        ApiConfig | HttpClient.Default
+        ApiConfig | HttpClient.Client.Default
       >
       mapPath: (req: I) => string
       name: string
@@ -91,7 +91,7 @@ export const useSafeQuery_ = <I, A, E>(
       handler: Effect<
         FetchResponse<A>,
         E,
-        ApiConfig | HttpClient.Default
+        ApiConfig | HttpClient.Client.Default
       >
       mapPath: string
       name: string

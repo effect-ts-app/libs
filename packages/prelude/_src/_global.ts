@@ -47,16 +47,6 @@ import { Request } from "effect/Request"
 /**
  * @tsplus global
  */
-import { ClientRequest } from "@effect/platform/Http/ClientRequest"
-
-/**
- * @tsplus global
- */
-import { EffectCache, EffectRequest, HttpClient } from "effect-app/Request"
-
-/**
- * @tsplus global
- */
 import { RequestResolver } from "effect/RequestResolver"
 
 /* eslint-disable unused-imports/no-unused-imports */

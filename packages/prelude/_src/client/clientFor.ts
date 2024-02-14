@@ -4,6 +4,7 @@
 import { REST } from "effect-app/schema"
 import * as utils from "effect-app/utils"
 import { Path } from "path-parser"
+import type { HttpClient } from "../http.js"
 import type { ApiConfig } from "./config.js"
 import type { SupportedErrors } from "./errors.js"
 import type { FetchError, FetchResponse } from "./fetch.js"
@@ -31,12 +32,12 @@ const cache = new Map<any, Client<any>>()
 
 export type Client<M extends Requests> =
   & RequestHandlers<
-    ApiConfig | HttpClient.Default,
+    ApiConfig | HttpClient.Client.Default,
     SupportedErrors | FetchError | ResponseError,
     M
   >
   & RequestHandlersE<
-    ApiConfig | HttpClient.Default,
+    ApiConfig | HttpClient.Client.Default,
     SupportedErrors | FetchError | ResponseError,
     M
   >

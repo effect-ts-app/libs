@@ -230,6 +230,16 @@
         "default": "./_cjs/faker.cjs"
       }
     },
+    "./http": {
+      "import": {
+        "types": "./dist/http.d.ts",
+        "default": "./dist/http.js"
+      },
+      "require": {
+        "types": "./dist/http.d.ts",
+        "default": "./_cjs/http.cjs"
+      }
+    },
     "./ids": {
       "import": {
         "types": "./dist/ids.d.ts",

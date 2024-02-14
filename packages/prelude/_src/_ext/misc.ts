@@ -1,5 +1,7 @@
+import type { ClientRequest } from "@effect/platform/Http/ClientRequest"
 import * as Either from "effect/Either"
 import type { Option } from "effect/Option"
+import type { HttpClient, HttpClientRequest } from "../http.js"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<any, any, infer R>
@@ -151,11 +153,14 @@ export function flow<Args extends readonly any[], B, C>(f: (...args: Args) => B,
 /** @tsplus fluent effect/platform/Http/Client request */
 export const client: {
   <A, B, C, R, E>(
-    client: HttpClient<A, B, C>,
-    req: Effect<ClientRequest, E, R>
+    client: HttpClient.Client<A, B, C>,
+    req: Effect<HttpClientRequest.ClientRequest, E, R>
   ): Effect<C, B | E, A | R>
-  <A, B, C>(client: HttpClient<A, B, C>, req: ClientRequest): Effect<C, B, A>
-} = (client: HttpClient<any, any, any>, req: Effect<ClientRequest, any, any> | ClientRequest) =>
+  <A, B, C>(client: HttpClient.Client<A, B, C>, req: ClientRequest): Effect<C, B, A>
+} = (
+  client: HttpClient.Client<any, any, any>,
+  req: Effect<HttpClientRequest.ClientRequest, any, any> | HttpClientRequest.ClientRequest
+) =>
   Effect.isEffect(req)
     ? req.flatMap(client)
     : client(req)
