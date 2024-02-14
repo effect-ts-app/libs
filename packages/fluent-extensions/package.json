@@ -4,8 +4,6 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect-app/core": "workspace:*",
-    "@effect-app/schema": "workspace:*",
     "@effect/platform": "^0.45.1",
     "@fp-ts/optic": "^0.22.0",
     "date-fns": "^3.3.1",

@@ -363,12 +363,6 @@ importers:
 
   packages/fluent-extensions:
     dependencies:
-      '@effect-app/core':
-        specifier: workspace:*
-        version: link:../core
-      '@effect-app/schema':
-        specifier: workspace:*
-        version: link:../schema
       '@effect/platform':
         specifier: ^0.45.1
         version: 0.45.1(@effect/schema@0.62.6)(effect@2.3.5)
