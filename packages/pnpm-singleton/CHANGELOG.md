@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.51.0
+
+### Minor Changes
+
+- bs
+
 ## 0.50.0
 
 ### Minor Changes

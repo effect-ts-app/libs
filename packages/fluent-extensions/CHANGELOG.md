@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.132.0
+
+### Minor Changes
+
+- bs
+
 ## 0.131.0
 
 ### Minor Changes

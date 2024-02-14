@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.48.0
+
+### Minor Changes
+
+- bs
+
 ## 0.47.0
 
 ### Minor Changes
