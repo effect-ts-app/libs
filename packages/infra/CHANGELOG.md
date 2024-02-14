@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.184.3
+
+### Patch Changes
+
+- 5b30ea1: cleanup
+- Updated dependencies [5b30ea1]
+  - effect-app@0.162.3
+  - @effect-app/infra-adapters@0.125.3
+
 ## 0.184.2
 
 ### Patch Changes
