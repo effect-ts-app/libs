@@ -1,6 +1,6 @@
 {
   "name": "effect-app",
-  "version": "0.159.0",
+  "version": "0.160.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra",
-  "version": "0.182.6",
+  "version": "0.183.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
