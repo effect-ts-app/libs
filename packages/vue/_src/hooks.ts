@@ -245,7 +245,7 @@ export type MutationResult<E, A> = MutationInitial | MutationLoading | MutationS
  * Pass a function that returns an Effect, e.g from a client action, or an Effect
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
-export const useMutation: {
+export const useSafeMutation: {
   <I, E, A>(self: { handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.Client.Default> }): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (

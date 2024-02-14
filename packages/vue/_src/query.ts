@@ -26,6 +26,7 @@ export const useSafeQuery = <I, A, E>(
         ApiConfig | HttpClient.Default
       >
       mapPath: (req: I) => string
+      name: string
     }
     | {
       handler: Effect<
@@ -34,6 +35,7 @@ export const useSafeQuery = <I, A, E>(
         ApiConfig | HttpClient.Default
       >
       mapPath: string
+      name: string
     },
   arg?: I | WatchSource<I>,
   options: QueryObserverOptions<any, any, any> = {} // TODO
@@ -48,11 +50,12 @@ export const useSafeQuery = <I, A, E>(
       }
     } as any)
     : ref(arg)
+  const queryKey = pipe(q.name.split("/"), (split) => split.map((_) => "$" + _)).join("/").split(".")
   const r = useQuery(
     Effect.isEffect(q.handler)
       ? {
         ...options,
-        queryKey: [computed(() => q.mapPath)],
+        queryKey,
         queryFn: () =>
           run
             .value(q.handler as any)
@@ -65,10 +68,10 @@ export const useSafeQuery = <I, A, E>(
       }
       : {
         ...options,
-        queryKey: [computed(() => (q.mapPath as any)(req.value))],
+        queryKey: [...queryKey, req],
         queryFn: () =>
           run
-            .value(q.handler(req.value))
+            .value((q.handler as any)(req.value))
             .then((_) => (_ as any).body)
             .catch((_) => {
               if (!Runtime.isFiberFailure(_)) throw _
@@ -77,25 +80,6 @@ export const useSafeQuery = <I, A, E>(
             })
       }
   )
-
-  function swrToQuery<E, A>(r: {
-    error: E | undefined
-    data: A | undefined
-    isValidating: boolean
-  }): QueryResult<E, A> {
-    if (r.error) {
-      return r.isValidating
-        ? Refreshing.fail<E, A>(r.error, r.data)
-        : Done.fail<E, A>(r.error, r.data)
-    }
-    if (r.data !== undefined) {
-      return r.isValidating
-        ? Refreshing.succeed<A, E>(r.data)
-        : Done.succeed<A, E>(r.data)
-    }
-
-    return r.isValidating ? new Loading() : new Initial()
-  }
 
   const result = computed(() =>
     swrToQuery({
@@ -115,4 +99,23 @@ export const useSafeQuery = <I, A, E>(
       : undefined
   })
   return [result, latestSuccess, r.refetch] as const
+}
+
+function swrToQuery<E, A>(r: {
+  error: E | undefined
+  data: A | undefined
+  isValidating: boolean
+}): QueryResult<E, A> {
+  if (r.error) {
+    return r.isValidating
+      ? Refreshing.fail<E, A>(r.error, r.data)
+      : Done.fail<E, A>(r.error, r.data)
+  }
+  if (r.data !== undefined) {
+    return r.isValidating
+      ? Refreshing.succeed<A, E>(r.data)
+      : Done.succeed<A, E>(r.data)
+  }
+
+  return r.isValidating ? new Loading() : new Initial()
 }
