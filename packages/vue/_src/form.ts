@@ -1,10 +1,10 @@
-import type { Schema } from "effect-app/schema"
-import { createIntl, type IntlFormatters } from "@formatjs/intl"
-import type { Ref } from "vue"
-import { capitalize, ref, watch } from "vue"
-
 import * as JSONSchema from "@effect/schema/JSONSchema"
 import type { ParseError } from "@effect/schema/ParseResult"
+import { createIntl, type IntlFormatters } from "@formatjs/intl"
+import { Either, pipe, S } from "effect-app"
+import type { Schema } from "effect-app/schema"
+import type { Ref } from "vue"
+import { capitalize, ref, watch } from "vue"
 
 export function convertIn(v: string | null, type?: "text" | "float" | "int") {
   return v === null ? "" : type === "text" ? v : `${v}`
@@ -37,7 +37,7 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
       return prev
     },
     {} as {
-      [K in keyof Omit<To, keyof Equal>]-?: FieldInfo<To[K]>
+      [K in keyof To]-?: FieldInfo<To[K]>
     }
   )
 }
@@ -153,13 +153,10 @@ function buildFieldInfo(
   const parseRule = (v: unknown) =>
     pipe(
       parse(v),
-      (_) =>
-        _.match(
-          {
-            onLeft: (_) => renderError(_, v),
-            onRight: () => true
-          }
-        )
+      Either.match({
+        onLeft: (_) => renderError(_, v),
+        onRight: () => true
+      })
     )
 
   type UnknownRule = (v: unknown) => boolean | string

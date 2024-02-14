@@ -5,6 +5,7 @@
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/core",
   "dependencies": {
+    "@effect-app/fluent-extensions": "workspace:*",
     "@fp-ts/optic": "^0.22.0",
     "@effect/platform": "^0.44.7",
     "effect": "^2.3.5",

@@ -253,6 +253,9 @@ importers:
 
   packages/core:
     dependencies:
+      '@effect-app/fluent-extensions':
+        specifier: workspace:*
+        version: link:../fluent-extensions
       '@effect/platform':
         specifier: ^0.44.7
         version: 0.44.7(@effect/schema@0.62.6)(effect@2.3.5)

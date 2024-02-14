@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Done, Initial, Loading } from "effect-app/client"
-import type { ApiConfig, FetchResponse } from "effect-app/client"
+import { tuple } from "@effect-app/core/Function"
 import type * as HttpClient from "@effect/platform/Http/Client"
+import { Cause, Effect, Exit, Fiber, Option } from "effect-app"
+import { Done, hasValue, Initial, isInitializing, isSuccess, Loading, queryResult, Refreshing } from "effect-app/client"
+import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
 import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
 import { FiberFailureCauseId, isFiberFailure } from "effect/Runtime"
@@ -61,7 +63,7 @@ export function useMutate<E, A>(
     run.value(self.handler).then((_) => _.body).catch((_) => {
       if (!isFiberFailure(_)) throw _
       const cause = _[FiberFailureCauseId]
-      throw cause.squash
+      throw Cause.squash(cause)
     })
   return () => mutate(self.mapPath, fn)
 }
@@ -76,7 +78,7 @@ export function useMutateWithArg<Arg, E, A>(
     run.value(self.handler(arg)).then((_) => _.body).catch((_) => {
       if (!isFiberFailure(_)) throw _
       const cause = _[FiberFailureCauseId]
-      throw cause.squash
+      throw Cause.squash(cause)
     })
   return (arg: Arg) => mutate(self.mapPath(arg), fn(arg))
 }
@@ -174,17 +176,17 @@ export function useSafeQuery_<E, A>(
       .catch((_) => {
         if (!isFiberFailure(_)) throw _
         const cause = _[FiberFailureCauseId]
-        throw cause.squash
+        throw Cause.squash(cause)
       }), config)
   const result = computed(() =>
     swrToQuery({ data: swr.data.value, error: swr.error.value, isValidating: swr.isValidating.value })
   ) // ref<QueryResult<E, A>>()
   const latestSuccess = computed(() => {
     const value = result.value
-    return value.isSuccess()
-      ? value.current.isRight()
+    return isSuccess(value)
+      ? Either.isRight(value.current)
         ? value.current.right
-        : value.previous.isSome()
+        : Option.isSome(value.previous)
         ? value.previous.value
         : undefined
       : undefined
@@ -198,19 +200,19 @@ export function make<R, E, A>(self: Effect<FetchResponse<A>, E, R>) {
 
   const execute = Effect
     .sync(() => {
-      result.value = result.value.isInitializing()
+      result.value = isInitializing(result.value)
         ? new Loading()
         : new Refreshing(result.value)
     })
-    .zipRight(self.map((_) => _.body).asQueryResult)
+    .andThen(queryResult(self.map((_) => _.body)))
     .flatMap((r) => Effect.sync(() => result.value = r))
 
   const latestSuccess = computed(() => {
     const value = result.value
-    return value.hasValue()
-      ? value.current.isRight()
+    return hasValue(value)
+      ? Either.isRight(value.current)
         ? value.current.right
-        : value.previous.isSome()
+        : Option.isSome(value.previous)
         ? value.previous.value
         : undefined
       : undefined
@@ -266,25 +268,25 @@ export const useMutation: {
 ) => {
   const state: Ref<MutationResult<E, A>> = ref<MutationResult<E, A>>({ _tag: "Initial" }) as any
 
-  function handleExit(exit: Exit<A, E>): Effect<Either.Either<E, A>, never, never> {
+  function handleExit(exit: Exit.Exit<A, E>): Effect<Either.Either<E, A>, never, never> {
     return Effect.sync(() => {
-      if (exit.isSuccess()) {
+      if (Exit.isSuccess(exit)) {
         state.value = { _tag: "Success", data: exit.value }
         return Either.right(exit.value)
       }
 
-      const err = exit.cause.failureOption
-      if (err.isSome()) {
+      const err = Cause.failureOption(exit.cause)
+      if (Option.isSome(err)) {
         state.value = { _tag: "Error", error: err.value }
         return Either.left(err.value)
       }
 
-      const died = exit.cause.dieOption
-      if (died.value) {
+      const died = Cause.dieOption(exit.cause)
+      if (Option.isSome(died)) {
         throw died.value
       }
-      const interrupted = exit.cause.interruptOption
-      if (interrupted.value) {
+      const interrupted = Cause.interruptOption(exit.cause)
+      if (Option.isSome(interrupted)) {
         throw new InterruptedException()
       }
       throw new Error("Invalid state")
@@ -307,14 +309,14 @@ export const useMutation: {
         .sync(() => {
           state.value = { _tag: "Loading" }
         })
-        .zipRight(effect)
-        .exit
+        .andThen(effect)
+        .pipe(Effect.exit)
         .flatMap(handleExit)
-        .fork
+        .pipe(Effect.fork)
         .flatMap((f) => {
-          const cancel = () => run.value(f.interrupt)
+          const cancel = () => run.value(Fiber.interrupt(f))
           abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
-          return f.join
+          return Fiber.join(f)
         })
     )
   }

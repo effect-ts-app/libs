@@ -3,28 +3,33 @@ import * as Scope from "effect/Scope"
 import { initRuntime } from "./internal.js"
 
 import * as HttpClient from "@effect/platform/Http/Client"
+import { Config, Exit, Runtime } from "effect"
+import { Effect, Layer } from "effect-app"
 
 export { initRuntime } from "./internal.js"
 
 export const DefaultApiConfig = Config.all({
-  apiUrl: Config.string("apiUrl").withDefault("/api"),
+  apiUrl: Config.string("apiUrl").pipe(Config.withDefault("/api")),
   headers: Config
-    .string()
-    .hashMap("headers")
-    .option
+    .hashMap(
+      Config.string(),
+      "headers"
+    )
+    .pipe(Config.option)
 })
 
 export function makeApiLayers(config: ApiConfig) {
   return HttpClient
     .layer
-    .merge(ApiConfig.layer(config))
+    .pipe(Layer
+      .merge(ApiConfig.layer(config)))
 }
 
 export function makeAppRuntime<R, E, A>(layer: Layer<A, E, R>) {
   return Effect.gen(function*($) {
     const scope = yield* $(Scope.make())
-    const env = yield* $(layer.buildWithScope(scope))
-    const runtime = yield* $(Effect.runtime<A>().scoped.provide(env))
+    const env = yield* $(layer.pipe(Layer.buildWithScope(scope)))
+    const runtime = yield* $(Effect.runtime<A>().pipe(Effect.scoped, Effect.provide(env)))
 
     return {
       runtime: Object.assign(runtime, {
@@ -34,28 +39,28 @@ export function makeAppRuntime<R, E, A>(layer: Layer<A, E, R>) {
         runSyncExit: Runtime.runSyncExit(runtime),
         runFork: Runtime.runFork(runtime)
       }),
-      clean: scope.close(Exit.unit)
+      clean: Scope.close(scope, Exit.unit)
     }
   })
 }
 
 export function initializeSync<E, A>(layer: Layer<A | ApiConfig | HttpClient.Client.Default, E, never>) {
-  const { clean, runtime } = makeAppRuntime(layer).runSync
+  const { clean, runtime } = Effect.runSync(makeAppRuntime(layer))
   initRuntime(runtime)
   return {
     runtime,
-    clean: () => clean.runSync
+    clean: () => Effect.runSync(clean)
   }
 }
 
 export function initializeAsync<E, A>(layer: Layer<A | ApiConfig | HttpClient.Client.Default, E, never>) {
-  return makeAppRuntime(layer)
-    .runPromise
+  return Effect
+    .runPromise(makeAppRuntime(layer))
     .then(({ clean, runtime }) => {
       initRuntime(runtime)
       return {
         runtime,
-        clean: () => clean.runPromise
+        clean: () => Effect.runPromise(clean)
       }
     })
 }

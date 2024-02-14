@@ -1,4 +1,7 @@
+import { flow } from "effect"
+import { Option, S } from "effect-app"
 import type { REST, Schema } from "effect-app/schema"
+import { typedKeysOf } from "effect-app/utils"
 import type { ParsedQuery } from "query-string"
 
 export function getQueryParam(search: ParsedQuery, param: string) {
@@ -33,7 +36,7 @@ export function parseRouteParamsOption<NER extends Record<string, Schema<any, an
 ): {
   [K in keyof NER]: Option<Schema.To<NER[K]>>
 } {
-  return t.$$.keys.reduce(
+  return typedKeysOf(t).reduce(
     (prev, cur) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       prev[cur] = getQueryParamO(query, cur as string).flatMap(parseOpt(t[cur]!))
@@ -52,10 +55,10 @@ export function parseRouteParams<NER extends Record<string, Schema<any, any, nev
 ): {
   [K in keyof NER]: Schema.To<NER[K]>
 } {
-  return t.$$.keys.reduce(
+  return typedKeysOf(t).reduce(
     (prev, cur) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      prev[cur] = S.decodeUnknownSync(t[cur]!)(query[cur as any])
+      prev[cur] = S.decodeUnknownSync(t[cur]!)((query as any)[cur])
 
       return prev
     },

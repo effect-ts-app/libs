@@ -4,9 +4,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { QueryObserverOptions } from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
-import { Effect, Runtime } from "effect-app"
-import { Done, Initial, Loading, Refreshing } from "effect-app/client"
+import { Cause, Effect, Either, Option, pipe, Runtime } from "effect-app"
+import { Done, Initial, isSuccess, Loading, Refreshing } from "effect-app/client"
 import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
+import type { HttpClient } from "effect-app/Request"
 import { computed, ref, type WatchSource } from "vue"
 import { run } from "./internal.js"
 
@@ -14,7 +15,6 @@ import { run } from "./internal.js"
 // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
 // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
 // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UseQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
-
 export const useSafeQuery = <I, A, E>(
   q:
     | {
@@ -55,7 +55,7 @@ export const useSafeQuery = <I, A, E>(
         queryKey: [computed(() => q.mapPath)],
         queryFn: () =>
           run
-            .value(q.handler)
+            .value(q.handler as any)
             .then((_) => (_ as any).body)
             .catch((_) => {
               if (!Runtime.isFiberFailure(_)) throw _
@@ -106,10 +106,10 @@ export const useSafeQuery = <I, A, E>(
   )
   const latestSuccess = computed(() => {
     const value = result.value
-    return value.isSuccess()
-      ? value.current.isRight()
+    return isSuccess(value)
+      ? Either.isRight(value.current)
         ? value.current.right
-        : value.previous.isSome()
+        : Option.isSome(value.previous)
         ? value.previous.value
         : undefined
       : undefined
