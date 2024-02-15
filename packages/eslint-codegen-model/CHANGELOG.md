@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.49.1
+
+### Patch Changes
+
+- d7ebf34: enable sourcePrefix option
+
 ## 0.49.0
 
 ### Minor Changes
