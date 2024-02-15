@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.49.1
+
+### Patch Changes
+
+- 7b40fa7: use full path
+
 ## 0.49.0
 
 ### Minor Changes
