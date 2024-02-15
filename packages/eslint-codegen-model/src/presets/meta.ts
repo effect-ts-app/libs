@@ -3,9 +3,9 @@ import type { Preset } from 'eslint-plugin-codegen';
 /**
  * Adds file meta
  */
-export const meta: Preset<{
-}> = ({ meta }) => {
-  const moduleName = meta.filename.substring(meta.filename.indexOf("_src/") > -1 ? meta.filename.indexOf("_src/") + 5 : meta.filename.indexOf("src/") + 4, meta.filename.length - 3)
+export const meta: Preset<{ sourcePrefix?: string }> = ({ meta, options }) => {
+  const sourcePrefix = options.sourcePrefix || "src/"
+  const moduleName = meta.filename.substring(meta.filename.indexOf(sourcePrefix) + sourcePrefix.length, meta.filename.length - 3)
   const expectedContent = `export const meta = { moduleName: "${moduleName}" }`
 
   try {
