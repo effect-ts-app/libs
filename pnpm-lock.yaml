@@ -45,7 +45,7 @@ importers:
         version: 7.0.3
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.17)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.19)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.9
@@ -63,10 +63,10 @@ importers:
         specifier: ^2.27.1
         version: 2.27.1
       '@dprint/typescript':
-        specifier: ^0.89.0
-        version: 0.89.0
+        specifier: ^0.89.1
+        version: 0.89.1
       '@effect-app/cli':
-        specifier: ^0.49.0
+        specifier: ^0.49.1
         version: link:packages/cli
       '@effect-app/compiler':
         specifier: workspace:*
@@ -102,8 +102,8 @@ importers:
         specifier: ^4.14.202
         version: 4.14.202
       '@types/node':
-        specifier: ~20.11.17
-        version: 20.11.17
+        specifier: ~20.11.19
+        version: 20.11.19
       '@typescript-eslint/eslint-plugin':
         specifier: 7.0.1
         version: 7.0.1(@effect-app/typescript@5.4.0-tsplus.20240124)(@typescript-eslint/parser@7.0.1)(eslint@8.56.0)
@@ -192,11 +192,11 @@ importers:
         specifier: ^3.4.6
         version: 3.4.6(@effect-app/typescript@5.4.0-tsplus.20240124)
       vite:
-        specifier: ^5.1.2
-        version: 5.1.2(@types/node@20.11.17)
+        specifier: ^5.1.3
+        version: 5.1.3(@types/node@20.11.19)
       vitest:
         specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.17)
+        version: 1.2.2(@types/node@20.11.19)
 
   packages/cli:
     dependencies:
@@ -208,20 +208,20 @@ importers:
         specifier: ^7.23.9
         version: 7.23.9(@babel/core@7.23.9)
       '@types/node':
-        specifier: ~20.11.17
-        version: 20.11.17
+        specifier: ~20.11.19
+        version: 20.11.19
       json5:
         specifier: ^2.2.3
         version: 2.2.3
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.17)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.19)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.17)
+        version: 1.2.2(@types/node@20.11.19)
 
   packages/compiler:
     dependencies:
@@ -229,27 +229,27 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
       vite:
-        specifier: ^5.1.2
-        version: 5.1.2(@types/node@20.11.17)
+        specifier: ^5.1.3
+        version: 5.1.3(@types/node@20.11.19)
     devDependencies:
       '@babel/cli':
         specifier: ^7.23.9
         version: 7.23.9(@babel/core@7.23.9)
       '@types/node':
-        specifier: ~20.11.17
-        version: 20.11.17
+        specifier: ~20.11.19
+        version: 20.11.19
       json5:
         specifier: ^2.2.3
         version: 2.2.3
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.17)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.19)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.17)
+        version: 1.2.2(@types/node@20.11.19)
 
   packages/core:
     dependencies:
@@ -301,7 +301,7 @@ importers:
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.17)
+        version: 1.2.2(@types/node@20.11.19)
       winston:
         specifier: ^3.11.0
         version: 3.11.0
@@ -356,7 +356,7 @@ importers:
         version: 6.1.0(@effect-app/typescript@5.4.0-tsplus.20240124)
       ts-node:
         specifier: 10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.17)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.19)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
@@ -388,8 +388,8 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0
       ts-pattern:
-        specifier: ^5.0.6
-        version: 5.0.6
+        specifier: ^5.0.8
+        version: 5.0.8
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
@@ -407,8 +407,8 @@ importers:
         specifier: ^8.4.1
         version: 8.4.1
       '@types/node':
-        specifier: ~20.11.17
-        version: 20.11.17
+        specifier: ~20.11.19
+        version: 20.11.19
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
@@ -420,13 +420,13 @@ importers:
         version: 3.15.1(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.17)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.19)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.17)
+        version: 1.2.2(@types/node@20.11.19)
 
   packages/infra:
     dependencies:
@@ -504,14 +504,14 @@ importers:
         specifier: workspace:*
         version: link:../compiler
       '@sentry/node':
-        specifier: ^7.101.0
-        version: 7.101.0
+        specifier: ^7.101.1
+        version: 7.101.1
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
       '@types/node':
-        specifier: ~20.11.17
-        version: 20.11.17
+        specifier: ~20.11.19
+        version: 20.11.19
       '@types/proper-lockfile':
         specifier: ^4.1.4
         version: 4.1.4
@@ -538,13 +538,13 @@ importers:
         version: 3.1.2
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.17)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.19)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.17)
+        version: 1.2.2(@types/node@20.11.19)
 
   packages/infra-adapters:
     dependencies:
@@ -625,17 +625,17 @@ importers:
   packages/pnpm-singleton:
     devDependencies:
       '@types/node':
-        specifier: ~20.11.17
-        version: 20.11.17
+        specifier: ~20.11.19
+        version: 20.11.19
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.17)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.19)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.17)
+        version: 1.2.2(@types/node@20.11.19)
 
   packages/prelude:
     dependencies:
@@ -676,8 +676,8 @@ importers:
         specifier: ^8.2.0
         version: 8.2.0
       ts-pattern:
-        specifier: ^5.0.6
-        version: 5.0.6
+        specifier: ^5.0.8
+        version: 5.0.8
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
@@ -695,8 +695,8 @@ importers:
         specifier: ^8.4.1
         version: 8.4.1
       '@types/node':
-        specifier: ~20.11.17
-        version: 20.11.17
+        specifier: ~20.11.19
+        version: 20.11.19
       '@types/uuid':
         specifier: ^9.0.8
         version: 9.0.8
@@ -708,13 +708,13 @@ importers:
         version: 3.15.1(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.17)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.19)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.17)
+        version: 1.2.2(@types/node@20.11.19)
 
   packages/schema:
     dependencies:
@@ -763,7 +763,7 @@ importers:
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vitest:
         specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.17)
+        version: 1.2.2(@types/node@20.11.19)
 
   packages/vue:
     dependencies:
@@ -817,23 +817,23 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0
       '@types/node':
-        specifier: ~20.11.17
-        version: 20.11.17
+        specifier: ~20.11.19
+        version: 20.11.19
       json5:
         specifier: ^2.2.3
         version: 2.2.3
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.17)
+        version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.19)
       typescript:
         specifier: npm:@effect-app/typescript@5.4.0-tsplus.20240124
         version: /@effect-app/typescript@5.4.0-tsplus.20240124
       vite:
-        specifier: ^5.1.2
-        version: 5.1.2(@types/node@20.11.17)
+        specifier: ^5.1.3
+        version: 5.1.3(@types/node@20.11.19)
       vitest:
         specifier: ^1.2.2
-        version: 1.2.2(@types/node@20.11.17)
+        version: 1.2.2(@types/node@20.11.19)
 
 packages:
 
@@ -1630,8 +1630,8 @@ packages:
     dev: true
     optional: true
 
-  /@dprint/typescript@0.89.0:
-    resolution: {integrity: sha512-Y2VE+pGc8qFpPOTeoHU+gSVdzsW5xO9ny47pBhd30quTerQWPkLIzJFCPhfTU5cKURwUHhBGng541GsTHv6MRw==}
+  /@dprint/typescript@0.89.1:
+    resolution: {integrity: sha512-Xx9y6NtFtZ1JDoioiIkipv2UwcSKawpKCBVo1It5hyL+j/2FgWodLAGH3bfm+d2WhkkRjXmz58tm8/ybmXlwzw==}
     dev: true
 
   /@dprint/win32-x64@0.45.0:
@@ -2056,7 +2056,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
       '@types/yargs': 15.0.14
       chalk: 4.1.2
 
@@ -2411,43 +2411,43 @@ packages:
       - debug
     dev: false
 
-  /@sentry-internal/tracing@7.101.0:
-    resolution: {integrity: sha512-rp9oOLQs6vMuzvAnAHRRCNu5Z0o/ZVRI3WPYedxpdMWKD1Z3G9o+0joP+ZIUqHsamWWYiIgPqXgL9AK6AWjFRg==}
+  /@sentry-internal/tracing@7.101.1:
+    resolution: {integrity: sha512-ihjWG8x4x0ozx6t+EHoXLKbsPrgzYLCpeBLWyS+M6n3hn6cmHM76c8nZw3ldhUQi5UYL3LFC/JZ50b4oSxtlrg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.101.0
-      '@sentry/types': 7.101.0
-      '@sentry/utils': 7.101.0
+      '@sentry/core': 7.101.1
+      '@sentry/types': 7.101.1
+      '@sentry/utils': 7.101.1
     dev: true
 
-  /@sentry/core@7.101.0:
-    resolution: {integrity: sha512-dRNrNV5OLGARkOGgxJsVDhA98Pev5G1LVJcud5E83cRg49BCUx2riqEtDP6iIS1nvem6cApkSnLC1kvl/T5/Cw==}
+  /@sentry/core@7.101.1:
+    resolution: {integrity: sha512-XSmXXeYT1d4O14eDF3OXPJFUgaN2qYEeIGUztqPX9nBs9/ij8y/kZOayFqlIMnfGvjOUM+63sy/2xDBOpFn6ug==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.101.0
-      '@sentry/utils': 7.101.0
+      '@sentry/types': 7.101.1
+      '@sentry/utils': 7.101.1
     dev: true
 
-  /@sentry/node@7.101.0:
-    resolution: {integrity: sha512-4z01VAFjRYk7XcajbWPJlhkPN6PBG4nVX8n1dl+OH2OeqTxFxcnmY5zR5v+AtEbNJgg5PMwy8mnnGZRG/wLZgA==}
+  /@sentry/node@7.101.1:
+    resolution: {integrity: sha512-iXSxUT6Zbt/KUY0+fRcW5II6Tgp2zdTfhBW+fQuDt/UUZt7Ypvb+6n4U2oom3LJfttmD7mdjQuT4+vsNImDjTQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.101.0
-      '@sentry/core': 7.101.0
-      '@sentry/types': 7.101.0
-      '@sentry/utils': 7.101.0
+      '@sentry-internal/tracing': 7.101.1
+      '@sentry/core': 7.101.1
+      '@sentry/types': 7.101.1
+      '@sentry/utils': 7.101.1
     dev: true
 
-  /@sentry/types@7.101.0:
-    resolution: {integrity: sha512-YC+ltO/AlbEyJHjCUYQ4is1HcDT2zSMuLkIAcyQmK7fUdlGT4iR5sfENriY9ZopYHgjPdJKfhI8ohScam7zp/A==}
+  /@sentry/types@7.101.1:
+    resolution: {integrity: sha512-bwtkQvrCZ6JGc7vqX7TEAKBgkbQFORt84FFS3JQQb8G3efTt9fZd2ReY4buteKQdlALl8h1QWVngTLmI+kyUuw==}
     engines: {node: '>=8'}
     dev: true
 
-  /@sentry/utils@7.101.0:
-    resolution: {integrity: sha512-px1NUkCLsD9UKLE4W4DghpyzmAVHgYhskrjRt30ubyUKqlggtHkOXRvS8MjuWowR/i0wF0GuTCbU9StBd7JMrw==}
+  /@sentry/utils@7.101.1:
+    resolution: {integrity: sha512-Nrg0nrEI3nrOCd9SLJ/WGzxS5KMQE4cryLOvrDcHJRWpsSyGBF1hLLerk84Nsw/0myMsn7zTYU+xoq7idNsX5A==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.101.0
+      '@sentry/types': 7.101.1
     dev: true
 
   /@sideway/address@4.1.4:
@@ -2565,19 +2565,19 @@ packages:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
     dev: true
 
   /@types/bunyan@1.8.8:
     resolution: {integrity: sha512-Cblq+Yydg3u+sGiz2mjHjC5MPmdjY+No4qvHrF+BUhblsmSfMvsHLbOG62tPbonsqBj6sbWv1LHcsoe5Jw+/Ow==}
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
     dev: true
 
   /@types/connect@3.4.38:
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
     dev: true
 
   /@types/dynamodb@1.3.7:
@@ -2611,7 +2611,7 @@ packages:
   /@types/express-serve-static-core@4.17.33:
     resolution: {integrity: sha512-TPBqmR/HRYI3eC2E5hmiivIzv+bidAfXofM+sbonAGvyDhySGw9/PQZFt2BLOrjUUR++4eJVpx6KnLQK1Fk9tA==}
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
     dev: true
@@ -2629,7 +2629,7 @@ packages:
     resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
     dev: true
 
   /@types/http-cache-semantics@4.0.1:
@@ -2639,13 +2639,13 @@ packages:
   /@types/ioredis@4.28.10:
     resolution: {integrity: sha512-69LyhUgrXdgcNDv7ogs1qXZomnfOEnSmrmMFqKgt1XMJxmoOSG/u3wYy13yACIfKuMJ8IhKgHafDO3sx19zVQQ==}
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
     dev: true
 
   /@types/is-buffer@2.0.0:
     resolution: {integrity: sha512-0f7N/e3BAz32qDYvgB4d2cqv1DqUwvGxHkXsrucICn8la1Vb6Yl6Eg8mPScGwUiqHJeE7diXlzaK+QMA9m4Gxw==}
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
 
   /@types/istanbul-lib-coverage@2.0.4:
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
@@ -2670,7 +2670,7 @@ packages:
   /@types/jsonwebtoken@8.5.9:
     resolution: {integrity: sha512-272FMnFGzAVMGtu9tkr29hRL6bZj4Zs1KZNeHLnKqAvp06tAIcarTMwOh8/8bz4FmKRcMxZhZNeUAQsNLoiPhg==}
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
     dev: true
 
   /@types/lodash@4.14.202:
@@ -2693,8 +2693,8 @@ packages:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
     dev: true
 
-  /@types/node@20.11.17:
-    resolution: {integrity: sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==}
+  /@types/node@20.11.19:
+    resolution: {integrity: sha512-7xMnVEcZFu0DikYjWOlRq7NTPETrm7teqUT2WkQjrTIkEgUyyGdWsj/Zg8bEJt5TNklzbPD1X3fqfsHw3SpapQ==}
     dependencies:
       undici-types: 5.26.5
 
@@ -2718,7 +2718,7 @@ packages:
   /@types/redis@2.8.32:
     resolution: {integrity: sha512-7jkMKxcGq9p242exlbsVzuJb57KqHRhNl4dHoQu2Y5v9bCAbtIXXH0R3HleSQW4CTOqpHIYUW3t6tpUj4BVQ+w==}
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
     dev: true
 
   /@types/redlock@4.0.7:
@@ -2740,7 +2740,7 @@ packages:
     resolution: {integrity: sha512-z5xyF6uh8CbjAu9760KDKsH2FcDxZ2tFCsA4HIMWE6IkiYMXfVoa+4f9KX+FN0ZLsaMw1WNG2ETLA6N+/YA+cg==}
     dependencies:
       '@types/mime': 3.0.1
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
     dev: true
 
   /@types/stack-utils@2.0.1:
@@ -6284,7 +6284,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
@@ -9061,7 +9061,7 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
-  /ts-node@10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.17):
+  /ts-node@10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.19):
     resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
     hasBin: true
     peerDependencies:
@@ -9080,7 +9080,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
       acorn: 8.10.0
       acorn-walk: 8.3.0
       arg: 4.1.3
@@ -9091,8 +9091,8 @@ packages:
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
-  /ts-pattern@5.0.6:
-    resolution: {integrity: sha512-Y+jOjihlFriWzcBjncPCf2/am+Hgz7LtsWs77pWg5vQQKLQj07oNrJryo/wK2G0ndNaoVn2ownFMeoeAuReu3Q==}
+  /ts-pattern@5.0.8:
+    resolution: {integrity: sha512-aafbuAQOTEeWmA7wtcL94w6I89EgLD7F+IlWkr596wYxeb0oveWDO5dQpv85YP0CGbxXT/qXBIeV6IYLcoZ2uA==}
     dev: false
 
   /ts-toolbelt@9.6.0:
@@ -9484,7 +9484,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vite-node@1.2.2(@types/node@20.11.17):
+  /vite-node@1.2.2(@types/node@20.11.19):
     resolution: {integrity: sha512-1as4rDTgVWJO3n1uHmUYqq7nsFgINQ9u+mRcXpjeOMJUmviqNKjcZB7UfRZrlM7MjYXMKpuWp5oGkjaFLnjawg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -9493,7 +9493,7 @@ packages:
       debug: 4.3.4(supports-color@5.5.0)
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.1.2(@types/node@20.11.17)
+      vite: 5.1.3(@types/node@20.11.19)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -9505,7 +9505,7 @@ packages:
       - terser
     dev: true
 
-  /vite@5.1.0(@types/node@20.11.17):
+  /vite@5.1.0(@types/node@20.11.19):
     resolution: {integrity: sha512-STmSFzhY4ljuhz14bg9LkMTk3d98IO6DIArnTY6MeBwiD1Za2StcQtz7fzOUnRCqrHSD5+OS2reg4HOz1eoLnw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -9533,7 +9533,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
       esbuild: 0.19.5
       postcss: 8.4.35
       rollup: 4.4.1
@@ -9541,8 +9541,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@5.1.2(@types/node@20.11.17):
-    resolution: {integrity: sha512-uwiFebQbTWRIGbCaTEBVAfKqgqKNKMJ2uPXsXeLIZxM8MVMjoS3j0cG8NrPxdDIadaWnPSjrkLWffLSC+uiP3Q==}
+  /vite@5.1.3(@types/node@20.11.19):
+    resolution: {integrity: sha512-UfmUD36DKkqhi/F75RrxvPpry+9+tTkrXfMNZD+SboZqBCMsxKtO52XeGzzuh7ioz+Eo/SYDBbdb0Z7vgcDJew==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -9569,14 +9569,14 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
       esbuild: 0.19.5
       postcss: 8.4.35
       rollup: 4.4.1
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitest@1.2.2(@types/node@20.11.17):
+  /vitest@1.2.2(@types/node@20.11.19):
     resolution: {integrity: sha512-d5Ouvrnms3GD9USIK36KG8OZ5bEvKEkITFtnGv56HFaSlbItJuYr7hv2Lkn903+AvRAgSixiamozUVfORUekjw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -9601,7 +9601,7 @@ packages:
       jsdom:
         optional: true
     dependencies:
-      '@types/node': 20.11.17
+      '@types/node': 20.11.19
       '@vitest/expect': 1.2.2
       '@vitest/runner': 1.2.2
       '@vitest/snapshot': 1.2.2
@@ -9620,8 +9620,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.2
-      vite: 5.1.0(@types/node@20.11.17)
-      vite-node: 1.2.2(@types/node@20.11.17)
+      vite: 5.1.0(@types/node@20.11.19)
+      vite-node: 1.2.2(@types/node@20.11.19)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
