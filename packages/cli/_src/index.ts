@@ -81,7 +81,7 @@ function packagejson(p: string, levels = 0) {
   // TODO: no chdir!
   try {
     process.chdir(path.resolve(startDir, p))
-    r = cp.execSync(`sh ${startDir}/scripts/extract.sh`, { encoding: "utf-8" })
+    r = cp.execSync(`sh ${p === "." ? "../.." : startDir}/scripts/extract.sh`, { encoding: "utf-8" })
   } finally {
     process.chdir(curDir)
   }

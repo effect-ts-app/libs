@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.165.0
+
+### Minor Changes
+
+- 47f46f0: use actual action name casing so that editor go to works.
+
 ## 0.164.0
 
 ### Minor Changes

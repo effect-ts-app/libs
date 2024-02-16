@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.50.0
+
+### Minor Changes
+
+- 47f46f0: use actual action name casing so that editor go to works.
+
 ## 0.49.1
 
 ### Patch Changes
