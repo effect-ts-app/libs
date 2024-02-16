@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { REST } from "effect-app/schema"
-import * as utils from "effect-app/utils"
 import { Path } from "path-parser"
 import type { HttpClient } from "../http.js"
 import type { ApiConfig } from "./config.js"
@@ -66,8 +65,6 @@ function clientFor_<M extends Requests>(models: M) {
       const Request_ = REST.extractRequest(h) as AnyRequest
       const Response = REST.extractResponse(h)
 
-      // @ts-expect-error doc
-      const actionName = utils.uncapitalize(cur)
       const m = (models as any).meta as { moduleName: string }
       if (!m) throw new Error("No meta defined in Resource!")
       const requestName = `${m.moduleName}.${cur as string}`
@@ -110,7 +107,7 @@ function clientFor_<M extends Requests>(models: M) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         .flatMap((x) => x.ast.propertySignatures)
       // @ts-expect-error doc
-      prev[actionName] = Request.method === "GET"
+      prev[cur] = Request.method === "GET"
         ? fields.length === 0
           ? {
             handler: fetchApi(Request.method, Request.path)
@@ -155,7 +152,7 @@ function clientFor_<M extends Requests>(models: M) {
       // generate handler
 
       // @ts-expect-error doc
-      prev[`${actionName}E`] = Request.method === "GET"
+      prev[`${cur}E`] = Request.method === "GET"
         ? fields.length === 0
           ? {
             handler: fetchApi(Request.method, Request.path)
@@ -216,7 +213,7 @@ type HasEmptyTo<T extends Schema<any, any, any>> = T extends { struct: Schema<an
   : false
 
 type RequestHandlers<R, E, M extends Requests> = {
-  [K in keyof M & string as Uncapitalize<K>]: HasEmptyTo<REST.GetRequest<M[K]>> extends true ? {
+  [K in keyof M]: HasEmptyTo<REST.GetRequest<M[K]>> extends true ? {
       handler: Effect<FetchResponse<ExtractResponse<REST.GetResponse<M[K]>>>, E, R>
       Request: REST.GetRequest<M[K]>
       Reponse: ExtractResponse<REST.GetResponse<M[K]>>
@@ -239,7 +236,7 @@ type RequestHandlers<R, E, M extends Requests> = {
 }
 
 type RequestHandlersE<R, E, M extends Requests> = {
-  [K in keyof M & string as `${Uncapitalize<K>}E`]: HasEmptyTo<REST.GetRequest<M[K]>> extends true ? {
+  [K in keyof M & string as `${K}E`]: HasEmptyTo<REST.GetRequest<M[K]>> extends true ? {
       handler: Effect<
         FetchResponse<ExtractEResponse<REST.GetResponse<M[K]>>>,
         E,
