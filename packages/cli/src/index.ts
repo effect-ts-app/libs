@@ -192,7 +192,9 @@ switch (cmd) {
     fs
       .readdirSync(startDir + "/packages")
       .map((_) => startDir + "/packages/" + _)
-      .filter((_) => fs.existsSync(_ + "/package.json") && fs.existsSync(_ + "/src"))
+      .filter((_) =>
+        fs.existsSync(_ + "/package.json") && fs.existsSync(_ + "/src") && !_.endsWith("eslint-codegen-model")
+      )
       .forEach((_) => monitorPackagejson(_))
     break
   }
