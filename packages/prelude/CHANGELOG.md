@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.165.2
+
+### Patch Changes
+
+- dbbd0da: fix path
+
 ## 0.165.1
 
 ### Patch Changes
