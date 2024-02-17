@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.136.4
+
+### Patch Changes
+
+- ba06aae: fix options
+- Updated dependencies [ba06aae]
+  - @effect-app/vue@0.136.4
+
 ## 0.136.3
 
 ### Patch Changes
