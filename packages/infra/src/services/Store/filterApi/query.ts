@@ -3,6 +3,8 @@ import type { FieldPath, FieldPathValue } from "../../../filter/types/path/eager
 import type { Filter, Ops } from "./proxy.js"
 import { makeProxy } from "./proxy.js"
 
+export { Filter }
+
 export type FilterScopes = {
   t: "or-scope"
   result: FilterResult[]

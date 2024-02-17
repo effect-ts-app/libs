@@ -23,7 +23,7 @@ import { S } from "effect-app"
 import type { FixEnv } from "effect-app/Pure"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
-import { QueryBuilder } from "./Store/filterApi/query.js"
+import * as Q from "./Store/filterApi/query.js"
 
 /**
  * @tsplus type Repository
@@ -94,6 +94,8 @@ export class RepositoryBaseC2<
   override changeFeed
 }
 
+const anyQb = Q.QueryBuilder.make<any>()
+
 export class RepositoryBaseC3<
   T extends { id: unknown },
   PM extends PersistenceModelType<string>,
@@ -137,7 +139,7 @@ export class RepositoryBaseC3<
   >(
     map: Effect<
       {
-        filter?: QueryBuilder<PM> | undefined
+        filter?: Q.QueryBuilder<PM> | undefined
         collect?: ((t: PM) => Option<S>) | undefined
         limit?: number | undefined
         skip?: number | undefined
@@ -183,7 +185,7 @@ export class RepositoryBaseC3<
   ): Effect<S[]>
   project<U extends keyof PM>(
     map: {
-      filter?: QueryBuilder<PM>
+      filter?: Q.QueryBuilder<PM>
       select: NonEmptyReadonlyArray<U>
       limit?: number
       skip?: number
@@ -257,11 +259,18 @@ export class RepositoryBaseC3<
     )
   }
 
-  query<S = T>(
+  queryLegacy<S = T>(
     // TODO: think about collectPM, collectE, and collect(Parsed)
     map: { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
   ) {
     return this.queryEffect(Effect.sync(() => map))
+  }
+
+  query(
+    // TODO: think about collectPM, collectE, and collect(Parsed)
+    b: (fn: (f: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>) => Q.QueryBuilder<PM>
+  ) {
+    return this.queryEffect(Effect.sync(() => ({ filter: b(anyQb) })))
   }
 
   queryOne<S = T>(
@@ -696,7 +705,7 @@ export function makeRepo<
     return {
       make,
       Where: where,
-      Query: QueryBuilder.make<PM>()
+      Query: Q.QueryBuilder.make<PM>()
     }
   }
 }
@@ -852,7 +861,7 @@ export interface Repos<
   ): Effect<Out, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
   /** @deprecated use `query` instead */
   readonly Where: ReturnType<typeof makeWhere<PM>>
-  readonly Query: ReturnType<typeof QueryBuilder.make<PM>>
+  readonly Query: ReturnType<typeof Q.QueryBuilder.make<PM>>
   readonly type: Repository<T, PM, Evt, ItemType>
 }
 
@@ -924,7 +933,7 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
       static readonly Where = makeWhere<PM>()
-      static readonly Query = QueryBuilder.make<PM>()
+      static readonly Query = Q.QueryBuilder.make<PM>()
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
 
@@ -972,7 +981,7 @@ export const RepositoryDefaultImpl = <Service>() => {
       static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
 
       static readonly Where = makeWhere<PM>()
-      static readonly Query = QueryBuilder.make<PM>()
+      static readonly Query = Q.QueryBuilder.make<PM>()
 
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }

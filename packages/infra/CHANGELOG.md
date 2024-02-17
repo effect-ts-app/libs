@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.188.0
+
+### Minor Changes
+
+- new query
+
 ## 0.187.1
 
 ### Patch Changes
