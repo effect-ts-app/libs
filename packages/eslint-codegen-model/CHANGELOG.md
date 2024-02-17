@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.51.0
+
+### Minor Changes
+
+- 6e5c606: cl
+
 ## 0.50.0
 
 ### Minor Changes
