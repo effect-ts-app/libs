@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.52.0
+
+### Minor Changes
+
+- 29c5f16: detsp
+
 ## 0.51.0
 
 ### Minor Changes
