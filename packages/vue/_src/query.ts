@@ -99,7 +99,7 @@ export const useSafeQuery_ = <I, A, E>(
       name: string
     },
   arg?: I | WatchSource<I>,
-  options: QueryObserverOptions<any, any, any> = {} // TODO
+  options: Omit<QueryObserverOptions, "queryKey"> = {} // TODO
 ) => {
   const arr = arg
   const req: { value: I } = !arg
