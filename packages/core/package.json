@@ -187,16 +187,6 @@
         "default": "./_cjs/Prelude.cjs"
       }
     },
-    "./Prelude.code": {
-      "import": {
-        "types": "./dist/Prelude.code.d.ts",
-        "default": "./dist/Prelude.code.js"
-      },
-      "require": {
-        "types": "./dist/Prelude.code.d.ts",
-        "default": "./_cjs/Prelude.code.cjs"
-      }
-    },
     "./Set": {
       "import": {
         "types": "./dist/Set.d.ts",
