@@ -267,10 +267,9 @@ export class RepositoryBaseC3<
   }
 
   query(
-    // TODO: think about collectPM, collectE, and collect(Parsed)
-    b: (fn: (f: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>) => Q.QueryBuilder<PM>
+    b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>
   ) {
-    return this.queryEffect(Effect.sync(() => ({ filter: b(anyQb) })))
+    return this.queryEffect(Effect.sync(() => ({ filter: anyQb((_, fields) => b(_, fields as any)) })))
   }
 
   queryOne<S = T>(
@@ -882,7 +881,7 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
   get: (id: T["id"]) => Effect<T, NotFoundError<ItemType>, Service>
 
-  query: <S = T>(map: {
+  queryLegacy: <S = T>(map: {
     filter?: Filter<PM>
     collect?: (t: T) => Option<S>
     limit?: number
@@ -892,9 +891,11 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
 
 const makeRepoFunctions = (tag: any) => {
   const { all } = Effect.serviceConstants(tag) as any
-  const { find, get, query, removeAndPublish, removeById, save, saveAndPublish } = Effect.serviceFunctions(tag) as any
+  const { find, get, query, queryLegacy, removeAndPublish, removeById, save, saveAndPublish } = Effect.serviceFunctions(
+    tag
+  ) as any
 
-  return { all, find, removeById, saveAndPublish, removeAndPublish, save, get, query }
+  return { all, find, removeById, saveAndPublish, removeAndPublish, save, get, query, queryLegacy }
 }
 
 export const RepositoryBaseImpl = <Service>() => {
