@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.53.0
+
+### Minor Changes
+
+- de336f6: src
+
 ## 0.52.1
 
 ### Patch Changes

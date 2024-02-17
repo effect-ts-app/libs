@@ -1,5 +1,16 @@
 # @effect-app/core
 
+## 0.141.0
+
+### Minor Changes
+
+- de336f6: src
+
+### Patch Changes
+
+- Updated dependencies [de336f6]
+  - @effect-app/fluent-extensions@0.135.0
+
 ## 0.140.1
 
 ### Patch Changes

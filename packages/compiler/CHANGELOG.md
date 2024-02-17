@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.65.0
+
+### Minor Changes
+
+- de336f6: src
+
 ## 0.64.1
 
 ### Patch Changes

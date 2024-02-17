@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.50.0
+
+### Minor Changes
+
+- de336f6: src
+
 ## 0.49.1
 
 ### Patch Changes

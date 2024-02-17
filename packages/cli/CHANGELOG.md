@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.51.0
+
+### Minor Changes
+
+- de336f6: src
+
 ## 0.50.1
 
 ### Patch Changes
