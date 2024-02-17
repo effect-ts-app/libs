@@ -2,7 +2,7 @@
 
 for d in `find dist -type d | grep -v dist$`
 do
-  src_d="_src/${d#dist/}"
+  src_d="src/${d#dist/}"
   if [ ! -d "$src_d" ]; then
     echo "Removing $d"
     rm -rf $d
@@ -11,7 +11,7 @@ done
 
 for f in `find dist -type f | grep \\\.mjs$`
 do
-  src_f="_src/${f#dist/}"
+  src_f="src/${f#dist/}"
   src_f="${src_f%.mjs}.mts"
   src_f2="${src_f}x"
   raw="${f%.mjs}"
@@ -26,7 +26,7 @@ done
 
 for f in `find dist -type f | grep \\\.js$`
 do
-  src_f="_src/${f#dist/}"
+  src_f="src/${f#dist/}"
   src_f="${src_f%.js}.ts"
   src_f2="${src_f}x"
   raw="${f%.js}"

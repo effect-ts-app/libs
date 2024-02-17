@@ -6,11 +6,11 @@
         ],
         "tsPlusConfig": "../../tsplus.config.json",
         //        "tsPlusGlobalFiles": [
-        //            "./_src/_global.ts"
+        //            "./src/_global.ts"
         //        ],
         "moduleResolution": "Node16",
         "outDir": "./dist",
-        "rootDir": "./_src",
+        "rootDir": "./src",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
         "types": [
             "vitest/globals",
@@ -20,7 +20,7 @@
         "importsNotUsedAsValues": "preserve",
     },
     "include": [
-        "./_src/**/*.ts"
+        "./src/**/*.ts"
     ],
     "ts-node": {
         "require": [

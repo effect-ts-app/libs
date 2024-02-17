@@ -10,7 +10,7 @@ export default function makeConfig(dirName?: string) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     plugins: useDist ? [] : [effectPlugin({})],
     test: {
-      include: useDist ? ["./dist/**/*.test.js"] : ["./_src/**/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+      include: useDist ? ["./dist/**/*.test.js"] : ["./src/**/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
       exclude: ["./_test/**/*"],
       reporters: "verbose",
       globals: true,
@@ -19,7 +19,7 @@ export default function makeConfig(dirName?: string) {
     resolve: dirName
       ? {
         alias: {
-          [JSON.parse(fs.readFileSync(dirName + "/package.json", "utf-8")).name]: path.resolve(dirName, useDist ? "/dist" : "/_src")
+          [JSON.parse(fs.readFileSync(dirName + "/package.json", "utf-8")).name]: path.resolve(dirName, useDist ? "/dist" : "/src")
         } }
       : undefined,
   }

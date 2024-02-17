@@ -301,10 +301,10 @@
     "clean": "rm -rf dist && rm -rf _cjs",
     "clean-dist": "sh ../../scripts/clean-dist.sh",
     "circular": "pnpm circular:src && pnpm circular:dist",
-    "circular:src": "madge --circular --ts-config ./tsconfig.json --extensions ts ./_src",
+    "circular:src": "madge --circular --ts-config ./tsconfig.json --extensions ts ./src",
     "circular:dist": "madge --circular --extensions js ./dist",
     "compile": "NODE_OPTIONS=--max-old-space-size=6144 tsc --noEmit",
-    "lint": "NODE_OPTIONS=--max-old-space-size=6144 ESLINT_TS=1 eslint ./_src",
+    "lint": "NODE_OPTIONS=--max-old-space-size=6144 ESLINT_TS=1 eslint ./src",
     "lint:watch": "ESLINT_TS=1 esw -w --changed --clear --ext ts,tsx .",
     "autofix": "pnpm lint --fix",
     "test": "vitest",
@@ -319,7 +319,7 @@
   "sideEffects": [
     "./dist/faker.js",
     "./faker",
-    "./_src/faker",
+    "./src/faker",
     "./dist/faker",
     "./dist/src/faker.js",
     "./dist/faker.js"

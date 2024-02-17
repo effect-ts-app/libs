@@ -4,7 +4,7 @@
         // "moduleResolution": "Node16",
         // "outDir": "./dist",
         // "baseUrl": "./",
-        // "rootDir": "./_src",
+        // "rootDir": "./src",
         // "noEmit": false,
         // "tsPlusConfig": "../../tsplus.config.json",
         // temp

@@ -9,11 +9,11 @@
         "outDir": "./dist",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
         "noEmit": false,
-        "rootDir": "./_src",
+        "rootDir": "./src",
         "tsPlusConfig": "../../tsplus.config.json",
     },
     "include": [
-        "./_src"
+        "./src"
     ],
     "exclude": [
         "./dist",

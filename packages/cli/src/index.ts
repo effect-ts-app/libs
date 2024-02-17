@@ -101,7 +101,7 @@ function packagejson(p: string, levels = 0) {
     : items
 
   const exps = {
-    ...fs.existsSync(p + "/_src/index.ts")
+    ...fs.existsSync(p + "/src/index.ts")
       ? {
         ".": {
           "import": {
@@ -131,7 +131,7 @@ function packagejson(p: string, levels = 0) {
 
 function monitorPackagejson(path: string, levels = 0) {
   packagejson(path, levels)
-  w.default(path + "/_src", { recursive: true }, (_, __) => {
+  w.default(path + "/src", { recursive: true }, (_, __) => {
     packagejson(path, levels)
   })
 }
@@ -155,14 +155,14 @@ switch (cmd) {
 
   case "index-multi": {
     ;[
-      "./_project/api/_src",
-      "./_project/printworker/_src",
-      "./_project/api-api/_src",
-      "./_project/core/_src",
-      "./_project/resources/_src",
-      "./_project/models/_src",
-      "./_project/ui/_src",
-      "./_project/core/_src"
+      "./_project/api/src",
+      "./_project/printworker/src",
+      "./_project/api-api/src",
+      "./_project/core/src",
+      "./_project/resources/src",
+      "./_project/models/src",
+      "./_project/ui/src",
+      "./_project/core/src"
     ]
       .filter(
         (_) => fs.existsSync(_)
@@ -172,7 +172,7 @@ switch (cmd) {
   }
 
   case "index": {
-    monitorIndexes("./_src")
+    monitorIndexes("./src")
     break
   }
 
@@ -192,7 +192,7 @@ switch (cmd) {
     fs
       .readdirSync(startDir + "/packages")
       .map((_) => startDir + "/packages/" + _)
-      .filter((_) => fs.existsSync(_ + "/package.json") && fs.existsSync(_ + "/_src"))
+      .filter((_) => fs.existsSync(_ + "/package.json") && fs.existsSync(_ + "/src"))
       .forEach((_) => monitorPackagejson(_))
     break
   }

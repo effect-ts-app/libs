@@ -5,12 +5,12 @@
         "outDir": "./dist",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
         "baseUrl": "./",
-        "rootDir": "./_src",
+        "rootDir": "./src",
         "noEmit": false,
         "tsPlusConfig": "../../tsplus.config.json",
     },
     "include": [
-        "./_src"
+        "./src"
     ],
     "exclude": [
         "./dist",

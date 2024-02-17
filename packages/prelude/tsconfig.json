@@ -6,24 +6,24 @@
         ],
         "tsPlusConfig": "../../tsplus.config.json",
         //        "tsPlusGlobalFiles": [
-        //            "./_src/_global.ts"
+        //            "./src/_global.ts"
         //        ],
         "moduleResolution": "Node16",
         "outDir": "./dist",
-        "rootDir": "./_src",
+        "rootDir": "./src",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
         // "paths": {
         //     "effect-app": [
-        //         "./_src"
+        //         "./src"
         //     ],
         //     "effect-app/*": [
-        //         "./_src/*"
+        //         "./src/*"
         //     ],
         // },
     },
     "include": [
-        // "./_src/**/*.mts",
-        "./_src/**/*.ts"
+        // "./src/**/*.mts",
+        "./src/**/*.ts"
     ],
     "ts-node": {
         "require": [

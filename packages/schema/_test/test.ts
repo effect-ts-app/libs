@@ -1,4 +1,4 @@
-import type { NonEmptyString, NonEmptyString255, NonEmptyString2k } from "../_src/strings.js"
+import type { NonEmptyString, NonEmptyString255, NonEmptyString2k } from "../src/strings.js"
 
 declare let a: NonEmptyString
 a = "a" as NonEmptyString2k
