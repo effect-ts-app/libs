@@ -53,15 +53,8 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
       if (!writeFullTypes) {
         return [
           `export namespace ${modelName} {`,
-          `  /**`,
-          `   * @tsplus type ${modelName}.From`,
-          `   * @tsplus companion ${modelName}.From/Ops`,
-          `   */`,
           `  export class From extends S.FromClass<typeof ${modelName}>() {}`,
           // `  export const From: FromOps = { $: {} }`,
-          // `  /**`,
-          // `   * @tsplus type ${modelName}.From/Aspects`,
-          // `   */`,
           // `  export interface FromAspects {}`,
           "}",
         ]
@@ -241,19 +234,10 @@ export function processNode(tc: ts.TypeChecker, root: ts.Node, writeFullTypes = 
       return [
         `export interface ${modelName} {${parsed.length ? "\n" + parsed.map(l => "  " + l).join("\n") + "\n" : ""}}`,
         `export namespace ${modelName} {`,
-        `  /**`,
-        `   * @tsplus type ${modelName}.From`,
-        `   */`,
         `  export interface From {${encoded.length ? "\n" + encoded.map(l => "    " + l).join("\n") + "\n  " : ""}}`,
         `  export const From: FromOps = {}`,
         // `  export const From: FromOps = { $: {} }`,
-        // `  /**`,
-        // `   * @tsplus type ${modelName}.From/Aspects`,
-        // `   */`,
         // `  export interface FromAspects {}`,
-        `  /**`,
-        `   * @tsplus type ${modelName}.From/Ops`,
-        `   */`,
         `  export interface FromOps {}`,
         "}",
       ]
