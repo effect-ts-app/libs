@@ -881,6 +881,7 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
   get: (id: T["id"]) => Effect<T, NotFoundError<ItemType>, Service>
 
+  query: (b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>) => Effect<T[], never, never>
   queryLegacy: <S = T>(map: {
     filter?: Filter<PM>
     collect?: (t: T) => Option<S>
