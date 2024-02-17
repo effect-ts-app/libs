@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.52.1
+
+### Patch Changes
+
+- f10e630: update packages
+
 ## 0.52.0
 
 ### Minor Changes

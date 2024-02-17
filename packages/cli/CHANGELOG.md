@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.50.1
+
+### Patch Changes
+
+- f10e630: update packages
+
 ## 0.50.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.165.1
+
+### Patch Changes
+
+- 7715b74: add tsconfig.base.json
+- f10e630: update packages
+- Updated dependencies [f10e630]
+  - @effect-app/fluent-extensions@0.134.1
+  - @effect-app/schema@0.192.1
+  - @effect-app/core@0.140.1
+
 ## 0.165.0
 
 ### Minor Changes

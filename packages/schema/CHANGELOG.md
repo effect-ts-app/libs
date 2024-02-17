@@ -1,5 +1,13 @@
 # @effect-app/schema
 
+## 0.192.1
+
+### Patch Changes
+
+- f10e630: update packages
+- Updated dependencies [f10e630]
+  - @effect-app/core@0.140.1
+
 ## 0.192.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.64.1
+
+### Patch Changes
+
+- f10e630: update packages
+
 ## 0.64.0
 
 ### Minor Changes
