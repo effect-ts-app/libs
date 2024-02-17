@@ -12,13 +12,15 @@ import { computed, ref } from "vue"
 import type { ComputedRef, WatchSource } from "vue"
 import { makeQueryKey, run } from "./internal.js"
 
+export interface QueryObserverOptionsCustom extends Omit<QueryObserverOptions, "queryKey" | "queryFn"> {}
+
 export function useSafeQuery<E, A>(
   self: {
     handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.Client.Default>
     mapPath: string
     name: string
   },
-  options?: QueryObserverOptions<any, any, any> | undefined // TODO
+  options?: QueryObserverOptionsCustom | undefined // TODO
 ): readonly [
   ComputedRef<QueryResult<E, A>>,
   ComputedRef<A | undefined>,
@@ -32,7 +34,7 @@ export function useSafeQuery<Arg, E, A>(
     name: string
   },
   arg: Arg | WatchSource<Arg>,
-  options?: QueryObserverOptions<any, any, any> | undefined // TODO
+  options?: QueryObserverOptionsCustom | undefined // TODO
 ): readonly [
   ComputedRef<QueryResult<E, A>>,
   ComputedRef<A | undefined>,
@@ -99,7 +101,7 @@ export const useSafeQuery_ = <I, A, E>(
       name: string
     },
   arg?: I | WatchSource<I>,
-  options: Omit<QueryObserverOptions, "queryKey"> = {} // TODO
+  options: QueryObserverOptionsCustom = {} // TODO
 ) => {
   const arr = arg
   const req: { value: I } = !arg
