@@ -3,9 +3,9 @@
     "compilerOptions": {
         "module": "Node16",
         "lib": [
-            "esnext"
+            "ES2023"
         ],
-        "target": "es2021",
+        "target": "es2022",
         // inline source maps stay better in sync with the source, which should aid with watchers.
         //"sourceMap": true,
         "inlineSourceMap": true,

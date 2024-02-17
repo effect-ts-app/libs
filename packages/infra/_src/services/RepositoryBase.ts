@@ -78,14 +78,20 @@ export class RepositoryBaseC2<
     protected readonly impl: Repository<T, PM, Evt, ItemType>
   ) {
     super(itemType)
+    this.saveAndPublish = this.impl.saveAndPublish
+    this.removeAndPublish = this.impl.removeAndPublish
+    this.find = this.impl.find
+    this.all = this.impl.all
+    this.utils = this.impl.utils
+    this.changeFeed = this.impl.changeFeed
   }
   // makes super calls a compiler error, as it should
-  override saveAndPublish = this.impl.saveAndPublish
-  override removeAndPublish = this.impl.removeAndPublish
-  override find = this.impl.find
-  override all = this.impl.all
-  override utils = this.impl.utils
-  override changeFeed = this.impl.changeFeed
+  override saveAndPublish
+  override removeAndPublish
+  override find
+  override all
+  override utils
+  override changeFeed
 }
 
 export class RepositoryBaseC3<
