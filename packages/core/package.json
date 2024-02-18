@@ -7,8 +7,8 @@
   "dependencies": {
     "@effect-app/fluent-extensions": "workspace:*",
     "@fp-ts/optic": "^0.22.0",
-    "@effect/platform": "^0.45.3",
-    "effect": "^2.3.6",
+    "@effect/platform": "^0.45.4",
+    "effect": "^2.3.7",
     "cross-fetch": "^4.0.0",
     "lodash": "^4.17.21",
     "path-parser": "^6.1.0",

@@ -10,8 +10,8 @@
       "@typescript-eslint/scope-manager@7.0.1": "patches/@typescript-eslint__scope-manager@7.0.1.patch",
       "fast-check@3.15.1": "patches/fast-check@3.15.1.patch",
       "@fp-ts/optic@0.22.0": "patches/@fp-ts__optic@0.22.0.patch",
-      "@effect/schema@0.62.7": "patches/@effect__schema@0.62.7.patch",
-      "effect@2.3.6": "patches/effect@2.3.6.patch"
+      "@effect/schema@0.62.8": "patches/@effect__schema@0.62.8.patch",
+      "effect@2.3.7": "patches/effect@2.3.7.patch"
     }
   },
   "scripts": {
@@ -59,7 +59,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.89.1",
-    "@effect-app/cli": "^0.50.1",
+    "@effect-app/cli": "^0.52.0",
     "@effect-app/compiler": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
