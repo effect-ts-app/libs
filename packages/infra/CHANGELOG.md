@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.189.0
+
+### Minor Changes
+
+- 768e059: add Repo.mapped
+
 ## 0.188.2
 
 ### Patch Changes
