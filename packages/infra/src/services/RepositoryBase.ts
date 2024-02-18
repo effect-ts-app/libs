@@ -17,6 +17,8 @@ import { StoreMaker } from "./Store.js"
 import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig, Where } from "./Store.js"
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
+import { flatMapOption } from "@effect-app/core/Effect"
+import { id } from "@effect-app/core/Optic"
 import type { Opt } from "@effect-app/core/Option"
 import { makeFilters } from "@effect-app/infra/filter"
 import { S } from "effect-app"
@@ -24,6 +26,35 @@ import type { FixEnv } from "effect-app/Pure"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 import * as Q from "./Store/filterApi/query.js"
+
+export interface Mapped1<PM extends { id: string }, X, R> {
+  all: Effect<X[], ParseResult.ParseError, R>
+  save: (...xes: readonly X[]) => Effect<void, OptimisticConcurrencyException | ParseResult.ParseError, void>
+  query: (
+    b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>
+  ) => Effect<X[], ParseResult.ParseError, R>
+  find: (id: PM["id"]) => Effect<Option<X>, ParseResult.ParseError, R>
+}
+
+// TODO: auto use project, and select fields from the From side of schema only
+export interface Mapped2<PM extends { id: string }, X, R> {
+  all: Effect<X[], ParseResult.ParseError, R>
+  query: (
+    b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>
+  ) => Effect<X[], ParseResult.ParseError, R>
+}
+
+export interface Mapped<PM extends { id: string }, OriginalFrom> {
+  <X, R>(schema: S.Schema<X, OriginalFrom, R>): Mapped1<PM, X, R>
+  // TODO: constrain on From having to contain only fields that fit OriginalFrom
+  <X, From, R>(schema: S.Schema<X, From, R>): Mapped2<PM, X, R>
+}
+
+export interface MM<Repo, PM extends { id: string }, OriginalFrom> {
+  <X, R>(schema: S.Schema<X, OriginalFrom, R>): Effect<Mapped1<PM, X, R>, never, Repo>
+  // TODO: constrain on From having to contain only fields that fit OriginalFrom
+  <X, From, R>(schema: S.Schema<X, From, R>): Effect<Mapped2<PM, X, R>, never, Repo>
+}
 
 /**
  * @tsplus type Repository
@@ -52,6 +83,8 @@ export abstract class RepositoryBaseC<
     items: Iterable<T>,
     events?: Iterable<Evt>
   ) => Effect<void>
+
+  abstract readonly mapped: Mapped<PM, Omit<PM, "_etag">>
 }
 
 export abstract class RepositoryBaseC1<
@@ -84,6 +117,7 @@ export class RepositoryBaseC2<
     this.all = this.impl.all
     this.utils = this.impl.utils
     this.changeFeed = this.impl.changeFeed
+    this.mapped = this.impl.mapped
   }
   // makes super calls a compiler error, as it should
   override saveAndPublish
@@ -92,6 +126,7 @@ export class RepositoryBaseC2<
   override all
   override utils
   override changeFeed
+  override mapped
 }
 
 const anyQb = Q.QueryBuilder.make<any>()
@@ -599,20 +634,21 @@ export function makeRepo<
                 .pick("id"))
         )
         const encodeId = flow(i.encode, Effect.provide(rctx))
-        function findE(_id: T["id"]) {
-          return encodeId({ id: _id })
-            .map((_) => _.id)
-            .orDie
-            .andThen((id) =>
-              store
-                .find(id as unknown as string)
-            )
+        function findEId(_id: From["id"]) {
+          return store
+            .find(id as unknown as string)
             .flatMap((items) =>
               Do(($) => {
                 const { set } = $(cms)
                 return items.map((_) => mapReverse(_, set))
               })
             )
+        }
+        function findE(_id: T["id"]) {
+          return encodeId({ id: _id })
+            .orDie
+            .map((_) => _.id)
+            .flatMap(findEId)
         }
 
         function find(id: T["id"]) {
@@ -687,6 +723,23 @@ export function makeRepo<
                     : cms.map(({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
                 ),
             all: store.all.tap((items) => cms.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))
+          },
+          mapped: (schema: any) => {
+            // const enc = S.encode(schema)
+            const dec = S.decode(schema)
+            const encMany = S.encode(S.array(schema))
+            const decMany = S.decode(S.array(schema))
+            return {
+              all: r.utils.all.flatMap(decMany).map((_) => _ as unknown[]),
+              find: (id: PM["id"]) => flatMapOption(findE(id), dec),
+              query: (b: any) =>
+                r
+                  .utils
+                  .filter({ filter: b })
+                  .flatMap(decMany)
+                  .map((_) => _ as unknown[]),
+              save: (...xes: any[]) => encMany(xes).andThen((_) => saveAllE(_ as any))
+            }
           },
           changeFeed,
           itemType: name,
@@ -888,6 +941,8 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     limit?: number
     skip?: number
   }) => Effect<S[], never, never>
+
+  mapped: MM<Service, PM, Omit<PM, "_etag">>
 }
 
 const makeRepoFunctions = (tag: any) => {
@@ -896,7 +951,9 @@ const makeRepoFunctions = (tag: any) => {
     tag
   ) as any
 
-  return { all, find, removeById, saveAndPublish, removeAndPublish, save, get, query, queryLegacy }
+  const mapped = (s: any) => tag.map((_: any) => _.mapped(s))
+
+  return { all, find, removeById, saveAndPublish, removeAndPublish, save, get, query, queryLegacy, mapped }
 }
 
 export const RepositoryBaseImpl = <Service>() => {
