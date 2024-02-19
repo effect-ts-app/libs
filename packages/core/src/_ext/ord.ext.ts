@@ -12,40 +12,6 @@ export function toArray<A>(
 /**
  * Remove duplicates from an array, keeping the first occurrence of an element.
  *
- * @tsplus static ReadonlyArray.Ops uniq
- * @tsplus pipeable ReadonlyArray uniq
- */
-export function uniqArray<A>(E: Equivalence<A>) {
-  return (self: ReadonlyArray<A>): ReadonlyArray<A> => {
-    const includes = arrayIncludes(E)
-    const result: Array<A> = []
-    const length = self.length
-    let i = 0
-    for (; i < length; i = i + 1) {
-      const a = self[i]
-      if (!includes(result, a)) {
-        result.push(a)
-      }
-    }
-    return length === result.length ? self : result
-  }
-}
-
-function arrayIncludes<A>(E: Equivalence<A>) {
-  return (array: Array<A>, value: A): boolean => {
-    for (let i = 0; i < array.length; i = i + 1) {
-      const element = array[i]
-      if (E(element, value)) {
-        return true
-      }
-    }
-    return false
-  }
-}
-
-/**
- * Remove duplicates from an array, keeping the first occurrence of an element.
- *
  * @tsplus static effect/data/Chunk.Ops uniq
  * @tsplus pipeable effect/data/Chunk uniq
  */

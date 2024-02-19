@@ -128,7 +128,7 @@ export function buildWhereCosmosQuery(
         .filter((_) => _.key.includes(".-1."))
         .map((_) => _.key.split(".-1.")[0])
         .map((_) => `JOIN ${_} IN f.${_}`)
-        .uniq(Equivalence.string)
+        .dedupeWith(Equivalence.string)
         .join("\n")
     }
     WHERE f.id != @id AND ${
@@ -373,7 +373,7 @@ export function buildWhereCosmosQuery3(
         .filter((_) => _.path.includes(".-1."))
         .map((_) => _.path.split(".-1.")[0])
         .map((_) => `JOIN ${_} IN f.${_}`)
-        .uniq(Equivalence.string)
+        .dedupeWith(Equivalence.string)
         .join("\n")
     }
 

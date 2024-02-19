@@ -15,41 +15,6 @@ import type { NonEmptyReadonlyArray } from "./Prelude.js"
 export const toNonEmptyArray = <A>(a: ReadonlyArray<A>) =>
   a.length ? Option.some(a as NonEmptyReadonlyArray<A>) : Option.none()
 
-/**
- * Remove duplicates from an array, keeping the first occurrence of an element.
- *
- * @tsplus pipeable Array uniq
- * @tsplus pipeable ReadonlyArray uniq
- * @tsplus static effect/data/ReadonlyArray.Ops uniq
- */
-export function uniq<A>(E: Equivalence<A>) {
-  return (self: ReadonlyArray<A>): ReadonlyArray<A> => {
-    const includes = arrayIncludes(E)
-    const result: Array<A> = []
-    const length = self.length
-    let i = 0
-    for (; i < length; i = i + 1) {
-      const a = self[i]
-      if (!includes(result, a)) {
-        result.push(a)
-      }
-    }
-    return length === result.length ? self : result
-  }
-}
-
-function arrayIncludes<A>(E: Equivalence<A>) {
-  return (array: Array<A>, value: A): boolean => {
-    for (let i = 0; i < array.length; i = i + 1) {
-      const element = array[i]
-      if (E(element, value)) {
-        return true
-      }
-    }
-    return false
-  }
-}
-
 export const { isArray } = Array
 
 /**
