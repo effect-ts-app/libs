@@ -4,14 +4,10 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect/platform": "^0.45.4",
-    "@effect/schema": "^0.62.8",
     "@effect-app/core": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",
     "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "effect": "^2.3.7",
-    "@fp-ts/optic": "^0.22.0",
     "query-string": "^8.2.0"
   },
   "devDependencies": {
@@ -32,7 +28,11 @@
     "winston": "^3.11.0"
   },
   "peerDependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "@effect/platform": "^0.45.4",
+    "@effect/schema": "^0.62.8",
+    "@fp-ts/optic": "^0.22.0",
+    "effect": "^2.3.7"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",
