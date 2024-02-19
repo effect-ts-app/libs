@@ -64,11 +64,11 @@ export function assignTag<Id, Service = Id>(key?: string, creationError?: Error)
   }
 }
 
-export const TagMake = <Id>() =>
-<ServiceImpl, R, E, const Key extends string>(
+export const TagMake = <ServiceImpl, R, E, const Key extends string>(
   key: Key,
   make: Effect<ServiceImpl, E, R>
-) => {
+) =>
+<Id>() => {
   const limit = Error.stackTraceLimit
   Error.stackTraceLimit = 2
   const creationError = new Error()
@@ -119,11 +119,11 @@ export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
   return assignTag<Id, Service>(key, creationError)(c)
 }
 
-export const TagClassMake = <Id, Service = Id>() =>
-<ServiceImpl, R, E>(
+export const TagClassMake = <ServiceImpl, R, E>(
   make: Effect<ServiceImpl, E, R>,
   key?: string
-) => {
+) =>
+<Id, Service = Id>() => {
   const limit = Error.stackTraceLimit
   Error.stackTraceLimit = 2
   const creationError = new Error()
@@ -157,8 +157,8 @@ export const TagClassMake = <Id, Service = Id>() =>
   return assignTag<Id, Service>(key, creationError)(c)
 }
 
-export function TagClassId<Id, ServiceImpl>() {
-  return <const Key extends string>(key: Key) => {
+export function TagClassId<const Key extends string>(key: Key) {
+  return <Id, ServiceImpl>() => {
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 2
     const creationError = new Error()
@@ -185,11 +185,11 @@ export function TagClassId<Id, ServiceImpl>() {
   }
 }
 
-export const TagClassMakeId = <Id>() =>
-<ServiceImpl, R, E, const Key extends string>(
+export const TagClassMakeId = <ServiceImpl, R, E, const Key extends string>(
   key: Key,
   make: Effect<ServiceImpl, E, R>
-) => {
+) =>
+<Id>() => {
   const limit = Error.stackTraceLimit
   Error.stackTraceLimit = 2
   const creationError = new Error()

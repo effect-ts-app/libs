@@ -1,21 +1,10 @@
 import * as Q from "effect/Queue"
 
-/**
- * @tsplus type MemQueue
- * @tsplus companion MemQueue.Ops
- */
-export class MemQueue extends TagClassId<MemQueue, {
-  getOrCreateQueue: (k: string) => Effect<Queue<string>>
-}>()("effect-app/MemQueue") {}
-
-/**
- * @tsplus static MemQueue.Ops Live
- */
-export const LiveMemQueue = Effect
+const make = Effect
   .gen(function*($) {
     const store = yield* $(Effect.sync(() => new Map<string, Queue<string>>()))
 
-    return new MemQueue({
+    return {
       getOrCreateQueue: (k: string) =>
         Effect.gen(function*($) {
           const q = store.get(k)
@@ -24,6 +13,13 @@ export const LiveMemQueue = Effect
           store.set(k, newQ)
           return newQ
         })
-    })
+    }
   })
-  .toLayer(MemQueue)
+
+/**
+ * @tsplus type MemQueue
+ * @tsplus companion MemQueue.Ops
+ */
+export class MemQueue extends TagClassMakeId("effect-app/MemQueue", make)<MemQueue>() {
+  static readonly Live = this.toLayer()
+}

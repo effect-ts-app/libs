@@ -9,10 +9,10 @@ import { ContextMap } from "./service.js"
 /**
  * @tsplus companion ContextMapContainer.Ops
  */
-export class ContextMapContainer extends TagClassId<ContextMapContainer, {
+export class ContextMapContainer extends TagClassId("effect-app/ContextMapContainer")<ContextMapContainer, {
   get: Effect<ContextMap>
   start: Effect<void>
-}>()("effect-app/ContextMapContainer") {
+}>() {
   static get get(): Effect<ContextMap, never, ContextMapContainer> {
     return ContextMapContainer.flatMap((_) => _.get)
   }

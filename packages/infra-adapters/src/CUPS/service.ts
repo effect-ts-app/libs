@@ -8,4 +8,4 @@ export type PrinterId = NonEmptyString255
  * @tsplus type CUPS
  * @tsplus companion CUPS.Ops
  */
-export class CUPS extends TagClassId<CUPS, Effect.Success<ReturnType<typeof makeCUPS>>>()("effect-app/CUPS") {}
+export class CUPS extends TagClassId("effect-app/CUPS")<CUPS, Effect.Success<ReturnType<typeof makeCUPS>>>() {}

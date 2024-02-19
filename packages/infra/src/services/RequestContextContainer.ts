@@ -5,11 +5,11 @@ import { RequestContext } from "../RequestContext.js"
  * @tsplus type RequestContextContainer
  * @tsplus companion RequestContextContainer.Ops
  */
-export class RequestContextContainer extends TagClassId<RequestContextContainer, {
+export class RequestContextContainer extends TagClassId("effect-app/RequestContextContainer")<RequestContextContainer, {
   requestContext: Effect<RequestContext>
   update: (f: (rc: RequestContext) => RequestContext) => Effect<RequestContext>
   start: (f: RequestContext) => Effect<void>
-}>()("effect-app/RequestContextContainer") {
+}>() {
   static get get(): Effect<RequestContext, never, RequestContextContainer> {
     return RequestContextContainer.flatMap((_) => _.requestContext)
   }

@@ -99,13 +99,13 @@ export interface Store<PM extends PersistenceModelType<Id>, Id> {
  * @tsplus type StoreMaker
  * @tsplus companion StoreMaker.Ops
  */
-export class StoreMaker extends TagClassId<StoreMaker, {
+export class StoreMaker extends TagClassId("effect-app/StoreMaker")<StoreMaker, {
   make: <PM extends PersistenceModelType<Id>, Id extends string, R = never, E = never>(
     name: string,
     seed?: Effect<Iterable<PM>, E, R>,
     config?: StoreConfig<PM>
   ) => Effect<Store<PM, Id>, E, R>
-}>()("effect-app/StoreMaker") {
+}>() {
 }
 
 export const makeContextMap = () => {
@@ -179,7 +179,7 @@ const makeMap = Effect.sync(() => makeContextMap())
  * @tsplus type ContextMap
  * @tsplus companion ContextMap.Ops
  */
-export class ContextMap extends TagClassMakeId<ContextMap>()("effect-app/ContextMap", makeMap) {
+export class ContextMap extends TagClassMakeId("effect-app/ContextMap", makeMap)<ContextMap>() {
 }
 
 export interface PersistenceModelType<Id> {
