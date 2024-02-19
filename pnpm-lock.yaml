@@ -317,6 +317,9 @@ importers:
       '@typescript-eslint/utils':
         specifier: 7.0.1
         version: 7.0.1(@effect-app/typescript@5.4.0-tsplus.20240124)(eslint@8.56.0)
+      effect:
+        specifier: ^2.3.7
+        version: 2.3.7(patch_hash=jvkrpyvp7n3vcht32p4lpnk55e)
       eslint-plugin-codegen:
         specifier: 0.17.0
         version: 0.17.0(patch_hash=3ogk7peuefdu45q3hbzcgdiuna)
