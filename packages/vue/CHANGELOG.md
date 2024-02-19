@@ -1,5 +1,22 @@
 # @effect-app/vue
 
+## 0.140.0
+
+### Minor Changes
+
+- 4abe087: fix namespace invalidation
+
+### Patch Changes
+
+- 73c3e1b: update packages
+- Updated dependencies [4abe087]
+- Updated dependencies [73c3e1b]
+  - @effect-app/vue@0.140.0
+  - @effect-app/fluent-extensions@0.137.1
+  - effect-app@0.171.1
+  - @effect-app/core@0.144.1
+  - @effect-app/schema@0.195.1
+
 ## 0.139.2
 
 ### Patch Changes

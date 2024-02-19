@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.53.0
+
+### Minor Changes
+
+- d478694: handle double namespace as one
+
 ## 0.52.0
 
 ### Minor Changes

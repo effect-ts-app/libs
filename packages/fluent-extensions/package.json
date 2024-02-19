@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/fluent-extensions",
-  "version": "0.137.0",
+  "version": "0.137.1",
   "license": "MIT",
   "type": "module",
   "dependencies": {
