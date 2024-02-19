@@ -18,7 +18,6 @@ import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig,
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import { flatMapOption } from "@effect-app/core/Effect"
-import { id } from "@effect-app/core/Optic"
 import type { Opt } from "@effect-app/core/Option"
 import { makeFilters } from "@effect-app/infra/filter"
 import { S } from "effect-app"
@@ -634,18 +633,18 @@ export function makeRepo<
                 .pick("id"))
         )
         const encodeId = flow(i.encode, Effect.provide(rctx))
-        function findEId(_id: From["id"]) {
+        function findEId(id: From["id"]) {
           return store
-            .find(id as unknown as string)
-            .flatMap((items) =>
+            .find(id)
+            .flatMap((item) =>
               Do(($) => {
                 const { set } = $(cms)
-                return items.map((_) => mapReverse(_, set))
+                return item.map((_) => mapReverse(_, set))
               })
             )
         }
-        function findE(_id: T["id"]) {
-          return encodeId({ id: _id })
+        function findE(id: T["id"]) {
+          return encodeId({ id })
             .orDie
             .map((_) => _.id)
             .flatMap(findEId)
