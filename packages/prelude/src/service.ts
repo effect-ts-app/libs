@@ -167,15 +167,17 @@ export function TagClassId<Id, ServiceImpl>() {
       new(service: ServiceImpl): Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>
       toLayer: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, R>
       toLayerScoped: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, Exclude<R, Scope>>
+      make: (service: ServiceImpl) => Id
     } = class {
       constructor(service: ServiceImpl) {
         Object.assign(this, service)
       }
+      static make = (service: ServiceImpl) => new this(service)
       static toLayer = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
-        return eff.map((_) => new this(_)).toLayer(this as any)
+        return Layer.effect(this as any, eff.map((_) => new this(_)))
       }
       static toLayerScoped = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
-        return eff.map((_) => new this(_)).toLayerScoped(this as any)
+        return Layer.scoped(this as any, eff.map((_) => new this(_)))
       }
     } as any
 
