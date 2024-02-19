@@ -1,5 +1,15 @@
 # @effect-app/vue
 
+## 0.139.1
+
+### Patch Changes
+
+- a9fed16: update
+- Updated dependencies [76ea9ae]
+- Updated dependencies [a9fed16]
+  - effect-app@0.170.0
+  - @effect-app/vue@0.139.1
+
 ## 0.139.0
 
 ### Minor Changes
