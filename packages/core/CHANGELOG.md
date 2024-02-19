@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.143.0
+
+### Minor Changes
+
+- c4ac357: use dedupe with
+
 ## 0.142.0
 
 ### Minor Changes
