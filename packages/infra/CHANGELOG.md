@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.190.2
+
+### Patch Changes
+
+- 51ef4ca: fix sig
+
 ## 0.190.1
 
 ### Patch Changes
