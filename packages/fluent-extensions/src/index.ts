@@ -4,7 +4,7 @@ import type * as Effect from "effect/Effect"
 import type * as Either from "effect/Either"
 import type * as Option from "effect/Option"
 import type { NonEmptyArray } from "effect/ReadonlyArray"
-import type { Concurrency, NoInfer } from "effect/Types"
+import type { Concurrency, NoInfer, NotFunction } from "effect/Types"
 import "./builtin.js"
 import type { LazyArg } from "effect/Function"
 
@@ -25,7 +25,7 @@ declare module "effect/Effect" {
 
     andThen<A, X, E, R>(
       this: Effect<A, E, R>,
-      f: X
+      f: NotFunction<X>
     ): [X] extends [Effect<infer A1, infer E1, infer R1>] ? Effect<A1, E | E1, R | R1>
       : [X] extends [Promise<infer A1>] ? Effect<A1, Cause.UnknownException, R>
       : Effect<X, E, R>
@@ -37,7 +37,7 @@ declare module "effect/Effect" {
       : Effect<A, E, R>
     tap<A, X, E, R>(
       this: Effect<A, E, R>,
-      f: X
+      f: NotFunction<X>
     ): [X] extends [Effect<infer _A1, infer E1, infer R1>] ? Effect<A, E | E1, R | R1>
       : [X] extends [Promise<infer _A1>] ? Effect<A, Cause.UnknownException | E, R>
       : Effect<A, E, R>
@@ -59,7 +59,7 @@ declare module "effect/Cause" {
 
     andThen<A, X, E, R>(
       this: Effect.Effect<A, E, R>,
-      f: X
+      f: NotFunction<X>
     ): [X] extends [Effect.Effect<infer A1, infer E1, infer R1>] ? Effect.Effect<A1, E | E1, R | R1>
       : [X] extends [Promise<infer A1>] ? Effect.Effect<A1, UnknownException | E, R>
       : Effect.Effect<X, E, R>
@@ -71,7 +71,7 @@ declare module "effect/Cause" {
       : Effect.Effect<A, E, R>
     tap<A, X, E, R>(
       this: Effect.Effect<A, E, R>,
-      f: X
+      f: NotFunction<X>
     ): [X] extends [Effect.Effect<infer _A1, infer E1, infer R1>] ? Effect.Effect<A, E | E1, R | R1>
       : [X] extends [Promise<infer _A1>] ? Effect.Effect<R, UnknownException | E, A>
       : Effect.Effect<A, E, R>
