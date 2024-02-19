@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Effect } from "@effect-app/core"
 import { constant } from "@effect-app/core/Function"
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import type { REST } from "effect-app/schema"
@@ -23,7 +24,7 @@ export class ResponseError {
   constructor(public readonly error: unknown) {}
 }
 
-const getClient = HttpClient.Client.flatMap((defaultClient) =>
+const getClient = Effect.flatMap(HttpClient.Client, (defaultClient) =>
   ApiConfig
     .Tag
     .map(({ apiUrl, headers }) =>
@@ -93,8 +94,7 @@ const getClient = HttpClient.Client.flatMap((defaultClient) =>
               ),
           "RequestError": (err) => Effect.fail({ _tag: "HttpErrorRequest", error: err.error } as HttpRequestError)
         })
-    )
-)
+    ))
 
 export function fetchApi(
   method: Method,
