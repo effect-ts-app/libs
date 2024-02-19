@@ -167,12 +167,12 @@ export function TagClassId<Id, ServiceImpl>() {
       new(service: ServiceImpl): Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>
       toLayer: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, R>
       toLayerScoped: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, Exclude<R, Scope>>
-      make: (service: ServiceImpl) => Id
+      wrap: (service: ServiceImpl) => Id
     } = class {
       constructor(service: ServiceImpl) {
         Object.assign(this, service)
       }
-      static make = (service: ServiceImpl) => new this(service)
+      static wrap = (service: ServiceImpl) => new this(service)
       static toLayer = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
         return Layer.effect(this as any, eff.map((_) => new this(_)))
       }
@@ -196,21 +196,28 @@ export const TagClassMakeId = <Id>() =>
   Error.stackTraceLimit = limit
   const c: {
     new(service: ServiceImpl): Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>
-    toLayer: () => Layer<Id, E, R>
-    toLayerScoped: () => Layer<Id, E, Exclude<R, Scope>>
+    toLayer: { (): Layer<Id, E, R>; <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, R> }
+    toLayerScoped: {
+      (): Layer<Id, E, Exclude<R, Scope>>
+      <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, Exclude<R, Scope>>
+    }
+
+    wrap: (service: ServiceImpl) => Id
     make: Effect<Id, E, R>
   } = class {
     constructor(service: ServiceImpl) {
       Object.assign(this, service)
     }
+
+    static wrap = (service: ServiceImpl) => new this(service)
     static make = make.andThen((_) => new this(_))
     // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
-    static toLayer = () => {
-      return this.make.toLayer(this as any)
+    static toLayer = (arg?: any) => {
+      return arg ? Layer.effect(this as any, arg) : this.make.toLayer(this as any)
     }
 
-    static toLayerScoped = () => {
-      return this.make.toLayerScoped(this as any)
+    static toLayerScoped = (arg?: any) => {
+      return arg ? Layer.scoped(this as any, arg) : this.make.toLayerScoped(this as any)
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any
