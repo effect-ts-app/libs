@@ -11,5 +11,11 @@
     "react-hook-form",
     "@effect/language-service",
     "eslint-plugin-codegen"
+  ],
+  "dep": [
+    "prod",
+    "dev",
+    "optional",
+    "peer"
   ]
 }

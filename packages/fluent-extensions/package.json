@@ -14,7 +14,7 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.45.4",
+    "@effect/platform": "^0.45.5",
     "@fp-ts/optic": "^0.22.0",
     "effect": "^2.3.7"
   },

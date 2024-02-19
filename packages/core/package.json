@@ -16,7 +16,7 @@
   "peerDependencies": {
     "effect": "^2.3.7",
     "@fp-ts/optic": "^0.22.0",
-    "@effect/platform": "^0.45.4"
+    "@effect/platform": "^0.45.5"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8",
