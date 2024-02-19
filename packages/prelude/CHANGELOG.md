@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.171.2
+
+### Patch Changes
+
+- 0fd4175: f
+
 ## 0.171.1
 
 ### Patch Changes
