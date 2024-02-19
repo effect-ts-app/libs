@@ -28,7 +28,7 @@ import * as Q from "./Store/filterApi/query.js"
 
 export interface Mapped1<PM extends { id: string }, X, R> {
   all: Effect<X[], ParseResult.ParseError, R>
-  save: (...xes: readonly X[]) => Effect<void, OptimisticConcurrencyException | ParseResult.ParseError, void>
+  save: (...xes: readonly X[]) => Effect<void, OptimisticConcurrencyException | ParseResult.ParseError, R>
   query: (
     b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>
   ) => Effect<X[], ParseResult.ParseError, R>
@@ -723,21 +723,24 @@ export function makeRepo<
                 ),
             all: store.all.tap((items) => cms.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))
           },
-          mapped: (schema: any) => {
+          mapped: <A, R>(schema: S.Schema<A, any, R>) => {
             // const enc = S.encode(schema)
             const dec = S.decode(schema)
             const encMany = S.encode(S.array(schema))
             const decMany = S.decode(S.array(schema))
             return {
-              all: r.utils.all.flatMap(decMany).map((_) => _ as unknown[]),
+              all: cms
+                .flatMap((cm) => r.utils.all.map((_) => _.map((_) => mapReverse(_, cm.set))))
+                .flatMap(decMany)
+                .map((_) => _ as any[]),
               find: (id: PM["id"]) => flatMapOption(findE(id), dec),
               query: (b: any) =>
                 r
                   .utils
                   .filter({ filter: b })
                   .flatMap(decMany)
-                  .map((_) => _ as unknown[]),
-              save: (...xes: any[]) => encMany(xes).andThen((_) => saveAllE(_ as any))
+                  .map((_) => _ as any[]),
+              save: (...xes: any[]) => encMany(xes).flatMap((_) => saveAllE(_ as any))
             }
           },
           changeFeed,
