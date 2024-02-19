@@ -1,5 +1,16 @@
 # @effect-app/infra-adapters
 
+## 0.131.0
+
+### Minor Changes
+
+- 49fb62c: align Tag arg order.
+
+### Patch Changes
+
+- Updated dependencies [49fb62c]
+  - effect-app@0.171.0
+
 ## 0.130.1
 
 ### Patch Changes

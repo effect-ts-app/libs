@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.171.0
+
+### Minor Changes
+
+- 49fb62c: align Tag arg order.
+
 ## 0.170.0
 
 ### Minor Changes
