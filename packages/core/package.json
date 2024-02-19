@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/core",
-  "version": "0.143.0",
+  "version": "0.143.1",
   "license": "MIT",
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/core",

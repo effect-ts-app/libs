@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.136.1
+
+### Patch Changes
+
+- fix tap/andThen signature
+
 ## 0.136.0
 
 ### Minor Changes
