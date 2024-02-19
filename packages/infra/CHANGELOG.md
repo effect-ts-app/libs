@@ -1,5 +1,20 @@
 # @effect-app/infra
 
+## 0.192.0
+
+### Minor Changes
+
+- 7079fc8: connection reset by peer
+
+### Patch Changes
+
+- Updated dependencies [7079fc8]
+  - @effect-app/fluent-extensions@0.137.0
+  - @effect-app/infra-adapters@0.130.0
+  - effect-app@0.169.0
+  - @effect-app/schema@0.195.0
+  - @effect-app/core@0.144.0
+
 ## 0.191.2
 
 ### Patch Changes

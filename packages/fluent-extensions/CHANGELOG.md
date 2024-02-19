@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.137.0
+
+### Minor Changes
+
+- 7079fc8: connection reset by peer
+
 ## 0.136.1
 
 ### Patch Changes

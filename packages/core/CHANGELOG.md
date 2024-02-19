@@ -1,5 +1,16 @@
 # @effect-app/core
 
+## 0.144.0
+
+### Minor Changes
+
+- 7079fc8: connection reset by peer
+
+### Patch Changes
+
+- Updated dependencies [7079fc8]
+  - @effect-app/fluent-extensions@0.137.0
+
 ## 0.143.1
 
 ### Patch Changes

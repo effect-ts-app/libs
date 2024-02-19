@@ -1,5 +1,20 @@
 # @effect-app/vue
 
+## 0.139.0
+
+### Minor Changes
+
+- 7079fc8: connection reset by peer
+
+### Patch Changes
+
+- Updated dependencies [7079fc8]
+  - @effect-app/fluent-extensions@0.137.0
+  - effect-app@0.169.0
+  - @effect-app/schema@0.195.0
+  - @effect-app/core@0.144.0
+  - @effect-app/vue@0.139.0
+
 ## 0.138.3
 
 ### Patch Changes

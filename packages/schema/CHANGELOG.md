@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.195.0
+
+### Minor Changes
+
+- 7079fc8: connection reset by peer
+
+### Patch Changes
+
+- Updated dependencies [7079fc8]
+  - @effect-app/core@0.144.0
+
 ## 0.194.2
 
 ### Patch Changes
