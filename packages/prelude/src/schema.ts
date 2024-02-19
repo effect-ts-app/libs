@@ -1,5 +1,6 @@
 import { isValidEmail, isValidPhone } from "@effect-app/core/validation"
 import { type A, type Email as EmailT, fromBrand, nominal, type PhoneNumber as PhoneNumberT } from "@effect-app/schema"
+import * as S from "@effect-app/schema"
 import { fakerArb } from "./faker.js"
 
 export const Email = S
