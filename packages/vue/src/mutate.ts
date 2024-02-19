@@ -12,7 +12,6 @@ import { computed, ref, shallowRef } from "vue"
 import { makeQueryKey, run } from "./internal.js"
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
-
 export function make<R, E, A>(self: Effect<FetchResponse<A>, E, R>) {
   const result = shallowRef(new Initial() as QueryResult<E, A>)
 
