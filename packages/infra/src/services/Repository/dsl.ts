@@ -1,14 +1,14 @@
 import type { FixEnv, PureLogT } from "effect-app/Pure"
 
 export interface PureDSL<S, S2, W> {
-  get: ReturnType<typeof Pure.get<S>>
-  set: typeof Pure.set<S2>
+  get: Pure<never, S, S, never, never, S>
+  set: Pure<never, S2, S2, never, never, void>
   log: (...w: W[]) => PureLogT<W>
 }
 
 export const AnyPureDSL: PureDSL<any, any, any> = {
   get: Pure.get(),
-  set: Pure.set,
+  set: Pure.set as any,
   log: (...evt: any[]) => Pure.logMany(evt)
 }
 
