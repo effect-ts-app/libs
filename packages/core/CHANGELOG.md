@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.144.3
+
+### Patch Changes
+
+- b5543d4: fix ld
+
 ## 0.144.2
 
 ### Patch Changes
