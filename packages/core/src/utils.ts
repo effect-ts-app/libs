@@ -6,11 +6,11 @@ import type * as Either from "effect/Either"
 import { dual, isFunction } from "effect/Function"
 import type { Types } from "effect/Match"
 import type { NoInfer } from "effect/Types"
-import get from "lodash/get.js"
-import omit_ from "lodash/omit.js"
-import pick from "lodash/pick.js"
+import * as ld from "lodash"
 import type { Dictionary } from "./Dictionary.js"
-import * as D from "./Dictionary.js"
+import * as D from "./Dictionary.js"  
+
+const { get, omit: omit_, pick } = ld
 
 // codegen:start {preset: barrel, include: ./utils/*.ts }
 export * from "./utils/effectify.js"
