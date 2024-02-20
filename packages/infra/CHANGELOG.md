@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.193.5
+
+### Patch Changes
+
+- ea6839f: fix puredsl types
+
 ## 0.193.4
 
 ### Patch Changes
