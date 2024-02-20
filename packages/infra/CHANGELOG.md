@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.193.7
+
+### Patch Changes
+
+- 9e6e8c0: dual method
+
 ## 0.193.6
 
 ### Patch Changes
