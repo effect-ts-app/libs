@@ -31,6 +31,7 @@
     "@types/babel__traverse": "7.20.5",
     "@types/glob": "8.1.0",
     "@types/lodash": "4.14.202",
+    "effect": "^2.3.7",
     "madge": "6.1.0",
     "ts-node": "10.9.2",
     "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124"

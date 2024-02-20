@@ -34,31 +34,15 @@ export class Operation extends ExtendedClass<Operation, Operation.From>()({
 //
 /* eslint-disable */
 export namespace OperationProgress {
-  /**
-   * @tsplus type OperationProgress.From
-   * @tsplus companion OperationProgress.From/Ops
-   */
   export class From extends S.FromClass<typeof OperationProgress>() {}
 }
 export namespace Success {
-  /**
-   * @tsplus type Success.From
-   * @tsplus companion Success.From/Ops
-   */
   export class From extends S.FromClass<typeof Success>() {}
 }
 export namespace Failure {
-  /**
-   * @tsplus type Failure.From
-   * @tsplus companion Failure.From/Ops
-   */
   export class From extends S.FromClass<typeof Failure>() {}
 }
 export namespace Operation {
-  /**
-   * @tsplus type Operation.From
-   * @tsplus companion Operation.From/Ops
-   */
   export class From extends S.FromClass<typeof Operation>() {}
 }
 /* eslint-enable */

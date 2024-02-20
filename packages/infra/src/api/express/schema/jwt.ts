@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import * as S from "effect-app/schema"
 import type { ParseIssue } from "@effect/schema/ParseResult"
+import * as S from "effect-app/schema"
 import { jwtDecode, type JwtDecodeOptions } from "jwt-decode"
 
 export const parseJwt = <R, I, A>(

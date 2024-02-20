@@ -8,7 +8,7 @@ import type { Types } from "effect/Match"
 import type { NoInfer } from "effect/Types"
 import * as ld from "lodash"
 import type { Dictionary } from "./Dictionary.js"
-import * as D from "./Dictionary.js"  
+import * as D from "./Dictionary.js"
 
 const { get, omit: omit_, pick } = ld.default ?? ld
 
