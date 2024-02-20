@@ -1,6 +1,9 @@
 {
     "plugins": [
         [
+            "@babel/plugin-syntax-import-attributes"
+        ],
+        [
             "replace-import-extension",
             {
                 "extMapping": {

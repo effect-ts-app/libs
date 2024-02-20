@@ -34,6 +34,26 @@
         "types": "./dist/index.d.ts",
         "default": "./_cjs/index.cjs"
       }
+    },
+    "./link": {
+      "import": {
+        "types": "./dist/link.d.ts",
+        "default": "./dist/link.js"
+      },
+      "require": {
+        "types": "./dist/link.d.ts",
+        "default": "./_cjs/link.cjs"
+      }
+    },
+    "./unlink": {
+      "import": {
+        "types": "./dist/unlink.d.ts",
+        "default": "./dist/unlink.js"
+      },
+      "require": {
+        "types": "./dist/unlink.d.ts",
+        "default": "./_cjs/unlink.cjs"
+      }
     }
   },
   "scripts": {

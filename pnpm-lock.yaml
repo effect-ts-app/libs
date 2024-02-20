@@ -56,6 +56,9 @@ importers:
       '@babel/plugin-proposal-export-namespace-from':
         specifier: ^7.18.9
         version: 7.18.9(@babel/core@7.23.9)
+      '@babel/plugin-syntax-import-attributes':
+        specifier: ^7.23.3
+        version: 7.23.3(@babel/core@7.23.9)
       '@babel/plugin-transform-modules-commonjs':
         specifier: ^7.23.3
         version: 7.23.3(@babel/core@7.23.9)
@@ -1259,7 +1262,17 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.23.9
-      '@babel/helper-plugin-utils': 7.20.2
+      '@babel/helper-plugin-utils': 7.22.5
+    dev: true
+
+  /@babel/plugin-syntax-import-attributes@7.23.3(@babel/core@7.23.9):
+    resolution: {integrity: sha512-pawnE0P9g10xgoP7yKr6CK63K2FMsTE+FZidZO/1PwRdzmAPVs+HS1mAURUsgaoxammTJvULUdIkEK0gOcU2tA==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.9
+      '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
   /@babel/plugin-transform-modules-commonjs@7.23.3(@babel/core@7.23.9):

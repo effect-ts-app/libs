@@ -13,7 +13,9 @@ const supportedCommands = [
   "index-multi",
   "packagejson",
   "packagejson-target",
-  "packagejson-packages"
+  "packagejson-packages",
+  "link",
+  "unlink"
 ] as const
 if (
   !supportedCommands.includes(_cmd as any)
@@ -138,6 +140,12 @@ function monitorPackagejson(path: string, levels = 0) {
 
 let cmds = process.argv.slice(3)
 switch (cmd) {
+  case "link":
+    await import("./link.js")
+    break
+  case "unlink":
+    await import("./unlink.js")
+    break
   case "watch": {
     const dirs = ["../api/src/resources", "../api/src/models"]
     const viteConfigFile = "./vite.config.ts"
