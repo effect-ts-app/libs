@@ -139,13 +139,20 @@ function monitorPackagejson(path: string, levels = 0) {
 let cmds = process.argv.slice(3)
 switch (cmd) {
   case "watch": {
-    const dirs = ["../resources/dist", "../types/dist", "../ui/dist"]
-
+    const dirs = ["../api/src/resources", "../api/src/models"]
+    const viteConfigFile = "./vite.config.json"
+    const viteConfigExists = fs.existsSync(viteConfigFile)
     dirs.forEach((d) => {
       if (fs.existsSync(d)) {
-        w.default(d, { recursive: true }, () => {
+        const files: string[] = []
+        w.default(d, { recursive: true }, (t, f) => {
           // console.log("change!", d)
           touch("./tsconfig.json")
+          if (viteConfigExists && t === "update" && !files.includes(f)) {
+            // TODO: only on new files
+            touch(viteConfigFile)
+            files.push(f)
+          }
         })
       }
     })
@@ -155,14 +162,7 @@ switch (cmd) {
 
   case "index-multi": {
     ;[
-      "./_project/api/src",
-      "./_project/printworker/src",
-      "./_project/api-api/src",
-      "./_project/core/src",
-      "./_project/resources/src",
-      "./_project/models/src",
-      "./_project/ui/src",
-      "./_project/core/src"
+      "./api/src"
     ]
       .filter(
         (_) => fs.existsSync(_)
