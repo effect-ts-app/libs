@@ -140,7 +140,7 @@ let cmds = process.argv.slice(3)
 switch (cmd) {
   case "watch": {
     const dirs = ["../api/src/resources", "../api/src/models"]
-    const viteConfigFile = "./vite.config.json"
+    const viteConfigFile = "./vite.config.ts"
     const viteConfigExists = fs.existsSync(viteConfigFile)
     dirs.forEach((d) => {
       if (fs.existsSync(d)) {
