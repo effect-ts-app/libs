@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.53.0
+
+### Minor Changes
+
+- 25123dc: improve cli frontend
+
 ## 0.52.0
 
 ### Minor Changes
