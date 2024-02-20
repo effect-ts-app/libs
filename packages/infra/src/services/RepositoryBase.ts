@@ -20,8 +20,8 @@ import type {} from "effect/Hash"
 import { flatMapOption } from "@effect-app/core/Effect"
 import type { Opt } from "@effect-app/core/Option"
 import { makeFilters } from "@effect-app/infra/filter"
-import { S } from "effect-app"
-import type { FixEnv } from "effect-app/Pure"
+import { Effect, S } from "effect-app"
+import { type FixEnv, runTerm } from "effect-app/Pure"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 import * as Q from "./Store/filterApi/query.js"
@@ -408,8 +408,30 @@ export class RepositoryBaseC3<
     (items: Iterable<S1>) => saveManyWithPure_(this, items, pure)
   }
 
-  byIdAndSaveWithPure(id: T["id"]) {
-    return <R, A, E, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, T, S2>>) =>
+  byIdAndSaveWithPure(
+    id: T["id"]
+  ): <R, A, E, S2 extends T>(
+    pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
+  ) => Effect<
+    A,
+    InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E,
+    Exclude<R, {
+      env: PureEnv<Evt, T, S2>
+    }>
+  >
+  byIdAndSaveWithPure<R, A, E, S2 extends T>(
+    id: T["id"],
+    pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
+  ): Effect<
+    A,
+    InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E,
+    Exclude<R, {
+      env: PureEnv<Evt, T, S2>
+    }>
+  >
+  byIdAndSaveWithPure<R, A, E, S2 extends T>(id: T["id"], pure?: Effect<A, E, FixEnv<R, Evt, T, S2>>) {
+    if (pure) return get(this, id).flatMap((item) => saveWithPure_(this, item, pure))
+    return (pure: Effect<A, E, FixEnv<R, Evt, T, S2>>) =>
       get(this, id).flatMap((item) => saveWithPure_(this, item, pure))
   }
 
@@ -435,7 +457,7 @@ export class RepositoryBaseC3<
   ) {
     return saveAllWithEffectInt(
       this,
-      pure.runTerm([...items])
+      runTerm(pure, [...items])
     )
   }
 
@@ -451,8 +473,7 @@ export class RepositoryBaseC3<
   ) {
     return saveAllWithEffectInt(
       this,
-      pure
-        .runTerm(item)
+      runTerm(pure, item)
         .map(([item, events, a]) => [[item], events, a])
     )
   }
@@ -516,7 +537,7 @@ export class RepositoryBaseC3<
       .forEachEffect((batch) =>
         saveAllWithEffectInt(
           this,
-          pure.runTerm(batch)
+          runTerm(pure, batch)
         )
       )
   }
