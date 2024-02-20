@@ -25,7 +25,18 @@
     "downlevelIteration": true,
     "noErrorTruncation": true,
     "ignoreDeprecations": "5.0",
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "plugins": [
+      // Transform paths in output .js files
+      {
+        "transform": "typescript-transform-paths"
+      },
+      // Transform paths in output .d.ts files (Include this line if you output declarations files)
+      {
+        "transform": "typescript-transform-paths",
+        "position": "afterDeclaration"
+      }
+    ]
   },
   "watchOptions": {
     // Use native file system events for files and directories
