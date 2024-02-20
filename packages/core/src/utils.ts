@@ -10,7 +10,7 @@ import * as ld from "lodash"
 import type { Dictionary } from "./Dictionary.js"
 import * as D from "./Dictionary.js"  
 
-const { get, omit: omit_, pick } = ld
+const { get, omit: omit_, pick } = ld.default ?? ld
 
 // codegen:start {preset: barrel, include: ./utils/*.ts }
 export * from "./utils/effectify.js"
