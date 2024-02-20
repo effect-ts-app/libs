@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.144.2
+
+### Patch Changes
+
+- 39beb09: ldbs
+
 ## 0.144.1
 
 ### Patch Changes
