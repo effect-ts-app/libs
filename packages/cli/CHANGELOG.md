@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.53.1
+
+### Patch Changes
+
+- c550140: fix
+
 ## 0.53.0
 
 ### Minor Changes
