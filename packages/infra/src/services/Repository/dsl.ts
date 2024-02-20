@@ -2,7 +2,7 @@ import type { FixEnv, PureLogT } from "effect-app/Pure"
 
 export interface PureDSL<S, S2, W> {
   get: Pure<never, S, S, never, never, S>
-  set: Pure<never, S2, S2, never, never, void>
+  set: (s: S2) => Pure<never, S2, S2, never, never, void>
   log: (...w: W[]) => PureLogT<W>
 }
 
