@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.53.2
+
+### Patch Changes
+
+- 1168eb4: add link/unlink
+
 ## 0.53.1
 
 ### Patch Changes
