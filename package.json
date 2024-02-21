@@ -46,11 +46,14 @@
     "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
   },
   "resolutions": {
-    "date-fns": "^2.30.0"
+    "date-fns": "$date-fns",
+    "vue": "$vue"
   },
   "dependencies": {
+    "date-fns": "^2.30.0",
     "cross-env": "^7.0.3",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "vue": "^3.4.19"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",
