@@ -29,7 +29,7 @@
     "test": "pnpm -r test:run",
     "testsuite": "pnpm -r testsuite",
     "up-all": "pnpm --recursive update",
-    "up-ncu": "pnpm run update && pnpm i",
+    "u": "pnpm run update && pnpm i && pnpm dedupe",
     "update": "ncu -u && pnpm -r ncu -u",
     "ncu": "ncu",
     "lint:watch": "ESLINT_TS=1 esw -w --changed --clear --ext ts,tsx",
@@ -42,7 +42,7 @@
     "build:tsc": "effect-app-cli packagejson-packages tsc --build ./tsconfig.all.json",
     "watch": "pnpm build:tsc --watch",
     "build": "cd packages/cli && pnpm build && cd ../../ && pnpm build:tsc && cd packages/core && pnpm build",
-    "rebuild": "pnpm -r clean && pnpm -r build",
+    "rbuild": "pnpm clean && pnpm build",
     "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
   },
   "resolutions": {

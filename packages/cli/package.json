@@ -4,6 +4,8 @@
   "license": "MIT",
   "type": "module",
   "bin": {
+    "effect-app": "./bin.js",
+    "effa": "./bin.js",
     "effect-app-cli": "./bin.js"
   },
   "dependencies": {
