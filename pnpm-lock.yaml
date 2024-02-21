@@ -70,7 +70,7 @@ importers:
         version: 0.89.1
       '@effect-app/cli':
         specifier: ^0.53.2
-        version: link:packages/cli
+        version: 0.53.2
       '@effect-app/compiler':
         specifier: workspace:*
         version: link:packages/compiler
@@ -1660,6 +1660,13 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@effect-app/cli@0.53.2:
+    resolution: {integrity: sha512-7EwtWxeCX9ohoMAcPyrbLIjrjUzt45XEMZxhI+r4Sk9sVF7xIphNM6kc7ADGLb3jeiipyqhWOzmj8+jZDCd6HQ==}
+    hasBin: true
+    dependencies:
+      node-watch: 0.7.4
+    dev: true
 
   /@effect-app/typescript@5.4.0-tsplus.20240124:
     resolution: {integrity: sha512-fxM5CqvD/+NiKvKE7S5HfnSjE3qK80MUcLZo9qx+kBmnFTU1T0YafEiPPKpIUiKqdBBSyO4b2QkaYI7FiK4Rsw==}
@@ -7159,7 +7166,6 @@ packages:
   /node-watch@0.7.4:
     resolution: {integrity: sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==}
     engines: {node: '>=6'}
-    dev: false
 
   /nodemon@3.0.3:
     resolution: {integrity: sha512-7jH/NXbFPxVaMwmBCC2B9F/V6X1VkEdNgx3iu9jji8WxWcvhMWkmhNWhI5077zknOnZnBzba9hZP6bCPJLSReQ==}
