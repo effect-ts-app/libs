@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.53.1
+
+### Patch Changes
+
+- d8496db: peer
+
 ## 0.53.0
 
 ### Minor Changes
