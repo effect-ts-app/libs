@@ -20,7 +20,7 @@ const supportedCommands = [
 if (
   !supportedCommands.includes(_cmd as any)
 ) {
-  console.log("unknown command: ", _cmd)
+  console.log("unknown command: ", _cmd, "supported commands: ", supportedCommands.join(", "))
   process.exit(1)
 }
 
