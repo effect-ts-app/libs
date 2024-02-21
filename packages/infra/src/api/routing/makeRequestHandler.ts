@@ -39,7 +39,7 @@ export type Middleware<
   handler: RequestHandler<R, M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, ResE, PPath, CTX, Context, Config>
 ) => {
   handler: RequestHandler<
-    Exclude<R2, HttpServerRequest> | PR | RequestContextContainer | ContextMapContainer,
+    R2 | PR | RequestContextContainer | ContextMapContainer,
     M,
     PathA,
     CookieA,

@@ -4,7 +4,8 @@ import { type RouteDescriptorAny } from "@effect-app/infra/api/express/schema/ro
 import type { ValidationError } from "@effect-app/infra/errors"
 import type { StructFields } from "effect-app/schema"
 import type {} from "effect-app/utils"
-import { HttpRouter, type HttpServerRequest, type HttpServerResponse } from "../http.js"
+import { HttpRouter } from "../http.js"
+import type { HttpRouteContext, HttpServerRequest, HttpServerResponse } from "../http.js"
 import type { RequestHandler } from "./base.js"
 import { makeRequestHandler } from "./makeRequestHandler.js"
 import type { Middleware } from "./makeRequestHandler.js"
@@ -51,7 +52,7 @@ export function match<
     req: HttpServerRequest,
     res: HttpServerResponse,
     r2: Effect<HttpServerResponse, ValidationError | MiddlewareE | ResE, R>
-  ) => Effect<HttpServerResponse, never, RErr | R>,
+  ) => Effect<HttpServerResponse, never, Exclude<RErr | R, HttpServerRequest | HttpRouteContext | Scope>>,
   middleware?: Middleware<
     R,
     M,
