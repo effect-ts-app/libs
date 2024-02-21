@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.55.1
+
+### Patch Changes
+
+- b7daa54: improve supported commands prompt
+
 ## 0.55.0
 
 ### Minor Changes
