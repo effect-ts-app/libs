@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.195.0
+
+### Minor Changes
+
+- 7f6de42: fix http context elimination
+
 ## 0.194.0
 
 ### Minor Changes
