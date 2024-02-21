@@ -4,9 +4,7 @@
   "pnpm": {
     "patchedDependencies": {
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
-      "@effect/language-service@0.0.19": "patches/@effect__language-service@0.0.19.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
-      "date-fns@2.30.0": "patches/date-fns@2.30.0.patch",
       "@typescript-eslint/scope-manager@7.0.2": "patches/@typescript-eslint__scope-manager@7.0.2.patch",
       "fast-check@3.15.1": "patches/fast-check@3.15.1.patch",
       "@fp-ts/optic@0.22.0": "patches/@fp-ts__optic@0.22.0.patch",
@@ -50,7 +48,7 @@
     "vue": "$vue"
   },
   "dependencies": {
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.3.1",
     "cross-env": "^7.0.3",
     "ts-node": "^10.9.2",
     "vue": "^3.4.19"
@@ -63,7 +61,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.89.1",
-    "@effect-app/cli": "^0.53.2",
+    "@effect-app/cli": "^0.54.0",
     "@effect-app/compiler": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
@@ -72,7 +70,7 @@
     "@effect-app/pnpm-singleton": "workspace:*",
     "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/language-service": "0.0.19",
+    "@effect/language-service": "0.1.0",
     "@phaphoso/eslint-plugin-dprint": "^0.5.2",
     "@tsconfig/strictest": "^2.0.3",
     "@types/lodash": "^4.14.202",

@@ -45,17 +45,6 @@
                 }
             }
         ],
-        "transformers": [
-            {
-                "name": "@effect/language-service/transformer",
-                "trace": {
-                    "exclude": [
-                        "**/*.ts"
-                    ]
-                }
-                //"debug": {}
-            },
-        ],
         "types": [
             "vitest/globals"
         ],

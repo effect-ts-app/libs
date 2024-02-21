@@ -5,13 +5,10 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  date-fns: ^2.30.0
+  date-fns: ^3.3.1
   vue: ^3.4.19
 
 patchedDependencies:
-  '@effect/language-service@0.0.19':
-    hash: izp2ue34jjv4swyrhg2ux4ha3e
-    path: patches/@effect__language-service@0.0.19.patch
   '@effect/schema@0.62.9':
     hash: 7rlb3zq7nv33outk5reiwq3sqe
     path: patches/@effect__schema@0.62.9.patch
@@ -24,9 +21,6 @@ patchedDependencies:
   '@typescript-eslint/scope-manager@7.0.2':
     hash: nrjotwpevdhz7eyb6bwy6orwfq
     path: patches/@typescript-eslint__scope-manager@7.0.2.patch
-  date-fns@2.30.0:
-    hash: g5hqt5bhnjezqo5vnkpprfkba4
-    path: patches/date-fns@2.30.0.patch
   effect@2.3.8:
     hash: 6hgrqgy6n4sjzqknifhsqicwxa
     path: patches/effect@2.3.8.patch
@@ -45,8 +39,8 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       date-fns:
-        specifier: ^2.30.0
-        version: 2.30.0(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
+        specifier: ^3.3.1
+        version: 3.3.1
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@effect-app/typescript@5.4.0-tsplus.20240124)(@types/node@20.11.19)
@@ -76,8 +70,8 @@ importers:
         specifier: ^0.89.1
         version: 0.89.1
       '@effect-app/cli':
-        specifier: ^0.53.2
-        version: 0.53.2
+        specifier: ^0.54.0
+        version: link:packages/cli
       '@effect-app/compiler':
         specifier: workspace:*
         version: link:packages/compiler
@@ -100,8 +94,8 @@ importers:
         specifier: workspace:*
         version: link:packages/schema
       '@effect/language-service':
-        specifier: 0.0.19
-        version: 0.0.19(patch_hash=izp2ue34jjv4swyrhg2ux4ha3e)
+        specifier: 0.1.0
+        version: 0.1.0
       '@phaphoso/eslint-plugin-dprint':
         specifier: ^0.5.2
         version: 0.5.2(patch_hash=5r3oafqkulzxdb6awceadivssy)(eslint@8.56.0)
@@ -383,8 +377,8 @@ importers:
         specifier: ^0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.3.8)
       date-fns:
-        specifier: ^2.30.0
-        version: 2.30.0(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
+        specifier: ^3.3.1
+        version: 3.3.1
       effect:
         specifier: ^2.3.8
         version: 2.3.8(patch_hash=6hgrqgy6n4sjzqknifhsqicwxa)
@@ -674,8 +668,8 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3
       date-fns:
-        specifier: ^2.30.0
-        version: 2.30.0(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
+        specifier: ^3.3.1
+        version: 3.3.1
       effect:
         specifier: ^2.3.8
         version: 2.3.8(patch_hash=6hgrqgy6n4sjzqknifhsqicwxa)
@@ -1226,6 +1220,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.1
+    dev: true
 
   /@babel/template@7.23.9:
     resolution: {integrity: sha512-+xrD2BWLpvHKNmX2QbpdpsBaWnRxahMwJjO+KZk2JOElj5nSmKezyS1B4u+QbHMTX69t4ukm6hh9lsYQ7GHCKA==}
@@ -1527,25 +1522,14 @@ packages:
     dev: true
     optional: true
 
-  /@effect-app/cli@0.53.2:
-    resolution: {integrity: sha512-7EwtWxeCX9ohoMAcPyrbLIjrjUzt45XEMZxhI+r4Sk9sVF7xIphNM6kc7ADGLb3jeiipyqhWOzmj8+jZDCd6HQ==}
-    hasBin: true
-    dependencies:
-      node-watch: 0.7.4
-    dev: true
-
   /@effect-app/typescript@5.4.0-tsplus.20240124:
     resolution: {integrity: sha512-fxM5CqvD/+NiKvKE7S5HfnSjE3qK80MUcLZo9qx+kBmnFTU1T0YafEiPPKpIUiKqdBBSyO4b2QkaYI7FiK4Rsw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
-  /@effect/language-service@0.0.19(patch_hash=izp2ue34jjv4swyrhg2ux4ha3e):
-    resolution: {integrity: sha512-sKNVo031dkwLfe1jHZzdTiF1UXgLq1lAYd2JG7q416dlmMoxRcMXrZWyw6a/SxIDM0hyIJAEmrz5iUkQPcPdBQ==}
-    dependencies:
-      '@fp-ts/core': 0.0.11
-      '@fp-ts/data': 0.0.40
+  /@effect/language-service@0.1.0:
+    resolution: {integrity: sha512-BnlM8LlaqCAYgdRfxlbR7gXGh/FD1scL1fPgNVJEPoOM08od1jtJz+iKhwfaud8TPnnhZR+TED2h5ynjanLeCQ==}
     dev: true
-    patched: true
 
   /@effect/platform-browser@0.30.6(@effect/platform@0.45.6)(effect@2.3.8):
     resolution: {integrity: sha512-2TSbY+GhIZn6V8FVTwDTSv2X4ZYHspZ/vqoI92d6b6sJ3gNLPRrp/FtT5SkVrWgOHxPds1cik7/IIVsqsjJ+Rg==}
@@ -1870,16 +1854,6 @@ packages:
       tslib: 2.5.0
       typescript: /@effect-app/typescript@5.4.0-tsplus.20240124
     dev: false
-
-  /@fp-ts/core@0.0.11:
-    resolution: {integrity: sha512-BCAJBYzghwoJpcUOARJ1tui50HoYJFlV2pJlVMlsEkDFhD8MTtq8xQVpZCRF66RmtkxtGBYINCQ+5H1lRaL35Q==}
-    dev: true
-
-  /@fp-ts/data@0.0.40:
-    resolution: {integrity: sha512-Wo/2KNO3n6TdUuX+vFEkK1hkQ3EDWp/5Uha8ZLtIvurndQxlDcF4kpU20c0CKJL8g5DpnRHiKN/cni5yyb09eQ==}
-    dependencies:
-      '@fp-ts/core': 0.0.11
-    dev: true
 
   /@fp-ts/optic@0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.3.8):
     resolution: {integrity: sha512-Kpg9bdA+q3d1I+ulENsax4iV6ge5TzRH6nj2/kdPPg42wtTmlir42oBlpbiwp3l3uNDja9rBWmuya0Q6GAmakQ==}
@@ -3816,7 +3790,7 @@ packages:
     hasBin: true
     dependencies:
       chalk: 4.1.2
-      date-fns: 2.30.0(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4)
+      date-fns: 3.3.1
       lodash: 4.17.21
       rxjs: 7.8.1
       shell-quote: 1.8.1
@@ -3952,12 +3926,8 @@ packages:
       stream-transform: 2.1.3
     dev: true
 
-  /date-fns@2.30.0(patch_hash=g5hqt5bhnjezqo5vnkpprfkba4):
-    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
-    engines: {node: '>=0.11'}
-    dependencies:
-      '@babel/runtime': 7.23.9
-    patched: true
+  /date-fns@3.3.1:
+    resolution: {integrity: sha512-y8e109LYGgoQDveiEBD3DYXKba1jWf5BA8YU1FL5Tvm0BTdEfy54WLCwnuYWZNnzzvALy/QQ4Hov+Q9RVRv+Zw==}
 
   /debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -6921,6 +6891,7 @@ packages:
   /node-watch@0.7.4:
     resolution: {integrity: sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==}
     engines: {node: '>=6'}
+    dev: false
 
   /nodemon@3.0.3:
     resolution: {integrity: sha512-7jH/NXbFPxVaMwmBCC2B9F/V6X1VkEdNgx3iu9jji8WxWcvhMWkmhNWhI5077zknOnZnBzba9hZP6bCPJLSReQ==}
@@ -7892,6 +7863,7 @@ packages:
 
   /regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
+    dev: true
 
   /regexp.prototype.flags@1.5.1:
     resolution: {integrity: sha512-sy6TXMN+hnP/wMy+ISxg3krXx7BAtWVO4UouuCN/ziM9UEne0euamVNafDfvC83bRNr95y0V5iijeDQFUNpvrg==}

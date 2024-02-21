@@ -9,7 +9,6 @@
     "redis",
     "@types/redis",
     "react-hook-form",
-    "@effect/language-service",
     "eslint-plugin-codegen"
   ],
   "dep": [
