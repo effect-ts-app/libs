@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.55.0
+
+### Minor Changes
+
+- db67c43: update bins
+
 ## 0.54.0
 
 ### Minor Changes
