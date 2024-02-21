@@ -1,5 +1,19 @@
 # @effect-app/prelude
 
+## 0.172.0
+
+### Minor Changes
+
+- 57fcfef: update packages
+
+### Patch Changes
+
+- 739e742: add missing plugins in tsconfig
+- Updated dependencies [57fcfef]
+  - @effect-app/fluent-extensions@0.138.0
+  - @effect-app/schema@0.196.0
+  - @effect-app/core@0.145.0
+
 ## 0.171.4
 
 ### Patch Changes
