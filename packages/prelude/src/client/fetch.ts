@@ -2,6 +2,7 @@
 import { Effect } from "@effect-app/core"
 import { constant } from "@effect-app/core/Function"
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
+import { ReadonlyRecord } from "effect"
 import type { REST } from "effect-app/schema"
 import { Path } from "path-parser"
 import qs from "query-string"

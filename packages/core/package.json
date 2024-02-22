@@ -299,16 +299,6 @@
         "default": "./_cjs/http/http-client.cjs"
       }
     },
-    "./http/http-client-fetch": {
-      "import": {
-        "types": "./dist/http/http-client-fetch.d.ts",
-        "default": "./dist/http/http-client-fetch.js"
-      },
-      "require": {
-        "types": "./dist/http/http-client-fetch.d.ts",
-        "default": "./_cjs/http/http-client-fetch.cjs"
-      }
-    },
     "./transform": {
       "import": {
         "types": "./dist/transform.d.ts",

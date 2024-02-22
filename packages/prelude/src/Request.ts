@@ -1,6 +1,6 @@
 import type { ClientResponse } from "@effect/platform/Http/ClientResponse"
 import type { Headers } from "@effect/platform/Http/Headers"
-import { type HttpClient, HttpClientError } from "./http.js"
+import { type HttpClient, HttpClientError, HttpHeaders } from "./http.js"
 
 export interface ResponseWithBody<A> extends Pick<ClientResponse, "headers" | "status" | "remoteAddress"> {
   readonly body: A
@@ -29,7 +29,7 @@ export const schemaJsonBody = <R, To, From, A, B>(
   client: HttpClient.Client<A, B, ClientResponse>,
   schema: Schema<To, From, R>
 ) => {
-  return client.mapEffect((_) => _.json.flatMap(schema.decodeUnknown))
+  return client.mapEffect((_) => _.json.flatMap(S.decodeUnknown(schema)))
 }
 
 /**
@@ -39,7 +39,7 @@ export const schemaJsonBodyUnsafe = <To, From, A, B>(
   client: HttpClient.Client<A, B, ClientResponse>,
   schema: Schema<To, From>
 ) => {
-  return client.mapEffect((_) => _.json.map(schema.decodeUnknownSync))
+  return client.mapEffect((_) => _.json.map(S.decodeUnknownSync(schema)))
 }
 
 /**
@@ -59,7 +59,7 @@ export const schemaJson = <
   client: HttpClient.Client<A, B, ClientResponse>,
   schema: Schema<To, From, R>
 ) => {
-  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(schema.decodeUnknown))
+  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(S.decodeUnknown(schema)))
 }
 
 /**
@@ -79,7 +79,7 @@ export const schemaJsonUnsafe = <
   client: HttpClient.Client<A, B, ClientResponse>,
   schema: Schema<To, From, R>
 ) => {
-  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(schema.decodeUnknown))
+  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(S.decodeUnknown(schema)))
 }
 
 /** @tsplus getter effect/platform/Http/Client demandJson */
@@ -88,13 +88,13 @@ export const demandJson = <R, E>(client: HttpClient.Client<R, E, ClientResponse>
     .mapRequest((_) => _.acceptJson)
     .transform((r, request) =>
       r.tap((response) =>
-        response.headers.get("Content-Type").value?.startsWith("application/json")
+        HttpHeaders.get(response.headers, "Content-Type").value?.startsWith("application/json")
           ? Effect.unit
           : Effect.fail(HttpClientError.ResponseError({
             request,
             response,
             reason: "Decode",
-            error: "not json response: " + response.headers.get("Content-Type").value
+            error: "not json response: " + HttpHeaders.get(response.headers, "Content-Type").value
           }))
       )
     )

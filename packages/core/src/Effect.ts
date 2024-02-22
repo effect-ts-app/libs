@@ -3,10 +3,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 import * as Def from "effect/Deferred"
-import * as Either from "effect/Either"
 import * as Fiber from "effect/Fiber"
 import { Option } from "effect/Option"
-import { curry, pipe } from "./Function.js"
+import { curry } from "./Function.js"
 import { typedKeysOf } from "./utils.js"
 
 export * from "effect/Effect"
@@ -73,22 +72,6 @@ export function mapOption<R, E, A, A2>(
       onSome: (_) => Option.some(fm(_))
     })
   )
-}
-
-/**
- * @tsplus static effect/io/Effect.Ops tryCatchPromiseWithInterrupt
- */
-export function tryCatchPromiseWithInterrupt<E, A>(
-  promise: LazyArg<Promise<A>>,
-  onReject: (reason: unknown) => E,
-  canceller: () => void
-): Effect<A, E> {
-  return Effect.asyncEither((resolve) => {
-    promise()
-      .then((x) => pipe(x, Effect.succeed, resolve))
-      .catch((x) => pipe(x, onReject, Effect.fail, resolve))
-    return Either.left(Effect.sync(canceller))
-  })
 }
 
 /**
