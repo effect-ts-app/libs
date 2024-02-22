@@ -1,5 +1,20 @@
 # @effect-app/prelude
 
+## 0.173.0
+
+### Minor Changes
+
+- c070e0d: update effect
+
+### Patch Changes
+
+- dd0cf42: update
+- Updated dependencies [c070e0d]
+- Updated dependencies [dd0cf42]
+  - @effect-app/fluent-extensions@0.139.0
+  - @effect-app/schema@0.197.0
+  - @effect-app/core@0.146.0
+
 ## 0.172.0
 
 ### Minor Changes

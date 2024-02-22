@@ -1,5 +1,18 @@
 # @effect-app/core
 
+## 0.146.0
+
+### Minor Changes
+
+- c070e0d: update effect
+
+### Patch Changes
+
+- dd0cf42: update
+- Updated dependencies [c070e0d]
+- Updated dependencies [dd0cf42]
+  - @effect-app/fluent-extensions@0.139.0
+
 ## 0.145.0
 
 ### Minor Changes

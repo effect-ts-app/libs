@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.56.0
+
+### Minor Changes
+
+- c070e0d: update effect
+
 ## 0.55.1
 
 ### Patch Changes
