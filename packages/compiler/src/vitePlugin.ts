@@ -73,11 +73,11 @@ function tsPlugin(options?: { include?: Array<string>; exclude?: Array<string> }
       getDefaultLibFileName: (options) => ts.getDefaultLibFilePath(options),
       fileExists: (fileName) => ts.sys.fileExists(fileName),
       readFile: (fileName) => ts.sys.readFile(fileName),
-      ...ts.sys.realpath
+      ...(ts.sys.realpath
         ? {
           realpath: (fileName) => ts.sys.realpath!(fileName)
         }
-        : {}
+        : {})
     }
 
     services = ts.createLanguageService(servicesHost, registry)

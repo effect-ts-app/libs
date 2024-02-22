@@ -44,7 +44,7 @@ export namespace Either {
   export * from "effect/Either"
 }
 /** @tsplus type effect/data/Either */
-export type Either<E, A> = EITHER.Either<E, A>
+export type Either<R, L = never> = EITHER.Either<R, L>
 
 export namespace Order {
   // @ts-expect-error abc

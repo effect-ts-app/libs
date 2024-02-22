@@ -34,8 +34,8 @@ export function unifyChunk<X extends Chunk<any>>(
 export function unifyEither<X extends Either.Either<any, any>>(
   self: X
 ): Either.Either<
-  X extends Either.Left<infer EX, any> ? EX : X extends Either.Right<infer EX, any> ? EX : never,
-  X extends Either.Right<any, infer AX> ? AX : X extends Either.Left<any, infer AX> ? AX : never
+  X extends Either.Right<any, infer AX> ? AX : X extends Either.Left<any, infer AX> ? AX : never,
+  X extends Either.Left<infer EX, any> ? EX : X extends Either.Right<infer EX, any> ? EX : never
 > {
   return self
 }

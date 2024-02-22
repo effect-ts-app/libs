@@ -103,7 +103,7 @@ function packagejson(p: string, levels = 0) {
     : items
 
   const exps = {
-    ...fs.existsSync(p + "/src/index.ts")
+    ...(fs.existsSync(p + "/src/index.ts")
       ? {
         ".": {
           "import": {
@@ -116,7 +116,7 @@ function packagejson(p: string, levels = 0) {
           }
         }
       }
-      : undefined,
+      : undefined),
     ...Object
       .keys(t)
       .reduce((prev, cur) => {

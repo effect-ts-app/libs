@@ -29,7 +29,7 @@ export function encaseMaybeInEffect_<E, A>(
 export function encaseMaybeEither_<E, A>(
   o: Option<A>,
   onError: LazyArg<E>
-): Either.Either<E, A> {
+): Either.Either<A, E> {
   return o.match({ onNone: () => Either.left(onError()), onSome: Either.right })
 }
 

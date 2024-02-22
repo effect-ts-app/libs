@@ -17,7 +17,7 @@ export * from "./utils/effectify.js"
 export * from "./utils/extend.js"
 // codegen:end
 
-export const unsafeRight = <E, A>(ei: Either.Either<E, A>) => {
+export const unsafeRight = <E, A>(ei: Either.Either<A, E>) => {
   if (ei.isLeft()) {
     console.error(ei.left)
     throw ei.left
@@ -597,7 +597,7 @@ export const copy = dual<
     <A extends Object>(self: A, f: (a: A) => Partial<A>): A
     <A extends Object>(self: A, f: Partial<A>): A
   }
->(2, <A>(self: A, f: Partial<A> | ((a: A) => Partial<A>)) => clone(self, { ...self, ...isFunction(f) ? f(self) : f }))
+>(2, <A>(self: A, f: Partial<A> | ((a: A) => Partial<A>)) => clone(self, { ...self, ...(isFunction(f) ? f(self) : f) }))
 
 /**
  * @tsplus fluent Object.Ops clone

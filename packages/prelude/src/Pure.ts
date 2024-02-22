@@ -161,7 +161,7 @@ export function logMany<W>(w: Iterable<W>): PureLogT<W> {
 export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
   self: Effect<A, E, FixEnv<R, W3, S1, S3>>,
   s: S4
-): Effect<readonly [Chunk<W3>, Either.Either<E, readonly [S3, A]>], never, Exclude<R, { env: PureEnv<W3, S1, S3> }>> {
+): Effect<readonly [Chunk<W3>, Either.Either<readonly [S3, A], E>], never, Exclude<R, { env: PureEnv<W3, S1, S3> }>> {
   const a = self
     .flatMap((x) =>
       castTag<W3, S1, S3>()
@@ -171,11 +171,11 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
         .map(
           (
             { log, state }
-          ) => tuple(log, Either.right(tuple(state, x)) as Either.Either<E, readonly [S3, A]>)
+          ) => tuple(log, Either.right(tuple(state, x)))
         )
     )
     .catchAll(
-      (err) => tagg.map((env) => tuple(env.env.log, Either.left(err) as Either.Either<E, readonly [S3, A]>))
+      (err) => tagg.map((env) => tuple(env.env.log, Either.left(err)))
     )
   return a
     .provide(tagg.makeLayer({ env: makePureEnv<W3, S3, S4>(s) as any }) as any)

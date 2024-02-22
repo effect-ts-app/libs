@@ -68,13 +68,13 @@ export const useSafeMutation: {
     (
       i: I,
       abortSignal?: AbortSignal
-    ) => Promise<Either.Either<E, A>>
+    ) => Promise<Either.Either<A, E>>
   ]
   <E, A>(self: { handler: Effect<A, E, ApiConfig | HttpClient.Client.Default>; name: string }): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
       abortSignal?: AbortSignal
-    ) => Promise<Either.Either<E, A>>
+    ) => Promise<Either.Either<A, E>>
   ]
 } = <I, E, A>(
   self: {
@@ -87,7 +87,7 @@ export const useSafeMutation: {
   const queryClient = useQueryClient()
   const state: Ref<MutationResult<E, A>> = ref<MutationResult<E, A>>({ _tag: "Initial" }) as any
 
-  function handleExit(exit: Exit.Exit<A, E>): Effect<Either.Either<E, A>, never, never> {
+  function handleExit(exit: Exit.Exit<A, E>): Effect<Either.Either<A, E>, never, never> {
     return Effect.sync(() => {
       if (Exit.isSuccess(exit)) {
         state.value = { _tag: "Success", data: exit.value }

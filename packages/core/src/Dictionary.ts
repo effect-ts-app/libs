@@ -331,7 +331,7 @@ export function singleton<A>(k: string, a: A): Dictionary<A> {
  * Partition a record using f that also consumes the entry key
  */
 export function partitionMapWithIndex<A, B, C>(
-  f: (key: string, a: A) => Either.Either<B, C>
+  f: (key: string, a: A) => Either.Either<C, B>
 ): (fa: Dictionary<A>) => readonly [Dictionary<B>, Dictionary<C>] {
   return (fa) => partitionMapWithIndex_(fa, f)
 }
@@ -341,7 +341,7 @@ export function partitionMapWithIndex<A, B, C>(
  */
 export function partitionMapWithIndex_<A, B, C>(
   fa: Dictionary<A>,
-  f: (key: string, a: A) => Either.Either<B, C>
+  f: (key: string, a: A) => Either.Either<C, B>
 ): readonly [Dictionary<B>, Dictionary<C>] {
   const left: MutableRecord<string, B> = {}
   const right: MutableRecord<string, C> = {}
@@ -536,7 +536,7 @@ export const compact = <A>(fa: Dictionary<O.Option<A>>): Dictionary<A> => {
  * Separate the record entries
  */
 export const separate = <A, B>(
-  fa: Dictionary<Either.Either<A, B>>
+  fa: Dictionary<Either.Either<B, A>>
 ): readonly [Dictionary<A>, Dictionary<B>] => {
   const left: MutableRecord<string, A> = {}
   const right: MutableRecord<string, B> = {}
@@ -611,18 +611,18 @@ export const partition_: {
  * Partition & map record entries
  */
 export const partitionMap: {
-  <A, B, C>(f: (a: A) => Either.Either<B, C>): (
+  <A, B, C>(f: (a: A) => Either.Either<C, B>): (
     fa: Dictionary<A>
   ) => readonly [Dictionary<B>, Dictionary<C>]
-  <A, B, C>(f: (a: A) => Either.Either<B, C>): (
+  <A, B, C>(f: (a: A) => Either.Either<C, B>): (
     fa: Dictionary<A>
   ) => readonly [Dictionary<B>, Dictionary<C>]
-} = <A, B, C>(f: (a: A) => Either.Either<B, C>) => (fa: Dictionary<A>) => partitionMap_(fa, f)
+} = <A, B, C>(f: (a: A) => Either.Either<C, B>) => (fa: Dictionary<A>) => partitionMap_(fa, f)
 
 /**
  * Partition & map record entries
  */
-export const partitionMap_ = <A, B, C>(fa: Dictionary<A>, f: (a: A) => Either.Either<B, C>) =>
+export const partitionMap_ = <A, B, C>(fa: Dictionary<A>, f: (a: A) => Either.Either<C, B>) =>
   partitionMapWithIndex_(fa, (_, a: A) => f(a))
 
 /**

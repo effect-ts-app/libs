@@ -201,12 +201,12 @@ declare module "effect/Option" {
 
 declare module "effect/Either" {
   export interface Left<out E, out A> {
-    andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: (a: A) => Either.Either<E2, B>): Either.Either<E1 | E2, B>
-    andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: Either.Either<E2, B>): Either.Either<E1 | E2, B>
-    map<E, A, B>(this: Either.Either<E, A>, f: (a: A) => B): Either.Either<E, B>
+    andThen<E1, A, E2, B>(this: Either.Either<A, E1>, f: (a: A) => Either.Either<B, E2>): Either.Either<B, E1 | E2>
+    andThen<E1, A, E2, B>(this: Either.Either<A, E1>, f: Either.Either<B, E2>): Either.Either<B, E1 | E2>
+    map<E, A, B>(this: Either.Either<A, E>, f: (a: A) => B): Either.Either<B, E>
     map<A, E, R, B>(this: Effect.Effect<A, E, R>, f: (a: A) => B): Effect.Effect<B, E, R>
 
-    flatMap<E1, A, E2, B>(this: Either<E1, A>, f: (a: A) => Either<E2, B>): Either<E1 | E2, B>
+    flatMap<E1, A, E2, B>(this: Either<A, E1>, f: (a: A) => Either<B, E2>): Either<B, E1 | E2>
     flatMap<A, E, R, B, E1, R1>(
       this: Effect.Effect<A, E, R>,
       f: (a: A) => Effect.Effect<B, E1, R1>
@@ -214,12 +214,12 @@ declare module "effect/Either" {
     get right(): A | undefined
   }
   export interface Right<out E, out A> {
-    andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: (a: A) => Either.Either<E2, B>): Either.Either<E1 | E2, B>
-    andThen<E1, A, E2, B>(this: Either.Either<E1, A>, f: Either.Either<E2, B>): Either.Either<E1 | E2, B>
-    map<E, A, B>(this: Either.Either<E, A>, f: (a: A) => B): Either.Either<E, B>
+    andThen<E1, A, E2, B>(this: Either.Either<A, E1>, f: (a: A) => Either.Either<B, E2>): Either.Either<B, E1 | E2>
+    andThen<E1, A, E2, B>(this: Either.Either<A, E1>, f: Either.Either<B, E2>): Either.Either<B, E1 | E2>
+    map<E, A, B>(this: Either.Either<A, E>, f: (a: A) => B): Either.Either<B, E>
     map<A, E, R, B>(this: Effect.Effect<A, E, R>, f: (a: A) => B): Effect.Effect<B, E, R>
 
-    flatMap<E1, A, E2, B>(this: Either<E1, A>, f: (a: A) => Either<E2, B>): Either<E1 | E2, B>
+    flatMap<E1, A, E2, B>(this: Either<A, E1>, f: (a: A) => Either<B, E2>): Either<B, E1 | E2>
     flatMap<A, E, R, B, E1, R1>(
       this: Effect.Effect<A, E, R>,
       f: (a: A) => Effect.Effect<B, E1, R1>
