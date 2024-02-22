@@ -11,17 +11,39 @@ export interface QueryWhere<TFieldValues extends FieldValues> extends Query<TFie
 }
 
 // Impl, later
-// export type All<TFieldValues extends FieldValues> = Value<TFieldValues> | Where<TFieldValues>
+export type Q<TFieldValues extends FieldValues> = Value<TFieldValues> | Where<TFieldValues>
 
-// export class Value<TFieldValues extends FieldValues> extends Data.TaggedClass("value")<{ value: TFieldValues }> {}
+export class Value<TFieldValues extends FieldValues> extends Data.TaggedClass("value")<{ value: TFieldValues }> {}
 
-// export class Where<TFieldValues extends FieldValues> extends Data.TaggedClass("where")<{}> {}
+export class Where<TFieldValues extends FieldValues> extends Data.TaggedClass("where")<{
+  current: Query<TFieldValues>
+  operation: [string, Ops, any] | [string, any]
+}> implements QueryWhere<TFieldValues> {
+  _id2!: any
+  _id: any
+}
 
-export declare const where: FilterWhere
+export class And<TFieldValues extends FieldValues> extends Data.TaggedClass("and")<{
+  current: Query<TFieldValues>
+  operation: [string, Ops, any] | [string, any] | (() => QueryWhere<TFieldValues>)
+}> implements QueryWhere<TFieldValues> {
+  _id2!: any
+  _id: any
+}
 
-export declare const and: FilterContinuation
+export class Or<TFieldValues extends FieldValues> extends Data.TaggedClass("or")<{
+  current: Query<TFieldValues>
+  operation: [string, Ops, any] | [string, any] | (() => QueryWhere<TFieldValues>)
+}> implements QueryWhere<TFieldValues> {
+  _id2!: any
+  _id: any
+}
 
-export declare const or: FilterContinuation
+export const where: FilterWhere = (...operation) => (current) => new Where({ current, operation })
+
+export const and: FilterContinuation = (...operation: any[]) => (current: any) => new And({ current, operation })
+
+export const or: FilterContinuation = (...operation: any[]) => (current: any) => new Or({ current, operation })
 
 // TODO: able to switch to Order and Limit/Take, which are "enders"
 export type FilterWheres = {
