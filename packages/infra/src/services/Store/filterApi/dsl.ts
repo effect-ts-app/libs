@@ -1,7 +1,7 @@
 import type { FieldValues } from "../../../filter/types.js"
 import type { FieldPath, FieldPathValue } from "../../../filter/types/path/eager.js"
 import type { Ops } from "./proxy.js"
-import type { Initial, QueryBuilder } from "./query.js"
+import type { QueryBuilder } from "./query.js"
 
 export interface Query<TFieldValues extends FieldValues> {
   readonly _id: unique symbol
@@ -154,8 +154,8 @@ export type FilterContinuations = {
 
 export type FilterContinuation = {
   <TFieldValues extends FieldValues>(
-    fb: (f: FilterContinuations & Initial<TFieldValues>) => (
-      current: QueryWhere<TFieldValues>
+    fb: () => (
+      current: Query<TFieldValues>
     ) => QueryWhere<TFieldValues>
   ): (
     current: QueryWhere<TFieldValues>
@@ -188,7 +188,7 @@ filter((where) =>
     .or((where) => where("a", "b")) // able to create scope
 )
 
-const p = pipe(
+const q = pipe(
   value<A>(),
   where("b", "neq", 1),
   and("b", "gt", 1),
