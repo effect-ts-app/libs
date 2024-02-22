@@ -29,10 +29,10 @@
   },
   "peerDependencies": {
     "express": "^4.18.2",
-    "@effect/platform": "^0.45.6",
-    "@effect/schema": "^0.62.9",
+    "@effect/platform": "^0.46.1",
+    "@effect/schema": "^0.63.0",
     "@fp-ts/optic": "^0.22.0",
-    "effect": "^2.3.8"
+    "effect": "^2.4.0"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",
