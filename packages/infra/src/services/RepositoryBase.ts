@@ -23,6 +23,8 @@ import { makeFilters } from "@effect-app/infra/filter"
 import { Effect, S } from "effect-app"
 import { type FixEnv, runTerm } from "effect-app/Pure"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
+import type { FieldValues } from "../filter/types.js"
+import { make as makeQuery, type QAll, type Query, query, type QueryProjection } from "./query.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 import * as Q from "./Store/filterApi/query.js"
 
@@ -88,6 +90,19 @@ export abstract class RepositoryBaseC<
   ) => Effect<void>
 
   abstract readonly mapped: Mapped<PM, Omit<PM, "_etag">>
+  abstract readonly q2: {
+    <A, R, From extends FieldValues>(
+      q: (initial: Query<Omit<PM, "_etag">>) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
+    ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
+    <R = never>(
+      q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R>
+    ): Effect.Effect<readonly T[], never, R>
+
+    <A, R, From extends FieldValues>(
+      q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
+    ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
+    <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, R>
+  }
 }
 
 export abstract class RepositoryBaseC1<
@@ -121,6 +136,7 @@ export class RepositoryBaseC2<
     this.utils = this.impl.utils
     this.changeFeed = this.impl.changeFeed
     this.mapped = this.impl.mapped
+    this.q2 = this.impl.q2
   }
   // makes super calls a compiler error, as it should
   override saveAndPublish
@@ -130,6 +146,7 @@ export class RepositoryBaseC2<
   override utils
   override changeFeed
   override mapped
+  override q2
 }
 
 const anyQb = Q.QueryBuilder.make<any>()
@@ -782,7 +799,8 @@ export function makeRepo<
           find,
           all,
           saveAndPublish,
-          removeAndPublish
+          removeAndPublish,
+          q2: (q: any) => query(r, typeof q === "function" ? q(makeQuery()) : q) as any
         }
         return r
       })
@@ -970,26 +988,27 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
   get: (id: T["id"]) => Effect<T, NotFoundError<ItemType>, Service>
 
-  query: (b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>) => Effect<T[], never, never>
+  query: (b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>) => Effect<T[], never, Service>
   queryLegacy: <S = T>(map: {
     filter?: Filter<PM>
     collect?: (t: T) => Option<S>
     limit?: number
     skip?: number
-  }) => Effect<S[], never, never>
+  }) => Effect<S[], never, Service>
 
   mapped: MM<Service, PM, Omit<PM, "_etag">>
 }
 
 const makeRepoFunctions = (tag: any) => {
   const { all } = Effect.serviceConstants(tag) as any
-  const { find, get, query, queryLegacy, removeAndPublish, removeById, save, saveAndPublish } = Effect.serviceFunctions(
-    tag
-  ) as any
+  const { find, get, q2, query, queryLegacy, removeAndPublish, removeById, save, saveAndPublish } = Effect
+    .serviceFunctions(
+      tag
+    ) as any
 
   const mapped = (s: any) => tag.map((_: any) => _.mapped(s))
 
-  return { all, find, removeById, saveAndPublish, removeAndPublish, save, get, query, queryLegacy, mapped }
+  return { all, find, removeById, saveAndPublish, removeAndPublish, save, get, query, queryLegacy, q2, mapped }
 }
 
 export const RepositoryBaseImpl = <Service>() => {

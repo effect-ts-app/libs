@@ -696,6 +696,16 @@
         "default": "./_cjs/services/Store/utils.cjs"
       }
     },
+    "./services/query": {
+      "import": {
+        "types": "./dist/services/query.d.ts",
+        "default": "./dist/services/query.js"
+      },
+      "require": {
+        "types": "./dist/services/query.d.ts",
+        "default": "./_cjs/services/query.cjs"
+      }
+    },
     "./services/simpledb/cosmosdb": {
       "import": {
         "types": "./dist/services/simpledb/cosmosdb.d.ts",
