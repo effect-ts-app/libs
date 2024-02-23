@@ -60,7 +60,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.89.2",
-    "@effect-app/cli": "^0.55.1",
+    "@effect-app/cli": "^0.56.0",
     "@effect-app/compiler": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
