@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.173.1
+
+### Patch Changes
+
+- ac8e9aa: add OperationResult.is
+
 ## 0.173.0
 
 ### Minor Changes
