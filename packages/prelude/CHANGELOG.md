@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.173.3
+
+### Patch Changes
+
+- 4d9b13c: add extendTaggedUnion
+
 ## 0.173.2
 
 ### Patch Changes
