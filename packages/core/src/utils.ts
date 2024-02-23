@@ -9,6 +9,7 @@ import type { NoInfer } from "effect/Types"
 import * as ld from "lodash"
 import type { Dictionary } from "./Dictionary.js"
 import * as D from "./Dictionary.js"
+import { identity } from "./Function.js"
 
 const { get, omit: omit_, pick } = ld.default ?? ld
 
@@ -837,3 +838,9 @@ type RemoveNonArray<T> = T extends readonly any[] ? T : never
 export function isNativeTuple<A>(a: A): a is RemoveNonArray<A> {
   return Array.isArray(a)
 }
+
+export type Writable<T> = { -readonly [P in keyof T]: T[P] }
+
+export type DeepWritable<T> = { -readonly [P in keyof T]: DeepWritable<T[P]> }
+
+export const writable: { <A>(a: A, deep: true): DeepWritable<A>; <A>(a: A): Writable<A> } = identity
