@@ -19,8 +19,14 @@ export class Failure extends ExtendedTaggedClass<Failure, Failure.From>()("Failu
   message: nullable(NonEmptyString2k).withDefault
 }) {}
 
-export const OperationResult = S.union(Success, Failure)
-export type OperationResult = Schema.To<typeof OperationResult>
+const r = S.union(Success, Failure)
+export const OperationResult = Object.assign(r, {
+  is: {
+    Success: (x: OperationResult): x is Success => x._tag === "Success",
+    Failure: (x: OperationResult): x is Failure => x._tag === "Failure"
+  }
+})
+export type OperationResult = Schema.To<typeof r>
 
 export class Operation extends ExtendedClass<Operation, Operation.From>()({
   id: OperationId,
