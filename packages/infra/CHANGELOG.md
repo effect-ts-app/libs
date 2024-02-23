@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.196.5
+
+### Patch Changes
+
+- b56fd55: add q2
+
 ## 0.196.4
 
 ### Patch Changes
