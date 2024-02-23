@@ -73,6 +73,10 @@ export abstract class RepositoryBaseC<
   ) => Effect<void, InvalidStateError | OptimisticConcurrencyException>
   abstract readonly utils: {
     parseMany: (a: readonly PM[]) => Effect<readonly T[]>
+    parseMany2: <A, R>(
+      a: readonly PM[],
+      schema: S.Schema<A, Omit<PM, "_etag">, R>
+    ) => Effect<readonly A[], S.ParseResult.ParseError, R>
     all: Effect<PM[]>
     filter: FilterFunc<PM>
     // count: (filter?: Filter<PM>) => Effect<never, never, NonNegativeInt>
@@ -732,6 +736,15 @@ export function makeRepo<
               cms.flatMap((cm) =>
                 items
                   .forEachEffect((_) => decode(mapReverse(_, cm.set)), { concurrency: "inherit", batching: true })
+                  .orDie
+              ),
+            parseMany2: (items, schema) =>
+              cms.flatMap((cm) =>
+                items
+                  .forEachEffect((_) => schema.decode(mapReverse(_, cm.set) as any), {
+                    concurrency: "inherit",
+                    batching: true
+                  })
                   .orDie
               ),
             filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
