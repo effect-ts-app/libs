@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.146.1
+
+### Patch Changes
+
+- 3170396: writable
+
 ## 0.146.0
 
 ### Minor Changes
