@@ -1,3 +1,4 @@
+import { HashMap, Logger } from "effect-app"
 import { getRequestContext } from "./shared.js"
 
 export const logfmtLogger = Logger.make<unknown, void>(
