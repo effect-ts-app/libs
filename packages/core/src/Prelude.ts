@@ -16,6 +16,7 @@ import type * as C from "effect/Cause"
 import type * as CNK from "effect/Chunk"
 import type * as CFG from "effect/Config"
 import type * as CTX from "effect/Context"
+import type * as DUR from "effect/Duration"
 import type * as EITHER from "effect/Either"
 import type * as EQL from "effect/Equal"
 import type * as EQ from "effect/Equivalence"
@@ -68,6 +69,13 @@ export namespace Ref {
 }
 /** @tsplus type effect/data/Ref */
 export type Ref<A> = REF.Ref<A>
+
+export namespace Duration {
+  // @ts-expect-error abc
+  export * from "effect/Duration"
+}
+/** @tsplus type effect/data/Duration */
+export type Duration = DUR.Duration
 
 export namespace Context {
   // @ts-expect-error abc

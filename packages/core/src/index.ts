@@ -11,6 +11,7 @@ export {
   Chunk,
   Config,
   Context,
+  Duration,
   Effect,
   Either,
   Equal,

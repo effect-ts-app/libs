@@ -1,9 +1,11 @@
 import { reportError } from "@effect-app/infra/errorReporter"
+import { NonEmptyString2k } from "@effect-app/schema"
+import { subHours } from "date-fns"
+import type { Exit } from "effect-app"
+import { Duration, Effect, Option, Schedule } from "effect-app"
 import type { OperationProgress } from "effect-app/Operations"
 import { Failure, Operation, OperationId, Success } from "effect-app/Operations"
 import { Operations } from "./service.js"
-import { NonEmptyString2k } from "@effect-app/schema"
-import { Effect, Option, Exit, Schedule, Duration } from "effect-app"
 
 const reportAppError = reportError("Operations.Cleanup")
 
@@ -13,10 +15,9 @@ const make = Effect.sync(() => {
 
   const cleanup = Effect
     .sync(() => {
-      const before = new Date().subHours(1)
-      ops
-        .entries()
-        .toChunk
+      const before = subHours(new Date(), 1)
+      ;[...ops
+        .entries()]
         .forEach(([id, op]) => {
           const lastChanged = Option.fromNullable(op.updatedAt).getOrElse(() => op.createdAt)
           if (lastChanged < before) {

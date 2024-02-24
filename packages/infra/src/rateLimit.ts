@@ -23,6 +23,10 @@
 //   }
 // }
 
+import type { Semaphore } from "@effect-app/core/Effect"
+import type { Duration, NonEmptyArray } from "effect-app"
+import { Effect } from "effect-app"
+
 /**
  * Executes the specified effect, acquiring the specified number of permits
  * immediately before the effect begins execution and releasing them
@@ -117,7 +121,7 @@ export function batch<R, E, A, R2, E2, A2, T>(
 
 export function naiveRateLimit(
   n: number,
-  d: DUR
+  d: Duration
 ) {
   return <T>(items: Iterable<T>) => (<R, E, A, R2, E2, A2>(
     forEachItem: (i: T) => Effect<A, E, R>,

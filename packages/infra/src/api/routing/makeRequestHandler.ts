@@ -10,7 +10,7 @@ import type { ContextMapContainer } from "@effect-app/infra/services/Store/Conte
 import type { Layer } from "effect-app"
 import { Effect, FiberRef } from "effect-app"
 import { NonEmptyString255 } from "effect-app/schema"
-import type { REST, Schema, Schema, Schema, Schema, StructFields } from "effect-app/schema"
+import type { REST, Schema, StructFields } from "effect-app/schema"
 import type { HttpRequestError } from "../http.js"
 import { HttpBody, HttpRouteContext, HttpServerRequest, HttpServerResponse } from "../http.js"
 import { makeRequestParsers, parseRequestParams } from "./base.js"

@@ -16,6 +16,8 @@ import type {
   InvalidTokenError,
   UnauthorizedError as JWTUnauthorizedError
 } from "express-oauth2-jwt-bearer"
+import { Schema } from "@effect-app/schema"
+import { Data, Effect, Schedule } from "effect-app"
 
 export class JWTError extends Data.TaggedClass("JWTError")<{
   error:
