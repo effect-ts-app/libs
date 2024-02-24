@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { pick } from "effect-app/utils"
+import { get, pick } from "effect-app/utils"
 import type { RequestContext } from "../../RequestContext.js"
 import type { FilterArgs, FilterJoinSelect, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
@@ -12,6 +12,25 @@ export function memFilter<T extends PersistenceModelType<string>, U extends keyo
     const select = (r: T[]): M[] => (f.select ? r.map((_) => pick(_, f.select!)) : r) as any
     const skip = f?.skip
     const limit = f?.limit
+    const ords = Option.fromNullable(f.order).map((_) =>
+      _.map((_) =>
+        Order.make<T>((self, that) => {
+          // TODO: inspect data types for the right comparison?
+          const selfV = get(self, _.key) ?? false
+          const thatV = get(that, _.key) ?? false
+          if (selfV === thatV) {
+            return 0
+          }
+          if (_.direction === "ASC") {
+            return selfV < thatV ? -1 : 1
+          }
+          return selfV < thatV ? 1 : -1
+        })
+      )
+    )
+    if (ords.value) {
+      c = c.sortBy(...ords.value)
+    }
     if (!skip && limit === 1) {
       return select(
         c.findFirstMap(f.filter ? codeFilter(f.filter) : (_) => Option.some(_)).map(ReadonlyArray.make).getOrElse(
@@ -47,6 +66,7 @@ function logQuery(f: FilterArgs<any, any>, defaultValues?: any) {
         undefined,
         2
       ),
+      order: JSON.stringify(f.order, undefined, 2),
       select: JSON.stringify(f.select, undefined, 2),
       defaultValues: JSON.stringify(defaultValues, undefined, 2),
       skip: f.skip,

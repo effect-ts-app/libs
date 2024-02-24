@@ -291,6 +291,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         importedMarkerId,
                         defaultValues,
                         f.select as NonEmptyReadonlyArray<string> | undefined,
+                        f.order as NonEmptyReadonlyArray<{ key: string; direction: "ASC" | "DESC" }> | undefined,
                         skip,
                         limit
                       )

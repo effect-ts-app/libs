@@ -230,11 +230,10 @@ export function buildWhereCosmosQuery3(
   importedMarkerId: string,
   defaultValues: Record<string, unknown>,
   select?: NonEmptyReadonlyArray<string>,
+  order?: NonEmptyReadonlyArray<{ key: string; direction: "ASC" | "DESC" }>,
   skip?: number,
   limit?: number
 ) {
-  const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
-
   const statement = (x: FilterR, i: number) => {
     let k = x.path.includes(".-1.")
       ? `${x.path.split(".-1.")[0]}.${x.path.split(".-1.")[1]!}`
@@ -378,7 +377,8 @@ export function buildWhereCosmosQuery3(
     }
 
     WHERE f.id != @id ${filter.length ? `AND ${print(filter)}` : ""}
-    ${lm}`,
+    ${order ? `ORDER BY ${order.map((_) => `f.${_.key} ${_.direction}`).join(", ")}` : ""}
+    ${skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""}`,
     parameters: [
       { name: "@id", value: importedMarkerId },
       ...values

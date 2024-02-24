@@ -93,7 +93,7 @@ export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPat
   extends Data.TaggedClass("order")<{
     current: Query<TFieldValues> | QueryEnd<TFieldValues>
     field: TFieldName
-    desc?: boolean | undefined
+    direction: "ASC" | "DESC"
   }>
   implements QueryEnd<TFieldValues>
 {
@@ -122,7 +122,7 @@ export const order: <TFieldValues extends FieldValues, TFieldName extends FieldP
   field: TFieldName,
   desc?: boolean
 ) => (current: Query<TFieldValues> | QueryEnd<TFieldValues>) => QueryEnd<TFieldValues> = (field, desc) => (current) =>
-  new Order({ current, field, desc })
+  new Order({ current, field, direction: desc ? "DESC" : "ASC" })
 
 export const page: <TFieldValues extends FieldValues>(
   page: { limit?: number; skip?: number }
@@ -304,9 +304,11 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
   let schema: S.Schema<A, TFieldValues, R> | undefined = undefined as any
   let limit: number | undefined = undefined as any
   let skip: number | undefined = undefined as any
+  const order: { field: FieldPath<TFieldValues>; direction: "ASC" | "DESC" }[] = []
 
-  const upd = (v: { schema: any; limit: any; skip: any; filter: readonly FilterResult[] }) => {
+  const upd = (v: { schema: any; limit: any; skip: any; filter: readonly FilterResult[]; order: any[] }) => {
     values.push(...v.filter)
+    order.push(...v.order)
     limit = v.limit
     skip = v.skip
     schema = v.schema
@@ -384,7 +386,8 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
     filter: values,
     limit,
     skip,
-    schema
+    schema,
+    order
   }
 }
 

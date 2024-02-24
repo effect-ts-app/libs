@@ -63,9 +63,15 @@ export type FilterJoinSelect = {
   value: any /* value path[valueKey] of E */
 }
 
+export interface O<PM extends PersistenceModelType<unknown>> {
+  key: keyof PM
+  direction: "ASC" | "DESC"
+}
+
 export interface FilterArgs<PM extends PersistenceModelType<unknown>, U extends keyof PM = never> {
   filter?: Filter<PM> | undefined
   select?: NonEmptyReadonlyArray<U> | undefined
+  order?: NonEmptyReadonlyArray<O<PM>>
   limit?: number | undefined
   skip?: number | undefined
 }
@@ -182,7 +188,7 @@ const makeMap = Effect.sync(() => makeContextMap())
 export class ContextMap extends TagClassMakeId("effect-app/ContextMap", makeMap)<ContextMap>() {
 }
 
-export interface PersistenceModelType<Id> {
+export interface PersistenceModelType<Id> extends Record<string, any> {
   id: Id
   _etag: string | undefined
 }
