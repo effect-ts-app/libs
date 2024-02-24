@@ -209,16 +209,6 @@
         "default": "./_cjs/Unify.cjs"
       }
     },
-    "./_ext/Iterable": {
-      "import": {
-        "types": "./dist/_ext/Iterable.d.ts",
-        "default": "./dist/_ext/Iterable.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Iterable.d.ts",
-        "default": "./_cjs/_ext/Iterable.cjs"
-      }
-    },
     "./_ext/ord.ext": {
       "import": {
         "types": "./dist/_ext/ord.ext.d.ts",
