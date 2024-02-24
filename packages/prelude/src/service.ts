@@ -6,8 +6,8 @@
  * https://github.com/microsoft/TypeScript/issues/52644
  */
 
-import type { Context, Effect, Scope } from "@effect-app/core"
-import { Layer } from "@effect-app/core"
+import type { Effect, Scope } from "@effect-app/core"
+import { Context, Layer } from "@effect-app/core"
 
 export const ServiceTag = Symbol()
 export type ServiceTag = typeof ServiceTag
@@ -33,7 +33,7 @@ export function makeService<T extends ServiceTagged<any>>(_: Omit<T, ServiceTag>
 /**
  * @tsplus fluent effect/data/Context/Tag make
  */
-export function make<T extends ServiceTagged<any>, I = T>(_: Tag<I, T>, t: Omit<T, ServiceTag>) {
+export function make<T extends ServiceTagged<any>, I = T>(_: Context.Tag<I, T>, t: Omit<T, ServiceTag>) {
   return t as T
 }
 
@@ -41,8 +41,8 @@ let i = 0
 const randomId = () => "unknown-service-" + i++
 
 export function assignTag<Id, Service = Id>(key?: string, creationError?: Error) {
-  return <S extends object>(cls: S): S & Tag<Id, Service> => {
-    const tag = GenericTag<Id, Service>(key ?? randomId())
+  return <S extends object>(cls: S): S & Context.Tag<Id, Service> => {
+    const tag = Context.GenericTag<Id, Service>(key ?? randomId())
     let fields = tag
     if (Reflect.ownKeys(cls).includes("key")) {
       const { key, ...rest } = tag

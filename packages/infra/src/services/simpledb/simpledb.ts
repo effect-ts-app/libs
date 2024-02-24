@@ -26,7 +26,7 @@ export function makeLiveRecordCache() {
 export interface RecordCache extends ReturnType<typeof makeLiveRecordCache> {}
 
 // module tag
-export const RecordCache = GenericTag<RecordCache>("@services/RecordCache")
+export const RecordCache = Context.GenericTag<RecordCache>("@services/RecordCache")
 
 export const LiveRecordCache = Effect.sync(() => makeLiveRecordCache()).toLayer(RecordCache)
 

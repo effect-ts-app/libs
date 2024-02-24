@@ -237,7 +237,7 @@ export function modify<S2, A, S3>(mod: (s: S2) => readonly [S3, A]): Effect<A, n
   return castTag<never, S3, S2>().map(
     (_) =>
       Effect.sync(() => mod(_.env.state)).map(([s, a]) => {
-        _.env.state = s
+        _.env.state = s as any
         return a
       })
   ) as any
@@ -251,7 +251,7 @@ export function modifyM<W, R, E, A, S2, S3>(
 ): Effect<A, E, FixEnv<R, W, S2, S3>> {
   // return serviceWithEffect(_ => Ref.modifyM_(_.state, mod))
   return castTag<W, S3, S2>().flatMap(
-    (_) => mod(_.env.state).map(([s, a]) => Effect.sync(() => _.env.state = s).map(() => a))
+    (_) => mod(_.env.state).map(([s, a]) => Effect.sync(() => _.env.state = s as any).map(() => a))
   ) as any
 }
 

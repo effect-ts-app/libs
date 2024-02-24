@@ -16,7 +16,7 @@ import {
   makePathWithBody,
   makePathWithQuery,
   mapResponseM,
-  ResponseError
+  ResError
 } from "./fetch.js"
 
 export * from "./config.js"
@@ -34,12 +34,12 @@ const cache = new Map<any, Client<any>>()
 export type Client<M extends Requests> =
   & RequestHandlers<
     ApiConfig | HttpClient.Client.Default,
-    SupportedErrors | FetchError | ResponseError,
+    SupportedErrors | FetchError | ResError,
     M
   >
   & RequestHandlersE<
     ApiConfig | HttpClient.Client.Default,
-    SupportedErrors | FetchError | ResponseError,
+    SupportedErrors | FetchError | ResError,
     M
   >
 
@@ -95,7 +95,7 @@ function clientFor_<M extends Requests>(models: M) {
       }
 
       const res = Response as Schema<any>
-      const parseResponse = flow(res.decodeUnknown, (_) => _.mapError((err) => new ResponseError(err)))
+      const parseResponse = flow(res.decodeUnknown, (_) => _.mapError((err) => new ResError(err)))
 
       const parseResponseE = flow(parseResponse, (x) => x.andThen(res.encode))
 

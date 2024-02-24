@@ -15,7 +15,7 @@ function makeClient(url: string) {
   )
 }
 
-const Client = GenericTag<ServiceBusClient>("@services/Client")
+const Client = Context.GenericTag<ServiceBusClient>("@services/Client")
 export const LiveServiceBusClient = (url: string) => makeClient(url).toLayerScoped(Client)
 
 function makeSender(queueName: string) {
@@ -29,7 +29,7 @@ function makeSender(queueName: string) {
     )
   })
 }
-export const Sender = GenericTag<ServiceBusSender>("@services/Sender")
+export const Sender = Context.GenericTag<ServiceBusSender>("@services/Sender")
 
 export function LiveSender(queueName: string) {
   return makeSender(queueName).toLayerScoped(Sender)
@@ -47,7 +47,7 @@ function makeReceiver(queueName: string) {
   })
 }
 
-export const Receiver = GenericTag<ServiceBusReceiver>("@services/Receiver")
+export const Receiver = Context.GenericTag<ServiceBusReceiver>("@services/Receiver")
 export function LiveReceiver(queueName: string) {
   return makeReceiver(queueName).toLayerScoped(Receiver)
 }
@@ -91,7 +91,7 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
   })
 }
 
-const SubscribeTag = GenericTag<Effect.Success<ReturnType<typeof subscribe>>>("@services/SubscribeTag")
+const SubscribeTag = Context.GenericTag<Effect.Success<ReturnType<typeof subscribe>>>("@services/SubscribeTag")
 
 export function Subscription<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
   return subscribe(hndlr).toLayerScoped(SubscribeTag)

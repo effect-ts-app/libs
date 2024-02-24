@@ -92,7 +92,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
 
 export interface RedisClient extends Effect.Success<ReturnType<typeof makeRedisClient>> {}
 
-export const RedisClient = GenericTag<RedisClient>("@services/RedisClient")
+export const RedisClient = Context.GenericTag<RedisClient>("@services/RedisClient")
 
 export const RedisClientLayer = (storageUrl: string) =>
   makeRedisClient(makeRedis(storageUrl))

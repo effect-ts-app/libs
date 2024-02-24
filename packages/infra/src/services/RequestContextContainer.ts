@@ -37,7 +37,7 @@ export class RequestContextContainer extends TagClassId("effect-app/RequestConte
 }
 
 /** @tsplus static RequestContext.Ops Tag */
-export const RCTag = GenericTag<RequestContext>("@services/RCTag")
+export const RCTag = Context.GenericTag<RequestContext>("@services/RCTag")
 
 /**
  * @tsplus getter RequestContext spanAttributes

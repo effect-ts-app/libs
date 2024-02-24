@@ -71,7 +71,7 @@ export interface ExpressAppConfig {
   readonly exitHandler: typeof defaultExitHandler
 }
 
-export const ExpressAppConfig = GenericTag<ExpressAppConfig>("@services/ExpressAppConfig")
+export const ExpressAppConfig = Context.GenericTag<ExpressAppConfig>("@services/ExpressAppConfig")
 
 export function LiveExpressAppConfig<R>(
   host: string,
@@ -202,7 +202,7 @@ export const makeExpressApp = Effect.gen(function*(_) {
 })
 
 export interface ExpressApp extends Effect.Success<typeof makeExpressApp> {}
-export const ExpressApp = GenericTag<ExpressApp>("@services/ExpressApp")
+export const ExpressApp = Context.GenericTag<ExpressApp>("@services/ExpressApp")
 export const LiveExpressApp = makeExpressApp.toLayerScoped(ExpressApp)
 
 export type ExpressEnv = ExpressAppConfig | ExpressApp

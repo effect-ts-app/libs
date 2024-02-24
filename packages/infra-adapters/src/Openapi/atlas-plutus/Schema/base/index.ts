@@ -8,7 +8,7 @@ export interface References {
   ref: Ref<Map<string, SubSchema>>
 }
 
-export const References = GenericTag<References>("@services/References")
+export const References = Context.GenericTag<References>("@services/References")
 
 export class UnsupportedOperation {
   readonly _tag = "UnsupportedOperation"

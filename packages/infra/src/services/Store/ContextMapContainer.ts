@@ -34,4 +34,4 @@ export class ContextMapContainer extends TagClassId("effect-app/ContextMapContai
 }
 
 /** @tsplus static ContextMap.Ops Tag */
-export const RCTag = GenericTag<ContextMap>("@services/RCTag")
+export const RCTag = Context.GenericTag<ContextMap>("@services/RCTag")

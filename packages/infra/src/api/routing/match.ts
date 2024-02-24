@@ -10,7 +10,7 @@ import type { RequestHandler } from "./base.js"
 import { makeRequestHandler } from "./makeRequestHandler.js"
 import type { Middleware } from "./makeRequestHandler.js"
 
-export const RouteDescriptors = GenericTag<Ref<RouteDescriptorAny[]>>("@services/RouteDescriptors")
+export const RouteDescriptors = Context.GenericTag<Ref<RouteDescriptorAny[]>>("@services/RouteDescriptors")
 
 export function match<
   R,

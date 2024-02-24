@@ -18,10 +18,14 @@ import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig,
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import { flatMapOption } from "@effect-app/core/Effect"
-import type { Opt } from "@effect-app/core/Option"
 import { makeFilters } from "@effect-app/infra/filter"
-import { Effect, S } from "effect-app"
-import { type FixEnv, runTerm } from "effect-app/Pure"
+import type { ParseResult, Schema } from "@effect-app/schema"
+import { NonNegativeInt } from "@effect-app/schema"
+import type { Context, NonEmptyArray, NonEmptyReadonlyArray, Option } from "effect-app"
+import { Effect, flow, PubSub, S } from "effect-app"
+import { runTerm } from "effect-app/Pure"
+import type { FixEnv, PureEnv } from "effect-app/Pure"
+import { assignTag } from "effect-app/service"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import type { FieldValues } from "../filter/types.js"
 import { make as makeQuery, type QAll, type Query, query, type QueryProjection } from "./query.js"
@@ -67,7 +71,7 @@ export abstract class RepositoryBaseC<
   ItemType extends string
 > {
   abstract readonly itemType: ItemType
-  abstract readonly find: (id: T["id"]) => Effect<Opt<T>>
+  abstract readonly find: (id: T["id"]) => Effect<Option<T>>
   abstract readonly all: Effect<T[]>
   abstract readonly saveAndPublish: (
     items: Iterable<T>,
@@ -278,7 +282,7 @@ export class RepositoryBaseC3<
     return map.flatMap((f) =>
       (f.filter ? this.utils.filter(f) : this.utils.all)
         .flatMap((_) => this.utils.parseMany(_))
-        .map((_) => f.collect ? _.filterMap(f.collect) : _ as any as S[])
+        .map((_) => f.collect ? _.filterMap(f.collect) : _ as S[])
     )
   }
 
@@ -306,7 +310,7 @@ export class RepositoryBaseC3<
       (f.filter ? this.utils.filter({ filter: f.filter, limit: 1 }) : this.utils.all)
         .flatMap((_) => this.utils.parseMany(_))
         .flatMap((_) =>
-          (f.collect ? _.filterMap(f.collect) : _ as any as S[])
+          (f.collect ? _.filterMap(f.collect) : _ as S[])
             .toNonEmpty
             .encaseInEffect(() => new NotFoundError<ItemType>({ type: this.itemType, id: f.filter }))
             .map((_) => _[0])
@@ -1036,7 +1040,7 @@ export const RepositoryBaseImpl = <Service>() => {
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
-      & Tag<Service, Service>
+      & Context.Tag<Service, Service>
       & Repos<
         T,
         PM,
@@ -1082,7 +1086,7 @@ export const RepositoryDefaultImpl = <Service>() => {
       & (abstract new(
         impl: Repository<T, PM, Evt, ItemType>
       ) => RepositoryBaseC3<T, PM, Evt, ItemType>)
-      & Tag<Service, Service>
+      & Context.Tag<Service, Service>
       & Repos<
         T,
         PM,
