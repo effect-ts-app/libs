@@ -109,7 +109,6 @@ function renderFakeIfTest(addr: EmailData | EmailData[], makeId: () => number) {
     ? addr
       .map((x) => (isTestAddress(x) ? renderFake(x, makeId) : x))
       .dedupeWith(eq)
-      .toArray
     : isTestAddress(addr)
     ? renderFake(addr, makeId)
     : addr

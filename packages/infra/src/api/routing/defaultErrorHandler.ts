@@ -1,4 +1,6 @@
 import { logError } from "@effect-app/infra/errorReporter"
+import type { Schema } from "@effect-app/schema"
+import { Data, Effect, Schedule } from "effect-app"
 import type { SupportedErrors } from "effect-app/client/errors"
 import {
   InvalidStateError,
@@ -8,16 +10,13 @@ import {
   UnauthorizedError,
   ValidationError
 } from "effect-app/client/errors"
-import { HttpBody, HttpHeaders, type HttpServerRequest, type HttpServerResponse } from "../http.js"
-
 import type {
   InsufficientScopeError,
   InvalidRequestError,
   InvalidTokenError,
   UnauthorizedError as JWTUnauthorizedError
 } from "express-oauth2-jwt-bearer"
-import { Schema } from "@effect-app/schema"
-import { Data, Effect, Schedule } from "effect-app"
+import { HttpBody, HttpHeaders, type HttpServerRequest, type HttpServerResponse } from "../http.js"
 
 export class JWTError extends Data.TaggedClass("JWTError")<{
   error:

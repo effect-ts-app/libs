@@ -5,6 +5,7 @@ import * as S from "effect-app/schema"
 
 import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import { ValidationError } from "@effect-app/infra/errors"
+import type { Context } from "effect-app"
 import { Effect, flow, Option } from "effect-app"
 import type { REST, StructFields } from "effect-app/schema"
 import type { Simplify } from "effect/Types"
@@ -383,7 +384,7 @@ export type Request<
   Body?: BodyA
   Query?: QueryA
   Headers?: HeaderA
-  Tag: Tag<M, M>
+  Tag: Context.Tag<M, M>
   ReqA?: ReqA
 }
 

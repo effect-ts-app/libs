@@ -1,4 +1,4 @@
-import { Logger, Cause } from "effect-app"
+import { Cause, Logger } from "effect-app"
 import { getRequestContext } from "./shared.js"
 
 export const jsonLogger = Logger.make<unknown, void>(

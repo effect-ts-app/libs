@@ -3,6 +3,7 @@ import { Effect } from "effect-app"
 import type { Operation, OperationId, OperationProgress } from "effect-app/Operations"
 import { TagClassId } from "effect-app/service"
 import * as Scope from "effect/Scope"
+import { forkDaemonReportRequestUnexpected } from "../../api/reportError.js"
 
 /**
  * @tsplus type Operations
@@ -32,7 +33,7 @@ export function forkOperation<R, E, A>(self: Effect<A, E, R>) {
           Operations
             .register
             .extend(scope)
-            .tap(() => self.use(scope).forkDaemonReportRequestUnexpected)
+            .tap(() => forkDaemonReportRequestUnexpected(self.use(scope)))
         )
   )
 }
@@ -56,7 +57,7 @@ export function forkOperation2<R, E, A>(self: (opId: OperationId) => Effect<A, E
           Operations
             .register
             .extend(scope)
-            .tap((id) => self(id).use(scope).forkDaemonReportRequestUnexpected)
+            .tap((id) => forkDaemonReportRequestUnexpected(self(id).use(scope)))
         )
   )
 }
@@ -76,7 +77,7 @@ export function forkOperationWithEffect<R, R2, E, E2, A, A2>(
           Operations
             .register
             .extend(scope)
-            .tap((opId) => self(opId).use(scope).forkDaemonReportRequestUnexpected)
+            .tap((opId) => forkDaemonReportRequestUnexpected(self(opId).use(scope)))
             .tap((opId) => fnc(opId).interruptible.forkScoped.extend(scope))
         )
   )

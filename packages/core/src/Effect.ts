@@ -7,9 +7,10 @@ import * as Def from "effect/Deferred"
 import type { Semaphore } from "effect/Effect"
 import { Effect } from "effect/Effect"
 import * as Fiber from "effect/Fiber"
+import * as FiberRef from "effect/FiberRef"
 import { Option } from "effect/Option"
 import { curry } from "./Function.js"
-import type { Context } from "./index.js"
+import { HashMap, type Context } from "./index.js"
 import { typedKeysOf } from "./utils.js"
 
 export * from "effect/Effect"
@@ -210,4 +211,44 @@ export function allLowerWithEffect<T extends Record<string, Context.Tag<any, any
   fn: (services: LowerServices<T>) => Effect<A, E, R>
 ) {
   return allLower(services).flatMap(fn)
+}
+
+/**
+ * Recovers from all errors.
+ *
+ * @tsplus static effect/io/Effect.Ops catchAllMap
+ * @tsplus pipeable effect/io/Effect catchAllMap
+ */
+export function catchAllMap<E, A2>(f: (e: E) => A2) {
+  return <R, A>(self: Effect<A, E, R>): Effect<A2 | A, never, R> => self.catchAll((err) => Effect.sync(() => f(err)))
+}
+
+/**
+ * Annotates each log in this scope with the specified log annotation.
+ *
+ * @tsplus static effect/io/Effect.Ops annotateLogscoped
+ */
+export function annotateLogscoped(key: string, value: string) {
+  return FiberRef
+    .currentLogAnnotations
+    .get
+    .flatMap((annotations) =>
+      Effect.suspend(() => FiberRef.currentLogAnnotations.locallyScoped(annotations.set(key, value)))
+    )
+}
+
+/**
+ * Annotates each log in this scope with the specified log annotations.
+ *
+ * @tsplus static effect/io/Effect.Ops annotateLogsScoped
+ */
+export function annotateLogsScoped(kvps: Record<string, string>) {
+  return FiberRef
+    .currentLogAnnotations
+    .get
+    .flatMap((annotations) =>
+      Effect.suspend(() =>
+        FiberRef.currentLogAnnotations.locallyScoped(HashMap.fromIterable([...annotations, ...kvps.$$.entries]))
+      )
+    )
 }

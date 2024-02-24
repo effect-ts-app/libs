@@ -1,7 +1,7 @@
 import { RuntimeFlags } from "effect"
+import { FiberRef, Runtime } from "effect-app"
 import * as FiberRefs from "effect/FiberRefs"
 import { RequestContextContainer } from "../services/RequestContextContainer.js"
-import { FiberRef, Runtime } from "effect-app"
 
 export function getRequestContext(fiberRefs: FiberRefs.FiberRefs) {
   const context = FiberRefs.getOrDefault(fiberRefs, FiberRef.currentContext)

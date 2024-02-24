@@ -64,15 +64,15 @@ export function batchPar<R, E, A, R2, E2, A2, T>(
   forEachBatch: (a: NonEmptyArray<A>, i: number) => Effect<A2, E2, R2>
 ) {
   return (items: Iterable<T>) =>
-    items
-      .chunk(n)
-      .forEachEffect(
-        (_, i) =>
-          _
-            .forEachEffect((_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
-            .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i)),
-        { concurrency: "inherit" }
-      )
+    Effect.forEach(
+      items
+        .chunk(n),
+      (_, i) =>
+        _
+          .forEachEffect((_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
+          .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i)),
+      { concurrency: "inherit" }
+    )
 }
 
 /**
@@ -85,13 +85,13 @@ export function batch<R, E, A, R2, E2, A2, T>(
   forEachBatch: (a: NonEmptyArray<A>, i: number) => Effect<A2, E2, R2>
 ) {
   return (items: Iterable<T>) =>
-    items
-      .chunk(n)
-      .forEachEffect((_, i) =>
+    Effect.forEach(
+      items.chunk(n),
+      (_, i) =>
         _
           .forEachEffect((_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
           .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i))
-      )
+    )
 }
 
 // /**

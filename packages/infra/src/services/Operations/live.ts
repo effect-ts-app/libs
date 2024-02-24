@@ -6,6 +6,7 @@ import { Duration, Effect, Option, Schedule } from "effect-app"
 import type { OperationProgress } from "effect-app/Operations"
 import { Failure, Operation, OperationId, Success } from "effect-app/Operations"
 import { Operations } from "./service.js"
+import { annotateLogscoped } from "@effect-app/core/Effect"
 
 const reportAppError = reportError("Operations.Cleanup")
 
@@ -79,8 +80,7 @@ const make = Effect.sync(() => {
     cleanup,
     register: makeOp
       .tap((id) =>
-        Effect
-          .annotateLogscoped("operationId", id)
+        annotateLogscoped("operationId", id)
           .andThen(
             addOp(id).acquireRelease(
               (_, exit) => finishOp(id, exit)
