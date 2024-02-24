@@ -105,26 +105,6 @@
         "default": "./_cjs/REST.cjs"
       }
     },
-    "./_global": {
-      "import": {
-        "types": "./dist/_global.d.ts",
-        "default": "./dist/_global.js"
-      },
-      "require": {
-        "types": "./dist/_global.d.ts",
-        "default": "./_cjs/_global.cjs"
-      }
-    },
-    "./_global.ext": {
-      "import": {
-        "types": "./dist/_global.ext.d.ts",
-        "default": "./dist/_global.ext.js"
-      },
-      "require": {
-        "types": "./dist/_global.ext.d.ts",
-        "default": "./_cjs/_global.ext.cjs"
-      }
-    },
     "./arbitrary": {
       "import": {
         "types": "./dist/arbitrary.d.ts",

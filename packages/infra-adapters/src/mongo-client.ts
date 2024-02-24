@@ -1,23 +1,23 @@
+import { Context, Effect, Layer } from "effect-app"
 import { MongoClient as MongoClient_ } from "mongodb"
 
 // TODO: we should probably share a single client...
 
 const withClient = (url: string) =>
-  Effect
-    .promise(() => {
-      const client = new MongoClient_(url)
-      return client.connect()
-    })
-    .acquireRelease(
-      (cl) => Effect.promise(() => cl.close()).uninterruptible.orDie
-    )
+  Effect.acquireRelease(
+    Effect
+      .promise(() => {
+        const client = new MongoClient_(url)
+        return client.connect()
+      }),
+    (cl) => Effect.promise(() => cl.close()).pipe(Effect.uninterruptible, Effect.orDie)
+  )
 
-const makeMongoClient = (url: string, dbName?: string) => withClient(url).map((x) => ({ db: x.db(dbName) }))
+const makeMongoClient = (url: string, dbName?: string) => Effect.map(withClient(url), (x) => ({ db: x.db(dbName) }))
 
 export interface MongoClient extends Effect.Success<ReturnType<typeof makeMongoClient>> {}
 
-export const MongoClient = GenericTag<MongoClient>("@services/MongoClient")
+export const MongoClient = Context.GenericTag<MongoClient>("@services/MongoClient")
 
 export const MongoClientLive = (mongoUrl: string, dbName?: string) =>
-  makeMongoClient(mongoUrl, dbName)
-    .toLayerScoped(MongoClient)
+  Layer.scoped(MongoClient, makeMongoClient(mongoUrl, dbName))

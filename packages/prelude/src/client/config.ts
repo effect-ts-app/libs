@@ -1,10 +1,12 @@
+import { Context, type Effect, type HashMap, Layer, type Option } from "@effect-app/core"
+
 export interface ApiConfig {
   apiUrl: string
   headers: Option<HashMap<string, string>>
 }
 
-const tag = GenericTag<ApiConfig>("@services/tag")
-export const layer = (config: ApiConfig) => tag.makeLayer(config)
+const tag = Context.GenericTag<ApiConfig>("@services/tag")
+export const layer = (config: ApiConfig) => Layer.succeed(tag, config)
 export const ApiConfig = {
   Tag: tag,
   layer

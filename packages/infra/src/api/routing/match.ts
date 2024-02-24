@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
-import { type RouteDescriptorAny } from "@effect-app/infra/api/express/schema/routing"
 import type { ValidationError } from "@effect-app/infra/errors"
 import type { StructFields } from "effect-app/schema"
+import { type RouteDescriptorAny } from "./schema/routing.js"
 import type {} from "effect-app/utils"
+import type { Layer, Ref, Scope } from "effect-app"
+import { Context, Effect } from "effect-app"
 import { HttpRouter } from "../http.js"
 import type { HttpRouteContext, HttpServerRequest, HttpServerResponse } from "../http.js"
 import type { RequestHandler } from "./base.js"
 import { makeRequestHandler } from "./makeRequestHandler.js"
 import type { Middleware } from "./makeRequestHandler.js"
 
-export const RouteDescriptors = GenericTag<Ref<RouteDescriptorAny[]>>("@services/RouteDescriptors")
+export const RouteDescriptors = Context.GenericTag<Ref<RouteDescriptorAny[]>>("@services/RouteDescriptors")
 
 export function match<
   R,

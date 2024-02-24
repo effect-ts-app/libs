@@ -1,7 +1,6 @@
+import { Equal, Hash } from "@effect-app/core"
 import * as Chunk from "effect/Chunk"
-import * as EQ from "effect/Equal"
 import { pipe } from "effect/Function"
-import * as Hash from "effect/Hash"
 import { SecretTypeId } from "effect/Secret"
 import type * as SecretURL from "../SecretURL.js"
 
@@ -17,7 +16,7 @@ export const proto = {
       Hash.combine(Hash.hash(this.raw))
     )
   },
-  [EQ.symbol](this: SecretURL.SecretURL, that: unknown): boolean {
+  [Equal.symbol](this: SecretURL.SecretURL, that: unknown): boolean {
     return isSecretURL(that) && Equal.equals(this.raw, that.raw)
   }
 }

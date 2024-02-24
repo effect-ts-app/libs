@@ -1,4 +1,7 @@
+import { NonEmptyString255 } from "@effect-app/schema"
+import { Context, Effect, FiberRef, Option } from "effect-app"
 import { RequestId } from "effect-app/ids"
+import { TagClassId } from "effect-app/service"
 import { RequestContext } from "../RequestContext.js"
 
 /**
@@ -37,7 +40,7 @@ export class RequestContextContainer extends TagClassId("effect-app/RequestConte
 }
 
 /** @tsplus static RequestContext.Ops Tag */
-export const RCTag = GenericTag<RequestContext>("@services/RCTag")
+export const RCTag = Context.GenericTag<RequestContext>("@services/RCTag")
 
 /**
  * @tsplus getter RequestContext spanAttributes

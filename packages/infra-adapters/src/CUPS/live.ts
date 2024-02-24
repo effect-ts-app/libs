@@ -1,5 +1,6 @@
 import { pretty } from "@effect-app/core/utils"
 import cp from "child_process"
+import { Effect, Predicate } from "effect-app"
 import { NonEmptyString255 } from "effect-app/schema"
 import fs from "fs"
 import os from "os"
@@ -34,13 +35,15 @@ export function makeCUPS(cupsServer?: URL) {
 
 const exec_ = util.promisify(cp.exec)
 const exec = (command: string) =>
-  Effect
-    .logDebug(`Executing: ${command}`)
-    .andThen(
+  Effect.andThen(
+    Effect
+      .logDebug(`Executing: ${command}`),
+    Effect.tap(
       Effect
-        .tryPromise(() => exec_(command))
-        .tap((r) => (Effect.logDebug(`Executed`).annotateLogs("result", pretty(r))))
+        .tryPromise(() => exec_(command)),
+      (r) => (Effect.logDebug(`Executed`).pipe(Effect.annotateLogs("result", pretty(r))))
     )
+  )
 type PrinterConfig = { url?: URL | undefined; id: string }
 
 function printFile(printer: PrinterConfig | undefined, options: string[]) {
@@ -85,8 +88,10 @@ const makePrintJobTempFile = makeTempFile("print-job")
 function printBuffer(printer: PrinterConfig, options: string[]) {
   return (buffer: ArrayBuffer) =>
     makePrintJobTempFile(Buffer.from(buffer))
-      .flatMap(printFile(printer, options))
-      .scoped
+      .pipe(
+        Effect.flatMap(printFile(printer, options)),
+        Effect.scoped
+      )
 }
 
 function getAvailablePrinters(host?: string) {

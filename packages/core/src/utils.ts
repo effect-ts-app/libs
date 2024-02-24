@@ -9,7 +9,9 @@ import type { NoInfer } from "effect/Types"
 import * as ld from "lodash"
 import type { Dictionary } from "./Dictionary.js"
 import * as D from "./Dictionary.js"
-import { identity } from "./Function.js"
+import { identity, pipe } from "./Function.js"
+import { Match } from "./index.js"
+import { Effect, Option } from "./Prelude.js"
 
 const { get, omit: omit_, pick } = ld.default ?? ld
 
@@ -749,7 +751,7 @@ export function AnyPretty<TT>(o: AnyOps<TT>) {
 
 /** @tsplus getter Object.Ops matcher */
 export function matchValue<TT extends object>(o: ObjectOps<TT>) {
-  return Matcher.value(o.subject)
+  return Match.value(o.subject)
 }
 
 /** @tsplus pipeable Object.Ops matchTags */
@@ -765,7 +767,7 @@ export function matchValueTags<
     }
     & { readonly [Tag in Exclude<keyof P, Types.Tags<"_tag", I>>]: never }
 >(m: P) {
-  return (o: ObjectOps<I>) => Matcher.valueTags(m)(o.subject)
+  return (o: ObjectOps<I>) => Match.valueTags(m)(o.subject)
 }
 
 /**

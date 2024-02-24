@@ -2,11 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import type { Some } from "effect/Option"
 import { getOrUndefined as value, Option } from "effect/Option"
 
 export * from "effect/Option"
-
-export { Option as Opt } from "effect/Option"
 
 /**
  * @tsplus getter effect/data/Option value

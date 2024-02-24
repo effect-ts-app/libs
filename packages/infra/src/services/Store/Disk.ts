@@ -3,6 +3,7 @@ import * as fu from "@effect-app/infra-adapters/fileUtil"
 
 import fs from "fs"
 
+import { Effect, flow } from "effect-app"
 import { makeMemoryStoreInt, storeId } from "./Memory.js"
 import type { PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
@@ -60,7 +61,7 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
 
     yield* $(store.all.flatMap(fsStore.setRaw))
 
-    const sem = Semaphore.unsafeMake(1)
+    const sem = Effect.unsafeMakeSemaphore(1)
     const withPermit = sem.withPermits(1)
     const flushToDisk = store.all.flatMap(fsStore.setRaw).pipe(withPermit)
     const flushToDiskInBackground = flushToDisk
@@ -106,7 +107,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
         config?: StoreConfig<PM>
       ) =>
         Effect.gen(function*($) {
-          const storesSem = Semaphore.unsafeMake(1)
+          const storesSem = Effect.unsafeMakeSemaphore(1)
           const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, seed, config?.defaultValues))
           const stores = new Map<string, Store<PM, Id>>([["primary", primary]])
           const ctx = yield* $(Effect.context<R>())

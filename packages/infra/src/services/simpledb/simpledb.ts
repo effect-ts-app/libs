@@ -1,3 +1,5 @@
+import type { Scope } from "effect-app"
+import { Context, Effect, Option, Unify } from "effect-app"
 import type { CachedRecord, DBRecord, EffectMap } from "./shared.js"
 import { makeMap, OptimisticLockException } from "./shared.js"
 
@@ -26,7 +28,7 @@ export function makeLiveRecordCache() {
 export interface RecordCache extends ReturnType<typeof makeLiveRecordCache> {}
 
 // module tag
-export const RecordCache = GenericTag<RecordCache>("@services/RecordCache")
+export const RecordCache = Context.GenericTag<RecordCache>("@services/RecordCache")
 
 export const LiveRecordCache = Effect.sync(() => makeLiveRecordCache()).toLayer(RecordCache)
 
@@ -90,7 +92,9 @@ export function store<R, E, R2, E2, TKey extends string, EA, A extends DBRecord<
       c
         .find(record.id)
         .mapOpt((x) => x.version)
-        .flatMap((_) => _.match({ onNone: () => save(record, Option.none()), onSome: confirmVersionAndSave(record) }))
+        .flatMap((_) =>
+          Unify.unify(_.match({ onNone: () => save(record, Option.none()), onSome: confirmVersionAndSave(record) }))
+        )
         .tap((r) => c.set(record.id, r))
         .map((r) => r.data)
     )

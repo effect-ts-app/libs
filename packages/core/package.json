@@ -179,16 +179,6 @@
         "default": "./_cjs/Option.cjs"
       }
     },
-    "./Prelude": {
-      "import": {
-        "types": "./dist/Prelude.d.ts",
-        "default": "./dist/Prelude.js"
-      },
-      "require": {
-        "types": "./dist/Prelude.d.ts",
-        "default": "./_cjs/Prelude.cjs"
-      }
-    },
     "./Set": {
       "import": {
         "types": "./dist/Set.d.ts",
@@ -219,16 +209,6 @@
         "default": "./_cjs/Unify.cjs"
       }
     },
-    "./_ext/Iterable": {
-      "import": {
-        "types": "./dist/_ext/Iterable.d.ts",
-        "default": "./dist/_ext/Iterable.js"
-      },
-      "require": {
-        "types": "./dist/_ext/Iterable.d.ts",
-        "default": "./_cjs/_ext/Iterable.cjs"
-      }
-    },
     "./_ext/ord.ext": {
       "import": {
         "types": "./dist/_ext/ord.ext.d.ts",
@@ -257,26 +237,6 @@
       "require": {
         "types": "./dist/_ext/pipe.ext.d.ts",
         "default": "./_cjs/_ext/pipe.ext.cjs"
-      }
-    },
-    "./_global": {
-      "import": {
-        "types": "./dist/_global.d.ts",
-        "default": "./dist/_global.js"
-      },
-      "require": {
-        "types": "./dist/_global.d.ts",
-        "default": "./_cjs/_global.cjs"
-      }
-    },
-    "./_global.ext": {
-      "import": {
-        "types": "./dist/_global.ext.d.ts",
-        "default": "./dist/_global.ext.js"
-      },
-      "require": {
-        "types": "./dist/_global.ext.d.ts",
-        "default": "./_cjs/_global.ext.cjs"
       }
     },
     "./global": {

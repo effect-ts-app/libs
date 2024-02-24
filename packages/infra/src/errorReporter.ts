@@ -1,5 +1,7 @@
 import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/node"
+import { Effect } from "effect-app"
+import type { Cause } from "effect-app"
 import { CauseException } from "./errors.js"
 import { RequestContextContainer } from "./services/RequestContextContainer.js"
 

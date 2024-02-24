@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Effect } from "effect-app"
+import { Ref } from "effect-app"
+import { Context, Effect } from "effect-app"
 import type { JSONSchema, SubSchema } from "../../JsonSchema/index.js"
 import { Ref as SchemaRef } from "../../JsonSchema/index.js"
 
@@ -8,7 +9,7 @@ export interface References {
   ref: Ref<Map<string, SubSchema>>
 }
 
-export const References = GenericTag<References>("@services/References")
+export const References = Context.GenericTag<References>("@services/References")
 
 export class UnsupportedOperation {
   readonly _tag = "UnsupportedOperation"
@@ -35,7 +36,7 @@ export function referenced(x?: ConfigExtensionRef) {
       return Effect.gen(function*(_) {
         const { ref } = yield* _(References)
         const jsonSchema = yield* _(schema)
-        yield* _(ref.update((m) => m.set(openapiRef, jsonSchema)))
+        yield* _(Ref.update(ref, (m) => m.set(openapiRef, jsonSchema)))
         return SchemaRef(`#/components/schemas/${openapiRef}`)
       })
     }

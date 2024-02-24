@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import { Cause } from "effect-app"
 import { makeFiberFailure } from "effect/Runtime"
 
 export * from "effect-app/client/errors"

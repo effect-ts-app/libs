@@ -1,3 +1,4 @@
+import { Option, pipe } from "@effect-app/core"
 import { isValidEmail, isValidPhone } from "@effect-app/core/validation"
 import { type A, type Email as EmailT, fromBrand, nominal, type PhoneNumber as PhoneNumberT } from "@effect-app/schema"
 import * as S from "@effect-app/schema"
@@ -35,7 +36,7 @@ export const PhoneNumber = S
   )
 
 export const makeIs = <A extends { _tag: string }, I, R>(
-  schema: Schema<A, I, R>
+  schema: S.Schema<A, I, R>
 ) => {
   if (S.AST.isUnion(schema.ast)) {
     return schema.ast.types.reduce((acc, t) => {
@@ -67,7 +68,7 @@ export const makeIs = <A extends { _tag: string }, I, R>(
 }
 
 export const makeIsAnyOf = <A extends { _tag: string }, I, R>(
-  schema: Schema<A, I, R>
+  schema: S.Schema<A, I, R>
 ): IsAny<A> => {
   if (S.AST.isUnion(schema.ast)) {
     return <Keys extends A["_tag"][]>(...keys: Keys) => (a: A): a is ExtractUnion<A, ElemType<Keys>> =>
@@ -77,7 +78,7 @@ export const makeIsAnyOf = <A extends { _tag: string }, I, R>(
 }
 
 export const extendTaggedUnion = <A extends { _tag: string }, I, R>(
-  schema: Schema<A, I, R>
+  schema: S.Schema<A, I, R>
 ) => extendM(schema, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_) }))
 
 export type ExtractUnion<A extends { _tag: string }, Tags extends A["_tag"]> = Extract<A, Record<"_tag", Tags>>

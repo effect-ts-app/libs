@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Misc, Union } from "ts-toolbelt"
-
+import type { NonEmptyReadonlyArray, Option } from "./Prelude.js"
 import type * as SET from "./Set.js"
 
 // type SomeObject = {
@@ -16,8 +16,8 @@ import type * as SET from "./Set.js"
 // type test1 = Transform<SomeObject[]>
 
 type OptOf<A> = Union.Exclude<
-  A extends Some<infer X> ? X | null : A,
-  None<any>
+  A extends Option.Some<infer X> ? X | null : A,
+  Option.None<any>
 >
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 

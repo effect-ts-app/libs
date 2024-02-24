@@ -1,4 +1,6 @@
+import type { Effect } from "effect-app"
 import { NonEmptyString255 } from "effect-app/schema"
+import { TagClassId } from "effect-app/service"
 import type { makeCUPS } from "./live.js"
 
 export const PrinterId = NonEmptyString255

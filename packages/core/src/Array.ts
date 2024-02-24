@@ -1,11 +1,11 @@
+import * as T from "effect/Effect"
 import * as ReadonlyArray from "effect/ReadonlyArray"
 import type { NoInfer } from "effect/Types"
-import { dual, identity } from "./Function.js"
+import type { Predicate } from "./Function.js"
+import { dual, identity, tuple } from "./Function.js"
 import * as Option from "./Option.js"
-
-import * as T from "effect/Effect"
-
-import type { NonEmptyReadonlyArray } from "./Prelude.js"
+import { Chunk } from "./Prelude.js"
+import type { Effect, NonEmptyArray, NonEmptyReadonlyArray, Order } from "./Prelude.js"
 
 /**
  * @tsplus getter ReadonlyArray toNonEmpty

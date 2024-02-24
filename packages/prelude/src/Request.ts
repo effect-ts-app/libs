@@ -1,6 +1,8 @@
+import type { Schema } from "@effect-app/schema"
 import type { ClientResponse } from "@effect/platform/Http/ClientResponse"
 import type { Headers } from "@effect/platform/Http/Headers"
 import { type HttpClient, HttpClientError, HttpHeaders } from "./http.js"
+import { Effect, S } from "./lib.js"
 
 export interface ResponseWithBody<A> extends Pick<ClientResponse, "headers" | "status" | "remoteAddress"> {
   readonly body: A

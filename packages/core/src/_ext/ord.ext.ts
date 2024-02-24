@@ -1,4 +1,5 @@
 import * as CNK from "effect/Chunk"
+import type { Chunk, Equivalence } from "../Prelude.js"
 
 /**
  * @tsplus getter Generator toArray

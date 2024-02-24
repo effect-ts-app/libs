@@ -5,9 +5,6 @@
             "esnext",
         ],
         "tsPlusConfig": "../../tsplus.config.json",
-        //        "tsPlusGlobalFiles": [
-        //            "./src/_global.ts"
-        //        ],
         "moduleResolution": "Node16",
         "outDir": "./dist",
         "rootDir": "./src",

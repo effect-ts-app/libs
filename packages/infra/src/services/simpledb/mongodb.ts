@@ -1,4 +1,5 @@
 import { MongoClient } from "@effect-app/infra-adapters/mongo-client"
+import { Effect, Option } from "effect-app"
 import type { IndexDescription, InsertOneOptions } from "mongodb"
 import type { CachedRecord, DBRecord } from "./shared.js"
 import { OptimisticLockException } from "./shared.js"

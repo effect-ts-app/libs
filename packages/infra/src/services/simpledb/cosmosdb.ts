@@ -2,6 +2,7 @@ import type { IndexingPolicy } from "@azure/cosmos"
 import { typedKeysOf } from "@effect-app/core/utils"
 
 import * as Cosmos from "@effect-app/infra-adapters/cosmos-client"
+import { Data, Effect, Option } from "effect-app"
 import type { CachedRecord, DBRecord } from "./shared.js"
 import { OptimisticLockException } from "./shared.js"
 import * as simpledb from "./simpledb.js"

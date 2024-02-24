@@ -7,7 +7,10 @@ import { reportError } from "@effect-app/infra/errorReporter"
 import type { ValidationError } from "@effect-app/infra/errors"
 import type { RequestContextContainer } from "@effect-app/infra/services/RequestContextContainer"
 import type { ContextMapContainer } from "@effect-app/infra/services/Store/ContextMapContainer"
-import type { REST, StructFields } from "effect-app/schema"
+import type { Layer } from "effect-app"
+import { Effect, FiberRef, S } from "effect-app"
+import { NonEmptyString255 } from "effect-app/schema"
+import type { REST, Schema, StructFields } from "effect-app/schema"
 import type { HttpRequestError } from "../http.js"
 import { HttpBody, HttpRouteContext, HttpServerRequest, HttpServerResponse } from "../http.js"
 import { makeRequestParsers, parseRequestParams } from "./base.js"
@@ -108,7 +111,7 @@ export function makeRequestHandler<
 > {
   const { Request, Response, h: handle } = handler
 
-  const response: REST.ReqRes<any, any, any> = Response ? Response : Void
+  const response: REST.ReqRes<any, any, any> = Response ? Response : S.void
   const resp = response as typeof response & { struct?: Schema<any, any, any> }
   // TODO: consider if the alternative of using the struct schema is perhaps just better.
   const encoder = "struct" in resp && resp.struct
@@ -180,7 +183,7 @@ export function makeRequestHandler<
                   return hn
                 })
                 .flatMap((parsedReq) =>
-                  handle(parsedReq as any)
+                  handle(parsedReq)
                     .provideService(handler.Request.Tag, parsedReq as any)
                     .flatMap(encoder)
                     .map((r) =>

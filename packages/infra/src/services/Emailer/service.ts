@@ -1,6 +1,9 @@
+import type { Email, NonEmptyString255 } from "@effect-app/schema"
 import type { MailContent, MailData } from "@sendgrid/helpers/classes/mail.js"
 import type { ResponseError } from "@sendgrid/mail"
 import type sgMail from "@sendgrid/mail"
+import type { Effect, NonEmptyReadonlyArray, Secret } from "effect-app"
+import { TagClassId } from "effect-app/service"
 
 /**
  * @tsplus type Emailer
@@ -15,7 +18,7 @@ export interface SendgridConfig {
   subjectPrefix: string
   realMail: boolean
   defaultFrom: Email | { name?: NonEmptyString255; email: Email }
-  apiKey: Secret
+  apiKey: Secret.Secret
 }
 export type EmailMsg = sgMail.MailDataRequired
 export type EmailTemplateMsg = MailData & { templateId: string }

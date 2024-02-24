@@ -1,3 +1,4 @@
+import { Data, Effect, Option } from "effect-app"
 import * as S from "effect-app/schema"
 
 export class CouldNotAquireDbLockException
@@ -35,7 +36,7 @@ export class SerializedDBRecord extends S.Class<SerializedDBRecord>()({
 
 // unknown -> string -> SDB?
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function makeSerialisedDBRecord(s: Schema<any>) {
+export function makeSerialisedDBRecord(s: S.Schema<any>) {
   return S.struct({
     version: S.number,
     timestamp: S.Date,

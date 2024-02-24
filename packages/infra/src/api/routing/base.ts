@@ -5,9 +5,10 @@ import * as S from "effect-app/schema"
 
 import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import { ValidationError } from "@effect-app/infra/errors"
+import type { Context } from "effect-app"
+import { Effect, Option } from "effect-app"
 import type { REST, StructFields } from "effect-app/schema"
 import type { Simplify } from "effect/Types"
-import type express from "express"
 import type { HttpRequestError, HttpRoute } from "../http.js"
 
 export type Flatten<T extends object> = object extends T ? object : {
@@ -249,20 +250,6 @@ function makeError(type: string) {
   return (e: unknown) => [{ type, errors: decodeErrors(e) }]
 }
 
-export function respondSuccess<ReqA, A, E>(
-  encodeResponse: (req: ReqA) => Encode<A, E>
-) {
-  return (req: ReqA, res: express.Response) =>
-    flow(encodeResponse(req), Effect.succeed, (_) =>
-      _.flatMap((r) =>
-        Effect.sync(() => {
-          r === undefined
-            ? res.status(204).send()
-            : res.status(200).send(JSON.stringify(r))
-        })
-      ))
-}
-
 export function makeRequestParsers<
   R,
   M,
@@ -299,7 +286,7 @@ export function makeRequestParsers<
   const ph = Effect.sync(() =>
     Option
       .fromNullable(Request.Headers)
-      .map((s) => s as unknown as Schema<any>)
+      .map((s) => s as unknown as S.Schema<any>)
       .map(S.decodeUnknown)
   )
   const parseHeaders = (u: unknown) => ph.flatMapOpt((d) => d(u))
@@ -307,7 +294,7 @@ export function makeRequestParsers<
   const pq = Effect.sync(() =>
     Option
       .fromNullable(Request.Query)
-      .map((s) => s as unknown as Schema<any>)
+      .map((s) => s as unknown as S.Schema<any>)
       .map(S.decodeUnknown)
   )
   const parseQuery = (u: unknown) => pq.flatMapOpt((d) => d(u))
@@ -315,7 +302,7 @@ export function makeRequestParsers<
   const pb = Effect.sync(() =>
     Option
       .fromNullable(Request.Body)
-      .map((s) => s as unknown as Schema<any>)
+      .map((s) => s as unknown as S.Schema<any>)
       .map(S.decodeUnknown)
   )
   const parseBody = (u: unknown) => pb.flatMapOpt((d) => d(u))
@@ -323,7 +310,7 @@ export function makeRequestParsers<
   const pp = Effect.sync(() =>
     Option
       .fromNullable(Request.Path)
-      .map((s) => s as unknown as Schema<any>)
+      .map((s) => s as unknown as S.Schema<any>)
       .map(S.decodeUnknown)
   )
   const parsePath = (u: unknown) => pp.flatMapOpt((d) => d(u))
@@ -331,7 +318,7 @@ export function makeRequestParsers<
   const pc = Effect.sync(() =>
     Option
       .fromNullable(Request.Cookie)
-      .map((s) => s as unknown as Schema<any>)
+      .map((s) => s as unknown as S.Schema<any>)
       .map(S.decodeUnknown)
   )
   const parseCookie = (u: unknown) => pc.flatMapOpt((d) => d(u))
@@ -382,7 +369,7 @@ export type Request<
   Body?: BodyA
   Query?: QueryA
   Headers?: HeaderA
-  Tag: Tag<M, M>
+  Tag: Context.Tag<M, M>
   ReqA?: ReqA
 }
 

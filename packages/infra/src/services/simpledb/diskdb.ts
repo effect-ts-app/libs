@@ -4,6 +4,7 @@ import * as PLF from "proper-lockfile"
 
 import { pretty } from "@effect-app/core/utils"
 import * as fu from "@effect-app/infra-adapters/fileUtil"
+import { Effect, Option } from "effect-app"
 import type { CachedRecord, DBRecord, Index } from "./shared.js"
 import { ConnectionException, CouldNotAquireDbLockException, getIndexName, getRecordName } from "./shared.js"
 import * as simpledb from "./simpledb.js"

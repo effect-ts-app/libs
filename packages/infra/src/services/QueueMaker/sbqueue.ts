@@ -10,9 +10,10 @@ import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { Tracer } from "effect"
-import type { S } from "effect-app"
+import { Effect, flow, Layer, type S } from "effect-app"
 import { RequestId } from "effect-app/ids"
-import { struct } from "effect-app/schema"
+import type { StringId } from "effect-app/schema"
+import { NonEmptyString255, struct } from "effect-app/schema"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
@@ -41,7 +42,7 @@ export function makeServiceBusQueue<
   return Effect.gen(function*($) {
     const s = yield* $(Sender)
     const receiver = yield* $(Receiver)
-    const receiverLayer = Receiver.makeLayer(receiver)
+    const receiverLayer = Layer.succeed(Receiver, receiver)
     const silenceAndReportError = reportNonInterruptedFailure({ name: "ServiceBusQueue.drain." + queueDrainName })
     const reportError = reportNonInterruptedFailureCause({ name: "ServiceBusQueue.drain." + queueDrainName })
     const rcc = yield* $(RequestContextContainer)

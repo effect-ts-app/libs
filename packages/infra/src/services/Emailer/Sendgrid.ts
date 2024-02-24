@@ -1,6 +1,7 @@
 import { dropUndefinedT } from "@effect-app/core/utils"
 import type { EmailData } from "@sendgrid/helpers/classes/email-address.js"
 import sgMail from "@sendgrid/mail"
+import { Effect, Equivalence } from "effect-app"
 import { inspect } from "util"
 import { Emailer } from "./service.js"
 import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.js"
@@ -108,7 +109,6 @@ function renderFakeIfTest(addr: EmailData | EmailData[], makeId: () => number) {
     ? addr
       .map((x) => (isTestAddress(x) ? renderFake(x, makeId) : x))
       .dedupeWith(eq)
-      .toArray
     : isTestAddress(addr)
     ? renderFake(addr, makeId)
     : addr

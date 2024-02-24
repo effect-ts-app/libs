@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import type { Option } from "../Option.js"
+
 export const Method = {
   GET: null,
   POST: null,

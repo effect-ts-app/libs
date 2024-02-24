@@ -2,8 +2,10 @@
 
 import type * as Either from "effect/Either"
 import { not } from "effect/Predicate"
-import { identity } from "./Function.js"
+import type { Predicate, Refinement } from "./Function.js"
+import { identity, tuple } from "./Function.js"
 import { Option } from "./Option.js"
+import type { Equivalence, Order } from "./Prelude.js"
 
 /**
  * @tsplus fluent ets/Set find

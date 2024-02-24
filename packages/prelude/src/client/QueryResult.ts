@@ -1,6 +1,7 @@
 // TODO: Convert to effect/core
 
 /* eslint-disable @typescript-eslint/ban-types */
+import { Data, type Effect, Option } from "@effect-app/core"
 import * as Either from "effect/Either"
 
 export class Initial extends Data.TaggedClass("Initial")<{}> {}

@@ -5,12 +5,12 @@
             "es2020"
         ],
         "moduleResolution": "Node16",
-        "baseUrl": "./",
         "outDir": "./dist",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
         "noEmit": false,
         "rootDir": "./src",
         "tsPlusConfig": "../../tsplus.config.json",
+        "tsPlusEnabled": false
     },
     "include": [
         "./src"

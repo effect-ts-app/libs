@@ -8,31 +8,34 @@ import type {
   ServiceBusSender
 } from "@azure/service-bus"
 import { ServiceBusClient } from "@azure/service-bus"
+import { Context, Effect, Layer, Runtime } from "effect-app"
 
 function makeClient(url: string) {
-  return Effect.sync(() => new ServiceBusClient(url)).acquireRelease(
+  return Effect.acquireRelease(
+    Effect.sync(() => new ServiceBusClient(url)),
     (client) => Effect.promise(() => client.close())
   )
 }
 
-const Client = GenericTag<ServiceBusClient>("@services/Client")
-export const LiveServiceBusClient = (url: string) => makeClient(url).toLayerScoped(Client)
+const Client = Context.GenericTag<ServiceBusClient>("@services/Client")
+export const LiveServiceBusClient = (url: string) => Layer.scoped(Client)(makeClient(url))
 
 function makeSender(queueName: string) {
   return Effect.gen(function*($) {
     const serviceBusClient = yield* $(Client)
 
     return yield* $(
-      Effect.sync(() => serviceBusClient.createSender(queueName)).acquireRelease(
+      Effect.acquireRelease(
+        Effect.sync(() => serviceBusClient.createSender(queueName)),
         (subscription) => Effect.promise(() => subscription.close())
       )
     )
   })
 }
-export const Sender = GenericTag<ServiceBusSender>("@services/Sender")
+export const Sender = Context.GenericTag<ServiceBusSender>("@services/Sender")
 
 export function LiveSender(queueName: string) {
-  return makeSender(queueName).toLayerScoped(Sender)
+  return Layer.scoped(Sender, makeSender(queueName))
 }
 
 function makeReceiver(queueName: string) {
@@ -40,16 +43,17 @@ function makeReceiver(queueName: string) {
     const serviceBusClient = yield* $(Client)
 
     return yield* $(
-      Effect.sync(() => serviceBusClient.createReceiver(queueName)).acquireRelease(
+      Effect.acquireRelease(
+        Effect.sync(() => serviceBusClient.createReceiver(queueName)),
         (r) => Effect.promise(() => r.close())
       )
     )
   })
 }
 
-export const Receiver = GenericTag<ServiceBusReceiver>("@services/Receiver")
+export const Receiver = Context.GenericTag<ServiceBusReceiver>("@services/Receiver")
 export function LiveReceiver(queueName: string) {
-  return makeReceiver(queueName).toLayerScoped(Receiver)
+  return Layer.scoped(Receiver, makeReceiver(queueName))
 }
 
 export function sendMessages(
@@ -67,34 +71,35 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
     const r = yield* $(Receiver)
 
     yield* $(
-      Effect
-        .runtime<RMsg | RErr>()
-        .map((rt) =>
-          r.subscribe({
-            processError: (err) =>
-              rt.runPromise(
-                hndlr
-                  .processError(err)
-                  .catchAllCause((cause) => Effect.logError("ServiceBus Error", cause))
-              ),
-            processMessage: (msg) =>
-              rt.runPromise(
-                hndlr.processMessage(msg)
-              )
-            // DO NOT CATCH ERRORS here as they should return to the queue!
-          })
-        )
-        .acquireRelease(
-          (subscription) => Effect.promise(() => subscription.close())
-        )
+      Effect.acquireRelease(
+        Effect.map(
+          Effect
+            .runtime<RMsg | RErr>(),
+          (rt) =>
+            r.subscribe({
+              processError: (err) =>
+                Runtime.runPromise(rt)(
+                  hndlr
+                    .processError(err)
+                    .pipe(Effect.catchAllCause((cause) => Effect.logError("ServiceBus Error", cause)))
+                ),
+              processMessage: (msg) =>
+                Runtime.runPromise(rt)(
+                  hndlr.processMessage(msg)
+                )
+              // DO NOT CATCH ERRORS here as they should return to the queue!
+            })
+        ),
+        (subscription) => Effect.promise(() => subscription.close())
+      )
     )
   })
 }
 
-const SubscribeTag = GenericTag<Effect.Success<ReturnType<typeof subscribe>>>("@services/SubscribeTag")
+const SubscribeTag = Context.GenericTag<Effect.Success<ReturnType<typeof subscribe>>>("@services/SubscribeTag")
 
 export function Subscription<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
-  return subscribe(hndlr).toLayerScoped(SubscribeTag)
+  return Layer.scoped(SubscribeTag, subscribe(hndlr))
 }
 
 export interface MessageHandlers<RMsg, RErr> {

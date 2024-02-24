@@ -1,3 +1,4 @@
+import type { Effect } from "effect-app"
 import { logError, reportError } from "../errorReporter.js"
 
 /**

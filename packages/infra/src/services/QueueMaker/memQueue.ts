@@ -1,6 +1,8 @@
 import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
+import { NonEmptyString255, struct } from "@effect-app/schema"
 import { Tracer } from "effect"
+import { Effect, flow } from "effect-app"
 import type { S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import { RequestContextContainer } from "../RequestContextContainer.js"
@@ -11,8 +13,8 @@ import { type QueueBase, QueueMeta } from "./service.js"
  * @tsplus static QueueMaker.Ops makeMem
  */
 export function makeMemQueue<
-  Evt extends { id: StringId; _tag: string },
-  DrainEvt extends { id: StringId; _tag: string },
+  Evt extends { id: S.StringId; _tag: string },
+  DrainEvt extends { id: S.StringId; _tag: string },
   EvtE,
   DrainEvtE
 >(
@@ -38,8 +40,8 @@ export function makeMemQueue<
           const currentSpan = yield* $(Effect.currentSpan.orDie)
           const span = Tracer.externalSpan(currentSpan)
           return yield* $(
-            messages
-              .forEachEffect((m) =>
+            Effect
+              .forEach(messages, (m) =>
                 // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
                 wireSchema
                   .encode({ body: m, meta: { requestContext, span } })
@@ -47,8 +49,7 @@ export function makeMemQueue<
                   .andThen(JSON.stringify)
                   // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))
                   .flatMap((_) => q.offer(_))
-                  .asUnit
-              )
+                  .asUnit)
               .forkDaemonReportQueue
           )
         }),

@@ -7,8 +7,7 @@ import type * as Methods from "./Methods.js"
 
 import type { FromStruct, Schema, StructFields, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
-import { GenericTag } from "effect/Context"
-import type * as Context from "effect/Context"
+import * as Context from "effect/Context"
 import type { Simplify } from "effect/Types"
 import type { AST } from "./schema.js"
 
@@ -18,7 +17,7 @@ export type AnyRecord = Record<string, any>
 
 export type AnyRecordSchema = S.Schema<AnyRecord, AnyRecord>
 
-const RequestTag = GenericTag<never, never>("@services/RequestTag")
+const RequestTag = Context.GenericTag<never, never>("@services/RequestTag")
 
 export { Methods }
 

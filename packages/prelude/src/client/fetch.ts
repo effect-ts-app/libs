@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Effect } from "@effect-app/core"
+import { Effect, Option } from "@effect-app/core"
 import { constant } from "@effect-app/core/Function"
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { ReadonlyRecord } from "effect"
-import type { REST } from "effect-app/schema"
+import type { REST, Schema } from "effect-app/schema"
+import { StringId } from "effect-app/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
 import { ApiConfig } from "./config.js"
+import type { SupportedErrors } from "./errors.js"
 import {
   InvalidStateError,
   NotFoundError,
@@ -16,11 +18,13 @@ import {
   ValidationError
 } from "./errors.js"
 
+import type { ResponseError } from "@effect/platform/Http/ClientError"
 import { HttpClient, HttpClientRequest } from "../http.js"
+import { S } from "../lib.js"
 
 export type FetchError = HttpError<string>
 
-export class ResponseError {
+export class ResError {
   public readonly _tag = "ResponseError"
   constructor(public readonly error: unknown) {}
 }
@@ -54,7 +58,7 @@ const getClient = Effect.flatMap(HttpClient.Client, (defaultClient) =>
         )
         .catchTag(
           "ResponseError",
-          (err) => {
+          (err): Effect<FetchResponse<unknown>, ResponseError | SupportedErrors> => {
             const toError = <R, From, To>(s: Schema<To, From, R>) =>
               err.response.json.flatMap((_) => s.decodeUnknown(_).catchAll(() => Effect.fail(err))).flatMap(Effect.fail)
 
@@ -80,7 +84,7 @@ const getClient = Effect.flatMap(HttpClient.Client, (defaultClient) =>
             return Effect.fail(err)
           }
         )
-        .catchTags({
+        .pipe(HttpClient.catchTags({
           "ResponseError": (err) =>
             err
               .response
@@ -94,7 +98,7 @@ const getClient = Effect.flatMap(HttpClient.Client, (defaultClient) =>
                 } as HttpResponseError<unknown>)
               ),
           "RequestError": (err) => Effect.fail({ _tag: "HttpErrorRequest", error: err.error } as HttpRequestError)
-        })
+        }))
     ))
 
 export function fetchApi(
@@ -127,7 +131,7 @@ export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, Response
 ) {
   const encodeRequest = request.encode
   const decRes = response.decodeUnknown
-  const decodeRes = (u: unknown) => decRes(u).mapError((err) => new ResponseError(err))
+  const decodeRes = (u: unknown) => decRes(u).mapError((err) => new ResError(err))
   return (method: Method, path: Path) => (req: RequestTo) => {
     return encodeRequest(req).andThen((encoded) =>
       fetchApi(

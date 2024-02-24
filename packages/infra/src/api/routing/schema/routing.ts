@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { Context } from "effect-app"
 import type { REST } from "effect-app/schema"
 
 export type Request<
@@ -19,7 +20,7 @@ export type Request<
   Body?: REST.ReqRes<BodyA, unknown, any>
   Query?: REST.ReqRes<QueryA, Record<string, string>, any>
   Headers?: REST.ReqRes<HeaderA, Record<string, string>, any>
-  Tag: Tag<M, M>
+  Tag: Context.Tag<M, M>
 }
 
 export interface RouteRequestHandler<

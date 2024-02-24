@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Update = Must return updated items
 // Modify = Must `set` updated items, and can return anything.
-import type { FixEnv } from "effect-app/Pure"
+import { NonNegativeInt } from "@effect-app/schema"
+import { Effect } from "effect-app"
+import type { NonEmptyArray, NonEmptyReadonlyArray, Option } from "effect-app"
+import type { FixEnv, PureEnv } from "effect-app/Pure"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../../errors.js"
 import { NotFoundError } from "../../errors.js"
 import type { Filter, PersistenceModelType } from "../../services/Store.js"
@@ -23,7 +26,7 @@ export function get<
 ) {
   return self
     .find(id)
-    .flatMap((_) => _.encaseInEffect(() => new NotFoundError<ItemType>({ type: self.itemType, id })))
+    .flatMap((_) => _.mapError(() => new NotFoundError<ItemType>({ type: self.itemType, id })))
 }
 
 /**
@@ -208,7 +211,7 @@ export function queryEffect<
   return map.flatMap((f) =>
     (f.filter ? self.utils.filter(f) : self.utils.all)
       .flatMap((_) => self.utils.parseMany(_))
-      .map((_) => f.collect ? _.filterMap(f.collect) : _ as any as S[])
+      .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
   )
 }
 
@@ -257,9 +260,9 @@ export function queryOneEffect<
     (f.filter ? self.utils.filter({ filter: f.filter, limit: 1 }) : self.utils.all)
       .flatMap((_) => self.utils.parseMany(_))
       .flatMap((_) =>
-        (f.collect ? _.filterMap(f.collect) : _ as any as S[])
+        (f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
           .toNonEmpty
-          .encaseInEffect(() => new NotFoundError<ItemType>({ type: self.itemType, id: f.filter }))
+          .mapError(() => new NotFoundError<ItemType>({ type: self.itemType, id: f.filter }))
           .map((_) => _[0])
       )
   )
@@ -630,14 +633,15 @@ export function saveManyWithPureBatched_<
   pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>,
   batchSize = 100
 ) {
-  return items
-    .chunk(batchSize)
-    .forEachEffect((batch) =>
+  return Effect.forEach(
+    items
+      .chunk(batchSize),
+    (batch) =>
       saveAllWithEffectInt(
         self,
         pure.runTerm(batch)
       )
-    )
+  )
 }
 
 /**

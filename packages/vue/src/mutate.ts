@@ -21,8 +21,10 @@ export function make<R, E, A>(self: Effect<FetchResponse<A>, E, R>) {
         ? new Loading()
         : new Refreshing(result.value)
     })
-    .andThen(queryResult(self.map((_) => _.body)))
-    .flatMap((r) => Effect.sync(() => result.value = r))
+    .pipe(
+      Effect.andThen(queryResult(Effect.map(self, (_) => _.body))),
+      Effect.flatMap((r) => Effect.sync(() => result.value = r))
+    )
 
   const latestSuccess = computed(() => {
     const value = result.value
@@ -128,30 +130,32 @@ export const useSafeMutation: {
         .sync(() => {
           state.value = { _tag: "Loading" }
         })
-        .andThen(effect)
-        .tap(() =>
-          Effect.suspend(() => {
-            const key = makeQueryKey(self.name)
-            const ns = key.filter((_) => _.startsWith("$"))
-            const nses: string[] = []
-            for (let i = 0; i < ns.length; i++) {
-              nses.push(ns.slice(0, i + 1).join("/"))
-            }
-            return Effect.promise(() => queryClient.invalidateQueries({ queryKey: [ns[0]] }))
-            // TODO: more efficient invalidation, including args etc
-            // return Effect.promise(() => queryClient.invalidateQueries({
-            //   predicate: (_) => nses.includes(_.queryKey.filter((_) => _.startsWith("$")).join("/"))
-            // }))
+        .pipe(
+          Effect.andThen(effect),
+          Effect.tap(() =>
+            Effect.suspend(() => {
+              const key = makeQueryKey(self.name)
+              const ns = key.filter((_) => _.startsWith("$"))
+              const nses: string[] = []
+              for (let i = 0; i < ns.length; i++) {
+                nses.push(ns.slice(0, i + 1).join("/"))
+              }
+              return Effect.promise(() => queryClient.invalidateQueries({ queryKey: [ns[0]] }))
+              // TODO: more efficient invalidation, including args etc
+              // return Effect.promise(() => queryClient.invalidateQueries({
+              //   predicate: (_) => nses.includes(_.queryKey.filter((_) => _.startsWith("$")).join("/"))
+              // }))
+            })
+          ),
+          Effect.exit,
+          Effect.flatMap(handleExit),
+          Effect.fork,
+          Effect.flatMap((f) => {
+            const cancel = () => run.value(Fiber.interrupt(f))
+            abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
+            return Fiber.join(f)
           })
         )
-        .pipe(Effect.exit)
-        .flatMap(handleExit)
-        .pipe(Effect.fork)
-        .flatMap((f) => {
-          const cancel = () => run.value(Fiber.interrupt(f))
-          abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
-          return Fiber.join(f)
-        })
     )
   }
 

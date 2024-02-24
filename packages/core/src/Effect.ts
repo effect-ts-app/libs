@@ -2,10 +2,15 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
+import { Ref } from "effect"
 import * as Def from "effect/Deferred"
+import type { Semaphore } from "effect/Effect"
+import { Effect } from "effect/Effect"
 import * as Fiber from "effect/Fiber"
+import * as FiberRef from "effect/FiberRef"
 import { Option } from "effect/Option"
 import { curry } from "./Function.js"
+import { HashMap, type Context } from "./index.js"
 import { typedKeysOf } from "./utils.js"
 
 export * from "effect/Effect"
@@ -119,12 +124,12 @@ export const await_ = Def.await
  * Ref has atomic modify support if synchronous, for Effect we need a Semaphore.
  * @tsplus fluent effect/io/Ref modifyWithEffect
  */
-export function modifyWithPermitWithEffect<A>(ref: Ref<A>, semaphore: Semaphore) {
+export function modifyWithPermitWithEffect<A>(ref: Ref.Ref<A>, semaphore: Semaphore) {
   const withPermit = semaphore.withPermits(1)
   return <R, E, A2>(mod: (a: A) => Effect<readonly [A2, A], E, R>) =>
     withPermit(
-      ref
-        .get
+      Ref
+        .get(ref)
         .flatMap(mod)
         .tap(([, _]) => ref.set(_))
         .map(([_]) => _)
@@ -139,8 +144,12 @@ export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<A, E>>): Effect<reado
   return Fiber.join(Fiber.all(fibers))
 }
 
-export type Service<T> = T extends Effect<infer S, any, any> ? S : T extends Tag<any, infer S> ? S : never
-export type ServiceR<T> = T extends Effect<any, any, infer R> ? R : T extends Tag<infer R, any> ? R : never
+export type Service<T> = T extends Effect<infer S, any, any> ? S
+  : T extends Context.Tag<any, infer S> ? S
+  : never
+export type ServiceR<T> = T extends Effect<any, any, infer R> ? R
+  : T extends Context.Tag<infer R, any> ? R
+  : never
 export type ServiceE<T> = T extends Effect<any, infer E, any> ? E : never
 export type Values<T> = T extends { [s: string]: infer S } ? Service<S> : never
 export type ValuesR<T> = T extends { [s: string]: infer S } ? ServiceR<S> : never
@@ -164,14 +173,14 @@ export interface EffectUnunified<R, E, A> extends Effect<R, E, A> {}
 
 export type LowerFirst<S extends PropertyKey> = S extends `${infer First}${infer Rest}` ? `${Lowercase<First>}${Rest}`
   : S
-export type LowerServices<T extends Record<string, Tag<any, any> | Effect<any, any, any>>> = {
+export type LowerServices<T extends Record<string, Context.Tag<any, any> | Effect<any, any, any>>> = {
   [key in keyof T as LowerFirst<key>]: Service<T[key]>
 }
 
 /**
  * @tsplus static effect/io/Effect.Ops allLower
  */
-export function allLower<T extends Record<string, Tag<any, any> | Effect<any, any, any>>>(
+export function allLower<T extends Record<string, Context.Tag<any, any> | Effect<any, any, any>>>(
   services: T
 ) {
   return Effect.all(
@@ -187,7 +196,7 @@ export function allLower<T extends Record<string, Tag<any, any> | Effect<any, an
 /**
  * @tsplus static effect/io/Effect.Ops allLowerWith
  */
-export function allLowerWith<T extends Record<string, Tag<any, any> | Effect<any, any, any>>, A>(
+export function allLowerWith<T extends Record<string, Context.Tag<any, any> | Effect<any, any, any>>, A>(
   services: T,
   fn: (services: LowerServices<T>) => A
 ) {
@@ -197,9 +206,49 @@ export function allLowerWith<T extends Record<string, Tag<any, any> | Effect<any
 /**
  * @tsplus static effect/io/Effect.Ops allLowerWithEffect
  */
-export function allLowerWithEffect<T extends Record<string, Tag<any, any> | Effect<any, any, any>>, R, E, A>(
+export function allLowerWithEffect<T extends Record<string, Context.Tag<any, any> | Effect<any, any, any>>, R, E, A>(
   services: T,
   fn: (services: LowerServices<T>) => Effect<A, E, R>
 ) {
   return allLower(services).flatMap(fn)
+}
+
+/**
+ * Recovers from all errors.
+ *
+ * @tsplus static effect/io/Effect.Ops catchAllMap
+ * @tsplus pipeable effect/io/Effect catchAllMap
+ */
+export function catchAllMap<E, A2>(f: (e: E) => A2) {
+  return <R, A>(self: Effect<A, E, R>): Effect<A2 | A, never, R> => self.catchAll((err) => Effect.sync(() => f(err)))
+}
+
+/**
+ * Annotates each log in this scope with the specified log annotation.
+ *
+ * @tsplus static effect/io/Effect.Ops annotateLogscoped
+ */
+export function annotateLogscoped(key: string, value: string) {
+  return FiberRef
+    .currentLogAnnotations
+    .get
+    .flatMap((annotations) =>
+      Effect.suspend(() => FiberRef.currentLogAnnotations.locallyScoped(annotations.set(key, value)))
+    )
+}
+
+/**
+ * Annotates each log in this scope with the specified log annotations.
+ *
+ * @tsplus static effect/io/Effect.Ops annotateLogsScoped
+ */
+export function annotateLogsScoped(kvps: Record<string, string>) {
+  return FiberRef
+    .currentLogAnnotations
+    .get
+    .flatMap((annotations) =>
+      Effect.suspend(() =>
+        FiberRef.currentLogAnnotations.locallyScoped(HashMap.fromIterable([...annotations, ...kvps.$$.entries]))
+      )
+    )
 }

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Lens } from "@fp-ts/optic"
-import { identity } from "./Function.js"
-
 import * as OPTIC from "@fp-ts/optic"
-
 import { dual } from "effect/Function"
+import { identity } from "./Function.js"
+import { Effect } from "./Prelude.js"
+import { lazyGetter } from "./utils.js"
 
 export * from "@fp-ts/optic"
 

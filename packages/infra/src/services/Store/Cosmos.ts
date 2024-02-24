@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { CosmosClient, CosmosClientLayer } from "@effect-app/infra-adapters/cosmos-client"
-import { dropUndefinedT, omit, pick } from "effect-app/utils"
+import { Duration, Effect, Option } from "effect-app"
+import type { NonEmptyReadonlyArray } from "effect-app"
+import { dropUndefinedT, omit, pick, spread } from "effect-app/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
 import {
   buildCosmosQuery,
@@ -87,45 +89,45 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 const batches = b.chunk(config?.maxBulkSize ?? 10).toReadonlyArray
 
                 const batchResult = yield* $(
-                  batches
-                    .map((x, i) => [i, x] as const)
-                    .forEachEffect(
-                      ([i, batch]) =>
-                        Effect
-                          .promise(() => bulk(batch.map(([, op]) => op)))
-                          .delay(Duration.millis(i === 0 ? 0 : 1100))
-                          .flatMap((responses) =>
-                            Effect.gen(function*($) {
-                              const r = responses.find((x) => x.statusCode === 412 || x.statusCode === 404)
-                              if (r) {
-                                return yield* $(
-                                  Effect.fail(
-                                    new OptimisticConcurrencyException(
-                                      { type: name, id: JSON.stringify(r.resourceBody?.["id"]) }
-                                    )
+                  Effect.forEach(
+                    batches
+                      .map((x, i) => [i, x] as const),
+                    ([i, batch]) =>
+                      Effect
+                        .promise(() => bulk(batch.map(([, op]) => op)))
+                        .delay(Duration.millis(i === 0 ? 0 : 1100))
+                        .flatMap((responses) =>
+                          Effect.gen(function*($) {
+                            const r = responses.find((x) => x.statusCode === 412 || x.statusCode === 404)
+                            if (r) {
+                              return yield* $(
+                                Effect.fail(
+                                  new OptimisticConcurrencyException(
+                                    { type: name, id: JSON.stringify(r.resourceBody?.["id"]) }
                                   )
                                 )
-                              }
-                              const r2 = responses.find(
-                                (x) => x.statusCode > 299 || x.statusCode < 200
                               )
-                              if (r2) {
-                                return yield* $(
-                                  Effect.die(
-                                    new CosmosDbOperationError(
-                                      "not able to update record: " + r2.statusCode
-                                    )
+                            }
+                            const r2 = responses.find(
+                              (x) => x.statusCode > 299 || x.statusCode < 200
+                            )
+                            if (r2) {
+                              return yield* $(
+                                Effect.die(
+                                  new CosmosDbOperationError(
+                                    "not able to update record: " + r2.statusCode
                                   )
                                 )
-                              }
-                              return batch.map(([e], i) => ({
-                                ...e,
-                                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                                _etag: responses[i]!.eTag
-                              }))
-                            })
-                          )
-                    )
+                              )
+                            }
+                            return batch.map(([e], i) => ({
+                              ...e,
+                              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                              _etag: responses[i]!.eTag
+                            }))
+                          })
+                        )
+                  )
                 )
                 return batchResult.flat() as unknown as NonEmptyReadonlyArray<PM>
               })
@@ -146,7 +148,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                           resourceBody: {
                             ...omit(x, "_etag"),
                             _partitionKey: config?.partitionValue(x)
-                          } as any
+                          }
                         }),
                         onSome: (eTag) => ({
                           operationType: "Replace" as const,
@@ -154,7 +156,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                           resourceBody: {
                             ...omit(x, "_etag"),
                             _partitionKey: config?.partitionValue(x)
-                          } as any,
+                          },
                           ifMatch: eTag
                         })
                       })
@@ -221,21 +223,23 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               filter: FilterJoinSelect,
               cursor?: { skip?: number; limit?: number }
             ) =>
-              filter
-                .keys
-                .forEachEffect((k) =>
-                  Effect
-                    .sync(() => buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
-                    .tap((q) => logQuery(q))
-                    .flatMap((q) =>
-                      Effect.promise(() =>
-                        container
-                          .items
-                          .query<T>(q)
-                          .fetchAll()
-                          .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._ })))
+              Effect
+                .forEach(
+                  filter
+                    .keys,
+                  (k) =>
+                    Effect
+                      .sync(() => buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
+                      .tap((q) => logQuery(q))
+                      .flatMap((q) =>
+                        Effect.promise(() =>
+                          container
+                            .items
+                            .query<T>(q)
+                            .fetchAll()
+                            .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._ })))
+                        )
                       )
-                    )
                 )
                 .map((a) => {
                   const v = a
@@ -265,21 +269,23 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 // This is a problem if one of the multiple joined arrays can be empty!
                 // https://stackoverflow.com/questions/60320780/azure-cosmosdb-sql-join-not-returning-results-when-the-child-contains-empty-arra
                 // so we use multiple queries instead.
-                ? filter
-                  .keys
-                  .forEachEffect((k) =>
-                    Effect
-                      .sync(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
-                      .tap((q) => logQuery(q))
-                      .flatMap((q) =>
-                        Effect.promise(() =>
-                          container
-                            .items
-                            .query<M>(q)
-                            .fetchAll()
-                            .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._ })))
+                ? Effect
+                  .forEach(
+                    filter
+                      .keys,
+                    (k) =>
+                      Effect
+                        .sync(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
+                        .tap((q) => logQuery(q))
+                        .flatMap((q) =>
+                          Effect.promise(() =>
+                            container
+                              .items
+                              .query<M>(q)
+                              .fetchAll()
+                              .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._ })))
+                          )
                         )
-                      )
                   )
                   .map((_) => _.flatMap((_) => _))
                 : (filter.type === "new-kid"
@@ -412,7 +418,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               const m = yield* $(seed)
               yield* $(
                 Effect
-                  .succeed(m.toNonEmptyArray)
+                  .succeed([...m].toNonEmpty)
                   .flatMapOpt((a) =>
                     s
                       .bulkSet(a)

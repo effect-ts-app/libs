@@ -1,3 +1,4 @@
+import { Chunk, Equal } from "effect-app"
 import type { ObjectOps } from "effect-app/utils"
 import { inspect } from "util"
 import { NotFoundError } from "../errors.js"
@@ -17,7 +18,7 @@ export function getFirstById<A extends { id: unknown }, Type extends string>(
   return Chunk
     .fromIterable(a)
     .findFirst((_) => Equal.equals(_.id, id))
-    .encaseInEffect(() => new NotFoundError<Type>({ type, id }))
+    .mapError(() => new NotFoundError<Type>({ type, id }))
 }
 
 /**

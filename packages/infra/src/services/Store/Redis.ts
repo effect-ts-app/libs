@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { RedisClient, RedisClientLayer } from "@effect-app/infra-adapters/redis-client"
+import { Effect, Option } from "effect-app"
+import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
 import { NotFoundError } from "../../errors.js"
 import { memFilter } from "./Memory.js"
 import type { FilterJoinSelect, PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
@@ -30,21 +32,21 @@ function makeRedisStore({ prefix }: StorageConfig) {
           }
           const get = redis
             .get(key)
-            .flatMap((x) => x.encaseInEffect(() => new NotFoundError<"data">({ type: "data", id: "" })))
+            .flatMap((x) => x.mapError(() => new NotFoundError<"data">({ type: "data", id: "" })))
             .orDie
             .map((x) => JSON.parse(x) as { data: readonly PM[] })
             .map((_) => _.data)
 
           const set = (i: ReadonlyMap<Id, PM>) => redis.set(key, JSON.stringify({ data: [...i.values()] })).orDie
 
-          const sem = Semaphore.unsafeMake(1)
+          const sem = Effect.unsafeMakeSemaphore(1)
           const withPermit = sem.withPermits(1)
 
           const asMap = get.map((x) => new Map(x.map((x) => [x.id, x] as const)))
           const all = get.map(ReadonlyArray.fromIterable)
           const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
-            items
-              .forEachEffect((e) => s.find(e.id).flatMap((current) => updateETag(e, current)))
+            Effect
+              .forEach(items, (e) => s.find(e.id).flatMap((current) => updateETag(e, current)))
               .tap((items) =>
                 asMap
                   .map((m) => {

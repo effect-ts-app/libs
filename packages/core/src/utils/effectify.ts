@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
+import { Effect } from "../Prelude.js"
+
 interface Callback<E, A> {
   (err: E, a?: A): void
 }

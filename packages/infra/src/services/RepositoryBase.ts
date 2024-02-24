@@ -18,10 +18,14 @@ import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig,
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import { flatMapOption } from "@effect-app/core/Effect"
-import type { Opt } from "@effect-app/core/Option"
 import { makeFilters } from "@effect-app/infra/filter"
-import { Effect, S } from "effect-app"
-import { type FixEnv, runTerm } from "effect-app/Pure"
+import type { ParseResult, Schema } from "@effect-app/schema"
+import { NonNegativeInt } from "@effect-app/schema"
+import type { Context, NonEmptyArray, NonEmptyReadonlyArray, Option } from "effect-app"
+import { Chunk, Effect, flow, PubSub, S } from "effect-app"
+import { runTerm } from "effect-app/Pure"
+import type { FixEnv, PureEnv } from "effect-app/Pure"
+import { assignTag } from "effect-app/service"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import type { FieldValues } from "../filter/types.js"
 import { make as makeQuery, type QAll, type Query, query, type QueryProjection } from "./query.js"
@@ -67,7 +71,7 @@ export abstract class RepositoryBaseC<
   ItemType extends string
 > {
   abstract readonly itemType: ItemType
-  abstract readonly find: (id: T["id"]) => Effect<Opt<T>>
+  abstract readonly find: (id: T["id"]) => Effect<Option<T>>
   abstract readonly all: Effect<T[]>
   abstract readonly saveAndPublish: (
     items: Iterable<T>,
@@ -83,7 +87,7 @@ export abstract class RepositoryBaseC<
     filter: FilterFunc<PM>
     // count: (filter?: Filter<PM>) => Effect<never, never, NonNegativeInt>
   }
-  abstract readonly changeFeed: PubSub<[T[], "save" | "remove"]>
+  abstract readonly changeFeed: PubSub.PubSub<[T[], "save" | "remove"]>
   abstract readonly removeAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
@@ -160,7 +164,7 @@ export class RepositoryBaseC3<
   get(id: T["id"]) {
     return this
       .find(id)
-      .flatMap((_) => _.encaseInEffect(() => new NotFoundError<ItemType>({ type: this.itemType, id })))
+      .flatMap((_) => _.mapError(() => new NotFoundError<ItemType>({ type: this.itemType, id })))
   }
 
   readonly log = (evt: Evt) => AnyPureDSL.log(evt)
@@ -278,7 +282,7 @@ export class RepositoryBaseC3<
     return map.flatMap((f) =>
       (f.filter ? this.utils.filter(f) : this.utils.all)
         .flatMap((_) => this.utils.parseMany(_))
-        .map((_) => f.collect ? _.filterMap(f.collect) : _ as any as S[])
+        .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
     )
   }
 
@@ -306,9 +310,9 @@ export class RepositoryBaseC3<
       (f.filter ? this.utils.filter({ filter: f.filter, limit: 1 }) : this.utils.all)
         .flatMap((_) => this.utils.parseMany(_))
         .flatMap((_) =>
-          (f.collect ? _.filterMap(f.collect) : _ as any as S[])
+          (f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
             .toNonEmpty
-            .encaseInEffect(() => new NotFoundError<ItemType>({ type: this.itemType, id: f.filter }))
+            .mapError(() => new NotFoundError<ItemType>({ type: this.itemType, id: f.filter }))
             .map((_) => _[0])
         )
     )
@@ -553,14 +557,15 @@ export class RepositoryBaseC3<
     pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>,
     batchSize = 100
   ) {
-    return items
-      .chunk(batchSize)
-      .forEachEffect((batch) =>
+    return Effect.forEach(
+      items
+        .chunk(batchSize),
+      (batch) =>
         saveAllWithEffectInt(
           this,
           runTerm(pure, batch)
         )
-      )
+    )
   }
 
   readonly save = (...items: NonEmptyArray<T>) => this.saveAndPublish(items)
@@ -648,7 +653,7 @@ export function makeRepo<
         )
 
         const all = allE.flatMap((_) =>
-          _.forEachEffect((_) => decode(_), { concurrency: "inherit", batching: true }).orDie
+          Effect.forEach(_, (_) => decode(_), { concurrency: "inherit", batching: true }).orDie
         )
 
         const structSchema = schema as unknown as { struct: typeof schema }
@@ -698,7 +703,7 @@ export function makeRepo<
 
         const saveAllE = (a: Iterable<From>) =>
           Effect
-            .sync(() => a.toNonEmptyArray)
+            .sync(() => [...a].toNonEmpty)
             .flatMapOpt((a) =>
               Do(($) => {
                 const { get, set } = $(cms)
@@ -710,24 +715,33 @@ export function makeRepo<
             .asUnit
 
         const saveAll = (a: Iterable<T>) =>
-          a.toChunk.forEachEffect((_) => encode(_), { concurrency: "inherit", batching: true }).orDie.andThen(saveAllE)
+          Effect
+            .forEach(
+              Array.from(a),
+              (_) => encode(_),
+              { concurrency: "inherit", batching: true }
+            )
+            .orDie
+            .andThen(saveAllE)
 
         const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) => {
           const it = items.toChunk
           return saveAll(it)
-            .andThen(Effect.sync(() => events.toNonEmptyArray))
+            .andThen(Effect.sync(() => [...events].toNonEmpty))
             // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
             .flatMapOpt(pub)
             .andThen(changeFeed
-              .publish([it.toArray, "save"]))
+              .publish([Chunk.toArray(it), "save"]))
             .asUnit
         }
 
         function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
           return Effect.gen(function*($) {
             const { get, set } = yield* $(cms)
-            const it = a.toChunk
-            const items = yield* $(it.forEachEffect((_) => encode(_), { concurrency: "inherit", batching: true }).orDie)
+            const it = [...a]
+            const items = yield* $(
+              Effect.forEach(it, (_) => encode(_), { concurrency: "inherit", batching: true }).orDie
+            )
             // TODO: we should have a batchRemove on store so the adapter can actually batch...
             for (const e of items) {
               yield* $(store.remove(mapToPersistenceModel(e, get)))
@@ -735,12 +749,12 @@ export function makeRepo<
             }
             yield* $(
               Effect
-                .sync(() => events.toNonEmptyArray)
+                .sync(() => [...events].toNonEmpty)
                 // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
                 .flatMapOpt(pub)
             )
 
-            yield* $(changeFeed.publish([it.toArray, "remove"]))
+            yield* $(changeFeed.publish([it, "remove"]))
           })
         }
 
@@ -751,14 +765,14 @@ export function makeRepo<
           utils: {
             parseMany: (items) =>
               cms.flatMap((cm) =>
-                items
-                  .forEachEffect((_) => decode(mapReverse(_, cm.set)), { concurrency: "inherit", batching: true })
+                Effect
+                  .forEach(items, (_) => decode(mapReverse(_, cm.set)), { concurrency: "inherit", batching: true })
                   .orDie
               ),
             parseMany2: (items, schema) =>
               cms.flatMap((cm) =>
-                items
-                  .forEachEffect((_) => schema.decode(mapReverse(_, cm.set) as any), {
+                Effect
+                  .forEach(items, (_) => schema.decode(mapReverse(_, cm.set) as any), {
                     concurrency: "inherit",
                     batching: true
                   })
@@ -907,7 +921,7 @@ export function makeStore<
             pluralize(name),
             makeInitial
               ? (makeInitial
-                .flatMap((_) => _.forEachEffect(encodeToPM())))
+                .flatMap(Effect.forEach(encodeToPM())))
                 .withSpan("Repository.makeInitial [effect-app/infra]", {
                   attributes: { "repository.model_name": name }
                 })
@@ -1036,7 +1050,7 @@ export const RepositoryBaseImpl = <Service>() => {
     jitM?: (pm: From) => From
   ): Exact<PM, From & { _etag: string | undefined }> extends true ?
       & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
-      & Tag<Service, Service>
+      & Context.Tag<Service, Service>
       & Repos<
         T,
         PM,
@@ -1082,7 +1096,7 @@ export const RepositoryDefaultImpl = <Service>() => {
       & (abstract new(
         impl: Repository<T, PM, Evt, ItemType>
       ) => RepositoryBaseC3<T, PM, Evt, ItemType>)
-      & Tag<Service, Service>
+      & Context.Tag<Service, Service>
       & Repos<
         T,
         PM,

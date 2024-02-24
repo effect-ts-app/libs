@@ -1,3 +1,5 @@
+import { Context, Effect, FiberRef, Option } from "effect-app"
+import { TagClassId } from "effect-app/service"
 import { ContextMap } from "./service.js"
 
 // TODO: we have to create a new contextmap on every request.
@@ -34,4 +36,4 @@ export class ContextMapContainer extends TagClassId("effect-app/ContextMapContai
 }
 
 /** @tsplus static ContextMap.Ops Tag */
-export const RCTag = GenericTag<ContextMap>("@services/RCTag")
+export const RCTag = Context.GenericTag<ContextMap>("@services/RCTag")

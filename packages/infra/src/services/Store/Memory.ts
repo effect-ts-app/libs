@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { Effect, FiberRef, flow, Option, Order, pipe, Ref } from "effect-app"
+import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
 import { get, pick } from "effect-app/utils"
 import type { RequestContext } from "../../RequestContext.js"
 import type { FilterArgs, FilterJoinSelect, PersistenceModelType, Store, StoreConfig } from "./service.js"
@@ -29,7 +31,7 @@ export function memFilter<T extends PersistenceModelType<string>, U extends keyo
       )
     )
     if (ords.value) {
-      c = c.sortBy(...ords.value)
+      c = c.sortBy(...ords.value!)
     }
     if (!skip && limit === 1) {
       return select(
@@ -87,15 +89,15 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
 
     const items = new Map(items_.toChunk.map((_) => [_.id, { ...defaultValues, ..._ }] as const))
     const store = Ref.unsafeMake<ReadonlyMap<Id, PM>>(items)
-    const sem = Semaphore.unsafeMake(1)
+    const sem = Effect.unsafeMakeSemaphore(1)
     const withPermit = sem.withPermits(1)
     const values = store.get.map((s) => s.values())
 
     const all = values.map(ReadonlyArray.fromIterable)
 
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
-      items
-        .forEachEffect((i) => s.find(i.id).flatMap((current) => updateETag(i, current)))
+      Effect
+        .forEach(items, (i) => s.find(i.id).flatMap((current) => updateETag(i, current)))
         .tap((items) =>
           store
             .get
@@ -191,7 +193,7 @@ export const makeMemoryStore = () => ({
     config?: StoreConfig<PM>
   ) =>
     Effect.gen(function*($) {
-      const storesSem = Semaphore.unsafeMake(1)
+      const storesSem = Effect.unsafeMakeSemaphore(1)
       const primary = yield* $(makeMemoryStoreInt<Id, PM, R, E>(modelName, "primary", seed, config?.defaultValues))
       const ctx = yield* $(Effect.context<R>())
       const stores = new Map([["primary", primary]])

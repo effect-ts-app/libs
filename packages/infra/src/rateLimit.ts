@@ -23,6 +23,10 @@
 //   }
 // }
 
+import type { Semaphore } from "@effect-app/core/Effect"
+import type { Duration, NonEmptyArray } from "effect-app"
+import { Effect } from "effect-app"
+
 /**
  * Executes the specified effect, acquiring the specified number of permits
  * immediately before the effect begins execution and releasing them
@@ -60,15 +64,15 @@ export function batchPar<R, E, A, R2, E2, A2, T>(
   forEachBatch: (a: NonEmptyArray<A>, i: number) => Effect<A2, E2, R2>
 ) {
   return (items: Iterable<T>) =>
-    items
-      .chunk(n)
-      .forEachEffect(
-        (_, i) =>
-          _
-            .forEachEffect((_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
-            .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i)),
-        { concurrency: "inherit" }
-      )
+    Effect.forEach(
+      items
+        .chunk(n),
+      (_, i) =>
+        Effect
+          .forEach(_, (_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
+          .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i)),
+      { concurrency: "inherit" }
+    )
 }
 
 /**
@@ -81,13 +85,13 @@ export function batch<R, E, A, R2, E2, A2, T>(
   forEachBatch: (a: NonEmptyArray<A>, i: number) => Effect<A2, E2, R2>
 ) {
   return (items: Iterable<T>) =>
-    items
-      .chunk(n)
-      .forEachEffect((_, i) =>
-        _
-          .forEachEffect((_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
+    Effect.forEach(
+      items.chunk(n),
+      (_, i) =>
+        Effect
+          .forEach(_, (_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
           .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i))
-      )
+    )
 }
 
 // /**
@@ -117,20 +121,22 @@ export function batch<R, E, A, R2, E2, A2, T>(
 
 export function naiveRateLimit(
   n: number,
-  d: DUR
+  d: Duration
 ) {
   return <T>(items: Iterable<T>) => (<R, E, A, R2, E2, A2>(
     forEachItem: (i: T) => Effect<A, E, R>,
     forEachBatch: (a: A[]) => Effect<A2, E2, R2>
   ) =>
-    items
-      .chunk(n)
-      .forEachEffect((batch, i) =>
-        ((i === 0) ? Effect.unit : Effect.sleep(d))
+    Effect.forEach(
+      items.chunk(n),
+      (batch, i) =>
+        ((i === 0)
+          ? Effect.unit
+          : Effect.sleep(d))
           .zipRight(
-            batch
-              .forEachEffect(forEachItem, { concurrency: n })
+            Effect
+              .forEach(batch, forEachItem, { concurrency: n })
               .flatMap(forEachBatch)
           )
-      ))
+    ))
 }
