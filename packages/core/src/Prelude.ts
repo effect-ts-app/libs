@@ -14,6 +14,7 @@ import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as SET from "@effect-app/core/Set"
 import type * as CNK from "effect/Chunk"
 import type * as EITHER from "effect/Either"
+import type * as EQL from "effect/Equal"
 import type * as EQ from "effect/Equivalence"
 import type * as LAYER from "effect/Layer"
 import type * as O from "effect/Option"
@@ -76,6 +77,12 @@ export namespace Equivalence {
   export * from "effect/Equivalence"
 }
 export type Equivalence<A> = EQ.Equivalence<A>
+
+export namespace Equal {
+  // @ts-expect-error abc
+  export * from "effect/Equal"
+}
+export type Equal = EQL.Equal
 
 export namespace Chunk {
   // @ts-expect-error abc

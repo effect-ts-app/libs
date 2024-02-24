@@ -6,6 +6,6 @@ export * as Utils from "./utils.js"
 // for app land, it may make sense to create an app/prelude?
 export * from "./Prelude.js"
 
-export { Chunk, Effect, Either, Equivalence, Layer, Option, Order, ReadonlyArray, Scope } from "./Prelude.js"
+export { Chunk, Effect, Either, Equal, Equivalence, Layer, Option, Order, ReadonlyArray, Scope } from "./Prelude.js"
 
 export * from "effect"
