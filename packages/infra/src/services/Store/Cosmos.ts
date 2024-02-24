@@ -414,7 +414,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               const m = yield* $(seed)
               yield* $(
                 Effect
-                  .succeed(m.toNonEmptyArray)
+                  .succeed([...m].toNonEmpty)
                   .flatMapOpt((a) =>
                     s
                       .bulkSet(a)

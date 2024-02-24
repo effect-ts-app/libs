@@ -123,12 +123,12 @@ export function makeDSL<S1, S2, Evt>() {
 export interface DSLExt<S1, S2, Evt> extends ReturnType<typeof makeDSL<S1, S2, Evt>> {}
 
 export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effect<A, E, R>) {
-  return (items: Iterable<T>) => Effect.sync(() => items.toNonEmptyArray).flatMapOpt(fn)
+  return (items: Iterable<T>) => Effect.sync(() => [...items].toNonEmpty).flatMapOpt(fn)
 }
 
 /**
  * @tsplus fluent Iterable ifAny
  */
 export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<A, E, R>) {
-  return Effect.sync(() => items.toNonEmptyArray).flatMapOpt(fn)
+  return Effect.sync(() => [...items].toNonEmpty).flatMapOpt(fn)
 }

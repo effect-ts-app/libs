@@ -22,7 +22,7 @@ import { makeFilters } from "@effect-app/infra/filter"
 import type { ParseResult, Schema } from "@effect-app/schema"
 import { NonNegativeInt } from "@effect-app/schema"
 import type { Context, NonEmptyArray, NonEmptyReadonlyArray, Option } from "effect-app"
-import { Effect, flow, PubSub, S } from "effect-app"
+import { Chunk, Effect, flow, PubSub, S } from "effect-app"
 import { runTerm } from "effect-app/Pure"
 import type { FixEnv, PureEnv } from "effect-app/Pure"
 import { assignTag } from "effect-app/service"
@@ -87,7 +87,7 @@ export abstract class RepositoryBaseC<
     filter: FilterFunc<PM>
     // count: (filter?: Filter<PM>) => Effect<never, never, NonNegativeInt>
   }
-  abstract readonly changeFeed: PubSub<[T[], "save" | "remove"]>
+  abstract readonly changeFeed: PubSub.PubSub<[T[], "save" | "remove"]>
   abstract readonly removeAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
@@ -282,7 +282,7 @@ export class RepositoryBaseC3<
     return map.flatMap((f) =>
       (f.filter ? this.utils.filter(f) : this.utils.all)
         .flatMap((_) => this.utils.parseMany(_))
-        .map((_) => f.collect ? _.filterMap(f.collect) : _ as S[])
+        .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
     )
   }
 
@@ -310,7 +310,7 @@ export class RepositoryBaseC3<
       (f.filter ? this.utils.filter({ filter: f.filter, limit: 1 }) : this.utils.all)
         .flatMap((_) => this.utils.parseMany(_))
         .flatMap((_) =>
-          (f.collect ? _.filterMap(f.collect) : _ as S[])
+          (f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
             .toNonEmpty
             .mapError(() => new NotFoundError<ItemType>({ type: this.itemType, id: f.filter }))
             .map((_) => _[0])
@@ -557,14 +557,15 @@ export class RepositoryBaseC3<
     pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>,
     batchSize = 100
   ) {
-    return items
-      .chunk(batchSize)
-      .forEachEffect((batch) =>
+    return Effect.forEach(
+      items
+        .chunk(batchSize),
+      (batch) =>
         saveAllWithEffectInt(
           this,
           runTerm(pure, batch)
         )
-      )
+    )
   }
 
   readonly save = (...items: NonEmptyArray<T>) => this.saveAndPublish(items)
@@ -702,7 +703,7 @@ export function makeRepo<
 
         const saveAllE = (a: Iterable<From>) =>
           Effect
-            .sync(() => a.toNonEmptyArray)
+            .sync(() => [...a].toNonEmpty)
             .flatMapOpt((a) =>
               Do(($) => {
                 const { get, set } = $(cms)
@@ -714,24 +715,30 @@ export function makeRepo<
             .asUnit
 
         const saveAll = (a: Iterable<T>) =>
-          a.toChunk.forEachEffect((_) => encode(_), { concurrency: "inherit", batching: true }).orDie.andThen(saveAllE)
+          Array
+            .from(a)
+            .forEachEffect((_) => encode(_), { concurrency: "inherit", batching: true })
+            .orDie
+            .andThen(saveAllE)
 
         const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) => {
           const it = items.toChunk
           return saveAll(it)
-            .andThen(Effect.sync(() => events.toNonEmptyArray))
+            .andThen(Effect.sync(() => [...events].toNonEmpty))
             // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
             .flatMapOpt(pub)
             .andThen(changeFeed
-              .publish([it.toArray, "save"]))
+              .publish([Chunk.toArray(it), "save"]))
             .asUnit
         }
 
         function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
           return Effect.gen(function*($) {
             const { get, set } = yield* $(cms)
-            const it = a.toChunk
-            const items = yield* $(it.forEachEffect((_) => encode(_), { concurrency: "inherit", batching: true }).orDie)
+            const it = [...a]
+            const items = yield* $(
+              Effect.forEach(it, (_) => encode(_), { concurrency: "inherit", batching: true }).orDie
+            )
             // TODO: we should have a batchRemove on store so the adapter can actually batch...
             for (const e of items) {
               yield* $(store.remove(mapToPersistenceModel(e, get)))
@@ -739,12 +746,12 @@ export function makeRepo<
             }
             yield* $(
               Effect
-                .sync(() => events.toNonEmptyArray)
+                .sync(() => [...events].toNonEmpty)
                 // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
                 .flatMapOpt(pub)
             )
 
-            yield* $(changeFeed.publish([it.toArray, "remove"]))
+            yield* $(changeFeed.publish([it, "remove"]))
           })
         }
 

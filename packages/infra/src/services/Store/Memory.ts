@@ -11,7 +11,7 @@ import { codeFilter, codeFilterJoinSelect, makeUpdateETag } from "./utils.js"
 export function memFilter<T extends PersistenceModelType<string>, U extends keyof T = never>(f: FilterArgs<T, U>) {
   type M = U extends undefined ? T : Pick<T, U>
   return ((c: T[]): M[] => {
-    const select = (r: T[]): M[] => (f.select ? r.map((_) => pick(_, f.select)) : r) as any
+    const select = (r: T[]): M[] => (f.select ? r.map((_) => pick(_, f.select!)) : r) as any
     const skip = f?.skip
     const limit = f?.limit
     const ords = Option.fromNullable(f.order).map((_) =>
@@ -89,7 +89,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
 
     const items = new Map(items_.toChunk.map((_) => [_.id, { ...defaultValues, ..._ }] as const))
     const store = Ref.unsafeMake<ReadonlyMap<Id, PM>>(items)
-    const sem = Semaphore.unsafeMake(1)
+    const sem = Effect.unsafeMakeSemaphore(1)
     const withPermit = sem.withPermits(1)
     const values = store.get.map((s) => s.values())
 
@@ -193,7 +193,7 @@ export const makeMemoryStore = () => ({
     config?: StoreConfig<PM>
   ) =>
     Effect.gen(function*($) {
-      const storesSem = Semaphore.unsafeMake(1)
+      const storesSem = Effect.unsafeMakeSemaphore(1)
       const primary = yield* $(makeMemoryStoreInt<Id, PM, R, E>(modelName, "primary", seed, config?.defaultValues))
       const ctx = yield* $(Effect.context<R>())
       const stores = new Map([["primary", primary]])

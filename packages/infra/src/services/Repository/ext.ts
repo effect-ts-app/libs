@@ -211,7 +211,7 @@ export function queryEffect<
   return map.flatMap((f) =>
     (f.filter ? self.utils.filter(f) : self.utils.all)
       .flatMap((_) => self.utils.parseMany(_))
-      .map((_) => f.collect ? _.filterMap(f.collect) : _ as S[])
+      .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
   )
 }
 
@@ -260,7 +260,7 @@ export function queryOneEffect<
     (f.filter ? self.utils.filter({ filter: f.filter, limit: 1 }) : self.utils.all)
       .flatMap((_) => self.utils.parseMany(_))
       .flatMap((_) =>
-        (f.collect ? _.filterMap(f.collect) : _ as S[])
+        (f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
           .toNonEmpty
           .mapError(() => new NotFoundError<ItemType>({ type: self.itemType, id: f.filter }))
           .map((_) => _[0])
@@ -633,14 +633,15 @@ export function saveManyWithPureBatched_<
   pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>,
   batchSize = 100
 ) {
-  return items
-    .chunk(batchSize)
-    .forEachEffect((batch) =>
+  return Effect.forEach(
+    items
+      .chunk(batchSize),
+    (batch) =>
       saveAllWithEffectInt(
         self,
         pure.runTerm(batch)
       )
-    )
+  )
 }
 
 /**

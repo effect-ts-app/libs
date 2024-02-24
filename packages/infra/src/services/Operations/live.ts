@@ -1,12 +1,12 @@
+import { annotateLogscoped } from "@effect-app/core/Effect"
 import { reportError } from "@effect-app/infra/errorReporter"
 import { NonEmptyString2k } from "@effect-app/schema"
 import { subHours } from "date-fns"
 import type { Exit } from "effect-app"
-import { Duration, Effect, Option, Schedule } from "effect-app"
+import { copy, Duration, Effect, Option, Schedule } from "effect-app"
 import type { OperationProgress } from "effect-app/Operations"
 import { Failure, Operation, OperationId, Success } from "effect-app/Operations"
 import { Operations } from "./service.js"
-import { annotateLogscoped } from "@effect-app/core/Effect"
 
 const reportAppError = reportError("Operations.Cleanup")
 
@@ -42,27 +42,29 @@ const make = Effect.sync(() => {
         if (_.isNone()) {
           throw new Error("Not found")
         }
-        ops.set(id, {
-          ..._.value,
-          updatedAt: new Date(),
-          result: exit.isSuccess()
-            ? new Success()
-            : new Failure({
-              message: exit.cause.isInterrupted()
-                ? NonEmptyString2k("Interrupted")
-                : exit.cause.isDie()
-                ? NonEmptyString2k("Unknown error")
-                : exit
-                  .cause
-                  .failureOption
-                  .flatMap((_) =>
-                    typeof _ === "object" && _ !== null && "message" in _ && NonEmptyString2k.is(_.message)
-                      ? Option.some(_.message)
-                      : Option.none()
-                  )
-                  .value ?? null
-            })
-        })
+        ops.set(
+          id,
+          copy(_.value, {
+            updatedAt: new Date(),
+            result: exit.isSuccess()
+              ? new Success()
+              : new Failure({
+                message: exit.cause.isInterrupted()
+                  ? NonEmptyString2k("Interrupted")
+                  : exit.cause.isDie()
+                  ? NonEmptyString2k("Unknown error")
+                  : exit
+                    .cause
+                    .failureOption
+                    .flatMap((_) =>
+                      typeof _ === "object" && _ !== null && "message" in _ && NonEmptyString2k.is(_.message)
+                        ? Option.some(_.message)
+                        : Option.none()
+                    )
+                    .value ?? null
+              })
+          })
+        )
       })
     )
   }
@@ -72,7 +74,7 @@ const make = Effect.sync(() => {
         if (_.isNone()) {
           throw new Error("Not found")
         }
-        ops.set(id, { ..._.value, updatedAt: new Date(), progress })
+        ops.set(id, copy(_.value, { updatedAt: new Date(), progress }))
       })
     )
   }
