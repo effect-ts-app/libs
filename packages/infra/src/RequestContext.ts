@@ -1,3 +1,4 @@
+import { TaggedClass, NonEmptyString255, struct, literal } from "@effect-app/schema"
 import { S } from "effect-app"
 import { RequestId, UserProfileId } from "effect-app/ids"
 

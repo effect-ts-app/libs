@@ -3,7 +3,7 @@ import { RequestContext } from "@effect-app/infra/RequestContext"
 import { NonEmptyString255, struct } from "@effect-app/schema"
 import { Tracer } from "effect"
 import { Effect, flow } from "effect-app"
-import type { S, StringId } from "effect-app"
+import type { S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure } from "./errors.js"
@@ -13,8 +13,8 @@ import { type QueueBase, QueueMeta } from "./service.js"
  * @tsplus static QueueMaker.Ops makeMem
  */
 export function makeMemQueue<
-  Evt extends { id: StringId; _tag: string },
-  DrainEvt extends { id: StringId; _tag: string },
+  Evt extends { id: S.StringId; _tag: string },
+  DrainEvt extends { id: S.StringId; _tag: string },
   EvtE,
   DrainEvtE
 >(

@@ -1,5 +1,6 @@
 import { pretty } from "effect-app/utils"
 import { Emailer } from "./service.js"
+import { Effect } from "effect-app"
 
 const makeFake = Effect
   .logDebug("FAKE Emailer Service enabled")

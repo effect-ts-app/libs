@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { CosmosClient, CosmosClientLayer } from "@effect-app/infra-adapters/cosmos-client"
-import { dropUndefinedT, omit, pick } from "effect-app/utils"
+import { Duration, Effect, Option } from "effect-app"
+import type { NonEmptyReadonlyArray } from "effect-app"
+import { dropUndefinedT, omit, pick, spread } from "effect-app/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
 import {
   buildCosmosQuery,
@@ -146,7 +148,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                           resourceBody: {
                             ...omit(x, "_etag"),
                             _partitionKey: config?.partitionValue(x)
-                          } as any
+                          }
                         }),
                         onSome: (eTag) => ({
                           operationType: "Replace" as const,
@@ -154,7 +156,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                           resourceBody: {
                             ...omit(x, "_etag"),
                             _partitionKey: config?.partitionValue(x)
-                          } as any,
+                          },
                           ifMatch: eTag
                         })
                       })

@@ -3,6 +3,7 @@
 // Modify = Must `set` updated items, and can return anything.
 import { NonNegativeInt } from "@effect-app/schema"
 import { Effect } from "effect-app"
+import type { NonEmptyArray, NonEmptyReadonlyArray, Option } from "effect-app"
 import type { FixEnv, PureEnv } from "effect-app/Pure"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../../errors.js"
 import { NotFoundError } from "../../errors.js"
@@ -10,15 +11,6 @@ import type { Filter, PersistenceModelType } from "../../services/Store.js"
 import type { RepositoryBaseC } from "../RepositoryBase.js"
 import type { QueryBuilder } from "../Store/filterApi/query.js"
 import { AnyPureDSL } from "./dsl.js"
-
-import type {
-  NonEmptyArray,
-  NonEmptyArray,
-  NonEmptyReadonlyArray,
-  NonEmptyReadonlyArray,
-  Option,
-  Option
-} from "effect-app"
 
 /**
  * @tsplus fluent Repository get

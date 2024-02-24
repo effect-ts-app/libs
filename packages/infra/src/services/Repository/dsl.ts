@@ -1,7 +1,7 @@
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { Effect } from "effect-app"
 import { Pure } from "effect-app/Pure"
-import type { PureEnvEnv, PureLogT } from "effect-app/Pure"
+import type { FixEnv, PureEnvEnv, PureLogT } from "effect-app/Pure"
 
 export interface PureDSL<S, S2, W> {
   get: Pure<never, S, S, never, never, S>

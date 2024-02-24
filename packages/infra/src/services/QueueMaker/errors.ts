@@ -1,4 +1,6 @@
 import { reportError } from "@effect-app/infra/errorReporter"
+import type { Cause, Exit } from "effect-app"
+import { Effect } from "effect-app"
 
 const reportQueueError_ = reportError("Queue")
 
