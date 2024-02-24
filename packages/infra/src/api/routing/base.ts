@@ -6,10 +6,9 @@ import * as S from "effect-app/schema"
 import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import { ValidationError } from "@effect-app/infra/errors"
 import type { Context } from "effect-app"
-import { Effect, flow, Option } from "effect-app"
+import { Effect, Option } from "effect-app"
 import type { REST, StructFields } from "effect-app/schema"
 import type { Simplify } from "effect/Types"
-import type express from "express"
 import type { HttpRequestError, HttpRoute } from "../http.js"
 
 export type Flatten<T extends object> = object extends T ? object : {
@@ -249,20 +248,6 @@ export function parseRequestParams<
 
 function makeError(type: string) {
   return (e: unknown) => [{ type, errors: decodeErrors(e) }]
-}
-
-export function respondSuccess<ReqA, A, E>(
-  encodeResponse: (req: ReqA) => Encode<A, E>
-) {
-  return (req: ReqA, res: express.Response) =>
-    flow(encodeResponse(req), Effect.succeed, (_) =>
-      _.flatMap((r) =>
-        Effect.sync(() => {
-          r === undefined
-            ? res.status(204).send()
-            : res.status(200).send(JSON.stringify(r))
-        })
-      ))
 }
 
 export function makeRequestParsers<

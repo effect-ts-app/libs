@@ -96,36 +96,6 @@
         "default": "./_cjs/api/codec.cjs"
       }
     },
-    "./api/defaultErrorHandler": {
-      "import": {
-        "types": "./dist/api/defaultErrorHandler.d.ts",
-        "default": "./dist/api/defaultErrorHandler.js"
-      },
-      "require": {
-        "types": "./dist/api/defaultErrorHandler.d.ts",
-        "default": "./_cjs/api/defaultErrorHandler.cjs"
-      }
-    },
-    "./api/express/schema/jwt": {
-      "import": {
-        "types": "./dist/api/express/schema/jwt.d.ts",
-        "default": "./dist/api/express/schema/jwt.js"
-      },
-      "require": {
-        "types": "./dist/api/express/schema/jwt.d.ts",
-        "default": "./_cjs/api/express/schema/jwt.cjs"
-      }
-    },
-    "./api/express/schema/routing": {
-      "import": {
-        "types": "./dist/api/express/schema/routing.d.ts",
-        "default": "./dist/api/express/schema/routing.js"
-      },
-      "require": {
-        "types": "./dist/api/express/schema/routing.d.ts",
-        "default": "./_cjs/api/express/schema/routing.cjs"
-      }
-    },
     "./api/http": {
       "import": {
         "types": "./dist/api/http.d.ts",
@@ -194,6 +164,26 @@
       "require": {
         "types": "./dist/api/routing/match.d.ts",
         "default": "./_cjs/api/routing/match.cjs"
+      }
+    },
+    "./api/routing/schema/jwt": {
+      "import": {
+        "types": "./dist/api/routing/schema/jwt.d.ts",
+        "default": "./dist/api/routing/schema/jwt.js"
+      },
+      "require": {
+        "types": "./dist/api/routing/schema/jwt.d.ts",
+        "default": "./_cjs/api/routing/schema/jwt.cjs"
+      }
+    },
+    "./api/routing/schema/routing": {
+      "import": {
+        "types": "./dist/api/routing/schema/routing.d.ts",
+        "default": "./dist/api/routing/schema/routing.js"
+      },
+      "require": {
+        "types": "./dist/api/routing/schema/routing.d.ts",
+        "default": "./_cjs/api/routing/schema/routing.cjs"
       }
     },
     "./api/setupRequest": {
