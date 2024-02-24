@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Context, Effect, Ref } from "effect-app"
+import type { Ref } from "effect-app"
+import { Context, Effect } from "effect-app"
 import type { JSONSchema, SubSchema } from "../../JsonSchema/index.js"
 import { Ref as SchemaRef } from "../../JsonSchema/index.js"
 

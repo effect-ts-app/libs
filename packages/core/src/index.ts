@@ -13,11 +13,13 @@ export {
   Either,
   Equal,
   Equivalence,
+  FiberRef,
   HashMap,
   Layer,
   Option,
   Order,
   ReadonlyArray,
+  Ref,
   Scope
 } from "./Prelude.js"
 

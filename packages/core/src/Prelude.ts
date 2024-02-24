@@ -17,10 +17,12 @@ import type * as CFG from "effect/Config"
 import type * as EITHER from "effect/Either"
 import type * as EQL from "effect/Equal"
 import type * as EQ from "effect/Equivalence"
+import type * as FR from "effect/FiberRef"
 import type * as HM from "effect/HashMap"
 import type * as LAYER from "effect/Layer"
 import type * as O from "effect/Option"
 import type * as ORD from "effect/Order"
+import type * as REF from "effect/Ref"
 import type * as SCOPE from "effect/Scope"
 
 export type { NonEmptyArray, NonEmptyReadonlyArray } from "@effect-app/core/Array"
@@ -56,6 +58,20 @@ export namespace Order {
 }
 /** @tsplus type effect/data/Order */
 export type Order<A> = ORD.Order<A>
+
+export namespace Ref {
+  // @ts-expect-error abc
+  export * from "effect/Ref"
+}
+/** @tsplus type effect/data/Ref */
+export type Ref<A> = REF.Ref<A>
+
+export namespace FiberRef {
+  // @ts-expect-error abc
+  export * from "effect/FiberRef"
+}
+/** @tsplus type effect/data/FiberRef */
+export type FiberRef<A> = FR.FiberRef<A>
 
 export namespace HashMap {
   // @ts-expect-error abc
