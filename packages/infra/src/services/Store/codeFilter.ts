@@ -99,7 +99,7 @@ export const codeFilterStatement = <E>(p: FilterR, x: E) => {
 // }
 
 export const codeFilter3 = <E>(state: readonly FilterResult[]) => (sut: E) => codeFilter3_(state, sut)
-export const codeFilter3_ = <E>(state: readonly FilterResult[], sut: E): boolean => {
+export const codeFilter3_ = <E>(state: readonly FilterResult[], sut: E, statements: any[] = []): boolean => {
   let s = ""
   let l = 0
   const printN = (n: number) => {
@@ -111,30 +111,33 @@ export const codeFilter3_ = <E>(state: readonly FilterResult[], sut: E): boolean
   for (const e of state) {
     switch (e.t) {
       case "where":
-        s += process(e)
+        statements.push(() => process(e))
+        s += `statements[${statements.length - 1}]()`
         break
       case "or":
-        s += " || " + process(e)
+        statements.push(() => process(e))
+        s += " || " + `statements[${statements.length - 1}]()`
         break
       case "and":
-        s += " && " + process(e)
+        statements.push(() => process(e))
+        s += " && " + `statements[${statements.length - 1}]()`
         break
       case "or-scope": {
         ;++l
-        s += ` || (\n${printN(l + 1)}${codeFilter3_(e.result, sut)}\n${printN(l)})`
+        s += ` || (\n${printN(l + 1)}${codeFilter3_(e.result, sut, statements)}\n${printN(l)})`
         ;--l
         break
       }
       case "and-scope": {
         ;++l
-        s += ` && (\n${printN(l + 1)}${codeFilter3_(e.result, sut)}\n${printN(l)})`
+        s += ` && (\n${printN(l + 1)}${codeFilter3_(e.result, sut, statements)}\n${printN(l)})`
         ;--l
 
         break
       }
       case "where-scope": {
         // ;++l
-        s += `(\n${printN(l + 1)}${codeFilter3_(e.result, sut)}\n)`
+        s += `(\n${printN(l + 1)}${codeFilter3_(e.result, sut, statements)}\n)`
         // ;--l
         break
       }
