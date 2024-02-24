@@ -175,16 +175,6 @@
         "default": "./_cjs/ServiceBus.cjs"
       }
     },
-    "./_global": {
-      "import": {
-        "types": "./dist/_global.d.ts",
-        "default": "./dist/_global.js"
-      },
-      "require": {
-        "types": "./dist/_global.d.ts",
-        "default": "./_cjs/_global.cjs"
-      }
-    },
     "./cosmos-client": {
       "import": {
         "types": "./dist/cosmos-client.d.ts",

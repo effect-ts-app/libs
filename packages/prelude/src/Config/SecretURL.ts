@@ -1,9 +1,10 @@
 /**
  * @since 1.0.0
  */
+import type { Equal } from "@effect-app/core"
+import { Config } from "@effect-app/core"
 import type * as Chunk from "effect/Chunk"
 import * as Either from "effect/Either"
-import type * as Equal from "effect/Equal"
 import type { SecretTypeId } from "effect/Secret"
 import * as internal from "./internal/configSecretURL.js"
 

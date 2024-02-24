@@ -133,36 +133,6 @@
         "default": "./_cjs/_ext/misc.cjs"
       }
     },
-    "./_global": {
-      "import": {
-        "types": "./dist/_global.d.ts",
-        "default": "./dist/_global.js"
-      },
-      "require": {
-        "types": "./dist/_global.d.ts",
-        "default": "./_cjs/_global.cjs"
-      }
-    },
-    "./_global.ext": {
-      "import": {
-        "types": "./dist/_global.ext.d.ts",
-        "default": "./dist/_global.ext.js"
-      },
-      "require": {
-        "types": "./dist/_global.ext.d.ts",
-        "default": "./_cjs/_global.ext.cjs"
-      }
-    },
-    "./_global.schema": {
-      "import": {
-        "types": "./dist/_global.schema.d.ts",
-        "default": "./dist/_global.schema.js"
-      },
-      "require": {
-        "types": "./dist/_global.schema.d.ts",
-        "default": "./_cjs/_global.schema.cjs"
-      }
-    },
     "./client": {
       "import": {
         "types": "./dist/client.d.ts",

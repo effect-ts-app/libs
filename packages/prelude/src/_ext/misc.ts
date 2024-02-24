@@ -1,3 +1,5 @@
+import { Effect, FiberRef, HashMap, pipe, type Scope } from "@effect-app/core"
+import type { LazyArg } from "@effect-app/core/Function"
 import type { ClientRequest } from "@effect/platform/Http/ClientRequest"
 import * as Either from "effect/Either"
 import type { Option } from "effect/Option"

@@ -86,36 +86,6 @@
         "default": "./_cjs/_ext/Array.cjs"
       }
     },
-    "./_global": {
-      "import": {
-        "types": "./dist/_global.d.ts",
-        "default": "./dist/_global.js"
-      },
-      "require": {
-        "types": "./dist/_global.d.ts",
-        "default": "./_cjs/_global.cjs"
-      }
-    },
-    "./_global.ext": {
-      "import": {
-        "types": "./dist/_global.ext.d.ts",
-        "default": "./dist/_global.ext.js"
-      },
-      "require": {
-        "types": "./dist/_global.ext.d.ts",
-        "default": "./_cjs/_global.ext.cjs"
-      }
-    },
-    "./_global.schema": {
-      "import": {
-        "types": "./dist/_global.schema.d.ts",
-        "default": "./dist/_global.schema.js"
-      },
-      "require": {
-        "types": "./dist/_global.schema.d.ts",
-        "default": "./_cjs/_global.schema.cjs"
-      }
-    },
     "./api/codec": {
       "import": {
         "types": "./dist/api/codec.d.ts",
