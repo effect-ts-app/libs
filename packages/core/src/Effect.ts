@@ -10,7 +10,7 @@ import * as Fiber from "effect/Fiber"
 import * as FiberRef from "effect/FiberRef"
 import { Option } from "effect/Option"
 import { curry } from "./Function.js"
-import { HashMap, type Context } from "./index.js"
+import { type Context, HashMap } from "./index.js"
 import { typedKeysOf } from "./utils.js"
 
 export * from "effect/Effect"

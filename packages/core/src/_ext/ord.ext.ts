@@ -1,5 +1,5 @@
-import * as CNK from "effect/Chunk"
-import type { Chunk, Equivalence } from "../Prelude.js"
+import { Chunk } from "../Prelude.js"
+import type { Equivalence } from "../Prelude.js"
 
 /**
  * @tsplus getter Generator toArray
@@ -18,11 +18,11 @@ export function toArray<A>(
  */
 export function uniq<A>(E: Equivalence<A>) {
   return (self: Chunk<A>): Chunk<A> => {
-    let out = ([] as A[]).toChunk
+    let out = Chunk.fromIterable<A>([])
     for (let i = 0; i < self.length; i++) {
-      const a = self.unsafeGet(i)
-      if (!out.elem2(E, a)) {
-        out = out.append(a)
+      const a = Chunk.unsafeGet(self, i)
+      if (!elem(E, a)(out)) {
+        out = Chunk.append(out, a)
       }
     }
     return self.length === out.length ? self : out
@@ -40,15 +40,10 @@ export function uniq<A>(E: Equivalence<A>) {
 export function elem<A>(E: Equivalence<A>, value: A) {
   return (self: Chunk<A>): boolean => {
     for (let i = 0; i < self.length; i++) {
-      if (E(self.unsafeGet(i), value)) {
+      if (E(Chunk.unsafeGet(self, i), value)) {
         return true
       }
     }
     return false
   }
 }
-
-/**
- * @tsplus pipeable effect/data/Chunk partition
- */
-export const ChunkPartition = CNK.partition

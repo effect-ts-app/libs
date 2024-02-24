@@ -43,8 +43,8 @@ export const modify2 = lazyGetter(<S, A>(l: Lens<S, A>) => {
     <Evt extends readonly any[]>(s: S, f: (a: A) => readonly [A, ...Evt]): readonly [S, ...Evt]
     <Evt extends readonly any[]>(f: (a: A) => readonly [A, ...Evt]): (s: S) => readonly [S, ...Evt]
   } = dual(2, <Evt extends readonly any[]>(s: S, f: (a: A) => readonly [A, ...Evt]) => {
-    const [b, evt] = f(l.get(s))
-    return [l.replace(s, b), evt] as const
+    const [b, evt] = f(OPTIC.get(l)(s))
+    return [OPTIC.replace(l)(b)(s), evt] as const
   })
   return f
 })
@@ -57,7 +57,7 @@ export const replaceIfDefined = lazyGetter(<S, A>(l: Lens<S, A>) => {
   const f: {
     <B>(b: B | undefined, map: (b: B) => A): (s: S) => S
     <B>(map: (b: B) => A): (b: B | undefined) => (s: S) => S
-  } = dual(2, <B>(b: B | undefined, map: (b: B) => A) => b !== undefined ? l.replace(map(b)) : identity)
+  } = dual(2, <B>(b: B | undefined, map: (b: B) => A) => b !== undefined ? OPTIC.replace(l, map(b)) : identity)
   return f
 })
 
@@ -71,8 +71,8 @@ export const modifyM = lazyGetter(<S, A>(l: Lens<S, A>) => {
     <R, E>(f: (a: A) => Effect<A, E, R>): (s: S) => Effect<S, E, R>
   } = dual(2, <R, E>(a: S, mod: (b: A) => Effect<A, E, R>) =>
     Effect.gen(function*($) {
-      const b = yield* $(mod(l.get(a)))
-      return l.replace(b)(a)
+      const b = yield* $(mod(OPTIC.get(l)(a)))
+      return OPTIC.replace(l)(b)(a)
     }))
   return f
 })
@@ -94,8 +94,8 @@ export const modify2M = lazyGetter(<S, A>(l: Lens<S, A>) => {
     2,
     <R, E, Evt extends readonly any[]>(a: S, mod: (b: A) => Effect<readonly [A, ...Evt], E, R>) =>
       Effect.gen(function*($) {
-        const [b, evt] = yield* $(mod(l.get(a)))
-        return [l.replace(b)(a), evt] as const
+        const [b, evt] = yield* $(mod(OPTIC.get(l)(a)))
+        return [OPTIC.replace(l)(b)(a), evt] as const
       })
   )
   return f
