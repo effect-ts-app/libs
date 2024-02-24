@@ -1,5 +1,3 @@
-import "@effect-app/fluent-extensions"
-
 export * as Record from "@effect-app/core/Object"
 export * as Fnc from "./Function.js"
 export * as Utils from "./utils.js"

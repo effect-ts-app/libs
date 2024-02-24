@@ -259,26 +259,6 @@
         "default": "./_cjs/_ext/pipe.ext.cjs"
       }
     },
-    "./_global": {
-      "import": {
-        "types": "./dist/_global.d.ts",
-        "default": "./dist/_global.js"
-      },
-      "require": {
-        "types": "./dist/_global.d.ts",
-        "default": "./_cjs/_global.cjs"
-      }
-    },
-    "./_global.ext": {
-      "import": {
-        "types": "./dist/_global.ext.d.ts",
-        "default": "./dist/_global.ext.js"
-      },
-      "require": {
-        "types": "./dist/_global.ext.d.ts",
-        "default": "./_cjs/_global.ext.cjs"
-      }
-    },
     "./global": {
       "import": {
         "types": "./dist/global.d.ts",

@@ -1,6 +1,8 @@
+import type { Predicate, Refinement } from "./Function.js"
 import { Option } from "./Option.js"
 
 import * as Chunk from "effect/Chunk"
+import type { Equivalence } from "./index.js"
 
 export * from "effect/Chunk"
 
