@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.198.1
+
+### Patch Changes
+
+- f51afb5: fix api
+
 ## 0.198.0
 
 ### Minor Changes
