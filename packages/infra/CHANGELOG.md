@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.198.0
+
+### Minor Changes
+
+- 32b21bf: lazy codeFilter3 statements
+
 ## 0.197.0
 
 ### Minor Changes
