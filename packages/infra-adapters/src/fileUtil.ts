@@ -12,12 +12,11 @@ export function readFile(fileName: string) {
 }
 
 export function createReadableStream(fileName: string) {
-  return openFile(fileName)
-    .map((file) => file.createReadStream())
+  return Effect.map(openFile(fileName), (file) => file.createReadStream())
 }
 
 export function openFile(fileName: string) {
-  return Effect.tryPromise(() => fs.open(fileName)).acquireRelease((f) => Effect.promise(() => f.close()))
+  return Effect.acquireRelease(Effect.tryPromise(() => fs.open(fileName)), (f) => Effect.promise(() => f.close()))
 }
 
 export function tempFile(
@@ -46,16 +45,20 @@ export function tempFile_(
   data: Data,
   options?: Options
 ) {
-  return Effect
-    .sync(() => path.join(os.tmpdir(), folder, `${prefix}-` + crypto.randomUUID()))
-    .flatMap((fp) =>
-      Effect
-        .tryPromise(() => fs.writeFile(fp, data, options))
-        .map((_) => fp)
-        .acquireRelease(
-          (p) => Effect.promise(() => fs.unlink(p))
-        )
-    )
+  return Effect.flatMap(
+    Effect
+      .sync(() => path.join(os.tmpdir(), folder, `${prefix}-` + crypto.randomUUID())),
+    (fp) =>
+      Effect.acquireRelease(
+        Effect
+          .map(
+            Effect
+              .tryPromise(() => fs.writeFile(fp, data, options)),
+            (_) => fp
+          ),
+        (p) => Effect.promise(() => fs.unlink(p))
+      )
+  )
 }
 
 /**
@@ -63,18 +66,18 @@ export function tempFile_(
  */
 export function writeTextFile(fileName: string, content: string) {
   const tmp = fileName + ".tmp"
-  return (
-    Effect
-      .tryPromise(() => fs.writeFile(tmp, content, "utf-8"))
-      .andThen(Effect.tryPromise(() => fs.rename(tmp, fileName)))
-  )
-    .orDie
+  return Effect
+    .andThen(
+      Effect
+        .tryPromise(() => fs.writeFile(tmp, content, "utf-8")),
+      Effect.tryPromise(() => fs.rename(tmp, fileName))
+    )
+    .pipe(Effect.orDie)
 }
 
 export function fileExists(fileName: string) {
-  return Effect
-    .tryPromise(() => fs.stat(fileName).then((_) => _.isFile()))
-    .orDie
+  return Effect.orDie(Effect
+    .tryPromise(() => fs.stat(fileName).then((_) => _.isFile())))
 }
 
 export function readTextFile(fileName: string) {

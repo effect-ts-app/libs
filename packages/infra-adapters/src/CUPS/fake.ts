@@ -10,10 +10,15 @@ export const FAKECups = CUPS.toLayer(Effect.sync(() => {
     print: (buffer, printerId, ...options) =>
       Effect
         .logInfo("Printing to fake printer")
-        .zipRight(Effect.sync(() => ({ stdout: "fake", stderr: "" })))
-        .annotateLogs("printerId", printerId)
-        .annotateLogs("options", pretty(options))
-        .annotateLogs("bufferSize", buffer.byteLength.toString()),
+        .pipe(
+          Effect.zipRight(Effect.sync(() => ({ stdout: "fake", stderr: "" }))),
+          Effect
+            .annotateLogs({
+              printerId,
+              "options": pretty(options),
+              "bufferSize": buffer.byteLength.toString()
+            })
+        ),
     getAvailablePrinters: Effect.sync(() => [])
   }
 }))
