@@ -1,3 +1,5 @@
+import * as Optic from "./Optic.js"
+
 const l = Optic
   .id<{ test: number }>()
   .at("test")

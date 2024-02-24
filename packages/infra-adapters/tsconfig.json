@@ -5,7 +5,6 @@
             "es2020"
         ],
         "moduleResolution": "Node16",
-        "baseUrl": "./",
         "outDir": "./dist",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
         "noEmit": false,

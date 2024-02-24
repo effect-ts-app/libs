@@ -2,7 +2,7 @@
 
 import type * as Either from "effect/Either"
 import * as A from "./Array.js"
-import type { Predicate, Refinement } from "./Function.js"
+import { type Predicate, type Refinement, tuple } from "./Function.js"
 import * as O from "./Option.js"
 import type { PredicateWithIndex, RefinementWithIndex } from "./utils.js"
 

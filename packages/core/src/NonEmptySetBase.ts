@@ -1,4 +1,5 @@
 import { flow } from "./Function.js"
+import type { Equivalence, NonEmptyReadonlyArray, Order } from "./Prelude.js"
 import { Option } from "./Prelude.js"
 import {
   filter_,

@@ -2,6 +2,7 @@
 export * as Effect from "@effect-app/core/Effect"
 export * as Chunk from "effect/Chunk"
 export * as Either from "effect/Either"
+export * as Equivalence from "effect/Equivalence"
 export * as Layer from "effect/Layer"
 export * as Option from "effect/Option"
 export * as Order from "effect/Order"
