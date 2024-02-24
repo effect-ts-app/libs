@@ -2,6 +2,7 @@ import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/node"
 import { CauseException } from "./errors.js"
 import { RequestContextContainer } from "./services/RequestContextContainer.js"
+import { Cause, Effect } from "effect-app"
 
 export function reportError(
   name: string

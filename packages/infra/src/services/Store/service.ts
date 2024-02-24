@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UniqueKey } from "@azure/cosmos"
 import { Effect } from "effect-app"
-import type { NonEmptyReadonlyArray, NonEmptyReadonlyArray, Option, Option, Secret, Secret } from "effect-app"
+import type { NonEmptyReadonlyArray, Option, Secret } from "effect-app"
 import { TagClassId, TagClassMakeId } from "effect-app/service"
 import type { OptimisticConcurrencyException } from "../../errors.js"
 import type { FieldValues } from "../../filter/types.js"
@@ -197,7 +197,7 @@ export interface PersistenceModelType<Id> extends Record<string, any> {
 }
 
 export interface StorageConfig {
-  url: Secret
+  url: Secret.Secret
   prefix: string
   dbName: string
 }

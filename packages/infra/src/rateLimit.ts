@@ -127,14 +127,16 @@ export function naiveRateLimit(
     forEachItem: (i: T) => Effect<A, E, R>,
     forEachBatch: (a: A[]) => Effect<A2, E2, R2>
   ) =>
-    items
-      .chunk(n)
-      .forEachEffect((batch, i) =>
-        ((i === 0) ? Effect.unit : Effect.sleep(d))
+    Effect.forEach(
+      items.chunk(n),
+      (batch, i) =>
+        ((i === 0)
+          ? Effect.unit
+          : Effect.sleep(d))
           .zipRight(
             batch
               .forEachEffect(forEachItem, { concurrency: n })
               .flatMap(forEachBatch)
           )
-      ))
+    ))
 }
