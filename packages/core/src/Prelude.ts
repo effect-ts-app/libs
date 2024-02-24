@@ -12,11 +12,14 @@ import "./global.js"
 import type * as EFFECT from "@effect-app/core/Effect"
 import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as SET from "@effect-app/core/Set"
+import type * as C from "effect/Cause"
 import type * as CNK from "effect/Chunk"
 import type * as CFG from "effect/Config"
+import type * as CTX from "effect/Context"
 import type * as EITHER from "effect/Either"
 import type * as EQL from "effect/Equal"
 import type * as EQ from "effect/Equivalence"
+import type * as EX from "effect/Exit"
 import type * as FR from "effect/FiberRef"
 import type * as HM from "effect/HashMap"
 import type * as LAYER from "effect/Layer"
@@ -66,12 +69,33 @@ export namespace Ref {
 /** @tsplus type effect/data/Ref */
 export type Ref<A> = REF.Ref<A>
 
+export namespace Context {
+  // @ts-expect-error abc
+  export * from "effect/Context"
+}
+/** @tsplus type effect/data/Context */
+export type Context<A> = CTX.Context<A>
+
 export namespace FiberRef {
   // @ts-expect-error abc
   export * from "effect/FiberRef"
 }
 /** @tsplus type effect/data/FiberRef */
 export type FiberRef<A> = FR.FiberRef<A>
+
+export namespace Cause {
+  // @ts-expect-error abc
+  export * from "effect/Cause"
+}
+/** @tsplus type effect/data/Cause */
+export type Cause<A> = C.Cause<A>
+
+export namespace Exit {
+  // @ts-expect-error abc
+  export * from "effect/Exit"
+}
+/** @tsplus type effect/data/Exit */
+export type Exit<A, E = never> = EX.Exit<A, E>
 
 export namespace HashMap {
   // @ts-expect-error abc

@@ -1,10 +1,13 @@
 // TODO: Export order seems to be important? Somehow some cyclics?
 export * as Effect from "@effect-app/core/Effect"
+export * as Cause from "effect/Cause"
 export * as Chunk from "effect/Chunk"
 export * as Config from "effect/Config"
+export * as Context from "effect/Context"
 export * as Either from "effect/Either"
 export * as Equal from "effect/Equal"
 export * as Equivalence from "effect/Equivalence"
+export * as Exit from "effect/Exit"
 export * as FiberRef from "effect/FiberRef"
 export * as HashMap from "effect/HashMap"
 export * as Layer from "effect/Layer"

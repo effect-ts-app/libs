@@ -2,6 +2,8 @@
 
 import { flow } from "@effect-app/core/Function"
 import { RedisClient } from "@effect-app/infra-adapters/redis-client"
+import { Effect } from "effect-app"
+import type { Option } from "effect-app"
 import * as S from "effect-app/schema"
 import type { Lock } from "redlock"
 import type { CachedRecord, DBRecord, Index } from "./shared.js"

@@ -1,11 +1,9 @@
+import { Effect, Option } from "effect-app"
 import { get } from "effect-app/utils"
-
-import { OptimisticConcurrencyException } from "../../errors.js"
-
-import type { Filter, FilterJoinSelect, PersistenceModelType, SupportedValues2 } from "./service.js"
-
 import objectHash from "object-hash"
+import { OptimisticConcurrencyException } from "../../errors.js"
 import { codeFilter3_ } from "./codeFilter.js"
+import type { Filter, FilterJoinSelect, PersistenceModelType, SupportedValues2 } from "./service.js"
 
 export const makeETag = <E extends PersistenceModelType<Id>, Id extends string>(
   { _etag, ...e }: E
@@ -19,7 +17,7 @@ export const makeUpdateETag =
       if (e._etag) {
         yield* $(
           current
-            .encaseInEffect(() => new OptimisticConcurrencyException({ type, id: e.id, current: "", found: e._etag }))
+            .mapError(() => new OptimisticConcurrencyException({ type, id: e.id, current: "", found: e._etag }))
         )
       }
       if (current.isSome() && current.value._etag !== e._etag) {

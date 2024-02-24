@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { Effect, FiberRef, flow, Option, Order, pipe, Ref } from "effect-app"
+import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
 import { get, pick } from "effect-app/utils"
 import type { RequestContext } from "../../RequestContext.js"
 import type { FilterArgs, FilterJoinSelect, PersistenceModelType, Store, StoreConfig } from "./service.js"
@@ -9,7 +11,7 @@ import { codeFilter, codeFilterJoinSelect, makeUpdateETag } from "./utils.js"
 export function memFilter<T extends PersistenceModelType<string>, U extends keyof T = never>(f: FilterArgs<T, U>) {
   type M = U extends undefined ? T : Pick<T, U>
   return ((c: T[]): M[] => {
-    const select = (r: T[]): M[] => (f.select ? r.map((_) => pick(_, f.select!)) : r) as any
+    const select = (r: T[]): M[] => (f.select ? r.map((_) => pick(_, f.select)) : r) as any
     const skip = f?.skip
     const limit = f?.limit
     const ords = Option.fromNullable(f.order).map((_) =>

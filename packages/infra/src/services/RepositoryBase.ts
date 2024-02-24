@@ -164,7 +164,7 @@ export class RepositoryBaseC3<
   get(id: T["id"]) {
     return this
       .find(id)
-      .flatMap((_) => _.encaseInEffect(() => new NotFoundError<ItemType>({ type: this.itemType, id })))
+      .flatMap((_) => _.mapError(() => new NotFoundError<ItemType>({ type: this.itemType, id })))
   }
 
   readonly log = (evt: Evt) => AnyPureDSL.log(evt)
@@ -312,7 +312,7 @@ export class RepositoryBaseC3<
         .flatMap((_) =>
           (f.collect ? _.filterMap(f.collect) : _ as S[])
             .toNonEmpty
-            .encaseInEffect(() => new NotFoundError<ItemType>({ type: this.itemType, id: f.filter }))
+            .mapError(() => new NotFoundError<ItemType>({ type: this.itemType, id: f.filter }))
             .map((_) => _[0])
         )
     )

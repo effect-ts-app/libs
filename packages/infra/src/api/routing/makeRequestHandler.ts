@@ -173,15 +173,15 @@ export function makeRequestHandler<
               const handleRequest = parseRequest(pars)
                 .map(({ body, path, query }) => {
                   const hn = {
-                    ...body.value as any,
-                    ...query.value as any,
-                    ...path.value as any
+                    ...body.value,
+                    ...query.value,
+                    ...path.value
                   } as unknown as ReqA
                   return hn
                 })
                 .flatMap((parsedReq) =>
-                  handle(parsedReq as any)
-                    .provideService(handler.Request.Tag, parsedReq as any)
+                  handle(parsedReq)
+                    .provideService(handler.Request.Tag, parsedReq)
                     .flatMap(encoder)
                     .map((r) =>
                       res

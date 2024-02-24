@@ -7,12 +7,15 @@ export * as Utils from "./utils.js"
 export * from "./Prelude.js"
 
 export {
+  Cause,
   Chunk,
   Config,
+  Context,
   Effect,
   Either,
   Equal,
   Equivalence,
+  Exit,
   FiberRef,
   HashMap,
   Layer,
