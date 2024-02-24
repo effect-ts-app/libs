@@ -13,9 +13,11 @@ import type * as EFFECT from "@effect-app/core/Effect"
 import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as SET from "@effect-app/core/Set"
 import type * as CNK from "effect/Chunk"
+import type * as CFG from "effect/Config"
 import type * as EITHER from "effect/Either"
 import type * as EQL from "effect/Equal"
 import type * as EQ from "effect/Equivalence"
+import type * as HM from "effect/HashMap"
 import type * as LAYER from "effect/Layer"
 import type * as O from "effect/Option"
 import type * as ORD from "effect/Order"
@@ -55,6 +57,13 @@ export namespace Order {
 /** @tsplus type effect/data/Order */
 export type Order<A> = ORD.Order<A>
 
+export namespace HashMap {
+  // @ts-expect-error abc
+  export * from "effect/HashMap"
+}
+/** @tsplus type effect/data/HashMap */
+export type HashMap<out Key, out Value> = HM.HashMap<Key, Value>
+
 export namespace Scope {
   // @ts-expect-error abc
   export * from "effect/Scope"
@@ -77,6 +86,12 @@ export namespace Equivalence {
   export * from "effect/Equivalence"
 }
 export type Equivalence<A> = EQ.Equivalence<A>
+
+export namespace Config {
+  // @ts-expect-error abc
+  export * from "effect/Config"
+}
+export type Config<A> = CFG.Config<A>
 
 export namespace Equal {
   // @ts-expect-error abc

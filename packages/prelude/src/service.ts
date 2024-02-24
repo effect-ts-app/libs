@@ -6,7 +6,8 @@
  * https://github.com/microsoft/TypeScript/issues/52644
  */
 
-import type { Context } from "effect"
+import type { Context, Effect, Scope } from "@effect-app/core"
+import { Layer } from "@effect-app/core"
 
 export const ServiceTag = Symbol()
 export type ServiceTag = typeof ServiceTag

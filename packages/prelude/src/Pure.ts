@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as Either from "effect/Either"
+import { Chunk, Context, Effect, Either, Layer } from "@effect-app/core"
 import type { ServiceTagged } from "./service.js"
 import "@effect-app/fluent-extensions"
+import { tuple } from "@effect-app/core/Function"
 
 const S1 = Symbol()
 const S2 = Symbol()
@@ -114,9 +115,9 @@ export function GMU<W, S, S2, GA, MR, ME>(modify: (i: GA) => Pure<W, S, S2, MR, 
   ) => GMU_(get, modify, update)
 }
 
-const tagg = GenericTag<{ env: PureEnv<never, unknown, never> }>("@services/tagg")
+const tagg = Context.GenericTag<{ env: PureEnv<never, unknown, never> }>("@services/tagg")
 function castTag<W, S, S2>() {
-  return tagg as any as Tag<PureEnvEnv<W, S, S2>, PureEnvEnv<W, S, S2>>
+  return tagg as any as Context.Tag<PureEnvEnv<W, S, S2>, PureEnvEnv<W, S, S2>>
 }
 
 export const PureEnvEnv = Symbol()
@@ -178,7 +179,7 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
       (err) => tagg.map((env) => tuple(env.env.log, Either.left(err)))
     )
   return a
-    .provide(tagg.makeLayer({ env: makePureEnv<W3, S3, S4>(s) as any }) as any)
+    .provide(Layer.succeed(tagg, { env: makePureEnv<W3, S3, S4>(s) as any }) as any)
 }
 
 /**
@@ -203,7 +204,7 @@ export function runTerm<R, E, A, W3, S1, S3, S4 extends S1>(
   return runAll(self, s)
     .flatMap(([evts, r]) =>
       r
-        .map(([s3, a]) => tuple(s3, evts.toArray, a))
+        .map(([s3, a]) => tuple(s3, Chunk.toArray(evts), a))
     )
 }
 
@@ -236,7 +237,7 @@ export function modify<S2, A, S3>(mod: (s: S2) => readonly [S3, A]): Effect<A, n
   return castTag<never, S3, S2>().map(
     (_) =>
       Effect.sync(() => mod(_.env.state)).map(([s, a]) => {
-        _.env.state = s as any
+        _.env.state = s
         return a
       })
   ) as any
@@ -250,7 +251,7 @@ export function modifyM<W, R, E, A, S2, S3>(
 ): Effect<A, E, FixEnv<R, W, S2, S3>> {
   // return serviceWithEffect(_ => Ref.modifyM_(_.state, mod))
   return castTag<W, S3, S2>().flatMap(
-    (_) => mod(_.env.state).map(([s, a]) => Effect.sync(() => _.env.state = s as any).map(() => a))
+    (_) => mod(_.env.state).map(([s, a]) => Effect.sync(() => _.env.state = s).map(() => a))
   ) as any
 }
 

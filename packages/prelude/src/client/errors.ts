@@ -1,11 +1,12 @@
 import { TaggedError } from "effect-app/schema"
+import { S } from "../lib.js"
 
 /** @tsplus type NotFoundError */
 // eslint-disable-next-line unused-imports/no-unused-vars
 // @ts-expect-error type not used
 export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<ItemType>>()("NotFoundError", {
-  type: string,
-  id: unknown
+  type: S.string,
+  id: S.unknown
 }) {
   override get message() {
     return `Didn't find ${this.type}#${JSON.stringify(this.id)}`
@@ -14,7 +15,7 @@ export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<
 
 /** @tsplus type InvalidStateError */
 export class InvalidStateError extends TaggedError<InvalidStateError>()("InvalidStateError", {
-  message: string
+  message: S.string
 }) {
   constructor(messageOrObject: string | { message: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
@@ -23,7 +24,7 @@ export class InvalidStateError extends TaggedError<InvalidStateError>()("Invalid
 
 /** @tsplus type ValidationError */
 export class ValidationError extends TaggedError<ValidationError>()("ValidationError", {
-  errors: array(unknown) // meh
+  errors: S.array(S.unknown) // meh
 }) {
   override get message() {
     return `Validation failed: ${this.errors.map((e) => JSON.stringify(e)).join(", ")}`
@@ -32,7 +33,7 @@ export class ValidationError extends TaggedError<ValidationError>()("ValidationE
 
 /** @tsplus type NotLoggedInError */
 export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLoggedInError", {
-  message: string.optional()
+  message: S.string.optional()
 }) {
   constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
@@ -44,7 +45,7 @@ export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLogged
  */
 /** @tsplus type LoginError */
 export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
-  message: string.optional()
+  message: S.string.optional()
 }) {
   constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
@@ -53,7 +54,7 @@ export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
 
 /** @tsplus type UnauthorizedError */
 export class UnauthorizedError extends TaggedError<UnauthorizedError>()("UnauthorizedError", {
-  message: string.optional()
+  message: S.string.optional()
 }) {
   constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
@@ -70,7 +71,7 @@ type OptimisticConcurrencyDetails = {
 /** @tsplus type OptimisticConcurrencyException */
 export class OptimisticConcurrencyException extends TaggedError<OptimisticConcurrencyException>()(
   "OptimisticConcurrencyException",
-  { message: string }
+  { message: S.string }
 ) {
   readonly details?: OptimisticConcurrencyDetails
   constructor(
@@ -97,13 +98,13 @@ const GeneralErrors = [
   ValidationError
 ] as const
 
-export const SupportedErrors = union(
+export const SupportedErrors = S.union(
   ...MutationOnlyErrors,
   ...GeneralErrors
 )
 // .pipe(named("SupportedErrors"))
 // .pipe(withDefaults)
-export type SupportedErrors = Schema.To<typeof SupportedErrors>
+export type SupportedErrors = S.Schema.To<typeof SupportedErrors>
 
 // ideal?
 // export const QueryErrors = union({ ...GeneralErrors })
@@ -118,5 +119,5 @@ export type SupportedErrors = Schema.To<typeof SupportedErrors>
 
 export const MutationErrors = SupportedErrors
 export const QueryErrors = SupportedErrors
-export type MutationErrors = Schema.To<typeof MutationErrors>
-export type QueryErrors = Schema.To<typeof QueryErrors>
+export type MutationErrors = S.Schema.To<typeof MutationErrors>
+export type QueryErrors = S.Schema.To<typeof QueryErrors>

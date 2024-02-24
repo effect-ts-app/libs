@@ -223,6 +223,16 @@
         "default": "./_cjs/ids.cjs"
       }
     },
+    "./lib": {
+      "import": {
+        "types": "./dist/lib.d.ts",
+        "default": "./dist/lib.js"
+      },
+      "require": {
+        "types": "./dist/lib.d.ts",
+        "default": "./_cjs/lib.cjs"
+      }
+    },
     "./refinements": {
       "import": {
         "types": "./dist/refinements.d.ts",

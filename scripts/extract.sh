@@ -15,7 +15,7 @@ f2="${f2%.ts}.js"
 f3="./_cjs${f2#./dist}"
 f3="${f3%.js}.cjs"
 
-if [[ $f1 != "Prelude.code.ts" ]]; then
+if [[ $f1 != "Prelude.code.ts" && $f1 != "Prelude.ts" ]]; then
   echo "\"${f%.ts}\": { \"import\": { \"types\": \"${f2%.js}.d.ts\", \"default\": \"$f2\" }, \"require\": { \"types\": \"${f2%.js}.d.ts\", \"default\": \"${f3}\" } },"
 fi
 

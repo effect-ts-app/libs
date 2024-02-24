@@ -1,33 +1,33 @@
 import * as S from "./schema.js"
 
-export type OperationId = StringId
-export const OperationId = StringId
+export type OperationId = S.StringId
+export const OperationId = S.StringId
 
-export class OperationProgress extends ExtendedClass<
+export class OperationProgress extends S.ExtendedClass<
   OperationProgress,
   OperationProgress.From
 >()({
-  completed: NonNegativeInt,
-  total: NonNegativeInt
+  completed: S.NonNegativeInt,
+  total: S.NonNegativeInt
 }) {}
 
-export class Success extends ExtendedTaggedClass<Success, Success.From>()("Success", {
-  message: nullable(NonEmptyString2k).withDefault
+export class Success extends S.ExtendedTaggedClass<Success, Success.From>()("Success", {
+  message: S.nullable(S.NonEmptyString2k).withDefault
 }) {}
 
-export class Failure extends ExtendedTaggedClass<Failure, Failure.From>()("Failure", {
-  message: nullable(NonEmptyString2k).withDefault
+export class Failure extends S.ExtendedTaggedClass<Failure, Failure.From>()("Failure", {
+  message: S.nullable(S.NonEmptyString2k).withDefault
 }) {}
 
 export const OperationResult = S.extendTaggedUnion(S.union(Success, Failure))
-export type OperationResult = Schema.To<typeof OperationResult>
+export type OperationResult = S.Schema.To<typeof OperationResult>
 
-export class Operation extends ExtendedClass<Operation, Operation.From>()({
+export class Operation extends S.ExtendedClass<Operation, Operation.From>()({
   id: OperationId,
   progress: S.optional(OperationProgress),
   result: S.optional(OperationResult),
   createdAt: S.Date.withDefault,
-  updatedAt: nullable(S.Date).withDefault
+  updatedAt: S.nullable(S.Date).withDefault
 }) {}
 
 // codegen:start {preset: model}

@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Effect } from "@effect-app/core"
+import { Effect, Option } from "@effect-app/core"
 import { constant } from "@effect-app/core/Function"
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { ReadonlyRecord } from "effect"
-import type { REST } from "effect-app/schema"
+import type { REST, Schema } from "effect-app/schema"
+import { StringId } from "effect-app/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
 import { ApiConfig } from "./config.js"
@@ -17,6 +18,7 @@ import {
 } from "./errors.js"
 
 import { HttpClient, HttpClientRequest } from "../http.js"
+import { S } from "../lib.js"
 
 export type FetchError = HttpError<string>
 
