@@ -999,15 +999,15 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   mapped: MM<Service, PM, Omit<PM, "_etag">>
 
   readonly q2: {
-    <A, R>(
-      q: (initial: Query<Omit<PM, "_etag">>) => QueryProjection<Omit<PM, "_etag">, A, R>
+    <A, R, From extends FieldValues>(
+      q: (initial: Query<Omit<PM, "_etag">>) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
     ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
     <R = never>(
       q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R>
     ): Effect.Effect<readonly T[], never, Service | R>
 
-    <A, R>(
-      q: QueryProjection<Omit<PM, "_etag">, A, R>
+    <A, R, From extends FieldValues>(
+      q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
     ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
     <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, Service | R>
   }
