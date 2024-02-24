@@ -1,7 +1,6 @@
 import { isValidEmail, isValidPhone } from "@effect-app/core/validation"
 import { type A, type Email as EmailT, fromBrand, nominal, type PhoneNumber as PhoneNumberT } from "@effect-app/schema"
 import * as S from "@effect-app/schema"
-import { inspect } from "util"
 import { fakerArb } from "./faker.js"
 import { extendM } from "./utils.js"
 
@@ -40,7 +39,6 @@ export const makeIs = <A extends { _tag: string }, I, R>(
 ) => {
   if (S.AST.isUnion(schema.ast)) {
     return schema.ast.types.reduce((acc, t) => {
-      console.log("t", inspect(t, undefined, 5))
       if (S.AST.isTransform(t)) {
         if (S.AST.isDeclaration(t.to)) {
           t = t.from

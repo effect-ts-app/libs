@@ -367,7 +367,6 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
       },
       order: ({ current }) => {
         upd(interpret(current))
-        console.log("missing order implementation")
       },
       page: (v) => {
         upd(interpret(v.current))
