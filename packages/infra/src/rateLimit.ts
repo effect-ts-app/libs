@@ -68,8 +68,8 @@ export function batchPar<R, E, A, R2, E2, A2, T>(
       items
         .chunk(n),
       (_, i) =>
-        _
-          .forEachEffect((_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
+        Effect
+          .forEach(_, (_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
           .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i)),
       { concurrency: "inherit" }
     )
@@ -88,8 +88,8 @@ export function batch<R, E, A, R2, E2, A2, T>(
     Effect.forEach(
       items.chunk(n),
       (_, i) =>
-        _
-          .forEachEffect((_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
+        Effect
+          .forEach(_, (_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
           .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i))
     )
 }
@@ -134,8 +134,8 @@ export function naiveRateLimit(
           ? Effect.unit
           : Effect.sleep(d))
           .zipRight(
-            batch
-              .forEachEffect(forEachItem, { concurrency: n })
+            Effect
+              .forEach(batch, forEachItem, { concurrency: n })
               .flatMap(forEachBatch)
           )
     ))

@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Chunk, Context, Effect, Either, Layer } from "@effect-app/core"
-import type { ServiceTagged } from "./service.js"
-import "@effect-app/fluent-extensions"
 import { tuple } from "@effect-app/core/Function"
+import type { ServiceTagged } from "./service.js"
 
 const S1 = Symbol()
 const S2 = Symbol()

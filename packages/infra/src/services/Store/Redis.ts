@@ -45,8 +45,8 @@ function makeRedisStore({ prefix }: StorageConfig) {
           const asMap = get.map((x) => new Map(x.map((x) => [x.id, x] as const)))
           const all = get.map(ReadonlyArray.fromIterable)
           const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
-            items
-              .forEachEffect((e) => s.find(e.id).flatMap((current) => updateETag(e, current)))
+            Effect
+              .forEach(items, (e) => s.find(e.id).flatMap((current) => updateETag(e, current)))
               .tap((items) =>
                 asMap
                   .map((m) => {

@@ -40,8 +40,8 @@ export function makeMemQueue<
           const currentSpan = yield* $(Effect.currentSpan.orDie)
           const span = Tracer.externalSpan(currentSpan)
           return yield* $(
-            messages
-              .forEachEffect((m) =>
+            Effect
+              .forEach(messages, (m) =>
                 // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
                 wireSchema
                   .encode({ body: m, meta: { requestContext, span } })
@@ -49,8 +49,7 @@ export function makeMemQueue<
                   .andThen(JSON.stringify)
                   // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))
                   .flatMap((_) => q.offer(_))
-                  .asUnit
-              )
+                  .asUnit)
               .forkDaemonReportQueue
           )
         }),

@@ -653,7 +653,7 @@ export function makeRepo<
         )
 
         const all = allE.flatMap((_) =>
-          _.forEachEffect((_) => decode(_), { concurrency: "inherit", batching: true }).orDie
+          Effect.forEach(_, (_) => decode(_), { concurrency: "inherit", batching: true }).orDie
         )
 
         const structSchema = schema as unknown as { struct: typeof schema }
@@ -715,9 +715,12 @@ export function makeRepo<
             .asUnit
 
         const saveAll = (a: Iterable<T>) =>
-          Array
-            .from(a)
-            .forEachEffect((_) => encode(_), { concurrency: "inherit", batching: true })
+          Effect
+            .forEach(
+              Array.from(a),
+              (_) => encode(_),
+              { concurrency: "inherit", batching: true }
+            )
             .orDie
             .andThen(saveAllE)
 
@@ -762,14 +765,14 @@ export function makeRepo<
           utils: {
             parseMany: (items) =>
               cms.flatMap((cm) =>
-                items
-                  .forEachEffect((_) => decode(mapReverse(_, cm.set)), { concurrency: "inherit", batching: true })
+                Effect
+                  .forEach(items, (_) => decode(mapReverse(_, cm.set)), { concurrency: "inherit", batching: true })
                   .orDie
               ),
             parseMany2: (items, schema) =>
               cms.flatMap((cm) =>
-                items
-                  .forEachEffect((_) => schema.decode(mapReverse(_, cm.set) as any), {
+                Effect
+                  .forEach(items, (_) => schema.decode(mapReverse(_, cm.set) as any), {
                     concurrency: "inherit",
                     batching: true
                   })
@@ -918,7 +921,7 @@ export function makeStore<
             pluralize(name),
             makeInitial
               ? (makeInitial
-                .flatMap((_) => _.forEachEffect(encodeToPM())))
+                .flatMap(Effect.forEach(encodeToPM())))
                 .withSpan("Repository.makeInitial [effect-app/infra]", {
                   attributes: { "repository.model_name": name }
                 })

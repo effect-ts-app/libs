@@ -31,7 +31,7 @@ export function memFilter<T extends PersistenceModelType<string>, U extends keyo
       )
     )
     if (ords.value) {
-      c = c.sortBy(...ords.value)
+      c = c.sortBy(...ords.value!)
     }
     if (!skip && limit === 1) {
       return select(
@@ -96,8 +96,8 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
     const all = values.map(ReadonlyArray.fromIterable)
 
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
-      items
-        .forEachEffect((i) => s.find(i.id).flatMap((current) => updateETag(i, current)))
+      Effect
+        .forEach(items, (i) => s.find(i.id).flatMap((current) => updateETag(i, current)))
         .tap((items) =>
           store
             .get
