@@ -1,4 +1,5 @@
 import { pretty } from "@effect-app/core/utils"
+import { Effect } from "effect-app"
 import { CUPS } from "./service.js"
 
 /**
