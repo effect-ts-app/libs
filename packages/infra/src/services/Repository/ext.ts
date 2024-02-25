@@ -555,10 +555,7 @@ export function saveAllWithEffectInt<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   gen: Effect<readonly [Iterable<P>, Iterable<Evt>, A], E, R>
 ) {
-  return gen
-    .flatMap(
-      ([items, events, a]) => self.saveAndPublish(items, events).map(() => a)
-    )
+  return Effect.flatMap(gen, ([items, events, a]) => self.saveAndPublish(items, events).map(() => a))
 }
 
 /**

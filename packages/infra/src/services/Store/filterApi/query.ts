@@ -1,3 +1,4 @@
+import { ReadonlyArray } from "effect-app"
 import type { FieldValues } from "../../../filter/types.js"
 import type { FieldPath, FieldPathValue } from "../../../filter/types/path/eager.js"
 import type { Filter, Ops } from "./proxy.js"

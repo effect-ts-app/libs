@@ -17,12 +17,13 @@ import { StoreMaker } from "./Store.js"
 import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig, Where } from "./Store.js"
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
+import { toNonEmptyArray } from "@effect-app/core/Array"
 import { flatMapOption } from "@effect-app/core/Effect"
 import { makeFilters } from "@effect-app/infra/filter"
 import type { ParseResult, Schema } from "@effect-app/schema"
 import { NonNegativeInt } from "@effect-app/schema"
 import type { Context, NonEmptyArray, NonEmptyReadonlyArray, Option } from "effect-app"
-import { Chunk, Effect, flow, PubSub, S } from "effect-app"
+import { Chunk, Effect, flow, PubSub, ReadonlyArray, S } from "effect-app"
 import { runTerm } from "effect-app/Pure"
 import type { FixEnv, PureEnv } from "effect-app/Pure"
 import { assignTag } from "effect-app/service"
@@ -162,15 +163,17 @@ export class RepositoryBaseC3<
   ItemType extends string
 > extends RepositoryBaseC2<T, PM, Evt, ItemType> {
   get(id: T["id"]) {
-    return this
-      .find(id)
-      .flatMap((_) => _.mapError(() => new NotFoundError<ItemType>({ type: this.itemType, id })))
+    return Effect.andThen(
+      this
+        .find(id),
+      (_) => Effect.mapError(_, () => new NotFoundError<ItemType>({ type: this.itemType, id }))
+    )
   }
 
   readonly log = (evt: Evt) => AnyPureDSL.log(evt)
 
   removeById(id: T["id"]) {
-    return this.get(id).andThen((_) => this.removeAndPublish([_]))
+    return Effect.andThen(this.get(id), (_) => this.removeAndPublish([_]))
   }
 
   // TODO: project inside the db.
@@ -226,12 +229,13 @@ export class RepositoryBaseC3<
     >
   ): Effect<S[], E, R> {
     // TODO: a projection that gets sent to the db instead.
-    return map.flatMap((f) =>
-      this
-        .utils
-        .filter(f)
-        .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown as S[])
-    )
+    return Effect.flatMap(map, (f) =>
+      Effect.map(
+        this
+          .utils
+          .filter(f),
+        (_) => f.collect ? ReadonlyArray.filterMap(_, f.collect) : _ as unknown as S[]
+      ))
   }
 
   project<S = PM>(
@@ -266,9 +270,10 @@ export class RepositoryBaseC3<
   }
 
   count(filter?: Filter<PM>) {
-    return this
-      .projectEffect(Effect.sync(() => ({ filter })))
-      .map((_) => NonNegativeInt(_.length))
+    return Effect.map(
+      this.projectEffect(Effect.sync(() => ({ filter }))),
+      (_) => NonNegativeInt(_.length)
+    )
   }
 
   queryEffect<
@@ -279,11 +284,12 @@ export class RepositoryBaseC3<
     // TODO: think about collectPM, collectE, and collect(Parsed)
     map: Effect<{ filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
   ) {
-    return map.flatMap((f) =>
+    return Effect.flatMap(map, (f) =>
       (f.filter ? this.utils.filter(f) : this.utils.all)
-        .flatMap((_) => this.utils.parseMany(_))
-        .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
-    )
+        .pipe(
+          Effect.flatMap((_) => this.utils.parseMany(_)),
+          Effect.map((_) => f.collect ? ReadonlyArray.filterMap(_, f.collect) : _ as unknown[] as S[])
+        ))
   }
 
   queryOneEffect<R, E>(
@@ -306,16 +312,23 @@ export class RepositoryBaseC3<
     // TODO: think about collectPM, collectE, and collect(Parsed)
     map: Effect<{ filter?: Filter<PM>; collect?: (t: T) => Option<S> }, E, R>
   ): Effect<S, E | NotFoundError<ItemType>, R> {
-    return map.flatMap((f) =>
+    return Effect.flatMap(map, (f) =>
       (f.filter ? this.utils.filter({ filter: f.filter, limit: 1 }) : this.utils.all)
-        .flatMap((_) => this.utils.parseMany(_))
-        .flatMap((_) =>
-          (f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
-            .toNonEmpty
-            .mapError(() => new NotFoundError<ItemType>({ type: this.itemType, id: f.filter }))
-            .map((_) => _[0])
-        )
-    )
+        .pipe(
+          Effect.flatMap((_) => this.utils.parseMany(_)),
+          Effect
+            .flatMap((_) =>
+              toNonEmptyArray(
+                f.collect
+                  ? ReadonlyArray.filterMap(_, f.collect)
+                  : _ as unknown[] as S[]
+              )
+                .pipe(
+                  Effect.mapError(() => new NotFoundError<ItemType>({ type: this.itemType, id: f.filter })),
+                  Effect.map((_) => _[0])
+                )
+            )
+        ))
   }
 
   queryLegacy<S = T>(
@@ -377,9 +390,7 @@ export class RepositoryBaseC3<
   queryAndSaveOnePureEffect(
     map: any
   ) {
-    return (pure: any) =>
-      queryOneEffect(this, map)
-        .flatMap((_) => saveWithPure_(this, _, pure))
+    return (pure: any) => Effect.flatMap(queryOneEffect(this, map), (_) => saveWithPure_(this, _, pure))
   }
 
   queryAndSaveOnePure<
@@ -416,8 +427,7 @@ export class RepositoryBaseC3<
     map: Effect<{ filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
   ) {
     return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, S[], S2[]>>) =>
-      queryEffect(this, map)
-        .flatMap((_) => this.saveManyWithPure_(_, pure))
+      Effect.flatMap(queryEffect(this, map), (_) => this.saveManyWithPure_(_, pure))
   }
 
   queryAndSavePure<
@@ -805,7 +815,7 @@ export function makeRepo<
                   .filter({ filter: b })
                   .flatMap(decMany)
                   .map((_) => _ as any[]),
-              save: (...xes: any[]) => encMany(xes).flatMap((_) => saveAllE(_ as any))
+              save: (...xes: any[]) => encMany(xes).flatMap((_) => saveAllE(_))
             }
           },
           changeFeed,
