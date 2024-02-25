@@ -25,7 +25,7 @@
 
 import type { Semaphore } from "@effect-app/core/Effect"
 import type { Duration, NonEmptyArray } from "effect-app"
-import { Effect } from "effect-app"
+import { Effect, ReadonlyArray } from "effect-app"
 
 /**
  * Executes the specified effect, acquiring the specified number of permits
@@ -42,14 +42,12 @@ export function SEM_withPermitsDuration(permits: number, duration: Duration) {
       Effect.uninterruptibleMask(
         (restore) =>
           restore(self.take(permits))
-            .andThen(
+            .pipe(Effect.andThen(
               restore(effect)
-                .ensuring(
-                  self
-                    .release(permits)
-                    .delay(duration)
-                )
-            )
+                .pipe(Effect.ensuring(
+                  Effect.delay(self.release(permits), duration)
+                ))
+            ))
       )
   }
 }
@@ -65,12 +63,11 @@ export function batchPar<R, E, A, R2, E2, A2, T>(
 ) {
   return (items: Iterable<T>) =>
     Effect.forEach(
-      items
-        .chunk(n),
+      ReadonlyArray.chunk_(items, n),
       (_, i) =>
         Effect
           .forEach(_, (_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
-          .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i)),
+          .pipe(Effect.flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i))),
       { concurrency: "inherit" }
     )
 }
@@ -86,11 +83,11 @@ export function batch<R, E, A, R2, E2, A2, T>(
 ) {
   return (items: Iterable<T>) =>
     Effect.forEach(
-      items.chunk(n),
+      ReadonlyArray.chunk_(items, n),
       (_, i) =>
         Effect
           .forEach(_, (_, j) => forEachItem(_, j, i), { concurrency: "inherit" })
-          .flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i))
+          .pipe(Effect.flatMap((_) => forEachBatch(_ as NonEmptyArray<A>, i)))
     )
 }
 
@@ -128,15 +125,15 @@ export function naiveRateLimit(
     forEachBatch: (a: A[]) => Effect<A2, E2, R2>
   ) =>
     Effect.forEach(
-      items.chunk(n),
+      ReadonlyArray.chunk_(items, n),
       (batch, i) =>
         ((i === 0)
           ? Effect.unit
           : Effect.sleep(d))
-          .zipRight(
+          .pipe(Effect.zipRight(
             Effect
               .forEach(batch, forEachItem, { concurrency: n })
-              .flatMap(forEachBatch)
-          )
+              .pipe(Effect.flatMap(forEachBatch))
+          ))
     ))
 }
