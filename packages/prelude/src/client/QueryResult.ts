@@ -1,7 +1,7 @@
 // TODO: Convert to effect/core
 
 /* eslint-disable @typescript-eslint/ban-types */
-import { Data, type Effect, Option } from "@effect-app/core"
+import { Data, Effect, Option } from "@effect-app/core"
 import * as Either from "effect/Either"
 
 export class Initial extends Data.TaggedClass("Initial")<{}> {}
@@ -58,7 +58,7 @@ type Result<E, A> = Omit<Done<E, A>, "current"> | Omit<Refreshing<E, A>, "curren
 export function isSuccess<E, A>(
   qr: QueryResult<E, A>
 ): qr is Result<E, A> & { current: Either.Right<E, A> } {
-  return qr.hasValue() && qr.current.isRight()
+  return hasValue(qr) && Either.isRight(qr.current)
 }
 
 /**
@@ -67,7 +67,7 @@ export function isSuccess<E, A>(
 export function hasValue<E, A>(
   qr: QueryResult<E, A>
 ): qr is Done<E, A> | Refreshing<E, A> {
-  return qr.isDone() || qr.isRefreshing()
+  return isDone(qr) || isRefreshing(qr)
 }
 
 /**
@@ -103,7 +103,7 @@ export function isInitializing<E, A>(
 export function isFailed<E, A>(
   qr: QueryResult<E, A>
 ): qr is Result<E, A> & { current: Either.Left<E, A> } {
-  return qr.hasValue() && qr.current.isLeft()
+  return hasValue(qr) && Either.isLeft(qr.current)
 }
 
 export type ResultTuple<Result> = readonly [result: Result, refresh: () => void]
@@ -117,5 +117,5 @@ export const { fail, succeed } = Done
 export function queryResult<R, E, A>(
   self: Effect<A, E, R>
 ): Effect<QueryResult<E, A>, never, R> {
-  return self.match({ onFailure: fail, onSuccess: succeed })
+  return Effect.match(self, { onFailure: fail, onSuccess: succeed })
 }
