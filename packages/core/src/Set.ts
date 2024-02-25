@@ -1,10 +1,10 @@
 // ets_tracing: off
 
-import { Option } from "effect"
+import { Option, ReadonlyArray } from "effect"
 import type { Either } from "effect"
 import { not } from "effect/Predicate"
 import type { Predicate, Refinement } from "./Function.js"
-import { identity, tuple } from "./Function.js"
+import { identity, pipe, tuple } from "./Function.js"
 import type { Equivalence, Order } from "./Prelude.js"
 
 /**
@@ -38,7 +38,7 @@ export function findFirstMap_<A, B>(
   set: ReadonlySet<A>,
   f: (a: A) => Option.Option<B>
 ): Option.Option<B> {
-  return [...set].findFirstMap(f)
+  return ReadonlyArray.findFirst([...set], f)
 }
 
 export type MutableSet<A> = globalThis.Set<A>
@@ -633,7 +633,7 @@ function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
   const insert__ = insert(eq)
 
   function replace_(set: Set<A>, a: A) {
-    return filter_(set, (x) => !eq(x, a)).pipe(insert__(a))
+    return pipe(filter_(set, (x) => !eq(x, a)), insert__(a))
   }
 
   return {

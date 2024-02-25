@@ -57,7 +57,7 @@ export const replaceIfDefined = lazyGetter(<S, A>(l: Lens<S, A>) => {
   const f: {
     <B>(b: B | undefined, map: (b: B) => A): (s: S) => S
     <B>(map: (b: B) => A): (b: B | undefined) => (s: S) => S
-  } = dual(2, <B>(b: B | undefined, map: (b: B) => A) => b !== undefined ? OPTIC.replace(l, map(b)) : identity)
+  } = dual(2, <B>(b: B | undefined, map: (b: B) => A) => b !== undefined ? OPTIC.replace(l)(map(b)) : identity)
   return f
 })
 

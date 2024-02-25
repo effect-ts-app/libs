@@ -4,8 +4,8 @@ import type { NoInfer } from "effect/Types"
 import type { Predicate } from "./Function.js"
 import { dual, identity, tuple } from "./Function.js"
 import * as Option from "./Option.js"
-import { Chunk } from "./Prelude.js"
-import type { Effect, NonEmptyArray, NonEmptyReadonlyArray, Order } from "./Prelude.js"
+import { Chunk, Effect } from "./Prelude.js"
+import type { NonEmptyArray, NonEmptyReadonlyArray, Order } from "./Prelude.js"
 
 /**
  * @tsplus getter ReadonlyArray toNonEmpty
@@ -117,7 +117,7 @@ export function chunk_<T>(items_: Iterable<T>, size: number) {
  * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffect
  */
 export function forEachEffectNA<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A) => Effect<B, E, R>) {
-  return T.forEach(as, f).map((_) => _.toNonEmpty.value!)
+  return Effect.map(T.forEach(as, f), (_) => Option.getOrNull(toNonEmptyArray(_)))
 }
 
 export * from "effect/ReadonlyArray"
