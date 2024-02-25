@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { type Effect, flow } from "@effect-app/core"
+import { Effect, flow } from "@effect-app/core"
 import type { Schema } from "effect-app/schema"
 import { REST } from "effect-app/schema"
 import { Path } from "path-parser"
 import type { HttpClient } from "../http.js"
+import { S } from "../lib.js"
+import { typedKeysOf } from "../utils.js"
 import type { ApiConfig } from "./config.js"
 import type { SupportedErrors } from "./errors.js"
 import type { FetchError, FetchResponse } from "./fetch.js"
@@ -56,9 +58,7 @@ export function clientFor<M extends Requests>(
 }
 
 function clientFor_<M extends Requests>(models: M) {
-  return (models
-    .$$
-    .keys
+  return (typedKeysOf(models)
     // ignore module interop with automatic default exports..
     .filter((x) => x !== "default" && x !== "meta")
     .reduce((prev, cur) => {
@@ -95,9 +95,9 @@ function clientFor_<M extends Requests>(models: M) {
       }
 
       const res = Response as Schema<any>
-      const parseResponse = flow(res.decodeUnknown, (_) => _.mapError((err) => new ResError(err)))
+      const parseResponse = flow(S.decodeUnknown(res), (_) => Effect.mapError(_, (err) => new ResError(err)))
 
-      const parseResponseE = flow(parseResponse, (x) => x.andThen(res.encode))
+      const parseResponseE = flow(parseResponse, Effect.andThen(S.encode(res)))
 
       const path = new Path(Request.path)
 
@@ -121,13 +121,13 @@ function clientFor_<M extends Requests>(models: M) {
           }
           : {
             handler: (req: any) =>
-              fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(req)))
+              fetchApi(Request.method, makePathWithQuery(path, S.encodeSync(Request)(req)))
                 .flatMap(mapResponseM(parseResponse))
                 .withSpan("client.request", {
                   attributes: { "request.name": requestName }
                 }),
             ...meta,
-            mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(req)) : Request.path
+            mapPath: (req: any) => req ? makePathWithQuery(path, S.encodeSync(Request)(req)) : Request.path
           }
         : fields.length === 0
         ? {
@@ -146,8 +146,8 @@ function clientFor_<M extends Requests>(models: M) {
           mapPath: (req: any) =>
             req
               ? Request.method === "DELETE"
-                ? makePathWithQuery(path, Request.encodeSync(req))
-                : makePathWithBody(path, Request.encodeSync(req))
+                ? makePathWithQuery(path, S.encodeSync(Request)(req))
+                : makePathWithBody(path, S.encodeSync(Request)(req))
               : Request.path
         }
 
@@ -166,14 +166,14 @@ function clientFor_<M extends Requests>(models: M) {
           }
           : {
             handler: (req: any) =>
-              fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(req)))
+              fetchApi(Request.method, makePathWithQuery(path, S.encodeSync(Request)(req)))
                 .flatMap(mapResponseM(parseResponseE))
                 .withSpan("client.request", {
                   attributes: { "request.name": requestName }
                 }),
 
             ...meta,
-            mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(req)) : Request.path
+            mapPath: (req: any) => req ? makePathWithQuery(path, S.encodeSync(Request)(req)) : Request.path
           }
         : fields.length === 0
         ? {
@@ -192,8 +192,8 @@ function clientFor_<M extends Requests>(models: M) {
           mapPath: (req: any) =>
             req
               ? Request.method === "DELETE"
-                ? makePathWithQuery(path, Request.encodeSync(req))
-                : makePathWithBody(path, Request.encodeSync(req))
+                ? makePathWithQuery(path, S.encodeSync(Request)(req))
+                : makePathWithBody(path, S.encodeSync(Request)(req))
               : Request.path
         }
       // generate handler
