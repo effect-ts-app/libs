@@ -1,4 +1,4 @@
-import { Context, type Effect, type HashMap, Layer, type Option } from "@effect-app/core"
+import { Context, Effect, type HashMap, Layer, type Option } from "@effect-app/core"
 
 export interface ApiConfig {
   apiUrl: string
@@ -12,4 +12,4 @@ export const ApiConfig = {
   layer
 }
 
-export const getConfig = <R, E, A>(self: (cfg: ApiConfig) => Effect<A, E, R>) => tag.flatMap(self)
+export const getConfig = <R, E, A>(self: (cfg: ApiConfig) => Effect<A, E, R>) => Effect.flatMap(tag, self)

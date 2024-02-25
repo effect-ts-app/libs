@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Effect, Option } from "@effect-app/core"
+import { Effect, HashMap, Option } from "@effect-app/core"
 import { constant } from "@effect-app/core/Function"
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { ReadonlyRecord } from "effect"
@@ -29,111 +29,135 @@ export class ResError {
   constructor(public readonly error: unknown) {}
 }
 
-const getClient = Effect.flatMap(HttpClient.Client, (defaultClient) =>
-  ApiConfig
-    .Tag
-    .map(({ apiUrl, headers }) =>
+const getClient = Effect.flatMap(
+  HttpClient.Client,
+  (defaultClient) =>
+    Effect.map(ApiConfig.Tag, ({ apiUrl, headers }) =>
       defaultClient
-        .filterStatusOk
-        .mapRequest((_) =>
-          _
-            .acceptJson
-            .prependUrl(apiUrl)
-            .setHeaders({
-              "request-id": headers.flatMap((_) => _.get("request-id")).value ?? StringId.make(),
-              ...headers.map((_) => Object.fromEntries(_)).value
-            })
-        )
-        .tapRequest((r) =>
-          Effect
-            .logDebug(`[HTTP] ${r.method}`)
-            .annotateLogs("url", r.url)
-            .annotateLogs("body", r.body._tag === "Uint8Array" ? new TextDecoder().decode(r.body.body) : r.body._tag)
-            .annotateLogs("headers", r.headers)
-        )
-        .mapEffect((_) =>
-          _.status === 204
-            ? Effect.sync(() => ({ status: _.status, body: void 0, headers: _.headers }))
-            : _.json.map((body) => ({ status: _.status, body, headers: _.headers }))
-        )
-        .catchTag(
-          "ResponseError",
-          (err): Effect<FetchResponse<unknown>, ResponseError | SupportedErrors> => {
-            const toError = <R, From, To>(s: Schema<To, From, R>) =>
-              err.response.json.flatMap((_) => s.decodeUnknown(_).catchAll(() => Effect.fail(err))).flatMap(Effect.fail)
+        .pipe(
+          HttpClient
+            .filterStatusOk,
+          HttpClient
+            .mapRequest((_) =>
+              _.pipe(
+                HttpClientRequest.acceptJson,
+                HttpClientRequest
+                  .prependUrl(apiUrl),
+                HttpClientRequest
+                  .setHeaders({
+                    "request-id": Option.getOrUndefined(Option.flatMap(headers, (_) => HashMap.get(_, "request-id")))
+                      ?? StringId.make(),
+                    ...Option.getOrUndefined(Option.map(headers, (_) => Object.fromEntries(_)))
+                  })
+              )
+            ),
+          HttpClient
+            .tapRequest((r) =>
+              Effect
+                .logDebug(`[HTTP] ${r.method}`)
+                .pipe(Effect.annotateLogs({
+                  "url": r.url,
+                  "body": r.body._tag === "Uint8Array"
+                    ? new TextDecoder().decode(r.body.body)
+                    : r.body._tag,
+                  "headers": r.headers
+                }))
+            ),
+          HttpClient
+            .mapEffect((_) =>
+              _.status === 204
+                ? Effect.sync(() => ({ status: _.status, body: void 0, headers: _.headers }))
+                : Effect.map(_.json, (body) => ({ status: _.status, body, headers: _.headers }))
+            ),
+          HttpClient
+            .catchTag(
+              "ResponseError",
+              (err): Effect<FetchResponse<unknown>, ResponseError | SupportedErrors> => {
+                const toError = <R, From, To>(s: Schema<To, From, R>) =>
+                  Effect
+                    .flatMap(
+                      err
+                        .response
+                        .json,
+                      (_) => S.decodeUnknown(s)(_).pipe(Effect.catchAll(() => Effect.fail(err)))
+                    )
+                    .pipe(Effect.flatMap(Effect.fail))
 
-            // opposite of api's `defaultErrorHandler`
-            if (err.response.status === 404) {
-              return toError(NotFoundError)
-            }
-            if (err.response.status === 400) {
-              return toError(ValidationError)
-            }
-            if (err.response.status === 401) {
-              return toError(NotLoggedInError)
-            }
-            if (err.response.status === 422) {
-              return toError(InvalidStateError)
-            }
-            if (err.response.status === 403) {
-              return toError(UnauthorizedError)
-            }
-            if (err.response.status === 412) {
-              return toError(OptimisticConcurrencyException)
-            }
-            return Effect.fail(err)
-          }
-        )
-        .pipe(HttpClient.catchTags({
-          "ResponseError": (err) =>
-            err
-              .response
-              .text
-              // TODO
-              .orDie
-              .flatMap((_) =>
-                Effect.fail({
-                  _tag: "HttpErrorResponse" as const,
-                  response: { body: Option.fromNullable(_), status: err.response.status, headers: err.response.headers }
-                } as HttpResponseError<unknown>)
-              ),
-          "RequestError": (err) => Effect.fail({ _tag: "HttpErrorRequest", error: err.error } as HttpRequestError)
-        }))
-    ))
+                // opposite of api's `defaultErrorHandler`
+                if (err.response.status === 404) {
+                  return toError(NotFoundError)
+                }
+                if (err.response.status === 400) {
+                  return toError(ValidationError)
+                }
+                if (err.response.status === 401) {
+                  return toError(NotLoggedInError)
+                }
+                if (err.response.status === 422) {
+                  return toError(InvalidStateError)
+                }
+                if (err.response.status === 403) {
+                  return toError(UnauthorizedError)
+                }
+                if (err.response.status === 412) {
+                  return toError(OptimisticConcurrencyException)
+                }
+                return Effect.fail(err)
+              }
+            ),
+          HttpClient.catchTags({
+            "ResponseError": (err) =>
+              Effect
+                .orDie(
+                  err
+                    .response
+                    .text
+                  // TODO
+                )
+                .pipe(Effect
+                  .flatMap((_) =>
+                    Effect.fail({
+                      _tag: "HttpErrorResponse" as const,
+                      response: {
+                        body: Option.fromNullable(_),
+                        status: err.response.status,
+                        headers: err.response.headers
+                      }
+                    } as HttpResponseError<unknown>)
+                  )),
+            "RequestError": (err) => Effect.fail({ _tag: "HttpErrorRequest", error: err.error } as HttpRequestError)
+          })
+        ))
+)
 
 export function fetchApi(
   method: Method,
   path: string,
   body?: unknown
 ) {
-  return getClient
-    .flatMap((client) =>
-      (method === "GET"
-        ? client.request(HttpClientRequest.make(method)(path))
-        : body === undefined
-        ? client.request(
-          HttpClientRequest
-            .make(method)(path)
-        )
-        : client.request(
-          HttpClientRequest
-            .make(method)(path)
-            .jsonBody(body)
-        ))
-        .scoped
-        .withSpan("http.request", { attributes: { "http.method": method, "http.url": path } })
-    )
+  return Effect.flatMap(getClient, (client) =>
+    (method === "GET"
+      ? client(HttpClientRequest.make(method)(path))
+      : body === undefined
+      ? client(HttpClientRequest.make(method)(path))
+      : HttpClientRequest
+        .make(method)(path)
+        .pipe(HttpClientRequest.jsonBody(body), Effect.flatMap(client)))
+      .pipe(
+        Effect.scoped,
+        Effect.withSpan("http.request", { attributes: { "http.method": method, "http.url": path } })
+      ))
 }
 
 export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, ResponseFrom, ResponseTo>(
   request: Schema<RequestTo, RequestFrom, RequestR>,
   response: Schema<ResponseTo, ResponseFrom, ResponseR>
 ) {
-  const encodeRequest = request.encode
-  const decRes = response.decodeUnknown
-  const decodeRes = (u: unknown) => decRes(u).mapError((err) => new ResError(err))
+  const encodeRequest = S.encode(request)
+  const decRes = S.decodeUnknown(response)
+  const decodeRes = (u: unknown) => Effect.mapError(decRes(u), (err) => new ResError(err))
   return (method: Method, path: Path) => (req: RequestTo) => {
-    return encodeRequest(req).andThen((encoded) =>
+    return Effect.andThen(encodeRequest(req), (encoded) =>
       fetchApi(
         method,
         method === "DELETE"
@@ -142,13 +166,14 @@ export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, Response
           : makePathWithBody(path, encoded as any),
         encoded
       )
-        .flatMap(mapResponseM(decodeRes))
-        .map((i) => ({
-          ...i,
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-          body: i.body as ResponseTo
-        }))
-    )
+        .pipe(
+          Effect.flatMap(mapResponseM(decodeRes)),
+          Effect.map((i) => ({
+            ...i,
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+            body: i.body as ResponseTo
+          }))
+        ))
   }
 }
 
@@ -181,7 +206,7 @@ export function fetchApi3SE<RequestA, RequestE, ResponseE = unknown, ResponseA =
     new Path(Request.path)
   )
   const encode = S.encode(Response)
-  return (req: RequestA) => a(req).flatMap(mapResponseM((_) => encode(_)))
+  return (req: RequestA) => Effect.flatMap(a(req), mapResponseM((_) => encode(_)))
 }
 
 export function makePathWithQuery(
@@ -257,5 +282,5 @@ export function EmptyResponseMThunk<T>(): Effect<
 }
 
 export function getBody<R, E, A>(eff: Effect<FetchResponse<A | null>, E, R>) {
-  return eff.flatMap((r) => r.body === null ? Effect.die("Not found") : Effect.sync(() => r.body))
+  return Effect.flatMap(eff, (r) => r.body === null ? Effect.die("Not found") : Effect.sync(() => r.body))
 }

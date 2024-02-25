@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { type Effect, flow } from "@effect-app/core"
+import { Effect, flow } from "@effect-app/core"
 import type { Schema } from "effect-app/schema"
 import { REST } from "effect-app/schema"
 import { Path } from "path-parser"
 import type { HttpClient } from "../http.js"
+import { S } from "../lib.js"
+import { typedKeysOf } from "../utils.js"
 import type { ApiConfig } from "./config.js"
 import type { SupportedErrors } from "./errors.js"
 import type { FetchError, FetchResponse } from "./fetch.js"
@@ -56,9 +58,7 @@ export function clientFor<M extends Requests>(
 }
 
 function clientFor_<M extends Requests>(models: M) {
-  return (models
-    .$$
-    .keys
+  return (typedKeysOf(models)
     // ignore module interop with automatic default exports..
     .filter((x) => x !== "default" && x !== "meta")
     .reduce((prev, cur) => {
@@ -95,9 +95,9 @@ function clientFor_<M extends Requests>(models: M) {
       }
 
       const res = Response as Schema<any>
-      const parseResponse = flow(res.decodeUnknown, (_) => _.mapError((err) => new ResError(err)))
+      const parseResponse = flow(S.decodeUnknown(res), (_) => Effect.mapError(_, (err) => new ResError(err)))
 
-      const parseResponseE = flow(parseResponse, (x) => x.andThen(res.encode))
+      const parseResponseE = flow(parseResponse, Effect.andThen(S.encode(res)))
 
       const path = new Path(Request.path)
 
@@ -113,41 +113,47 @@ function clientFor_<M extends Requests>(models: M) {
         ? fields.length === 0
           ? {
             handler: fetchApi(Request.method, Request.path)
-              .flatMap(mapResponseM(parseResponse))
-              .withSpan("client.request", {
-                attributes: { "request.name": requestName }
-              }),
+              .pipe(
+                Effect.flatMap(mapResponseM(parseResponse)),
+                Effect
+                  .withSpan("client.request", {
+                    attributes: { "request.name": requestName }
+                  })
+              ),
             ...meta
           }
           : {
             handler: (req: any) =>
-              fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(req)))
-                .flatMap(mapResponseM(parseResponse))
-                .withSpan("client.request", {
-                  attributes: { "request.name": requestName }
-                }),
+              fetchApi(Request.method, makePathWithQuery(path, S.encodeSync(Request)(req)))
+                .pipe(
+                  Effect.flatMap(mapResponseM(parseResponse)),
+                  Effect
+                    .withSpan("client.request", {
+                      attributes: { "request.name": requestName }
+                    })
+                ),
             ...meta,
-            mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(req)) : Request.path
+            mapPath: (req: any) => req ? makePathWithQuery(path, S.encodeSync(Request)(req)) : Request.path
           }
         : fields.length === 0
         ? {
-          handler: fetchApi3S(b)({}).withSpan("client.request", {
+          handler: fetchApi3S(b)({}).pipe(Effect.withSpan("client.request", {
             attributes: { "request.name": requestName }
-          }),
+          })),
           ...meta
         }
         : {
           handler: (req: any) =>
-            fetchApi3S(b)(req).withSpan("client.request", {
+            fetchApi3S(b)(req).pipe(Effect.withSpan("client.request", {
               attributes: { "request.name": requestName }
-            }),
+            })),
 
           ...meta,
           mapPath: (req: any) =>
             req
               ? Request.method === "DELETE"
-                ? makePathWithQuery(path, Request.encodeSync(req))
-                : makePathWithBody(path, Request.encodeSync(req))
+                ? makePathWithQuery(path, S.encodeSync(Request)(req))
+                : makePathWithBody(path, S.encodeSync(Request)(req))
               : Request.path
         }
 
@@ -158,42 +164,48 @@ function clientFor_<M extends Requests>(models: M) {
         ? fields.length === 0
           ? {
             handler: fetchApi(Request.method, Request.path)
-              .flatMap(mapResponseM(parseResponseE))
-              .withSpan("client.request", {
-                attributes: { "request.name": requestName }
-              }),
+              .pipe(
+                Effect.flatMap(mapResponseM(parseResponseE)),
+                Effect
+                  .withSpan("client.request", {
+                    attributes: { "request.name": requestName }
+                  })
+              ),
             ...meta
           }
           : {
             handler: (req: any) =>
-              fetchApi(Request.method, makePathWithQuery(path, Request.encodeSync(req)))
-                .flatMap(mapResponseM(parseResponseE))
-                .withSpan("client.request", {
-                  attributes: { "request.name": requestName }
-                }),
+              fetchApi(Request.method, makePathWithQuery(path, S.encodeSync(Request)(req)))
+                .pipe(
+                  Effect.flatMap(mapResponseM(parseResponseE)),
+                  Effect
+                    .withSpan("client.request", {
+                      attributes: { "request.name": requestName }
+                    })
+                ),
 
             ...meta,
-            mapPath: (req: any) => req ? makePathWithQuery(path, Request.encodeSync(req)) : Request.path
+            mapPath: (req: any) => req ? makePathWithQuery(path, S.encodeSync(Request)(req)) : Request.path
           }
         : fields.length === 0
         ? {
-          handler: fetchApi3SE(b)({}).withSpan("client.request", {
+          handler: fetchApi3SE(b)({}).pipe(Effect.withSpan("client.request", {
             attributes: { "request.name": requestName }
-          }),
+          })),
           ...meta
         }
         : {
           handler: (req: any) =>
-            fetchApi3SE(b)(req).withSpan("client.request", {
+            fetchApi3SE(b)(req).pipe(Effect.withSpan("client.request", {
               attributes: { "request.name": requestName }
-            }),
+            })),
 
           ...meta,
           mapPath: (req: any) =>
             req
               ? Request.method === "DELETE"
-                ? makePathWithQuery(path, Request.encodeSync(req))
-                : makePathWithBody(path, Request.encodeSync(req))
+                ? makePathWithQuery(path, S.encodeSync(Request)(req))
+                : makePathWithBody(path, S.encodeSync(Request)(req))
               : Request.path
         }
       // generate handler

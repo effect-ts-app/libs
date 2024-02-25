@@ -33,7 +33,7 @@ export class ValidationError extends TaggedError<ValidationError>()("ValidationE
 
 /** @tsplus type NotLoggedInError */
 export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLoggedInError", {
-  message: S.string.optional()
+  message: S.optional(S.string)
 }) {
   constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
@@ -45,7 +45,7 @@ export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLogged
  */
 /** @tsplus type LoginError */
 export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
-  message: S.string.optional()
+  message: S.optional(S.string)
 }) {
   constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
@@ -54,7 +54,7 @@ export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
 
 /** @tsplus type UnauthorizedError */
 export class UnauthorizedError extends TaggedError<UnauthorizedError>()("UnauthorizedError", {
-  message: S.string.optional()
+  message: S.optional(S.string)
 }) {
   constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)

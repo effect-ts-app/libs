@@ -100,5 +100,5 @@ export const secretURL = (name?: string): Config<SecretURL> => {
     "a secret property",
     (text) => Either.right(fromString(text))
   )
-  return name === undefined ? config : config.nested(name)
+  return name === undefined ? config : Config.nested(config, name)
 }

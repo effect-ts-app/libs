@@ -20,7 +20,7 @@ export function encaseMaybeInEffect_<E, A>(
   o: Option<A>,
   onError: LazyArg<E>
 ): Effect<A, E> {
-  return o.match({ onNone: () => Effect.fail(onError()), onSome: Effect.succeed })
+  return Option.match(o, { onNone: () => Effect.fail(onError()), onSome: Effect.succeed })
 }
 
 /**
@@ -30,7 +30,7 @@ export function encaseMaybeEither_<E, A>(
   o: Option<A>,
   onError: LazyArg<E>
 ): Either.Either<A, E> {
-  return o.match({ onNone: () => Either.left(onError()), onSome: Either.right })
+  return Option.match(o, { onNone: () => Either.left(onError()), onSome: Either.right })
 }
 
 /**
@@ -49,7 +49,7 @@ export function scope<R, E, A, R2, E2, A2>(
   scopedEffect: Effect<A, E, R | Scope>,
   effect: Effect<A2, E2, R2>
 ): Effect<A2, E | E2, Exclude<R | R2, Scope>> {
-  return scopedEffect.zipRight(effect).scoped
+  return Effect.zipRight(scopedEffect, effect).pipe(Effect.scoped)
 }
 
 /**
@@ -59,7 +59,7 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
   scopedEffect: Effect<A, E, R | Scope>,
   effect: (a: A) => Effect<A2, E2, R2>
 ): Effect<A2, E | E2, Exclude<R | R2, Scope>> {
-  return scopedEffect.flatMap(effect).scoped
+  return scopedEffect.pipe(Effect.flatMap(effect), Effect.scoped)
 }
 
 // /**
@@ -94,5 +94,5 @@ export const client: {
   req: Effect<HttpClientRequest.ClientRequest, any, any> | HttpClientRequest.ClientRequest
 ) =>
   Effect.isEffect(req)
-    ? req.flatMap(client)
+    ? Effect.flatMap(req, client)
     : client(req)
