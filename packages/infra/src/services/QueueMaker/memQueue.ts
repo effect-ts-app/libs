@@ -2,11 +2,12 @@ import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { NonEmptyString255, struct } from "@effect-app/schema"
 import { Tracer } from "effect"
-import { Effect, flow } from "effect-app"
-import type { S } from "effect-app"
+import { Effect, Fiber, flow, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
+import { pretty } from "effect-app/utils"
+import { setupRequestContext } from "../../api/setupRequest.js"
 import { RequestContextContainer } from "../RequestContextContainer.js"
-import { reportNonInterruptedFailure } from "./errors.js"
+import { forkDaemonReportQueue, reportNonInterruptedFailure } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
 /**
@@ -31,26 +32,28 @@ export function makeMemQueue<
 
     const wireSchema = struct({ body: schema, meta: QueueMeta })
     const drainW = struct({ body: drainSchema, meta: QueueMeta })
-    const parseDrain = flow(drainW.decodeUnknown, (_) => _.orDie)
+    const parseDrain = flow(S.decodeUnknown(drainW), Effect.orDie)
 
     return {
       publish: (...messages) =>
         Effect.gen(function*($) {
           const requestContext = yield* $(rcc.requestContext)
-          const currentSpan = yield* $(Effect.currentSpan.orDie)
+          const currentSpan = yield* $(Effect.currentSpan.pipe(Effect.orDie))
           const span = Tracer.externalSpan(currentSpan)
           return yield* $(
             Effect
               .forEach(messages, (m) =>
                 // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-                wireSchema
-                  .encode({ body: m, meta: { requestContext, span } })
-                  .orDie
-                  .andThen(JSON.stringify)
+                S.encode(wireSchema)({ body: m, meta: { requestContext, span } }).pipe(
+                  Effect.orDie,
+                  Effect
+                    .andThen(JSON.stringify),
                   // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))
-                  .flatMap((_) => q.offer(_))
-                  .asUnit)
-              .forkDaemonReportQueue
+                  Effect.flatMap((_) => q.offer(_)),
+                  Effect
+                    .asUnit
+                ))
+              .pipe(forkDaemonReportQueue)
           )
         }),
       makeDrain: <DrainE, DrainR>(
@@ -62,35 +65,48 @@ export function makeMemQueue<
             // we JSON parse, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
             Effect
               .sync(() => JSON.parse(msg))
-              .flatMap(parseDrain)
-              .orDie
-              .flatMap(({ body, meta }) =>
+              .pipe(
+                Effect.flatMap(parseDrain),
                 Effect
-                  .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                  .pipe(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
-                  .zipRight(handleEvent(body))
-                  .pipe(silenceAndReportError)
-                  .setupRequestContext(RequestContext.inherit(meta.requestContext, {
-                    id: RequestId(body.id),
-                    locale: "en" as const,
-                    name: NonEmptyString255(body._tag)
-                  }))
-                  .withSpan("queue.drain", {
-                    attributes: { "queue.name": queueDrainName },
-                    parent: meta.span
-                      ? Tracer.externalSpan(meta.span)
-                      : undefined
-                  })
+                  .orDie,
+                Effect
+                  .flatMap(({ body, meta }) =>
+                    Effect
+                      .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
+                      .pipe(
+                        Effect.annotateLogs({ body: pretty(body), meta: pretty(meta) }),
+                        Effect.zipRight(handleEvent(body)),
+                        silenceAndReportError,
+                        (_) =>
+                          setupRequestContext(
+                            _,
+                            RequestContext.inherit(meta.requestContext, {
+                              id: RequestId(body.id),
+                              locale: "en" as const,
+                              name: NonEmptyString255(body._tag)
+                            })
+                          ),
+                        Effect
+                          .withSpan("queue.drain", {
+                            attributes: { "queue.name": queueDrainName },
+                            parent: meta.span
+                              ? Tracer.externalSpan(meta.span)
+                              : undefined
+                          })
+                      )
+                  )
               )
           return yield* $(
             qDrain
               .take
-              .flatMap((x) => processMessage(x).uninterruptible.fork.flatMap((_) => _.join))
-              // TODO: normally a failed item would be returned to the queue and retried up to X times.
-              // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.
-              .pipe(silenceAndReportError)
-              .forever
-              .forkScoped
+              .pipe(
+                Effect.flatMap((x) => processMessage(x).pipe(Effect.uninterruptible, Effect.fork, Effect.flatMap(Fiber.join))),
+                // TODO: normally a failed item would be returned to the queue and retried up to X times.
+                // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.
+                silenceAndReportError,
+                Effect.forever,
+                Effect.forkScoped
+              )
           )
         })
     } satisfies QueueBase<Evt, DrainEvt>

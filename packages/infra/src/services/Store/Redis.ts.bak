@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { RedisClient, RedisClientLayer } from "@effect-app/infra-adapters/redis-client"
-import { Effect, Option } from "effect-app"
+import { Effect, Layer, Option, ReadonlyArray, Secret } from "effect-app"
 import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
 import { NotFoundError } from "../../errors.js"
 import { memFilter } from "./Memory.js"
@@ -86,5 +86,5 @@ function makeRedisStore({ prefix }: StorageConfig) {
 export function RedisStoreLayer(cfg: StorageConfig) {
   return StoreMaker
     .toLayer(makeRedisStore(cfg))
-    .provide(RedisClientLayer(cfg.url.value))
+    .pipe(Layer.provide(RedisClientLayer(Secret.value(cfg.url))))
 }

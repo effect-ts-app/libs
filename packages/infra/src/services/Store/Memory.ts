@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Effect, FiberRef, flow, Option, Order, pipe, Ref } from "effect-app"
+import { Effect, FiberRef, flow, Option, Order, pipe, ReadonlyArray, Ref } from "effect-app"
 import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
 import { get, pick } from "effect-app/utils"
 import type { RequestContext } from "../../RequestContext.js"
@@ -14,7 +14,7 @@ export function memFilter<T extends PersistenceModelType<string>, U extends keyo
     const select = (r: T[]): M[] => (f.select ? r.map((_) => pick(_, f.select!)) : r) as any
     const skip = f?.skip
     const limit = f?.limit
-    const ords = Option.fromNullable(f.order).map((_) =>
+    const ords = Option.map(Option.fromNullable(f.order), (_) =>
       _.map((_) =>
         Order.make<T>((self, that) => {
           // TODO: inspect data types for the right comparison?
@@ -28,24 +28,26 @@ export function memFilter<T extends PersistenceModelType<string>, U extends keyo
           }
           return selfV < thatV ? 1 : -1
         })
-      )
-    )
-    if (ords.value) {
-      c = c.sortBy(...ords.value!)
+      ))
+    if (Option.isSome(ords)) {
+      c = ReadonlyArray.sortBy(...ords.value)(c)
     }
     if (!skip && limit === 1) {
       return select(
-        c.findFirstMap(f.filter ? codeFilter(f.filter) : (_) => Option.some(_)).map(ReadonlyArray.make).getOrElse(
-          () => []
+        ReadonlyArray.findFirst(c, f.filter ? codeFilter(f.filter) : (_) => Option.some(_)).pipe(
+          Option.map(ReadonlyArray.make),
+          Option.getOrElse(
+            () => []
+          )
         )
       )
     }
-    let r = f.filter ? c.filterMap(codeFilter(f.filter)) : c
+    let r = f.filter ? ReadonlyArray.filterMap(c, codeFilter(f.filter)) : c
     if (skip) {
-      r = r.drop(skip)
+      r = ReadonlyArray.drop(r, skip)
     }
     if (limit !== undefined) {
-      r = r.take(limit)
+      r = ReadonlyArray.take(r, limit)
     }
 
     return select(r)
@@ -57,7 +59,7 @@ export const storeId = FiberRef.unsafeMake("primary")
 /**
  * @tsplus getter RequestContext restoreStoreId
  */
-export const restoreFromRequestContext = (ctx: RequestContext) => storeId.set(ctx.namespace ?? "primary")
+export const restoreFromRequestContext = (ctx: RequestContext) => FiberRef.set(storeId, ctx.namespace ?? "primary")
 
 function logQuery(f: FilterArgs<any, any>, defaultValues?: any) {
   return Effect
@@ -87,100 +89,131 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
     const items_ = yield* $(seed ?? Effect.sync(() => []))
     const defaultValues = _defaultValues ?? {}
 
-    const items = new Map(items_.toChunk.map((_) => [_.id, { ...defaultValues, ..._ }] as const))
+    const items = new Map([...items_].map((_) => [_.id, { ...defaultValues, ..._ }] as const))
     const store = Ref.unsafeMake<ReadonlyMap<Id, PM>>(items)
     const sem = Effect.unsafeMakeSemaphore(1)
     const withPermit = sem.withPermits(1)
-    const values = store.get.map((s) => s.values())
+    const values = Effect.map(Ref.get(store), (s) => s.values())
 
-    const all = values.map(ReadonlyArray.fromIterable)
+    const all = Effect.map(values, ReadonlyArray.fromIterable)
 
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
       Effect
-        .forEach(items, (i) => s.find(i.id).flatMap((current) => updateETag(i, current)))
-        .tap((items) =>
-          store
-            .get
-            .map((m) => {
-              const mut = m as Map<Id, PM>
-              items.forEach((e) => mut.set(e.id, e))
-              return mut
-            })
-            .flatMap((_) => store.set(_))
+        .forEach(items, (i) => Effect.flatMap(s.find(i.id), (current) => updateETag(i, current)))
+        .pipe(
+          Effect
+            .tap((items) =>
+              Ref
+                .get(store)
+                .pipe(
+                  Effect
+                    .map((m) => {
+                      const mut = m as Map<Id, PM>
+                      items.forEach((e) => mut.set(e.id, e))
+                      return mut
+                    }),
+                  Effect
+                    .flatMap((_) => Ref.set(store, _))
+                )
+            ),
+          Effect
+            .map((_) => _ as NonEmptyArray<PM>),
+          withPermit
         )
-        .map((_) => _ as NonEmptyArray<PM>)
-        .pipe(withPermit)
     const s: Store<PM, Id> = {
-      all: all.withSpan("Memory.all [effect-app/infra/Store]", {
+      all: all.pipe(Effect.withSpan("Memory.all [effect-app/infra/Store]", {
         attributes: {
           modelName,
           namespace
         }
-      }),
+      })),
       find: (id) =>
-        store
-          .get
-          .map((_) => Option.fromNullable(_.get(id)))
-          .withSpan("Memory.find [effect-app/infra/Store]", {
-            attributes: {
-              modelName,
-              namespace
-            }
-          }),
+        Ref
+          .get(store)
+          .pipe(
+            Effect.map((_) => Option.fromNullable(_.get(id))),
+            Effect
+              .withSpan("Memory.find [effect-app/infra/Store]", {
+                attributes: {
+                  modelName,
+                  namespace
+                }
+              })
+          ),
       filter: (f) =>
         all
-          .tap(() => logQuery(f, defaultValues))
-          .map(memFilter(f))
-          .withSpan("Memory.filter [effect-app/infra/Store]", {
-            attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
-          }),
+          .pipe(
+            Effect.tap(() => logQuery(f, defaultValues)),
+            Effect.map(memFilter(f)),
+            Effect.withSpan("Memory.filter [effect-app/infra/Store]", {
+              attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+            })
+          ),
       filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
         all
-          .map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter)))
-          .withSpan(
-            "Memory.filterJoinSelect [effect-app/infra/Store]",
-            {
-              attributes: {
-                modelName
-              }
-            }
+          .pipe(
+            Effect.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),
+            Effect
+              .withSpan(
+                "Memory.filterJoinSelect [effect-app/infra/Store]",
+                {
+                  attributes: {
+                    modelName
+                  }
+                }
+              )
           ),
       set: (e) =>
         s
           .find(e.id)
-          .flatMap((current) => updateETag(e, current))
-          .tap((e) => store.get.map((_) => new Map([..._, [e.id, e]])).flatMap((_) => store.set(_)))
-          .pipe(withPermit)
-          .withSpan("Memory.set [effect-app/infra/Store]", {
-            attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
-          }),
+          .pipe(
+            Effect.flatMap((current) => updateETag(e, current)),
+            Effect
+              .tap((e) =>
+                Ref.get(store).pipe(
+                  Effect.map((_) => new Map([..._, [e.id, e]])),
+                  Effect.flatMap((_) => Ref.set(store, _))
+                )
+              ),
+            withPermit,
+            Effect
+              .withSpan("Memory.set [effect-app/infra/Store]", {
+                attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+              })
+          ),
       batchSet: (items: readonly [PM, ...PM[]]) =>
         pipe(
           Effect
             .sync(() => items)
             // align with CosmosDB
-            .filterOrDieMessage((_) => _.length <= 100, "BatchSet: a batch may not exceed 100 items")
-            .andThen(batchSet)
-            .withSpan("Memory.batchSet [effect-app/infra/Store]", {
-              attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
-            })
+            .pipe(
+              Effect.filterOrDieMessage((_) => _.length <= 100, "BatchSet: a batch may not exceed 100 items"),
+              Effect
+                .andThen(batchSet),
+              Effect
+                .withSpan("Memory.batchSet [effect-app/infra/Store]", {
+                  attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+                })
+            )
         ),
       bulkSet: flow(
         batchSet,
         (_) =>
-          _.withSpan("Memory.bulkSet [effect-app/infra/Store]", {
+          _.pipe(Effect.withSpan("Memory.bulkSet [effect-app/infra/Store]", {
             attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
-          })
+          }))
       ),
       remove: (e: PM) =>
-        store
-          .get
-          .map((_) => new Map([..._].filter(([_]) => _ !== e.id)))
-          .flatMap((_) => store.set(_))
-          .pipe(withPermit)
-          .withSpan("Memory.remove [effect-app/infra/Store]", {
-            attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
-          })
+        Ref
+          .get(store)
+          .pipe(
+            Effect.map((_) => new Map([..._].filter(([_]) => _ !== e.id))),
+            Effect.flatMap((_) => Ref.set(store, _)),
+            withPermit,
+            Effect.withSpan("Memory.remove [effect-app/infra/Store]", {
+              attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+            })
+          )
     }
     return s
   })
@@ -197,32 +230,38 @@ export const makeMemoryStore = () => ({
       const primary = yield* $(makeMemoryStoreInt<Id, PM, R, E>(modelName, "primary", seed, config?.defaultValues))
       const ctx = yield* $(Effect.context<R>())
       const stores = new Map([["primary", primary]])
-      const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap((namespace) => {
-        const store = stores.get(namespace)
-        if (store) {
-          return Effect.succeed(store)
-        }
-        if (!config.allowNamespace!(namespace)) {
-          throw new Error(`Namespace ${namespace} not allowed!`)
-        }
-        return storesSem.withPermits(1)(Effect.suspend(() => {
+      const getStore = !config?.allowNamespace
+        ? Effect.succeed(primary)
+        : FiberRef.get(storeId).pipe(Effect.flatMap((namespace) => {
           const store = stores.get(namespace)
-          if (store) return Effect.sync(() => store)
-          return makeMemoryStoreInt(modelName, namespace, seed, config?.defaultValues)
-            .orDie
-            .provide(ctx)
-            .tap((store) => Effect.sync(() => stores.set(namespace, store)))
+          if (store) {
+            return Effect.succeed(store)
+          }
+          if (!config.allowNamespace!(namespace)) {
+            throw new Error(`Namespace ${namespace} not allowed!`)
+          }
+          return storesSem.withPermits(1)(Effect.suspend(() => {
+            const store = stores.get(namespace)
+            if (store) return Effect.sync(() => store)
+            return makeMemoryStoreInt(modelName, namespace, seed, config?.defaultValues)
+              .pipe(
+                Effect.orDie,
+                Effect
+                  .provide(ctx),
+                Effect
+                  .tap((store) => Effect.sync(() => stores.set(namespace, store)))
+              )
+          }))
         }))
-      })
       const s: Store<PM, Id> = {
-        all: getStore.flatMap((_) => _.all),
-        find: (...args) => getStore.flatMap((_) => _.find(...args)),
-        filter: (...args) => getStore.flatMap((_) => _.filter(...args)),
-        filterJoinSelect: (...args) => getStore.flatMap((_) => _.filterJoinSelect(...args)),
-        set: (...args) => getStore.flatMap((_) => _.set(...args)),
-        batchSet: (...args) => getStore.flatMap((_) => _.batchSet(...args)),
-        bulkSet: (...args) => getStore.flatMap((_) => _.bulkSet(...args)),
-        remove: (...args) => getStore.flatMap((_) => _.remove(...args))
+        all: Effect.flatMap(getStore, (_) => _.all),
+        find: (...args) => Effect.flatMap(getStore, (_) => _.find(...args)),
+        filter: (...args) => Effect.flatMap(getStore, (_) => _.filter(...args)),
+        filterJoinSelect: (...args) => Effect.flatMap(getStore, (_) => _.filterJoinSelect(...args)),
+        set: (...args) => Effect.flatMap(getStore, (_) => _.set(...args)),
+        batchSet: (...args) => Effect.flatMap(getStore, (_) => _.batchSet(...args)),
+        bulkSet: (...args) => Effect.flatMap(getStore, (_) => _.bulkSet(...args)),
+        remove: (...args) => Effect.flatMap(getStore, (_) => _.remove(...args))
       }
       return s
     })

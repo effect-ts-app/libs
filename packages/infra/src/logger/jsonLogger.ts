@@ -1,4 +1,4 @@
-import { Cause, Logger } from "effect-app"
+import { Cause, FiberId, HashMap, List, Logger, Option } from "effect-app"
 import { getRequestContext } from "./shared.js"
 
 export const jsonLogger = Logger.make<unknown, void>(
@@ -11,12 +11,12 @@ export const jsonLogger = Logger.make<unknown, void>(
     const data = {
       timestamp: now,
       level: logLevel.label,
-      fiber: fiberId.threadName,
+      fiber: FiberId.threadName(fiberId),
       message,
-      request: c.value,
-      cause: cause != null && cause != Cause.empty ? cause.pretty : undefined,
-      spans: spans.map((_) => ({ label: _.label, timing: nowMillis - _.startTime })).toArray,
-      annotations: annotations.size > 0
+      request: Option.getOrUndefined(c),
+      cause: cause != null && cause != Cause.empty ? Cause.pretty(cause) : undefined,
+      spans: List.map(spans, (_) => ({ label: _.label, timing: nowMillis - _.startTime })).pipe(List.toArray),
+      annotations: HashMap.size(annotations) > 0
         ? [...annotations].reduce((prev, [k, v]) => {
           prev[k] = v
           return prev

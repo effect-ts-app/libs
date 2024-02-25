@@ -1,7 +1,8 @@
+import { toNonEmptyArray } from "@effect-app/core/Array"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { Effect } from "effect-app"
-import { Pure } from "effect-app/Pure"
-import type { FixEnv, PureEnvEnv, PureLogT } from "effect-app/Pure"
+import { get, logMany, set } from "effect-app/Pure"
+import type { FixEnv, Pure, PureEnvEnv, PureLogT } from "effect-app/Pure"
 
 export interface PureDSL<S, S2, W> {
   get: Pure<never, S, S, never, never, S>
@@ -10,9 +11,9 @@ export interface PureDSL<S, S2, W> {
 }
 
 export const AnyPureDSL: PureDSL<any, any, any> = {
-  get: Pure.get(),
-  set: Pure.set as any,
-  log: (...evt: any[]) => Pure.logMany(evt)
+  get: get(),
+  set: set as any,
+  log: (...evt: any[]) => logMany(evt)
 }
 
 const anyDSL = makeDSL<any, any, any>()
@@ -81,7 +82,7 @@ export function makeDSL<S1, S2, Evt>() {
       dsl: PureDSL<S1, S2, Evt>
     ) => Effect<A, E, R>
   ): Effect<A, E, FixEnv<R, Evt, S1, S2>> {
-    return dsl.get.flatMap((items) => pure(items, dsl)) as any
+    return dsl.get.pipe(Effect.flatMap((items) => pure(items, dsl))) as any
   }
 
   function update<
@@ -93,7 +94,7 @@ export function makeDSL<S1, S2, Evt>() {
       log: (...evt: Evt[]) => PureLogT<Evt>
     ) => Effect<S2, E, R>
   ): Effect<S2, E, FixEnv<R, Evt, S1, S2>> {
-    return dsl.get.flatMap((items) => pure(items, dsl.log).tap(dsl.set)) as any
+    return dsl.get.pipe(Effect.flatMap((items) => pure(items, dsl.log).pipe(Effect.tap(dsl.set)))) as any
   }
 
   function withDSL<
@@ -123,12 +124,12 @@ export function makeDSL<S1, S2, Evt>() {
 export interface DSLExt<S1, S2, Evt> extends ReturnType<typeof makeDSL<S1, S2, Evt>> {}
 
 export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effect<A, E, R>) {
-  return (items: Iterable<T>) => Effect.sync(() => [...items].toNonEmpty).flatMapOpt(fn)
+  return (items: Iterable<T>) => Effect.flatMapOption(Effect.sync(() => toNonEmptyArray([...items])), fn)
 }
 
 /**
  * @tsplus fluent Iterable ifAny
  */
 export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<A, E, R>) {
-  return Effect.sync(() => [...items].toNonEmpty).flatMapOpt(fn)
+  return Effect.flatMapOption(Effect.sync(() => toNonEmptyArray([...items])), fn)
 }

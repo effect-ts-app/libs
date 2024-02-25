@@ -25,41 +25,43 @@ export class Operations extends TagClassId("effect-app/Operations")<Operations, 
  * @tsplus getter effect/io/Effect forkOperation
  */
 export function forkOperation<R, E, A>(self: Effect<A, E, R>) {
-  return Operations.flatMap(
-    (Operations) =>
-      Scope
-        .make()
-        .flatMap((scope) =>
-          Operations
-            .register
-            .extend(scope)
-            .tap(() => forkDaemonReportRequestUnexpected(self.use(scope)))
-        )
-  )
+  return Effect.flatMap(Operations, (Operations) =>
+    Effect.flatMap(
+      Scope.make(),
+      (scope) =>
+        Operations
+          .register
+          .pipe(
+            Scope.extend(scope),
+            Effect
+              .tap(() => forkDaemonReportRequestUnexpected(Scope.use(self, scope)))
+          )
+    ))
 }
 
 /**
  * @tsplus getter function forkOperation
  */
 export function forkOperationFunction<R, E, A, Inp>(fnc: (inp: Inp) => Effect<A, E, R>) {
-  return (inp: Inp) => fnc(inp).forkOperation
+  return (inp: Inp) => fnc(inp).pipe(forkOperation)
 }
 
 /**
  * @tsplus static effect/io/Effect.Ops forkOperation
  */
 export function forkOperation2<R, E, A>(self: (opId: OperationId) => Effect<A, E, R>) {
-  return Operations.flatMap(
-    (Operations) =>
-      Scope
-        .make()
-        .flatMap((scope) =>
-          Operations
-            .register
-            .extend(scope)
-            .tap((id) => forkDaemonReportRequestUnexpected(self(id).use(scope)))
-        )
-  )
+  return Effect.flatMap(Operations, (Operations) =>
+    Effect.flatMap(
+      Scope.make(),
+      (scope) =>
+        Operations
+          .register
+          .pipe(
+            Scope.extend(scope),
+            Effect
+              .tap((id) => forkDaemonReportRequestUnexpected(Scope.use(self(id), scope)))
+          )
+    ))
 }
 
 /**
@@ -69,16 +71,17 @@ export function forkOperationWithEffect<R, R2, E, E2, A, A2>(
   self: (id: OperationId) => Effect<A, E, R>,
   fnc: (id: OperationId) => Effect<A2, E2, R2>
 ) {
-  return Operations.flatMap(
-    (Operations) =>
+  return Effect.flatMap(Operations, (Operations) =>
+    Effect.flatMap(
       Scope
-        .make()
-        .flatMap((scope) =>
-          Operations
-            .register
-            .extend(scope)
-            .tap((opId) => forkDaemonReportRequestUnexpected(self(opId).use(scope)))
-            .tap((opId) => fnc(opId).interruptible.forkScoped.extend(scope))
-        )
-  )
+        .make(),
+      (scope) =>
+        Operations
+          .register
+          .pipe(
+            Scope.extend(scope),
+            Effect.tap((opId) => forkDaemonReportRequestUnexpected(Scope.use(self(opId), scope))),
+            Effect.tap((opId) => Effect.interruptible(fnc(opId)).pipe(Effect.forkScoped, Scope.extend(scope)))
+          )
+    ))
 }

@@ -15,6 +15,7 @@
         ],
         // temp disbaled to support ts-plus ops
         "importsNotUsedAsValues": "preserve",
+        "tsPlusEnabled": false
     },
     "include": [
         "./src/**/*.ts"
