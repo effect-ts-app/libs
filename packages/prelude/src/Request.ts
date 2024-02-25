@@ -1,8 +1,8 @@
 import type { Schema } from "@effect-app/schema"
 import type { ClientResponse } from "@effect/platform/Http/ClientResponse"
 import type { Headers } from "@effect/platform/Http/Headers"
-import { type HttpClient, HttpClientError, HttpHeaders } from "./http.js"
-import { Effect, S } from "./lib.js"
+import { HttpClient, HttpClientError, HttpClientRequest, HttpHeaders } from "./http.js"
+import { Effect, Option, S } from "./lib.js"
 
 export interface ResponseWithBody<A> extends Pick<ClientResponse, "headers" | "status" | "remoteAddress"> {
   readonly body: A
@@ -17,7 +17,7 @@ export interface ResponseWithBody<A> extends Pick<ClientResponse, "headers" | "s
 export const responseWithJsonBody = (
   response: ClientResponse
 ) =>
-  response.json.map((body): ResponseWithBody<unknown> => ({
+  Effect.map(response.json, (body): ResponseWithBody<unknown> => ({
     body,
     headers: response.headers,
     status: response.status,
@@ -31,7 +31,7 @@ export const schemaJsonBody = <R, To, From, A, B>(
   client: HttpClient.Client<A, B, ClientResponse>,
   schema: Schema<To, From, R>
 ) => {
-  return client.mapEffect((_) => _.json.flatMap(S.decodeUnknown(schema)))
+  return HttpClient.mapEffect(client, (_) => Effect.flatMap(_.json, S.decodeUnknown(schema)))
 }
 
 /**
@@ -41,7 +41,7 @@ export const schemaJsonBodyUnsafe = <To, From, A, B>(
   client: HttpClient.Client<A, B, ClientResponse>,
   schema: Schema<To, From>
 ) => {
-  return client.mapEffect((_) => _.json.map(S.decodeUnknownSync(schema)))
+  return HttpClient.mapEffect(client, (_) => Effect.map(_.json, S.decodeUnknownSync(schema)))
 }
 
 /**
@@ -61,7 +61,7 @@ export const schemaJson = <
   client: HttpClient.Client<A, B, ClientResponse>,
   schema: Schema<To, From, R>
 ) => {
-  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(S.decodeUnknown(schema)))
+  return HttpClient.mapEffect(client, (_) => Effect.flatMap(responseWithJsonBody(_), S.decodeUnknown(schema)))
 }
 
 /**
@@ -81,22 +81,24 @@ export const schemaJsonUnsafe = <
   client: HttpClient.Client<A, B, ClientResponse>,
   schema: Schema<To, From, R>
 ) => {
-  return client.mapEffect((_) => _.responseWithJsonBody.flatMap(S.decodeUnknown(schema)))
+  return HttpClient.mapEffect(client, (_) => Effect.flatMap(responseWithJsonBody(_), S.decodeUnknown(schema)))
 }
 
 /** @tsplus getter effect/platform/Http/Client demandJson */
 export const demandJson = <R, E>(client: HttpClient.Client<R, E, ClientResponse>) =>
-  client
-    .mapRequest((_) => _.acceptJson)
-    .transform((r, request) =>
-      r.tap((response) =>
-        HttpHeaders.get(response.headers, "Content-Type").value?.startsWith("application/json")
+  HttpClient
+    .mapRequest(client, (_) => HttpClientRequest.acceptJson(_))
+    .pipe(HttpClient.transform((r, request) =>
+      Effect.tap(r, (response) =>
+        Option
+            .getOrUndefined(HttpHeaders
+              .get(response.headers, "Content-Type"))
+            ?.startsWith("application/json")
           ? Effect.unit
           : Effect.fail(HttpClientError.ResponseError({
             request,
             response,
             reason: "Decode",
-            error: "not json response: " + HttpHeaders.get(response.headers, "Content-Type").value
-          }))
-      )
-    )
+            error: "not json response: " + Option.getOrUndefined(HttpHeaders.get(response.headers, "Content-Type"))
+          })))
+    ))
