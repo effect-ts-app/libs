@@ -79,7 +79,7 @@ export function GMUA_<W, S, S2, GR, GE, GA, MR, ME, MA, UR, UE, UA>(
   modify: (i: GA) => Pure<W, S, S2, MR, ME, readonly [GA, MA]>,
   update: (i: GA) => Pure<W, S, S2, UR, UE, UA>
 ): Pure<W, S, S2, GR | MR | UR, GE | ME | UE, MA> {
-  return get.flatMap(modify).flatMap(([s, a]) => update(s).map(() => a))
+  return Effect.flatMap(get, modify).pipe(Effect.flatMap(([s, a]) => Effect.map(update(s), () => a)))
 }
 
 /**
@@ -101,7 +101,7 @@ export function GMU_<W, S, S2, GR, GE, GA, MR, ME, UR, UE, UA>(
   modify: (i: GA) => Pure<W, S, S2, MR, ME, GA>,
   update: (i: GA) => Pure<W, S, S2, UR, UE, UA>
 ): Pure<W, S, S2, GR | MR | UR, GE | ME | UE, UA> {
-  return get.flatMap(modify).flatMap(update)
+  return Effect.flatMap(get, modify).pipe(Effect.flatMap(update))
 }
 
 /**
@@ -128,14 +128,14 @@ export interface PureEnvEnv<W, S, S2> extends ServiceTagged<typeof PureEnvEnv> {
  * @tsplus static Pure.Ops get
  */
 export function get<S>(): Pure<never, S, S, never, never, S> {
-  return castTag<never, S, S>().map((_) => _.env.state)
+  return Effect.map(castTag<never, S, S>(), (_) => _.env.state)
 }
 
 /**
  * @tsplus static Pure.Ops set
  */
 export function set<S>(s: S): Pure<never, S, S, never, never, void> {
-  return castTag<never, S, S>().map((_) => _.env.state = s)
+  return Effect.map(castTag<never, S, S>(), (_) => _.env.state = s)
 }
 
 export type PureLogT<W> = Pure<W, unknown, never, never, never, void>
@@ -144,14 +144,14 @@ export type PureLogT<W> = Pure<W, unknown, never, never, never, void>
  * @tsplus static Pure.Ops log
  */
 export function log<W>(w: W): PureLogT<W> {
-  return castTag<W, unknown, never>().map((_) => _.env.log = _.env.log.append(w))
+  return Effect.map(castTag<W, unknown, never>(), (_) => _.env.log = Chunk.append(_.env.log, w))
 }
 
 /**
  * @tsplus static Pure.Ops logMany
  */
 export function logMany<W>(w: Iterable<W>): PureLogT<W> {
-  return castTag<W, unknown, never>().map((_) => _.env.log = _.env.log.appendAll(w.toChunk))
+  return Effect.map(castTag<W, unknown, never>(), (_) => _.env.log = Chunk.appendAll(_.env.log, Chunk.fromIterable(w)))
 }
 
 /**
@@ -236,7 +236,7 @@ export function modify<S2, A, S3>(mod: (s: S2) => readonly [S3, A]): Effect<A, n
   return castTag<never, S3, S2>().map(
     (_) =>
       Effect.sync(() => mod(_.env.state)).map(([s, a]) => {
-        _.env.state = s as any
+        _.env.state = s
         return a
       })
   ) as any
@@ -250,7 +250,7 @@ export function modifyM<W, R, E, A, S2, S3>(
 ): Effect<A, E, FixEnv<R, W, S2, S3>> {
   // return serviceWithEffect(_ => Ref.modifyM_(_.state, mod))
   return castTag<W, S3, S2>().flatMap(
-    (_) => mod(_.env.state).map(([s, a]) => Effect.sync(() => _.env.state = s as any).map(() => a))
+    (_) => mod(_.env.state).map(([s, a]) => Effect.sync(() => _.env.state = s).map(() => a))
   ) as any
 }
 
