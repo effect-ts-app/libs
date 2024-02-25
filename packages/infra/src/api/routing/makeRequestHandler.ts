@@ -9,11 +9,10 @@ import type { RequestContextContainer } from "@effect-app/infra/services/Request
 import type { ContextMapContainer } from "@effect-app/infra/services/Store/ContextMapContainer"
 import type { Layer } from "effect-app"
 import { Effect, FiberRef, Option, S } from "effect-app"
-import { HttpBody, HttpServerRequest, HttpServerResponse } from "effect-app/http"
+import type { HttpServerError } from "effect-app/http"
+import { HttpBody, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { NonEmptyString255 } from "effect-app/schema"
 import type { REST, Schema, StructFields } from "effect-app/schema"
-import { HttpRouteContext } from "../http.js"
-import type { HttpRequestError } from "../http.js"
 import { updateRequestContext } from "../setupRequest.js"
 import { makeRequestParsers, parseRequestParams } from "./base.js"
 import type { RequestHandler, RequestHandlerBase } from "./base.js"
@@ -102,8 +101,8 @@ export function makeRequestHandler<
   middlewareLayer?: Layer<PR, MiddlewareE, R2>
 ): Effect<
   HttpServerResponse.ServerResponse,
-  HttpRequestError,
-  | HttpRouteContext
+  HttpServerError.RequestError,
+  | HttpRouter.RouteContext
   | HttpServerRequest.ServerRequest
   | RequestContextContainer
   | ContextMapContainer
@@ -133,7 +132,7 @@ export function makeRequestHandler<
   const getParams = Effect.map(
     Effect
       .all({
-        rcx: HttpRouteContext,
+        rcx: HttpRouter.RouteContext,
         req: Effect.flatMap(
           HttpServerRequest.ServerRequest,
           (req) => req.json.pipe(Effect.map((body) => ({ body, headers: req.headers })))

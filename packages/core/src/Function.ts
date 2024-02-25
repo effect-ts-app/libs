@@ -1,5 +1,5 @@
 export * from "effect/Function"
-export { Predicate, Refinement } from "effect/Predicate"
+export type { Predicate, Refinement } from "effect/Predicate"
 
 /**
  * Construct tuples

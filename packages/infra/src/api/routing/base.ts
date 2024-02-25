@@ -7,9 +7,9 @@ import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import { ValidationError } from "@effect-app/infra/errors"
 import type { Context } from "effect-app"
 import { Cause, Effect, Exit, Option } from "effect-app"
+import type { HttpRouter, HttpServerError } from "effect-app/http"
 import type { REST, StructFields } from "effect-app/schema"
 import type { Simplify } from "effect/Types"
-import type { HttpRequestError, HttpRoute } from "../http.js"
 
 export type Flatten<T extends object> = object extends T ? object : {
   [K in keyof T]-?: (
@@ -54,7 +54,7 @@ export type RouteMatch<
   // PR = never
   Effect<
     // RouteDescriptor<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, SupportedErrors, Methods>
-    HttpRoute<Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>, HttpRequestError>
+    HttpRouter.Route<Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>, HttpServerError.RequestError>
   >
 
 export interface ReqHandler<

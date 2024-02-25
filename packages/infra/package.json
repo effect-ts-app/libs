@@ -96,16 +96,6 @@
         "default": "./_cjs/api/codec.cjs"
       }
     },
-    "./api/http": {
-      "import": {
-        "types": "./dist/api/http.d.ts",
-        "default": "./dist/api/http.js"
-      },
-      "require": {
-        "types": "./dist/api/http.d.ts",
-        "default": "./_cjs/api/http.cjs"
-      }
-    },
     "./api/reportError": {
       "import": {
         "types": "./dist/api/reportError.d.ts",

@@ -6,9 +6,8 @@ import { type RouteDescriptorAny } from "./schema/routing.js"
 import type {} from "effect-app/utils"
 import type { Layer, Ref, Scope } from "effect-app"
 import { Context, Effect } from "effect-app"
-
 import { HttpRouter } from "effect-app/http"
-import type { HttpRouteContext, HttpServerRequest, HttpServerResponse } from "../http.js"
+import type { HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import type { RequestHandler } from "./base.js"
 import { makeRequestHandler } from "./makeRequestHandler.js"
 import type { Middleware } from "./makeRequestHandler.js"
@@ -52,10 +51,14 @@ export function match<
     Config
   >,
   errorHandler: <R>(
-    req: HttpServerRequest,
-    res: HttpServerResponse,
-    r2: Effect<HttpServerResponse, ValidationError | MiddlewareE | ResE, R>
-  ) => Effect<HttpServerResponse, never, Exclude<RErr | R, HttpServerRequest | HttpRouteContext | Scope>>,
+    req: HttpServerRequest.ServerRequest,
+    res: HttpServerResponse.ServerResponse,
+    r2: Effect<HttpServerResponse.ServerResponse, ValidationError | MiddlewareE | ResE, R>
+  ) => Effect<
+    HttpServerResponse.ServerResponse,
+    never,
+    Exclude<RErr | R, HttpServerRequest.ServerRequest | HttpRouter.RouteContext | Scope>
+  >,
   middleware?: Middleware<
     R,
     M,

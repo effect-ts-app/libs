@@ -155,7 +155,7 @@ export function trace<P extends string>(path: P): `[TRACE]: ${P}` {
   return `[TRACE]: ${path}` as any
 }
 
-export { ResponseCode } from "./code.js"
+export type { ResponseCode } from "./code.js"
 
 const true_ = true
 const false_ = false
