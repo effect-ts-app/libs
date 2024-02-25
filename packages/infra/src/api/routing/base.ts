@@ -6,7 +6,7 @@ import * as S from "effect-app/schema"
 import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import { ValidationError } from "@effect-app/infra/errors"
 import type { Context } from "effect-app"
-import { Effect, Option } from "effect-app"
+import { Cause, Effect, Exit, Option } from "effect-app"
 import type { REST, StructFields } from "effect-app/schema"
 import type { Simplify } from "effect/Types"
 import type { HttpRequestError, HttpRoute } from "../http.js"
@@ -126,6 +126,20 @@ export function parseRequestParams<
 >(
   parsers: RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA>
 ) {
+  const handleParse = <A, E, R>(effect: Effect<A, E, R>) =>
+    effect.pipe(
+      Effect.exit,
+      Effect
+        .flatMap((_) =>
+          Exit.isFailure(_) && !Cause.isFailure(_.cause)
+            ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError>)
+            : Effect.sync(() =>
+              Exit.isSuccess(_)
+                ? { _tag: "Success" as const, value: _.value }
+                : { _tag: "Failure", errors: Cause.failures(_.cause) }
+            )
+        )
+    )
   return (
     { body, cookies, headers, params, query }: {
       body: unknown
@@ -139,93 +153,49 @@ export function parseRequestParams<
       .all({
         body: parsers
           .parseBody(body)
-          .exit
-          .flatMap((_) =>
-            _.isFailure() && !_.cause.isFailure()
-              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError>)
-              : Effect.sync(() =>
-                _.isSuccess()
-                  ? { _tag: "Success" as const, value: _.value }
-                  : { _tag: "Failure", errors: _.cause.failures }
-              )
-          ),
+          .pipe(handleParse),
         cookie: parsers
           .parseCookie(cookies)
-          .exit
-          .flatMap((_) =>
-            _.isFailure() && !_.cause.isFailure()
-              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError>)
-              : Effect.sync(() =>
-                _.isSuccess()
-                  ? { _tag: "Success" as const, value: _.value }
-                  : { _tag: "Failure", errors: _.cause.failures }
-              )
-          ),
+          .pipe(handleParse),
         headers: parsers
           .parseHeaders(headers)
-          .exit
-          .flatMap((_) =>
-            _.isFailure() && !_.cause.isFailure()
-              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError>)
-              : Effect.sync(() =>
-                _.isSuccess()
-                  ? { _tag: "Success" as const, value: _.value }
-                  : { _tag: "Failure", errors: _.cause.failures }
-              )
-          ),
+          .pipe(handleParse),
         query: parsers
           .parseQuery(query)
-          .exit
-          .flatMap((_) =>
-            _.isFailure() && !_.cause.isFailure()
-              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError>)
-              : Effect.sync(() =>
-                _.isSuccess()
-                  ? { _tag: "Success" as const, value: _.value }
-                  : { _tag: "Failure", errors: _.cause.failures }
-              )
-          ),
+          .pipe(handleParse),
         path: parsers
           .parsePath(params)
-          .exit
-          .flatMap((_) =>
-            _.isFailure() && !_.cause.isFailure()
-              ? (Effect.failCauseSync(() => _.cause) as Effect<never, ValidationError>)
-              : Effect.sync(() =>
-                _.isSuccess()
-                  ? { _tag: "Success" as const, value: _.value }
-                  : { _tag: "Failure", errors: _.cause.failures }
-              )
-          )
+          .pipe(handleParse)
       })
-      .flatMap(({ body, cookie, headers, path, query }) => {
-        const errors: unknown[] = []
-        if (body._tag === "Failure") {
-          errors.push(makeError("body")(body.errors))
-        }
-        if (cookie._tag === "Failure") {
-          errors.push(makeError("cookie")(cookie.errors))
-        }
-        if (headers._tag === "Failure") {
-          errors.push(makeError("headers")(headers.errors))
-        }
-        if (path._tag === "Failure") {
-          errors.push(makeError("path")(path.errors))
-        }
-        if (query._tag === "Failure") {
-          errors.push(makeError("query")(query.errors))
-        }
-        if (errors.length) {
-          return new ValidationError({ errors })
-        }
-        return Effect.sync(() => ({
-          body: body.value!,
-          cookie: cookie.value!,
-          headers: headers.value!,
-          path: path.value!,
-          query: query.value!
+      .pipe(Effect
+        .flatMap(({ body, cookie, headers, path, query }) => {
+          const errors: unknown[] = []
+          if (body._tag === "Failure") {
+            errors.push(makeError("body")(body.errors))
+          }
+          if (cookie._tag === "Failure") {
+            errors.push(makeError("cookie")(cookie.errors))
+          }
+          if (headers._tag === "Failure") {
+            errors.push(makeError("headers")(headers.errors))
+          }
+          if (path._tag === "Failure") {
+            errors.push(makeError("path")(path.errors))
+          }
+          if (query._tag === "Failure") {
+            errors.push(makeError("query")(query.errors))
+          }
+          if (errors.length) {
+            return new ValidationError({ errors })
+          }
+          return Effect.sync(() => ({
+            body: body.value!,
+            cookie: cookie.value!,
+            headers: headers.value!,
+            path: path.value!,
+            query: query.value!
+          }))
         }))
-      })
 }
 
 // // eslint-disable-next-line @typescript-eslint/no-explicit-any

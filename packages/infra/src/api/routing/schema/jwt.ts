@@ -23,4 +23,4 @@ export const parseJwt = <R, I, A>(
         throw new Error("not implemented")
       }
     )
-    .compose(schema, { strict: false })
+    .pipe(S.compose(schema, { strict: false }))

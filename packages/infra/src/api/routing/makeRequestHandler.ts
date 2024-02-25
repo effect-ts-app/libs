@@ -9,17 +9,11 @@ import type { RequestContextContainer } from "@effect-app/infra/services/Request
 import type { ContextMapContainer } from "@effect-app/infra/services/Store/ContextMapContainer"
 import type { Layer } from "effect-app"
 import { Effect, FiberRef, S } from "effect-app"
+import { HttpBody, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { NonEmptyString255 } from "effect-app/schema"
 import type { REST, Schema, StructFields } from "effect-app/schema"
+import { HttpRouteContext } from "../http.js"
 import type { HttpRequestError } from "../http.js"
-import {
-  HttpBody,
-  HttpRouteContext,
-  HttpServerRequest,
-  HttpServerResponse,
-  HttpServerResponse,
-  HttpServerResponse
-} from "../http.js"
 import { updateRequestContext } from "../setupRequest.js"
 import { makeRequestParsers, parseRequestParams } from "./base.js"
 import type { RequestHandler, RequestHandlerBase } from "./base.js"
@@ -101,16 +95,16 @@ export function makeRequestHandler<
     Config
   >,
   errorHandler: <R>(
-    req: HttpServerRequest,
-    res: HttpServerResponse,
-    r2: Effect<HttpServerResponse, ValidationError | ResE | MiddlewareE, R>
-  ) => Effect<HttpServerResponse, never, RErr | R>,
+    req: HttpServerRequest.ServerRequest,
+    res: HttpServerResponse.ServerResponse,
+    r2: Effect<HttpServerResponse.ServerResponse, ValidationError | ResE | MiddlewareE, R>
+  ) => Effect<HttpServerResponse.ServerResponse, never, RErr | R>,
   middlewareLayer?: Layer<PR, MiddlewareE, R2>
 ): Effect<
-  HttpServerResponse,
+  HttpServerResponse.ServerResponse,
   HttpRequestError,
   | HttpRouteContext
-  | HttpServerRequest
+  | HttpServerRequest.ServerRequest
   | RequestContextContainer
   | ContextMapContainer
   | RErr
@@ -141,7 +135,7 @@ export function makeRequestHandler<
       .all({
         rcx: HttpRouteContext,
         req: Effect.flatMap(
-          HttpServerRequest,
+          HttpServerRequest.ServerRequest,
           (req) => req.json.pipe(Effect.map((body) => ({ body, headers: req.headers })))
         )
       }),
@@ -158,7 +152,7 @@ export function makeRequestHandler<
 
   return Effect
     .gen(function*($) {
-      const req = yield* $(HttpServerRequest)
+      const req = yield* $(HttpServerRequest.ServerRequest)
       const res = HttpServerResponse
         .empty()
         .pipe((_) => req.method === "GET" ? _.setHeader("Cache-Control", "no-store") : _)
@@ -207,7 +201,7 @@ export function makeRequestHandler<
                             .setStatus(r === undefined ? 204 : 200)
                         )
                     ) as Effect<
-                      HttpServerResponse,
+                      HttpServerResponse.ServerResponse,
                       ValidationError | ResE,
                       Exclude<R, EnforceNonEmptyRecord<M>>
                     >
@@ -215,10 +209,10 @@ export function makeRequestHandler<
                   // Commands should not be interruptable.
                   const r = req.method !== "GET" ? Effect.uninterruptible(handleRequest) : handleRequest // .instrument("Performance.RequestResponse")
                   const r2 = middlewareLayer
-                    ? r.provide(middlewareLayer)
+                    ? Effect.provide(r, middlewareLayer)
                     // PR is not relevant here
                     : (r as Effect<
-                      HttpServerResponse,
+                      HttpServerResponse.ServerResponse,
                       ResE | MiddlewareE | ValidationError,
                       Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>
                     >)

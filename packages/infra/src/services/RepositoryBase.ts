@@ -1144,7 +1144,7 @@ export const RepositoryDefaultImpl = <Service>() => {
         super(itemType, impl)
       }
       static readonly make = mkRepo.make
-      static readonly makeWith = ((a: any, b: any) => mkRepo.make(a).map(b)) as any
+      static readonly makeWith = ((a: any, b: any) => Effect.map(mkRepo.make(a), b)) as any
 
       static readonly Where = makeWhere<PM>()
       static readonly Query = Q.QueryBuilder.make<PM>()

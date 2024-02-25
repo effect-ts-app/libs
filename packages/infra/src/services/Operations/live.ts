@@ -19,7 +19,7 @@ const make = Effect.sync(() => {
       ;[...ops
         .entries()]
         .forEach(([id, op]) => {
-          const lastChanged = Option.fromNullable(op.updatedAt).getOrElse(() => op.createdAt)
+          const lastChanged = Option.fromNullable(op.updatedAt).pipe(Option.getOrElse(() => op.createdAt))
           if (lastChanged < before) {
             ops.delete(id)
           }
