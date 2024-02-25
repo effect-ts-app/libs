@@ -22,6 +22,4 @@ Uses [Changesets](https://github.com/changesets/changesets/blob/main/README.md)
 - All contributors
 - Michael Arnaldi, Max Brown and the Effect-TS contributors for Effect
   - ZIO Contributors for the excellent ZIO
-- 0x706b for the amazing tsplus
-- timsmart for excellent tsplus-gen and tsplus-json projects
 - Anyone else we're forgetting..
