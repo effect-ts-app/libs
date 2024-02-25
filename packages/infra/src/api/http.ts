@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { Route as HttpRoute, Router as HttpRouter } from "@effect/platform/Http/Router"
+import { Route as HttpRoute, Router as HttpRouter } from "@effect/platform/Http/Router"
 
 export type { HttpApp } from "@effect/platform/Http/App"
 export type { Body as HttpBody } from "@effect/platform/Http/Body"
@@ -10,7 +10,7 @@ export { RouteContext as HttpRouteContext } from "@effect/platform/Http/Router"
 export { RequestError as HttpRequestError } from "@effect/platform/Http/ServerError"
 export { ServerRequest as HttpServerRequest } from "@effect/platform/Http/ServerRequest"
 export type { ServerResponse as HttpServerResponse } from "@effect/platform/Http/ServerResponse"
-export type { HttpRoute, HttpRouter }
+export { HttpRoute, HttpRouter }
 export * as HttpServer from "@effect/platform/Http/Server"
 
 /**

@@ -1,7 +1,7 @@
 import { dropUndefinedT } from "@effect-app/core/utils"
 import type { EmailData } from "@sendgrid/helpers/classes/email-address.js"
 import sgMail from "@sendgrid/mail"
-import { Effect, Equivalence } from "effect-app"
+import { Effect, Equivalence, ReadonlyArray } from "effect-app"
 import { inspect } from "util"
 import { Emailer } from "./service.js"
 import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.js"
@@ -98,17 +98,20 @@ function renderFake(addr: EmailData | EmailData[], makeId: () => number) {
     email: `test+${makeId()}@nomizz.com`
   }
 }
-const eq = Equivalence.string.mapInput((to: { name?: string; email: string } | string) =>
-  typeof to === "string" ? to.toLowerCase() : to.email.toLowerCase()
+const eq = Equivalence.mapInput(
+  Equivalence.string,
+  (to: { name?: string; email: string } | string) => typeof to === "string" ? to.toLowerCase() : to.email.toLowerCase()
 )
 
 // TODO: should just not add any already added email address
 // https://stackoverflow.com/a/53603076/11595834
 function renderFakeIfTest(addr: EmailData | EmailData[], makeId: () => number) {
   return Array.isArray(addr)
-    ? addr
-      .map((x) => (isTestAddress(x) ? renderFake(x, makeId) : x))
-      .dedupeWith(eq)
+    ? ReadonlyArray.dedupeWith(
+      addr
+        .map((x) => (isTestAddress(x) ? renderFake(x, makeId) : x)),
+      eq
+    )
     : isTestAddress(addr)
     ? renderFake(addr, makeId)
     : addr

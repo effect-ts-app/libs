@@ -1,4 +1,4 @@
-import type { Effect } from "effect-app"
+import { Effect } from "effect-app"
 import { logError, reportError } from "../errorReporter.js"
 
 /**
@@ -11,10 +11,11 @@ import { logError, reportError } from "../errorReporter.js"
  * @tsplus getter effect/io/Effect forkDaemonReportRequest
  */
 export function forkDaemonReportRequest<R, E, A>(self: Effect<A, E, R>) {
-  return self
-    .tapErrorCause(reportError("Request"))
-    .fork
-    .daemonChildren
+  return self.pipe(
+    Effect.tapErrorCause(reportError("Request")),
+    Effect.fork,
+    Effect.daemonChildren
+  )
 }
 
 /**
