@@ -139,17 +139,14 @@ export function fetchApi(
     (method === "GET"
       ? client(HttpClientRequest.make(method)(path))
       : body === undefined
-      ? client.request(
-        HttpClientRequest
-          .make(method)(path)
-      )
-      : client.request(
-        HttpClientRequest
-          .make(method)(path)
-          .jsonBody(body)
+      ? client(HttpClientRequest.make(method)(path))
+      : HttpClientRequest
+        .make(method)(path)
+        .pipe(HttpClientRequest.jsonBody(body), Effect.flatMap(client)))
+      .pipe(
+        Effect.scoped,
+        Effect.withSpan("http.request", { attributes: { "http.method": method, "http.url": path } })
       ))
-      .scoped
-      .withSpan("http.request", { attributes: { "http.method": method, "http.url": path } }))
 }
 
 export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, ResponseFrom, ResponseTo>(
@@ -169,12 +166,14 @@ export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, Response
           : makePathWithBody(path, encoded as any),
         encoded
       )
-        .flatMap(mapResponseM(decodeRes))
-        .map((i) => ({
-          ...i,
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-          body: i.body as ResponseTo
-        })))
+        .pipe(
+          Effect.flatMap(mapResponseM(decodeRes)),
+          Effect.map((i) => ({
+            ...i,
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+            body: i.body as ResponseTo
+          }))
+        ))
   }
 }
 
@@ -207,7 +206,7 @@ export function fetchApi3SE<RequestA, RequestE, ResponseE = unknown, ResponseA =
     new Path(Request.path)
   )
   const encode = S.encode(Response)
-  return (req: RequestA) => a(req).flatMap(mapResponseM((_) => encode(_)))
+  return (req: RequestA) => Effect.flatMap(a(req), mapResponseM((_) => encode(_)))
 }
 
 export function makePathWithQuery(
@@ -283,5 +282,5 @@ export function EmptyResponseMThunk<T>(): Effect<
 }
 
 export function getBody<R, E, A>(eff: Effect<FetchResponse<A | null>, E, R>) {
-  return eff.flatMap((r) => r.body === null ? Effect.die("Not found") : Effect.sync(() => r.body))
+  return Effect.flatMap(eff, (r) => r.body === null ? Effect.die("Not found") : Effect.sync(() => r.body))
 }

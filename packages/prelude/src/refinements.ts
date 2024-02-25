@@ -1,4 +1,5 @@
-import { type Equal, flow, Option } from "@effect-app/core"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Either, type Equal, flow, Option } from "@effect-app/core"
 import type { Refinement } from "@effect-app/core/Function"
 import * as Optic from "@effect-app/core/Optic"
 import type { Clone } from "@fp-ts/optic"
@@ -18,7 +19,7 @@ export function asCollectable<T, T2 extends T>(refinement: Refinement<T, T2>) {
 export function as<T, T2 extends T>(refinement: Refinement<T, T2>, name: string) {
   return flow(
     asCollectable(refinement),
-    (_) => _.encaseInEither(() => new InvalidStateError(`Cannot be ${name}`))
+    (_) => Either.fromOption(_, () => new InvalidStateError(`Cannot be ${name}`))
   )
 }
 
@@ -26,11 +27,11 @@ export function as<T, T2 extends T>(refinement: Refinement<T, T2>, name: string)
  * @tsplus fluent function refinements
  */
 export function makeAwesome<T, T2 extends T>(refinement: Refinement<T, T2>, name: string) {
-  const as = refinement.as(name)
+  const _as = as(refinement, name)
   const validate = {
     is: refinement,
-    collect: refinement.asCollectable,
-    as,
+    collect: asCollectable(refinement),
+    as: _as,
     lens: Optic.id<T2>()
   }
   function validatei(item: T) {
@@ -58,21 +59,21 @@ export interface Collect<A, B extends A> {
  * @tsplus fluent function as
  */
 export function asOption<T, T2 extends T>(collect: Collect<T, T2>, name: string) {
-  return flow(collect, (_) => _.encaseInEither(() => new InvalidStateError({ message: `Cannot be ${name}` })))
+  return flow(collect, Either.fromOption(() => new InvalidStateError({ message: `Cannot be ${name}` })))
 }
 
 /**
  * @tsplus fluent function refinements
  */
 export function makeAwesomeCollect<T extends Object, T2 extends T>(collect: Collect<T, T2>, name: string) {
-  const as = collect.as(name)
+  const _as = asOption(collect, name)
   function is(item: T): item is T2 {
-    return collect(item).isSome()
+    return Option.isSome(collect(item))
   }
   const validate = {
     collect,
     is,
-    as,
+    as: _as,
     lens: Optic.id<T2>(),
     copy: (item: T2, _copy: Partial<Omit<T2, keyof Clone | keyof Equal>>) => copy(item, _copy),
     clone: (item: T, cloned: T) => clone(item, cloned)

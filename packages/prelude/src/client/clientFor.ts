@@ -113,34 +113,40 @@ function clientFor_<M extends Requests>(models: M) {
         ? fields.length === 0
           ? {
             handler: fetchApi(Request.method, Request.path)
-              .flatMap(mapResponseM(parseResponse))
-              .withSpan("client.request", {
-                attributes: { "request.name": requestName }
-              }),
+              .pipe(
+                Effect.flatMap(mapResponseM(parseResponse)),
+                Effect
+                  .withSpan("client.request", {
+                    attributes: { "request.name": requestName }
+                  })
+              ),
             ...meta
           }
           : {
             handler: (req: any) =>
               fetchApi(Request.method, makePathWithQuery(path, S.encodeSync(Request)(req)))
-                .flatMap(mapResponseM(parseResponse))
-                .withSpan("client.request", {
-                  attributes: { "request.name": requestName }
-                }),
+                .pipe(
+                  Effect.flatMap(mapResponseM(parseResponse)),
+                  Effect
+                    .withSpan("client.request", {
+                      attributes: { "request.name": requestName }
+                    })
+                ),
             ...meta,
             mapPath: (req: any) => req ? makePathWithQuery(path, S.encodeSync(Request)(req)) : Request.path
           }
         : fields.length === 0
         ? {
-          handler: fetchApi3S(b)({}).withSpan("client.request", {
+          handler: fetchApi3S(b)({}).pipe(Effect.withSpan("client.request", {
             attributes: { "request.name": requestName }
-          }),
+          })),
           ...meta
         }
         : {
           handler: (req: any) =>
-            fetchApi3S(b)(req).withSpan("client.request", {
+            fetchApi3S(b)(req).pipe(Effect.withSpan("client.request", {
               attributes: { "request.name": requestName }
-            }),
+            })),
 
           ...meta,
           mapPath: (req: any) =>
@@ -158,35 +164,41 @@ function clientFor_<M extends Requests>(models: M) {
         ? fields.length === 0
           ? {
             handler: fetchApi(Request.method, Request.path)
-              .flatMap(mapResponseM(parseResponseE))
-              .withSpan("client.request", {
-                attributes: { "request.name": requestName }
-              }),
+              .pipe(
+                Effect.flatMap(mapResponseM(parseResponseE)),
+                Effect
+                  .withSpan("client.request", {
+                    attributes: { "request.name": requestName }
+                  })
+              ),
             ...meta
           }
           : {
             handler: (req: any) =>
               fetchApi(Request.method, makePathWithQuery(path, S.encodeSync(Request)(req)))
-                .flatMap(mapResponseM(parseResponseE))
-                .withSpan("client.request", {
-                  attributes: { "request.name": requestName }
-                }),
+                .pipe(
+                  Effect.flatMap(mapResponseM(parseResponseE)),
+                  Effect
+                    .withSpan("client.request", {
+                      attributes: { "request.name": requestName }
+                    })
+                ),
 
             ...meta,
             mapPath: (req: any) => req ? makePathWithQuery(path, S.encodeSync(Request)(req)) : Request.path
           }
         : fields.length === 0
         ? {
-          handler: fetchApi3SE(b)({}).withSpan("client.request", {
+          handler: fetchApi3SE(b)({}).pipe(Effect.withSpan("client.request", {
             attributes: { "request.name": requestName }
-          }),
+          })),
           ...meta
         }
         : {
           handler: (req: any) =>
-            fetchApi3SE(b)(req).withSpan("client.request", {
+            fetchApi3SE(b)(req).pipe(Effect.withSpan("client.request", {
               attributes: { "request.name": requestName }
-            }),
+            })),
 
           ...meta,
           mapPath: (req: any) =>
