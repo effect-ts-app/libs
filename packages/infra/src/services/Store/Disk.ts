@@ -27,25 +27,34 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
     const fsStore = {
       get: fu
         .readTextFile(file)
-        .withSpan("Disk.read.readFile [effect-app/infra/Store]")
-        .flatMap((x) => Effect.sync(() => JSON.parse(x) as PM[]).withSpan("Disk.read.parse [effect-app/infra/Store]"))
-        .orDie
-        .withSpan("Disk.read [effect-app/infra/Store]", { attributes: { "disk.file": file } }),
+        .pipe(
+          Effect.withSpan("Disk.read.readFile [effect-app/infra/Store]"),
+          Effect.flatMap((x) =>
+            Effect.sync(() => JSON.parse(x) as PM[]).pipe(Effect.withSpan("Disk.read.parse [effect-app/infra/Store]"))
+          ),
+          Effect.orDie,
+          Effect.withSpan("Disk.read [effect-app/infra/Store]", { attributes: { "disk.file": file } })
+        ),
       setRaw: (v: Iterable<PM>) =>
         Effect
           .sync(() => JSON.stringify([...v], undefined, 2))
-          .withSpan("Disk.stringify [effect-app/infra/Store]", { attributes: { "disk.file": file } })
-          .flatMap(
-            (json) =>
-              fu
-                .writeTextFile(file, json)
-                .withSpan("Disk.write.writeFile [effect-app/infra/Store]", {
-                  attributes: { "disk.file_size": json.length }
-                })
+          .pipe(
+            Effect.withSpan("Disk.stringify [effect-app/infra/Store]", { attributes: { "disk.file": file } }),
+            Effect
+              .flatMap(
+                (json) =>
+                  fu
+                    .writeTextFile(file, json)
+                    .pipe(Effect
+                      .withSpan("Disk.write.writeFile [effect-app/infra/Store]", {
+                        attributes: { "disk.file_size": json.length }
+                      }))
+              ),
+            Effect
+              .withSpan("Disk.write [effect-app/infra/Store]", {
+                attributes: { "disk.file": file }
+              })
           )
-          .withSpan("Disk.write [effect-app/infra/Store]", {
-            attributes: { "disk.file": file }
-          })
     }
 
     const store = yield* $(
@@ -59,33 +68,35 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
       )
     )
 
-    yield* $(store.all.flatMap(fsStore.setRaw))
+    yield* $(store.all.pipe(Effect.flatMap(fsStore.setRaw)))
 
     const sem = Effect.unsafeMakeSemaphore(1)
     const withPermit = sem.withPermits(1)
-    const flushToDisk = store.all.flatMap(fsStore.setRaw).pipe(withPermit)
+    const flushToDisk = Effect.flatMap(store.all, fsStore.setRaw).pipe(withPermit)
     const flushToDiskInBackground = flushToDisk
-      .tapErrorCause((err) => Effect.sync(() => console.error(err)))
-      .uninterruptible
-      .forkDaemon
+      .pipe(
+        Effect.tapErrorCause((err) => Effect.sync(() => console.error(err))),
+        Effect.uninterruptible,
+        Effect.forkDaemon
+      )
 
     return {
       ...store,
       batchSet: flow(
         store.batchSet,
-        (t) => t.tap(() => flushToDiskInBackground)
+        Effect.tap(flushToDiskInBackground)
       ),
       bulkSet: flow(
         store.bulkSet,
-        (t) => t.tap(() => flushToDiskInBackground)
+        Effect.tap(flushToDiskInBackground)
       ),
       set: flow(
         store.set,
-        (t) => t.tap(() => flushToDiskInBackground)
+        Effect.tap(flushToDiskInBackground)
       ),
       remove: flow(
         store.remove,
-        (t) => t.tap(() => flushToDiskInBackground)
+        Effect.tap(flushToDiskInBackground)
       )
     } satisfies Store<PM, Id>
   })
