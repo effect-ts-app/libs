@@ -641,8 +641,8 @@ export function makeRepo<
     ) {
       return Do(($) => {
         const rctx = $(Effect.context<R>())
-        const encode = flow(schema.encode, Effect.provide(rctx))
-        const decode = flow(schema.decode, Effect.provide(rctx))
+        const encode = flow(S.encode(schema), Effect.provide(rctx))
+        const decode = flow(S.decode(schema), Effect.provide(rctx))
 
         const store = $(mkStore(args.makeInitial, args.config))
         const { get } = $(ContextMapContainer)
@@ -782,7 +782,7 @@ export function makeRepo<
             parseMany2: (items, schema) =>
               cms.flatMap((cm) =>
                 Effect
-                  .forEach(items, (_) => schema.decode(mapReverse(_, cm.set) as any), {
+                  .forEach(items, (_) => S.decode(schema)(mapReverse(_, cm.set) as any), {
                     concurrency: "inherit",
                     batching: true
                   })

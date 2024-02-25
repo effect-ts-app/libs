@@ -2,8 +2,7 @@ import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { NonEmptyString255, struct } from "@effect-app/schema"
 import { Tracer } from "effect"
-import { Effect, flow } from "effect-app"
-import type { S } from "effect-app"
+import { Effect, flow, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure } from "./errors.js"
@@ -31,7 +30,7 @@ export function makeMemQueue<
 
     const wireSchema = struct({ body: schema, meta: QueueMeta })
     const drainW = struct({ body: drainSchema, meta: QueueMeta })
-    const parseDrain = flow(drainW.decodeUnknown, (_) => _.orDie)
+    const parseDrain = flow(S.decodeUnknown(drainW), Effect.orDie)
 
     return {
       publish: (...messages) =>

@@ -115,12 +115,12 @@ export function makeRequestHandler<
   const resp = response as typeof response & { struct?: Schema<any, any, any> }
   // TODO: consider if the alternative of using the struct schema is perhaps just better.
   const encoder = "struct" in resp && resp.struct
-    ? resp.struct.encode
+    ? S.encode(resp.struct)
     // ? (i: any) => {
-    //   if (i instanceof (response as any)) return response.encodeSync(i)
-    //   else return response.encodeSync(new (response as any)(i))
+    //   if (i instanceof (response as any)) return S.encodeSync(response)(i)
+    //   else return S.encodeSync(response)(new (response as any)(i))
     // }
-    : resp.encode
+    : S.encode(resp)
   // const encodeResponse = adaptResponse
   //   ? (req: ReqA) => Encoder.for(adaptResponse(req))
   //   : () => encoder

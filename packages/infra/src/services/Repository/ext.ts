@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Update = Must return updated items
 // Modify = Must `set` updated items, and can return anything.
+import { toNonEmptyArray } from "@effect-app/core/Array"
 import { NonNegativeInt } from "@effect-app/schema"
-import { Effect } from "effect-app"
+import { Effect, ReadonlyArray } from "effect-app"
 import type { NonEmptyArray, NonEmptyReadonlyArray, Option } from "effect-app"
-import type { FixEnv, PureEnv } from "effect-app/Pure"
+import { type FixEnv, type PureEnv, runTerm } from "effect-app/Pure"
 import type { InvalidStateError, OptimisticConcurrencyException } from "../../errors.js"
 import { NotFoundError } from "../../errors.js"
 import type { Filter, PersistenceModelType } from "../../services/Store.js"
@@ -26,7 +27,7 @@ export function get<
 ) {
   return self
     .find(id)
-    .flatMap((_) => _.mapError(() => new NotFoundError<ItemType>({ type: self.itemType, id })))
+    .pipe(Effect.flatMap((_) => Effect.mapError(_, () => new NotFoundError<ItemType>({ type: self.itemType, id }))))
 }
 
 /**
@@ -112,12 +113,11 @@ export function projectEffect<
   >
 ): Effect<S[], E, R> {
   // TODO: a projection that gets sent to the db instead.
-  return map.flatMap((f) =>
+  return Effect.flatMap(map, (f) =>
     self
       .utils
       .filter(f)
-      .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown as S[])
-  )
+      .pipe(Effect.map((_) => f.collect ? ReadonlyArray.filterMap(_, f.collect) : _ as unknown as S[])))
 }
 
 /**
@@ -171,7 +171,7 @@ export function project<
     skip?: number
   }
 ): Effect<S[]> {
-  return self.projectEffect(Effect.sync(() => map))
+  return projectEffect(self, Effect.sync(() => map))
 }
 
 /**
@@ -187,9 +187,8 @@ export function count<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   filter?: Filter<PM>
 ) {
-  return self
-    .projectEffect(Effect.sync(() => ({ filter })))
-    .map((_) => NonNegativeInt(_.length))
+  return projectEffect(self, Effect.sync(() => ({ filter })))
+    .pipe(Effect.map((_) => NonNegativeInt(_.length)))
 }
 
 /**
@@ -208,11 +207,12 @@ export function queryEffect<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<{ filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
 ) {
-  return map.flatMap((f) =>
+  return Effect.flatMap(map, (f) =>
     (f.filter ? self.utils.filter(f) : self.utils.all)
-      .flatMap((_) => self.utils.parseMany(_))
-      .map((_) => f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
-  )
+      .pipe(
+        Effect.flatMap((_) => self.utils.parseMany(_)),
+        Effect.map((_) => f.collect ? ReadonlyArray.filterMap(_, f.collect) : _ as unknown[] as S[])
+      ))
 }
 
 /**
@@ -256,16 +256,24 @@ export function queryOneEffect<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: Effect<{ filter?: Filter<PM>; collect?: (t: T) => Option<S> }, E, R>
 ): Effect<S, E | NotFoundError<ItemType>, R> {
-  return map.flatMap((f) =>
+  return Effect.flatMap(map, (f) =>
     (f.filter ? self.utils.filter({ filter: f.filter, limit: 1 }) : self.utils.all)
-      .flatMap((_) => self.utils.parseMany(_))
-      .flatMap((_) =>
-        (f.collect ? _.filterMap(f.collect) : _ as unknown[] as S[])
-          .toNonEmpty
-          .mapError(() => new NotFoundError<ItemType>({ type: self.itemType, id: f.filter }))
-          .map((_) => _[0])
-      )
-  )
+      .pipe(
+        Effect.flatMap((_) => self.utils.parseMany(_)),
+        Effect
+          .flatMap((_) =>
+            toNonEmptyArray(
+              f.collect
+                ? ReadonlyArray.filterMap(_, f.collect)
+                : _ as unknown[] as S[]
+            )
+              .pipe(
+                Effect.mapError(() => new NotFoundError<ItemType>({ type: self.itemType, id: f.filter })),
+                Effect
+                  .map((_) => _[0])
+              )
+          )
+      ))
 }
 
 /**
@@ -282,7 +290,7 @@ export function query<
   // TODO: think about collectPM, collectE, and collect(Parsed)
   map: { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
-  return self.queryEffect(Effect.sync(() => map))
+  return queryEffect(self, Effect.sync(() => map))
 }
 
 /**
@@ -317,7 +325,7 @@ export function queryOne<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: { filter?: Filter<PM>; collect?: (t: T) => Option<S> }
 ) {
-  return self.queryOneEffect(Effect.sync(() => map))
+  return queryOneEffect(self, Effect.sync(() => map))
 }
 
 /**
@@ -370,7 +378,7 @@ export function queryAndSaveOnePureEffect(
 ) {
   return (pure: any) =>
     queryOneEffect(self, map)
-      .flatMap((_) => saveWithPure_(self, _, pure))
+      .pipe(Effect.flatMap((_) => saveWithPure_(self, _, pure)))
 }
 
 /**
@@ -431,7 +439,7 @@ export function queryAndSavePureEffect<
 ) {
   return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, S[], S2[]>>) =>
     queryEffect(self, map)
-      .flatMap((_) => self.saveManyWithPure_(_, pure))
+      .pipe(Effect.flatMap((_) => saveManyWithPure_(self, _, pure)))
 }
 
 /**
@@ -447,7 +455,7 @@ export function queryAndSavePure<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
 ) {
-  return self.queryAndSavePureEffect(Effect.sync(() => map))
+  return queryAndSavePureEffect(self, Effect.sync(() => map))
 }
 
 /**
@@ -473,7 +481,7 @@ export function byIdAndSaveWithPure<
   ItemType extends string
 >(self: RepositoryBaseC<T, PM, Evt, ItemType>, id: T["id"]) {
   return <R, A, E, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, T, S2>>) =>
-    get(self, id).flatMap((item) => saveWithPure_(self, item, pure))
+    get(self, id).pipe(Effect.flatMap((item) => saveWithPure_(self, item, pure)))
 }
 
 /**
@@ -512,7 +520,7 @@ export function saveManyWithPure_<
 ) {
   return saveAllWithEffectInt(
     self,
-    pure.runTerm([...items])
+    runTerm(pure, [...items])
   )
 }
 
@@ -536,9 +544,9 @@ export function saveWithPure_<
 ) {
   return saveAllWithEffectInt(
     self,
-    pure
-      .runTerm(item)
-      .map(([item, events, a]) => [[item], events, a])
+    runTerm(pure, item)
+      .pipe(Effect
+        .map(([item, events, a]) => [[item], events, a]))
   )
 }
 
@@ -555,7 +563,7 @@ export function saveAllWithEffectInt<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   gen: Effect<readonly [Iterable<P>, Iterable<Evt>, A], E, R>
 ) {
-  return Effect.flatMap(gen, ([items, events, a]) => self.saveAndPublish(items, events).map(() => a))
+  return Effect.flatMap(gen, ([items, events, a]) => self.saveAndPublish(items, events).pipe(Effect.map(() => a)))
 }
 
 /**
@@ -577,7 +585,7 @@ export function queryAndSavePureEffectBatched<
 ) {
   return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, S[], S2[]>>) =>
     queryEffect(self, map)
-      .flatMap((_) => self.saveManyWithPureBatched_(_, pure, batchSize))
+      .pipe(Effect.flatMap((_) => saveManyWithPureBatched_(self, _, pure, batchSize)))
 }
 
 /**
@@ -631,12 +639,11 @@ export function saveManyWithPureBatched_<
   batchSize = 100
 ) {
   return Effect.forEach(
-    items
-      .chunk(batchSize),
+    ReadonlyArray.chunk_(items, batchSize),
     (batch) =>
       saveAllWithEffectInt(
         self,
-        pure.runTerm(batch)
+        runTerm(pure, batch)
       )
   )
 }
@@ -684,7 +691,7 @@ export function itemUpdateWithEffect<
   id: T["id"],
   mod: (item: T) => Effect<T, E, R>
 ) {
-  return repo.get(id).andThen(mod).andThen(repo.save)
+  return get(repo, id).pipe(Effect.andThen(mod), Effect.andThen(save(repo)))
 }
 
 /**

@@ -10,7 +10,7 @@ import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { Tracer } from "effect"
-import { Effect, flow, Layer, type S } from "effect-app"
+import { Effect, flow, Layer, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import type { StringId } from "effect-app/schema"
 import { NonEmptyString255, struct } from "effect-app/schema"
@@ -37,7 +37,7 @@ export function makeServiceBusQueue<
     meta: QueueMeta
   })
   const drainW = struct({ body: drainSchema, meta: QueueMeta })
-  const parseDrain = flow(drainW.decodeUnknown, (_) => _.orDie)
+  const parseDrain = flow(S.decodeUnknown(drainW), Effect.orDie)
 
   return Effect.gen(function*($) {
     const s = yield* $(Sender)
@@ -102,7 +102,7 @@ export function makeServiceBusQueue<
                 s.sendMessages(
                   messages.map((m) => ({
                     body: JSON.stringify(
-                      wireSchema.encodeSync({ body: m, meta: { requestContext, span } })
+                      S.encodeSync(wireSchema)({ body: m, meta: { requestContext, span } })
                     ),
                     messageId: m.id, /* correllationid: requestId */
                     contentType: "application/json"
