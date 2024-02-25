@@ -1,14 +1,14 @@
 import { dropUndefinedT } from "@effect-app/core/utils"
 import type { EmailData } from "@sendgrid/helpers/classes/email-address.js"
 import sgMail from "@sendgrid/mail"
-import { Effect, Equivalence, ReadonlyArray } from "effect-app"
+import { Effect, Equivalence, ReadonlyArray, Secret } from "effect-app"
 import { inspect } from "util"
 import { Emailer } from "./service.js"
 import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.js"
 
 const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPrefix }: SendgridConfig) =>
   Effect.sync(() => {
-    sgMail.setApiKey(apiKey.value)
+    sgMail.setApiKey(Secret.value(apiKey))
 
     return new Emailer({
       sendMail(msg_: EmailMsgOptionalFrom) {
@@ -22,7 +22,7 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
 
           const renderedMsg_ = render(msg)
           const renderedMsg = { ...renderedMsg_, subject: `${subjectPrefix}${renderedMsg_.subject}` }
-          yield* $(Effect.logDebug("Sending email").annotateLogs("msg", inspect(renderedMsg, false, 5)))
+          yield* $(Effect.logDebug("Sending email").pipe(Effect.annotateLogs("msg", inspect(renderedMsg, false, 5))))
 
           const ret = yield* $(
             Effect.async<[sgMail.ClientResponse, Record<string, unknown>], Error | sgMail.ResponseError>(
@@ -53,8 +53,7 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
  * @tsplus static Emailer.Ops SendgridLayer
  */
 export function Sendgrid(config: SendgridConfig) {
-  return makeSendgrid(config)
-    .toLayer(Emailer)
+  return Emailer.toLayer(makeSendgrid(config))
 }
 
 /**

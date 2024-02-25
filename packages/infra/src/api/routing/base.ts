@@ -256,42 +256,52 @@ export function makeRequestParsers<
   const ph = Effect.sync(() =>
     Option
       .fromNullable(Request.Headers)
-      .map((s) => s as unknown as S.Schema<any>)
-      .map(S.decodeUnknown)
+      .pipe(
+        Option.map((s) => s as unknown as S.Schema<any>),
+        Option.map(S.decodeUnknown)
+      )
   )
-  const parseHeaders = (u: unknown) => ph.flatMapOpt((d) => d(u))
+  const parseHeaders = (u: unknown) => Effect.flatMapOption(ph, (d) => d(u))
 
   const pq = Effect.sync(() =>
     Option
       .fromNullable(Request.Query)
-      .map((s) => s as unknown as S.Schema<any>)
-      .map(S.decodeUnknown)
+      .pipe(
+        Option.map((s) => s as unknown as S.Schema<any>),
+        Option.map(S.decodeUnknown)
+      )
   )
-  const parseQuery = (u: unknown) => pq.flatMapOpt((d) => d(u))
+  const parseQuery = (u: unknown) => Effect.flatMapOption(pq, (d) => d(u))
 
   const pb = Effect.sync(() =>
     Option
       .fromNullable(Request.Body)
-      .map((s) => s as unknown as S.Schema<any>)
-      .map(S.decodeUnknown)
+      .pipe(
+        Option.map((s) => s as unknown as S.Schema<any>),
+        Option.map(S.decodeUnknown)
+      )
   )
-  const parseBody = (u: unknown) => pb.flatMapOpt((d) => d(u))
+  const parseBody = (u: unknown) => Effect.flatMapOption(pb, (d) => d(u))
 
   const pp = Effect.sync(() =>
     Option
       .fromNullable(Request.Path)
-      .map((s) => s as unknown as S.Schema<any>)
-      .map(S.decodeUnknown)
+      .pipe(
+        Option.map((s) => s as unknown as S.Schema<any>),
+        Option.map(S.decodeUnknown)
+      )
   )
-  const parsePath = (u: unknown) => pp.flatMapOpt((d) => d(u))
+  const parsePath = (u: unknown) => Effect.flatMapOption(pp, (d) => d(u))
 
   const pc = Effect.sync(() =>
     Option
       .fromNullable(Request.Cookie)
-      .map((s) => s as unknown as S.Schema<any>)
-      .map(S.decodeUnknown)
+      .pipe(
+        Option.map((s) => s as unknown as S.Schema<any>),
+        Option.map(S.decodeUnknown)
+      )
   )
-  const parseCookie = (u: unknown) => pc.flatMapOpt((d) => d(u))
+  const parseCookie = (u: unknown) => Effect.flatMapOption(pc, (d) => d(u))
 
   return {
     parseBody,
