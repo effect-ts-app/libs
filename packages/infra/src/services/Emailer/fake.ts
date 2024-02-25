@@ -7,7 +7,9 @@ const makeFake = Effect
   .pipe(Effect.map(() =>
     new Emailer({
       sendMail(msg) {
-        return Effect.logDebug(`Fake send mail`).annotateLogs("msg", pretty(msg))
+        return Effect
+          .logDebug(`Fake send mail`)
+          .pipe(Effect.annotateLogs("msg", pretty(msg)))
       }
     })
   ))

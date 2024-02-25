@@ -8,7 +8,7 @@ import type { ValidationError } from "@effect-app/infra/errors"
 import type { RequestContextContainer } from "@effect-app/infra/services/RequestContextContainer"
 import type { ContextMapContainer } from "@effect-app/infra/services/Store/ContextMapContainer"
 import type { Layer } from "effect-app"
-import { Effect, FiberRef, S } from "effect-app"
+import { Effect, FiberRef, Option, S } from "effect-app"
 import { HttpBody, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { NonEmptyString255 } from "effect-app/schema"
 import type { REST, Schema, StructFields } from "effect-app/schema"
@@ -155,7 +155,7 @@ export function makeRequestHandler<
       const req = yield* $(HttpServerRequest.ServerRequest)
       const res = HttpServerResponse
         .empty()
-        .pipe((_) => req.method === "GET" ? _.setHeader("Cache-Control", "no-store") : _)
+        .pipe((_) => req.method === "GET" ? HttpServerResponse.setHeader(_, "Cache-Control", "no-store") : _)
 
       const pars = yield* $(getParams)
 
@@ -183,22 +183,30 @@ export function makeRequestHandler<
               .andThen(
                 Effect.suspend(() => {
                   const handleRequest = parseRequest(pars)
-                    .map(({ body, path, query }) => {
-                      const hn = {
-                        ...body.value,
-                        ...query.value,
-                        ...path.value
-                      } as unknown as ReqA
-                      return hn
-                    })
-                    .flatMap((parsedReq) =>
-                      handle(parsedReq)
-                        .provideService(handler.Request.Tag, parsedReq)
-                        .flatMap(encoder)
-                        .map((r) =>
-                          res
-                            .setBody(HttpBody.unsafeJson(r))
-                            .setStatus(r === undefined ? 204 : 200)
+                    .pipe(
+                      Effect.map(({ body, path, query }) => {
+                        const hn = {
+                          ...body.pipe(Option.getOrUndefined) ?? {},
+                          ...query.pipe(Option.getOrUndefined) ?? {},
+                          ...path.pipe(Option.getOrUndefined) ?? {}
+                        } as unknown as ReqA
+                        return hn
+                      }),
+                      Effect
+                        .flatMap((parsedReq) =>
+                          handle(parsedReq)
+                            .pipe(
+                              Effect.provideService(handler.Request.Tag, parsedReq as any),
+                              Effect
+                                .flatMap(encoder),
+                              Effect
+                                .map((r) =>
+                                  res.pipe(
+                                    HttpServerResponse.setBody(HttpBody.unsafeJson(r)),
+                                    HttpServerResponse.setStatus(r === undefined ? 204 : 200)
+                                  )
+                                )
+                            )
                         )
                     ) as Effect<
                       HttpServerResponse.ServerResponse,
@@ -226,7 +234,7 @@ export function makeRequestHandler<
             Effect
               .catchAllCause((cause) =>
                 Effect
-                  .sync(() => res.setStatus(500))
+                  .sync(() => HttpServerResponse.setStatus(res, 500))
                   .pipe(Effect
                     .tap((res) =>
                       Effect
