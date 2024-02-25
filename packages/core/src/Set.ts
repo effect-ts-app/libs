@@ -532,7 +532,7 @@ export function fromArray<A>(E: Equivalence<A>): (as: ReadonlyArray<A>) => Set<A
 /**
  * Set compaction, remove none
  */
-export function compact<A>(E: Equivalence<A>): (fa: Set<Option<A>>) => Set<A> {
+export function compact<A>(E: Equivalence<A>): (fa: Set<Option.Option<A>>) => Set<A> {
   return filterMap(E)(identity)
 }
 

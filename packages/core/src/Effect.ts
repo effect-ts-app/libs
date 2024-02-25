@@ -195,7 +195,7 @@ export function allLowerWith<T extends Record<string, Context.Tag<any, any> | Ef
   services: T,
   fn: (services: LowerServices<T>) => A
 ) {
-  return allLower(services).map(fn)
+  return Effect.map(allLower(services), fn)
 }
 
 /**
@@ -210,7 +210,7 @@ export function allLowerWithEffect<
   services: T,
   fn: (services: LowerServices<T>) => Effect.Effect<A, E, R>
 ) {
-  return allLower(services).flatMap(fn)
+  return Effect.flatMap(allLower(services), fn)
 }
 
 /**
@@ -221,7 +221,7 @@ export function allLowerWithEffect<
  */
 export function catchAllMap<E, A2>(f: (e: E) => A2) {
   return <R, A>(self: Effect.Effect<A, E, R>): Effect.Effect<A2 | A, never, R> =>
-    self.catchAll((err) => Effect.sync(() => f(err)))
+    Effect.catchAll(self, (err) => Effect.sync(() => f(err)))
 }
 
 /**
@@ -231,11 +231,16 @@ export function catchAllMap<E, A2>(f: (e: E) => A2) {
  */
 export function annotateLogscoped(key: string, value: string) {
   return FiberRef
-    .currentLogAnnotations
-    .get
-    .flatMap((annotations) =>
-      Effect.suspend(() => FiberRef.currentLogAnnotations.locallyScoped(annotations.set(key, value)))
+    .get(
+      FiberRef
+        .currentLogAnnotations
     )
+    .pipe(Effect
+      .flatMap((annotations) =>
+        Effect.suspend(() =>
+          FiberRef.currentLogAnnotations.pipe(Effect.locallyScoped(HashMap.set(annotations, key, value)))
+        )
+      ))
 }
 
 /**
@@ -252,7 +257,9 @@ export function annotateLogsScoped(kvps: Record<string, string>) {
     .pipe(Effect
       .flatMap((annotations) =>
         Effect.suspend(() =>
-          FiberRef.currentLogAnnotations.locallyScoped(HashMap.fromIterable([...annotations, ...kvps.$$.entries]))
+          FiberRef.currentLogAnnotations.pipe(
+            Effect.locallyScoped(HashMap.fromIterable([...annotations, ...Object.entries(kvps)]))
+          )
         )
       ))
 }
