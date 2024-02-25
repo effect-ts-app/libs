@@ -25,7 +25,7 @@ const make = Effect.sync(() => {
           }
         })
     })
-    .withSpan("Operations.cleanup")
+    .pipe(Effect.withSpan("Operations.cleanup"))
 
   function addOp(id: OperationId) {
     return Effect.sync(() => {

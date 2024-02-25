@@ -1,4 +1,4 @@
-import { Effect, Option } from "effect-app"
+import { Effect, Option, ReadonlyArray } from "effect-app"
 import { get } from "effect-app/utils"
 import objectHash from "object-hash"
 import { OptimisticConcurrencyException } from "../../errors.js"
@@ -167,22 +167,24 @@ export function codeFilterJoinSelect<E extends { id: string }, NE>(
   filter: FilterJoinSelect
 ) {
   return (x: E) =>
-    filter
-      .keys
-      .filterMap((k) => {
-        const value = get(x, k)
-        // we mimic the behavior of cosmosdb; if the shape in db does not match what we're looking for, we imagine false hit
-        return value
-          ? Option.some(
-            (value as readonly NE[]).filterMap((v) =>
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              compare(v[filter.valueKey], filter.value)
-                ? Option.some({ ...v, _rootId: x.id })
-                : Option.none()
+    ReadonlyArray
+      .filterMap(
+        filter
+          .keys,
+        (k) => {
+          const value = get(x, k)
+          // we mimic the behavior of cosmosdb; if the shape in db does not match what we're looking for, we imagine false hit
+          return value
+            ? Option.some(
+              ReadonlyArray.filterMap(value as readonly NE[], (v) =>
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                compare((v as any)[filter.valueKey], filter.value)
+                  ? Option.some({ ...v, _rootId: x.id })
+                  : Option.none())
             )
-          )
-          : Option.none()
-      })
+            : Option.none()
+        }
+      )
       .flatMap((_) => _)
 }
 
