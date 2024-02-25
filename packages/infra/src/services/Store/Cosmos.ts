@@ -367,7 +367,9 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   container
                     .item(id, config?.partitionValue({ id } as PM))
                     .read<PM>()
-                    .then(({ resource }) => Option.fromNullable(resource).map((_) => ({ ...defaultValues, ..._ })))
+                    .then(({ resource }) =>
+                      Option.fromNullable(resource).pipe(Option.map((_) => ({ ...defaultValues, ..._ })))
+                    )
                 )
                 .pipe(Effect
                   .withSpan("Cosmos.find [effect-app/infra/Store]", {

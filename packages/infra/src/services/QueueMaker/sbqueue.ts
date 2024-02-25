@@ -14,8 +14,10 @@ import { Effect, flow, Layer, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import type { StringId } from "effect-app/schema"
 import { NonEmptyString255, struct } from "effect-app/schema"
+import { pretty } from "effect-app/utils"
+import { setupRequestContext } from "../../api/setupRequest.js"
 import { RequestContextContainer } from "../RequestContextContainer.js"
-import { reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
+import { forkDaemonReportQueue, reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
 /**
@@ -56,45 +58,63 @@ export function makeServiceBusQueue<
           function processMessage(messageBody: any) {
             return Effect
               .sync(() => JSON.parse(messageBody))
-              .flatMap((x) => parseDrain(x))
-              .orDie
-              .flatMap(({ body, meta }) =>
+              .pipe(
+                Effect.flatMap((x) => parseDrain(x)),
+                Effect.orDie,
                 Effect
-                  .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                  .pipe(Effect.annotateLogs({ body: body.$$.pretty, meta: meta.$$.pretty }))
-                  .zipRight(handleEvent(body))
-                  .orDie
-                  // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
-                  .pipe(silenceAndReportError)
-                  .setupRequestContext(RequestContext.inherit(meta.requestContext, {
-                    id: RequestId(body.id),
-                    locale: "en" as const,
-                    name: NonEmptyString255(body._tag)
-                  }))
-                  .withSpan("queue.drain", {
-                    attributes: { "queue.name": queueDrainName },
-                    parent: meta.span
-                      ? Tracer.externalSpan(meta.span)
-                      : undefined
-                  })
+                  .flatMap(({ body, meta }) =>
+                    Effect
+                      .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
+                      .pipe(
+                        Effect.annotateLogs({
+                          body: pretty(body),
+                          meta: pretty(meta)
+                        }),
+                        Effect
+                          .zipRight(handleEvent(body)),
+                        Effect
+                          .orDie
+                      )
+                      // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
+                      .pipe(
+                        silenceAndReportError,
+                        (_) =>
+                          setupRequestContext(
+                            _,
+                            RequestContext.inherit(meta.requestContext, {
+                              id: RequestId(body.id),
+                              locale: "en" as const,
+                              name: NonEmptyString255(body._tag)
+                            })
+                          ),
+                        Effect
+                          .withSpan("queue.drain", {
+                            attributes: { "queue.name": queueDrainName },
+                            parent: meta.span
+                              ? Tracer.externalSpan(meta.span)
+                              : undefined
+                          })
+                      )
+                  ),
+                Effect
+                  // we reportError here, so that we report the error only, and keep flowing
+                  .tapErrorCause(reportError)
               )
-              // we reportError here, so that we report the error only, and keep flowing
-              .tapErrorCause(reportError)
           }
 
           return yield* $(
             subscribe({
-              processMessage: (x) => processMessage(x.body).uninterruptible,
+              processMessage: (x) => processMessage(x.body).pipe(Effect.uninterruptible),
               processError: (err) => Effect.sync(() => captureException(err.error))
             })
-              .provide(receiverLayer)
+              .pipe(Effect.provide(receiverLayer))
           )
         }),
 
       publish: (...messages) =>
         Effect.gen(function*($) {
           const requestContext = yield* $(rcc.requestContext)
-          const currentSpan = yield* $(Effect.currentSpan.orDie)
+          const currentSpan = yield* $(Effect.currentSpan.pipe(Effect.orDie))
           const span = Tracer.externalSpan(currentSpan)
           return yield* $(
             Effect
@@ -109,7 +129,7 @@ export function makeServiceBusQueue<
                   }))
                 )
               )
-              .forkDaemonReportQueue
+              .pipe(forkDaemonReportQueue)
           )
         })
     } satisfies QueueBase<Evt, DrainEvt>
@@ -120,5 +140,5 @@ export function makeServiceBusQueue<
  * @tsplus static QueueMaker.Ops makeServiceBusLayers
  */
 export function makeServiceBusLayers(url: string, queueName: string, queueDrainName: string) {
-  return Layer.merge(LiveReceiver(queueDrainName), LiveSender(queueName)).provide(LiveServiceBusClient(url))
+  return Layer.merge(LiveReceiver(queueDrainName), LiveSender(queueName)).pipe(Layer.provide(LiveServiceBusClient(url)))
 }

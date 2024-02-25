@@ -21,10 +21,9 @@ export const QueueMaker: QueueMakerOps = {}
 
 export const QueueMeta = struct({
   requestContext: RequestContext,
-  span: struct({
+  span: S.optional(struct({
     spanId: S.string,
     traceId: S.string,
-    sampled: S.boolean.optional()
-  })
-    .optional()
+    sampled: S.optional(S.boolean)
+  }))
 })

@@ -3,7 +3,7 @@ import * as fu from "@effect-app/infra-adapters/fileUtil"
 
 import fs from "fs"
 
-import { Effect, flow } from "effect-app"
+import { Effect, FiberRef, flow } from "effect-app"
 import { makeMemoryStoreInt, storeId } from "./Memory.js"
 import type { PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
@@ -122,35 +122,39 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
           const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, seed, config?.defaultValues))
           const stores = new Map<string, Store<PM, Id>>([["primary", primary]])
           const ctx = yield* $(Effect.context<R>())
-          const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap((namespace) => {
-            const store = stores.get(namespace)
-            if (store) {
-              return Effect.succeed(store)
-            }
-            if (!config.allowNamespace!(namespace)) {
-              throw new Error(`Namespace ${namespace} not allowed!`)
-            }
-            return storesSem.withPermits(1)(
-              Effect.suspend(() => {
-                const existing = stores.get(namespace)
-                if (existing) return Effect.sync(() => existing)
-                return makeDiskStoreInt<Id, PM, R, E>(prefix, namespace, dir, name, seed, config?.defaultValues)
-                  .orDie
-                  .provide(ctx)
-                  .tap((store) => Effect.sync(() => stores.set(namespace, store)))
-              })
-            )
-          })
+          const getStore = !config?.allowNamespace
+            ? Effect.succeed(primary)
+            : FiberRef.get(storeId).pipe(Effect.flatMap((namespace) => {
+              const store = stores.get(namespace)
+              if (store) {
+                return Effect.succeed(store)
+              }
+              if (!config.allowNamespace!(namespace)) {
+                throw new Error(`Namespace ${namespace} not allowed!`)
+              }
+              return storesSem.withPermits(1)(
+                Effect.suspend(() => {
+                  const existing = stores.get(namespace)
+                  if (existing) return Effect.sync(() => existing)
+                  return makeDiskStoreInt<Id, PM, R, E>(prefix, namespace, dir, name, seed, config?.defaultValues)
+                    .pipe(
+                      Effect.orDie,
+                      Effect.provide(ctx),
+                      Effect.tap((store) => Effect.sync(() => stores.set(namespace, store)))
+                    )
+                })
+              )
+            }))
 
           const s: Store<PM, Id> = {
-            all: getStore.flatMap((_) => _.all),
-            find: (...args) => getStore.flatMap((_) => _.find(...args)),
-            filter: (...args) => getStore.flatMap((_) => _.filter(...args)),
-            filterJoinSelect: (...args) => getStore.flatMap((_) => _.filterJoinSelect(...args)),
-            set: (...args) => getStore.flatMap((_) => _.set(...args)),
-            batchSet: (...args) => getStore.flatMap((_) => _.batchSet(...args)),
-            bulkSet: (...args) => getStore.flatMap((_) => _.bulkSet(...args)),
-            remove: (...args) => getStore.flatMap((_) => _.remove(...args))
+            all: Effect.flatMap(getStore, (_) => _.all),
+            find: (...args) => Effect.flatMap(getStore, (_) => _.find(...args)),
+            filter: (...args) => Effect.flatMap(getStore, (_) => _.filter(...args)),
+            filterJoinSelect: (...args) => Effect.flatMap(getStore, (_) => _.filterJoinSelect(...args)),
+            set: (...args) => Effect.flatMap(getStore, (_) => _.set(...args)),
+            batchSet: (...args) => Effect.flatMap(getStore, (_) => _.batchSet(...args)),
+            bulkSet: (...args) => Effect.flatMap(getStore, (_) => _.bulkSet(...args)),
+            remove: (...args) => Effect.flatMap(getStore, (_) => _.remove(...args))
           }
           return s
         })

@@ -1,6 +1,6 @@
 import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/node"
-import { Cause, Effect } from "effect-app"
+import { Cause, Effect, Option } from "effect-app"
 import { CauseException } from "./errors.js"
 import { RequestContextContainer } from "./services/RequestContextContainer.js"
 
@@ -32,15 +32,15 @@ function reportSentry(
   name: string,
   extras: Record<string, unknown> | undefined
 ) {
-  return RequestContextContainer.getOption.map((ctx) => {
-    const context = ctx.value!
+  return RequestContextContainer.getOption.pipe(Effect.map((ctx) => {
+    const context = Option.getOrUndefined(ctx)
     const scope = new Sentry.Scope()
     if (context) scope.setContext("context", context as unknown as Record<string, unknown>)
     if (extras) scope.setContext("extras", extras)
     const error = new CauseException(cause, name)
     scope.setContext("error", error.toJSON() as any)
     Sentry.captureException(error, scope)
-  })
+  }))
 }
 
 export function logError<E>(

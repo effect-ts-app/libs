@@ -1,5 +1,5 @@
 import { reportError } from "@effect-app/infra/errorReporter"
-import type { Cause, Exit } from "effect-app"
+import { Cause, Exit } from "effect-app"
 import { Effect } from "effect-app"
 
 const reportQueueError_ = reportError("Queue")
@@ -17,7 +17,7 @@ export const reportQueueError = <E>(cause: Cause<E>, extras?: Record<string, unk
  * @tsplus getter effect/io/Effect forkDaemonReportQueue
  */
 export function forkDaemonReportQueue<R, E, A>(self: Effect<A, E, R>) {
-  return self.tapErrorCause(reportNonInterruptedFailureCause({})).fork.daemonChildren
+  return self.pipe(Effect.tapErrorCause(reportNonInterruptedFailureCause({})), Effect.fork, Effect.daemonChildren)
 }
 
 export const reportFatalQueueError = reportError(
@@ -27,20 +27,23 @@ export const reportFatalQueueError = reportError(
 export function reportNonInterruptedFailure(context?: Record<string, unknown>) {
   const report = reportNonInterruptedFailureCause(context)
   return <R, E, A>(inp: Effect<A, E, R>): Effect<Exit<A, E>, never, R> =>
-    inp
-      .exit
-      .flatMap((result) =>
-        result.match({
-          onFailure: (cause) => report(cause).map(() => result),
-          onSuccess: () => Effect.sync(() => result)
-        })
-      )
+    inp.pipe(
+      Effect
+        .exit,
+      Effect
+        .flatMap((result) =>
+          Exit.match(result, {
+            onFailure: (cause) => Effect.map(report(cause), () => result),
+            onSuccess: () => Effect.sync(() => result)
+          })
+        )
+    )
 }
 
 export function reportNonInterruptedFailureCause(context?: Record<string, unknown>) {
   return <E>(cause: Cause<E>): Effect<void> => {
-    if (cause.isInterrupted()) {
-      return (cause as Cause<never>).failCause
+    if (Cause.isInterrupted(cause)) {
+      return Effect.failCause(cause as Cause<never>)
     }
     return reportQueueError(cause, context)
   }
