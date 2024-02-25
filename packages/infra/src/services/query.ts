@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { toNonEmptyArray } from "@effect-app/core/Array"
 import type { FieldValues } from "@effect-app/infra/filter/types"
 import type { FieldPath, FieldPathValue } from "@effect-app/infra/filter/types/path/eager"
 import type { Repository } from "@effect-app/infra/services/Repository"
 import type { PersistenceModelType } from "@effect-app/infra/services/Store"
 import type { Ops } from "@effect-app/infra/services/Store/filterApi/proxy"
 import type { FilterResult, QueryBuilder } from "@effect-app/infra/services/Store/filterApi/query"
-import { Data, Effect, Match, pipe, S, Unify } from "effect-app"
+import { Data, Effect, Match, Option, pipe, S, Unify } from "effect-app"
 import type { NoInfer } from "effect/Types"
 
 export type QAll<TFieldValues extends FieldValues, A = TFieldValues, R = never> =
@@ -441,7 +442,7 @@ export const query: {
       : repo.utils.filter({
         limit: a.limit,
         skip: a.skip,
-        select: select.toNonEmpty.value ?? undefined,
+        select: Option.getOrUndefined(toNonEmptyArray(select)),
         filter: a.filter.length
           ? {
             type: "new-kid" as const,
