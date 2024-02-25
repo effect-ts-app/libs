@@ -22,8 +22,8 @@ import { flatMapOption } from "@effect-app/core/Effect"
 import { makeFilters } from "@effect-app/infra/filter"
 import type { ParseResult, Schema } from "@effect-app/schema"
 import { NonNegativeInt } from "@effect-app/schema"
-import type { Context, NonEmptyArray, NonEmptyReadonlyArray, Option } from "effect-app"
-import { Chunk, Effect, flow, PubSub, ReadonlyArray, S } from "effect-app"
+import type { Context, NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
+import { Chunk, Effect, flow, Option, pipe, PubSub, ReadonlyArray, S } from "effect-app"
 import { runTerm } from "effect-app/Pure"
 import type { FixEnv, PureEnv } from "effect-app/Pure"
 import { assignTag } from "effect-app/service"
@@ -465,9 +465,9 @@ export class RepositoryBaseC3<
     }>
   >
   byIdAndSaveWithPure<R, A, E, S2 extends T>(id: T["id"], pure?: Effect<A, E, FixEnv<R, Evt, T, S2>>) {
-    if (pure) return get(this, id).flatMap((item) => saveWithPure_(this, item, pure))
+    if (pure) return get(this, id).pipe(Effect.flatMap((item) => saveWithPure_(this, item, pure)))
     return (pure: Effect<A, E, FixEnv<R, Evt, T, S2>>) =>
-      get(this, id).flatMap((item) => saveWithPure_(this, item, pure))
+      get(this, id).pipe(Effect.flatMap((item) => saveWithPure_(this, item, pure)))
   }
 
   /**
@@ -509,7 +509,7 @@ export class RepositoryBaseC3<
     return saveAllWithEffectInt(
       this,
       runTerm(pure, item)
-        .map(([item, events, a]) => [[item], events, a])
+        .pipe(Effect.map(([item, events, a]) => [[item], events, a]))
     )
   }
 
@@ -521,10 +521,7 @@ export class RepositoryBaseC3<
   >(
     gen: Effect<readonly [Iterable<P>, Iterable<Evt>, A], E, R>
   ) {
-    return gen
-      .flatMap(
-        ([items, events, a]) => this.saveAndPublish(items, events).map(() => a)
-      )
+    return Effect.flatMap(gen, ([items, events, a]) => Effect.map(this.saveAndPublish(items, events), () => a))
   }
 
   queryAndSavePureEffectBatched<
@@ -537,8 +534,7 @@ export class RepositoryBaseC3<
     batchSize = 100
   ) {
     return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, S[], S2[]>>) =>
-      queryEffect(this, map)
-        .flatMap((_) => this.saveManyWithPureBatched_(_, pure, batchSize))
+      Effect.flatMap(queryEffect(this, map), (_) => this.saveManyWithPureBatched_(_, pure, batchSize))
   }
 
   queryAndSavePureBatched<
@@ -568,8 +564,7 @@ export class RepositoryBaseC3<
     batchSize = 100
   ) {
     return Effect.forEach(
-      items
-        .chunk(batchSize),
+      ReadonlyArray.chunk_(items, batchSize),
       (batch) =>
         saveAllWithEffectInt(
           this,
@@ -639,195 +634,207 @@ export function makeRepo<
           }
         }
     ) {
-      return Do(($) => {
-        const rctx = $(Effect.context<R>())
-        const encode = flow(S.encode(schema), Effect.provide(rctx))
-        const decode = flow(S.decode(schema), Effect.provide(rctx))
+      return Effect
+        .gen(function*($) {
+          const rctx = yield* $(Effect.context<R>())
+          const encode = flow(S.encode(schema), Effect.provide(rctx))
+          const decode = flow(S.decode(schema), Effect.provide(rctx))
 
-        const store = $(mkStore(args.makeInitial, args.config))
-        const { get } = $(ContextMapContainer)
-        const cms = get.andThen((_) => ({
-          get: (id: string) => _.get(`${name}.${id}`),
-          set: (id: string, etag: string | undefined) => _.set(`${name}.${id}`, etag)
-        }))
+          const store = yield* $(mkStore(args.makeInitial, args.config))
+          const { get } = yield* $(ContextMapContainer)
+          const cms = Effect.andThen(get, (_) => ({
+            get: (id: string) => _.get(`${name}.${id}`),
+            set: (id: string, etag: string | undefined) => _.set(`${name}.${id}`, etag)
+          }))
 
-        const pubCfg = $(Effect.context<R2>())
-        const pub = "publishEvents" in args ? flow(args.publishEvents, (_) => _.provide(pubCfg)) : () => Effect.unit
-        const changeFeed = $(PubSub.unbounded<[T[], "save" | "remove"]>())
+          const pubCfg = yield* $(Effect.context<R2>())
+          const pub = "publishEvents" in args
+            ? flow(args.publishEvents, Effect.provide(pubCfg))
+            : () => Effect.unit
+          const changeFeed = yield* $(PubSub.unbounded<[T[], "save" | "remove"]>())
 
-        const allE = store.all.flatMap((items) =>
-          Do(($) => {
-            const { set } = $(cms)
-            return items.map((_) => mapReverse(_, set))
-          })
-        )
+          const allE = store.all.pipe(Effect.flatMap((items) =>
+            Effect.gen(function*($) {
+              const { set } = yield* $(cms)
+              return items.map((_) => mapReverse(_, set))
+            })
+          ))
 
-        const all = allE.flatMap((_) =>
-          Effect.forEach(_, (_) => decode(_), { concurrency: "inherit", batching: true }).orDie
-        )
+          const all = Effect.flatMap(
+            allE,
+            (_) => Effect.forEach(_, (_) => decode(_), { concurrency: "inherit", batching: true }).orDie
+          )
 
-        const structSchema = schema as unknown as { struct: typeof schema }
-        const i = ("struct" in structSchema ? structSchema["struct"] : schema).pipe((_) =>
-          _.ast._tag === "Union"
-            // we need to get the TypeLiteral, incase of class it's behind a transform...
-            ? S.union(..._.ast.types.map((_) =>
-              (S.make(_._tag === "Transform" ? _.from : _) as unknown as Schema<T, From>)
-                .pipe(S.pick("id"))
-            ))
-            : _
-                .ast
-                ._tag === "Transform"
-            ? (S
-              .make(
-                _
+          const structSchema = schema as unknown as { struct: typeof schema }
+          const i = ("struct" in structSchema ? structSchema["struct"] : schema).pipe((_) =>
+            _.ast._tag === "Union"
+              // we need to get the TypeLiteral, incase of class it's behind a transform...
+              ? S.union(..._.ast.types.map((_) =>
+                (S.make(_._tag === "Transform" ? _.from : _) as unknown as Schema<T, From>)
+                  .pipe(S.pick("id"))
+              ))
+              : _
                   .ast
-                  .from
-              ) as unknown as Schema<T, From>)
-              .pipe(S
-                .pick("id"))
-            : _
-              .pipe(S
-                .pick("id"))
-        )
-        const encodeId = flow(i.encode, Effect.provide(rctx))
-        function findEId(id: From["id"]) {
-          return store
-            .find(id)
-            .flatMap((item) =>
-              Do(($) => {
-                const { set } = $(cms)
-                return item.map((_) => mapReverse(_, set))
-              })
+                  ._tag === "Transform"
+              ? (S
+                .make(
+                  _
+                    .ast
+                    .from
+                ) as unknown as Schema<T, From>)
+                .pipe(S
+                  .pick("id"))
+              : _
+                .pipe(S
+                  .pick("id"))
+          )
+          const encodeId = flow(S.encode(i), Effect.provide(rctx))
+          function findEId(id: From["id"]) {
+            return Effect.flatMap(
+              store.find(id),
+              (item) =>
+                Effect.gen(function*($) {
+                  const { set } = yield* $(cms)
+                  return item.pipe(Option.map((_) => mapReverse(_, set)))
+                })
             )
-        }
-        function findE(id: T["id"]) {
-          return encodeId({ id })
-            .orDie
-            .map((_) => _.id)
-            .flatMap(findEId)
-        }
-
-        function find(id: T["id"]) {
-          return findE(id).flatMapOpt((_) => decode(_).orDie)
-        }
-
-        const saveAllE = (a: Iterable<From>) =>
-          Effect
-            .sync(() => [...a].toNonEmpty)
-            .flatMapOpt((a) =>
-              Do(($) => {
-                const { get, set } = $(cms)
-                const items = a.map((_) => mapToPersistenceModel(_, get))
-                const ret = $(store.batchSet(items))
-                ret.forEach((_) => set(_.id, _._etag))
-              })
+          }
+          function findE(id: T["id"]) {
+            return pipe(
+              encodeId({ id }),
+              Effect.orDie,
+              Effect.map((_) => _.id),
+              Effect.flatMap(findEId)
             )
-            .asUnit
+          }
 
-        const saveAll = (a: Iterable<T>) =>
-          Effect
-            .forEach(
-              Array.from(a),
-              (_) => encode(_),
-              { concurrency: "inherit", batching: true }
-            )
-            .orDie
-            .andThen(saveAllE)
+          function find(id: T["id"]) {
+            return Effect.flatMapOption(findE(id), (_) => Effect.orDie(decode(_)))
+          }
 
-        const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) => {
-          const it = items.toChunk
-          return saveAll(it)
-            .andThen(Effect.sync(() => [...events].toNonEmpty))
-            // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
-            .flatMapOpt(pub)
-            .andThen(changeFeed
-              .publish([Chunk.toArray(it), "save"]))
-            .asUnit
-        }
-
-        function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
-          return Effect.gen(function*($) {
-            const { get, set } = yield* $(cms)
-            const it = [...a]
-            const items = yield* $(
-              Effect.forEach(it, (_) => encode(_), { concurrency: "inherit", batching: true }).orDie
-            )
-            // TODO: we should have a batchRemove on store so the adapter can actually batch...
-            for (const e of items) {
-              yield* $(store.remove(mapToPersistenceModel(e, get)))
-              set(e.id, undefined)
-            }
-            yield* $(
-              Effect
-                .sync(() => [...events].toNonEmpty)
-                // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
-                .flatMapOpt(pub)
-            )
-
-            yield* $(changeFeed.publish([it, "remove"]))
-          })
-        }
-
-        const r: Repository<T, PM, Evt, ItemType> = {
-          /**
-           * @internal
-           */
-          utils: {
-            parseMany: (items) =>
-              cms.flatMap((cm) =>
+          const saveAllE = (a: Iterable<From>) =>
+            Effect
+              .flatMapOption(
                 Effect
-                  .forEach(items, (_) => decode(mapReverse(_, cm.set)), { concurrency: "inherit", batching: true })
-                  .orDie
-              ),
-            parseMany2: (items, schema) =>
-              cms.flatMap((cm) =>
-                Effect
-                  .forEach(items, (_) => S.decode(schema)(mapReverse(_, cm.set) as any), {
-                    concurrency: "inherit",
-                    batching: true
+                  .sync(() => toNonEmptyArray([...a])),
+                (a) =>
+                  Effect.gen(function*($) {
+                    const { get, set } = yield* $(cms)
+                    const items = a.map((_) => mapToPersistenceModel(_, get))
+                    const ret = yield* $(store.batchSet(items))
+                    ret.forEach((_) => set(_.id, _._etag))
                   })
-                  .orDie
-              ),
-            filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
-              store
-                .filter(args)
-                .tap((items) =>
-                  args.select
-                    ? Effect.unit
-                    : cms.map(({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
-                ),
-            all: store.all.tap((items) => cms.map(({ set }) => items.forEach((_) => set(_.id, _._etag))))
-          },
-          mapped: <A, R>(schema: S.Schema<A, any, R>) => {
-            // const enc = S.encode(schema)
-            const dec = S.decode(schema)
-            const encMany = S.encode(S.array(schema))
-            const decMany = S.decode(S.array(schema))
-            return {
-              all: cms
-                .flatMap((cm) => r.utils.all.map((_) => _.map((_) => mapReverse(_, cm.set))))
-                .flatMap(decMany)
-                .map((_) => _ as any[]),
-              find: (id: PM["id"]) => flatMapOption(findE(id), dec),
-              query: (b: any) =>
-                r
-                  .utils
-                  .filter({ filter: b })
+              )
+              .pipe(Effect.asUnit)
+
+          const saveAll = (a: Iterable<T>) =>
+            Effect
+              .forEach(
+                Array.from(a),
+                (_) => encode(_),
+                { concurrency: "inherit", batching: true }
+              )
+              .pipe(
+                Effect.orDie,
+                Effect.andThen(saveAllE)
+              )
+
+          const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) => {
+            const it = Chunk.fromIterable(items)
+            return saveAll(it)
+              .pipe(
+                Effect.andThen(Effect.sync(() => toNonEmptyArray([...events]))),
+                // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
+                (_) => Effect.flatMapOption(_, pub),
+                Effect.andThen(changeFeed.publish([Chunk.toArray(it), "save"])),
+                Effect.asUnit
+              )
+          }
+
+          function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
+            return Effect.gen(function*($) {
+              const { get, set } = yield* $(cms)
+              const it = [...a]
+              const items = yield* $(
+                Effect.forEach(it, (_) => encode(_), { concurrency: "inherit", batching: true }).pipe(Effect.orDie)
+              )
+              // TODO: we should have a batchRemove on store so the adapter can actually batch...
+              for (const e of items) {
+                yield* $(store.remove(mapToPersistenceModel(e, get)))
+                set(e.id, undefined)
+              }
+              yield* $(
+                Effect
+                  .sync(() => toNonEmptyArray([...events]))
+                  // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
+                  .pipe((_) => Effect.flatMapOption(_, pub))
+              )
+
+              yield* $(changeFeed.publish([it, "remove"]))
+            })
+          }
+
+          const r: Repository<T, PM, Evt, ItemType> = {
+            /**
+             * @internal
+             */
+            utils: {
+              parseMany: (items) =>
+                Effect.flatMap(cms, (cm) =>
+                  Effect
+                    .forEach(items, (_) => decode(mapReverse(_, cm.set)), { concurrency: "inherit", batching: true })
+                    .pipe(Effect.orDie)),
+              parseMany2: (items, schema) =>
+                Effect.flatMap(cms, (cm) =>
+                  Effect
+                    .forEach(items, (_) => S.decode(schema)(mapReverse(_, cm.set) as any), {
+                      concurrency: "inherit",
+                      batching: true
+                    })
+                    .pipe(Effect.orDie)),
+              filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
+                store
+                  .filter(args)
+                  .pipe(Effect.tap((items) =>
+                    args.select
+                      ? Effect.unit
+                      : Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
+                  )),
+              all: Effect.tap(
+                store.all,
+                (items) => Effect.map(cms, ({ set }) => items.forEach((_) => set(_.id, _._etag)))
+              )
+            },
+            mapped: <A, R>(schema: S.Schema<A, any, R>) => {
+              // const enc = S.encode(schema)
+              const dec = S.decode(schema)
+              const encMany = S.encode(S.array(schema))
+              const decMany = S.decode(S.array(schema))
+              return {
+                all: cms
+                  .flatMap((cm) => r.utils.all.map((_) => _.map((_) => mapReverse(_, cm.set))))
                   .flatMap(decMany)
                   .map((_) => _ as any[]),
-              save: (...xes: any[]) => encMany(xes).flatMap((_) => saveAllE(_))
-            }
-          },
-          changeFeed,
-          itemType: name,
-          find,
-          all,
-          saveAndPublish,
-          removeAndPublish,
-          q2: (q: any) => query(r, typeof q === "function" ? q(makeQuery()) : q) as any
-        }
-        return r
-      })
+                find: (id: PM["id"]) => flatMapOption(findE(id), dec),
+                query: (b: any) =>
+                  r
+                    .utils
+                    .filter({ filter: b })
+                    .flatMap(decMany)
+                    .map((_) => _ as any[]),
+                save: (...xes: any[]) => encMany(xes).flatMap((_) => saveAllE(_))
+              }
+            },
+            changeFeed,
+            itemType: name,
+            find,
+            all,
+            saveAndPublish,
+            removeAndPublish,
+            q2: (q: any) => query(r, typeof q === "function" ? q(makeQuery()) : q) as any
+          }
+          return r
+        })
         // .withSpan("Repository.make [effect-app/infra]", { attributes: { "repository.model_name": name } })
         .withLogSpan("Repository.make: " + name)
     }
@@ -853,7 +860,7 @@ export function removeById<
   self: Repository<T, PM, Evt, ItemType>,
   id: T["id"]
 ) {
-  return self.get(id).flatMap((_) => self.removeAndPublish([_]))
+  return get(self, id).pipe(Effect.flatMap((_) => self.removeAndPublish([_])))
 }
 
 export function makeWhere<PM extends { id: string; _etag: string | undefined }>() {

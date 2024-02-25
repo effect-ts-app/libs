@@ -603,7 +603,7 @@ export function queryAndSavePureBatched<
   map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number },
   batchSize = 100
 ) {
-  return self.queryAndSavePureEffectBatched(Effect.sync(() => map), batchSize)
+  return queryAndSavePureEffectBatched(self, Effect.sync(() => map), batchSize)
 }
 
 /**
