@@ -1,8 +1,9 @@
 import { NonEmptyString255 } from "@effect-app/schema"
-import { Context, Effect, FiberRef, Option } from "effect-app"
+import { Context, Effect, FiberRef, Layer, Option } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import { TagClassId } from "effect-app/service"
 import { RequestContext } from "../RequestContext.js"
+import { restoreFromRequestContext } from "./Store/Memory.js"
 
 /**
  * @tsplus type RequestContextContainer
@@ -14,29 +15,37 @@ export class RequestContextContainer extends TagClassId("effect-app/RequestConte
   start: (f: RequestContext) => Effect<void>
 }>() {
   static get get(): Effect<RequestContext, never, RequestContextContainer> {
-    return RequestContextContainer.flatMap((_) => _.requestContext)
+    return Effect.flatMap(RequestContextContainer, (_) => _.requestContext)
   }
   static get getOption() {
-    return Effect
-      .contextWith((_: Context<never>) => Context.getOption(_, RequestContextContainer))
-      .flatMap((requestContext) =>
-        requestContext.isSome()
-          ? requestContext.value.requestContext.map(Option.some)
+    return Effect.flatMap(
+      Effect
+        .contextWith((_: Context<never>) => Context.getOption(_, RequestContextContainer)),
+      (requestContext) =>
+        Option.isSome(requestContext)
+          ? Effect.map(requestContext.value.requestContext, Option.some)
           : Effect.sync(() => Option.none())
-      )
+    )
   }
   static readonly live = Effect
-    .sync(() => new RequestContext({ name: NonEmptyString255("_root_"), rootId: RequestId("_root_"), locale: "en" }))
-    .andThen(FiberRef.make<RequestContext>)
-    .map((ref) =>
-      new RequestContextContainer({
-        requestContext: ref.get,
-        update: (f: (a: RequestContext) => RequestContext) =>
-          ref.getAndUpdate(f).tap((rc) => Effect.annotateCurrentSpan(rc.spanAttributes)),
-        start: (a: RequestContext) => ref.set(a).andThen(a.restoreStoreId)
-      })
+    .andThen(
+      Effect
+        .sync(() =>
+          new RequestContext({ name: NonEmptyString255("_root_"), rootId: RequestId("_root_"), locale: "en" })
+        ),
+      FiberRef.make<RequestContext>
     )
-    .toLayerScoped(this)
+    .pipe(
+      Effect.map((ref) =>
+        new RequestContextContainer({
+          requestContext: FiberRef.get(ref),
+          update: (f: (a: RequestContext) => RequestContext) =>
+            Effect.tap(FiberRef.getAndUpdate(ref, f), (rc) => Effect.annotateCurrentSpan(spanAttributes(rc))),
+          start: (a: RequestContext) => Effect.zipRight(FiberRef.set(ref, a), restoreFromRequestContext(a))
+        })
+      ),
+      Layer.scoped(this)
+    )
 }
 
 /** @tsplus static RequestContext.Ops Tag */

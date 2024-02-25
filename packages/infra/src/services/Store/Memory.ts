@@ -57,7 +57,7 @@ export const storeId = FiberRef.unsafeMake("primary")
 /**
  * @tsplus getter RequestContext restoreStoreId
  */
-export const restoreFromRequestContext = (ctx: RequestContext) => storeId.set(ctx.namespace ?? "primary")
+export const restoreFromRequestContext = (ctx: RequestContext) => FiberRef.set(storeId, ctx.namespace ?? "primary")
 
 function logQuery(f: FilterArgs<any, any>, defaultValues?: any) {
   return Effect
