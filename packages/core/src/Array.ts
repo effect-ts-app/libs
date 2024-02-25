@@ -40,7 +40,7 @@ export function NEROArrayFromArray<T>(ar: ReadonlyArray<T>) {
 export function sortByO<A>(
   ords: Option.Option<NonEmptyReadonlyArray<Order<A>>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
-  return ords.match({ onNone: () => identity, onSome: (_) => ReadonlyArray.sortBy(..._) })
+  return Option.match(ords, { onNone: () => identity, onSome: (_) => ReadonlyArray.sortBy(..._) })
 }
 
 /**

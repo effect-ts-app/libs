@@ -2,13 +2,11 @@
 /* eslint-disable prefer-destructuring */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-import { Ref } from "effect"
+import { Effect, Option, Ref } from "effect"
 import * as Def from "effect/Deferred"
 import type { Semaphore } from "effect/Effect"
-import { Effect } from "effect/Effect"
 import * as Fiber from "effect/Fiber"
 import * as FiberRef from "effect/FiberRef"
-import { Option } from "effect/Option"
 import { curry } from "./Function.js"
 import { type Context, HashMap } from "./index.js"
 import { typedKeysOf } from "./utils.js"
@@ -20,15 +18,14 @@ export * from "effect/Effect"
  * @tsplus fluent effect/io/Effect flatMapOpt
  */
 export function flatMapOption<R, E, A, R2, E2, A2>(
-  self: Effect<Option<A>, E, R>,
-  fm: (a: A) => Effect<A2, E2, R2>
-): Effect<Option<A2>, E | E2, R | R2> {
-  return self.flatMap((d) =>
-    d.match({
+  self: Effect.Effect<Option.Option<A>, E, R>,
+  fm: (a: A) => Effect.Effect<A2, E2, R2>
+): Effect.Effect<Option.Option<A2>, E | E2, R | R2> {
+  return Effect.flatMap(self, (d) =>
+    Option.match(d, {
       onNone: () => Effect.sync(() => Option.none()),
-      onSome: (_) => fm(_).map(Option.some)
-    })
-  )
+      onSome: (_) => Effect.map(fm(_), Option.some)
+    }))
 }
 
 /**
@@ -36,15 +33,14 @@ export function flatMapOption<R, E, A, R2, E2, A2>(
  * @tsplus fluent effect/io/Effect tapOpt
  */
 export function tapOption<R, E, A, R2, E2, A2>(
-  self: Effect<Option<A>, E, R>,
-  fm: (a: A) => Effect<A2, E2, R2>
-): Effect<Option<A>, E | E2, R | R2> {
-  return self.flatMap((d) =>
-    d.match({
+  self: Effect.Effect<Option.Option<A>, E, R>,
+  fm: (a: A) => Effect.Effect<A2, E2, R2>
+): Effect.Effect<Option.Option<A>, E | E2, R | R2> {
+  return Effect.flatMap(self, (d) =>
+    Option.match(d, {
       onNone: () => Effect.sync(() => Option.none()),
-      onSome: (_) => fm(_).map(() => Option.some(_))
-    })
-  )
+      onSome: (_) => Effect.map(fm(_), () => Option.some(_))
+    }))
 }
 
 /**
@@ -52,15 +48,14 @@ export function tapOption<R, E, A, R2, E2, A2>(
  * @tsplus fluent effect/io/Effect zipRightOpt
  */
 export function zipRightOption<R, E, A, R2, E2, A2>(
-  self: Effect<Option<A>, E, R>,
-  fm: Effect<A2, E2, R2>
+  self: Effect.Effect<Option.Option<A>, E, R>,
+  fm: Effect.Effect<A2, E2, R2>
 ) {
-  return self.flatMap((d) =>
-    d.match({
+  return Effect.flatMap(self, (d) =>
+    Option.match(d, {
       onNone: () => Effect.sync(() => Option.none()),
-      onSome: (_) => fm.map(() => Option.some(_))
-    })
-  )
+      onSome: (_) => Effect.map(fm, () => Option.some(_))
+    }))
 }
 
 /**
@@ -68,15 +63,14 @@ export function zipRightOption<R, E, A, R2, E2, A2>(
  * @tsplus fluent effect/io/Effect mapOpt
  */
 export function mapOption<R, E, A, A2>(
-  self: Effect<Option<A>, E, R>,
+  self: Effect.Effect<Option.Option<A>, E, R>,
   fm: (a: A) => A2
-): Effect<Option<A2>, E, R> {
-  return self.map((d) =>
-    d.match({
+): Effect.Effect<Option.Option<A2>, E, R> {
+  return Effect.map(self, (d) =>
+    Option.match(d, {
       onNone: () => Option.none(),
       onSome: (_) => Option.some(fm(_))
-    })
-  )
+    }))
 }
 
 /**
@@ -84,33 +78,33 @@ export function mapOption<R, E, A, A2>(
  * taps the Effect, returning A.
  */
 export function tupleTap<A, B, R, E, C>(
-  f: (b: B) => (a: A) => Effect<C, E, R>
+  f: (b: B) => (a: A) => Effect.Effect<C, E, R>
 ) {
-  return (t: readonly [A, B]) => Effect.sync(() => t[0]).tap(f(t[1]))
+  return (t: readonly [A, B]) => Effect.sync(() => t[0]).pipe(Effect.tap(f(t[1])))
 }
 
 /**
  * Takes [A, B], applies it to an Effect function,
  * taps the Effect, returning A.
  */
-export function tupleTap_<A, B, R, E, C>(f: (a: A, b: B) => Effect<C, E, R>) {
+export function tupleTap_<A, B, R, E, C>(f: (a: A, b: B) => Effect.Effect<C, E, R>) {
   return tupleTap(curry(f))
 }
 
-export function ifDiffR<I, R, E, A>(f: (i: I) => Effect<A, E, R>) {
+export function ifDiffR<I, R, E, A>(f: (i: I) => Effect.Effect<A, E, R>) {
   return (n: I, orig: I) => ifDiff_(n, orig, f)
 }
 
 export function ifDiff_<I, R, E, A>(
   n: I,
   orig: I,
-  f: (i: I) => Effect<A, E, R>
+  f: (i: I) => Effect.Effect<A, E, R>
 ) {
   return n !== orig ? f(n) : Effect.unit
 }
 
 export function ifDiff<I, R, E, A>(n: I, orig: I) {
-  return (f: (i: I) => Effect<A, E, R>) => ifDiff_(n, orig, f)
+  return (f: (i: I) => Effect.Effect<A, E, R>) => ifDiff_(n, orig, f)
 }
 
 // NOTE: await extension doesnt work via tsplus somehow
@@ -126,13 +120,14 @@ export const await_ = Def.await
  */
 export function modifyWithPermitWithEffect<A>(ref: Ref.Ref<A>, semaphore: Semaphore) {
   const withPermit = semaphore.withPermits(1)
-  return <R, E, A2>(mod: (a: A) => Effect<readonly [A2, A], E, R>) =>
+  return <R, E, A2>(mod: (a: A) => Effect.Effect<readonly [A2, A], E, R>) =>
     withPermit(
-      Ref
-        .get(ref)
-        .flatMap(mod)
-        .tap(([, _]) => ref.set(_))
-        .map(([_]) => _)
+      Effect
+        .flatMap(Ref.get(ref), mod)
+        .pipe(
+          Effect.tap(([, _]) => Ref.set(ref, _)),
+          Effect.map(([_]) => _)
+        )
     )
 }
 
@@ -140,17 +135,17 @@ export function modifyWithPermitWithEffect<A>(ref: Ref.Ref<A>, semaphore: Semaph
  * @tsplus getter Iterable joinAll
  * @tsplus static effect/io/Effect.Ops joinAll
  */
-export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<A, E>>): Effect<readonly A[], E> {
+export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<A, E>>): Effect.Effect<readonly A[], E> {
   return Fiber.join(Fiber.all(fibers))
 }
 
-export type Service<T> = T extends Effect<infer S, any, any> ? S
+export type Service<T> = T extends Effect.Effect<infer S, any, any> ? S
   : T extends Context.Tag<any, infer S> ? S
   : never
-export type ServiceR<T> = T extends Effect<any, any, infer R> ? R
+export type ServiceR<T> = T extends Effect.Effect<any, any, infer R> ? R
   : T extends Context.Tag<infer R, any> ? R
   : never
-export type ServiceE<T> = T extends Effect<any, infer E, any> ? E : never
+export type ServiceE<T> = T extends Effect.Effect<any, infer E, any> ? E : never
 export type Values<T> = T extends { [s: string]: infer S } ? Service<S> : never
 export type ValuesR<T> = T extends { [s: string]: infer S } ? ServiceR<S> : never
 export type ValuesE<T> = T extends { [s: string]: infer S } ? ServiceE<S> : never
@@ -162,25 +157,25 @@ export type ValuesE<T> = T extends { [s: string]: infer S } ? ServiceE<S> : neve
  * const a = <
  *  SVC extends Record<
  *    string,
- *    ((req: number) => Effect<any, any, any>) | Effect<any, any, any>
+ *    ((req: number) => Effect.Effect<any, any, any>) | Effect.Effect<any, any, any>
  *   >
  * >(svc: SVC) => svc
  *
  * const b = a({ str: "" })   // valid, but shouldn't be!
  * ```
  */
-export interface EffectUnunified<R, E, A> extends Effect<R, E, A> {}
+export interface EffectUnunified<R, E, A> extends Effect.Effect<R, E, A> {}
 
 export type LowerFirst<S extends PropertyKey> = S extends `${infer First}${infer Rest}` ? `${Lowercase<First>}${Rest}`
   : S
-export type LowerServices<T extends Record<string, Context.Tag<any, any> | Effect<any, any, any>>> = {
+export type LowerServices<T extends Record<string, Context.Tag<any, any> | Effect.Effect<any, any, any>>> = {
   [key in keyof T as LowerFirst<key>]: Service<T[key]>
 }
 
 /**
  * @tsplus static effect/io/Effect.Ops allLower
  */
-export function allLower<T extends Record<string, Context.Tag<any, any> | Effect<any, any, any>>>(
+export function allLower<T extends Record<string, Context.Tag<any, any> | Effect.Effect<any, any, any>>>(
   services: T
 ) {
   return Effect.all(
@@ -190,13 +185,13 @@ export function allLower<T extends Record<string, Context.Tag<any, any> | Effect
       return prev
     }, {} as any),
     { concurrency: "inherit" }
-  ) as any as Effect<LowerServices<T>, ValuesE<T>, ValuesR<T>>
+  ) as any as Effect.Effect<LowerServices<T>, ValuesE<T>, ValuesR<T>>
 }
 
 /**
  * @tsplus static effect/io/Effect.Ops allLowerWith
  */
-export function allLowerWith<T extends Record<string, Context.Tag<any, any> | Effect<any, any, any>>, A>(
+export function allLowerWith<T extends Record<string, Context.Tag<any, any> | Effect.Effect<any, any, any>>, A>(
   services: T,
   fn: (services: LowerServices<T>) => A
 ) {
@@ -206,9 +201,14 @@ export function allLowerWith<T extends Record<string, Context.Tag<any, any> | Ef
 /**
  * @tsplus static effect/io/Effect.Ops allLowerWithEffect
  */
-export function allLowerWithEffect<T extends Record<string, Context.Tag<any, any> | Effect<any, any, any>>, R, E, A>(
+export function allLowerWithEffect<
+  T extends Record<string, Context.Tag<any, any> | Effect.Effect<any, any, any>>,
+  R,
+  E,
+  A
+>(
   services: T,
-  fn: (services: LowerServices<T>) => Effect<A, E, R>
+  fn: (services: LowerServices<T>) => Effect.Effect<A, E, R>
 ) {
   return allLower(services).flatMap(fn)
 }
@@ -220,7 +220,8 @@ export function allLowerWithEffect<T extends Record<string, Context.Tag<any, any
  * @tsplus pipeable effect/io/Effect catchAllMap
  */
 export function catchAllMap<E, A2>(f: (e: E) => A2) {
-  return <R, A>(self: Effect<A, E, R>): Effect<A2 | A, never, R> => self.catchAll((err) => Effect.sync(() => f(err)))
+  return <R, A>(self: Effect.Effect<A, E, R>): Effect.Effect<A2 | A, never, R> =>
+    self.catchAll((err) => Effect.sync(() => f(err)))
 }
 
 /**
@@ -244,11 +245,14 @@ export function annotateLogscoped(key: string, value: string) {
  */
 export function annotateLogsScoped(kvps: Record<string, string>) {
   return FiberRef
-    .currentLogAnnotations
-    .get
-    .flatMap((annotations) =>
-      Effect.suspend(() =>
-        FiberRef.currentLogAnnotations.locallyScoped(HashMap.fromIterable([...annotations, ...kvps.$$.entries]))
-      )
+    .get(
+      FiberRef
+        .currentLogAnnotations
     )
+    .pipe(Effect
+      .flatMap((annotations) =>
+        Effect.suspend(() =>
+          FiberRef.currentLogAnnotations.locallyScoped(HashMap.fromIterable([...annotations, ...kvps.$$.entries]))
+        )
+      ))
 }

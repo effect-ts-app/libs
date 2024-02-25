@@ -1,7 +1,8 @@
-import type { Predicate, Refinement } from "./Function.js"
+import { pipe, type Predicate, type Refinement } from "./Function.js"
 import * as Option from "./Option.js"
 
 import * as Chunk from "effect/Chunk"
+import * as ReadonlyArray from "./Array.js"
 import type { Equivalence } from "./index.js"
 
 export * from "effect/Chunk"
@@ -19,7 +20,7 @@ export const fromIterable = Chunk.fromIterable
  * @tsplus fluent effect/data/Chunk groupByT
  */
 export function groupByTChunk_<A, Key extends PropertyKey>(c: Chunk.Chunk<A>, f: (a: A) => Key) {
-  return c.toReadonlyArray.groupByT(f).toChunk
+  return pipe(Chunk.toReadonlyArray(c), ReadonlyArray.groupByT(f), Chunk.fromIterable)
 }
 
 /**

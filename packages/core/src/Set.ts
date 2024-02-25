@@ -1,10 +1,10 @@
 // ets_tracing: off
 
-import type * as Either from "effect/Either"
+import { Option } from "effect"
+import type { Either } from "effect"
 import { not } from "effect/Predicate"
 import type { Predicate, Refinement } from "./Function.js"
 import { identity, tuple } from "./Function.js"
-import { Option } from "./Option.js"
 import type { Equivalence, Order } from "./Prelude.js"
 
 /**
@@ -25,9 +25,9 @@ export function find_<A>(set: ReadonlySet<A>, predicate: Predicate<A>) {
 export function findFirst_<A, B extends A>(
   set: ReadonlySet<A>,
   refinement: Refinement<A, B>
-): Option<B>
-export function findFirst_<A>(set: ReadonlySet<A>, predicate: Predicate<A>): Option<A>
-export function findFirst_<A>(set: ReadonlySet<A>, predicate: Predicate<A>): Option<A> {
+): Option.Option<B>
+export function findFirst_<A>(set: ReadonlySet<A>, predicate: Predicate<A>): Option.Option<A>
+export function findFirst_<A>(set: ReadonlySet<A>, predicate: Predicate<A>): Option.Option<A> {
   return Option.fromNullable([...set].find(predicate))
 }
 
@@ -36,8 +36,8 @@ export function findFirst_<A>(set: ReadonlySet<A>, predicate: Predicate<A>): Opt
  */
 export function findFirstMap_<A, B>(
   set: ReadonlySet<A>,
-  f: (a: A) => Option<B>
-): Option<B> {
+  f: (a: A) => Option.Option<B>
+): Option.Option<B> {
   return [...set].findFirstMap(f)
 }
 
@@ -571,7 +571,7 @@ export function separate<E, A>(
  */
 export function filterMap<B>(
   E: Equivalence<B>
-): <A>(f: (a: A) => Option<B>) => (fa: Set<A>) => Set<B> {
+): <A>(f: (a: A) => Option.Option<B>) => (fa: Set<A>) => Set<B> {
   const fm = filterMap_(E)
   return (f) => (fa) => fm(fa, f)
 }
@@ -581,7 +581,7 @@ export function filterMap<B>(
  */
 export function filterMap_<B>(
   E: Equivalence<B>
-): <A>(fa: Set<A>, f: (a: A) => Option<B>) => Set<B> {
+): <A>(fa: Set<A>, f: (a: A) => Option.Option<B>) => Set<B> {
   const elemE = elem_(E)
   return (fa, f) => {
     const r: MutableSet<B> = new Set()
