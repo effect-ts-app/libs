@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
-import { pretty } from "@effect-app/core/utils"
+import { copy, pretty } from "@effect-app/core/utils"
 import { snipString } from "@effect-app/infra/api/util"
 import { reportError } from "@effect-app/infra/errorReporter"
 import type { ValidationError } from "@effect-app/infra/errors"
@@ -12,7 +12,15 @@ import { Effect, FiberRef, S } from "effect-app"
 import { NonEmptyString255 } from "effect-app/schema"
 import type { REST, Schema, StructFields } from "effect-app/schema"
 import type { HttpRequestError } from "../http.js"
-import { HttpBody, HttpRouteContext, HttpServerRequest, HttpServerResponse, HttpServerResponse } from "../http.js"
+import {
+  HttpBody,
+  HttpRouteContext,
+  HttpServerRequest,
+  HttpServerResponse,
+  HttpServerResponse,
+  HttpServerResponse
+} from "../http.js"
+import { updateRequestContext } from "../setupRequest.js"
 import { makeRequestParsers, parseRequestParams } from "./base.js"
 import type { RequestHandler, RequestHandlerBase } from "./base.js"
 
@@ -285,11 +293,14 @@ export function makeRequestHandler<
 
       return yield* $(eff)
     })
-    .updateRequestContext((_) =>
-      _.$$.copy({
-        name: NonEmptyString255(
-          handler.name
-        )
-      })
+    .pipe((_) =>
+      updateRequestContext(
+        _,
+        copy((_) => ({
+          name: NonEmptyString255(
+            handler.name
+          )
+        }))
+      )
     )
 }

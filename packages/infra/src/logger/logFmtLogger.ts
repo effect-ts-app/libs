@@ -9,16 +9,14 @@ export const logfmtLogger = Logger.make<unknown, void>(
     if (requestContext && requestContext.name !== "_root_") {
       annotations = HashMap.make(...[
         ...annotations,
-        ...{
+        ...Object.entries({
           "request.root.id": requestContext.rootId,
           "request.id": requestContext.id,
           "request.name": requestContext.name,
           "request.namespace": requestContext.namespace,
           "request.locale": requestContext.locale,
           ...(requestContext.userProfile?.sub ? { "request.user.sub": requestContext.userProfile.sub } : {})
-        }
-          .$$
-          .entries
+        })
       ])
     }
     const formatted = Logger.logfmtLogger.log({ ..._, annotations })
