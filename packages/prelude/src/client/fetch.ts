@@ -55,31 +55,33 @@ const getClient = Effect.flatMap(
             .tapRequest((r) =>
               Effect
                 .logDebug(`[HTTP] ${r.method}`)
-                .annotateLogs("url", r.url)
-                .annotateLogs(
-                  "body",
-                  r.body._tag === "Uint8Array"
+                .pipe(Effect.annotateLogs({
+                  "url": r.url,
+                  "body": r.body._tag === "Uint8Array"
                     ? new TextDecoder().decode(r.body.body)
-                    : r.body._tag
-                )
-                .annotateLogs("headers", r.headers)
+                    : r.body._tag,
+                  "headers": r.headers
+                }))
             ),
           HttpClient
             .mapEffect((_) =>
               _.status === 204
                 ? Effect.sync(() => ({ status: _.status, body: void 0, headers: _.headers }))
-                : _.json.map((body) => ({ status: _.status, body, headers: _.headers }))
+                : Effect.map(_.json, (body) => ({ status: _.status, body, headers: _.headers }))
             ),
           HttpClient
             .catchTag(
               "ResponseError",
               (err): Effect<FetchResponse<unknown>, ResponseError | SupportedErrors> => {
                 const toError = <R, From, To>(s: Schema<To, From, R>) =>
-                  err
-                    .response
-                    .json
-                    .flatMap((_) => s.decodeUnknown(_).catchAll(() => Effect.fail(err)))
-                    .flatMap(Effect.fail)
+                  Effect
+                    .flatMap(
+                      err
+                        .response
+                        .json,
+                      (_) => S.decodeUnknown(s)(_).pipe(Effect.catchAll(() => Effect.fail(err)))
+                    )
+                    .pipe(Effect.flatMap(Effect.fail))
 
                 // opposite of api's `defaultErrorHandler`
                 if (err.response.status === 404) {
@@ -105,21 +107,24 @@ const getClient = Effect.flatMap(
             ),
           HttpClient.catchTags({
             "ResponseError": (err) =>
-              err
-                .response
-                .text
-                // TODO
-                .orDie
-                .flatMap((_) =>
-                  Effect.fail({
-                    _tag: "HttpErrorResponse" as const,
-                    response: {
-                      body: Option.fromNullable(_),
-                      status: err.response.status,
-                      headers: err.response.headers
-                    }
-                  } as HttpResponseError<unknown>)
-                ),
+              Effect
+                .orDie(
+                  err
+                    .response
+                    .text
+                  // TODO
+                )
+                .pipe(Effect
+                  .flatMap((_) =>
+                    Effect.fail({
+                      _tag: "HttpErrorResponse" as const,
+                      response: {
+                        body: Option.fromNullable(_),
+                        status: err.response.status,
+                        headers: err.response.headers
+                      }
+                    } as HttpResponseError<unknown>)
+                  )),
             "RequestError": (err) => Effect.fail({ _tag: "HttpErrorRequest", error: err.error } as HttpRequestError)
           })
         ))
