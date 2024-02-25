@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Misc, Union } from "ts-toolbelt"
-import type { NonEmptyReadonlyArray, Option } from "./Prelude.js"
+import { Option } from "./Prelude.js"
+import type { NonEmptyReadonlyArray } from "./Prelude.js"
 import type * as SET from "./Set.js"
 
 // type SomeObject = {
@@ -65,7 +66,7 @@ const encodeOptsAsNullable_ = (value: any, cacheMap: Map<any, any>): any => {
   if (value instanceof Object) {
     if (value._tag === "Some" || value._tag === "None") {
       const v = value as Option<unknown>
-      return encodeOptsAsNullable_(v.getOrNull, cacheMap)
+      return encodeOptsAsNullable_(Option.getOrNull(v), cacheMap)
     }
     const newObj = {} as Record<string, any>
     cacheMap.set(value, newObj)

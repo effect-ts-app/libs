@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Clone } from "@fp-ts/optic"
 import { cloneTrait } from "@fp-ts/optic"
-import type * as Either from "effect/Either"
+import * as Either from "effect/Either"
 import { dual, isFunction } from "effect/Function"
 import type { Types } from "effect/Match"
 import type { NoInfer } from "effect/Types"
@@ -21,7 +21,7 @@ export * from "./utils/extend.js"
 // codegen:end
 
 export const unsafeRight = <E, A>(ei: Either.Either<A, E>) => {
-  if (ei.isLeft()) {
+  if (Either.isLeft(ei)) {
     console.error(ei.left)
     throw ei.left
   }
@@ -29,7 +29,7 @@ export const unsafeRight = <E, A>(ei: Either.Either<A, E>) => {
 }
 
 export const unsafeSome = (makeErrorMessage: () => string) => <A>(o: Option<A>) => {
-  if (o.isNone()) {
+  if (Option.isNone(o)) {
     throw new Error(makeErrorMessage())
   }
   return o.value
@@ -560,26 +560,6 @@ export interface AnyOps<T> {
   subject: T
 }
 
-/**
- * @tsplus fluent effect/io/Effect debug
- */
-export function Effect_debug<R, E, A>(self: Effect<A, E, R>, name: string) {
-  return self.tap((a) => {
-    let r: string | A = a
-    try {
-      r = pretty(a)
-    } catch { /* empty */ }
-    return Effect.logDebug("print").annotateLogs(name, `${r}`)
-  })
-}
-
-/**
- * @tsplus fluent effect/io/Effect debugUnsafe
- */
-export function Effect_debugUnsafe<R, E, A>(self: Effect<A, E, R>, name: string) {
-  return self.tap((a) => Effect.sync(() => console.log(name, a)))
-}
-
 export const clone = dual<
   <A extends Object>(f: NoInfer<A>) => (self: A) => A,
   <A extends Object>(self: A, f: A) => A
@@ -630,8 +610,11 @@ export function debug<A>(a: AnyOps<A>, name: string) {
   } catch { /* empty */ }
   return Effect
     .logDebug("print")
-    .annotateLogs(name, `${r}`)
-    .map(() => a.subject)
+    .pipe(
+      Effect.annotateLogs(name, `${r}`),
+      Effect
+        .map(() => a.subject)
+    )
 }
 
 /**
@@ -828,7 +811,7 @@ export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
 
 export function setMoveElDropUndefined<T>(el: T, newIndex: number) {
   return (arrInput: ReadonlySet<T | undefined>): Option<ReadonlySet<T>> =>
-    [...arrInput].pipe(arMoveElDropUndefined(el, newIndex)).map((ar) => new Set(ar))
+    pipe([...arrInput], arMoveElDropUndefined(el, newIndex), Option.map((ar) => new Set(ar)))
 }
 
 export { get, pick }

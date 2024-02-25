@@ -1,8 +1,6 @@
-import { Effect, type Scope } from "@effect-app/core"
+import { Effect, Either, Option, type Scope } from "@effect-app/core"
 import type { LazyArg } from "@effect-app/core/Function"
 import type { ClientRequest } from "@effect/platform/Http/ClientRequest"
-import * as Either from "effect/Either"
-import type { Option } from "effect/Option"
 import type { HttpClient, HttpClientRequest } from "../http.js"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
@@ -41,7 +39,7 @@ export function encaseMaybeEither_<E, A>(
 export function toNullable<R, E, A>(
   self: Effect<Option<A>, E, R>
 ) {
-  return self.map((_) => _.getOrNull)
+  return Effect.map(self, (_) => Option.getOrNull(_))
 }
 
 /**

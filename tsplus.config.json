@@ -2,8 +2,12 @@
   "importMap": {
     "^(.*)/packages/prelude/src/(.*)\\.[cm]?[tj]s$": "effect-app/$2",
     "^(.*)/packages/(.*)/src/(.*)\\.[cm]?[tj]s$": "@effect-app/$2/$3",
+    "^(.*)/packages/prelude/dist/(.*)\\.[cmd]?[tj]s$": "effect-app/$2",
+    "^(.*)/packages/(.*)/dist/(.*)\\.[cmd]?[tj]s$": "@effect-app/$2/$3",
     "^(.*)/node_modules/@effect-app/prelude/src/(.*)\\.[cm]?[tj]s$": "effect-app/$2",
     "^(.*)/node_modules/@effect-app/(.*)/src/(.*)\\.[cm]?[tj]s$": "@effect-app/$2/$3",
+    "^(.*)/node_modules/@effect-app/prelude/dist/(.*)\\.[cmd]?[tj]s$": "effect-app/$2",
+    "^(.*)/node_modules/@effect-app/(.*)/dist/(.*)\\.[cmd]?[tj]s$": "@effect-app/$2/$3",
     ".pnpm/[^\/]*/node_modules/(.*)": "$1"
   }
 }

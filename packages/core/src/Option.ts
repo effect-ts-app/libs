@@ -3,7 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { Some } from "effect/Option"
-import { getOrUndefined as value, Option } from "effect/Option"
+import { getOrUndefined as value } from "effect/Option"
+import * as Option from "effect/Option"
 
 export * from "effect/Option"
 
@@ -15,7 +16,7 @@ export const getOrUndefined = value
 /**
  * @tsplus static effect/data/Option.Ops omitableToNullable
  */
-export function omitableToNullable<T>(om: Option<T> | undefined) {
+export function omitableToNullable<T>(om: Option.Option<T> | undefined) {
   return om ?? Option.fromNullable(om)
 }
 
@@ -35,12 +36,12 @@ export const fromBool = (b: boolean) => (b ? Option.some(true) : Option.none())
 /**
  * Access property, unwrapping Options along the path
  */
-export function p<T, K extends KeysMatching<T, Option<any>>>(
+export function p<T, K extends KeysMatching<T, Option.Option<any>>>(
   k: K
-): (v: Option<T>) => Option<_A<T[K]>>
-export function p<T, K extends keyof T>(k: K): (v: Option<T>) => Option<T[K]>
+): (v: Option.Option<T>) => Option.Option<_A<T[K]>>
+export function p<T, K extends keyof T>(k: K): (v: Option.Option<T>) => Option.Option<T[K]>
 export function p<T>(k: any) {
-  return (v: Option<T>) => v.flatMap((a) => convert(a[k]))
+  return (v: Option.Option<T>) => Option.flatMap(v, (a) => convert(a[k]))
 }
 function convert(a: any) {
   return Option.isSome(a) || Option.isNone(a) ? a : Option.fromNullable(a)
@@ -67,7 +68,7 @@ function raisePartial<X>(): X {
  */
 export function partial<ARGS extends any[], A>(
   f: (miss: <X>() => X) => (...args: ARGS) => A
-): (...args: ARGS) => Option<A> {
+): (...args: ARGS) => Option.Option<A> {
   return (...args) => {
     try {
       return Option.some(f(raisePartial)(...args))
