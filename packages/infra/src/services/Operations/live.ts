@@ -2,8 +2,7 @@ import { annotateLogscoped } from "@effect-app/core/Effect"
 import { reportError } from "@effect-app/infra/errorReporter"
 import { NonEmptyString2k } from "@effect-app/schema"
 import { subHours } from "date-fns"
-import type { Exit } from "effect-app"
-import { copy, Duration, Effect, Option, Schedule } from "effect-app"
+import { Cause, copy, Duration, Effect, Exit, Layer, Option, S, Schedule } from "effect-app"
 import type { OperationProgress } from "effect-app/Operations"
 import { Failure, Operation, OperationId, Success } from "effect-app/Operations"
 import { Operations } from "./service.js"
@@ -37,58 +36,56 @@ const make = Effect.sync(() => {
     return Effect.sync(() => Option.fromNullable(ops.get(id)))
   }
   function finishOp(id: OperationId, exit: Exit<unknown, unknown>) {
-    return findOp(id).flatMap((_) =>
+    return Effect.flatMap(findOp(id), (_) =>
       Effect.sync(() => {
-        if (_.isNone()) {
+        if (Option.isNone(_)) {
           throw new Error("Not found")
         }
         ops.set(
           id,
           copy(_.value, {
             updatedAt: new Date(),
-            result: exit.isSuccess()
+            result: Exit.isSuccess(exit)
               ? new Success()
               : new Failure({
-                message: exit.cause.isInterrupted()
+                message: Cause.isInterrupted(exit.cause)
                   ? NonEmptyString2k("Interrupted")
-                  : exit.cause.isDie()
+                  : Cause.isDie(exit.cause)
                   ? NonEmptyString2k("Unknown error")
-                  : exit
-                    .cause
-                    .failureOption
-                    .flatMap((_) =>
-                      typeof _ === "object" && _ !== null && "message" in _ && NonEmptyString2k.is(_.message)
-                        ? Option.some(_.message)
-                        : Option.none()
+                  : Cause
+                    .failureOption(exit.cause)
+                    .pipe(
+                      Option.flatMap((_) =>
+                        typeof _ === "object" && _ !== null && "message" in _ && S.is(NonEmptyString2k)(_.message)
+                          ? Option.some(_.message)
+                          : Option.none()
+                      ),
+                      Option.getOrNull
                     )
-                    .value ?? null
               })
           })
         )
-      })
-    )
+      }))
   }
   function update(id: OperationId, progress: OperationProgress) {
-    return findOp(id).flatMap((_) =>
+    return Effect.flatMap(findOp(id), (_) =>
       Effect.sync(() => {
-        if (_.isNone()) {
+        if (Option.isNone(_)) {
           throw new Error("Not found")
         }
         ops.set(id, copy(_.value, { updatedAt: new Date(), progress }))
-      })
-    )
+      }))
   }
   return new Operations({
     cleanup,
-    register: makeOp
-      .tap((id) =>
-        annotateLogscoped("operationId", id)
-          .andThen(
-            addOp(id).acquireRelease(
-              (_, exit) => finishOp(id, exit)
-            )
-          )
-      ),
+    register: Effect.tap(
+      makeOp,
+      (id) =>
+        Effect.andThen(
+          annotateLogscoped("operationId", id),
+          Effect.acquireRelease(addOp(id), (_, exit) => finishOp(id, exit))
+        )
+    ),
 
     find: findOp,
     update
@@ -96,21 +93,26 @@ const make = Effect.sync(() => {
 })
 
 const cleanupLoop = Operations
-  .flatMap((_) => _.cleanup)
-  .exit
-  .flatMap((_) => {
-    if (_.isSuccess()) {
-      return Effect.unit
-    } else {
-      return reportAppError(_.cause)
-    }
-  })
-  .schedule(Schedule.fixed(Duration.minutes(1)))
-  .forkScoped
+  .pipe(
+    Effect.flatMap((_) => _.cleanup),
+    Effect.exit,
+    Effect
+      .flatMap((_) => {
+        if (Exit.isSuccess(_)) {
+          return Effect.unit
+        } else {
+          return reportAppError(_.cause)
+        }
+      }),
+    Effect.schedule(Schedule.fixed(Duration.minutes(1))),
+    Effect.forkScoped
+  )
 
 /**
  * @tsplus static Operations.Ops Live
  */
 export const Live = cleanupLoop
-  .toLayerScopedDiscard
-  .provideMerge(make.toLayer(Operations))
+  .pipe(
+    Layer.scopedDiscard,
+    Layer.provideMerge(Layer.effect(Operations, make))
+  )

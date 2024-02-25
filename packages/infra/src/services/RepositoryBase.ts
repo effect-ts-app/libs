@@ -904,10 +904,10 @@ export function makeStore<
     function encodeToPM() {
       const getEtag = () => undefined
       return (t: T) =>
-        schema
-          .encode(t)
-          .orDie
-          .map((_) => mapToPersistenceModel(_, getEtag))
+        S.encode(schema)(t).pipe(
+          Effect.orDie,
+          Effect.map((_) => mapToPersistenceModel(_, getEtag))
+        )
     }
 
     function mapToPersistenceModel(
@@ -923,18 +923,20 @@ export function makeStore<
         partitionValue?: (a: PM) => string
       }
     ) {
-      return Do(($) => {
-        const { make } = $(StoreMaker)
+      return Effect.gen(function*($) {
+        const { make } = yield* $(StoreMaker)
 
-        const store = $(
+        const store = yield* $(
           make<PM, string, R | RInitial, EInitial>(
             pluralize(name),
             makeInitial
-              ? (makeInitial
-                .flatMap(Effect.forEach(encodeToPM())))
-                .withSpan("Repository.makeInitial [effect-app/infra]", {
-                  attributes: { "repository.model_name": name }
-                })
+              ? makeInitial
+                .pipe(
+                  Effect.flatMap(Effect.forEach(encodeToPM())),
+                  Effect.withSpan("Repository.makeInitial [effect-app/infra]", {
+                    attributes: { "repository.model_name": name }
+                  })
+                )
               : undefined,
             {
               ...config,
