@@ -6,7 +6,6 @@
         // "baseUrl": "./",
         // "rootDir": "./src",
         // "noEmit": false,
-        // "tsPlusConfig": "../../tsplus.config.json",
         // temp
         "noImplicitAny": false,
         "importsNotUsedAsValues": "remove",

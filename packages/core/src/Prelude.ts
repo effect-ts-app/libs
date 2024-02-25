@@ -110,7 +110,7 @@ export namespace HashMap {
   export * from "effect/HashMap"
 }
 /** @tsplus type effect/data/HashMap */
-export type HashMap<out Key, out Value> = HM.HashMap<Key, Value>
+export type HashMap<Key, Value> = HM.HashMap<Key, Value>
 
 export namespace Scope {
   // @ts-expect-error abc

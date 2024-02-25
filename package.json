@@ -5,7 +5,6 @@
     "patchedDependencies": {
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
-      "@typescript-eslint/scope-manager@7.0.2": "patches/@typescript-eslint__scope-manager@7.0.2.patch",
       "fast-check@3.15.1": "patches/fast-check@3.15.1.patch",
       "@fp-ts/optic@0.22.0": "patches/@fp-ts__optic@0.22.0.patch",
       "@effect/schema@0.63.0": "patches/@effect__schema@0.63.0.patch",
@@ -100,7 +99,7 @@
     "ts-transform-paths": "^3.0.0",
     "tsc-watch": "^6.0.4",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124",
+    "typescript": "^5.3.3",
     "typescript-transform-paths": "^3.4.7",
     "vite": "^5.1.4",
     "vitest": "^1.3.1"

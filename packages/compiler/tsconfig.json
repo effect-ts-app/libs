@@ -4,7 +4,6 @@
         "lib": [
             "esnext"
         ],
-        "tsPlusConfig": "../../tsplus.config.json",
         "moduleResolution": "Node16",
         "outDir": "./dist",
         "rootDir": "./src",

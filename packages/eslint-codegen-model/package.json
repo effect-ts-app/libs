@@ -36,7 +36,7 @@
     "effect": "^2.4.0",
     "madge": "6.1.0",
     "ts-node": "10.9.2",
-    "typescript": "npm:@effect-app/typescript@5.4.0-tsplus.20240124"
+    "typescript": "^5.3.3"
   },
   "main": "index.js",
   "author": "Wessel van der Veen & Scott vanBommel",

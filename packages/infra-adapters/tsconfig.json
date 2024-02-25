@@ -9,8 +9,6 @@
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
         "noEmit": false,
         "rootDir": "./src",
-        "tsPlusConfig": "../../tsplus.config.json",
-        "tsPlusEnabled": false
     },
     "include": [
         "./src"

@@ -1,10 +1,14 @@
 import * as JSONSchema from "@effect/schema/JSONSchema"
 import type { ParseError } from "@effect/schema/ParseResult"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
+import type {} from "intl-messageformat"
 import { Either, pipe, S } from "effect-app"
 import type { Schema } from "effect-app/schema"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
+
+// type GetSchemaFromProp<T> = T extends Field<infer S, any, any, any> ? S
+//   : never
 
 export function convertIn(v: string | null, type?: "text" | "float" | "int") {
   return v === null ? "" : type === "text" ? v : `${v}`
@@ -62,11 +66,8 @@ export interface FieldInfo<Tout> extends PhantomTypeParameter<typeof f, { out: T
   metadata: FieldMetadata
   type: "text" | "float" | "int" // todo; multi-line vs single line text
 }
-
-// type GetSchemaFromProp<T> = T extends Field<infer S, any, any, any> ? S
-//   : never
-
 const defaultIntl = createIntl({ locale: "en" })
+
 export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage.bind(defaultIntl))
 export const customSchemaErrors = ref<Map<S.AST.AST, (message: string, e: unknown, v: unknown) => string>>(
   new Map()

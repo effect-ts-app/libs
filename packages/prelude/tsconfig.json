@@ -4,12 +4,10 @@
         "lib": [
             "esnext",
         ],
-        "tsPlusConfig": "../../tsplus.config.json",
         "moduleResolution": "Node16",
         "outDir": "./dist",
         "rootDir": "./src",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
-        "tsPlusEnabled": false
         // "paths": {
         //     "effect-app": [
         //         "./src"

@@ -100,7 +100,9 @@ export function makeMemQueue<
             qDrain
               .take
               .pipe(
-                Effect.flatMap((x) => processMessage(x).pipe(Effect.uninterruptible, Effect.fork, Effect.flatMap(Fiber.join))),
+                Effect.flatMap((x) =>
+                  processMessage(x).pipe(Effect.uninterruptible, Effect.fork, Effect.flatMap(Fiber.join))
+                ),
                 // TODO: normally a failed item would be returned to the queue and retried up to X times.
                 // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.
                 silenceAndReportError,
