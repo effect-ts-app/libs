@@ -1,5 +1,20 @@
 # @effect-app/prelude
 
+## 0.174.0
+
+### Minor Changes
+
+- A new day
+- 78b3c9e: reduce tspuse
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies [78b3c9e]
+  - @effect-app/core@0.147.0
+  - @effect-app/fluent-extensions@0.140.0
+  - @effect-app/schema@0.198.0
+
 ## 0.173.4
 
 ### Patch Changes

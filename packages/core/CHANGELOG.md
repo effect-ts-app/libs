@@ -1,5 +1,17 @@
 # @effect-app/core
 
+## 0.147.0
+
+### Minor Changes
+
+- A new day
+- 78b3c9e: reduce tspuse
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/fluent-extensions@0.140.0
+
 ## 0.146.1
 
 ### Patch Changes

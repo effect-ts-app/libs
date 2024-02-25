@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.57.0
+
+### Minor Changes
+
+- A new day
+
 ## 0.56.0
 
 ### Minor Changes

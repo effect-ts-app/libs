@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.55.0
+
+### Minor Changes
+
+- A new day
+
 ## 0.54.0
 
 ### Minor Changes

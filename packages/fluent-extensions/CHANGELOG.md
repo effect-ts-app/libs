@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.140.0
+
+### Minor Changes
+
+- A new day
+
 ## 0.139.0
 
 ### Minor Changes

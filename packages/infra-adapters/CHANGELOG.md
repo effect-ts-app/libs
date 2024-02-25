@@ -1,5 +1,21 @@
 # @effect-app/infra-adapters
 
+## 0.134.0
+
+### Minor Changes
+
+- A new day
+- 78b3c9e: reduce tspuse
+
+### Patch Changes
+
+- Updated dependencies
+- Updated dependencies [78b3c9e]
+  - @effect-app/core@0.147.0
+  - @effect-app/fluent-extensions@0.140.0
+  - effect-app@0.174.0
+  - @effect-app/schema@0.198.0
+
 ## 0.133.4
 
 ### Patch Changes

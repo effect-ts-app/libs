@@ -1,5 +1,12 @@
 # @effect-app/eslint-codegen-model
 
+## 0.56.0
+
+### Minor Changes
+
+- A new day
+- 78b3c9e: reduce tspuse
+
 ## 0.55.0
 
 ### Minor Changes

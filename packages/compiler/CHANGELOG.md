@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.68.0
+
+### Minor Changes
+
+- A new day
+
 ## 0.67.0
 
 ### Minor Changes
