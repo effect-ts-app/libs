@@ -1,4 +1,4 @@
-import { Effect, Equivalence } from "effect-app"
+import { Effect, Equivalence, pipe, ReadonlyArray } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { assertUnreachable } from "effect-app/utils"
 import type { FilterR, FilterResult } from "../filterApi/query.js"
@@ -125,12 +125,14 @@ export function buildWhereCosmosQuery(
     SELECT f
     FROM ${name} f
     ${
-      filter
-        .where
-        .filter((_) => _.key.includes(".-1."))
-        .map((_) => _.key.split(".-1.")[0])
-        .map((_) => `JOIN ${_} IN f.${_}`)
-        .dedupeWith(Equivalence.string)
+      pipe(
+        filter
+          .where
+          .filter((_) => _.key.includes(".-1."))
+          .map((_) => _.key.split(".-1.")[0])
+          .map((_) => `JOIN ${_} IN f.${_}`),
+        ReadonlyArray.dedupeWith(Equivalence.string)
+      )
         .join("\n")
     }
     WHERE f.id != @id AND ${
@@ -370,11 +372,13 @@ export function buildWhereCosmosQuery3(
     FROM ${name} f
 
     ${
-      values
-        .filter((_) => _.path.includes(".-1."))
-        .map((_) => _.path.split(".-1.")[0])
-        .map((_) => `JOIN ${_} IN f.${_}`)
-        .dedupeWith(Equivalence.string)
+      pipe(
+        values
+          .filter((_) => _.path.includes(".-1."))
+          .map((_) => _.path.split(".-1.")[0])
+          .map((_) => `JOIN ${_} IN f.${_}`),
+        ReadonlyArray.dedupeWith(Equivalence.string)
+      )
         .join("\n")
     }
 

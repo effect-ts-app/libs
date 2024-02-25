@@ -16,11 +16,13 @@ export const makeUpdateETag =
     Effect.gen(function*($) {
       if (e._etag) {
         yield* $(
-          current
-            .mapError(() => new OptimisticConcurrencyException({ type, id: e.id, current: "", found: e._etag }))
+          Effect.mapError(
+            current,
+            () => new OptimisticConcurrencyException({ type, id: e.id, current: "", found: e._etag })
+          )
         )
       }
-      if (current.isSome() && current.value._etag !== e._etag) {
+      if (Option.isSome(current) && current.value._etag !== e._etag) {
         return yield* $(
           new OptimisticConcurrencyException({
             type,
@@ -174,7 +176,7 @@ export function codeFilterJoinSelect<E extends { id: string }, NE>(
           ? Option.some(
             (value as readonly NE[]).filterMap((v) =>
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              compare((v as any)[filter.valueKey], filter.value)
+              compare(v[filter.valueKey], filter.value)
                 ? Option.some({ ...v, _rootId: x.id })
                 : Option.none()
             )

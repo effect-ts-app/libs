@@ -586,16 +586,6 @@
         "default": "./_cjs/services/Store/Memory.cjs"
       }
     },
-    "./services/Store/Redis": {
-      "import": {
-        "types": "./dist/services/Store/Redis.d.ts",
-        "default": "./dist/services/Store/Redis.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/Redis.d.ts",
-        "default": "./_cjs/services/Store/Redis.cjs"
-      }
-    },
     "./services/Store/codeFilter": {
       "import": {
         "types": "./dist/services/Store/codeFilter.d.ts",
