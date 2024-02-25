@@ -9,7 +9,6 @@
         "outDir": "./dist",
         "rootDir": "./src",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
-        "tsPlusEnabled": false
         // "paths": {
         //     "effect-app": [
         //         "./src"
