@@ -1,4 +1,4 @@
-import { Context, Effect, FiberRef, Option } from "effect-app"
+import { Context, Effect, FiberRef, Layer, Option } from "effect-app"
 import { TagClassId } from "effect-app/service"
 import { ContextMap } from "./service.js"
 
@@ -16,23 +16,34 @@ export class ContextMapContainer extends TagClassId("effect-app/ContextMapContai
   start: Effect<void>
 }>() {
   static get get(): Effect<ContextMap, never, ContextMapContainer> {
-    return ContextMapContainer.flatMap((_) => _.get)
+    return Effect.flatMap(ContextMapContainer, (_) => _.get)
   }
   static get getOption() {
-    return Effect
-      .contextWith((_: Context<never>) => Context.getOption(_, ContextMapContainer))
-      .flatMap((ctx) =>
-        ctx.isSome()
-          ? ctx.value.get.map(Option.some)
+    return Effect.flatMap(
+      Effect
+        .contextWith((_: Context<never>) => Context.getOption(_, ContextMapContainer)),
+      (ctx) =>
+        Option.isSome(ctx)
+          ? Effect.map(ctx.value.get, Option.some)
           : Effect.sync(() => Option.none())
-      )
+    )
   }
 
-  static readonly live = ContextMap
-    .make
-    .flatMap(FiberRef.make<ContextMap>)
-    .map((ref) => new ContextMapContainer({ get: ref.get, start: ContextMap.make.flatMap((_) => ref.set(_)) }))
-    .toLayerScoped(this)
+  static readonly live = Effect
+    .flatMap(
+      ContextMap.make,
+      FiberRef.make<ContextMap>
+    )
+    .pipe(
+      Effect
+        .map((ref) =>
+          new ContextMapContainer({
+            get: FiberRef.get(ref),
+            start: Effect.flatMap(ContextMap.make, (_) => FiberRef.set(ref, _))
+          })
+        ),
+      Layer.scoped(this)
+    )
 }
 
 /** @tsplus static ContextMap.Ops Tag */
