@@ -186,28 +186,34 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
           Effect
             .sync(() => items)
             // align with CosmosDB
-            .filterOrDieMessage((_) => _.length <= 100, "BatchSet: a batch may not exceed 100 items")
-            .andThen(batchSet)
-            .withSpan("Memory.batchSet [effect-app/infra/Store]", {
-              attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
-            })
+            .pipe(
+              Effect.filterOrDieMessage((_) => _.length <= 100, "BatchSet: a batch may not exceed 100 items"),
+              Effect
+                .andThen(batchSet),
+              Effect
+                .withSpan("Memory.batchSet [effect-app/infra/Store]", {
+                  attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+                })
+            )
         ),
       bulkSet: flow(
         batchSet,
         (_) =>
-          _.withSpan("Memory.bulkSet [effect-app/infra/Store]", {
+          _.pipe(Effect.withSpan("Memory.bulkSet [effect-app/infra/Store]", {
             attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
-          })
+          }))
       ),
       remove: (e: PM) =>
-        store
-          .get
-          .map((_) => new Map([..._].filter(([_]) => _ !== e.id)))
-          .flatMap((_) => store.set(_))
-          .pipe(withPermit)
-          .withSpan("Memory.remove [effect-app/infra/Store]", {
-            attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
-          })
+        Ref
+          .get(store)
+          .pipe(
+            Effect.map((_) => new Map([..._].filter(([_]) => _ !== e.id))),
+            Effect.flatMap((_) => Ref.set(store, _)),
+            withPermit,
+            Effect.withSpan("Memory.remove [effect-app/infra/Store]", {
+              attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
+            })
+          )
     }
     return s
   })
@@ -224,32 +230,38 @@ export const makeMemoryStore = () => ({
       const primary = yield* $(makeMemoryStoreInt<Id, PM, R, E>(modelName, "primary", seed, config?.defaultValues))
       const ctx = yield* $(Effect.context<R>())
       const stores = new Map([["primary", primary]])
-      const getStore = !config?.allowNamespace ? Effect.succeed(primary) : storeId.get.flatMap((namespace) => {
-        const store = stores.get(namespace)
-        if (store) {
-          return Effect.succeed(store)
-        }
-        if (!config.allowNamespace!(namespace)) {
-          throw new Error(`Namespace ${namespace} not allowed!`)
-        }
-        return storesSem.withPermits(1)(Effect.suspend(() => {
+      const getStore = !config?.allowNamespace
+        ? Effect.succeed(primary)
+        : FiberRef.get(storeId).pipe(Effect.flatMap((namespace) => {
           const store = stores.get(namespace)
-          if (store) return Effect.sync(() => store)
-          return makeMemoryStoreInt(modelName, namespace, seed, config?.defaultValues)
-            .orDie
-            .provide(ctx)
-            .tap((store) => Effect.sync(() => stores.set(namespace, store)))
+          if (store) {
+            return Effect.succeed(store)
+          }
+          if (!config.allowNamespace!(namespace)) {
+            throw new Error(`Namespace ${namespace} not allowed!`)
+          }
+          return storesSem.withPermits(1)(Effect.suspend(() => {
+            const store = stores.get(namespace)
+            if (store) return Effect.sync(() => store)
+            return makeMemoryStoreInt(modelName, namespace, seed, config?.defaultValues)
+              .pipe(
+                Effect.orDie,
+                Effect
+                  .provide(ctx),
+                Effect
+                  .tap((store) => Effect.sync(() => stores.set(namespace, store)))
+              )
+          }))
         }))
-      })
       const s: Store<PM, Id> = {
-        all: getStore.flatMap((_) => _.all),
-        find: (...args) => getStore.flatMap((_) => _.find(...args)),
-        filter: (...args) => getStore.flatMap((_) => _.filter(...args)),
-        filterJoinSelect: (...args) => getStore.flatMap((_) => _.filterJoinSelect(...args)),
-        set: (...args) => getStore.flatMap((_) => _.set(...args)),
-        batchSet: (...args) => getStore.flatMap((_) => _.batchSet(...args)),
-        bulkSet: (...args) => getStore.flatMap((_) => _.bulkSet(...args)),
-        remove: (...args) => getStore.flatMap((_) => _.remove(...args))
+        all: Effect.flatMap(getStore, (_) => _.all),
+        find: (...args) => Effect.flatMap(getStore, (_) => _.find(...args)),
+        filter: (...args) => Effect.flatMap(getStore, (_) => _.filter(...args)),
+        filterJoinSelect: (...args) => Effect.flatMap(getStore, (_) => _.filterJoinSelect(...args)),
+        set: (...args) => Effect.flatMap(getStore, (_) => _.set(...args)),
+        batchSet: (...args) => Effect.flatMap(getStore, (_) => _.batchSet(...args)),
+        bulkSet: (...args) => Effect.flatMap(getStore, (_) => _.bulkSet(...args)),
+        remove: (...args) => Effect.flatMap(getStore, (_) => _.remove(...args))
       }
       return s
     })

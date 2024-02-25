@@ -662,7 +662,7 @@ export function makeRepo<
 
           const all = Effect.flatMap(
             allE,
-            (_) => Effect.forEach(_, (_) => decode(_), { concurrency: "inherit", batching: true }).orDie
+            (_) => Effect.forEach(_, (_) => decode(_), { concurrency: "inherit", batching: true }).pipe(Effect.orDie)
           )
 
           const structSchema = schema as unknown as { struct: typeof schema }
@@ -812,17 +812,21 @@ export function makeRepo<
               const decMany = S.decode(S.array(schema))
               return {
                 all: cms
-                  .flatMap((cm) => r.utils.all.map((_) => _.map((_) => mapReverse(_, cm.set))))
-                  .flatMap(decMany)
-                  .map((_) => _ as any[]),
+                  .pipe(
+                    Effect.flatMap((cm) => Effect.map(r.utils.all, (_) => _.map((_) => mapReverse(_, cm.set)))),
+                    Effect.flatMap(decMany),
+                    Effect.map((_) => _ as any[])
+                  ),
                 find: (id: PM["id"]) => flatMapOption(findE(id), dec),
                 query: (b: any) =>
                   r
                     .utils
                     .filter({ filter: b })
-                    .flatMap(decMany)
-                    .map((_) => _ as any[]),
-                save: (...xes: any[]) => encMany(xes).flatMap((_) => saveAllE(_))
+                    .pipe(
+                      Effect.flatMap(decMany),
+                      Effect.map((_) => _ as any[])
+                    ),
+                save: (...xes: any[]) => Effect.flatMap(encMany(xes), (_) => saveAllE(_))
               }
             },
             changeFeed,
@@ -835,8 +839,9 @@ export function makeRepo<
           }
           return r
         })
-        // .withSpan("Repository.make [effect-app/infra]", { attributes: { "repository.model_name": name } })
-        .withLogSpan("Repository.make: " + name)
+        .pipe(Effect
+          // .withSpan("Repository.make [effect-app/infra]", { attributes: { "repository.model_name": name } })
+          .withLogSpan("Repository.make: " + name))
     }
 
     return {
