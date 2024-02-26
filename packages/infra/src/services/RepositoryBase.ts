@@ -178,6 +178,94 @@ export class RepositoryBaseC3<
     return Effect.andThen(this.get(id), (_) => this.removeAndPublish([_]))
   }
 
+  count(filter?: Filter<PM>) {
+    return Effect.map(
+      this.projectEffect(Effect.sync(() => ({ filter }))),
+      (_) => NonNegativeInt(_.length)
+    )
+  }
+
+  readonly save = (...items: NonEmptyArray<T>) => this.saveAndPublish(items)
+
+  readonly saveWithEvents = (events: Iterable<Evt>) => (...items: NonEmptyArray<T>) =>
+    this.saveAndPublish(items, events)
+
+  readonly q2AndSaveOnePure = <A, E2, R2, T2 extends T>(
+    q: (q: Query<Omit<PM, "_etag">>) => Query<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
+    pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
+  ) =>
+    this.q2(flow(q, page({ limit: 1 }))).pipe(
+      Effect.map(ReadonlyArray.toNonEmptyArray),
+      Effect.flatMap(Effect.mapError(() => new NotFoundError({ type: this.itemType, id: q }))),
+      Effect.andThen((_) => saveWithPure_(this, _[0], pure))
+    )
+
+  readonly q2AndSavePure = <A, E2, R2, T2 extends T>(
+    q: (q: Query<Omit<PM, "_etag">>) => Query<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
+    pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
+    batchSize?: number
+  ) =>
+    this.q2(flow(q, page({ limit: 1 }))).pipe(
+      Effect.andThen((_) =>
+        batchSize === undefined
+          ? saveManyWithPure_(this, _, pure)
+          : saveManyWithPureBatched_(this, _, pure, batchSize)
+      )
+    )
+
+  /**
+   * NOTE: it's not as composable, only useful when the request is simple, and only this part needs request args.
+   */
+  readonly handleByIdAndSaveWithPure = <Req extends { id: T["id"] }, Context, R, A, E, S2 extends T>(
+    pure: (req: Req, ctx: Context) => Effect<A, E, FixEnv<R, Evt, T, S2>>
+  ) =>
+  (req: Req, ctx: Context) => byIdAndSaveWithPure(this, req.id)(pure(req, ctx))
+
+  saveManyWithPure = <
+    R,
+    A,
+    E,
+    S1 extends T,
+    S2 extends T
+  >(
+    items: Iterable<S1>,
+    pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
+  ) =>
+    saveAllWithEffectInt(
+      this,
+      runTerm(pure, [...items])
+    )
+
+  byIdAndSaveWithPure: {
+    <R, A, E, S2 extends T>(
+      id: T["id"],
+      pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
+    ): Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E,
+      Exclude<R, {
+        env: PureEnv<Evt, T, S2>
+      }>
+    >
+  } = (id, pure): any => get(this, id).pipe(Effect.flatMap((item) => saveWithPure_(this, item, pure)))
+
+  saveWithPure<
+    R,
+    A,
+    E,
+    S1 extends T,
+    S2 extends T
+  >(
+    item: S1,
+    pure: Effect<A, E, FixEnv<R, Evt, S1, S2>>
+  ) {
+    return saveAllWithEffectInt(
+      this,
+      runTerm(pure, item)
+        .pipe(Effect.map(([item, events, a]) => [[item], events, a]))
+    )
+  }
+
   /** @deprecated use q2 */
   projectEffect<
     R,
@@ -274,13 +362,6 @@ export class RepositoryBaseC3<
     }
   ): Effect<S[]> {
     return this.projectEffect(Effect.sync(() => map))
-  }
-
-  count(filter?: Filter<PM>) {
-    return Effect.map(
-      this.projectEffect(Effect.sync(() => ({ filter }))),
-      (_) => NonNegativeInt(_.length)
-    )
   }
 
   /** @deprecated use q2 */
@@ -459,98 +540,6 @@ export class RepositoryBaseC3<
     return this.queryAndSavePureEffect(Effect.sync(() => map))
   }
 
-  saveManyWithPure = <
-    R,
-    A,
-    E,
-    S1 extends T,
-    S2 extends T
-  >(
-    items: Iterable<S1>,
-    pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
-  ) =>
-    saveAllWithEffectInt(
-      this,
-      runTerm(pure, [...items])
-    )
-
-  byIdAndSaveWithPure: {
-    (
-      id: T["id"]
-    ): <R, A, E, S2 extends T>(
-      pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
-    ) => Effect<
-      A,
-      InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E,
-      Exclude<R, {
-        env: PureEnv<Evt, T, S2>
-      }>
-    >
-    <R, A, E, S2 extends T>(
-      id: T["id"],
-      pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
-    ): Effect<
-      A,
-      InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E,
-      Exclude<R, {
-        env: PureEnv<Evt, T, S2>
-      }>
-    >
-  } = (id: any, pure?: any): any => {
-    if (pure) return get(this, id).pipe(Effect.flatMap((item) => saveWithPure_(this, item, pure)))
-    return (pure: any) => get(this, id).pipe(Effect.flatMap((item) => saveWithPure_(this, item, pure)))
-  }
-
-  readonly q2AndSaveOnePure = <A, E2, R2, T2 extends T>(
-    q: (q: Query<Omit<PM, "_etag">>) => Query<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
-    pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
-  ) =>
-    this.q2(flow(q, page({ limit: 1 }))).pipe(
-      Effect.map(ReadonlyArray.toNonEmptyArray),
-      Effect.flatMap(Effect.mapError(() => new NotFoundError({ type: this.itemType, id: q }))),
-      Effect.andThen((_) => saveWithPure_(this, _[0], pure))
-    )
-
-  readonly q2AndSavePure = <A, E2, R2, T2 extends T>(
-    q: (q: Query<Omit<PM, "_etag">>) => Query<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
-    pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
-    batchSize?: number
-  ) =>
-    this.q2(flow(q, page({ limit: 1 }))).pipe(
-      Effect.andThen((_) =>
-        batchSize === undefined
-          ? saveManyWithPure_(this, _, pure)
-          : saveManyWithPureBatched_(this, _, pure, batchSize)
-      )
-    )
-
-  /**
-   * NOTE: it's not as composable, only useful when the request is simple, and only this part needs request args.
-   */
-  get handleByIdAndSaveWithPure() {
-    return <Req extends { id: T["id"] }, Context, R, A, E, S2 extends T>(
-      pure: (req: Req, ctx: Context) => Effect<A, E, FixEnv<R, Evt, T, S2>>
-    ) =>
-    (req: Req, ctx: Context) => byIdAndSaveWithPure(this, req.id)(pure(req, ctx))
-  }
-
-  saveWithPure_<
-    R,
-    A,
-    E,
-    S1 extends T,
-    S2 extends T
-  >(
-    item: S1,
-    pure: Effect<A, E, FixEnv<R, Evt, S1, S2>>
-  ) {
-    return saveAllWithEffectInt(
-      this,
-      runTerm(pure, item)
-        .pipe(Effect.map(([item, events, a]) => [[item], events, a]))
-    )
-  }
-
   /** @deprecated use q2 */
   queryAndSavePureEffectBatched<
     R,
@@ -597,13 +586,6 @@ export class RepositoryBaseC3<
         )
     )
   }
-
-  readonly save = (...items: NonEmptyArray<T>) => this.saveAndPublish(items)
-
-  readonly saveWithEvents = (
-    events: Iterable<Evt>
-  ) =>
-  (...items: NonEmptyArray<T>) => this.saveAndPublish(items, events)
 }
 
 type Exact<A, B> = [A] extends [B] ? [B] extends [A] ? true : false : false
