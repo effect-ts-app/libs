@@ -646,6 +646,26 @@
         "default": "./_cjs/services/query.cjs"
       }
     },
+    "./services/query/dsl": {
+      "import": {
+        "types": "./dist/services/query/dsl.d.ts",
+        "default": "./dist/services/query/dsl.js"
+      },
+      "require": {
+        "types": "./dist/services/query/dsl.d.ts",
+        "default": "./_cjs/services/query/dsl.cjs"
+      }
+    },
+    "./services/query/new-kid-interpreter": {
+      "import": {
+        "types": "./dist/services/query/new-kid-interpreter.d.ts",
+        "default": "./dist/services/query/new-kid-interpreter.js"
+      },
+      "require": {
+        "types": "./dist/services/query/new-kid-interpreter.d.ts",
+        "default": "./_cjs/services/query/new-kid-interpreter.cjs"
+      }
+    },
     "./test.arbs": {
       "import": {
         "types": "./dist/test.arbs.d.ts",
