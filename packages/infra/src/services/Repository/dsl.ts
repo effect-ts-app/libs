@@ -29,14 +29,14 @@ export type AllDSL<T, Evt> =
  */
 export interface AllDSLExt<T, Evt> {
   modify: <R, E, A, S1 extends T, S2 extends T>(
-    pure: (items: S1[], dsl: PureDSL<S1[], S2[], Evt>) => Effect<A, E, R>
-  ) => Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>
+    pure: (items: readonly  S1[], dsl: PureDSL<readonly S1[], readonly S2[], Evt>) => Effect<A, E, R>
+  ) => Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
   update: <R, E, S1 extends T, S2 extends T>(
-    pure: (items: S1[], log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<S2[], E, R>
-  ) => Effect<S2[], E, FixEnv<R, Evt, S1[], S2[]>>
+    pure: (items: readonly S1[], log: (...evt: Evt[]) => PureLogT<Evt>) => Effect<readonly S2[], E, R>
+  ) => Effect<readonly S2[], E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
   updateWith: <S1 extends T, S2 extends T>(
-    upd: (item: S1[]) => S2[]
-  ) => Effect<S2[], never, PureEnvEnv<Evt, S1[], S2[]>>
+    upd: (item: readonly S1[]) => readonly S2[]
+  ) => Effect<readonly S2[], never, PureEnvEnv<Evt, readonly S1[], readonly S2[]>>
 }
 
 export function makeAllDSL<T, Evt>() {

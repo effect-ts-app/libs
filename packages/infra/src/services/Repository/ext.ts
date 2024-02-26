@@ -437,7 +437,7 @@ export function queryAndSavePureEffect<
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   map: Effect<{ filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
 ) {
-  return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, S[], S2[]>>) =>
+  return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, readonly S[], readonly S2[]>>) =>
     queryEffect(self, map)
       .pipe(Effect.flatMap((_) => saveManyWithPure_(self, _, pure)))
 }
@@ -467,7 +467,7 @@ export function saveManyWithPure<
   Evt,
   ItemType extends string
 >(self: RepositoryBaseC<T, PM, Evt, ItemType>) {
-  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>) =>
+  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>) =>
   (items: Iterable<S1>) => saveManyWithPure_(self, items, pure)
 }
 
@@ -516,7 +516,7 @@ export function saveManyWithPure_<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   items: Iterable<S1>,
-  pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>
+  pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
 ) {
   return saveAllWithEffectInt(
     self,
@@ -583,7 +583,7 @@ export function queryAndSavePureEffectBatched<
   map: Effect<{ filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>,
   batchSize = 100
 ) {
-  return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, S[], S2[]>>) =>
+  return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, readonly S[], readonly S2[]>>) =>
     queryEffect(self, map)
       .pipe(Effect.flatMap((_) => saveManyWithPureBatched_(self, _, pure, batchSize)))
 }
@@ -615,7 +615,7 @@ export function saveManyWithPureBatched<
   Evt,
   ItemType extends string
 >(self: RepositoryBaseC<T, PM, Evt, ItemType>, batchSize = 100) {
-  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>) =>
+  return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>) =>
   (items: Iterable<S1>) => saveManyWithPureBatched_(self, items, pure, batchSize)
 }
 
@@ -635,7 +635,7 @@ export function saveManyWithPureBatched_<
 >(
   self: RepositoryBaseC<T, PM, Evt, ItemType>,
   items: Iterable<S1>,
-  pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>,
+  pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>,
   batchSize = 100
 ) {
   return Effect.forEach(

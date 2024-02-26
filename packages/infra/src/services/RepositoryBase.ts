@@ -29,7 +29,8 @@ import type { FixEnv, PureEnv } from "effect-app/Pure"
 import { assignTag } from "effect-app/service"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import type { FieldValues } from "../filter/types.js"
-import { make as makeQuery, type QAll, type Query, query, type QueryProjection } from "./query.js"
+import { make as makeQuery, page, query } from "./query.js"
+import type { QAll, Query, QueryEnd, QueryProjection, QueryWhere } from "./query.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 import * as Q from "./Store/filterApi/query.js"
 
@@ -94,6 +95,7 @@ export abstract class RepositoryBaseC<
     events?: Iterable<Evt>
   ) => Effect<void>
 
+  /** @deprecated use q2 */
   abstract readonly mapped: Mapped<PM, Omit<PM, "_etag">>
   abstract readonly q2: {
     <A, R, From extends FieldValues>(
@@ -176,7 +178,7 @@ export class RepositoryBaseC3<
     return Effect.andThen(this.get(id), (_) => this.removeAndPublish([_]))
   }
 
-  // TODO: project inside the db.
+  /** @deprecated use q2 */
   projectEffect<
     R,
     E,
@@ -193,6 +195,7 @@ export class RepositoryBaseC3<
       R
     >
   ): Effect<S[], E, R>
+  /** @deprecated use q2 */
   projectEffect<
     R,
     E,
@@ -210,6 +213,7 @@ export class RepositoryBaseC3<
       R
     >
   ): Effect<Pick<PM, U>[], E, R>
+  /** @deprecated use q2 */
   projectEffect<
     R,
     E,
@@ -238,6 +242,7 @@ export class RepositoryBaseC3<
       ))
   }
 
+  /** @deprecated use q2 */
   project<S = PM>(
     map: {
       filter?: Filter<PM>
@@ -246,6 +251,7 @@ export class RepositoryBaseC3<
       skip?: number
     }
   ): Effect<S[]>
+  /** @deprecated use q2 */
   project<U extends keyof PM>(
     map: {
       filter?: Q.QueryBuilder<PM>
@@ -254,6 +260,7 @@ export class RepositoryBaseC3<
       skip?: number
     }
   ): Effect<Pick<PM, U>[]>
+  /** @deprecated use q2 */
   project<
     U extends keyof PM,
     S = Pick<PM, U>
@@ -276,6 +283,7 @@ export class RepositoryBaseC3<
     )
   }
 
+  /** @deprecated use q2 */
   queryEffect<
     R,
     E,
@@ -292,10 +300,12 @@ export class RepositoryBaseC3<
         ))
   }
 
+  /** @deprecated use q2 */
   queryOneEffect<R, E>(
     // TODO: think about collectPM, collectE, and collect(Parsed)
     map: Effect<{ filter?: Filter<PM> }, E, R>
   ): Effect<T, E | NotFoundError<ItemType>, R>
+  /** @deprecated use q2 */
   queryOneEffect<
     R,
     E,
@@ -304,6 +314,7 @@ export class RepositoryBaseC3<
     // TODO: think about collectPM, collectE, and collect(Parsed)
     map: Effect<{ filter?: Filter<PM>; collect: (t: T) => Option<S> }, E, R>
   ): Effect<S, E | NotFoundError<ItemType>, R>
+  /** @deprecated use q2 */
   queryOneEffect<
     R,
     E,
@@ -331,6 +342,7 @@ export class RepositoryBaseC3<
         ))
   }
 
+  /** @deprecated use q2 */
   queryLegacy<S = T>(
     // TODO: think about collectPM, collectE, and collect(Parsed)
     map: { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
@@ -338,24 +350,29 @@ export class RepositoryBaseC3<
     return this.queryEffect(Effect.sync(() => map))
   }
 
+  /** @deprecated use q2 */
   query(
     b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>
   ) {
     return this.queryEffect(Effect.sync(() => ({ filter: anyQb((_, fields) => b(_, fields as any)) })))
   }
 
+  /** @deprecated use q2 */
   queryOne<S = T>(
     map: { filter?: Filter<PM>; collect: (t: T) => Option<S> }
   ): Effect<S, NotFoundError<ItemType>>
+  /** @deprecated use q2 */
   queryOne(
     map: { filter?: Filter<PM> }
   ): Effect<T, NotFoundError<ItemType>>
+  /** @deprecated use q2 */
   queryOne<S = T>(
     map: { filter?: Filter<PM>; collect?: (t: T) => Option<S> }
   ) {
     return this.queryOneEffect(Effect.sync(() => map))
   }
 
+  /** @deprecated */
   queryAndSaveOnePureEffect<
     R,
     E,
@@ -372,6 +389,7 @@ export class RepositoryBaseC3<
       env: PureEnv<Evt, S, S2>
     }>
   >
+  /** @deprecated */
   queryAndSaveOnePureEffect<
     R,
     E
@@ -387,12 +405,13 @@ export class RepositoryBaseC3<
       env: PureEnv<Evt, T, T2>
     }>
   >
+  /** @deprecated */
   queryAndSaveOnePureEffect(
     map: any
   ) {
     return (pure: any) => Effect.flatMap(queryOneEffect(this, map), (_) => saveWithPure_(this, _, pure))
   }
-
+  /** @deprecated */
   queryAndSaveOnePure<
     S extends T = T
   >(
@@ -404,6 +423,7 @@ export class RepositoryBaseC3<
       env: PureEnv<Evt, S, S2>
     }>
   >
+  /** @deprecated */
   queryAndSaveOnePure(
     map: { filter: Filter<PM> }
   ): <R2, A, E2, T2>(pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>) => Effect<
@@ -413,12 +433,13 @@ export class RepositoryBaseC3<
       env: PureEnv<Evt, T, T2>
     }>
   >
+  /** @deprecated */
   queryAndSaveOnePure<S = T>(
     map: { filter: Filter<PM>; collect: (t: T) => Option<S> }
   ) {
     return this.queryAndSaveOnePureEffect(Effect.sync(() => map))
   }
-
+  /** @deprecated */
   queryAndSavePureEffect<
     R,
     E,
@@ -426,10 +447,10 @@ export class RepositoryBaseC3<
   >(
     map: Effect<{ filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
   ) {
-    return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, S[], S2[]>>) =>
-      Effect.flatMap(queryEffect(this, map), (_) => this.saveManyWithPure_(_, pure))
+    return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, readonly S[], readonly S2[]>>) =>
+      Effect.flatMap(queryEffect(this, map), (_) => this.saveManyWithPure(_, pure))
   }
-
+  /** @deprecated */
   queryAndSavePure<
     S extends T = T
   >(
@@ -438,37 +459,70 @@ export class RepositoryBaseC3<
     return this.queryAndSavePureEffect(Effect.sync(() => map))
   }
 
-  get saveManyWithPure() {
-    return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>) =>
-    (items: Iterable<S1>) => saveManyWithPure_(this, items, pure)
+  saveManyWithPure = <
+    R,
+    A,
+    E,
+    S1 extends T,
+    S2 extends T
+  >(
+    items: Iterable<S1>,
+    pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
+  ) =>
+    saveAllWithEffectInt(
+      this,
+      runTerm(pure, [...items])
+    )
+
+  byIdAndSaveWithPure: {
+    (
+      id: T["id"]
+    ): <R, A, E, S2 extends T>(
+      pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
+    ) => Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E,
+      Exclude<R, {
+        env: PureEnv<Evt, T, S2>
+      }>
+    >
+    <R, A, E, S2 extends T>(
+      id: T["id"],
+      pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
+    ): Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E,
+      Exclude<R, {
+        env: PureEnv<Evt, T, S2>
+      }>
+    >
+  } = (id: any, pure?: any): any => {
+    if (pure) return get(this, id).pipe(Effect.flatMap((item) => saveWithPure_(this, item, pure)))
+    return (pure: any) => get(this, id).pipe(Effect.flatMap((item) => saveWithPure_(this, item, pure)))
   }
 
-  byIdAndSaveWithPure(
-    id: T["id"]
-  ): <R, A, E, S2 extends T>(
-    pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
-  ) => Effect<
-    A,
-    InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E,
-    Exclude<R, {
-      env: PureEnv<Evt, T, S2>
-    }>
-  >
-  byIdAndSaveWithPure<R, A, E, S2 extends T>(
-    id: T["id"],
-    pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
-  ): Effect<
-    A,
-    InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E,
-    Exclude<R, {
-      env: PureEnv<Evt, T, S2>
-    }>
-  >
-  byIdAndSaveWithPure<R, A, E, S2 extends T>(id: T["id"], pure?: Effect<A, E, FixEnv<R, Evt, T, S2>>) {
-    if (pure) return get(this, id).pipe(Effect.flatMap((item) => saveWithPure_(this, item, pure)))
-    return (pure: Effect<A, E, FixEnv<R, Evt, T, S2>>) =>
-      get(this, id).pipe(Effect.flatMap((item) => saveWithPure_(this, item, pure)))
-  }
+  readonly q2AndSaveOnePure = <A, E2, R2, T2 extends T>(
+    q: (q: Query<Omit<PM, "_etag">>) => Query<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
+    pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
+  ) =>
+    this.q2(flow(q, page({ limit: 1 }))).pipe(
+      Effect.map(ReadonlyArray.toNonEmptyArray),
+      Effect.flatMap(Effect.mapError(() => new NotFoundError({ type: this.itemType, id: q }))),
+      Effect.andThen((_) => saveWithPure_(this, _[0], pure))
+    )
+
+  readonly q2AndSavePure = <A, E2, R2, T2 extends T>(
+    q: (q: Query<Omit<PM, "_etag">>) => Query<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
+    pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
+    batchSize?: number
+  ) =>
+    this.q2(flow(q, page({ limit: 1 }))).pipe(
+      Effect.andThen((_) =>
+        batchSize === undefined
+          ? saveManyWithPure_(this, _, pure)
+          : saveManyWithPureBatched_(this, _, pure, batchSize)
+      )
+    )
 
   /**
    * NOTE: it's not as composable, only useful when the request is simple, and only this part needs request args.
@@ -478,22 +532,6 @@ export class RepositoryBaseC3<
       pure: (req: Req, ctx: Context) => Effect<A, E, FixEnv<R, Evt, T, S2>>
     ) =>
     (req: Req, ctx: Context) => byIdAndSaveWithPure(this, req.id)(pure(req, ctx))
-  }
-
-  saveManyWithPure_<
-    R,
-    A,
-    E,
-    S1 extends T,
-    S2 extends T
-  >(
-    items: Iterable<S1>,
-    pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>
-  ) {
-    return saveAllWithEffectInt(
-      this,
-      runTerm(pure, [...items])
-    )
   }
 
   saveWithPure_<
@@ -513,17 +551,7 @@ export class RepositoryBaseC3<
     )
   }
 
-  saveAllWithEffectInt<
-    P extends T,
-    R,
-    E,
-    A
-  >(
-    gen: Effect<readonly [Iterable<P>, Iterable<Evt>, A], E, R>
-  ) {
-    return Effect.flatMap(gen, ([items, events, a]) => Effect.map(this.saveAndPublish(items, events), () => a))
-  }
-
+  /** @deprecated use q2 */
   queryAndSavePureEffectBatched<
     R,
     E,
@@ -533,10 +561,11 @@ export class RepositoryBaseC3<
     map: Effect<{ filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>,
     batchSize = 100
   ) {
-    return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, S[], S2[]>>) =>
-      Effect.flatMap(queryEffect(this, map), (_) => this.saveManyWithPureBatched_(_, pure, batchSize))
+    return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, readonly S[], readonly S2[]>>) =>
+      Effect.flatMap(queryEffect(this, map), (_) => this.saveManyWithPureBatched(_, pure, batchSize))
   }
 
+  /** @deprecated use q2 */
   queryAndSavePureBatched<
     S extends T = T
   >(
@@ -547,12 +576,8 @@ export class RepositoryBaseC3<
     return this.queryAndSavePureEffectBatched(Effect.sync(() => map), batchSize)
   }
 
-  saveManyWithPureBatched(batchSize = 100) {
-    return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>) =>
-    (items: Iterable<S1>) => saveManyWithPureBatched_(this, items, pure, batchSize)
-  }
-
-  saveManyWithPureBatched_<
+  /** @deprecated use q2 */
+  saveManyWithPureBatched<
     R,
     A,
     E,
@@ -560,7 +585,7 @@ export class RepositoryBaseC3<
     S2 extends T
   >(
     items: Iterable<S1>,
-    pure: Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>,
+    pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>,
     batchSize = 100
   ) {
     return Effect.forEach(
@@ -1026,6 +1051,7 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
   get: (id: T["id"]) => Effect<T, NotFoundError<ItemType>, Service>
 
+  /** @deprecated use q2 */
   query: (b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>) => Effect<T[], never, Service>
   queryLegacy: <S = T>(map: {
     filter?: Filter<PM>
@@ -1034,6 +1060,7 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     skip?: number
   }) => Effect<S[], never, Service>
 
+  /** @deprecated use q2 */
   mapped: MM<Service, PM, Omit<PM, "_etag">>
 
   byIdAndSaveWithPure: {
@@ -1043,8 +1070,50 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     ): Effect<
       A,
       InvalidStateError | OptimisticConcurrencyException | E | NotFoundError<ItemType>,
-      Exclude<R, {
+      | Service
+      | Exclude<R, {
         env: PureEnv<never, T, S2>
+      }>
+    >
+  }
+
+  q2AndSaveOnePure: {
+    <
+      R2,
+      A,
+      E2,
+      T2 extends T
+    >(
+      q: (initial: Query<Omit<PM, "_etag">>) =>
+        | Query<Omit<PM, "_etag">>
+        | QueryWhere<Omit<PM, "_etag">>,
+      pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
+    ): Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | E2 | NotFoundError<ItemType>,
+      | Service
+      | Exclude<R2, {
+        env: PureEnv<Evt, T, T2>
+      }>
+    >
+  }
+  q2AndSavePure: {
+    <
+      R2,
+      A,
+      E2,
+      T2 extends T
+    >(
+      q: (initial: Query<Omit<PM, "_etag">>) =>
+        | Query<Omit<PM, "_etag">>
+        | QueryWhere<Omit<PM, "_etag">>,
+      pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>
+    ): Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | E2,
+      | Service
+      | Exclude<R2, {
+        env: PureEnv<Evt, readonly T[], readonly T2[]>
       }>
     >
   }
@@ -1066,8 +1135,20 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
 
 const makeRepoFunctions = (tag: any) => {
   const { all } = Effect.serviceConstants(tag) as any
-  const { byIdAndSaveWithPure, find, get, q2, query, queryLegacy, removeAndPublish, removeById, save, saveAndPublish } =
-    Effect.serviceFunctions(tag) as any
+  const {
+    byIdAndSaveWithPure,
+    find,
+    get,
+    q2,
+    q2AndSaveOnePure,
+    q2AndSavePure,
+    query,
+    queryLegacy,
+    removeAndPublish,
+    removeById,
+    save,
+    saveAndPublish
+  } = Effect.serviceFunctions(tag) as any
 
   const mapped = (s: any) => tag.map((_: any) => _.mapped(s))
 
@@ -1083,7 +1164,9 @@ const makeRepoFunctions = (tag: any) => {
     query,
     queryLegacy,
     q2,
-    mapped
+    mapped,
+    q2AndSaveOnePure,
+    q2AndSavePure
   }
 }
 
