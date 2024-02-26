@@ -49,7 +49,7 @@
     "date-fns": "^3.3.1",
     "cross-env": "^7.0.3",
     "ts-node": "^10.9.2",
-    "vue": "^3.4.19"
+    "vue": "^3.4.20"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",
@@ -59,7 +59,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.89.3",
-    "@effect-app/cli": "^0.57.0",
+    "@effect-app/cli": "^0.58.0",
     "@effect-app/compiler": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",

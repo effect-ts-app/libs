@@ -8,7 +8,7 @@
     "lodash": "^4.17.21",
     "nanoid": "^5.0.6",
     "path-parser": "^6.1.0",
-    "query-string": "^8.2.0",
+    "query-string": "^9.0.0",
     "ts-pattern": "^5.0.8",
     "uuid": "^9.0.1",
     "validator": "^13.11.0"

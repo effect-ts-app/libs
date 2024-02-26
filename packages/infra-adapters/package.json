@@ -8,7 +8,7 @@
     "@effect-app/fluent-extensions": "workspace:*",
     "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "query-string": "^8.2.0"
+    "query-string": "^9.0.0"
   },
   "devDependencies": {
     "@azure/cosmos": "^4.0.0",
