@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.174.1
+
+### Patch Changes
+
+- 4008eb1: cleanup and add byIdAndSaveWithPure
+
 ## 0.174.0
 
 ### Minor Changes

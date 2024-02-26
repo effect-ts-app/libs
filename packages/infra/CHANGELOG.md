@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.199.1
+
+### Patch Changes
+
+- 4008eb1: cleanup and add byIdAndSaveWithPure
+- Updated dependencies [4008eb1]
+  - effect-app@0.174.1
+  - @effect-app/infra-adapters@0.134.1
+
 ## 0.199.0
 
 ### Minor Changes
