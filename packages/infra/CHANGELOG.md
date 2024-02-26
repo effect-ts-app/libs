@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.200.1
+
+### Patch Changes
+
+- 0429cd2: fix query dsl
+
 ## 0.200.0
 
 ### Minor Changes
