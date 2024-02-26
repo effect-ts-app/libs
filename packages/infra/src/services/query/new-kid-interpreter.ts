@@ -147,26 +147,23 @@ export const query: {
       select = t.propertySignatures.map((_) => _.name) as any
     }
   }
-  return pipe(
-    a.filter.length === 0
-      ? repo.utils.all
-      : repo.utils.filter({
-        limit: a.limit,
-        skip: a.skip,
-        select: Option.getOrUndefined(toNonEmptyArray(select)),
-        filter: a.filter.length
-          ? {
-            type: "new-kid" as const,
-            build: () => a.filter
-          } as any as QueryBuilder<any>
-          : undefined
-      }),
-    Effect.flatMap((_) =>
+  return Effect.flatMap(
+    repo.utils.filter({
+      limit: a.limit,
+      skip: a.skip,
+      select: Option.getOrUndefined(toNonEmptyArray(select)),
+      filter: a.filter.length
+        ? {
+          type: "new-kid" as const,
+          build: () => a.filter
+        } as QueryBuilder<any>
+        : undefined
+    }),
+    (_) =>
       Unify.unify(
         schema
           ? repo.utils.parseMany2(_, schema as any)
           : repo.utils.parseMany(_)
       )
-    )
   )
 }) as any
