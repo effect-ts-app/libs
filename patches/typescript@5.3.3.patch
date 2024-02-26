@@ -1,0 +1,63 @@
+diff --git a/lib/lib.dom.d.ts b/lib/lib.dom.d.ts
+index ac946bae15f0c3cc49ad8c5d2c4b455ab92e425e..84bf96d6c81cf7dd01580344f20004376eb4a667 100644
+--- a/lib/lib.dom.d.ts
++++ b/lib/lib.dom.d.ts
+@@ -25828,6 +25828,9 @@ interface Window extends EventTarget, AnimationFrameProvider, GlobalEventHandler
+     addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+     removeEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: Window, ev: WindowEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+     removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
++    Option: {
++        new(text?: string, value?: string, defaultSelected?: boolean, selected?: boolean): HTMLOptionElement;
++    };
+     [index: number]: Window;
+ }
+ 
+@@ -27173,9 +27176,6 @@ declare var Audio: {
+ declare var Image: {
+     new(width?: number, height?: number): HTMLImageElement;
+ };
+-declare var Option: {
+-    new(text?: string, value?: string, defaultSelected?: boolean, selected?: boolean): HTMLOptionElement;
+-};
+ /**
+  * @deprecated This is a legacy alias of `navigator`.
+  *
+diff --git a/lib/tsc.js b/lib/tsc.js
+index d98c47c3d7d3085fddbd5bd6e6b5c103f6c890e1..e3090ac16f3b5339e5a1f756bcc165fd30b2bc87 100644
+--- a/lib/tsc.js
++++ b/lib/tsc.js
+@@ -11376,7 +11376,7 @@ function isRestParameter(node) {
+ // src/compiler/utilities.ts
+ var resolvingEmptyArray = [];
+ var externalHelpersModuleNameText = "tslib";
+-var defaultMaximumTruncationLength = 160;
++var defaultMaximumTruncationLength = 1_000;
+ var noTruncationMaximumTruncationLength = 1e6;
+ function getDeclarationOfKind(symbol, kind) {
+   const declarations = symbol.declarations;
+diff --git a/lib/tsserver.js b/lib/tsserver.js
+index dd6b532de2dd7c8651ebbd01b1488ba82d58f8e0..d357d6ff9e1c1b0797004f713e9a2e54bf0b269d 100644
+--- a/lib/tsserver.js
++++ b/lib/tsserver.js
+@@ -15084,7 +15084,7 @@ function isRestParameter(node) {
+ // src/compiler/utilities.ts
+ var resolvingEmptyArray = [];
+ var externalHelpersModuleNameText = "tslib";
+-var defaultMaximumTruncationLength = 160;
++var defaultMaximumTruncationLength = 1_000;
+ var noTruncationMaximumTruncationLength = 1e6;
+ function getDeclarationOfKind(symbol, kind) {
+   const declarations = symbol.declarations;
+diff --git a/lib/typescript.js b/lib/typescript.js
+index fe732a6cb262712d4d79b917b7fa0f0eee9d58b4..90a80ab36054654c9a0dde5a7c1f711d1cc6638f 100644
+--- a/lib/typescript.js
++++ b/lib/typescript.js
+@@ -18952,7 +18952,7 @@ ${lanes.join("\n")}
+       init_ts2();
+       resolvingEmptyArray = [];
+       externalHelpersModuleNameText = "tslib";
+-      defaultMaximumTruncationLength = 160;
++      defaultMaximumTruncationLength = 1_000;
+       noTruncationMaximumTruncationLength = 1e6;
+       stringWriter = createSingleLineStringWriter();
+       getScriptTargetFeatures = /* @__PURE__ */ memoize(
