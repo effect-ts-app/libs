@@ -19,7 +19,7 @@ export interface Query<TFieldValues extends FieldValues> {
   readonly args: { TFieldValues: TFieldValues }
   readonly _id: unique symbol
 }
-export interface QueryWhere<TFieldValues extends FieldValues> extends Query<TFieldValues> {
+export interface QueryWhere<TFieldValues extends FieldValues> {
   readonly args: { TFieldValues: TFieldValues }
   readonly _id2: unique symbol
 }
@@ -82,7 +82,7 @@ export class Or<TFieldValues extends FieldValues> extends Data.TaggedClass("or")
 }
 
 export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("page")<{
-  current: Query<TFieldValues> | QueryEnd<TFieldValues>
+  current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
   limit?: number | undefined
   skip?: number | undefined
 }> implements QueryEnd<TFieldValues> {
@@ -92,7 +92,7 @@ export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("pa
 
 export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPath<TFieldValues>>
   extends Data.TaggedClass("order")<{
-    current: Query<TFieldValues> | QueryEnd<TFieldValues>
+    current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
     field: TFieldName
     direction: "ASC" | "DESC"
   }>
@@ -103,7 +103,7 @@ export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPat
 }
 
 export class Project<A, TFieldValues extends FieldValues, R> extends Data.TaggedClass("project")<{
-  current: Query<TFieldValues> | QueryEnd<TFieldValues>
+  current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
   schema: S.Schema<A, TFieldValues, R>
 }> implements QueryProjection<TFieldValues, A, R> {
   _id4!: any
@@ -122,12 +122,12 @@ export const or: FilterContinuation = (...operation: any[]) => (current: any) =>
 export const order: <TFieldValues extends FieldValues, TFieldName extends FieldPath<TFieldValues>>(
   field: TFieldName,
   desc?: boolean
-) => (current: Query<TFieldValues> | QueryEnd<TFieldValues>) => QueryEnd<TFieldValues> = (field, desc) => (current) =>
-  new Order({ current, field, direction: desc ? "DESC" : "ASC" })
+) => (current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>) => QueryEnd<TFieldValues> =
+  (field, desc) => (current) => new Order({ current, field, direction: desc ? "DESC" : "ASC" })
 
 export const page: <TFieldValues extends FieldValues>(
   page: { limit?: number; skip?: number }
-) => (current: Query<TFieldValues> | QueryEnd<TFieldValues>) => QueryEnd<TFieldValues> =
+) => (current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>) => QueryEnd<TFieldValues> =
   ({ limit, skip }) => (current) =>
     new Page({
       current,
@@ -138,8 +138,9 @@ export const page: <TFieldValues extends FieldValues>(
 export const project: <TFieldValues extends FieldValues, A, R>(
   schema: S.Schema<A, TFieldValues, R>
   // TODO: should be able to use a subset of FieldValues and use select
-) => (current: Query<TFieldValues> | QueryEnd<TFieldValues>) => QueryProjection<TFieldValues, A, R> =
-  (schema) => (current) => new Project({ current, schema })
+) => (
+  current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
+) => QueryProjection<TFieldValues, A, R> = (schema) => (current) => new Project({ current, schema })
 
 // TODO: able to switch to Order and Limit/Take, which are "enders"
 export type FilterWheres = {
