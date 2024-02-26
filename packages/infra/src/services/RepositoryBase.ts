@@ -1052,13 +1052,13 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   byIdAndSaveWithPure: {
     <R, A, E, S2 extends T>(
       id: T["id"],
-      pure: Effect<A, E, FixEnv<R, never, T, S2>>
+      pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
     ): Effect<
       A,
       InvalidStateError | OptimisticConcurrencyException | E | NotFoundError<ItemType>,
       | Service
       | Exclude<R, {
-        env: PureEnv<never, T, S2>
+        env: PureEnv<Evt, T, S2>
       }>
     >
   }
