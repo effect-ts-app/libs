@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 // import type { ParserEnv } from "@effect-app/schema/custom/Parser"
@@ -99,17 +102,17 @@ export abstract class RepositoryBaseC<
   /** @deprecated use q2 */
   abstract readonly mapped: Mapped<PM, Omit<PM, "_etag">>
   abstract readonly q2: {
-    <A, R, From extends FieldValues>(
-      q: (initial: Query<Omit<PM, "_etag">>) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
-    ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
     <R = never>(
       q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R>
     ): Effect.Effect<readonly T[], never, R>
+    <A, R, From extends FieldValues>(
+      q: (initial: Query<Omit<PM, "_etag">>) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
+    ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
 
+    <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, R>
     <A, R, From extends FieldValues>(
       q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
     ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
-    <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, R>
   }
 }
 
@@ -1105,17 +1108,17 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   }
 
   readonly q2: {
-    <A, R, From extends FieldValues>(
-      q: (initial: Query<Omit<PM, "_etag">>) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
-    ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
     <R = never>(
       q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R>
     ): Effect.Effect<readonly T[], never, Service | R>
+    <A, R, From extends FieldValues>(
+      q: (initial: Query<Omit<PM, "_etag">>) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
+    ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
 
+    <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, Service | R>
     <A, R, From extends FieldValues>(
       q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
     ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
-    <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, Service | R>
   }
 }
 

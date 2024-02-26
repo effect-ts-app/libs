@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { toNonEmptyArray } from "@effect-app/core/Array"
 import type { FieldValues } from "@effect-app/infra/filter/types"
@@ -7,7 +9,7 @@ import type { PersistenceModelType } from "@effect-app/infra/services/Store"
 import type { Ops } from "@effect-app/infra/services/Store/filterApi/proxy"
 import type { FilterResult, QueryBuilder } from "@effect-app/infra/services/Store/filterApi/query"
 import { Data, Effect, Match, Option, pipe, S, Unify } from "effect-app"
-import type { NoInfer } from "effect/Types"
+import type { Covariant, NoInfer } from "effect/Types"
 
 export type QAll<TFieldValues extends FieldValues, A = TFieldValues, R = never> =
   | Query<TFieldValues>
@@ -15,26 +17,35 @@ export type QAll<TFieldValues extends FieldValues, A = TFieldValues, R = never> 
   | QueryEnd<TFieldValues>
   | QueryProjection<TFieldValues, A, R>
 
-export interface Query<TFieldValues extends FieldValues> {
-  readonly args: { TFieldValues: TFieldValues }
-  readonly _id: unique symbol
-}
-export interface QueryWhere<TFieldValues extends FieldValues> {
-  readonly args: { TFieldValues: TFieldValues }
-  readonly _id2: unique symbol
+export const QId = Symbol()
+export type QId = typeof QId
+
+export interface QueryTogether<
+  out TFieldValues extends FieldValues,
+  out T extends "initial" | "where" | "end" | "projection" = "initial",
+  out A = TFieldValues,
+  out R = never
+> {
+  readonly [QId]: {
+    readonly _TFieldValues: Covariant<TFieldValues>
+    readonly _T: Covariant<T>
+    readonly _A: Covariant<A>
+    readonly _R: Covariant<R>
+  }
 }
 
-export interface QueryEnd<TFieldValues extends FieldValues> {
-  readonly args: { TFieldValues: TFieldValues }
-  readonly _id3: unique symbol
-}
+export type Query<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "initial">
+export type QueryWhere<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "where">
 
-export interface QueryProjection<TFieldValues extends FieldValues, A = TFieldValues, R = never> {
-  readonly args: { TFieldValues: TFieldValues; A: A; R: R }
-  readonly _id4: unique symbol
-}
+export type QueryEnd<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "end">
 
-// Impl, later
+export type QueryProjection<TFieldValues extends FieldValues, A = TFieldValues, R = never> = QueryTogether<
+  TFieldValues,
+  "projection",
+  A,
+  R
+>
+
 export type Q<TFieldValues extends FieldValues> =
   | Initial<TFieldValues>
   | Where<TFieldValues>
@@ -47,8 +58,7 @@ export type Q<TFieldValues extends FieldValues> =
 export class Initial<TFieldValues extends FieldValues> extends Data.TaggedClass("value")<{ value: "initial" }>
   implements Query<TFieldValues>
 {
-  readonly _id: any
-  readonly args: any
+  readonly [QId]!: any
   constructor() {
     super({ value: "initial" as const })
   }
@@ -58,27 +68,21 @@ export class Where<TFieldValues extends FieldValues> extends Data.TaggedClass("w
   current: Query<TFieldValues>
   operation: [string, Ops, any] | [string, any]
 }> implements QueryWhere<TFieldValues> {
-  _id2!: any
-  _id: any
-  readonly args: any
+  readonly [QId]!: any
 }
 
 export class And<TFieldValues extends FieldValues> extends Data.TaggedClass("and")<{
   current: Query<TFieldValues>
   operation: [string, Ops, any] | [string, any] | ((q: Query<TFieldValues>) => QueryWhere<TFieldValues>)
 }> implements QueryWhere<TFieldValues> {
-  _id2!: any
-  _id: any
-  readonly args: any
+  readonly [QId]!: any
 }
 
 export class Or<TFieldValues extends FieldValues> extends Data.TaggedClass("or")<{
   current: Query<TFieldValues>
   operation: [string, Ops, any] | [string, any] | ((q: Query<TFieldValues>) => QueryWhere<TFieldValues>)
 }> implements QueryWhere<TFieldValues> {
-  _id2!: any
-  _id: any
-  readonly args: any
+  readonly [QId]!: any
 }
 
 export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("page")<{
@@ -86,8 +90,7 @@ export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("pa
   limit?: number | undefined
   skip?: number | undefined
 }> implements QueryEnd<TFieldValues> {
-  _id3!: any
-  readonly args: any
+  readonly [QId]!: any
 }
 
 export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPath<TFieldValues>>
@@ -98,20 +101,17 @@ export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPat
   }>
   implements QueryEnd<TFieldValues>
 {
-  _id3!: any
-  readonly args: any
+  readonly [QId]!: any
 }
 
 export class Project<A, TFieldValues extends FieldValues, R> extends Data.TaggedClass("project")<{
   current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
   schema: S.Schema<A, TFieldValues, R>
 }> implements QueryProjection<TFieldValues, A, R> {
-  _id4!: any
-  readonly args: any
+  readonly [QId]!: any
 }
 
-const wh: any = (...operation: any[]) => (current: any[]) => new Where({ current, operation } as any)
-export const where: FilterWhere = wh
+export const where: FilterWhere = (...operation: any[]) => (current: any) => new Where({ current, operation } as any)
 
 export const and: FilterContinuation = (...operation: any[]) => (current: any) =>
   new And({ current, operation: typeof operation[0] === "function" ? operation[0] : operation } as any)
@@ -135,14 +135,12 @@ export const page: <TFieldValues extends FieldValues>(
       skip
     })
 
-export const project: <TFieldValues extends FieldValues, A, R>(
+export const project: <TFieldValues extends FieldValues, A = FieldValues, R = never>(
   schema: S.Schema<A, TFieldValues, R>
-  // TODO: should be able to use a subset of FieldValues and use select
 ) => (
   current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
 ) => QueryProjection<TFieldValues, A, R> = (schema) => (current) => new Project({ current, schema })
 
-// TODO: able to switch to Order and Limit/Take, which are "enders"
 export type FilterWheres = {
   <
     TFieldValues extends FieldValues,
@@ -382,7 +380,6 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
     })
   )
 
-  // TODO
   return {
     filter: values,
     limit,
