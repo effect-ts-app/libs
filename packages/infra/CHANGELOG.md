@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.199.2
+
+### Patch Changes
+
+- 3ba1e49: expand query
+
 ## 0.199.1
 
 ### Patch Changes
