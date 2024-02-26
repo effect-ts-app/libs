@@ -31,6 +31,7 @@ import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyExcept
 import type { FieldValues } from "../filter/types.js"
 import { make as makeQuery, page, query } from "./query.js"
 import type { QAll, Query, QueryEnd, QueryProjection, QueryWhere } from "./query.js"
+import * as Q2 from "./query.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 import * as Q from "./Store/filterApi/query.js"
 
@@ -854,7 +855,8 @@ export function makeRepo<
     return {
       make,
       Where: where,
-      Query: Q.QueryBuilder.make<PM>()
+      Query: Q.QueryBuilder.make<PM>(),
+      Q2: Q2.make<Omit<PM, "_etag">>()
     }
   }
 }
@@ -1010,9 +1012,11 @@ export interface Repos<
       },
     f: (r: Repository<T, PM, Evt, ItemType>) => Out
   ): Effect<Out, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
-  /** @deprecated use `query` instead */
+  /** @deprecated use `Q2` instead */
   readonly Where: ReturnType<typeof makeWhere<PM>>
+  /** @deprecated use `Q2` instead */
   readonly Query: ReturnType<typeof Q.QueryBuilder.make<PM>>
+  readonly Q2: ReturnType<typeof Q2.make<PM>>
   readonly type: Repository<T, PM, Evt, ItemType>
 }
 
