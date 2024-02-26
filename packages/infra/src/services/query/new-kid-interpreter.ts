@@ -10,32 +10,44 @@ import type { Repository } from "../Repository.js"
 import type { PersistenceModelType } from "../Store.js"
 import type { FilterResult, QueryBuilder } from "../Store/filterApi/query.js"
 
+type Result<TFieldValues extends FieldValues, A = TFieldValues, R = never> = {
+  filter: FilterResult[]
+  schema: S.Schema<A, TFieldValues, R> | undefined
+  limit: number | undefined
+  skip: number | undefined
+  order: { field: FieldPath<TFieldValues>; direction: "ASC" | "DESC" }[]
+}
+
 const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never>(_: QAll<TFieldValues, A, R>) => {
-  const values: FilterResult[] = []
   const a = _ as Q<TFieldValues>
 
-  let schema: S.Schema<A, TFieldValues, R> | undefined = undefined as any
-  let limit: number | undefined = undefined as any
-  let skip: number | undefined = undefined as any
-  const order: { field: FieldPath<TFieldValues>; direction: "ASC" | "DESC" }[] = []
+  const data: Result<TFieldValues, any, any> = {
+    filter: [],
+    schema: undefined,
+    limit: undefined,
+    skip: undefined,
+    order: []
+  }
 
-  const upd = (v: { schema: any; limit: any; skip: any; filter: readonly FilterResult[]; order: any[] }) => {
-    values.push(...v.filter)
-    order.push(...v.order)
-    limit = v.limit
-    skip = v.skip
-    schema = v.schema
+  const upd = (
+    v: Result<TFieldValues, any, any>
+  ) => {
+    data.filter.push(...v.filter)
+    data.order.push(...v.order)
+    data.limit = v.limit
+    data.skip = v.skip
+    data.schema = v.schema
   }
 
   pipe(
     a,
     Match.valueTags({
       value: () => {
-        // values.push(value)
+        // data.filter.push(value)
       },
       where: ({ current, operation }) => {
         upd(interpret(current))
-        values.push(
+        data.filter.push(
           {
             t: "where",
             path: operation[0],
@@ -47,11 +59,11 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
       and: ({ current, operation }) => {
         upd(interpret(current))
         if (typeof operation === "function") {
-          values.push(
+          data.filter.push(
             { t: "and-scope", result: interpret(operation(make())).filter }
           )
         } else {
-          values.push(
+          data.filter.push(
             {
               t: "and",
               path: operation[0],
@@ -64,11 +76,11 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
       or: ({ current, operation }) => {
         upd(interpret(current))
         if (typeof operation === "function") {
-          values.push(
+          data.filter.push(
             { t: "or-scope", result: interpret(operation(make())).filter }
           )
         } else {
-          values.push(
+          data.filter.push(
             {
               t: "or",
               path: operation[0],
@@ -83,23 +95,17 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
       },
       page: (v) => {
         upd(interpret(v.current))
-        limit = v.limit
-        skip = v.skip
+        data.limit = v.limit
+        data.skip = v.skip
       },
       project: (v) => {
         upd(interpret(v.current))
-        schema = v.schema
+        data.schema = v.schema
       }
     })
   )
 
-  return {
-    filter: values,
-    limit,
-    skip,
-    schema,
-    order
-  }
+  return data
 }
 
 export const query: {
