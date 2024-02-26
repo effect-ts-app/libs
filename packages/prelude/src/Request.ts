@@ -64,7 +64,10 @@ export const responseWithSchemaBody = <
   return HttpClient.mapEffect(
     client,
     (_) =>
-      Effect.flatMap(responseWithJsonBody(_), (_) => S.decodeUnknown(schema)(_.body).map((body) => ({ ..._, body })))
+      Effect.flatMap(
+        responseWithJsonBody(_),
+        (_) => Effect.map(S.decodeUnknown(schema)(_.body), (body) => ({ ..._, body }))
+      )
   )
 }
 

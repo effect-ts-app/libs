@@ -656,8 +656,8 @@ importers:
         specifier: ^0.63.0
         version: 0.63.0(patch_hash=cgyy7zypqy3mmx7d6pjwahlfk4)(effect@2.4.0)(fast-check@3.15.1)
       '@fp-ts/optic':
-        specifier: ^0.23.0
-        version: 0.23.0(@effect/typeclass@0.23.0)(effect@2.4.0)
+        specifier: 0.22.0
+        version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.4.0)
       '@tsconfig/strictest':
         specifier: ^2.0.3
         version: 2.0.3
@@ -1566,14 +1566,6 @@ packages:
       effect: 2.4.0(patch_hash=mr3gwmktprve6lk7omvcifckce)
     dev: false
 
-  /@effect/typeclass@0.23.0(effect@2.4.0):
-    resolution: {integrity: sha512-AqQh9ZkHEx0RP8PBccXxSAe+yDenXcVivzFcgeboW7dRw9Rp6GCKDssEoNySh3kC0uAXweVh2Ycz8Ynbax22Ug==}
-    peerDependencies:
-      effect: ^2.4.0
-    dependencies:
-      effect: 2.4.0(patch_hash=mr3gwmktprve6lk7omvcifckce)
-    dev: false
-
   /@esbuild/android-arm64@0.19.5:
     resolution: {integrity: sha512-5d1OkoJxnYQfmC+Zd8NBFjkhyCNYwM4n9ODrycTFY6Jk1IGiZ+tjVJDDSwDt77nK+tfpGP4T50iMtVi4dEGzhQ==}
     engines: {node: '>=12'}
@@ -1860,16 +1852,6 @@ packages:
       effect: 2.4.0(patch_hash=mr3gwmktprve6lk7omvcifckce)
     dev: false
     patched: true
-
-  /@fp-ts/optic@0.23.0(@effect/typeclass@0.23.0)(effect@2.4.0):
-    resolution: {integrity: sha512-I1++9VQPvtXgwQzEGaBcdfg50yYMlxMXsqcXPCXgz9QbDKFPDIhVKKP4cNg+DbbupVdBHuBh093GRQ49NKglHg==}
-    peerDependencies:
-      '@effect/typeclass': ^0.23.0
-      effect: ^2.4.0
-    dependencies:
-      '@effect/typeclass': 0.23.0(effect@2.4.0)
-      effect: 2.4.0(patch_hash=mr3gwmktprve6lk7omvcifckce)
-    dev: false
 
   /@gar/promisify@1.1.3:
     resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}

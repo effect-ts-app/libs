@@ -33,7 +33,7 @@
     "@effect/platform": "^0.46.1",
     "effect": "^2.4.0",
     "@effect/schema": "^0.63.0",
-    "@fp-ts/optic": "^0.23.0"
+    "@fp-ts/optic": "0.22.0"
   },
   "typesVersions": {
     "*": {
