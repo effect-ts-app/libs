@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.58.0
+
+### Minor Changes
+
+- 117be64: bump
+
 ## 0.57.0
 
 ### Minor Changes

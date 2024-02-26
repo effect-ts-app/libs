@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.141.0
+
+### Minor Changes
+
+- 117be64: bump
+
 ## 0.140.0
 
 ### Minor Changes

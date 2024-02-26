@@ -1,5 +1,11 @@
 # @effect-app/compiler
 
+## 0.69.0
+
+### Minor Changes
+
+- 117be64: bump
+
 ## 0.68.0
 
 ### Minor Changes

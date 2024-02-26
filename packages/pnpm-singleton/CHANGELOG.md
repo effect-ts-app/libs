@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.56.0
+
+### Minor Changes
+
+- 117be64: bump
+
 ## 0.55.0
 
 ### Minor Changes

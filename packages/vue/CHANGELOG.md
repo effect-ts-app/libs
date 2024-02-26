@@ -1,5 +1,20 @@
 # @effect-app/vue
 
+## 0.144.0
+
+### Minor Changes
+
+- 117be64: bump
+
+### Patch Changes
+
+- Updated dependencies [117be64]
+  - @effect-app/core@0.148.0
+  - @effect-app/fluent-extensions@0.141.0
+  - effect-app@0.175.0
+  - @effect-app/schema@0.199.0
+  - @effect-app/vue@0.144.0
+
 ## 0.143.1
 
 ### Patch Changes

@@ -1,5 +1,18 @@
 # @effect-app/prelude
 
+## 0.175.0
+
+### Minor Changes
+
+- 117be64: bump
+
+### Patch Changes
+
+- Updated dependencies [117be64]
+  - @effect-app/core@0.148.0
+  - @effect-app/fluent-extensions@0.141.0
+  - @effect-app/schema@0.199.0
+
 ## 0.174.1
 
 ### Patch Changes

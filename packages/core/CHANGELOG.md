@@ -1,5 +1,16 @@
 # @effect-app/core
 
+## 0.148.0
+
+### Minor Changes
+
+- 117be64: bump
+
+### Patch Changes
+
+- Updated dependencies [117be64]
+  - @effect-app/fluent-extensions@0.141.0
+
 ## 0.147.0
 
 ### Minor Changes
