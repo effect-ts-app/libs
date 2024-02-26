@@ -45,9 +45,9 @@ export const schemaJsonBodyUnsafe = <To, From, A, B>(
 }
 
 /**
- * @tsplus fluent effect/platform/Http/Client schemaJson
+ * @tsplus fluent effect/platform/Http/Client responseWithSchemaBody
  */
-export const schemaJson = <
+export const responseWithSchemaBody = <
   R,
   From extends {
     readonly status?: number
@@ -61,27 +61,11 @@ export const schemaJson = <
   client: HttpClient.Client<A, B, ClientResponse>,
   schema: Schema<To, From, R>
 ) => {
-  return HttpClient.mapEffect(client, (_) => Effect.flatMap(responseWithJsonBody(_), S.decodeUnknown(schema)))
-}
-
-/**
- * @tsplus fluent effect/platform/Http/Client schemaJsonUnsafe
- */
-export const schemaJsonUnsafe = <
-  R,
-  From extends {
-    readonly status?: number
-    readonly headers?: Headers
-    readonly body?: unknown
-  },
-  To,
-  A,
-  B
->(
-  client: HttpClient.Client<A, B, ClientResponse>,
-  schema: Schema<To, From, R>
-) => {
-  return HttpClient.mapEffect(client, (_) => Effect.flatMap(responseWithJsonBody(_), S.decodeUnknown(schema)))
+  return HttpClient.mapEffect(
+    client,
+    (_) =>
+      Effect.flatMap(responseWithJsonBody(_), (_) => S.decodeUnknown(schema)(_.body).map((body) => ({ ..._, body })))
+  )
 }
 
 /** @tsplus getter effect/platform/Http/Client demandJson */

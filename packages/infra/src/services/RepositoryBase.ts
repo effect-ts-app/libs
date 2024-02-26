@@ -1036,6 +1036,19 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
 
   mapped: MM<Service, PM, Omit<PM, "_etag">>
 
+  byIdAndSaveWithPure: {
+    <R, A, E, S2 extends T>(
+      id: T["id"],
+      pure: Effect<A, E, FixEnv<R, never, T, S2>>
+    ): Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | E | NotFoundError<ItemType>,
+      Exclude<R, {
+        env: PureEnv<never, T, S2>
+      }>
+    >
+  }
+
   readonly q2: {
     <A, R, From extends FieldValues>(
       q: (initial: Query<Omit<PM, "_etag">>) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
@@ -1053,14 +1066,25 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
 
 const makeRepoFunctions = (tag: any) => {
   const { all } = Effect.serviceConstants(tag) as any
-  const { find, get, q2, query, queryLegacy, removeAndPublish, removeById, save, saveAndPublish } = Effect
-    .serviceFunctions(
-      tag
-    ) as any
+  const { byIdAndSaveWithPure, find, get, q2, query, queryLegacy, removeAndPublish, removeById, save, saveAndPublish } =
+    Effect.serviceFunctions(tag) as any
 
   const mapped = (s: any) => tag.map((_: any) => _.mapped(s))
 
-  return { all, find, removeById, saveAndPublish, removeAndPublish, save, get, query, queryLegacy, q2, mapped }
+  return {
+    all,
+    byIdAndSaveWithPure,
+    find,
+    removeById,
+    saveAndPublish,
+    removeAndPublish,
+    save,
+    get,
+    query,
+    queryLegacy,
+    q2,
+    mapped
+  }
 }
 
 export const RepositoryBaseImpl = <Service>() => {
