@@ -81,9 +81,10 @@ function buildFieldInfo(
   const metadata = getMetadataFromSchema(property.type) // TODO
   const parse = S.decodeUnknownEither(schema)
 
-  const nullable = S.AST.isUnion(property.type) && property.type.types.includes(S.null.ast)
-  const realSelf = nullable && S.AST.isUnion(property.type)
-    ? property.type.types.filter((_) => _ !== S.null.ast)[0]!
+  const nullableOrUndefined = S.AST.isUnion(property.type)
+    && (property.type.types.includes(S.null.ast) || property.type.types.includes(S.undefined.ast))
+  const realSelf = nullableOrUndefined && S.AST.isUnion(property.type)
+    ? property.type.types.filter((_) => _ !== S.null.ast && _ !== S.undefined.ast)[0]!
     : property.type
 
   function renderError(e: ParseError, v: unknown) {
