@@ -1,11 +1,12 @@
 import { Effect, flow, pipe, S } from "effect-app"
 import { TagClassMakeId } from "effect-app/service"
+import { pick } from "effect-app/utils"
 import { inspect } from "util"
 import { and, make, or, order, page, project, toFilter, where } from "./query.js"
 import { RepositoryDefaultImpl } from "./RepositoryBase.js"
 import { memFilter } from "./Store/Memory.js"
 
-export class s extends S.Class<s>()({ id: S.string, displayName: S.string, n: S.Date }) {}
+export class s extends S.Class<s>()({ id: S.StringId.withDefault, displayName: S.NonEmptyString255, n: S.Date }) {}
 type sfrom = S.Schema.From<typeof s>
 
 const MakeSomeService = Effect.succeed({ a: 1 })
@@ -23,7 +24,7 @@ const q = pipe(
   project(
     S.transformOrFail(
       S.struct({ displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-      S.struct({ displayName: S.string }),
+      S.struct(pick(s.fields, "displayName")),
       (_) => Effect.andThen(SomeService, _),
       () => Effect.die(new Error("not implemented"))
     )
@@ -38,9 +39,9 @@ it("works", () => {
   console.log("filtersBuilt", inspect(filtersBuilt, undefined, 25))
   const process = memFilter(interpreted)
   const items = [
-    new s({ id: "1", displayName: "Verona", n: new Date("2021-01-01T00:00:00Z") }),
-    new s({ id: "2", displayName: "Riley", n: new Date("2022-01-01T00:00:00Z") }),
-    new s({ id: "3", displayName: "Riley", n: new Date("2020-01-01T00:00:00Z") })
+    new s({ displayName: S.NonEmptyString255("Verona"), n: new Date("2020-01-01T00:00:00Z") }),
+    new s({ displayName: S.NonEmptyString255("Riley"), n: new Date("2022-01-01T00:00:00Z") }),
+    new s({ displayName: S.NonEmptyString255("Riley"), n: new Date("2020-01-01T00:00:00Z") })
   ]
     .map((_) => S.encodeSync(s)(_))
 
@@ -68,7 +69,7 @@ it.skip("works with repo", () => {
     project(
       S.transformOrFail(
         S.struct({ displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-        S.struct({ displayName: S.string }),
+        S.struct(pick(s.fields, "displayName")),
         (_) => Effect.andThen(SomeService, _),
         () => Effect.die(new Error("not implemented"))
       )
