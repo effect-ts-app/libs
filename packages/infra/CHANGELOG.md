@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.201.7
+
+### Patch Changes
+
+- a742e36: fix
+
 ## 0.201.6
 
 ### Patch Changes
