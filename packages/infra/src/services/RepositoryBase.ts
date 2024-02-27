@@ -199,7 +199,7 @@ export class RepositoryBaseC3<
     q: (q: Query<Omit<PM, "_etag">>) => Query<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
     pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
   ) =>
-    this.q2(flow(q, page({ limit: 1 }))).pipe(
+    this.q2(flow(q, page({ take: 1 }))).pipe(
       Effect.map(ReadonlyArray.toNonEmptyArray),
       Effect.flatMap(Effect.mapError(() => new NotFoundError({ type: this.itemType, id: q }))),
       Effect.andThen((_) => saveWithPure_(this, _[0], pure))
@@ -210,7 +210,7 @@ export class RepositoryBaseC3<
     pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
     batchSize?: number
   ) =>
-    this.q2(flow(q, page({ limit: 1 }))).pipe(
+    this.q2(flow(q, page({ take: 1 }))).pipe(
       Effect.andThen((_) =>
         batchSize === undefined
           ? saveManyWithPure_(this, _, pure)

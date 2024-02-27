@@ -23,8 +23,8 @@ const q = pipe(
     where("displayName", "Riley"),
     and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
   )),
-  order("displayName", false),
-  page({ limit: 10 }),
+  order("displayName"),
+  page({ take: 10 }),
   project(
     S.transformOrFail(
       S.struct({ displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
@@ -68,7 +68,7 @@ it.skip("works with repo", () => {
       and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
     )),
     order("displayName"),
-    page({ limit: 10 }),
+    page({ take: 10 }),
     project(
       S.transformOrFail(
         S.struct({ displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields

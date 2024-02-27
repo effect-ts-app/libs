@@ -84,7 +84,7 @@ export class Or<TFieldValues extends FieldValues> extends Data.TaggedClass("or")
 
 export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("page")<{
   current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
-  limit?: number | undefined
+  take?: number | undefined
   skip?: number | undefined
 }> implements QueryEnd<TFieldValues> {
   readonly [QId]!: any
@@ -120,17 +120,17 @@ export const or: FilterContinuation = (...operation: any[]) => (current: any) =>
 
 export const order: <TFieldValues extends FieldValues, TFieldName extends FieldPath<TFieldValues>>(
   field: TFieldName,
-  desc?: boolean
+  direction?: "ASC" | "DESC"
 ) => (current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>) => QueryEnd<TFieldValues> =
-  (field, desc) => (current) => new Order({ current, field, direction: desc ? "DESC" : "ASC" })
+  (field, direction = "ASC") => (current) => new Order({ current, field, direction })
 
 export const page: <TFieldValues extends FieldValues>(
-  page: { limit?: number; skip?: number }
+  page: { skip?: number; take?: number }
 ) => (current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>) => QueryEnd<TFieldValues> =
-  ({ limit, skip }) => (current) =>
+  ({ skip, take }) => (current) =>
     new Page({
       current,
-      limit,
+      take,
       skip
     })
 

@@ -94,7 +94,7 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
       },
       page: (v) => {
         upd(interpret(v.current))
-        data.limit = v.limit
+        data.limit = v.take
         data.skip = v.skip
       },
       project: (v) => {
