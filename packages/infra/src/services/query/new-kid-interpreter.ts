@@ -97,7 +97,6 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
       },
       count: ({ current }) => {
         upd(interpret(current))
-        data.limit = undefined
         data.ttype = "count"
         data.schema = S.struct({ id: S.string }) as any
       },
