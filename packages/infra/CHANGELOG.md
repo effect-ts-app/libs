@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.201.6
+
+### Patch Changes
+
+- c759b1c: consolidate q2andsave
+
 ## 0.201.5
 
 ### Patch Changes
