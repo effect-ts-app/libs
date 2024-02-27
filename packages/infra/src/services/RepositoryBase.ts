@@ -245,12 +245,7 @@ export class RepositoryBaseC3<
           ? batchSize === undefined
             ? saveManyWithPure_(this, _, pure)
             : saveManyWithPureBatched_(this, _, pure, batchSize)
-          : pipe(
-            Effect.succeed(_),
-            Effect.map(ReadonlyArray.toNonEmptyArray),
-            Effect.flatMap(Effect.mapError(() => new NotFoundError({ type: this.itemType, id: q }))),
-            Effect.andThen((_) => saveWithPure_(this, _[0] as any, pure))
-          )
+          : saveWithPure_(this, _ as any, pure)
       )
     ) as any
 
@@ -1119,6 +1114,7 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
 
   /** @deprecated use q2 */
   query: (b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>) => Effect<T[], never, Service>
+  /** @deprecated use q2 */
   queryLegacy: <S = T>(map: {
     filter?: Filter<PM>
     collect?: (t: T) => Option<S>
