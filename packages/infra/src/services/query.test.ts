@@ -6,7 +6,9 @@ import { and, make, or, order, page, project, toFilter, where } from "./query.js
 import { RepositoryDefaultImpl } from "./RepositoryBase.js"
 import { memFilter } from "./Store/Memory.js"
 
-export class s extends S.Class<s>()({ id: S.StringId.withDefault, displayName: S.NonEmptyString255, n: S.Date }) {}
+export class s
+  extends S.Class<s>()({ id: S.StringId.withDefault, displayName: S.NonEmptyString255, n: S.Date.withDefault })
+{}
 export declare namespace s {
   export type From = S.Schema.From<typeof s>
 }
@@ -42,7 +44,7 @@ it("works", () => {
   const process = memFilter(interpreted)
   const items = [
     new s({ displayName: S.NonEmptyString255("Verona"), n: new Date("2020-01-01T00:00:00Z") }),
-    new s({ displayName: S.NonEmptyString255("Riley"), n: new Date("2022-01-01T00:00:00Z") }),
+    new s({ displayName: S.NonEmptyString255("Riley") }),
     new s({ displayName: S.NonEmptyString255("Riley"), n: new Date("2020-01-01T00:00:00Z") })
   ]
     .map((_) => S.encodeSync(s)(_))
