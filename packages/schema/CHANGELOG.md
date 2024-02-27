@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.200.0
+
+### Minor Changes
+
+- ee00776: improve identifier use
+
 ## 0.199.0
 
 ### Minor Changes
