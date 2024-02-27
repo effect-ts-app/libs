@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.201.4
+
+### Patch Changes
+
+- 42eb237: improve types
+
 ## 0.201.3
 
 ### Patch Changes
