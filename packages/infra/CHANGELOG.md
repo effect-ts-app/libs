@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.201.10
+
+### Patch Changes
+
+- fix error type
+
 ## 0.201.9
 
 ### Patch Changes
