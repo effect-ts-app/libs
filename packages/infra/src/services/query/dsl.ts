@@ -106,7 +106,9 @@ export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("pa
 
 export class One<TFieldValues extends FieldValues> extends Data.TaggedClass("one")<{
   current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
-}> implements QueryEnd<TFieldValues, "many"> {
+}> implements QueryEnd<TFieldValues, "one"> {
+  readonly [QId]!: any
+}
   readonly [QId]!: any
 }
 
