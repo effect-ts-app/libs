@@ -180,7 +180,8 @@ export const project: <
   schema: S.Schema<A, TFieldValues, R>
 ) => (
   current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
-) => QueryProjection<TFieldValues, A, R, TType> = (schema) => (current) => new Project({ current: current as any /* TODO: why */, schema })
+) => QueryProjection<TFieldValues, A, R, TType> = (schema) => (current) =>
+  new Project({ current: current as any, /* TODO: why */ schema })
 
 export type FilterWheres = {
   <

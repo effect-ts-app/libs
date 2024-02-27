@@ -103,9 +103,6 @@ export abstract class RepositoryBaseC<
   /** @deprecated use q2 */
   abstract readonly mapped: Mapped<PM, Omit<PM, "_etag">>
   abstract readonly q2: {
-    <R = never, TType extends "one" | "many" = "many">(
-      q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R, TType>
-    ): Effect.Effect<TType extends "many" ? readonly T[] : T, TType extends "many" ? never : NotFoundError<ItemType>, R>
     <A, R, From extends FieldValues, TType extends "one" | "many" = "many">(
       q: (
         initial: Query<Omit<PM, "_etag">>
@@ -115,6 +112,9 @@ export abstract class RepositoryBaseC<
       (TType extends "many" ? never : NotFoundError<ItemType>) | S.ParseResult.ParseError,
       R
     >
+    <R = never, TType extends "one" | "many" = "many">(
+      q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R, TType>
+    ): Effect.Effect<TType extends "many" ? readonly T[] : T, TType extends "many" ? never : NotFoundError<ItemType>, R>
     // <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, R>
     // <A, R, From extends FieldValues>(
     //   q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
@@ -200,13 +200,14 @@ export class RepositoryBaseC3<
   readonly saveWithEvents = (events: Iterable<Evt>) => (...items: NonEmptyArray<T>) =>
     this.saveAndPublish(items, events)
 
+  // TODO: Merge q2AndSave and SaveOne via `.one` ?
   readonly q2AndSaveOnePure = <A, E2, R2, T2 extends T>(
     q: (
       q: Query<Omit<PM, "_etag">>
     ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
     pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
   ) =>
-    this.q2(flow(q, page({ take: 1 }))).pipe(
+    this.q2<A>(flow(q, page({ take: 1 }))).pipe(
       Effect.map(ReadonlyArray.toNonEmptyArray),
       Effect.flatMap(Effect.mapError(() => new NotFoundError({ type: this.itemType, id: q }))),
       Effect.andThen((_) => saveWithPure_(this, _[0], pure))
@@ -219,7 +220,7 @@ export class RepositoryBaseC3<
     pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
     batchSize?: number
   ) =>
-    this.q2(flow(q, page({ take: 1 }))).pipe(
+    this.q2<A>(flow(q, page({ take: 1 }))).pipe(
       Effect.andThen((_) =>
         batchSize === undefined
           ? saveManyWithPure_(this, _, pure)
@@ -797,44 +798,30 @@ export function makeRepo<
 
           const query: {
             <
-              T extends { id: unknown },
-              PM extends PersistenceModelType<string>,
-              Evt,
-              ItemType extends string,
               A,
               R,
               From extends FieldValues
             >(
-              repo: Repository<T, PM, Evt, ItemType>,
               q: QueryProjection<PM extends From ? From : never, A, R>
             ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
             <
-              T extends { id: unknown },
-              PM extends PersistenceModelType<string>,
-              Evt,
-              ItemType extends string,
               A,
               R
             >(
-              repo: Repository<T, PM, Evt, ItemType>,
               q: QAll<NoInfer<PM>, A, R>
             ): Effect.Effect<readonly A[], never, R>
           } = (<
-            T extends { id: unknown },
-            PM extends PersistenceModelType<string>,
-            Evt,
-            ItemType extends string,
             A,
             R
-          >(repo: Repository<T, PM, Evt, ItemType>, q: QAll<PM, A, R>) => {
+          >(q: QAll<PM, A, R>) => {
             const a = Q2.toFilter(q)
             const eff = Effect.flatMap(
-              repo.utils.filter(a),
+              r.utils.filter(a),
               (_) =>
                 Unify.unify(
                   a.schema
-                    ? repo.utils.parseMany2(_, a.schema as any)
-                    : repo.utils.parseMany(_)
+                    ? r.utils.parseMany2(_, a.schema as any)
+                    : r.utils.parseMany(_)
                 )
             )
             return a.ttype === "one"
@@ -842,7 +829,7 @@ export function makeRepo<
                 eff,
                 flow(
                   toNonEmptyArray,
-                  Effect.mapError(() => new NotFoundError({ id: "query", /* TODO */ type: "User" })),
+                  Effect.mapError(() => new NotFoundError({ id: "query", /* TODO */ type: name })),
                   Effect.map((_) => _[0])
                 )
               )
@@ -910,7 +897,7 @@ export function makeRepo<
             all,
             saveAndPublish,
             removeAndPublish,
-            q2: (q: any) => query(r, typeof q === "function" ? q(makeQuery()) : q) as any
+            q2: (q: any) => query(typeof q === "function" ? q(makeQuery()) : q) as any
           }
           return r
         })
@@ -1172,13 +1159,6 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   }
 
   readonly q2: {
-    <R = never, TType extends "one" | "many" = "many">(
-      q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R, TType>
-    ): Effect.Effect<
-      TType extends "many" ? readonly T[] : T,
-      TType extends "many" ? never : NotFoundError<ItemType>,
-      Service | R
-    >
     <A, R, From extends FieldValues, TType extends "one" | "many" = "many">(
       q: (
         initial: Query<Omit<PM, "_etag">>
@@ -1186,6 +1166,13 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : A,
       (TType extends "many" ? never : NotFoundError<ItemType>) | S.ParseResult.ParseError,
+      Service | R
+    >
+    <R = never, TType extends "one" | "many" = "many">(
+      q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R, TType>
+    ): Effect.Effect<
+      TType extends "many" ? readonly T[] : T,
+      TType extends "many" ? never : NotFoundError<ItemType>,
       Service | R
     >
     // <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, Service | R>
