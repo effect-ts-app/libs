@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.201.3
+
+### Patch Changes
+
+- 578a333: support 1 vs many
+
 ## 0.201.2
 
 ### Patch Changes
