@@ -7,13 +7,15 @@ import { RepositoryDefaultImpl } from "./RepositoryBase.js"
 import { memFilter } from "./Store/Memory.js"
 
 export class s extends S.Class<s>()({ id: S.StringId.withDefault, displayName: S.NonEmptyString255, n: S.Date }) {}
-type sfrom = S.Schema.From<typeof s>
+export declare namespace s {
+  export type From = S.Schema.From<typeof s>
+}
 
 const MakeSomeService = Effect.succeed({ a: 1 })
 export class SomeService extends TagClassMakeId("SomeService", MakeSomeService)<SomeService>() {}
 
 const q = pipe(
-  make<sfrom>(), // provided automatically inside Repo.q2()
+  make<s.From>(), // provided automatically inside Repo.q2()
   where("displayName", "Verona"),
   or(flow(
     where("displayName", "Riley"),
@@ -51,7 +53,7 @@ it("works", () => {
 })
 
 it.skip("works with repo", () => {
-  class TestRepo extends RepositoryDefaultImpl<TestRepo>()<sfrom & { _etag: string | undefined }, never>()(
+  class TestRepo extends RepositoryDefaultImpl<TestRepo>()<s.From & { _etag: string | undefined }, never>()(
     "test",
     s
   ) {}
