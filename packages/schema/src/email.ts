@@ -20,5 +20,6 @@ export const Email = S
       arbitrary: () => (fc) => fc.emailAddress()
     }),
     fromBrand(nominal<Email>(), { jsonSchema: {} }),
+    S.identifier("Email"),
     withDefaults
   )

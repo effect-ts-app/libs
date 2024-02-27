@@ -29,6 +29,7 @@ export type NonEmptyString50 = string & NonEmptyString50Brand
 export const NonEmptyString50 = NonEmptyString.pipe(
   S.maxLength(50, { title: "NonEmptyString50" }),
   fromBrand(nominal<NonEmptyString2k>(), { jsonSchema: {} }),
+  S.identifier("NonEmptyString50"),
   withDefaults
 )
 
@@ -50,6 +51,7 @@ export const Min3String255 = pipe(
   S.minLength(3),
   S.maxLength(255, { title: "Min3String255" }),
   fromBrand(nominal<NonEmptyString2k>(), { jsonSchema: {} }),
+  S.identifier("Min3String255"),
   withDefaults
 )
 
@@ -81,6 +83,7 @@ export const StringId = extendM(
     S.string,
     S.minLength(minLength),
     S.maxLength(maxLength, { title: "StringId", arbitrary: StringIdArb }),
+    S.identifier("StringId"),
     fromBrand(nominal<StringIdBrand>(), { jsonSchema: {} })
   ),
   (s) => ({
@@ -184,5 +187,6 @@ export const Url = NonEmptyString
       jsonSchema: { format: "uri" }
     }),
     fromBrand(nominal<UrlBrand>(), { jsonSchema: {} }),
+    S.identifier("Url"),
     withDefaults
   )

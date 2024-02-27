@@ -9,28 +9,43 @@ export interface PositiveIntBrand
   extends Simplify<B.Brand<"PositiveInt"> & NonNegativeIntBrand & PositiveNumberBrand>
 {}
 export const PositiveInt = extendM(
-  S.Int.pipe(S.positive(), fromBrand(nominal<PositiveIntBrand>(), { jsonSchema: {} }), withDefaults),
+  S.Int.pipe(
+    S.positive(),
+    fromBrand(nominal<PositiveIntBrand>(), { jsonSchema: {} }),
+    S.identifier("PositiveInt"),
+    withDefaults
+  ),
   (s) => ({ withDefault: S.withDefaultConstructor(s, () => s(1)) })
 )
 export type PositiveInt = S.Schema.To<typeof PositiveInt>
 
 export interface NonNegativeIntBrand extends Simplify<B.Brand<"NonNegativeInt"> & IntBrand & NonNegativeNumberBrand> {}
 export const NonNegativeInt = extendM(
-  S.Int.pipe(S.nonNegative(), fromBrand(nominal<NonNegativeIntBrand>(), { jsonSchema: {} }), withDefaults),
+  S.Int.pipe(
+    S.nonNegative(),
+    fromBrand(nominal<NonNegativeIntBrand>(), { jsonSchema: {} }),
+    S.identifier("NonNegativeInt"),
+    withDefaults
+  ),
   (s) => ({ withDefault: S.withDefaultConstructor(s, () => s(0)) })
 )
 export type NonNegativeInt = S.Schema.To<typeof NonNegativeInt>
 
 export interface IntBrand extends Simplify<B.Brand<"Int">> {}
 export const Int = extendM(
-  S.Int.pipe(fromBrand(nominal<IntBrand>(), { jsonSchema: {} }), withDefaults),
+  S.Int.pipe(fromBrand(nominal<IntBrand>(), { jsonSchema: {} }), S.identifier("Int"), withDefaults),
   (s) => ({ withDefault: S.withDefaultConstructor(s, () => s(0)) })
 )
 export type Int = S.Schema.To<typeof Int>
 
 export interface PositiveNumberBrand extends Simplify<B.Brand<"PositiveNumber"> & NonNegativeNumberBrand> {}
 export const PositiveNumber = extendM(
-  S.number.pipe(S.positive(), fromBrand(nominal<PositiveNumberBrand>(), { jsonSchema: {} }), withDefaults),
+  S.number.pipe(
+    S.positive(),
+    fromBrand(nominal<PositiveNumberBrand>(), { jsonSchema: {} }),
+    S.identifier("PositiveNumber"),
+    withDefaults
+  ),
   (s) => ({ withDefault: S.withDefaultConstructor(s, () => s(1)) })
 )
 export type PositiveNumber = S.Schema.To<typeof PositiveNumber>
@@ -42,6 +57,7 @@ export const NonNegativeNumber = extendM(
     .pipe(
       S.nonNegative(),
       fromBrand(nominal<NonNegativeNumberBrand>(), { jsonSchema: {} }),
+      S.identifier("NonNegativeNumber"),
       withDefaults
     ),
   (s) => ({ withDefault: S.withDefaultConstructor(s, () => s(0)) })

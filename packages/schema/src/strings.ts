@@ -11,6 +11,7 @@ export type NonEmptyString = string & NonEmptyStringBrand
 export const NonEmptyString = nonEmptyString
   .pipe(
     fromBrand(nominal<NonEmptyString>(), { jsonSchema: {} }),
+    S.identifier("NonEmptyString"),
     withDefaults
   )
 
@@ -20,6 +21,7 @@ export const NonEmptyString64k = nonEmptyString
   .pipe(
     S.maxLength(64 * 1024, { title: "NonEmptyString64k" }),
     fromBrand(nominal<NonEmptyString64k>(), { jsonSchema: {} }),
+    S.identifier("NonEmptyString64k"),
     withDefaults
   )
 
@@ -29,6 +31,7 @@ export const NonEmptyString2k = nonEmptyString
   .pipe(
     S.maxLength(2 * 1024, { title: "NonEmptyString2k" }),
     fromBrand(nominal<NonEmptyString2k>(), { jsonSchema: {} }),
+    S.identifier("NonEmptyString2k"),
     withDefaults
   )
 
@@ -38,5 +41,6 @@ export const NonEmptyString255 = nonEmptyString
   .pipe(
     S.maxLength(255, { title: "NonEmptyString255" }),
     fromBrand(nominal<NonEmptyString255>(), { jsonSchema: {} }),
+    S.identifier("NonEmptyString255"),
     withDefaults
   )

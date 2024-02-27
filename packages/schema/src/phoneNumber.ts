@@ -20,5 +20,6 @@ export const PhoneNumber = S
       jsonSchema: { format: "phone" }
     }),
     fromBrand(nominal<PhoneNumber>(), { jsonSchema: {} }),
+    S.identifier("PhoneNumber"),
     withDefaults
   )

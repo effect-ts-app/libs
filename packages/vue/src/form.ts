@@ -2,7 +2,7 @@ import * as JSONSchema from "@effect/schema/JSONSchema"
 import type { ParseError } from "@effect/schema/ParseResult"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type {} from "intl-messageformat"
-import { Either, pipe, S } from "effect-app"
+import { Either, Option, pipe, S } from "effect-app"
 import type { Schema } from "effect-app/schema"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
@@ -69,7 +69,7 @@ export interface FieldInfo<Tout> extends PhantomTypeParameter<typeof f, { out: T
 const defaultIntl = createIntl({ locale: "en" })
 
 export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage.bind(defaultIntl))
-export const customSchemaErrors = ref<Map<S.AST.AST, (message: string, e: unknown, v: unknown) => string>>(
+export const customSchemaErrors = ref<Map<S.AST.AST | string, (message: string, e: unknown, v: unknown) => string>>(
   new Map()
 )
 
@@ -82,14 +82,21 @@ function buildFieldInfo(
   const parse = S.decodeUnknownEither(schema)
 
   const nullableOrUndefined = S.AST.isUnion(property.type)
-    && (property.type.types.includes(S.null.ast) || property.type.types.includes(S.undefined.ast))
+    && (property.type.types.includes(S.null.ast) || property.type.types.some((_) => _._tag === "UndefinedKeyword"))
   const realSelf = nullableOrUndefined && S.AST.isUnion(property.type)
-    ? property.type.types.filter((_) => _ !== S.null.ast && _ !== S.undefined.ast)[0]!
+    ? property.type.types.filter((_) => _ !== S.null.ast && _._tag !== "UndefinedKeyword")[0]!
     : property.type
+  const id = S.AST.getIdentifierAnnotation(property.type)
+  const id2 = S.AST.getIdentifierAnnotation(realSelf)
 
   function renderError(e: ParseError, v: unknown) {
     const err = e.toString()
-    const custom = customSchemaErrors.value.get(realSelf)
+
+    const custom = customSchemaErrors.value.get(property.type)
+      ?? customSchemaErrors.value.get(realSelf)
+      ?? (Option.isSome(id) ? customSchemaErrors.value.get(id.value) : undefined)
+      ?? (Option.isSome(id2) ? customSchemaErrors.value.get(id2.value) : undefined)
+
     return custom ? custom(err, e, v) : translate.value(
       { defaultMessage: "The entered value is not a valid {type}: {message}", id: "validation.not_a_valid" },
       {
