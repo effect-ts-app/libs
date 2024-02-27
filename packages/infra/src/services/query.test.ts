@@ -41,7 +41,6 @@ it("works", () => {
   console.log("interpreted", inspect(interpreted, undefined, 25))
   const filtersBuilt = interpreted.filter.build()
   console.log("filtersBuilt", inspect(filtersBuilt, undefined, 25))
-  const process = memFilter(interpreted)
   const items = [
     new s({ displayName: S.NonEmptyString255("Verona"), n: new Date("2020-01-01T00:00:00Z") }),
     new s({ displayName: S.NonEmptyString255("Riley") }),
@@ -49,7 +48,7 @@ it("works", () => {
   ]
     .map((_) => S.encodeSync(s)(_))
 
-  const processed = process(items)
+  const processed = memFilter(interpreted)(items)
 
   expect(processed).toEqual(items.slice(0, 2).toReversed().map(({ displayName }) => ({ displayName })))
 })
