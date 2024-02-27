@@ -33,7 +33,7 @@ import { assignTag } from "effect-app/service"
 import type { NoInfer } from "effect/Types"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import type { FieldValues } from "../filter/types.js"
-import { make as makeQuery, page } from "./query.js"
+import { make as makeQuery } from "./query.js"
 import type { QAll, Query, QueryEnd, QueryProjection, QueryWhere } from "./query.js"
 import * as Q2 from "./query.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
@@ -200,33 +200,59 @@ export class RepositoryBaseC3<
   readonly saveWithEvents = (events: Iterable<Evt>) => (...items: NonEmptyArray<T>) =>
     this.saveAndPublish(items, events)
 
-  // TODO: Merge q2AndSave and SaveOne via `.one` ?
-  readonly q2AndSaveOnePure = <A, E2, R2, T2 extends T>(
-    q: (
-      q: Query<Omit<PM, "_etag">>
-    ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
-    pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
-  ) =>
-    this.q2<A>(flow(q, page({ take: 1 }))).pipe(
-      Effect.map(ReadonlyArray.toNonEmptyArray),
-      Effect.flatMap(Effect.mapError(() => new NotFoundError({ type: this.itemType, id: q }))),
-      Effect.andThen((_) => saveWithPure_(this, _[0], pure))
-    )
-
-  readonly q2AndSavePure = <A, E2, R2, T2 extends T>(
-    q: (
-      q: Query<Omit<PM, "_etag">>
-    ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
-    pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
-    batchSize?: number
-  ) =>
-    this.q2<A>(q).pipe(
+  readonly q2AndSavePure: {
+    <A, E2, R2, T2 extends T>(
+      q: (
+        q: Query<Omit<PM, "_etag">>
+      ) => QueryEnd<Omit<PM, "_etag">, "one">,
+      pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
+    ): Effect.Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E2,
+      Exclude<R2, {
+        env: PureEnv<Evt, T, T2>
+      }>
+    >
+    <A, E2, R2, T2 extends T>(
+      q: (
+        q: Query<Omit<PM, "_etag">>
+      ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">, "many">,
+      pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>
+    ): Effect.Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | E2,
+      Exclude<R2, {
+        env: PureEnv<Evt, readonly T[], readonly T2[]>
+      }>
+    >
+    <A, E2, R2, T2 extends T>(
+      q: (
+        q: Query<Omit<PM, "_etag">>
+      ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">, "many">,
+      pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
+      batchSize: number
+    ): Effect.Effect<
+      A[],
+      InvalidStateError | OptimisticConcurrencyException | E2,
+      Exclude<R2, {
+        env: PureEnv<Evt, readonly T[], readonly T2[]>
+      }>
+    >
+  } = (q: any, pure: any, batchSize?: any) =>
+    this.q2(q).pipe(
       Effect.andThen((_) =>
-        batchSize === undefined
-          ? saveManyWithPure_(this, _, pure)
-          : saveManyWithPureBatched_(this, _, pure, batchSize)
+        Array.isArray(_)
+          ? batchSize === undefined
+            ? saveManyWithPure_(this, _, pure)
+            : saveManyWithPureBatched_(this, _, pure, batchSize)
+          : pipe(
+            Effect.succeed(_),
+            Effect.map(ReadonlyArray.toNonEmptyArray),
+            Effect.flatMap(Effect.mapError(() => new NotFoundError({ type: this.itemType, id: q }))),
+            Effect.andThen((_) => saveWithPure_(this, _[0] as any, pure))
+          )
       )
-    )
+    ) as any
 
   /**
    * NOTE: it's not as composable, only useful when the request is simple, and only this part needs request args.
@@ -1117,39 +1143,41 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     >
   }
 
-  q2AndSaveOnePure: {
-    <
-      R2,
-      A,
-      E2,
-      T2 extends T
-    >(
-      q: (initial: Query<Omit<PM, "_etag">>) =>
-        | Query<Omit<PM, "_etag">>
-        | QueryWhere<Omit<PM, "_etag">>,
+  q2AndSavePure: {
+    <A, E2, R2, T2 extends T>(
+      q: (
+        q: Query<Omit<PM, "_etag">>
+      ) => QueryEnd<Omit<PM, "_etag">, "one">,
       pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
-    ): Effect<
+    ): Effect.Effect<
       A,
-      InvalidStateError | OptimisticConcurrencyException | E2 | NotFoundError<ItemType>,
+      InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E2,
       | Service
       | Exclude<R2, {
         env: PureEnv<Evt, T, T2>
       }>
     >
-  }
-  q2AndSavePure: {
-    <
-      R2,
-      A,
-      E2,
-      T2 extends T
-    >(
-      q: (initial: Query<Omit<PM, "_etag">>) =>
-        | Query<Omit<PM, "_etag">>
-        | QueryWhere<Omit<PM, "_etag">>,
+    <A, E2, R2, T2 extends T>(
+      q: (
+        q: Query<Omit<PM, "_etag">>
+      ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">, "many">,
       pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>
-    ): Effect<
+    ): Effect.Effect<
       A,
+      InvalidStateError | OptimisticConcurrencyException | E2,
+      | Service
+      | Exclude<R2, {
+        env: PureEnv<Evt, readonly T[], readonly T2[]>
+      }>
+    >
+    <A, E2, R2, T2 extends T>(
+      q: (
+        q: Query<Omit<PM, "_etag">>
+      ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">, "many">,
+      pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
+      batchSize: number
+    ): Effect.Effect<
+      A[],
       InvalidStateError | OptimisticConcurrencyException | E2,
       | Service
       | Exclude<R2, {
@@ -1189,7 +1217,6 @@ const makeRepoFunctions = (tag: any) => {
     find,
     get,
     q2,
-    q2AndSaveOnePure,
     q2AndSavePure,
     query,
     queryLegacy,
@@ -1214,7 +1241,6 @@ const makeRepoFunctions = (tag: any) => {
     queryLegacy,
     q2,
     mapped,
-    q2AndSaveOnePure,
     q2AndSavePure
   }
 }
