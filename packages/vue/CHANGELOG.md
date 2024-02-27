@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.144.1
+
+### Patch Changes
+
+- 548c259: fix for undefined
+- Updated dependencies [548c259]
+  - @effect-app/vue@0.144.1
+
 ## 0.144.0
 
 ### Minor Changes
