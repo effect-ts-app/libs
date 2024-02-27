@@ -220,7 +220,7 @@ export class RepositoryBaseC3<
     pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
     batchSize?: number
   ) =>
-    this.q2<A>(flow(q, page({ take: 1 }))).pipe(
+    this.q2<A>(q).pipe(
       Effect.andThen((_) =>
         batchSize === undefined
           ? saveManyWithPure_(this, _, pure)
