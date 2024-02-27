@@ -14,6 +14,7 @@ type Result<TFieldValues extends FieldValues, A = TFieldValues, R = never> = {
   limit: number | undefined
   skip: number | undefined
   order: { key: FieldPath<TFieldValues>; direction: "ASC" | "DESC" }[]
+  ttype: "one" | "many" | undefined
 }
 
 const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never>(_: QAll<TFieldValues, A, R>) => {
@@ -24,7 +25,8 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
     schema: undefined,
     limit: undefined,
     skip: undefined,
-    order: []
+    order: [],
+    ttype: undefined
   }
 
   const upd = (
@@ -88,6 +90,11 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
           )
         }
       },
+      one: ({ current }) => {
+        upd(interpret(current))
+        data.limit = 1
+        data.ttype = "one"
+      },
       order: ({ current, direction, field }) => {
         upd(interpret(current))
         data.order.push({ key: field, direction })
@@ -133,6 +140,7 @@ export const toFilter = <
     select: Option.getOrUndefined(toNonEmptyArray(select)),
     schema,
     order: Option.getOrUndefined(toNonEmptyArray(a.order)),
+    ttype: a.ttype,
     filter: a.filter.length
       ? {
         type: "new-kid" as const,

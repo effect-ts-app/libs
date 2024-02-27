@@ -8,10 +8,10 @@ import type { S } from "effect-app"
 import { Data } from "effect-app"
 import type { Covariant } from "effect/Types"
 
-export type QAll<TFieldValues extends FieldValues, A = TFieldValues, R = never> =
+export type QAll<TFieldValues extends FieldValues, A = TFieldValues, R = never, TType extends "one" | "many" = "many"> =
   | Query<TFieldValues>
   | QueryWhere<TFieldValues>
-  | QueryEnd<TFieldValues>
+  | QueryEnd<TFieldValues, TType>
   | QueryProjection<TFieldValues, A, R>
 
 export const QId = Symbol()
@@ -21,28 +21,41 @@ export interface QueryTogether<
   out TFieldValues extends FieldValues,
   out T extends "initial" | "where" | "end" | "projection" = "initial",
   out A = TFieldValues,
-  out R = never
+  out R = never,
+  out TType extends "many" | "one" = "many"
 > {
   readonly [QId]: {
     readonly _TFieldValues: Covariant<TFieldValues>
     readonly _T: Covariant<T>
     readonly _A: Covariant<A>
     readonly _R: Covariant<R>
+    readonly _TT: Covariant<TType>
   }
 }
 
 export type Query<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "initial">
 export type QueryWhere<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "where">
 
-export type QueryEnd<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "end">
+export type QueryEnd<TFieldValues extends FieldValues, TType extends "many" | "one" = "many"> = QueryTogether<
+  TFieldValues,
+  "end",
+  TFieldValues,
+  never,
+  TType
+>
 
-export type QueryProjection<TFieldValues extends FieldValues, A = TFieldValues, R = never> = QueryTogether<
+export type QueryProjection<
+  TFieldValues extends FieldValues,
+  A = TFieldValues,
+  R = never,
+  TType extends "many" | "one" = "many"
+> = QueryTogether<
   TFieldValues,
   "projection",
   A,
-  R
+  R,
+  TType
 >
-
 export type Q<TFieldValues extends FieldValues> =
   | Initial<TFieldValues>
   | Where<TFieldValues>
@@ -51,6 +64,7 @@ export type Q<TFieldValues extends FieldValues> =
   | Order<TFieldValues, any>
   | Page<TFieldValues>
   | Project<any, TFieldValues, any>
+  | One<TFieldValues>
 
 export class Initial<TFieldValues extends FieldValues> extends Data.TaggedClass("value")<{ value: "initial" }>
   implements Query<TFieldValues>
@@ -90,6 +104,12 @@ export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("pa
   readonly [QId]!: any
 }
 
+export class One<TFieldValues extends FieldValues> extends Data.TaggedClass("one")<{
+  current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
+}> implements QueryEnd<TFieldValues, "many"> {
+  readonly [QId]!: any
+}
+
 export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPath<TFieldValues>>
   extends Data.TaggedClass("order")<{
     current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
@@ -101,10 +121,13 @@ export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPat
   readonly [QId]!: any
 }
 
-export class Project<A, TFieldValues extends FieldValues, R> extends Data.TaggedClass("project")<{
-  current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
-  schema: S.Schema<A, TFieldValues, R>
-}> implements QueryProjection<TFieldValues, A, R> {
+export class Project<A, TFieldValues extends FieldValues, R, TType extends "one" | "many" = "many">
+  extends Data.TaggedClass("project")<{
+    current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
+    schema: S.Schema<A, TFieldValues, R>
+  }>
+  implements QueryProjection<TFieldValues, A, R>
+{
   readonly [QId]!: any
 }
 
@@ -134,11 +157,30 @@ export const page: <TFieldValues extends FieldValues>(
       skip
     })
 
-export const project: <TFieldValues extends FieldValues, A = FieldValues, R = never>(
+export const one: <TFieldValues extends FieldValues>(
+  current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
+) => QueryEnd<TFieldValues, "one"> = (current) =>
+  new One({
+    current
+  })
+/*
+.andThen(flow(
+        toNonEmptyArray,
+        Effect.mapError(() => new NotFoundError<"User">({ id: auth0Id, type: "User" })),
+        Effect.map((_) => _[0])
+      ))
+*/
+
+export const project: <
+  TFieldValues extends FieldValues,
+  A = FieldValues,
+  R = never,
+  TType extends "one" | "many" = "many"
+>(
   schema: S.Schema<A, TFieldValues, R>
 ) => (
-  current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
-) => QueryProjection<TFieldValues, A, R> = (schema) => (current) => new Project({ current, schema })
+  current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
+) => QueryProjection<TFieldValues, A, R, TType> = (schema) => (current) => new Project({ current: current as any /* TODO: why */, schema })
 
 export type FilterWheres = {
   <

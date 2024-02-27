@@ -103,17 +103,22 @@ export abstract class RepositoryBaseC<
   /** @deprecated use q2 */
   abstract readonly mapped: Mapped<PM, Omit<PM, "_etag">>
   abstract readonly q2: {
-    <R = never>(
-      q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R>
-    ): Effect.Effect<readonly T[], never, R>
-    <A, R, From extends FieldValues>(
-      q: (initial: Query<Omit<PM, "_etag">>) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
-    ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
-
-    <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, R>
-    <A, R, From extends FieldValues>(
-      q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
-    ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
+    <R = never, TType extends "one" | "many" = "many">(
+      q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R, TType>
+    ): Effect.Effect<TType extends "many" ? readonly T[] : T, TType extends "many" ? never : NotFoundError<ItemType>, R>
+    <A, R, From extends FieldValues, TType extends "one" | "many" = "many">(
+      q: (
+        initial: Query<Omit<PM, "_etag">>
+      ) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R, TType>
+    ): Effect.Effect<
+      TType extends "many" ? readonly A[] : A,
+      (TType extends "many" ? never : NotFoundError<ItemType>) | S.ParseResult.ParseError,
+      R
+    >
+    // <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, R>
+    // <A, R, From extends FieldValues>(
+    //   q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
+    // ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
   }
 }
 
@@ -823,7 +828,7 @@ export function makeRepo<
             R
           >(repo: Repository<T, PM, Evt, ItemType>, q: QAll<PM, A, R>) => {
             const a = Q2.toFilter(q)
-            return Effect.flatMap(
+            const eff = Effect.flatMap(
               repo.utils.filter(a),
               (_) =>
                 Unify.unify(
@@ -832,6 +837,16 @@ export function makeRepo<
                     : repo.utils.parseMany(_)
                 )
             )
+            return a.ttype === "one"
+              ? Effect.andThen(
+                eff,
+                flow(
+                  toNonEmptyArray,
+                  Effect.mapError(() => new NotFoundError({ id: "query", /* TODO */ type: "User" })),
+                  Effect.map((_) => _[0])
+                )
+              )
+              : eff
           }) as any
 
           const r: Repository<T, PM, Evt, ItemType> = {
@@ -1157,17 +1172,26 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   }
 
   readonly q2: {
-    <R = never>(
-      q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R>
-    ): Effect.Effect<readonly T[], never, Service | R>
-    <A, R, From extends FieldValues>(
-      q: (initial: Query<Omit<PM, "_etag">>) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
-    ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
-
-    <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, Service | R>
-    <A, R, From extends FieldValues>(
-      q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
-    ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
+    <R = never, TType extends "one" | "many" = "many">(
+      q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R, TType>
+    ): Effect.Effect<
+      TType extends "many" ? readonly T[] : T,
+      TType extends "many" ? never : NotFoundError<ItemType>,
+      Service | R
+    >
+    <A, R, From extends FieldValues, TType extends "one" | "many" = "many">(
+      q: (
+        initial: Query<Omit<PM, "_etag">>
+      ) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R, TType>
+    ): Effect.Effect<
+      TType extends "many" ? readonly A[] : A,
+      (TType extends "many" ? never : NotFoundError<ItemType>) | S.ParseResult.ParseError,
+      Service | R
+    >
+    // <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, Service | R>
+    // <A, R, From extends FieldValues>(
+    //   q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
+    // ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
   }
 }
 
