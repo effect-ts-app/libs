@@ -196,7 +196,9 @@ export class RepositoryBaseC3<
     this.saveAndPublish(items, events)
 
   readonly q2AndSaveOnePure = <A, E2, R2, T2 extends T>(
-    q: (q: Query<Omit<PM, "_etag">>) => Query<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
+    q: (
+      q: Query<Omit<PM, "_etag">>
+    ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
     pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
   ) =>
     this.q2(flow(q, page({ take: 1 }))).pipe(
@@ -206,7 +208,9 @@ export class RepositoryBaseC3<
     )
 
   readonly q2AndSavePure = <A, E2, R2, T2 extends T>(
-    q: (q: Query<Omit<PM, "_etag">>) => Query<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
+    q: (
+      q: Query<Omit<PM, "_etag">>
+    ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">>,
     pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
     batchSize?: number
   ) =>

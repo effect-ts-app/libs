@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.201.2
+
+### Patch Changes
+
+- fix sig
+
 ## 0.201.1
 
 ### Patch Changes
