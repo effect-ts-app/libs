@@ -109,7 +109,8 @@ export abstract class RepositoryBaseC<
       ) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
-      (TType extends "many" ? never : NotFoundError<ItemType>) | S.ParseResult.ParseError,
+      | (TType extends "many" ? never : NotFoundError<ItemType>)
+      | (TType extends "count" ? never : S.ParseResult.ParseError),
       R
     >
     <R = never, TType extends "one" | "many" = "many">(
@@ -855,7 +856,9 @@ export function makeRepo<
                 )
               )
               : a.ttype === "count"
-              ? Effect.andThen(eff, (_) => NonNegativeInt(_.length))
+              ? Effect
+                .andThen(eff, (_) => NonNegativeInt(_.length))
+                .pipe(Effect.catchTag("ParseError", (e) => Effect.die(e)))
               : eff
           }) as any
 
@@ -1191,7 +1194,8 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
       ) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
-      (TType extends "many" ? never : NotFoundError<ItemType>) | S.ParseResult.ParseError,
+      | (TType extends "many" ? never : NotFoundError<ItemType>)
+      | (TType extends "count" ? never : S.ParseResult.ParseError),
       Service | R
     >
     <R = never, TType extends "one" | "many" = "many">(
