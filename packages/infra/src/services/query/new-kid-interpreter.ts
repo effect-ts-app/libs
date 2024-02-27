@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { toNonEmptyArray } from "@effect-app/core/Array"
-import { Effect, Match, Option, pipe, S, Unify } from "effect-app"
-import type { NoInfer } from "effect/Types"
+import { Match, Option, pipe, S } from "effect-app"
+import { dropUndefinedT } from "effect-app/utils"
 import type { FieldValues } from "../../filter/types.js"
 import type { FieldPath } from "../../filter/types/path/eager.js"
-import { make, type Q, type QAll, type QueryProjection } from "../query.js"
-import type { Repository } from "../Repository.js"
-import type { PersistenceModelType } from "../Store.js"
+import { make, type Q, type QAll } from "../query.js"
 import type { FilterResult, QueryBuilder } from "../Store/filterApi/query.js"
 
 type Result<TFieldValues extends FieldValues, A = TFieldValues, R = never> = {
@@ -15,7 +13,7 @@ type Result<TFieldValues extends FieldValues, A = TFieldValues, R = never> = {
   schema: S.Schema<A, TFieldValues, R> | undefined
   limit: number | undefined
   skip: number | undefined
-  order: { field: FieldPath<TFieldValues>; direction: "ASC" | "DESC" }[]
+  order: { key: FieldPath<TFieldValues>; direction: "ASC" | "DESC" }[]
 }
 
 const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never>(_: QAll<TFieldValues, A, R>) => {
@@ -90,8 +88,9 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
           )
         }
       },
-      order: ({ current }) => {
+      order: ({ current, direction, field }) => {
         upd(interpret(current))
+        data.order.push({ key: field, direction })
       },
       page: (v) => {
         upd(interpret(v.current))
@@ -108,42 +107,17 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
   return data
 }
 
-export const query: {
-  <
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
-    Evt,
-    ItemType extends string,
-    A,
-    R,
-    From extends FieldValues
-  >(
-    repo: Repository<T, PM, Evt, ItemType>,
-    q: QueryProjection<PM extends From ? From : never, A, R>
-  ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
-  <
-    T extends { id: unknown },
-    PM extends PersistenceModelType<string>,
-    Evt,
-    ItemType extends string,
-    A,
-    R
-  >(
-    repo: Repository<T, PM, Evt, ItemType>,
-    q: QAll<NoInfer<PM>, A, R>
-  ): Effect.Effect<readonly T[], never, R>
-} = (<
-  T extends { id: unknown },
-  PM extends PersistenceModelType<string>,
-  Evt,
-  ItemType extends string,
+export const toFilter = <
+  TFieldValues extends FieldValues,
   A,
   R
->(repo: Repository<T, PM, Evt, ItemType>, q: QAll<PM, A, R>) => {
+>(
+  q: QAll<TFieldValues, A, R>
+) => {
   // TODO: Native interpreter for each db adapter, instead of the intermediate "new-kid" format
   const a = interpret(q)
   const schema = a.schema
-  let select: (keyof PM)[] = []
+  let select: (keyof TFieldValues)[] = []
   if (schema) {
     let t = schema.ast
     if (S.AST.isTransform(t)) {
@@ -153,23 +127,17 @@ export const query: {
       select = t.propertySignatures.map((_) => _.name) as any
     }
   }
-  return Effect.flatMap(
-    repo.utils.filter({
-      limit: a.limit,
-      skip: a.skip,
-      select: Option.getOrUndefined(toNonEmptyArray(select)),
-      filter: a.filter.length
-        ? {
-          type: "new-kid" as const,
-          build: () => a.filter
-        } as QueryBuilder<any>
-        : undefined
-    }),
-    (_) =>
-      Unify.unify(
-        schema
-          ? repo.utils.parseMany2(_, schema as any)
-          : repo.utils.parseMany(_)
-      )
-  )
-}) as any
+  return dropUndefinedT({
+    limit: a.limit,
+    skip: a.skip,
+    select: Option.getOrUndefined(toNonEmptyArray(select)),
+    schema,
+    order: Option.getOrUndefined(toNonEmptyArray(a.order)),
+    filter: a.filter.length
+      ? {
+        type: "new-kid" as const,
+        build: () => a.filter
+      } as QueryBuilder<any>
+      : undefined
+  })
+}

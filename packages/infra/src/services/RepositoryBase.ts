@@ -26,13 +26,14 @@ import { makeFilters } from "@effect-app/infra/filter"
 import type { ParseResult, Schema } from "@effect-app/schema"
 import { NonNegativeInt } from "@effect-app/schema"
 import type { Context, NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
-import { Chunk, Effect, flow, Option, pipe, PubSub, ReadonlyArray, S } from "effect-app"
+import { Chunk, Effect, flow, Option, pipe, PubSub, ReadonlyArray, S, Unify } from "effect-app"
 import { runTerm } from "effect-app/Pure"
 import type { FixEnv, PureEnv } from "effect-app/Pure"
 import { assignTag } from "effect-app/service"
+import type { NoInfer } from "effect/Types"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import type { FieldValues } from "../filter/types.js"
-import { make as makeQuery, page, query } from "./query.js"
+import { make as makeQuery, page } from "./query.js"
 import type { QAll, Query, QueryEnd, QueryProjection, QueryWhere } from "./query.js"
 import * as Q2 from "./query.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
@@ -784,6 +785,50 @@ export function makeRepo<
               yield* $(changeFeed.publish([it, "remove"]))
             })
           }
+
+          const query: {
+            <
+              T extends { id: unknown },
+              PM extends PersistenceModelType<string>,
+              Evt,
+              ItemType extends string,
+              A,
+              R,
+              From extends FieldValues
+            >(
+              repo: Repository<T, PM, Evt, ItemType>,
+              q: QueryProjection<PM extends From ? From : never, A, R>
+            ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
+            <
+              T extends { id: unknown },
+              PM extends PersistenceModelType<string>,
+              Evt,
+              ItemType extends string,
+              A,
+              R
+            >(
+              repo: Repository<T, PM, Evt, ItemType>,
+              q: QAll<NoInfer<PM>, A, R>
+            ): Effect.Effect<readonly A[], never, R>
+          } = (<
+            T extends { id: unknown },
+            PM extends PersistenceModelType<string>,
+            Evt,
+            ItemType extends string,
+            A,
+            R
+          >(repo: Repository<T, PM, Evt, ItemType>, q: QAll<PM, A, R>) => {
+            const a = Q2.toFilter(q)
+            return Effect.flatMap(
+              repo.utils.filter(a),
+              (_) =>
+                Unify.unify(
+                  a.schema
+                    ? repo.utils.parseMany2(_, a.schema as any)
+                    : repo.utils.parseMany(_)
+                )
+            )
+          }) as any
 
           const r: Repository<T, PM, Evt, ItemType> = {
             /**
