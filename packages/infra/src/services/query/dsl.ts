@@ -4,6 +4,7 @@
 import type { FieldValues } from "@effect-app/infra/filter/types"
 import type { FieldPath, FieldPathValue } from "@effect-app/infra/filter/types/path/eager"
 import type { Ops } from "@effect-app/infra/services/Store/filterApi/proxy"
+import type { NonNegativeInt } from "@effect-app/schema"
 import type { S } from "effect-app"
 import { Data } from "effect-app"
 import type { Covariant } from "effect/Types"
@@ -22,7 +23,7 @@ export interface QueryTogether<
   out T extends "initial" | "where" | "end" | "projection" = "initial",
   out A = TFieldValues,
   out R = never,
-  out TType extends "many" | "one" = "many"
+  out TType extends "many" | "one" | "count" = "many"
 > {
   readonly [QId]: {
     readonly _TFieldValues: Covariant<TFieldValues>
@@ -36,7 +37,7 @@ export interface QueryTogether<
 export type Query<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "initial">
 export type QueryWhere<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "where">
 
-export type QueryEnd<TFieldValues extends FieldValues, TType extends "many" | "one" = "many"> = QueryTogether<
+export type QueryEnd<TFieldValues extends FieldValues, TType extends "many" | "one" | "count" = "many"> = QueryTogether<
   TFieldValues,
   "end",
   TFieldValues,
@@ -48,7 +49,7 @@ export type QueryProjection<
   TFieldValues extends FieldValues,
   A = TFieldValues,
   R = never,
-  TType extends "many" | "one" = "many"
+  TType extends "many" | "one" | "count" = "many"
 > = QueryTogether<
   TFieldValues,
   "projection",
@@ -65,6 +66,7 @@ export type Q<TFieldValues extends FieldValues> =
   | Page<TFieldValues>
   | Project<any, TFieldValues, any>
   | One<TFieldValues>
+  | Count<TFieldValues>
 
 export class Initial<TFieldValues extends FieldValues> extends Data.TaggedClass("value")<{ value: "initial" }>
   implements Query<TFieldValues>
@@ -109,6 +111,10 @@ export class One<TFieldValues extends FieldValues> extends Data.TaggedClass("one
 }> implements QueryEnd<TFieldValues, "one"> {
   readonly [QId]!: any
 }
+
+export class Count<TFieldValues extends FieldValues> extends Data.TaggedClass("count")<{
+  current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
+}> implements QueryEnd<TFieldValues, "count"> {
   readonly [QId]!: any
 }
 
@@ -165,6 +171,17 @@ export const one: <TFieldValues extends FieldValues>(
   new One({
     current
   })
+
+// TODO: implement count like one instead? or should we change schema projection to work with arrays, so we can count the elements?
+// no it's better to implement a distinct count so that the implementation can be optimised per adapter.
+export const count: <
+  TFieldValues extends FieldValues
+>(
+  current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, "many">
+) => QueryProjection<TFieldValues, NonNegativeInt, never, "count"> = (current) =>
+  // new Project({ current: current as any, /* TODO: why */ schema: S.struct({ id: S.unknown }) })
+  new Count({ current })
+
 /*
 .andThen(flow(
         toNonEmptyArray,

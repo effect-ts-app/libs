@@ -14,7 +14,7 @@ type Result<TFieldValues extends FieldValues, A = TFieldValues, R = never> = {
   limit: number | undefined
   skip: number | undefined
   order: { key: FieldPath<TFieldValues>; direction: "ASC" | "DESC" }[]
-  ttype: "one" | "many" | undefined
+  ttype: "one" | "many" | "count" | undefined
 }
 
 const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never>(_: QAll<TFieldValues, A, R>) => {
@@ -94,6 +94,12 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
         upd(interpret(current))
         data.limit = 1
         data.ttype = "one"
+      },
+      count: ({ current }) => {
+        upd(interpret(current))
+        data.limit = undefined
+        data.ttype = "count"
+        data.schema = S.struct({ id: S.string }) as any
       },
       order: ({ current, direction, field }) => {
         upd(interpret(current))

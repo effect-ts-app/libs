@@ -103,12 +103,12 @@ export abstract class RepositoryBaseC<
   /** @deprecated use q2 */
   abstract readonly mapped: Mapped<PM, Omit<PM, "_etag">>
   abstract readonly q2: {
-    <A, R, From extends FieldValues, TType extends "one" | "many" = "many">(
+    <A, R, From extends FieldValues, TType extends "one" | "many" | "count" = "many">(
       q: (
         initial: Query<Omit<PM, "_etag">>
       ) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R, TType>
     ): Effect.Effect<
-      TType extends "many" ? readonly A[] : A,
+      TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       (TType extends "many" ? never : NotFoundError<ItemType>) | S.ParseResult.ParseError,
       R
     >
@@ -854,6 +854,8 @@ export function makeRepo<
                   Effect.map((_) => _[0])
                 )
               )
+              : a.ttype === "count"
+              ? Effect.andThen(eff, (_) => NonNegativeInt(_.length))
               : eff
           }) as any
 
@@ -1183,12 +1185,12 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   }
 
   readonly q2: {
-    <A, R, From extends FieldValues, TType extends "one" | "many" = "many">(
+    <A, R, From extends FieldValues, TType extends "one" | "many" | "count" = "many">(
       q: (
         initial: Query<Omit<PM, "_etag">>
       ) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R, TType>
     ): Effect.Effect<
-      TType extends "many" ? readonly A[] : A,
+      TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       (TType extends "many" ? never : NotFoundError<ItemType>) | S.ParseResult.ParseError,
       Service | R
     >
