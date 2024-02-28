@@ -122,7 +122,7 @@ export function makeExactOptional<NER extends StructFields>(
 }
 
 /** A version of transform which is only a one way mapping of From->To */
-export const transformTo = <FromA, FromI, FromR, ToA, ToI, ToR, R3>(
+export const transformTo = <FromA, FromI, FromR, ToA, ToI, ToR>(
   from: Schema<FromA, FromI, FromR>,
   to: Schema<ToA, ToI, ToR>,
   decode: (
@@ -131,7 +131,7 @@ export const transformTo = <FromA, FromI, FromR, ToA, ToI, ToR, R3>(
     ast: AST.Transform
   ) => ToI
 ) =>
-  S.transformOrFail<FromA, FromI, FromR, ToA, ToI, ToR, R3, never>(
+  S.transformOrFail<FromA, FromI, FromR, ToA, ToI, ToR, never, never>(
     from,
     to,
     (...args) => Effect.sync(() => decode(...args)),
