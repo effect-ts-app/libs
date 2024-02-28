@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.201.13
+
+### Patch Changes
+
+- bc965fc: support raw query mode
+
 ## 0.201.12
 
 ### Patch Changes
