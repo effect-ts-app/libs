@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.203.2
+
+### Patch Changes
+
+- 24fb85f: potential optimisation for decode/encode many
+
 ## 0.203.1
 
 ### Patch Changes
