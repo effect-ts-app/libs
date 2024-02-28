@@ -160,7 +160,9 @@ export const makeFilter = <TFieldValues extends FieldValues>() => {
   return { all, fields }
 }
 
+/** @deprecated use Q */
 export const QueryBuilder = {
+  /** @deprecated use Q */
   make: <TFieldValues extends FieldValues>(): (
     fn: (f: FilterTest<TFieldValues>, fields: Filter<TFieldValues>) => QueryBuilder<TFieldValues>
   ) => QueryBuilder<TFieldValues> => {

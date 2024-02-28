@@ -9,7 +9,6 @@ import {
   byIdAndSaveWithPure,
   get,
   queryEffect,
-  queryOneEffect,
   type Repository,
   saveAllWithEffectInt,
   saveManyWithPure_,
@@ -35,15 +34,15 @@ import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyExcept
 import type { FieldValues } from "../filter/types.js"
 import { make as makeQuery } from "./query.js"
 import type { QAll, Query, QueryEnd, QueryProjection, QueryWhere } from "./query.js"
-import * as Q2 from "./query.js"
+import * as Q from "./query.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
-import * as Q from "./Store/filterApi/query.js"
+import * as QB from "./Store/filterApi/query.js"
 
 export interface Mapped1<PM extends { id: string }, X, R> {
   all: Effect<X[], ParseResult.ParseError, R>
   save: (...xes: readonly X[]) => Effect<void, OptimisticConcurrencyException | ParseResult.ParseError, R>
   query: (
-    b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>
+    b: (fn: QB.FilterTest<PM>, fields: QB.Filter<PM, never>) => QB.QueryBuilder<PM>
   ) => Effect<X[], ParseResult.ParseError, R>
   find: (id: PM["id"]) => Effect<Option<X>, ParseResult.ParseError, R>
 }
@@ -52,7 +51,7 @@ export interface Mapped1<PM extends { id: string }, X, R> {
 export interface Mapped2<PM extends { id: string }, X, R> {
   all: Effect<X[], ParseResult.ParseError, R>
   query: (
-    b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>
+    b: (fn: QB.FilterTest<PM>, fields: QB.Filter<PM, never>) => QB.QueryBuilder<PM>
   ) => Effect<X[], ParseResult.ParseError, R>
 }
 
@@ -100,9 +99,9 @@ export abstract class RepositoryBaseC<
     events?: Iterable<Evt>
   ) => Effect<void>
 
-  /** @deprecated use q2 */
+  /** @deprecated use query */
   abstract readonly mapped: Mapped<PM, Omit<PM, "_etag">>
-  abstract readonly q2: {
+  abstract readonly query: {
     <A, R, From extends FieldValues, TType extends "one" | "many" | "count" = "many">(
       q: (
         initial: Query<Omit<PM, "_etag">>
@@ -154,7 +153,7 @@ export class RepositoryBaseC2<
     this.utils = this.impl.utils
     this.changeFeed = this.impl.changeFeed
     this.mapped = this.impl.mapped
-    this.q2 = this.impl.q2
+    this.query = this.impl.query
   }
   // makes super calls a compiler error, as it should
   override saveAndPublish
@@ -164,10 +163,8 @@ export class RepositoryBaseC2<
   override utils
   override changeFeed
   override mapped
-  override q2
+  override query
 }
-
-const anyQb = Q.QueryBuilder.make<any>()
 
 export class RepositoryBaseC3<
   T extends { id: unknown },
@@ -189,19 +186,12 @@ export class RepositoryBaseC3<
     return Effect.andThen(this.get(id), (_) => this.removeAndPublish([_]))
   }
 
-  count(filter?: Filter<PM>) {
-    return Effect.map(
-      this.projectEffect(Effect.sync(() => ({ filter }))),
-      (_) => NonNegativeInt(_.length)
-    )
-  }
-
   readonly save = (...items: NonEmptyArray<T>) => this.saveAndPublish(items)
 
   readonly saveWithEvents = (events: Iterable<Evt>) => (...items: NonEmptyArray<T>) =>
     this.saveAndPublish(items, events)
 
-  readonly q2AndSavePure: {
+  readonly queryAndSavePure: {
     <A, E2, R2, T2 extends T>(
       q: (
         q: Query<Omit<PM, "_etag">>
@@ -240,7 +230,7 @@ export class RepositoryBaseC3<
       }>
     >
   } = (q: any, pure: any, batchSize?: any) =>
-    this.q2(q).pipe(
+    this.query(q).pipe(
       Effect.andThen((_) =>
         Array.isArray(_)
           ? batchSize === undefined
@@ -303,114 +293,12 @@ export class RepositoryBaseC3<
     )
   }
 
-  /** @deprecated use q2 */
-  projectEffect<
-    R,
-    E,
-    S = PM
-  >(
-    map: Effect<
-      {
-        filter?: Filter<PM> | undefined
-        collect?: ((t: PM) => Option<S>) | undefined
-        limit?: number | undefined
-        skip?: number | undefined
-      },
-      E,
-      R
-    >
-  ): Effect<S[], E, R>
-  /** @deprecated use q2 */
-  projectEffect<
-    R,
-    E,
-    U extends keyof PM,
-    S = PM
-  >(
-    map: Effect<
-      {
-        filter?: Q.QueryBuilder<PM> | undefined
-        collect?: ((t: PM) => Option<S>) | undefined
-        limit?: number | undefined
-        skip?: number | undefined
-      },
-      E,
-      R
-    >
-  ): Effect<Pick<PM, U>[], E, R>
-  /** @deprecated use q2 */
-  projectEffect<
-    R,
-    E,
-    U extends keyof PM,
-    S = Pick<PM, U>
-  >(
-    map: Effect<
-      {
-        filter?: Filter<PM> | undefined
-        select?: NonEmptyReadonlyArray<U> | undefined
-        collect?: ((t: PM) => Option<S>) | undefined
-        limit?: number | undefined
-        skip?: number | undefined
-      },
-      E,
-      R
-    >
-  ): Effect<S[], E, R> {
-    // TODO: a projection that gets sent to the db instead.
-    return Effect.flatMap(map, (f) =>
-      Effect.map(
-        this
-          .utils
-          .filter(f),
-        (_) => f.collect ? ReadonlyArray.filterMap(_, f.collect) : _ as unknown as S[]
-      ))
-  }
-
-  /** @deprecated use q2 */
-  project<S = PM>(
-    map: {
-      filter?: Filter<PM>
-      collect?: (t: PM) => Option<S>
-      limit?: number
-      skip?: number
-    }
-  ): Effect<S[]>
-  /** @deprecated use q2 */
-  project<U extends keyof PM>(
-    map: {
-      filter?: Q.QueryBuilder<PM>
-      select: NonEmptyReadonlyArray<U>
-      limit?: number
-      skip?: number
-    }
-  ): Effect<Pick<PM, U>[]>
-  /** @deprecated use q2 */
-  project<
-    U extends keyof PM,
-    S = Pick<PM, U>
-  >(
-    map: {
-      filter?: Filter<PM>
-      select?: NonEmptyReadonlyArray<U>
-      collect?: (t: Pick<PM, U>) => Option<S>
-      limit?: number
-      skip?: number
-    }
-  ): Effect<S[]> {
-    return this.projectEffect(Effect.sync(() => map))
-  }
-
-  /** @deprecated use q2 */
-  queryEffect<
-    R,
-    E,
-    S = T
-  >(
+  /** @deprecated use query */
+  queryLegacy<S = T>(
     // TODO: think about collectPM, collectE, and collect(Parsed)
-    map: Effect<{ filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
+    _map: { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
   ) {
-    return Effect.flatMap(map, (f) =>
+    return Effect.flatMap(Effect.sync(() => _map), (f) =>
       (f.filter ? this.utils.filter(f) : this.utils.all)
         .pipe(
           Effect.flatMap((_) => this.utils.parseMany(_)),
@@ -418,180 +306,7 @@ export class RepositoryBaseC3<
         ))
   }
 
-  /** @deprecated use q2 */
-  queryOneEffect<R, E>(
-    // TODO: think about collectPM, collectE, and collect(Parsed)
-    map: Effect<{ filter?: Filter<PM> }, E, R>
-  ): Effect<T, E | NotFoundError<ItemType>, R>
-  /** @deprecated use q2 */
-  queryOneEffect<
-    R,
-    E,
-    S = T
-  >(
-    // TODO: think about collectPM, collectE, and collect(Parsed)
-    map: Effect<{ filter?: Filter<PM>; collect: (t: T) => Option<S> }, E, R>
-  ): Effect<S, E | NotFoundError<ItemType>, R>
-  /** @deprecated use q2 */
-  queryOneEffect<
-    R,
-    E,
-    S = T
-  >(
-    // TODO: think about collectPM, collectE, and collect(Parsed)
-    map: Effect<{ filter?: Filter<PM>; collect?: (t: T) => Option<S> }, E, R>
-  ): Effect<S, E | NotFoundError<ItemType>, R> {
-    return Effect.flatMap(map, (f) =>
-      (f.filter ? this.utils.filter({ filter: f.filter, limit: 1 }) : this.utils.all)
-        .pipe(
-          Effect.flatMap((_) => this.utils.parseMany(_)),
-          Effect
-            .flatMap((_) =>
-              toNonEmptyArray(
-                f.collect
-                  ? ReadonlyArray.filterMap(_, f.collect)
-                  : _ as unknown[] as S[]
-              )
-                .pipe(
-                  Effect.mapError(() => new NotFoundError<ItemType>({ type: this.itemType, id: f.filter })),
-                  Effect.map((_) => _[0])
-                )
-            )
-        ))
-  }
-
-  /** @deprecated use q2 */
-  queryLegacy<S = T>(
-    // TODO: think about collectPM, collectE, and collect(Parsed)
-    map: { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
-  ) {
-    return this.queryEffect(Effect.sync(() => map))
-  }
-
-  /** @deprecated use q2 */
-  query(
-    b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>
-  ) {
-    return this.queryEffect(Effect.sync(() => ({ filter: anyQb((_, fields) => b(_, fields as any)) })))
-  }
-
-  /** @deprecated use q2 */
-  queryOne<S = T>(
-    map: { filter?: Filter<PM>; collect: (t: T) => Option<S> }
-  ): Effect<S, NotFoundError<ItemType>>
-  /** @deprecated use q2 */
-  queryOne(
-    map: { filter?: Filter<PM> }
-  ): Effect<T, NotFoundError<ItemType>>
-  /** @deprecated use q2 */
-  queryOne<S = T>(
-    map: { filter?: Filter<PM>; collect?: (t: T) => Option<S> }
-  ) {
-    return this.queryOneEffect(Effect.sync(() => map))
-  }
-
-  /** @deprecated */
-  queryAndSaveOnePureEffect<
-    R,
-    E,
-    S extends T = T
-  >(
-    map: Effect<{ filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
-  ): <R2, A, E2, S2 extends T>(
-    pure: Effect<A, E2, FixEnv<R2, Evt, S, S2>>
-  ) => Effect<
-    A,
-    InvalidStateError | OptimisticConcurrencyException | E | E2 | NotFoundError<ItemType>,
-    | R
-    | Exclude<R2, {
-      env: PureEnv<Evt, S, S2>
-    }>
-  >
-  /** @deprecated */
-  queryAndSaveOnePureEffect<
-    R,
-    E
-  >(
-    map: Effect<{ filter: Filter<PM> }, E, R>
-  ): <R2, A, E2, T2 extends T>(
-    pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
-  ) => Effect<
-    A,
-    InvalidStateError | OptimisticConcurrencyException | E | E2 | NotFoundError<ItemType>,
-    | R
-    | Exclude<R2, {
-      env: PureEnv<Evt, T, T2>
-    }>
-  >
-  /** @deprecated */
-  queryAndSaveOnePureEffect(
-    map: any
-  ) {
-    return (pure: any) => Effect.flatMap(queryOneEffect(this, map), (_) => saveWithPure_(this, _, pure))
-  }
-  /** @deprecated */
-  queryAndSaveOnePure<
-    S extends T = T
-  >(
-    map: { filter: Filter<PM>; collect: (t: T) => Option<S>; limit?: number; skip?: number }
-  ): <R2, A, E2, S2>(pure: Effect<A, E2, FixEnv<R2, Evt, S, S2>>) => Effect<
-    A,
-    InvalidStateError | OptimisticConcurrencyException | E2 | NotFoundError<ItemType>,
-    Exclude<R2, {
-      env: PureEnv<Evt, S, S2>
-    }>
-  >
-  /** @deprecated */
-  queryAndSaveOnePure(
-    map: { filter: Filter<PM> }
-  ): <R2, A, E2, T2>(pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>) => Effect<
-    A,
-    InvalidStateError | OptimisticConcurrencyException | E2 | NotFoundError<ItemType>,
-    Exclude<R2, {
-      env: PureEnv<Evt, T, T2>
-    }>
-  >
-  /** @deprecated */
-  queryAndSaveOnePure<S = T>(
-    map: { filter: Filter<PM>; collect: (t: T) => Option<S> }
-  ) {
-    return this.queryAndSaveOnePureEffect(Effect.sync(() => map))
-  }
-  /** @deprecated */
-  queryAndSavePureEffect<
-    R,
-    E,
-    S extends T = T
-  >(
-    map: Effect<{ filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>
-  ) {
-    return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, readonly S[], readonly S2[]>>) =>
-      Effect.flatMap(queryEffect(this, map), (_) => this.saveManyWithPure(_, pure))
-  }
-  /** @deprecated */
-  queryAndSavePure<
-    S extends T = T
-  >(
-    map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
-  ) {
-    return this.queryAndSavePureEffect(Effect.sync(() => map))
-  }
-
-  /** @deprecated use q2 */
-  queryAndSavePureEffectBatched<
-    R,
-    E,
-    S extends T = T
-  >(
-    // TODO: think about collectPM, collectE, and collect(Parsed)
-    map: Effect<{ filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }, E, R>,
-    batchSize = 100
-  ) {
-    return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, readonly S[], readonly S2[]>>) =>
-      Effect.flatMap(queryEffect(this, map), (_) => this.saveManyWithPureBatched(_, pure, batchSize))
-  }
-
-  /** @deprecated use q2 */
+  /** @deprecated use query */
   queryAndSavePureBatched<
     S extends T = T
   >(
@@ -599,10 +314,11 @@ export class RepositoryBaseC3<
     map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number },
     batchSize = 100
   ) {
-    return this.queryAndSavePureEffectBatched(Effect.sync(() => map), batchSize)
+    return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, readonly S[], readonly S2[]>>) =>
+      Effect.flatMap(queryEffect(this, Effect.succeed(map)), (_) => this.saveManyWithPureBatched(_, pure, batchSize))
   }
 
-  /** @deprecated use q2 */
+  /** @deprecated use query */
   saveManyWithPureBatched<
     R,
     A,
@@ -836,7 +552,7 @@ export function makeRepo<
             A,
             R
           >(q: QAll<PM, A, R>) => {
-            const a = Q2.toFilter(q)
+            const a = Q.toFilter(q)
             const eff = a.mode === "raw" ? r.utils.filter(a) : Effect.flatMap(
               r.utils.filter(a),
               (_) =>
@@ -933,7 +649,7 @@ export function makeRepo<
             all,
             saveAndPublish,
             removeAndPublish,
-            q2: (q: any) => query(typeof q === "function" ? q(makeQuery()) : q) as any
+            query: (q: any) => query(typeof q === "function" ? q(makeQuery()) : q) as any
           }
           return r
         })
@@ -945,8 +661,8 @@ export function makeRepo<
     return {
       make,
       Where: where,
-      Query: Q.QueryBuilder.make<PM>(),
-      Q2: Q2.make<Omit<PM, "_etag">>()
+      Query: QB.QueryBuilder.make<PM>(),
+      Q: Q.make<Omit<PM, "_etag">>()
     }
   }
 }
@@ -1102,11 +818,11 @@ export interface Repos<
       },
     f: (r: Repository<T, PM, Evt, ItemType>) => Out
   ): Effect<Out, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
-  /** @deprecated use `Q2` instead */
+  /** @deprecated use `Q` instead */
   readonly Where: ReturnType<typeof makeWhere<PM>>
-  /** @deprecated use `Q2` instead */
-  readonly Query: ReturnType<typeof Q.QueryBuilder.make<PM>>
-  readonly Q2: ReturnType<typeof Q2.make<PM>>
+  /** @deprecated use `Q` instead */
+  readonly Query: ReturnType<typeof QB.QueryBuilder.make<PM>>
+  readonly Q: ReturnType<typeof Q.make<PM>>
   readonly type: Repository<T, PM, Evt, ItemType>
 }
 
@@ -1127,9 +843,7 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
   get: (id: T["id"]) => Effect<T, NotFoundError<ItemType>, Service>
 
-  /** @deprecated use q2 */
-  query: (b: (fn: Q.FilterTest<PM>, fields: Q.Filter<PM, never>) => Q.QueryBuilder<PM>) => Effect<T[], never, Service>
-  /** @deprecated use q2 */
+  /** @deprecated use query */
   queryLegacy: <S = T>(map: {
     filter?: Filter<PM>
     collect?: (t: T) => Option<S>
@@ -1137,7 +851,7 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     skip?: number
   }) => Effect<S[], never, Service>
 
-  /** @deprecated use q2 */
+  /** @deprecated use query */
   mapped: MM<Service, PM, Omit<PM, "_etag">>
 
   byIdAndSaveWithPure: {
@@ -1154,7 +868,7 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     >
   }
 
-  q2AndSavePure: {
+  queryAndSavePure: {
     <A, E2, R2, T2 extends T>(
       q: (
         q: Query<Omit<PM, "_etag">>
@@ -1197,7 +911,7 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     >
   }
 
-  readonly q2: {
+  readonly query: {
     <A, R, From extends FieldValues, TType extends "one" | "many" | "count" = "many">(
       q: (
         initial: Query<Omit<PM, "_etag">>
@@ -1228,9 +942,8 @@ const makeRepoFunctions = (tag: any) => {
     byIdAndSaveWithPure,
     find,
     get,
-    q2,
-    q2AndSavePure,
     query,
+    queryAndSavePure,
     queryLegacy,
     removeAndPublish,
     removeById,
@@ -1251,9 +964,8 @@ const makeRepoFunctions = (tag: any) => {
     get,
     query,
     queryLegacy,
-    q2,
     mapped,
-    q2AndSavePure
+    queryAndSavePure
   }
 }
 
@@ -1293,8 +1005,8 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly makeWith = ((a: any, b: any) => Effect.map(mkRepo.make(a), b)) as any
 
       static readonly Where = makeWhere<PM>()
-      static readonly Query = Q.QueryBuilder.make<PM>()
-      static readonly Q2 = Q2.make<From>()
+      static readonly Query = QB.QueryBuilder.make<PM>()
+      static readonly Q = Q.make<From>()
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
 
@@ -1342,8 +1054,8 @@ export const RepositoryDefaultImpl = <Service>() => {
       static readonly makeWith = ((a: any, b: any) => Effect.map(mkRepo.make(a), b)) as any
 
       static readonly Where = makeWhere<PM>()
-      static readonly Query = Q.QueryBuilder.make<PM>()
-      static readonly Q2 = Q2.make<From>()
+      static readonly Query = QB.QueryBuilder.make<PM>()
+      static readonly Q = Q.make<From>()
 
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
