@@ -1,5 +1,20 @@
 # @effect-app/vue
 
+## 0.146.0
+
+### Minor Changes
+
+- e8e8ee2: update packages
+
+### Patch Changes
+
+- Updated dependencies [e8e8ee2]
+  - @effect-app/fluent-extensions@0.142.0
+  - effect-app@0.176.0
+  - @effect-app/schema@0.201.0
+  - @effect-app/core@0.149.0
+  - @effect-app/vue@0.146.0
+
 ## 0.145.0
 
 ### Minor Changes

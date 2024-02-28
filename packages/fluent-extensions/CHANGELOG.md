@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.142.0
+
+### Minor Changes
+
+- e8e8ee2: update packages
+
 ## 0.141.0
 
 ### Minor Changes
