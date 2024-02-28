@@ -826,20 +826,10 @@ index 0000000000000000000000000000000000000000..ef33f5fdb1a491789756df94765013a8
 +  "sideEffects": []
 +}
 diff --git a/package.json b/package.json
-index 4c40fd472b004e9d22fcc2a097ef67ab146c8eca..2cce46020750f1c5c9d8b68ed00d98794fb92b00 100644
+index 4c40fd472b004e9d22fcc2a097ef67ab146c8eca..e32632112ea544e474d0a7b35dfbd8b15d36a287 100644
 --- a/package.json
 +++ b/package.json
-@@ -5,8 +5,7 @@
-   "license": "MIT",
-   "repository": {
-     "type": "git",
--    "url": "https://github.com/effect-ts/effect.git",
--    "directory": "packages/effect"
-+    "url": "https://github.com/effect-ts/effect.git"
-   },
-   "sideEffects": [],
-   "main": "./dist/cjs/index.js",
-@@ -768,6 +767,11 @@
+@@ -768,6 +768,11 @@
        "types": "./dist/dts/Utils.d.ts",
        "import": "./dist/esm/Utils.js",
        "default": "./dist/cjs/Utils.js"
@@ -851,7 +841,7 @@ index 4c40fd472b004e9d22fcc2a097ef67ab146c8eca..2cce46020750f1c5c9d8b68ed00d9879
      }
    },
    "typesVersions": {
-@@ -1221,6 +1225,9 @@
+@@ -1221,6 +1226,9 @@
        ],
        "Utils": [
          "./dist/dts/Utils.d.ts"

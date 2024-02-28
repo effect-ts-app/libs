@@ -15,17 +15,17 @@
     "query-string": "^9.0.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.46.1",
-    "@effect/platform-browser": "^0.30.8",
-    "@effect/schema": "^0.63.0",
+    "@effect/platform": "^0.46.2",
+    "@effect/platform-browser": "^0.30.9",
+    "@effect/schema": "^0.63.1",
     "effect": "^2.4.0",
-    "vue": "^3.4.20"
+    "vue": "^3.4.21"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",
     "@effect-app/compiler": "workspace:*",
     "@rollup/pluginutils": "^5.1.0",
-    "@types/node": "~20.11.20",
+    "@types/node": "~20.11.21",
     "intl-messageformat": "^10.5.11",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",

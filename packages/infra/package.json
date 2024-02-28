@@ -29,7 +29,7 @@
     "@effect-app/compiler": "workspace:*",
     "@sentry/node": "^7.103.0",
     "@types/express": "^4.17.21",
-    "@types/node": "~20.11.20",
+    "@types/node": "~20.11.21",
     "@types/proper-lockfile": "^4.1.4",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.7",
@@ -44,8 +44,8 @@
   },
   "peerDependencies": {
     "express": "^4.18.2",
-    "@effect/platform": "^0.46.1",
-    "@effect/schema": "^0.63.0",
+    "@effect/platform": "^0.46.2",
+    "@effect/schema": "^0.63.1",
     "effect": "^2.4.0"
   },
   "typesVersions": {
