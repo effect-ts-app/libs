@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.202.2
+
+### Patch Changes
+
+- 03b9b6d: drop most legacy query stuff
+
 ## 0.202.1
 
 ### Patch Changes
