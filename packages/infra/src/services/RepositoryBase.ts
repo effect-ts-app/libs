@@ -248,20 +248,42 @@ export class RepositoryBaseC3<
   ) =>
   (req: Req, ctx: Context) => byIdAndSaveWithPure(this, req.id)(pure(req, ctx))
 
-  saveManyWithPure = <
-    R,
-    A,
-    E,
-    S1 extends T,
-    S2 extends T
-  >(
-    items: Iterable<S1>,
-    pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
-  ) =>
-    saveAllWithEffectInt(
-      this,
-      runTerm(pure, [...items])
-    )
+  saveManyWithPure: {
+    <R, A, E, S1 extends T, S2 extends T>(
+      items: Iterable<S1>,
+      pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
+    ): Effect.Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | E,
+      Exclude<R, {
+        env: PureEnv<Evt, readonly S1[], readonly S2[]>
+      }>
+    >
+    <R, A, E, S1 extends T, S2 extends T>(
+      items: Iterable<S1>,
+      pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>,
+      batch: "batched" | number
+    ): Effect.Effect<
+      A[],
+      InvalidStateError | OptimisticConcurrencyException | E,
+      Exclude<R, {
+        env: PureEnv<Evt, readonly S1[], readonly S2[]>
+      }>
+    >
+  } = (items, pure, batch?: "batched" | number) =>
+    batch
+      ? Effect.forEach(
+        ReadonlyArray.chunk_(items, batch === "batched" ? 100 : batch),
+        (batch) =>
+          saveAllWithEffectInt(
+            this,
+            runTerm(pure, batch)
+          )
+      )
+      : saveAllWithEffectInt(
+        this,
+        runTerm(pure, [...items])
+      )
 
   byIdAndSaveWithPure: {
     <R, A, E, S2 extends T>(
@@ -315,29 +337,7 @@ export class RepositoryBaseC3<
     batchSize = 100
   ) {
     return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, readonly S[], readonly S2[]>>) =>
-      Effect.flatMap(queryEffect(this, Effect.succeed(map)), (_) => this.saveManyWithPureBatched(_, pure, batchSize))
-  }
-
-  /** @deprecated use query */
-  saveManyWithPureBatched<
-    R,
-    A,
-    E,
-    S1 extends T,
-    S2 extends T
-  >(
-    items: Iterable<S1>,
-    pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>,
-    batchSize = 100
-  ) {
-    return Effect.forEach(
-      ReadonlyArray.chunk_(items, batchSize),
-      (batch) =>
-        saveAllWithEffectInt(
-          this,
-          runTerm(pure, batch)
-        )
-    )
+      Effect.flatMap(queryEffect(this, Effect.succeed(map)), (_) => this.saveManyWithPure(_, pure, batchSize))
   }
 }
 
@@ -843,31 +843,6 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
   get: (id: T["id"]) => Effect<T, NotFoundError<ItemType>, Service>
 
-  /** @deprecated use query */
-  queryLegacy: <S = T>(map: {
-    filter?: Filter<PM>
-    collect?: (t: T) => Option<S>
-    limit?: number
-    skip?: number
-  }) => Effect<S[], never, Service>
-
-  /** @deprecated use query */
-  mapped: MM<Service, PM, Omit<PM, "_etag">>
-
-  byIdAndSaveWithPure: {
-    <R, A, E, S2 extends T>(
-      id: T["id"],
-      pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
-    ): Effect<
-      A,
-      InvalidStateError | OptimisticConcurrencyException | E | NotFoundError<ItemType>,
-      | Service
-      | Exclude<R, {
-        env: PureEnv<Evt, T, S2>
-      }>
-    >
-  }
-
   queryAndSavePure: {
     <A, E2, R2, T2 extends T>(
       q: (
@@ -934,6 +909,55 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     //   q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
     // ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
   }
+
+  byIdAndSaveWithPure: {
+    <R, A, E, S2 extends T>(
+      id: T["id"],
+      pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
+    ): Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | E | NotFoundError<ItemType>,
+      | Service
+      | Exclude<R, {
+        env: PureEnv<Evt, T, S2>
+      }>
+    >
+  }
+
+  saveManyWithPure: {
+    <R, A, E, S1 extends T, S2 extends T>(
+      items: Iterable<S1>,
+      pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
+    ): Effect.Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | E,
+      Exclude<R, {
+        env: PureEnv<Evt, readonly S1[], readonly S2[]>
+      }>
+    >
+    <R, A, E, S1 extends T, S2 extends T>(
+      items: Iterable<S1>,
+      pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>,
+      batch: "batched" | number
+    ): Effect.Effect<
+      A[],
+      InvalidStateError | OptimisticConcurrencyException | E,
+      Exclude<R, {
+        env: PureEnv<Evt, readonly S1[], readonly S2[]>
+      }>
+    >
+  }
+
+  /** @deprecated use query */
+  queryLegacy: <S = T>(map: {
+    filter?: Filter<PM>
+    collect?: (t: T) => Option<S>
+    limit?: number
+    skip?: number
+  }) => Effect<S[], never, Service>
+
+  /** @experimental */
+  mapped: MM<Service, PM, Omit<PM, "_etag">>
 }
 
 const makeRepoFunctions = (tag: any) => {
@@ -948,7 +972,8 @@ const makeRepoFunctions = (tag: any) => {
     removeAndPublish,
     removeById,
     save,
-    saveAndPublish
+    saveAndPublish,
+    saveManyWithPure
   } = Effect.serviceFunctions(tag) as any
 
   const mapped = (s: any) => tag.map((_: any) => _.mapped(s))
@@ -965,7 +990,8 @@ const makeRepoFunctions = (tag: any) => {
     query,
     queryLegacy,
     mapped,
-    queryAndSavePure
+    queryAndSavePure,
+    saveManyWithPure
   }
 }
 
