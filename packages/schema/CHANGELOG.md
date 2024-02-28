@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.201.2
+
+### Patch Changes
+
+- d1e4f1b: fix typo
+
 ## 0.201.1
 
 ### Patch Changes
