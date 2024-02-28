@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.203.0
+
+### Minor Changes
+
+- ea80202: cleanup and consolidate api
+
 ## 0.202.3
 
 ### Patch Changes
