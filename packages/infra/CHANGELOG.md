@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.201.12
+
+### Patch Changes
+
+- doh
+
 ## 0.201.11
 
 ### Patch Changes
