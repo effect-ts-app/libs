@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.201.11
+
+### Patch Changes
+
+- 5565c72: fix missing Q2 instance
+
 ## 0.201.10
 
 ### Patch Changes
