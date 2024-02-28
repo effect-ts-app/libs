@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.201.1
+
+### Patch Changes
+
+- 0b514ad: add transformTo and transformToOrFail
+
 ## 0.201.0
 
 ### Minor Changes
