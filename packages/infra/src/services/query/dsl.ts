@@ -133,6 +133,7 @@ export class Project<A, TFieldValues extends FieldValues, R, TType extends "one"
   extends Data.TaggedClass("project")<{
     current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
     schema: S.Schema<A, TFieldValues, R>
+    mode: "raw" | "transform"
   }>
   implements QueryProjection<TFieldValues, A, R>
 {
@@ -190,17 +191,29 @@ export const count: <
       ))
 */
 
-export const project: <
-  TFieldValues extends FieldValues,
-  A = FieldValues,
-  R = never,
-  TType extends "one" | "many" = "many"
->(
-  schema: S.Schema<A, TFieldValues, R>
-) => (
-  current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
-) => QueryProjection<TFieldValues, A, R, TType> = (schema) => (current) =>
-  new Project({ current: current as any, /* TODO: why */ schema })
+export const project: {
+  <
+    TFieldValues extends FieldValues,
+    A = FieldValues,
+    R = never,
+    TType extends "one" | "many" = "many"
+  >(
+    schema: S.Schema<A, TFieldValues, R>,
+    mode: "raw"
+  ): (
+    current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
+  ) => QueryProjection<TFieldValues, TFieldValues, R, TType>
+  <
+    TFieldValues extends FieldValues,
+    A = FieldValues,
+    R = never,
+    TType extends "one" | "many" = "many"
+  >(
+    schema: S.Schema<A, TFieldValues, R>
+  ): (
+    current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
+  ) => QueryProjection<TFieldValues, A, R, TType>
+} = (schema: any, mode = "transform") => (current: any) => new Project({ current, /* TODO: why */ schema, mode } as any)
 
 export type FilterWheres = {
   <

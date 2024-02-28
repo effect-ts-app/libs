@@ -837,29 +837,39 @@ export function makeRepo<
             R
           >(q: QAll<PM, A, R>) => {
             const a = Q2.toFilter(q)
-            const eff = Effect.flatMap(
+            const eff = a.mode === "raw" ? r.utils.filter(a) : Effect.flatMap(
               r.utils.filter(a),
               (_) =>
-                Unify.unify(
-                  a.schema
-                    ? r.utils.parseMany2(_, a.schema as any)
-                    : r.utils.parseMany(_)
-                )
+                Unify
+                  .unify(
+                    a.schema
+                      ? r.utils.parseMany2(_, a.schema as any)
+                      : r.utils.parseMany(_)
+                  )
+                  .pipe(Effect.withSpan("parseMany"))
             )
-            return a.ttype === "one"
-              ? Effect.andThen(
-                eff,
-                flow(
-                  toNonEmptyArray,
-                  Effect.mapError(() => new NotFoundError({ id: "query", /* TODO */ type: name })),
-                  Effect.map((_) => _[0])
+            return pipe(
+              a.ttype === "one"
+                ? Effect.andThen(
+                  eff,
+                  flow(
+                    toNonEmptyArray,
+                    Effect.mapError(() => new NotFoundError({ id: "query", /* TODO */ type: name })),
+                    Effect.map((_) => _[0])
+                  )
                 )
-              )
-              : a.ttype === "count"
-              ? Effect
-                .andThen(eff, (_) => NonNegativeInt(_.length))
-                .pipe(Effect.catchTag("ParseError", (e) => Effect.die(e)))
-              : eff
+                : a.ttype === "count"
+                ? Effect
+                  .andThen(eff, (_) => NonNegativeInt(_.length))
+                  .pipe(Effect.catchTag("ParseError", (e) => Effect.die(e)))
+                : eff,
+              Effect.withSpan("Repository.query [effect-app/infra]", {
+                attributes: {
+                  "repository.model_name": name,
+                  query: { ...a, schema: a.schema ? "__SCHEMA__" : a.schema }
+                }
+              })
+            )
           }) as any
 
           const r: Repository<T, PM, Evt, ItemType> = {

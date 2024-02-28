@@ -15,6 +15,7 @@ type Result<TFieldValues extends FieldValues, A = TFieldValues, R = never> = {
   skip: number | undefined
   order: { key: FieldPath<TFieldValues>; direction: "ASC" | "DESC" }[]
   ttype: "one" | "many" | "count" | undefined
+  mode: "raw" | "transform" | undefined
 }
 
 const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never>(_: QAll<TFieldValues, A, R>) => {
@@ -26,7 +27,8 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
     limit: undefined,
     skip: undefined,
     order: [],
-    ttype: undefined
+    ttype: undefined,
+    mode: undefined
   }
 
   const upd = (
@@ -34,9 +36,11 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
   ) => {
     data.filter.push(...v.filter)
     data.order.push(...v.order)
-    data.limit = v.limit
-    data.skip = v.skip
-    data.schema = v.schema
+    if (v.limit !== undefined) data.limit = v.limit
+    if (v.skip !== undefined) data.skip = v.skip
+    if (v.ttype !== undefined) data.ttype = v.ttype
+    if (v.schema !== undefined) data.schema = v.schema
+    if (v.mode !== undefined) data.mode = v.mode
   }
 
   pipe(
@@ -112,6 +116,7 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
       project: (v) => {
         upd(interpret(v.current))
         data.schema = v.schema
+        data.mode = v.mode
       }
     })
   )
@@ -146,6 +151,7 @@ export const toFilter = <
     schema,
     order: Option.getOrUndefined(toNonEmptyArray(a.order)),
     ttype: a.ttype,
+    mode: a.mode ?? "transform",
     filter: a.filter.length
       ? {
         type: "new-kid" as const,
