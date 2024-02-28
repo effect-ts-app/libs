@@ -1333,6 +1333,7 @@ export const RepositoryDefaultImpl = <Service>() => {
 
       static readonly Where = makeWhere<PM>()
       static readonly Query = Q.QueryBuilder.make<PM>()
+      static readonly Q2 = Q2.make<From>()
 
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
