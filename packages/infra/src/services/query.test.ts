@@ -58,10 +58,10 @@ it.skip("works with repo", () => {
     "test",
     s
   ) {}
-  const q1 = TestRepo.q2(() => q)
+  const q1 = TestRepo.query(() => q)
 
   // same as above, but with the `flow` helper
-  const q2 = TestRepo.q2(flow(
+  const q2 = TestRepo.query(flow(
     where("displayName", "Verona"),
     or(flow(
       where("displayName", "Riley"),
