@@ -397,8 +397,9 @@ export function makeRepo<
       return Effect
         .gen(function*($) {
           const rctx = yield* $(Effect.context<R>())
-          const encode = flow(S.encode(schema), Effect.provide(rctx))
+          const encodeMany = flow(S.encode(S.array(schema)), Effect.provide(rctx), Effect.withSpan("encodeMany"))
           const decode = flow(S.decode(schema), Effect.provide(rctx))
+          const decodeMany = flow(S.decode(S.array(schema)), Effect.provide(rctx), Effect.withSpan("decodeMany"))
 
           const store = yield* $(mkStore(args.makeInitial, args.config))
           const { get } = yield* $(ContextMapContainer)
@@ -420,10 +421,12 @@ export function makeRepo<
             })
           ))
 
-          const all = Effect.flatMap(
-            allE,
-            (_) => Effect.forEach(_, (_) => decode(_), { concurrency: "inherit", batching: true }).pipe(Effect.orDie)
-          )
+          const all = Effect
+            .flatMap(
+              allE,
+              (_) => decodeMany(_).pipe(Effect.orDie)
+            )
+            .pipe(Effect.map((_) => _ as T[]))
 
           const structSchema = schema as unknown as { struct: typeof schema }
           const i = ("struct" in structSchema ? structSchema["struct"] : schema).pipe((_) =>
@@ -488,12 +491,7 @@ export function makeRepo<
               .pipe(Effect.asUnit)
 
           const saveAll = (a: Iterable<T>) =>
-            Effect
-              .forEach(
-                Array.from(a),
-                (_) => encode(_),
-                { concurrency: "inherit", batching: true }
-              )
+            encodeMany(Array.from(a))
               .pipe(
                 Effect.orDie,
                 Effect.andThen(saveAllE)
@@ -515,9 +513,7 @@ export function makeRepo<
             return Effect.gen(function*($) {
               const { get, set } = yield* $(cms)
               const it = [...a]
-              const items = yield* $(
-                Effect.forEach(it, (_) => encode(_), { concurrency: "inherit", batching: true }).pipe(Effect.orDie)
-              )
+              const items = yield* $(encodeMany(it).pipe(Effect.orDie))
               // TODO: we should have a batchRemove on store so the adapter can actually batch...
               for (const e of items) {
                 yield* $(store.remove(mapToPersistenceModel(e, get)))
@@ -562,7 +558,6 @@ export function makeRepo<
                       ? r.utils.parseMany2(_, a.schema as any)
                       : r.utils.parseMany(_)
                   )
-                  .pipe(Effect.withSpan("parseMany"))
             )
             return pipe(
               a.ttype === "one"
@@ -594,25 +589,16 @@ export function makeRepo<
              */
             utils: {
               parseMany: (items) =>
-                Effect.flatMap(cms, (cm) =>
-                  Effect
-                    .forEach(items.map((_) => mapReverse(_, cm.set)), (_) => decode(_), {
-                      concurrency: "inherit",
-                      batching: true
-                    })
-                    .pipe(Effect.orDie)),
+                Effect
+                  .flatMap(cms, (cm) =>
+                    decodeMany(items.map((_) => mapReverse(_, cm.set)))
+                      .pipe(Effect.orDie, Effect.withSpan("parseMany"))),
               parseMany2: (items, schema) =>
-                Effect.flatMap(cms, (cm) =>
-                  Effect
-                    .forEach(
-                      items.map((_) => mapReverse(_, cm.set)),
-                      (_) => S.decode(schema)(_ as any),
-                      {
-                        concurrency: "inherit",
-                        batching: true
-                      }
-                    )
-                    .pipe(Effect.orDie)),
+                Effect
+                  .flatMap(cms, (cm) =>
+                    S
+                      .decode(S.array(schema))(items.map((_) => mapReverse(_, cm.set) as unknown as Omit<PM, "_etag">))
+                      .pipe(Effect.orDie, Effect.withSpan("parseMany2"))),
               filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
                 store
                   .filter(args)
@@ -627,7 +613,6 @@ export function makeRepo<
               )
             },
             mapped: <A, R>(schema: S.Schema<A, any, R>) => {
-              // const enc = S.encode(schema)
               const dec = S.decode(schema)
               const encMany = S.encode(S.array(schema))
               const decMany = S.decode(S.array(schema))
