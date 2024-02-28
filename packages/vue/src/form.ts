@@ -266,9 +266,9 @@ export function getMetadataFromSchema(
     jschema = {}
     // console.warn("error getting jsonschema from ", err, ast)
   }
-  if (jschema["$ref"] && jschema["$ref"].startsWith("#/$defs/")) {
-    // todo filter ref/defs?
-    jschema = { ...jschema["$defs"][jschema["$ref"].replace("#/$defs/", "")], ...jschema }
+  while (jschema["$ref"] && jschema["$ref"].startsWith("#/$defs/")) {
+    const { $ref: _, ...rest } = jschema
+    jschema = { ...jschema["$defs"][jschema["$ref"].replace("#/$defs/", "")], ...rest }
   }
   // or we need to add these infos directly in the refinement like the minimum
   // or find a jsonschema parser whojoins all of them
@@ -281,7 +281,6 @@ export function getMetadataFromSchema(
   //         "title": "Int"
   //     }
   // }
-
   const isNumber = jschema.type === "number" || jschema.type === "integer"
   const isInt = jschema.type === "integer"
   return {
