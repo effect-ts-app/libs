@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+import { Effect } from "@effect-app/core"
 import { extendM, typedKeysOf } from "@effect-app/core/utils"
 import type { Schema, StructFields } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
 import { flow } from "effect"
-import type { AST } from "./schema.js"
+import type { AST, ParseResult } from "./index.js"
 
 export const Date = Object.assign(S.Date, { withDefault: S.withDefaultConstructor(S.Date, () => new global.Date()) })
 export const boolean = Object.assign(S.boolean, { withDefault: S.withDefaultConstructor(S.boolean, () => false) })
@@ -119,3 +120,32 @@ export function makeExactOptional<NER extends StructFields>(
     return prev
   }, {} as any)
 }
+
+/** A version of transform which is only a one way mapping of From->To */
+export const transformTo = <FromA, FromI, FromR, ToA, ToI, ToR, R3>(
+  from: Schema<FromA, FromI, FromR>,
+  to: Schema<ToA, ToI, ToR>,
+  decode: (
+    fromA: FromA,
+    options: AST.ParseOptions,
+    ast: AST.Transform
+  ) => ToI
+) =>
+  S.transformOrFail<FromA, FromI, FromR, ToA, ToI, ToR, R3, never>(
+    from,
+    to,
+    (...args) => Effect.sync(() => decode(...args)),
+    () => Effect.die("one way schema")
+  )
+
+/** A version of transformOrFail which is only a one way mapping of From->To */
+export const transformToOrFail = <FromA, FromI, FromR, ToA, ToI, ToR, R3>(
+  from: Schema<FromA, FromI, FromR>,
+  to: Schema<ToA, ToI, ToR>,
+  decode: (
+    fromA: FromA,
+    options: AST.ParseOptions,
+    ast: AST.Transform
+  ) => Effect.Effect<ToI, ParseResult.ParseIssue, R3>
+) =>
+  S.transformOrFail<FromA, FromI, FromR, ToA, ToI, ToR, R3, never>(from, to, decode, () => Effect.die("one way schema"))
