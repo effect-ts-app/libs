@@ -596,15 +596,22 @@ export function makeRepo<
               parseMany: (items) =>
                 Effect.flatMap(cms, (cm) =>
                   Effect
-                    .forEach(items, (_) => decode(mapReverse(_, cm.set)), { concurrency: "inherit", batching: true })
+                    .forEach(items.map((_) => mapReverse(_, cm.set)), (_) => decode(_), {
+                      concurrency: "inherit",
+                      batching: true
+                    })
                     .pipe(Effect.orDie)),
               parseMany2: (items, schema) =>
                 Effect.flatMap(cms, (cm) =>
                   Effect
-                    .forEach(items, (_) => S.decode(schema)(mapReverse(_, cm.set) as any), {
-                      concurrency: "inherit",
-                      batching: true
-                    })
+                    .forEach(
+                      items.map((_) => mapReverse(_, cm.set)),
+                      (_) => S.decode(schema)(_ as any),
+                      {
+                        concurrency: "inherit",
+                        batching: true
+                      }
+                    )
                     .pipe(Effect.orDie)),
               filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
                 store
