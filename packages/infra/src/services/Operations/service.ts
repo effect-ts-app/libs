@@ -15,10 +15,6 @@ export class Operations extends TagClassId("effect-app/Operations")<Operations, 
   find: (id: OperationId) => Effect<Option<Operation>>
   cleanup: Effect<void>
 }>() {
-  static readonly find = Effect.serviceFunctions(this).find
-  static readonly update = Effect.serviceFunctions(this).update
-  static readonly register = Effect.serviceConstants(this).register
-  static readonly cleanup = Effect.serviceConstants(this).cleanup
 }
 
 /**

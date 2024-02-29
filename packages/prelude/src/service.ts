@@ -65,6 +65,47 @@ export function assignTag<Id, Service = Id>(key?: string, creationError?: Error)
   }
 }
 
+export type ServiceAcessorShape<Self, Shape> =
+  & {
+    $: {
+      [k in keyof Shape as Shape[k] extends (...args: Array<any>) => any ? never : k]: Shape[k] extends
+        Effect.Effect<infer A, infer E, infer R> ? Effect.Effect<A, E, Self | R>
+        : Effect.Effect<Shape[k], never, Self>
+    }
+  }
+  & {
+    [k in keyof Shape as Shape[k] extends (...args: Array<any>) => any ? k : never]: Shape[k] extends
+      (...args: infer Args) => Effect.Effect<infer A, infer E, infer R>
+      ? (...args: Args) => Effect.Effect<A, E, Self | R>
+      : Shape[k] extends (...args: infer Args) => infer A ? (...args: Args) => Effect.Effect<A, never, Self>
+      : never
+  }
+
+export const proxify = <T extends object>(TagClass: T) =>
+<Self, Shape>():
+  & T
+  & ServiceAcessorShape<Self, Shape> =>
+{
+  // @ts-expect-error abc
+  TagClass["$"] = new Proxy({}, {
+    get(_target: any, prop: any, _receiver) {
+      // @ts-expect-error abc
+      return Effect.andThen(TagClass, (s) => s[prop])
+    }
+  })
+  const done = new Proxy(TagClass, {
+    get(_target: any, prop: any, _receiver) {
+      if (prop in TagClass) {
+        // @ts-expect-error abc
+        return TagClass[prop]
+      }
+      // @ts-expect-error abc
+      return (...args: Array<any>) => Effect.andThen(TagClass, (s: any) => s[prop](...args))
+    }
+  })
+  return done
+}
+
 export const TagMake = <ServiceImpl, R, E, const Key extends string>(
   key: Key,
   make: Effect<ServiceImpl, E, R>
@@ -89,7 +130,7 @@ export const TagMake = <ServiceImpl, R, E, const Key extends string>(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any
 
-  return assignTag<Id, ServiceImpl>(key, creationError)(c)
+  return proxify(assignTag<Id, ServiceImpl>(key, creationError)(c))<Id, ServiceImpl>()
 }
 
 export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
@@ -117,7 +158,7 @@ export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
     }
   } as any
 
-  return assignTag<Id, Service>(key, creationError)(c)
+  return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, Service>()
 }
 
 export const TagClassMake = <ServiceImpl, R, E>(
@@ -155,7 +196,7 @@ export const TagClassMake = <ServiceImpl, R, E>(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any
 
-  return assignTag<Id, Service>(key, creationError)(c)
+  return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, Service>()
 }
 
 export function TagClassId<const Key extends string>(key: Key) {
@@ -183,7 +224,7 @@ export function TagClassId<const Key extends string>(key: Key) {
       }
     } as any
 
-    return assignTag<Id, Id>(key, creationError)(c)
+    return proxify(assignTag<Id, Id>(key, creationError)(c))<Id, ServiceImpl>()
   }
 }
 
@@ -225,5 +266,5 @@ export const TagClassMakeId = <ServiceImpl, R, E, const Key extends string>(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any
 
-  return assignTag<Id, Id>(key, creationError)(c)
+  return proxify(assignTag<Id, Id>(key, creationError)(c))<Id, ServiceImpl>()
 }
