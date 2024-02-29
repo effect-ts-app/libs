@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.178.0
+
+### Minor Changes
+
+- 0354650: prototype
+
 ## 0.177.0
 
 ### Minor Changes
