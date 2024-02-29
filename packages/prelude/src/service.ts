@@ -171,6 +171,7 @@ export function TagClassId<const Key extends string>(key: Key) {
       wrap: (service: ServiceImpl) => Id
     } = class {
       constructor(service: ServiceImpl) {
+        // this addresses prototype inheritance, but the trade-off is that the object won't be `instanceof` the Service Id class, so it's really just used as an interface only.
         return Object.assign(Object.create(service as any), service)
       }
       static wrap = (service: ServiceImpl) => new this(service)
@@ -207,6 +208,7 @@ export const TagClassMakeId = <ServiceImpl, R, E, const Key extends string>(
     make: Effect<Id, E, R>
   } = class {
     constructor(service: ServiceImpl) {
+      // this addresses prototype inheritance, but the trade-off is that the object won't be `instanceof` the Service Id class, so it's really just used as an interface only.
       return Object.assign(Object.create(service as any), service)
     }
 
