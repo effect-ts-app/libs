@@ -135,7 +135,6 @@ export function makeRequestHandler<
   const response: REST.ReqRes<any, any, any> = Response ? Response : S.void
   const resp = response as typeof response & { struct?: Schema<any, any, any> }
   // TODO: consider if the alternative of using the struct schema is perhaps just better.
-  console.log("$$ rt", handler.rt)
   const encoder = "struct" in resp && resp.struct
     ? S.encode(handler.rt === "raw" ? S.from(resp.struct) : resp.struct)
     // ? (i: any) => {
