@@ -28,8 +28,7 @@ import type { Context, NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
 import { Chunk, Effect, flow, Option, pipe, PubSub, ReadonlyArray, S, Unify } from "effect-app"
 import { runTerm } from "effect-app/Pure"
 import type { FixEnv, PureEnv } from "effect-app/Pure"
-import type { ServiceAcessorShape } from "effect-app/service"
-import { assignTag, proxify } from "effect-app/service"
+import { assignTag } from "effect-app/service"
 import type { NoInfer } from "effect/Types"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import type { FieldValues } from "../filter/types.js"
@@ -1008,16 +1007,6 @@ export const RepositoryBaseImpl = <Service>() => {
         ItemType
       >
       & RepoFunctions<T, PM, Evt, ItemType, Service>
-      & ServiceAcessorShape<
-        Service,
-        Repos<
-          T,
-          PM,
-          R,
-          Evt,
-          ItemType
-        >
-      >
     : never =>
   {
     const mkRepo = makeRepo<PM, Evt>()(
@@ -1039,7 +1028,7 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
 
-    return proxify(assignTag<Service>()(Object.assign(Cls, makeRepoFunctions(Cls)))) as any
+    return assignTag<Service>()(Object.assign(Cls, makeRepoFunctions(Cls))) as any
   }
 }
 
@@ -1065,16 +1054,6 @@ export const RepositoryDefaultImpl = <Service>() => {
         ItemType
       >
       & RepoFunctions<T, PM, Evt, ItemType, Service>
-      & ServiceAcessorShape<
-        Service,
-        Repos<
-          T,
-          PM,
-          R,
-          Evt,
-          ItemType
-        >
-      >
     : never =>
   {
     const mkRepo = makeRepo<PM, Evt>()(
@@ -1098,6 +1077,6 @@ export const RepositoryDefaultImpl = <Service>() => {
 
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
-    return proxify(assignTag<Service>()(Object.assign(Cls, makeRepoFunctions(Cls)))) as any // impl is missing, but its marked protected
+    return assignTag<Service>()(Object.assign(Cls, makeRepoFunctions(Cls))) as any // impl is missing, but its marked protected
   }
 }
