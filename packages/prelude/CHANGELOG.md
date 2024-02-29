@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.177.0
+
+### Minor Changes
+
+- 32f852e: add requestname to span
+
 ## 0.176.2
 
 ### Patch Changes

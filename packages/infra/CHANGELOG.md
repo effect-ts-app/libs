@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 0.204.0
+
+### Minor Changes
+
+- 32f852e: add requestname to span
+- 89cbf41: add support for raw responses, From.
+
+### Patch Changes
+
+- Updated dependencies [32f852e]
+  - effect-app@0.177.0
+  - @effect-app/infra-adapters@0.136.3
+
 ## 0.203.2
 
 ### Patch Changes
