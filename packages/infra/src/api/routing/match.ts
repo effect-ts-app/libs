@@ -32,6 +32,7 @@ export function match<
   RErr,
   CTX,
   Context,
+  RT extends "raw" | "d",
   Config
 >(
   requestHandler: RequestHandler<
@@ -48,6 +49,7 @@ export function match<
     PPath,
     CTX,
     Context,
+    RT,
     Config
   >,
   errorHandler: <R>(
@@ -76,6 +78,7 @@ export function match<
     PR,
     CTX,
     Context,
+    RT,
     Config
   >
 ) {
@@ -104,6 +107,7 @@ export function match<
       PR,
       RErr,
       PPath,
+      RT,
       Config
     >(
       requestHandler as any, // one argument if no middleware, 2 if has middleware. TODO: clean this shit up

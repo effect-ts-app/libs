@@ -38,9 +38,26 @@ export type Middleware<
   PR,
   CTX,
   Context,
+  RT extends "raw" | "d",
   Config
 > = (
-  handler: RequestHandler<R, M, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, ResE, PPath, CTX, Context, Config>
+  handler: RequestHandler<
+    R,
+    M,
+    PathA,
+    CookieA,
+    QueryA,
+    BodyA,
+    HeaderA,
+    ReqA,
+    ResA,
+    ResE,
+    PPath,
+    CTX,
+    Context,
+    RT,
+    Config
+  >
 ) => {
   handler: RequestHandler<
     R2 | PR | RequestContextContainer | ContextMapContainer,
@@ -56,6 +73,7 @@ export type Middleware<
     PPath,
     CTX,
     Context,
+    RT,
     Config
   >
   makeRequestLayer: Layer<PR, MiddlewareE, R2>
@@ -77,6 +95,7 @@ export function makeRequestHandler<
   PR,
   RErr,
   PPath extends `/${string}`,
+  RT extends "raw" | "d",
   Config
 >(
   handler: RequestHandlerBase<
@@ -91,6 +110,7 @@ export function makeRequestHandler<
     ResA,
     ResE,
     PPath,
+    RT,
     Config
   >,
   errorHandler: <R>(
@@ -115,13 +135,14 @@ export function makeRequestHandler<
   const response: REST.ReqRes<any, any, any> = Response ? Response : S.void
   const resp = response as typeof response & { struct?: Schema<any, any, any> }
   // TODO: consider if the alternative of using the struct schema is perhaps just better.
+  console.log("$$ rt", handler.rt)
   const encoder = "struct" in resp && resp.struct
-    ? S.encode(resp.struct)
+    ? S.encode(handler.rt === "raw" ? S.from(resp.struct) : resp.struct)
     // ? (i: any) => {
     //   if (i instanceof (response as any)) return S.encodeSync(response)(i)
     //   else return S.encodeSync(response)(new (response as any)(i))
     // }
-    : S.encode(resp)
+    : S.encode(handler.rt === "raw" ? S.from(resp) : resp)
   // const encodeResponse = adaptResponse
   //   ? (req: ReqA) => Encoder.for(adaptResponse(req))
   //   : () => encoder

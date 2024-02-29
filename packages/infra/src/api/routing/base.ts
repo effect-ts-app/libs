@@ -64,6 +64,7 @@ export interface ReqHandler<
   Res,
   ReqSchema extends S.Schema<any, any, any>,
   ResSchema extends S.Schema<any, any, any>,
+  RT extends "raw" | "d",
   CTX = any,
   Context = any
 > {
@@ -74,6 +75,7 @@ export interface ReqHandler<
   name: string
   CTX: CTX
   Context: Context
+  rt: RT
 }
 
 export type ReqFromSchema<ReqSchema extends S.Schema<any, any, any>> = S.Schema.To<ReqSchema>
@@ -234,6 +236,7 @@ export function makeRequestParsers<
   PPath extends `/${string}`,
   CTX,
   Context,
+  RT extends "raw" | "d",
   Config
 >(
   Request: RequestHandler<
@@ -250,6 +253,7 @@ export function makeRequestParsers<
     PPath,
     CTX,
     Context,
+    RT,
     Config
   >["Request"]
 ): RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA> {
@@ -365,6 +369,7 @@ export interface RequestHandlerBase<
   ResA extends StructFields,
   ResE,
   PPath extends `/${string}`,
+  RT extends "raw" | "d",
   Config
 > {
   adaptResponse?: any
@@ -374,6 +379,7 @@ export interface RequestHandlerBase<
   ResponseOpenApi?: any
   config: Config
   name: string
+  rt: RT
 }
 
 export interface RequestHandler<
@@ -390,6 +396,7 @@ export interface RequestHandler<
   PPath extends `/${string}`,
   CTX,
   Context,
+  RT extends "raw" | "d",
   Config
 > {
   adaptResponse?: any
@@ -399,6 +406,7 @@ export interface RequestHandler<
   ResponseOpenApi?: any
   name: string
   CTX: CTX
+  rt: RT
   Context: Context
 }
 
