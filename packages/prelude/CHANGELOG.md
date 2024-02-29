@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.178.1
+
+### Patch Changes
+
+- fix
+
 ## 0.178.0
 
 ### Minor Changes

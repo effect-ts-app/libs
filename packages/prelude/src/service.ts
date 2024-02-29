@@ -171,7 +171,7 @@ export function TagClassId<const Key extends string>(key: Key) {
       wrap: (service: ServiceImpl) => Id
     } = class {
       constructor(service: ServiceImpl) {
-        Object.setPrototypeOf(this, Object.getPrototypeOf(service))
+        return Object.assign(Object.create(service as any), service)
       }
       static wrap = (service: ServiceImpl) => new this(service)
       static toLayer = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
@@ -207,7 +207,7 @@ export const TagClassMakeId = <ServiceImpl, R, E, const Key extends string>(
     make: Effect<Id, E, R>
   } = class {
     constructor(service: ServiceImpl) {
-      Object.setPrototypeOf(this, Object.getPrototypeOf(service))
+      return Object.assign(Object.create(service as any), service)
     }
 
     static wrap = (service: ServiceImpl) => new this(service)
