@@ -116,7 +116,7 @@ function clientFor_<M extends Requests>(models: M) {
               .pipe(
                 Effect.flatMap(mapResponseM(parseResponse)),
                 Effect
-                  .withSpan("client.request", {
+                  .withSpan("client.request " + requestName, {
                     attributes: { "request.name": requestName }
                   })
               ),
@@ -128,7 +128,7 @@ function clientFor_<M extends Requests>(models: M) {
                 .pipe(
                   Effect.flatMap(mapResponseM(parseResponse)),
                   Effect
-                    .withSpan("client.request", {
+                    .withSpan("client.request " + requestName, {
                       attributes: { "request.name": requestName }
                     })
                 ),
@@ -137,14 +137,14 @@ function clientFor_<M extends Requests>(models: M) {
           }
         : fields.length === 0
         ? {
-          handler: fetchApi3S(b)({}).pipe(Effect.withSpan("client.request", {
+          handler: fetchApi3S(b)({}).pipe(Effect.withSpan("client.request " + requestName, {
             attributes: { "request.name": requestName }
           })),
           ...meta
         }
         : {
           handler: (req: any) =>
-            fetchApi3S(b)(req).pipe(Effect.withSpan("client.request", {
+            fetchApi3S(b)(req).pipe(Effect.withSpan("client.request " + requestName, {
               attributes: { "request.name": requestName }
             })),
 
@@ -167,7 +167,7 @@ function clientFor_<M extends Requests>(models: M) {
               .pipe(
                 Effect.flatMap(mapResponseM(parseResponseE)),
                 Effect
-                  .withSpan("client.request", {
+                  .withSpan("client.request " + requestName, {
                     attributes: { "request.name": requestName }
                   })
               ),
@@ -179,7 +179,7 @@ function clientFor_<M extends Requests>(models: M) {
                 .pipe(
                   Effect.flatMap(mapResponseM(parseResponseE)),
                   Effect
-                    .withSpan("client.request", {
+                    .withSpan("client.request " + requestName, {
                       attributes: { "request.name": requestName }
                     })
                 ),
@@ -189,14 +189,14 @@ function clientFor_<M extends Requests>(models: M) {
           }
         : fields.length === 0
         ? {
-          handler: fetchApi3SE(b)({}).pipe(Effect.withSpan("client.request", {
+          handler: fetchApi3SE(b)({}).pipe(Effect.withSpan("client.request " + requestName, {
             attributes: { "request.name": requestName }
           })),
           ...meta
         }
         : {
           handler: (req: any) =>
-            fetchApi3SE(b)(req).pipe(Effect.withSpan("client.request", {
+            fetchApi3SE(b)(req).pipe(Effect.withSpan("client.request " + requestName, {
               attributes: { "request.name": requestName }
             })),
 
