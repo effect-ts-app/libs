@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.205.0
+
+### Minor Changes
+
+- add AcessTag support
+
+### Patch Changes
+
+- Updated dependencies
+  - effect-app@0.179.0
+  - @effect-app/infra-adapters@0.136.6
+
 ## 0.204.3
 
 ### Patch Changes

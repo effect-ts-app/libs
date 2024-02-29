@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.179.0
+
+### Minor Changes
+
+- add AcessTag support
+
 ## 0.178.1
 
 ### Patch Changes
