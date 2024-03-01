@@ -19,7 +19,7 @@
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.7",
     "connect": "^3.7.0",
-    "mongodb": "6.3.0",
+    "mongodb": "6.4.0",
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
     "strip-ansi": "^7.1.0",
@@ -27,10 +27,10 @@
     "winston": "^3.11.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.46.2",
-    "@effect/schema": "^0.63.1",
+    "@effect/platform": "^0.46.3",
+    "@effect/schema": "^0.63.2",
     "@fp-ts/optic": "0.22.0",
-    "effect": "^2.4.0"
+    "effect": "^2.4.1"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

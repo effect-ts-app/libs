@@ -15,9 +15,9 @@ import { AST } from "./schema.js"
 export interface EnhancedClass<A, I, R, C, Self, Fields, Inherited = {}, Proto = {}>
   extends S.Class<A, I, R, C, Self, Fields, Inherited, Proto>, PropsExtensions<Fields>
 {
-  readonly extend: <Extended>() => <FieldsB extends S.StructFields>(
+  readonly extend: <Extended = "Effect.orDie">() => <FieldsB extends S.StructFields>(
     fields: FieldsB
-  ) => [unknown] extends [Extended] ? MissingSelfGeneric<"Base.extend">
+  ) => [Extended] extends ["Effect.orDie"] ? MissingSelfGeneric<"Base.extend">
     : EnhancedClass<
       Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
       Simplify<Omit<I, keyof FieldsB> & FromStruct<FieldsB>>,
@@ -29,7 +29,7 @@ export interface EnhancedClass<A, I, R, C, Self, Fields, Inherited = {}, Proto =
       Proto
     >
 
-  readonly transformOrFail: <Transformed>() => <
+  readonly transformOrFail: <Transformed = "Effect.orDie">() => <
     FieldsB extends S.StructFields,
     R2,
     R3
@@ -45,7 +45,7 @@ export interface EnhancedClass<A, I, R, C, Self, Fields, Inherited = {}, Proto =
       options: ParseOptions,
       ast: AST.Transform
     ) => Effect.Effect<A, ParseResult.ParseIssue, R3>
-  ) => [unknown] extends [Transformed] ? MissingSelfGeneric<"Base.transform">
+  ) => [Transformed] extends ["Effect.orDie"] ? MissingSelfGeneric<"Base.transform">
     : EnhancedClass<
       Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
       I,
@@ -57,7 +57,7 @@ export interface EnhancedClass<A, I, R, C, Self, Fields, Inherited = {}, Proto =
       Proto
     >
 
-  readonly transformOrFailFrom: <Transformed>() => <
+  readonly transformOrFailFrom: <Transformed = "Effect.orDie">() => <
     FieldsB extends S.StructFields,
     R2,
     R3
@@ -73,7 +73,7 @@ export interface EnhancedClass<A, I, R, C, Self, Fields, Inherited = {}, Proto =
       options: ParseOptions,
       ast: AST.Transform
     ) => Effect.Effect<I, ParseResult.ParseIssue, R3>
-  ) => [unknown] extends [Transformed] ? MissingSelfGeneric<"Base.transformFrom">
+  ) => [Transformed] extends ["Effect.orDie"] ? MissingSelfGeneric<"Base.transformFrom">
     : EnhancedClass<
       Simplify<Omit<A, keyof FieldsB> & ToStruct<FieldsB>>,
       I,
@@ -110,43 +110,45 @@ export function include_<
   return fnc(fields)
 }
 
-export const Class: <Self>() => <Fields extends S.StructFields>(
+export const Class: <Self = "Effect.orDie">() => <Fields extends S.StructFields>(
   fields: Fields
-) => EnhancedClass<
-  Simplify<ToStruct<Fields>>,
-  Simplify<FromStruct<Fields>>,
-  Schema.Context<Fields[keyof Fields]>,
-  Simplify<ToStructConstructor<Fields>>,
-  Self,
-  Fields
-> = () => (fields) => {
-  const cls = S.Class as any
-  return class extends cls()(fields) {
-    static readonly include = include(fields)
-    static readonly pick = (...selection: any[]) => pick(fields, selection)
-    static readonly omit = (...selection: any[]) => omit(fields, selection)
-  } as any
-}
+) => [Self] extends ["Effect.orDie"] ? MissingSelfGeneric<"Class">
+  : EnhancedClass<
+    Simplify<ToStruct<Fields>>,
+    Simplify<FromStruct<Fields>>,
+    Schema.Context<Fields[keyof Fields]>,
+    Simplify<ToStructConstructor<Fields>>,
+    Self,
+    Fields
+  > = () => (fields) => {
+    const cls = S.Class as any
+    return class extends cls()(fields) {
+      static readonly include = include(fields)
+      static readonly pick = (...selection: any[]) => pick(fields, selection)
+      static readonly omit = (...selection: any[]) => omit(fields, selection)
+    } as any
+  }
 
-export const TaggedClass: <Self>() => <Tag extends string, Fields extends S.StructFields>(
+export const TaggedClass: <Self = "Effect.orDie">() => <Tag extends string, Fields extends S.StructFields>(
   tag: Tag,
   fields: Fields
-) => EnhancedClass<
-  Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
-  Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
-  Schema.Context<Fields[keyof Fields]>,
-  Simplify<ToStructConstructor<Fields>>,
-  Self,
-  Fields,
-  {}
-> = () => (tag, fields) => {
-  const cls = S.TaggedClass as any
-  return class extends cls()(tag, fields) {
-    static readonly include = include(fields)
-    static readonly pick = (...selection: any[]) => pick(fields, selection)
-    static readonly omit = (...selection: any[]) => omit(fields, selection)
-  } as any
-}
+) => [Self] extends ["Effect.orDie"] ? MissingSelfGeneric<"Class">
+  : EnhancedClass<
+    Simplify<{ readonly _tag: Tag } & ToStruct<Fields>>,
+    Simplify<{ readonly _tag: Tag } & FromStruct<Fields>>,
+    Schema.Context<Fields[keyof Fields]>,
+    Simplify<ToStructConstructor<Fields>>,
+    Self,
+    Fields,
+    {}
+  > = () => (tag, fields) => {
+    const cls = S.TaggedClass as any
+    return class extends cls()(tag, fields) {
+      static readonly include = include(fields)
+      static readonly pick = (...selection: any[]) => pick(fields, selection)
+      static readonly omit = (...selection: any[]) => omit(fields, selection)
+    } as any
+  }
 
 export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.StructFields>(
   fields: Fields
