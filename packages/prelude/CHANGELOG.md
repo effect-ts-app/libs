@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.180.1
+
+### Patch Changes
+
+- f2eea61: fix TagClass
+
 ## 0.180.0
 
 ### Minor Changes
