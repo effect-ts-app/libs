@@ -134,6 +134,7 @@ export class Project<A, TFieldValues extends FieldValues, R, TType extends "one"
     current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
     schema: S.Schema<A, TFieldValues, R>
     mode: "raw" | "transform"
+    batch?: boolean | "inherit" | undefined
   }>
   implements QueryProjection<TFieldValues, A, R>
 {
@@ -209,11 +210,20 @@ export const project: {
     R = never,
     TType extends "one" | "many" = "many"
   >(
-    schema: S.Schema<A, TFieldValues, R>
+    schema: S.Schema<A, TFieldValues, R>,
+    batch?: boolean | "inherit" | undefined
   ): (
     current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
   ) => QueryProjection<TFieldValues, A, R, TType>
-} = (schema: any, mode = "transform") => (current: any) => new Project({ current, /* TODO: why */ schema, mode } as any)
+} = (schema: any, batchOrMode) => (current: any) =>
+  new Project(
+    {
+      current,
+      schema,
+      mode: batchOrMode === "raw" ? batchOrMode : "transform",
+      batch: batchOrMode !== "raw" ? batchOrMode : undefined
+    } as any
+  )
 
 export type FilterWheres = {
   <

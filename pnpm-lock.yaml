@@ -10,7 +10,7 @@ overrides:
 
 patchedDependencies:
   '@effect/schema@0.63.2':
-    hash: oydbrgke225ywxtmwukdy7ngom
+    hash: bcg4vkwui4wr7gq334bsynewk4
     path: patches/@effect__schema@0.63.2.patch
   '@fp-ts/optic@0.22.0':
     hash: 2yuoegl5dhwsslauskmjxbvoeu
@@ -19,7 +19,7 @@ patchedDependencies:
     hash: 5r3oafqkulzxdb6awceadivssy
     path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
   effect@2.4.1:
-    hash: 4g6rbaj7v25zxo3egp5xpo6ry4
+    hash: x2yuyjyqqn4k2ctj4j46svc7pe
     path: patches/effect@2.4.1.patch
   eslint-plugin-codegen@0.17.0:
     hash: 3ogk7peuefdu45q3hbzcgdiuna
@@ -271,7 +271,7 @@ importers:
         version: 4.0.0
       effect:
         specifier: ^2.4.1
-        version: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+        version: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -357,7 +357,7 @@ importers:
         version: 4.14.202
       effect:
         specifier: ^2.4.1
-        version: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+        version: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
       madge:
         specifier: 6.1.0
         version: 6.1.0(typescript@5.3.3)
@@ -381,7 +381,7 @@ importers:
         version: 3.3.1
       effect:
         specifier: ^2.4.1
-        version: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+        version: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -460,7 +460,7 @@ importers:
         version: 0.46.3(@effect/schema@0.63.2)(effect@2.4.1)
       '@effect/schema':
         specifier: ^0.63.2
-        version: 0.63.2(patch_hash=oydbrgke225ywxtmwukdy7ngom)(effect@2.4.1)(fast-check@3.15.1)
+        version: 0.63.2(patch_hash=bcg4vkwui4wr7gq334bsynewk4)(effect@2.4.1)(fast-check@3.15.1)
       '@faker-js/faker':
         specifier: ^8.4.1
         version: 8.4.1
@@ -478,7 +478,7 @@ importers:
         version: 4.0.0
       effect:
         specifier: ^2.4.1
-        version: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+        version: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
       effect-app:
         specifier: workspace:*
         version: link:../prelude
@@ -569,13 +569,13 @@ importers:
         version: 0.46.3(@effect/schema@0.63.2)(effect@2.4.1)
       '@effect/schema':
         specifier: ^0.63.2
-        version: 0.63.2(patch_hash=oydbrgke225ywxtmwukdy7ngom)(effect@2.4.1)(fast-check@3.15.1)
+        version: 0.63.2(patch_hash=bcg4vkwui4wr7gq334bsynewk4)(effect@2.4.1)(fast-check@3.15.1)
       '@fp-ts/optic':
         specifier: 0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.4.1)
       effect:
         specifier: ^2.4.1
-        version: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+        version: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
       effect-app:
         specifier: workspace:*
         version: link:../prelude
@@ -657,7 +657,7 @@ importers:
         version: 0.46.3(@effect/schema@0.63.2)(effect@2.4.1)
       '@effect/schema':
         specifier: ^0.63.2
-        version: 0.63.2(patch_hash=oydbrgke225ywxtmwukdy7ngom)(effect@2.4.1)(fast-check@3.15.1)
+        version: 0.63.2(patch_hash=bcg4vkwui4wr7gq334bsynewk4)(effect@2.4.1)(fast-check@3.15.1)
       '@fp-ts/optic':
         specifier: 0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.4.1)
@@ -669,7 +669,7 @@ importers:
         version: 3.3.1
       effect:
         specifier: ^2.4.1
-        version: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+        version: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -730,13 +730,13 @@ importers:
         version: link:../core
       '@effect/schema':
         specifier: ^0.63.2
-        version: 0.63.2(patch_hash=oydbrgke225ywxtmwukdy7ngom)(effect@2.4.1)(fast-check@3.15.1)
+        version: 0.63.2(patch_hash=bcg4vkwui4wr7gq334bsynewk4)(effect@2.4.1)(fast-check@3.15.1)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
       effect:
         specifier: ^2.4.1
-        version: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+        version: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -794,7 +794,7 @@ importers:
         version: 0.30.10(@effect/platform@0.46.3)(effect@2.4.1)
       '@effect/schema':
         specifier: ^0.63.2
-        version: 0.63.2(patch_hash=oydbrgke225ywxtmwukdy7ngom)(effect@2.4.1)(fast-check@3.15.1)
+        version: 0.63.2(patch_hash=bcg4vkwui4wr7gq334bsynewk4)(effect@2.4.1)(fast-check@3.15.1)
       '@formatjs/intl':
         specifier: ^2.10.0
         version: 2.10.0(typescript@5.3.3)
@@ -803,7 +803,7 @@ importers:
         version: 5.24.1(vue@3.4.21)
       effect:
         specifier: ^2.4.1
-        version: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+        version: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
       effect-app:
         specifier: workspace:*
         version: link:../prelude
@@ -1540,7 +1540,7 @@ packages:
       effect: ^2.4.1
     dependencies:
       '@effect/platform': 0.46.3(@effect/schema@0.63.2)(effect@2.4.1)
-      effect: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+      effect: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
       multipasta: 0.1.21
     dev: false
 
@@ -1550,20 +1550,20 @@ packages:
       '@effect/schema': ^0.63.2
       effect: ^2.4.1
     dependencies:
-      '@effect/schema': 0.63.2(patch_hash=oydbrgke225ywxtmwukdy7ngom)(effect@2.4.1)(fast-check@3.15.1)
-      effect: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+      '@effect/schema': 0.63.2(patch_hash=bcg4vkwui4wr7gq334bsynewk4)(effect@2.4.1)(fast-check@3.15.1)
+      effect: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
     dev: false
 
-  /@effect/schema@0.63.2(patch_hash=oydbrgke225ywxtmwukdy7ngom)(effect@2.4.1)(fast-check@3.15.1):
+  /@effect/schema@0.63.2(patch_hash=bcg4vkwui4wr7gq334bsynewk4)(effect@2.4.1)(fast-check@3.15.1):
     resolution: {integrity: sha512-piS+6dlGmcX8sAPGXdY4T6QmBbY2YXVnYjUguXpClk6FL7lQ9u2aIDib5kjCpciawJjil2VwltmPnMj0NJKKQQ==}
     peerDependencies:
       effect: ^2.4.1
       fast-check: ^3.13.2
     dependencies:
-      effect: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+      effect: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
       fast-check: 3.15.1(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
     patched: true
@@ -1573,7 +1573,7 @@ packages:
     peerDependencies:
       effect: ^2.0.0
     dependencies:
-      effect: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+      effect: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
     dev: false
 
   /@esbuild/android-arm64@0.19.5:
@@ -1859,7 +1859,7 @@ packages:
       effect: ^2.0.0
     dependencies:
       '@effect/typeclass': 0.22.0(effect@2.4.1)
-      effect: 2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4)
+      effect: 2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe)
     dev: false
     patched: true
 
@@ -4296,7 +4296,7 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /effect@2.4.1(patch_hash=4g6rbaj7v25zxo3egp5xpo6ry4):
+  /effect@2.4.1(patch_hash=x2yuyjyqqn4k2ctj4j46svc7pe):
     resolution: {integrity: sha512-YsoMB/EGCohGKFyTPYqaFe2B7UCU2MM303dkoowF8DNOdks/4q/00cyhTbBUmM/0FMDoUPmUi/AJ0Aj3E7vO1A==}
     patched: true
 

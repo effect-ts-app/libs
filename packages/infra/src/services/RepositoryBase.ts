@@ -87,7 +87,8 @@ export abstract class RepositoryBaseC<
     parseMany: (a: readonly PM[]) => Effect<readonly T[]>
     parseMany2: <A, R>(
       a: readonly PM[],
-      schema: S.Schema<A, Omit<PM, "_etag">, R>
+      schema: S.Schema<A, Omit<PM, "_etag">, R>,
+      batch?: boolean | "inherit" | undefined
     ) => Effect<readonly A[], S.ParseResult.ParseError, R>
     all: Effect<PM[]>
     filter: FilterFunc<PM>
@@ -384,6 +385,7 @@ export function makeRepo<
           makeInitial?: Effect<readonly T[], E, RInitial>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
+            batch?: boolean | "inherit" | undefined
           }
         }
         : {
@@ -391,6 +393,7 @@ export function makeRepo<
           makeInitial?: Effect<readonly T[], E, RInitial>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
+            batch?: boolean | "inherit" | undefined
           }
         }
     ) {
@@ -399,7 +402,11 @@ export function makeRepo<
           const rctx = yield* $(Effect.context<R>())
           const encodeMany = flow(S.encode(S.array(schema)), Effect.provide(rctx), Effect.withSpan("encodeMany"))
           const decode = flow(S.decode(schema), Effect.provide(rctx))
-          const decodeMany = flow(S.decode(S.array(schema)), Effect.provide(rctx), Effect.withSpan("decodeMany"))
+          const decodeMany = flow(
+            S.decode(S.array(schema).pipe(S.batching(args.config?.batch))),
+            Effect.provide(rctx),
+            Effect.withSpan("decodeMany")
+          )
 
           const store = yield* $(mkStore(args.makeInitial, args.config))
           const { get } = yield* $(ContextMapContainer)
@@ -556,7 +563,7 @@ export function makeRepo<
                 Unify
                   .unify(
                     a.schema
-                      ? r.utils.parseMany2(_, a.schema as any)
+                      ? r.utils.parseMany2(_, a.schema as any, a.batch)
                       : r.utils.parseMany(_)
                   )
             )
@@ -594,11 +601,13 @@ export function makeRepo<
                   .flatMap(cms, (cm) =>
                     decodeMany(items.map((_) => mapReverse(_, cm.set)))
                       .pipe(Effect.orDie, Effect.withSpan("parseMany"))),
-              parseMany2: (items, schema) =>
+              parseMany2: (items, schema, batch) =>
                 Effect
                   .flatMap(cms, (cm) =>
                     S
-                      .decode(S.array(schema))(items.map((_) => mapReverse(_, cm.set) as unknown as Omit<PM, "_etag">))
+                      .decode(S.array(schema).pipe(S.batching(batch)))(
+                        items.map((_) => mapReverse(_, cm.set) as unknown as Omit<PM, "_etag">)
+                      )
                       .pipe(Effect.orDie, Effect.withSpan("parseMany2"))),
               filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
                 store
@@ -741,6 +750,7 @@ export function makeStore<
       makeInitial?: Effect<readonly T[], EInitial, RInitial>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
+        batch?: boolean | "inherit" | undefined
       }
     ) {
       return Effect.gen(function*($) {
@@ -785,6 +795,7 @@ export interface Repos<
         makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
+          batch?: boolean | "inherit" | undefined
         }
       }
       : {
@@ -792,6 +803,7 @@ export interface Repos<
         makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
+          batch?: boolean | "inherit" | undefined
         }
       }
   ): Effect<Repository<T, PM, Evt, ItemType>, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
@@ -800,6 +812,7 @@ export interface Repos<
         makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
+          batch?: boolean | "inherit" | undefined
         }
       }
       : {
@@ -807,6 +820,7 @@ export interface Repos<
         makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
+          batch?: boolean | "inherit" | undefined
         }
       },
     f: (r: Repository<T, PM, Evt, ItemType>) => Out
