@@ -87,8 +87,7 @@ export abstract class RepositoryBaseC<
     parseMany: (a: readonly PM[]) => Effect<readonly T[]>
     parseMany2: <A, R>(
       a: readonly PM[],
-      schema: S.Schema<A, Omit<PM, "_etag">, R>,
-      batch?: boolean | "inherit" | undefined
+      schema: S.Schema<A, Omit<PM, "_etag">, R>
     ) => Effect<readonly A[], S.ParseResult.ParseError, R>
     all: Effect<PM[]>
     filter: FilterFunc<PM>
@@ -568,15 +567,7 @@ export function makeRepo<
                     a.schema
                       ? r.utils.parseMany2(
                         _,
-                        a.schema as any,
-                        S
-                          .AST
-                          .getBatchingAnnotation(a.schema.ast)
-                          .pipe(Option.getOrUndefined)
-                          ?.valueOf() as
-                            | boolean
-                            | "inherit" // somehow otherwise inefers as string ?
-                            | undefined
+                        a.schema as any
                       )
                       : r.utils.parseMany(_)
                   )
@@ -615,11 +606,22 @@ export function makeRepo<
                   .flatMap(cms, (cm) =>
                     decodeMany(items.map((_) => mapReverse(_, cm.set)))
                       .pipe(Effect.orDie, Effect.withSpan("parseMany"))),
-              parseMany2: (items, schema, batch) =>
+              parseMany2: (items, schema) =>
                 Effect
                   .flatMap(cms, (cm) =>
                     S
-                      .decode(S.array(schema).pipe(S.batching(batch)))(
+                      .decode(
+                        S.array(schema).pipe(S.batching(
+                          S
+                            .AST
+                            .getBatchingAnnotation(schema.ast)
+                            .pipe(Option.getOrUndefined)
+                            ?.valueOf() as
+                              | boolean
+                              | "inherit" // somehow otherwise inefers as string ?
+                              | undefined
+                        ))
+                      )(
                         items.map((_) => mapReverse(_, cm.set) as unknown as Omit<PM, "_etag">)
                       )
                       .pipe(Effect.orDie, Effect.withSpan("parseMany2"))),
