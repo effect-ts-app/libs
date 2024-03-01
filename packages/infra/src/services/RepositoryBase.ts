@@ -363,6 +363,11 @@ export function makeRepo<
   ) => {
     const where = makeWhere<PM>()
 
+    const batch = S.AST.getBatchingAnnotation(schema.ast).pipe(Option.getOrUndefined)?.valueOf() as
+      | boolean
+      | "inherit" // somehow otherwise inefers as string ?
+      | undefined
+
     function mapToPersistenceModel(
       e: From,
       getEtag: (id: string) => string | undefined
@@ -385,7 +390,6 @@ export function makeRepo<
           makeInitial?: Effect<readonly T[], E, RInitial>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
-            batch?: boolean | "inherit" | undefined
           }
         }
         : {
@@ -393,7 +397,6 @@ export function makeRepo<
           makeInitial?: Effect<readonly T[], E, RInitial>
           config?: Omit<StoreConfig<PM>, "partitionValue"> & {
             partitionValue?: (a: PM) => string
-            batch?: boolean | "inherit" | undefined
           }
         }
     ) {
@@ -403,7 +406,7 @@ export function makeRepo<
           const encodeMany = flow(S.encode(S.array(schema)), Effect.provide(rctx), Effect.withSpan("encodeMany"))
           const decode = flow(S.decode(schema), Effect.provide(rctx))
           const decodeMany = flow(
-            S.decode(S.array(schema).pipe(S.batching(args.config?.batch))),
+            S.decode(S.array(schema).pipe(S.batching(batch))),
             Effect.provide(rctx),
             Effect.withSpan("decodeMany")
           )
@@ -750,7 +753,6 @@ export function makeStore<
       makeInitial?: Effect<readonly T[], EInitial, RInitial>,
       config?: Omit<StoreConfig<PM>, "partitionValue"> & {
         partitionValue?: (a: PM) => string
-        batch?: boolean | "inherit" | undefined
       }
     ) {
       return Effect.gen(function*($) {
@@ -795,7 +797,6 @@ export interface Repos<
         makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
-          batch?: boolean | "inherit" | undefined
         }
       }
       : {
@@ -803,7 +804,6 @@ export interface Repos<
         makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
-          batch?: boolean | "inherit" | undefined
         }
       }
   ): Effect<Repository<T, PM, Evt, ItemType>, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
@@ -812,7 +812,6 @@ export interface Repos<
         makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
-          batch?: boolean | "inherit" | undefined
         }
       }
       : {
@@ -820,7 +819,6 @@ export interface Repos<
         makeInitial?: Effect<readonly T[], E, RInitial>
         config?: Omit<StoreConfig<PM>, "partitionValue"> & {
           partitionValue?: (a: PM) => string
-          batch?: boolean | "inherit" | undefined
         }
       },
     f: (r: Repository<T, PM, Evt, ItemType>) => Out
