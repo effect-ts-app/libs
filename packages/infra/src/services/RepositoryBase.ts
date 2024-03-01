@@ -566,7 +566,18 @@ export function makeRepo<
                 Unify
                   .unify(
                     a.schema
-                      ? r.utils.parseMany2(_, a.schema as any, a.batch)
+                      ? r.utils.parseMany2(
+                        _,
+                        a.schema as any,
+                        S
+                          .AST
+                          .getBatchingAnnotation(a.schema.ast)
+                          .pipe(Option.getOrUndefined)
+                          ?.valueOf() as
+                            | boolean
+                            | "inherit" // somehow otherwise inefers as string ?
+                            | undefined
+                      )
                       : r.utils.parseMany(_)
                   )
             )
