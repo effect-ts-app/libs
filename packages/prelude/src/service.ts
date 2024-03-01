@@ -158,7 +158,7 @@ export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
     }
   } as any
 
-  return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, Service>()
+  return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, ServiceImpl>()
 }
 
 export const TagClassMake = <ServiceImpl, R, E>(
@@ -196,7 +196,7 @@ export const TagClassMake = <ServiceImpl, R, E>(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any
 
-  return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, Service>()
+  return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, ServiceImpl>()
 }
 
 export function TagClassId<const Key extends string>(key: Key) {
