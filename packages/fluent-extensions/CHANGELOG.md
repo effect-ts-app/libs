@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.143.1
+
+### Patch Changes
+
+- ef4b0ba: fix
+
 ## 0.143.0
 
 ### Minor Changes
