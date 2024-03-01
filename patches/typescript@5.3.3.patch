@@ -31,7 +31,7 @@ index d98c47c3d7d3085fddbd5bd6e6b5c103f6c890e1..e3090ac16f3b5339e5a1f756bcc165fd
  var resolvingEmptyArray = [];
  var externalHelpersModuleNameText = "tslib";
 -var defaultMaximumTruncationLength = 160;
-+var defaultMaximumTruncationLength = 1_000;
++var defaultMaximumTruncationLength = 3200;
  var noTruncationMaximumTruncationLength = 1e6;
  function getDeclarationOfKind(symbol, kind) {
    const declarations = symbol.declarations;
@@ -44,7 +44,7 @@ index dd6b532de2dd7c8651ebbd01b1488ba82d58f8e0..d357d6ff9e1c1b0797004f713e9a2e54
  var resolvingEmptyArray = [];
  var externalHelpersModuleNameText = "tslib";
 -var defaultMaximumTruncationLength = 160;
-+var defaultMaximumTruncationLength = 1_000;
++var defaultMaximumTruncationLength = 3200;
  var noTruncationMaximumTruncationLength = 1e6;
  function getDeclarationOfKind(symbol, kind) {
    const declarations = symbol.declarations;
@@ -57,7 +57,7 @@ index fe732a6cb262712d4d79b917b7fa0f0eee9d58b4..90a80ab36054654c9a0dde5a7c1f711d
        resolvingEmptyArray = [];
        externalHelpersModuleNameText = "tslib";
 -      defaultMaximumTruncationLength = 160;
-+      defaultMaximumTruncationLength = 1_000;
++      defaultMaximumTruncationLength = 3200;
        noTruncationMaximumTruncationLength = 1e6;
        stringWriter = createSingleLineStringWriter();
        getScriptTargetFeatures = /* @__PURE__ */ memoize(
