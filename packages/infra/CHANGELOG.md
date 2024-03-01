@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.207.0
+
+### Minor Changes
+
+- a7b68ec: add batch support
+
 ## 0.206.2
 
 ### Patch Changes
