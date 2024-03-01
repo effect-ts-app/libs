@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.208.0
+
+### Minor Changes
+
+- 1a78368: inherit batch mode from schema
+
 ## 0.207.0
 
 ### Minor Changes
