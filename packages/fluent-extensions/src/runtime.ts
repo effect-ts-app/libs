@@ -1,6 +1,7 @@
 import * as RT from "effect/Runtime"
 import type { Runtime } from "effect/Runtime"
 import "./index.js"
+import * as Effect from "effect/Effect"
 
 /**
  * useful in e.g frontend projects that do not use tsplus, but still has the most useful extensions installed.
@@ -13,7 +14,9 @@ export const installFluentRuntimeExtensions = <R>(runtime: Runtime<R>) => {
     enumerable: false,
     configurable: true,
     get() {
-      return runPromise(this)
+      // debugger workaround
+      if (!Effect.isEffect(this)) return undefined
+      return runPromise(this as any)
     }
   })
   Object.defineProperty(Object.prototype, "runFork", {
@@ -27,7 +30,9 @@ export const installFluentRuntimeExtensions = <R>(runtime: Runtime<R>) => {
     enumerable: false,
     configurable: true,
     get() {
-      return runSync(this)
+      // debugger workaround
+      if (!Effect.isEffect(this)) return undefined
+      return runSync(this as any)
     }
   })
 }
