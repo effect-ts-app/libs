@@ -1,5 +1,12 @@
 # @effect-app/infra
 
+## 0.208.1
+
+### Patch Changes
+
+- 894517c: cleanup service
+- 3864988: remove baked in run as fiber
+
 ## 0.208.0
 
 ### Minor Changes
