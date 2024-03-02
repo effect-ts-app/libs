@@ -12,7 +12,7 @@ import type { NonEmptyArray, NonEmptyReadonlyArray, Order } from "./Prelude.js"
  * @tsplus getter Array toNonEmpty
  * @tsplus getter effect/data/ReadonlyArray toNonEmpty
  */
-export const toNonEmptyArray = <A>(a: ReadonlyArray<A>) =>
+export const toNonEmptyArray = <A>(a: ReadonlyArray<A>): Option.Option<NonEmptyReadonlyArray<A>> =>
   a.length ? Option.some(a as NonEmptyReadonlyArray<A>) : Option.none()
 
 export const { isArray } = Array
