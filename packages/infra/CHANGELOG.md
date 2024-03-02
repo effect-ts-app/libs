@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.209.0
+
+### Minor Changes
+
+- e2c61c2: rename
+
 ## 0.208.1
 
 ### Patch Changes
