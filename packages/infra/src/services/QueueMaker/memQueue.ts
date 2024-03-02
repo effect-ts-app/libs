@@ -36,26 +36,25 @@ export function makeMemQueue<
 
     return {
       publish: (...messages) =>
-        Effect.gen(function*($) {
-          const requestContext = yield* $(rcc.requestContext)
-          const currentSpan = yield* $(Effect.currentSpan.pipe(Effect.orDie))
-          const span = Tracer.externalSpan(currentSpan)
-          return yield* $(
-            Effect
-              .forEach(messages, (m) =>
-                // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-                S.encode(wireSchema)({ body: m, meta: { requestContext, span } }).pipe(
-                  Effect.orDie,
-                  Effect
-                    .andThen(JSON.stringify),
-                  // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))
-                  Effect.flatMap((_) => q.offer(_)),
-                  Effect
-                    .asUnit
-                ))
-              .pipe(forkDaemonReportQueue)
-          )
-        }),
+        Effect
+          .gen(function*($) {
+            const requestContext = yield* $(rcc.requestContext)
+            const currentSpan = yield* $(Effect.currentSpan.pipe(Effect.orDie))
+            const span = Tracer.externalSpan(currentSpan)
+            return yield* $(
+              Effect
+                .forEach(messages, (m) =>
+                  // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
+                  S.encode(wireSchema)({ body: m, meta: { requestContext, span } }).pipe(
+                    Effect.orDie,
+                    Effect
+                      .andThen(JSON.stringify),
+                    // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))
+                    Effect.flatMap((_) => q.offer(_))
+                  ), { discard: true })
+            )
+          })
+          .pipe(forkDaemonReportQueue),
       makeDrain: <DrainE, DrainR>(
         handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>
       ) =>

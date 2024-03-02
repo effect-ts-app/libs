@@ -53,85 +53,88 @@ export function makeServiceBusQueue<
       makeDrain: <DrainE, DrainR>(
         handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>
       ) =>
-        Effect.gen(function*($) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          function processMessage(messageBody: any) {
-            return Effect
-              .sync(() => JSON.parse(messageBody))
-              .pipe(
-                Effect.flatMap((x) => parseDrain(x)),
-                Effect.orDie,
-                Effect
-                  .flatMap(({ body, meta }) =>
-                    Effect
-                      .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
-                      .pipe(
-                        Effect.annotateLogs({
-                          body: pretty(body),
-                          meta: pretty(meta)
-                        }),
-                        Effect
-                          .zipRight(handleEvent(body)),
-                        Effect
-                          .orDie
-                      )
-                      // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
-                      .pipe(
-                        silenceAndReportError,
-                        (_) =>
-                          setupRequestContext(
-                            _,
-                            RequestContext.inherit(meta.requestContext, {
-                              id: RequestId(body.id),
-                              locale: "en" as const,
-                              name: NonEmptyString255(body._tag)
+        Effect
+          .gen(function*($) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            function processMessage(messageBody: any) {
+              return Effect
+                .sync(() => JSON.parse(messageBody))
+                .pipe(
+                  Effect.flatMap((x) => parseDrain(x)),
+                  Effect.orDie,
+                  Effect
+                    .flatMap(({ body, meta }) =>
+                      Effect
+                        .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
+                        .pipe(
+                          Effect.annotateLogs({
+                            body: pretty(body),
+                            meta: pretty(meta)
+                          }),
+                          Effect
+                            .zipRight(handleEvent(body)),
+                          Effect
+                            .orDie
+                        )
+                        // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
+                        .pipe(
+                          silenceAndReportError,
+                          (_) =>
+                            setupRequestContext(
+                              _,
+                              RequestContext.inherit(meta.requestContext, {
+                                id: RequestId(body.id),
+                                locale: "en" as const,
+                                name: NonEmptyString255(body._tag)
+                              })
+                            ),
+                          Effect
+                            .withSpan("queue.drain", {
+                              attributes: { "queue.name": queueDrainName },
+                              parent: meta.span
+                                ? Tracer.externalSpan(meta.span)
+                                : undefined
                             })
-                          ),
-                        Effect
-                          .withSpan("queue.drain", {
-                            attributes: { "queue.name": queueDrainName },
-                            parent: meta.span
-                              ? Tracer.externalSpan(meta.span)
-                              : undefined
-                          })
-                      )
-                  ),
-                Effect
-                  // we reportError here, so that we report the error only, and keep flowing
-                  .tapErrorCause(reportError)
-              )
-          }
+                        )
+                    ),
+                  Effect
+                    // we reportError here, so that we report the error only, and keep flowing
+                    .tapErrorCause(reportError)
+                )
+            }
 
-          return yield* $(
-            subscribe({
-              processMessage: (x) => processMessage(x.body).pipe(Effect.uninterruptible),
-              processError: (err) => Effect.sync(() => captureException(err.error))
-            })
-              .pipe(Effect.provide(receiverLayer))
-          )
-        }),
+            return yield* $(
+              subscribe({
+                processMessage: (x) => processMessage(x.body).pipe(Effect.uninterruptible),
+                processError: (err) => Effect.sync(() => captureException(err.error))
+              })
+                .pipe(Effect.provide(receiverLayer))
+            )
+          })
+          .pipe(Effect.andThen(Effect.never.pipe(Effect.forkScoped))),
 
       publish: (...messages) =>
-        Effect.gen(function*($) {
-          const requestContext = yield* $(rcc.requestContext)
-          const currentSpan = yield* $(Effect.currentSpan.pipe(Effect.orDie))
-          const span = Tracer.externalSpan(currentSpan)
-          return yield* $(
-            Effect
-              .promise(() =>
-                s.sendMessages(
-                  messages.map((m) => ({
-                    body: JSON.stringify(
-                      S.encodeSync(wireSchema)({ body: m, meta: { requestContext, span } })
-                    ),
-                    messageId: m.id, /* correllationid: requestId */
-                    contentType: "application/json"
-                  }))
+        Effect
+          .gen(function*($) {
+            const requestContext = yield* $(rcc.requestContext)
+            const currentSpan = yield* $(Effect.currentSpan.pipe(Effect.orDie))
+            const span = Tracer.externalSpan(currentSpan)
+            return yield* $(
+              Effect
+                .promise(() =>
+                  s.sendMessages(
+                    messages.map((m) => ({
+                      body: JSON.stringify(
+                        S.encodeSync(wireSchema)({ body: m, meta: { requestContext, span } })
+                      ),
+                      messageId: m.id, /* correllationid: requestId */
+                      contentType: "application/json"
+                    }))
+                  )
                 )
-              )
-              .pipe(forkDaemonReportQueue)
-          )
-        })
+            )
+          })
+          .pipe(forkDaemonReportQueue)
     } satisfies QueueBase<Evt, DrainEvt>
   })
 }
