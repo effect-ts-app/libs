@@ -1,5 +1,12 @@
 # @effect-app/schema
 
+## 0.202.2
+
+### Patch Changes
+
+- Updated dependencies [81f152f]
+  - @effect-app/core@0.150.2
+
 ## 0.202.1
 
 ### Patch Changes

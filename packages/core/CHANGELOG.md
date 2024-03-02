@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.150.2
+
+### Patch Changes
+
+- 81f152f: fix type
+
 ## 0.150.1
 
 ### Patch Changes
