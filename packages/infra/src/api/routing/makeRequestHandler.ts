@@ -38,7 +38,6 @@ export type Middleware<
   PR,
   CTX,
   Context,
-  RT extends "raw" | "d",
   Config
 > = (
   handler: RequestHandler<
@@ -55,7 +54,6 @@ export type Middleware<
     PPath,
     CTX,
     Context,
-    RT,
     Config
   >
 ) => {
@@ -73,7 +71,6 @@ export type Middleware<
     PPath,
     CTX,
     Context,
-    RT,
     Config
   >
   makeRequestLayer: Layer<PR, MiddlewareE, R2>
@@ -95,7 +92,6 @@ export function makeRequestHandler<
   PR,
   RErr,
   PPath extends `/${string}`,
-  RT extends "raw" | "d",
   Config
 >(
   handler: RequestHandlerBase<
@@ -110,7 +106,6 @@ export function makeRequestHandler<
     ResA,
     ResE,
     PPath,
-    RT,
     Config
   >,
   errorHandler: <R>(
