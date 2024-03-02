@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.180.3
+
+### Patch Changes
+
+- add fiberbag
+
 ## 0.180.2
 
 ### Patch Changes
