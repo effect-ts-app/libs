@@ -6,7 +6,7 @@ import type { RequestContextContainer } from "../RequestContextContainer.js"
 import type { ContextMapContainer } from "../Store/ContextMapContainer.js"
 
 export interface QueueBase<Evt, DrainEvt> {
-  makeDrain: <DrainE, DrainR>(
+  drain: <DrainE, DrainR>(
     makeHandleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>
   ) => Effect<never, never, Scope | RequestContextContainer | ContextMapContainer | DrainR>
   publish: (

@@ -50,7 +50,7 @@ export function makeServiceBusQueue<
     const rcc = yield* $(RequestContextContainer)
 
     return {
-      makeDrain: <DrainE, DrainR>(
+      drain: <DrainE, DrainR>(
         handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>
       ) =>
         Effect

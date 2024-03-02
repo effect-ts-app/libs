@@ -54,7 +54,7 @@ export function makeMemQueue<
                   ), { discard: true })
             )
           }),
-      makeDrain: <DrainE, DrainR>(
+      drain: <DrainE, DrainR>(
         handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>
       ) =>
         Effect.gen(function*($) {
