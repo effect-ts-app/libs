@@ -7,7 +7,7 @@ import { RequestId } from "effect-app/ids"
 import { pretty } from "effect-app/utils"
 import { setupRequestContext } from "../../api/setupRequest.js"
 import { RequestContextContainer } from "../RequestContextContainer.js"
-import { forkDaemonReportQueue, reportNonInterruptedFailure } from "./errors.js"
+import { reportNonInterruptedFailure } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
 /**
@@ -53,8 +53,7 @@ export function makeMemQueue<
                     Effect.flatMap((_) => q.offer(_))
                   ), { discard: true })
             )
-          })
-          .pipe(forkDaemonReportQueue),
+          }),
       makeDrain: <DrainE, DrainR>(
         handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>
       ) =>
@@ -105,8 +104,7 @@ export function makeMemQueue<
                 // TODO: normally a failed item would be returned to the queue and retried up to X times.
                 // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.
                 silenceAndReportError,
-                Effect.forever,
-                Effect.forkScoped
+                Effect.forever
               )
           )
         })

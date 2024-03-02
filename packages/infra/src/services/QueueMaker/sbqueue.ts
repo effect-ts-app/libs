@@ -17,7 +17,7 @@ import { NonEmptyString255, struct } from "effect-app/schema"
 import { pretty } from "effect-app/utils"
 import { setupRequestContext } from "../../api/setupRequest.js"
 import { RequestContextContainer } from "../RequestContextContainer.js"
-import { forkDaemonReportQueue, reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
+import { reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
 /**
@@ -111,7 +111,7 @@ export function makeServiceBusQueue<
                 .pipe(Effect.provide(receiverLayer))
             )
           })
-          .pipe(Effect.andThen(Effect.never.pipe(Effect.forkScoped))),
+          .pipe(Effect.andThen(Effect.never)),
 
       publish: (...messages) =>
         Effect
@@ -134,7 +134,6 @@ export function makeServiceBusQueue<
                 )
             )
           })
-          .pipe(forkDaemonReportQueue)
     } satisfies QueueBase<Evt, DrainEvt>
   })
 }
