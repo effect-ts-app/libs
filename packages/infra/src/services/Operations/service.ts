@@ -1,3 +1,4 @@
+import type { StringId } from "@effect-app/schema"
 import type { Option } from "effect-app"
 import { Effect } from "effect-app"
 import type { Operation, OperationId, OperationProgress } from "effect-app/Operations"
@@ -66,7 +67,7 @@ export function forkOperation2<R, E, A>(self: (opId: OperationId) => Effect<A, E
 export function forkOperationWithEffect<R, R2, E, E2, A, A2>(
   self: (id: OperationId) => Effect<A, E, R>,
   fnc: (id: OperationId) => Effect<A2, E2, R2>
-) {
+): Effect<StringId, never, Operations | Exclude<R, Scope.Scope> | Exclude<R2, Scope.Scope>> {
   return Effect.flatMap(Operations, (Operations) =>
     Effect.flatMap(
       Scope
