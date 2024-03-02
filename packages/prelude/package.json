@@ -263,6 +263,16 @@
         "default": "./_cjs/service.cjs"
       }
     },
+    "./services/FiberBag": {
+      "import": {
+        "types": "./dist/services/FiberBag.d.ts",
+        "default": "./dist/services/FiberBag.js"
+      },
+      "require": {
+        "types": "./dist/services/FiberBag.d.ts",
+        "default": "./_cjs/services/FiberBag.cjs"
+      }
+    },
     "./utils": {
       "import": {
         "types": "./dist/utils.d.ts",
