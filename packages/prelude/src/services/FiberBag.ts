@@ -3,14 +3,23 @@ import { TagClassMakeId } from "../service.js"
 
 const make = Effect.gen(function*($) {
   const ref = yield* $(Ref.make<readonly Fiber.Fiber<void, never>[]>([]))
+  const join = ref.pipe(
+    Ref.get,
+    Effect.tap((bag) => Effect.logDebug("[FiberBag] Joining " + bag.length + " fibers")),
+    Effect.andThen(Fiber.joinAll)
+  )
+  const add = (...fibers: Fiber.Fiber<void, never>[]) => ref.pipe(Ref.update((_) => [..._, ...fibers]))
+  const addAll = (fibers: readonly Fiber.Fiber<void, never>[]) => ref.pipe(Ref.update((_) => [..._, ...fibers]))
+
+  const forkDaemon = <R>(effect: Effect<never, never, R>) => effect.pipe(Effect.forkDaemon, Effect.andThen(add))
+  const forkScoped = <R>(effect: Effect<never, never, R>) => effect.pipe(Effect.forkScoped, Effect.andThen(add))
+
   return {
-    join: ref.pipe(
-      Ref.get,
-      Effect.tap((bag) => Effect.logDebug("[FiberBag] Joining " + bag.length + " fibers")),
-      Effect.andThen(Fiber.joinAll)
-    ),
-    add: (...fibers: Fiber.Fiber<void, never>[]) => ref.pipe(Ref.update((_) => [..._, ...fibers])),
-    addAll: (fibers: readonly Fiber.Fiber<void, never>[]) => ref.pipe(Ref.update((_) => [..._, ...fibers]))
+    join,
+    forkDaemon,
+    forkScoped,
+    add,
+    addAll
   }
 })
 
