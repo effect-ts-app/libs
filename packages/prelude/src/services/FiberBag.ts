@@ -31,4 +31,9 @@ const make = Effect.gen(function*($) {
 export class FiberBag extends TagClassMakeId("FiberBag", make)<FiberBag>() {
   static readonly Live = this.toLayer()
   static readonly JoinLive = this.pipe(Effect.andThen((_) => _.join), Layer.effectDiscard, Layer.provide(this.Live))
+
+  static override readonly forkScoped = <R>(effect: Effect<never, never, R>) =>
+    Effect.andThen(this, (_) => _.forkScoped(effect))
+  static override readonly forkDaemon = <R>(effect: Effect<never, never, R>) =>
+    Effect.andThen(this, (_) => _.forkDaemon(effect))
 }
