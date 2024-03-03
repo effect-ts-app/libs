@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.210.11
+
+### Patch Changes
+
+- 8438d6c: decode From on raw
+
 ## 0.210.10
 
 ### Patch Changes
