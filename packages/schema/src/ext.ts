@@ -16,8 +16,8 @@ export const number = Object.assign(S.number, { withDefault: S.withDefaultConstr
  */
 export const array = flow(
   S.array,
-  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => []) }),
-  S.batching(true)
+  S.batching(true),
+  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => []) })
 )
 
 /**
@@ -25,8 +25,8 @@ export const array = flow(
  */
 export const readonlySet = flow(
   S.readonlySet,
-  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => new Set()) }),
-  S.batching(true)
+  S.batching(true),
+  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => new Set()) })
 )
 
 /**
@@ -34,8 +34,8 @@ export const readonlySet = flow(
  */
 export const readonlyMap = flow(
   S.readonlyMap,
-  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => new Map()) }),
-  S.batching(true)
+  S.batching(true),
+  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => new Map()) })
 )
 
 /**
