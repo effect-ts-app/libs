@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.181.0
+
+### Minor Changes
+
+- 752958a: awesome tag
+
 ## 0.180.10
 
 ### Patch Changes

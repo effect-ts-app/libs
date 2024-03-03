@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.210.0
+
+### Minor Changes
+
+- 752958a: awesome tag
+
+### Patch Changes
+
+- Updated dependencies [752958a]
+  - effect-app@0.181.0
+  - @effect-app/infra-adapters@0.137.11
+
 ## 0.209.10
 
 ### Patch Changes
