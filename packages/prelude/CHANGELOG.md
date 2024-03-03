@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.180.10
+
+### Patch Changes
+
+- abb5332: add ServiceShape
+
 ## 0.180.9
 
 ### Patch Changes
