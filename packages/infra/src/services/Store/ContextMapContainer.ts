@@ -15,9 +15,6 @@ export class ContextMapContainer extends TagClassId("effect-app/ContextMapContai
   get: Effect<ContextMap>
   start: Effect<void>
 }>() {
-  static get get(): Effect<ContextMap, never, ContextMapContainer> {
-    return Effect.flatMap(ContextMapContainer, (_) => _.get)
-  }
   static get getOption() {
     return Effect.flatMap(
       Effect

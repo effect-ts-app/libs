@@ -70,20 +70,22 @@ export function assignTag<Id, Service = Id>(key?: string, creationError?: Error)
   }
 }
 
-export type ServiceAcessorShape<Self, Shape> =
+export type ServiceAcessorShape<Self, Type> =
   & {
-    $: {
-      [k in keyof Shape as Shape[k] extends (...args: Array<any>) => any ? never : k]: Shape[k] extends
-        Effect.Effect<infer A, infer E, infer R> ? Effect.Effect<A, E, Self | R>
-        : Effect.Effect<Shape[k], never, Self>
-    }
+    [
+      k in keyof Type as Type[k] extends ((...args: [...infer Args]) => infer Ret)
+        ? ((...args: Readonly<Args>) => Ret) extends Type[k] ? k : never
+        : k
+    ]: Type[k] extends (...args: [...infer Args]) => Effect<infer A, infer E, infer R>
+      ? (...args: Readonly<Args>) => Effect<A, E, Self | R>
+      : Type[k] extends (...args: [...infer Args]) => infer A ? (...args: Readonly<Args>) => Effect<A, never, Self>
+      : Type[k] extends Effect<infer A, infer E, infer R> ? Effect<A, E, Self | R>
+      : Effect<Type[k], never, Self>
   }
   & {
-    [k in keyof Shape as Shape[k] extends (...args: Array<any>) => any ? k : never]: Shape[k] extends
-      (...args: infer Args) => Effect.Effect<infer A, infer E, infer R>
-      ? (...args: Args) => Effect.Effect<A, E, Self | R>
-      : Shape[k] extends (...args: infer Args) => infer A ? (...args: Args) => Effect.Effect<A, never, Self>
-      : never
+    use: <X>(
+      body: (_: Type) => X
+    ) => X extends Effect<infer A, infer E, infer R> ? Effect<A, E, R | Self> : Effect<X, never, Self>
   }
 
 export const proxify = <T extends object>(TagClass: T) =>
@@ -91,21 +93,28 @@ export const proxify = <T extends object>(TagClass: T) =>
   & T
   & ServiceAcessorShape<Self, Shape> =>
 {
-  // @ts-expect-error abc
-  TagClass["$"] = new Proxy({}, {
-    get(_target: any, prop: any, _receiver) {
-      // @ts-expect-error abc
-      return Effect.andThen(TagClass, (s) => s[prop])
-    }
-  })
+  const cache = new Map()
   const done = new Proxy(TagClass, {
     get(_target: any, prop: any, _receiver) {
+      if (prop === "use") {
+        // @ts-expect-error abc
+        return (body) => core.andThen(TagClass, body)
+      }
       if (prop in TagClass) {
         // @ts-expect-error abc
         return TagClass[prop]
       }
+      if (cache.has(prop)) {
+        return cache.get(prop)
+      }
       // @ts-expect-error abc
-      return (...args: Array<any>) => Effect.andThen(TagClass, (s: any) => s[prop](...args))
+      const fn = (...args: Array<any>) => core.andThen(TagClass, (s: any) => s[prop](...args))
+      // @ts-expect-error abc
+      const cn = core.andThen(TagClass, (s) => s[prop])
+      Object.assign(fn, cn)
+      Object.setPrototypeOf(fn, Object.getPrototypeOf(cn))
+      cache.set(prop, fn)
+      return fn
     }
   })
   return done
