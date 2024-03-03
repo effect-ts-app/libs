@@ -976,6 +976,10 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
 
   /** @experimental */
   mapped: MM<Service, PM, Omit<PM, "_etag">>
+
+  use: <X>(
+    body: (_: Service) => X
+  ) => X extends Effect<infer A, infer E, infer R> ? Effect<A, E, R | Service> : Effect<X, never, Service>
 }
 
 const makeRepoFunctions = (tag: any) => {
