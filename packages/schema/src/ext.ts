@@ -11,17 +11,36 @@ export const Date = Object.assign(S.Date, { withDefault: S.withDefaultConstructo
 export const boolean = Object.assign(S.boolean, { withDefault: S.withDefaultConstructor(S.boolean, () => false) })
 export const number = Object.assign(S.number, { withDefault: S.withDefaultConstructor(S.number, () => 0) })
 
-export const array = flow(S.array, (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => []) }))
-export const readonlySet = flow(
-  S.readonlySet,
-  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => new Set()) })
-)
-export const readonlyMap = flow(
-  S.readonlyMap,
-  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => new Map()) })
+/**
+ * Like the default Schema `array` but with `withDefault` and batching enabled by default
+ */
+export const array = flow(
+  S.array,
+  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => []) }),
+  S.batching(true)
 )
 
-/** @tsplus fluent effect/Schema/Schema nullable */
+/**
+ * Like the default Schema `readonlySet` but with `withDefault` and batching enabled by default
+ */
+export const readonlySet = flow(
+  S.readonlySet,
+  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => new Set()) }),
+  S.batching(true)
+)
+
+/**
+ * Like the default Schema `readonlyMap` but with `withDefault` and batching enabled by default
+ */
+export const readonlyMap = flow(
+  S.readonlyMap,
+  (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => new Map()) }),
+  S.batching(true)
+)
+
+/**
+ * Like the default Schema `record` but with `withDefault`
+ */
 export const nullable = flow(
   S.nullable,
   (s) => Object.assign(s, { withDefault: S.withDefaultConstructor(s, () => null) })
@@ -57,6 +76,9 @@ export const withDefaults = <Self extends S.Schema<any, any, never>>(s: Self) =>
   // return s as Self & WithDefaults<Self>
 }
 
+/**
+ * Like the original Schema `literal`, but with `literals` property exposed
+ */
 export const literal = <Literals extends ReadonlyArray<AST.LiteralValue>>(
   ...literals: Literals
 ) => Object.assign(S.literal(...literals) as Schema<Literals[number]>, { literals })
