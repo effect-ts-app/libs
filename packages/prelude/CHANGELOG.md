@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.180.6
+
+### Patch Changes
+
+- dba2711: fix generic
+
 ## 0.180.5
 
 ### Patch Changes
