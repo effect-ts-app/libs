@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.143.3
+
+### Patch Changes
+
+- ea3dd75: exts not as get
+
 ## 0.143.2
 
 ### Patch Changes

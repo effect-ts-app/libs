@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.202.4
+
+### Patch Changes
+
+- @effect-app/core@0.150.4
+
 ## 0.202.3
 
 ### Patch Changes
