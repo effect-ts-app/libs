@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.203.4
+
+### Patch Changes
+
+- ce64bc5: also enable batching for struct by default
+
 ## 0.203.3
 
 ### Patch Changes
