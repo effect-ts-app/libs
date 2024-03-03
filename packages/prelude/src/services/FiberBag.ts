@@ -1,23 +1,25 @@
-import { Effect, Fiber, Layer, Ref } from "@effect-app/core"
+import { Effect, Fiber, FiberSet, Layer } from "@effect-app/core"
 import { TagClassMakeId } from "../service.js"
 
+import type {} from "effect/Scope"
+import type {} from "effect/Context"
+
 const make = Effect.gen(function*($) {
-  const ref = yield* $(Ref.make<readonly Fiber.Fiber<void, never>[]>([]))
-  const join = ref.pipe(
-    Ref.get,
+  const set = yield* $(FiberSet.make<never, never>())
+  const join = Effect.sync(() => [...set]).pipe(
     Effect.tap((bag) => Effect.logDebug("[FiberBag] Joining " + bag.length + " fibers")),
     Effect.andThen(Fiber.joinAll)
   )
-  const add = (...fibers: Fiber.Fiber<void, never>[]) => ref.pipe(Ref.update((_) => [..._, ...fibers]))
-  const addAll = (fibers: readonly Fiber.Fiber<void, never>[]) => ref.pipe(Ref.update((_) => [..._, ...fibers]))
+  const add = (...fibers: Fiber.RuntimeFiber<never, never>[]) =>
+    Effect.sync(() => fibers.forEach((_) => FiberSet.unsafeAdd(set, _)))
+  const addAll = (fibers: readonly Fiber.RuntimeFiber<never, never>[]) =>
+    Effect.sync(() => fibers.forEach((_) => FiberSet.unsafeAdd(set, _)))
 
-  const forkDaemon = <R>(effect: Effect<never, never, R>) => effect.pipe(Effect.forkDaemon, Effect.andThen(add))
-  const forkScoped = <R>(effect: Effect<never, never, R>) => effect.pipe(Effect.forkScoped, Effect.andThen(add))
+  const run = FiberSet.run(set)
 
   return {
     join,
-    forkDaemon,
-    forkScoped,
+    run,
     add,
     addAll
   }
@@ -29,11 +31,6 @@ const make = Effect.gen(function*($) {
  * This way any errors will blow up the main program instead of fibers dying unknowingly.
  */
 export class FiberBag extends TagClassMakeId("FiberBag", make)<FiberBag>() {
-  static readonly Live = this.toLayer()
+  static readonly Live = this.toLayerScoped()
   static readonly JoinLive = this.pipe(Effect.andThen((_) => _.join), Layer.effectDiscard, Layer.provide(this.Live))
-
-  static override readonly forkScoped = <R>(effect: Effect<never, never, R>) =>
-    Effect.andThen(this, (_) => _.forkScoped(effect))
-  static override readonly forkDaemon = <R>(effect: Effect<never, never, R>) =>
-    Effect.andThen(this, (_) => _.forkDaemon(effect))
 }
