@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.181.1
+
+### Patch Changes
+
+- 579f42d: fix typo
+
 ## 0.181.0
 
 ### Minor Changes
