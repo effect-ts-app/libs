@@ -554,19 +554,25 @@ export function makeRepo<
             R
           >(q: QAll<PM, A, R>) => {
             const a = Q.toFilter(q)
-            const eff = a.mode === "raw" ? r.utils.filter(a) : Effect.flatMap(
-              r.utils.filter(a),
-              (_) =>
-                Unify
-                  .unify(
-                    a.schema
-                      ? r.utils.parseMany2(
-                        _,
-                        a.schema as any
-                      )
-                      : r.utils.parseMany(_)
-                  )
-            )
+            const eff = a.mode === "raw"
+              ? r
+                .utils
+                .filter(a)
+                // TODO: mapFrom but need to support per field and dependencies
+                .pipe(Effect.andThen(flow(S.decode(S.array(S.from(a.schema ?? schema))), Effect.provide(rctx))))
+              : Effect.flatMap(
+                r.utils.filter(a),
+                (_) =>
+                  Unify
+                    .unify(
+                      a.schema
+                        ? r.utils.parseMany2(
+                          _,
+                          a.schema as any
+                        )
+                        : r.utils.parseMany(_)
+                    )
+              )
             return pipe(
               a.ttype === "one"
                 ? Effect.andThen(
