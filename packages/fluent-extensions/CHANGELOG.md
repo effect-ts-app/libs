@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.143.4
+
+### Patch Changes
+
+- f4bea89: fup
+
 ## 0.143.3
 
 ### Patch Changes
