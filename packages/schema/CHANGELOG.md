@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.203.0
+
+### Minor Changes
+
+- e355a45: enable batching by default for array, readonlySet and readonlyMap.not for struct for the time being
+
 ## 0.202.5
 
 ### Patch Changes
