@@ -534,6 +534,34 @@ export function makeRepo<
             })
           }
 
+          const utils = {
+            parseMany: (items) =>
+              Effect
+                .flatMap(cms, (cm) =>
+                  decodeMany(items.map((_) => mapReverse(_, cm.set)))
+                    .pipe(Effect.orDie, Effect.withSpan("parseMany"))),
+            parseMany2: (items, schema) =>
+              Effect
+                .flatMap(cms, (cm) =>
+                  S
+                    .decode(S.array(schema))(
+                      items.map((_) => mapReverse(_, cm.set) as unknown as Omit<PM, "_etag">)
+                    )
+                    .pipe(Effect.orDie, Effect.withSpan("parseMany2"))),
+            filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
+              store
+                .filter(args)
+                .pipe(Effect.tap((items) =>
+                  args.select
+                    ? Effect.unit
+                    : Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
+                )),
+            all: Effect.tap(
+              store.all,
+              (items) => Effect.map(cms, ({ set }) => items.forEach((_) => set(_.id, _._etag)))
+            )
+          } satisfies Repository<T, PM, Evt, ItemType>["utils"]
+
           // TODO: For raw we should use S.from, and drop the R...
           const query: {
             <
@@ -561,16 +589,16 @@ export function makeRepo<
                 // TODO: mapFrom but need to support per field and dependencies
                 .pipe(Effect.andThen(flow(S.decode(S.array(S.from(a.schema ?? schema))), Effect.provide(rctx))))
               : Effect.flatMap(
-                r.utils.filter(a),
+                utils.filter(a),
                 (_) =>
                   Unify
                     .unify(
                       a.schema
-                        ? r.utils.parseMany2(
+                        ? utils.parseMany2(
                           _,
                           a.schema as any
                         )
-                        : r.utils.parseMany(_)
+                        : utils.parseMany(_)
                     )
               )
             return pipe(
@@ -601,33 +629,7 @@ export function makeRepo<
             /**
              * @internal
              */
-            utils: {
-              parseMany: (items) =>
-                Effect
-                  .flatMap(cms, (cm) =>
-                    decodeMany(items.map((_) => mapReverse(_, cm.set)))
-                      .pipe(Effect.orDie, Effect.withSpan("parseMany"))),
-              parseMany2: (items, schema) =>
-                Effect
-                  .flatMap(cms, (cm) =>
-                    S
-                      .decode(S.array(schema))(
-                        items.map((_) => mapReverse(_, cm.set) as unknown as Omit<PM, "_etag">)
-                      )
-                      .pipe(Effect.orDie, Effect.withSpan("parseMany2"))),
-              filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
-                store
-                  .filter(args)
-                  .pipe(Effect.tap((items) =>
-                    args.select
-                      ? Effect.unit
-                      : Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
-                  )),
-              all: Effect.tap(
-                store.all,
-                (items) => Effect.map(cms, ({ set }) => items.forEach((_) => set(_.id, _._etag)))
-              )
-            },
+            utils,
             mapped: <A, R>(schema: S.Schema<A, any, R>) => {
               const dec = S.decode(schema)
               const encMany = S.encode(S.array(schema))
@@ -635,7 +637,7 @@ export function makeRepo<
               return {
                 all: cms
                   .pipe(
-                    Effect.flatMap((cm) => Effect.map(r.utils.all, (_) => _.map((_) => mapReverse(_, cm.set)))),
+                    Effect.flatMap((cm) => Effect.map(utils.all, (_) => _.map((_) => mapReverse(_, cm.set)))),
                     Effect.flatMap(decMany),
                     Effect.map((_) => _ as any[])
                   ),
