@@ -1,5 +1,12 @@
 # @effect-app/infra-adapters
 
+## 0.137.8
+
+### Patch Changes
+
+- Updated dependencies [190415c]
+  - effect-app@0.180.8
+
 ## 0.137.7
 
 ### Patch Changes
