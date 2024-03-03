@@ -18,6 +18,11 @@ export abstract class PhantomTypeParameter<Identifier extends keyof any, Instant
   }
 }
 
+export type ServiceShape<T extends Context.TagClassShape<any, any>> = Omit<
+  T,
+  keyof Context.TagClassShape<any, any>
+>
+
 /**
  * @tsplus type ServiceTagged
  */
