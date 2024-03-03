@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.180.7
+
+### Patch Changes
+
+- 6ece717: base FiberBag on FiberSet
+
 ## 0.180.6
 
 ### Patch Changes
