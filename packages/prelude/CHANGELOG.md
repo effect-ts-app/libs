@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.180.5
+
+### Patch Changes
+
+- e470bd5: add forkDaemon and forkScoped in FiberBag.
+
 ## 0.180.4
 
 ### Patch Changes
