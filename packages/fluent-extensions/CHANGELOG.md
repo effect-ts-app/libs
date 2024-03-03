@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.143.2
+
+### Patch Changes
+
+- cef7a30: fix ext for dbg
+
 ## 0.143.1
 
 ### Patch Changes
