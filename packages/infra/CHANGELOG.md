@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.210.10
+
+### Patch Changes
+
+- d88f982: remove "pick up batching from containing schema" as batching is enabled by default for iterables atm
+
 ## 0.210.9
 
 ### Patch Changes
