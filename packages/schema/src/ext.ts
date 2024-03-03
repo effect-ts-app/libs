@@ -12,6 +12,14 @@ export const boolean = Object.assign(S.boolean, { withDefault: S.withDefaultCons
 export const number = Object.assign(S.number, { withDefault: S.withDefaultConstructor(S.number, () => 0) })
 
 /**
+ * Like the default Schema `array` but with batching enabled by default
+ */
+export const nonEmptyArray = flow(
+  S.nonEmptyArray,
+  S.batching(true)
+)
+
+/**
  * Like the default Schema `array` but with `withDefault` and batching enabled by default
  */
 export const array = flow(
