@@ -98,7 +98,7 @@ export const proxify = <T extends object>(TagClass: T) =>
     get(_target: any, prop: any, _receiver) {
       if (prop === "use") {
         // @ts-expect-error abc
-        return (body) => core.andThen(TagClass, body)
+        return (body) => Effect.andThen(TagClass, body)
       }
       if (prop in TagClass) {
         // @ts-expect-error abc
@@ -108,9 +108,9 @@ export const proxify = <T extends object>(TagClass: T) =>
         return cache.get(prop)
       }
       // @ts-expect-error abc
-      const fn = (...args: Array<any>) => core.andThen(TagClass, (s: any) => s[prop](...args))
+      const fn = (...args: Array<any>) => Effect.andThen(TagClass, (s: any) => s[prop](...args))
       // @ts-expect-error abc
-      const cn = core.andThen(TagClass, (s) => s[prop])
+      const cn = Effect.andThen(TagClass, (s) => s[prop])
       Object.assign(fn, cn)
       Object.setPrototypeOf(fn, Object.getPrototypeOf(cn))
       cache.set(prop, fn)
