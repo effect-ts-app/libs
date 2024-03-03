@@ -1,7 +1,6 @@
 import * as RT from "effect/Runtime"
 import type { Runtime } from "effect/Runtime"
 import "./index.js"
-import * as Effect from "effect/Effect"
 
 /**
  * useful in e.g frontend projects that do not use tsplus, but still has the most useful extensions installed.
@@ -13,10 +12,8 @@ export const installFluentRuntimeExtensions = <R>(runtime: Runtime<R>) => {
   Object.defineProperty(Object.prototype, "runPromise", {
     enumerable: false,
     configurable: true,
-    get() {
-      // debugger workaround
-      if (!Effect.isEffect(this)) return undefined
-      return runPromise(this as any)
+    value() {
+      return runPromise(this)
     }
   })
   Object.defineProperty(Object.prototype, "runFork", {
@@ -29,10 +26,8 @@ export const installFluentRuntimeExtensions = <R>(runtime: Runtime<R>) => {
   Object.defineProperty(Object.prototype, "runSync", {
     enumerable: false,
     configurable: true,
-    get() {
-      // debugger workaround
-      if (!Effect.isEffect(this)) return undefined
-      return runSync(this as any)
+    value() {
+      return runSync(this)
     }
   })
 }
@@ -42,9 +37,9 @@ export const installFluentRuntimeExtensions = <R>(runtime: Runtime<R>) => {
 declare module "effect/Effect" {
   export interface Effect<A, E, R> {
     // @ts-expect-error meh
-    get runPromise(this: Effect<A, E, RT>): Promise<A>
+    runPromise(this: Effect<A, E, RT>): Promise<A>
     // @ts-expect-error meh
-    get runSync(this: Effect<A, E, RT>): A
+    runSync(this: Effect<A, E, RT>): A
     runFork<A, E>(
       this: Effect<A, E, RT>,
       options?: Runtime.RunForkOptions,
@@ -55,9 +50,9 @@ declare module "effect/Effect" {
 declare module "effect/Cause" {
   export interface YieldableError {
     // @ts-expect-error meh
-    get runPromise(this: Effect<never, typeof this, RT>): Promise<never>
+    runPromise(this: Effect<never, typeof this, RT>): Promise<never>
     // @ts-expect-error meh
-    get runSync(this: Effect<never, typeof this, RT>): never
+    runSync(this: Effect<never, typeof this, RT>): never
     runFork<A, E>(
       this: Effect<A, E, RT>,
       options?: Runtime.RunForkOptions,
