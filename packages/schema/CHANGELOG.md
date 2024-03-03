@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.203.2
+
+### Patch Changes
+
+- e12b4f8: add nonEmptyArray with batching
+
 ## 0.203.1
 
 ### Patch Changes
