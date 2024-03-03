@@ -251,7 +251,7 @@ declare global {
   // }
 
   interface ReadonlyArray<T> {
-    get toNonEmpty(): Option.Option<NonEmptyArray<T>>
+    toNonEmpty(): Option.Option<NonEmptyArray<T>>
     findFirstMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option.Option<B>): Option.Option<B>
     findFirstMap<A, B extends A>(this: Iterable<A>, refinement: (a: A, i: number) => a is B): Option.Option<B>
     findFirstMap<A>(this: Iterable<A>, predicate: (a: A, i: number) => boolean): Option.Option<A>
@@ -512,7 +512,7 @@ declare global {
     ): T
   }
   interface Array<T> {
-    get toNonEmpty(): Option.Option<NonEmptyArray<T>>
+    toNonEmpty(): Option.Option<NonEmptyArray<T>>
     findFirstMap<A, B>(this: Iterable<A>, f: (a: A, i: number) => Option.Option<B>): Option.Option<B>
     findFirstMap<A, B extends A>(this: Iterable<A>, refinement: (a: A, i: number) => a is B): Option.Option<B>
     findFirstMap<A>(this: Iterable<A>, predicate: (a: A, i: number) => boolean): Option.Option<A>
