@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.203.3
+
+### Patch Changes
+
+- bbf24a6: fup
+
 ## 0.203.2
 
 ### Patch Changes
