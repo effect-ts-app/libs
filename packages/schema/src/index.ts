@@ -14,6 +14,7 @@ export {
   number,
   readonlyMap,
   readonlySet,
+  struct,
   tuple
 } from "./ext.js"
 export { Int } from "./numbers.js"
