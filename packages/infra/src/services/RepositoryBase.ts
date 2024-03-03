@@ -362,11 +362,6 @@ export function makeRepo<
   ) => {
     const where = makeWhere<PM>()
 
-    const batch = S.AST.getBatchingAnnotation(schema.ast).pipe(Option.getOrUndefined)?.valueOf() as
-      | boolean
-      | "inherit" // somehow otherwise inefers as string ?
-      | undefined
-
     function mapToPersistenceModel(
       e: From,
       getEtag: (id: string) => string | undefined
@@ -405,7 +400,7 @@ export function makeRepo<
           const encodeMany = flow(S.encode(S.array(schema)), Effect.provide(rctx), Effect.withSpan("encodeMany"))
           const decode = flow(S.decode(schema), Effect.provide(rctx))
           const decodeMany = flow(
-            S.decode(S.array(schema).pipe(S.batching(batch))),
+            S.decode(S.array(schema)),
             Effect.provide(rctx),
             Effect.withSpan("decodeMany")
           )
@@ -610,18 +605,7 @@ export function makeRepo<
                 Effect
                   .flatMap(cms, (cm) =>
                     S
-                      .decode(
-                        S.array(schema).pipe(S.batching(
-                          S
-                            .AST
-                            .getBatchingAnnotation(schema.ast)
-                            .pipe(Option.getOrUndefined)
-                            ?.valueOf() as
-                              | boolean
-                              | "inherit" // somehow otherwise inefers as string ?
-                              | undefined
-                        ))
-                      )(
+                      .decode(S.array(schema))(
                         items.map((_) => mapReverse(_, cm.set) as unknown as Omit<PM, "_etag">)
                       )
                       .pipe(Effect.orDie, Effect.withSpan("parseMany2"))),
