@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.203.1
+
+### Patch Changes
+
+- 09bc0d5: fix order
+
 ## 0.203.0
 
 ### Minor Changes
