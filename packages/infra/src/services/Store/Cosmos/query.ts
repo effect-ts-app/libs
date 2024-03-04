@@ -2,7 +2,7 @@ import { Effect, Equivalence, pipe, ReadonlyArray } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { assertUnreachable } from "effect-app/utils"
 import type { FilterR, FilterResult } from "../filterApi/query.js"
-import type { FilterJoinSelect, JoinFindFilter, LegacyFilter, StoreWhereFilter, SupportedValues } from "../service.js"
+import type { StoreWhereFilter, SupportedValues } from "../service.js"
 
 export function logQuery(q: {
   query: string
@@ -24,90 +24,6 @@ export function logQuery(q: {
         2
       )
     }))
-}
-
-/**
- * @deprecated: should build Select into Where query
- */
-export function buildFilterJoinSelectCosmosQuery(
-  filter: FilterJoinSelect,
-  k: string,
-  name: string,
-  skip?: number,
-  limit?: number
-) {
-  const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
-  return {
-    query: `
-SELECT r, f.id as _rootId
-FROM ${name} f
-JOIN r IN f.${k}
-WHERE r.${filter.valueKey} = @value
-${lm}
-`,
-    parameters: [{ name: "@value", value: filter.value }]
-  }
-}
-
-/**
- * @deprecated: is now part of Where query as k.-1.valueKey
- */
-export function buildFindJoinCosmosQuery(
-  filter: JoinFindFilter,
-  k: string,
-  name: string,
-  skip?: number,
-  limit?: number
-) {
-  const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
-  return {
-    query: `
-SELECT DISTINCT VALUE f
-FROM ${name} f
-JOIN r IN f.${k}
-WHERE r.${filter.valueKey} = @value
-${lm}`,
-    parameters: [{ name: "@value", value: filter.value }]
-  }
-}
-
-/**
- * @deprecated: should build into Where query
- */
-export function buildLegacyCosmosQuery<PM>(
-  filter: LegacyFilter<PM>,
-  name: string,
-  importedMarkerId: string,
-  defaultValues: Record<string, unknown>,
-  skip?: number,
-  limit?: number
-) {
-  if (Object.keys(defaultValues).length) {
-    throw new Error("defaultValues not supported with legacy cosmos query: " + JSON.stringify(defaultValues))
-  }
-  const lm = skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""
-  return {
-    query: `
-    SELECT f
-    FROM ${name} f
-    WHERE f.id != @id AND f.${
-      String(
-        filter.by
-      )
-    } LIKE @filter
-  ${lm}`,
-    parameters: [
-      { name: "@id", value: importedMarkerId },
-      {
-        name: "@filter",
-        value: filter.type === "endsWith"
-          ? `%${filter.value}`
-          : filter.type === "contains"
-          ? `%${filter.value}%`
-          : `${filter.value}%`
-      }
-    ]
-  }
 }
 
 export function buildWhereCosmosQuery(
@@ -213,19 +129,16 @@ export function buildWhereCosmosQuery(
 //   return Array.isArray(t)
 // }
 
-export function buildCosmosQuery<PM>(
-  filter: LegacyFilter<PM> | StoreWhereFilter,
+/** @deprecated use new-kid */
+export function buildCosmosQuery(
+  filter: StoreWhereFilter,
   name: string,
   importedMarkerId: string,
   defaultValues: Record<string, unknown>,
   skip?: number,
   limit?: number
 ) {
-  return filter.type === "startsWith"
-      || filter.type === "endsWith"
-      || filter.type === "contains"
-    ? buildLegacyCosmosQuery(filter, name, importedMarkerId, defaultValues, skip, limit)
-    : buildWhereCosmosQuery(filter, name, importedMarkerId, defaultValues, skip, limit)
+  return buildWhereCosmosQuery(filter, name, importedMarkerId, defaultValues, skip, limit)
 }
 
 export function buildWhereCosmosQuery3(

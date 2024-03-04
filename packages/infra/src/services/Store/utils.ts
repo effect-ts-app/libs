@@ -1,9 +1,9 @@
-import { Effect, Option, ReadonlyArray } from "effect-app"
+import { Effect, Option } from "effect-app"
 import { get } from "effect-app/utils"
 import objectHash from "object-hash"
 import { OptimisticConcurrencyException } from "../../errors.js"
 import { codeFilter3_ } from "./codeFilter.js"
-import type { Filter, FilterJoinSelect, PersistenceModelType, SupportedValues2 } from "./service.js"
+import type { Filter, PersistenceModelType, SupportedValues2 } from "./service.js"
 
 export const makeETag = <E extends PersistenceModelType<Id>, Id extends string>(
   { _etag, ...e }: E
@@ -40,34 +40,6 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
   return (x: E) =>
     filter.type === "new-kid"
       ? codeFilter3_(filter.build(), x) ? Option.some(x as unknown as NE) : Option.none()
-      : filter.type === "startsWith"
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ? lowercaseIfString((x as any)[filter.by]).startsWith(filter.value.toLowerCase())
-        ? Option.some(x as unknown as NE)
-        : Option.none()
-      : filter.type === "endsWith"
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ? lowercaseIfString((x as any)[filter.by]).endsWith(filter.value.toLowerCase())
-        ? Option.some(x as unknown as NE)
-        : Option.none()
-      : filter.type === "contains"
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      ? lowercaseIfString((x as any)[filter.by]).includes(filter.value.toLowerCase())
-        ? Option.some(x as unknown as NE)
-        : Option.none()
-      : filter.type === "join_find"
-      ? filter.keys.some((k) => {
-          const value = get(x, k) as Record<string, unknown>[]
-          // we mimic the behavior of cosmosdb; if the shape in db does not match what we're looking for, we imagine false hit
-          return (
-            value
-            && value.some((v) => compare(v[filter.valueKey], filter.value))
-          )
-        })
-        ? Option.some(x as unknown as NE)
-        : Option.none()
-      // TODO: support mixed or/and
       : filter.mode === "or"
       ? filter
           .where
@@ -161,31 +133,6 @@ export function codeFilter<E extends { id: string }, NE extends E>(filter: Filte
           })
       ? Option.some(x as unknown as NE)
       : Option.none()
-}
-
-export function codeFilterJoinSelect<E extends { id: string }, NE>(
-  filter: FilterJoinSelect
-) {
-  return (x: E) =>
-    ReadonlyArray
-      .filterMap(
-        filter
-          .keys,
-        (k) => {
-          const value = get(x, k)
-          // we mimic the behavior of cosmosdb; if the shape in db does not match what we're looking for, we imagine false hit
-          return value
-            ? Option.some(
-              ReadonlyArray.filterMap(value as readonly NE[], (v) =>
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                compare((v as any)[filter.valueKey], filter.value)
-                  ? Option.some({ ...v, _rootId: x.id })
-                  : Option.none())
-            )
-            : Option.none()
-        }
-      )
-      .flatMap((_) => _)
 }
 
 export function lowercaseIfString<T>(val: T) {

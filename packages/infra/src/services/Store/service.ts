@@ -35,6 +35,7 @@ export type Where =
   }
 
 // default is where
+/** @deprecated: use new Q. */
 export type StoreWhereFilter = {
   type?: "where" | undefined
   mode?: "and" | "or" | undefined // default is and
@@ -43,28 +44,9 @@ export type StoreWhereFilter = {
     ...(Where[])
   ]
 }
-export type LegacyFilter<E> =
-  | { by: keyof E; type: "startsWith"; value: any }
-  | { by: keyof E; type: "endsWith"; value: any }
-  | { by: keyof E; type: "contains"; value: any }
-export type JoinFindFilter = {
-  type: "join_find"
-  keys: readonly string[] /* value paths of E */
-  valueKey: string /* value paths of E[keys][valueKey] */
-  value: any /* value path[valueKey] of E */
-}
 export type Filter<E extends FieldValues> =
-  | JoinFindFilter
   | StoreWhereFilter
-  | LegacyFilter<E>
   | QueryBuilder<E>
-
-export type FilterJoinSelect = {
-  type: "filter_join_select"
-  keys: readonly string[] /* value paths of E */
-  valueKey: string /* value paths of E[keys][valueKey] */
-  value: any /* value path[valueKey] of E */
-}
 
 export interface O<PM extends PersistenceModelType<unknown>> {
   key: keyof PM
@@ -86,10 +68,6 @@ export type FilterFunc<PM extends PersistenceModelType<unknown>> = <U extends ke
 export interface Store<PM extends PersistenceModelType<Id>, Id> {
   all: Effect<PM[]>
   filter: FilterFunc<PM>
-  /** @deprecated */
-  filterJoinSelect: <T extends object>(
-    filter: FilterJoinSelect
-  ) => Effect<(T & { _rootId: string })[]>
   find: (id: Id) => Effect<Option<PM>>
   set: (e: PM) => Effect<PM, OptimisticConcurrencyException>
   batchSet: (

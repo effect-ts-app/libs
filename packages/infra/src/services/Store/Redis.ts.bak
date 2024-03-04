@@ -4,9 +4,9 @@ import { Effect, Layer, Option, ReadonlyArray, Secret } from "effect-app"
 import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
 import { NotFoundError } from "../../errors.js"
 import { memFilter } from "./Memory.js"
-import type { FilterJoinSelect, PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
+import type { PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
-import { codeFilterJoinSelect, makeETag, makeUpdateETag } from "./utils.js"
+import { makeETag, makeUpdateETag } from "./utils.js"
 
 function makeRedisStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
@@ -61,8 +61,6 @@ function makeRedisStore({ prefix }: StorageConfig) {
           const s: Store<PM, Id> = {
             all,
             filter: (f) => all.map(memFilter(f)),
-            filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
-              all.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),
             find: (id) => asMap.map((_) => Option.fromNullable(_.get(id))),
             set: (e) =>
               s

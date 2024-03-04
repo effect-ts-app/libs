@@ -4,9 +4,9 @@ import { Effect, FiberRef, flow, Option, Order, pipe, ReadonlyArray, Ref } from 
 import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
 import { get, pick } from "effect-app/utils"
 import type { RequestContext } from "../../RequestContext.js"
-import type { FilterArgs, FilterJoinSelect, PersistenceModelType, Store, StoreConfig } from "./service.js"
+import type { FilterArgs, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
-import { codeFilter, codeFilterJoinSelect, makeUpdateETag } from "./utils.js"
+import { codeFilter, makeUpdateETag } from "./utils.js"
 
 export function memFilter<T extends PersistenceModelType<string>, U extends keyof T = never>(f: FilterArgs<T, U>) {
   type M = U extends undefined ? T : Pick<T, U>
@@ -149,20 +149,6 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
               attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
             })
           ),
-      filterJoinSelect: <T extends object>(filter: FilterJoinSelect) =>
-        all
-          .pipe(
-            Effect.map((c) => c.flatMap(codeFilterJoinSelect<PM, T>(filter))),
-            Effect
-              .withSpan(
-                "Memory.filterJoinSelect [effect-app/infra/Store]",
-                {
-                  attributes: {
-                    modelName
-                  }
-                }
-              )
-          ),
       set: (e) =>
         s
           .find(e.id)
@@ -257,7 +243,6 @@ export const makeMemoryStore = () => ({
         all: Effect.flatMap(getStore, (_) => _.all),
         find: (...args) => Effect.flatMap(getStore, (_) => _.find(...args)),
         filter: (...args) => Effect.flatMap(getStore, (_) => _.filter(...args)),
-        filterJoinSelect: (...args) => Effect.flatMap(getStore, (_) => _.filterJoinSelect(...args)),
         set: (...args) => Effect.flatMap(getStore, (_) => _.set(...args)),
         batchSet: (...args) => Effect.flatMap(getStore, (_) => _.batchSet(...args)),
         bulkSet: (...args) => Effect.flatMap(getStore, (_) => _.bulkSet(...args)),

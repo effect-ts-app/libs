@@ -150,7 +150,6 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
             all: Effect.flatMap(getStore, (_) => _.all),
             find: (...args) => Effect.flatMap(getStore, (_) => _.find(...args)),
             filter: (...args) => Effect.flatMap(getStore, (_) => _.filter(...args)),
-            filterJoinSelect: (...args) => Effect.flatMap(getStore, (_) => _.filterJoinSelect(...args)),
             set: (...args) => Effect.flatMap(getStore, (_) => _.set(...args)),
             batchSet: (...args) => Effect.flatMap(getStore, (_) => _.batchSet(...args)),
             bulkSet: (...args) => Effect.flatMap(getStore, (_) => _.bulkSet(...args)),
