@@ -218,14 +218,13 @@ export class RepositoryBaseC3<
     >
   } = (q, pure, batch?: "batched" | number) =>
     this.query(q).pipe(
-      Effect.andThen((_) => {
-        console.log("$$$ query returned", _, pure, batch)
-        return Array.isArray(_)
+      Effect.andThen((_) =>
+        Array.isArray(_)
           ? batch === undefined
             ? saveManyWithPure_(this, _, pure as any)
             : saveManyWithPureBatched_(this, _, pure as any, batch === "batched" ? 100 : batch)
           : saveWithPure_(this, _ as any, pure as any)
-      })
+      )
     ) as any
 
   /**
