@@ -974,7 +974,8 @@ const makeRepoFunctions = (tag: any) => {
     queryLegacy,
     mapped,
     queryAndSavePure,
-    saveManyWithPure
+    saveManyWithPure,
+    use: (body: any) => Effect.andThen(tag, body)
   }
 }
 
