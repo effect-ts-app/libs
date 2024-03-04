@@ -210,11 +210,11 @@ export type Filts<TFieldValues extends FieldValues> = {
   ): QueryBuilder<TFieldValues>
   <
     TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
+    V extends string
   >(
     path: TFieldName,
     op: "startsWith" | "endsWith" | "contains" | "notContains" | "notStartsWith" | "notEndsWith",
-    value: V // only strings?
+    value: V
   ): QueryBuilder<TFieldValues>
   <
     TFieldName extends FieldPath<TFieldValues>,

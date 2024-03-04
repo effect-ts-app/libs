@@ -251,11 +251,11 @@ export type FilterWheres = {
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
+    V extends string
   >(
     path: TFieldName,
     op: "startsWith" | "endsWith" | "contains" | "notContains" | "notStartsWith" | "notEndsWith",
-    value: V // only strings?
+    value: V
   ): (
     current: Query<TFieldValues>
   ) => QueryWhere<TFieldValues>
@@ -322,11 +322,11 @@ export type FilterContinuations = {
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
+    V extends string
   >(
     path: TFieldName,
     op: "startsWith" | "endsWith" | "contains" | "notContains" | "notStartsWith" | "notEndsWith",
-    value: V // only strings?
+    value: V
   ): (
     current: QueryWhere<TFieldValues>
   ) => QueryWhere<TFieldValues>
