@@ -96,8 +96,7 @@ function clientFor_<M extends Requests>(models: M) {
 
       const res = Response as Schema<any>
       const parseResponse = flow(S.decodeUnknown(res), (_) => Effect.mapError(_, (err) => new ResError(err)))
-
-      const parseResponseE = flow(parseResponse, Effect.andThen(S.encode(res)))
+      const parseResponseE = flow(S.decodeUnknown(S.from(res)), (_) => Effect.mapError(_, (err) => new ResError(err)))
 
       const path = new Path(Request.path)
 
