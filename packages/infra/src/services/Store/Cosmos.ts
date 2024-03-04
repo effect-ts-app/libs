@@ -213,15 +213,14 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 parameters: [{ name: "@id", value: importedMarkerId }]
               }))
               .pipe(
-                Effect
-                  .tap((q) => logQuery(q)),
+                Effect.tap((q) => logQuery(q)),
                 Effect.flatMap((q) =>
                   Effect.promise(() =>
                     container
                       .items
                       .query<PM>(q)
                       .fetchAll()
-                      .then(({ resources }) => resources)
+                      .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._ })))
                   )
                 ),
                 Effect
@@ -241,8 +240,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     Effect
                       .sync(() => buildFilterJoinSelectCosmosQuery(filter, k, name, cursor?.skip, cursor?.limit))
                       .pipe(
-                        Effect
-                          .tap((q) => logQuery(q)),
+                        Effect.tap((q) => logQuery(q)),
                         Effect.flatMap((q) =>
                           Effect.promise(() =>
                             container
@@ -287,8 +285,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 // so we use multiple queries instead.
                 ? Effect
                   .forEach(
-                    filter
-                      .keys,
+                    filter.keys,
                     (k) =>
                       Effect
                         .sync(() => buildFindJoinCosmosQuery(filter, k, name, skip, limit))
