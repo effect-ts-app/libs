@@ -208,7 +208,7 @@ export class RepositoryBaseC3<
         q: Query<Omit<PM, "_etag">>
       ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">, "many">,
       pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
-      batched: "batched" | number
+      batch: "batched" | number
     ): Effect.Effect<
       A[],
       InvalidStateError | OptimisticConcurrencyException | E2,
@@ -216,15 +216,16 @@ export class RepositoryBaseC3<
         env: PureEnv<Evt, readonly T[], readonly T2[]>
       }>
     >
-  } = (q, pure, batched?) =>
+  } = (q, pure, batch?: "batched" | number) =>
     this.query(q).pipe(
-      Effect.andThen((_) =>
-        Array.isArray(_)
-          ? batched === undefined
+      Effect.andThen((_) => {
+        console.log("$$$ query returned", _, pure, batch)
+        return Array.isArray(_)
+          ? batch === undefined
             ? saveManyWithPure_(this, _, pure as any)
-            : saveManyWithPureBatched_(this, _, pure as any, batched as any)
+            : saveManyWithPureBatched_(this, _, pure as any, batch === "batched" ? 100 : batch)
           : saveWithPure_(this, _ as any, pure as any)
-      )
+      })
     ) as any
 
   /**
