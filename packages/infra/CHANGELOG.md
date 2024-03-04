@@ -1,5 +1,12 @@
 # @effect-app/infra
 
+## 0.211.0
+
+### Minor Changes
+
+- a34b4d2: remove legacy queries
+- b4ee211: drop legacy Where.
+
 ## 0.210.12
 
 ### Patch Changes
