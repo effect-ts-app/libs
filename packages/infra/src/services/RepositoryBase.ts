@@ -8,7 +8,6 @@ import {
   AnyPureDSL,
   byIdAndSaveWithPure,
   get,
-  queryEffect,
   type Repository,
   saveAllWithEffectInt,
   saveManyWithPure_,
@@ -16,7 +15,7 @@ import {
   saveWithPure_
 } from "./Repository.js"
 import { StoreMaker } from "./Store.js"
-import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig } from "./Store.js"
+import type { FilterArgs, PersistenceModelType, StoreConfig } from "./Store.js"
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import { toNonEmptyArray } from "@effect-app/core/Array"
@@ -35,7 +34,7 @@ import { make as makeQuery } from "./query.js"
 import type { QAll, Query, QueryEnd, QueryProjection, QueryWhere } from "./query.js"
 import * as Q from "./query.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
-import * as QB from "./Store/filterApi/query.js"
+import type * as QB from "./Store/filterApi/query.js"
 
 export interface Mapped1<PM extends { id: string }, X, R> {
   all: Effect<X[], ParseResult.ParseError, R>
@@ -82,24 +81,12 @@ export abstract class RepositoryBaseC<
     items: Iterable<T>,
     events?: Iterable<Evt>
   ) => Effect<void, InvalidStateError | OptimisticConcurrencyException>
-  abstract readonly utils: {
-    parseMany: (a: readonly PM[]) => Effect<readonly T[]>
-    parseMany2: <A, R>(
-      a: readonly PM[],
-      schema: S.Schema<A, Omit<PM, "_etag">, R>
-    ) => Effect<readonly A[], S.ParseResult.ParseError, R>
-    all: Effect<PM[]>
-    filter: FilterFunc<PM>
-    // count: (filter?: Filter<PM>) => Effect<never, never, NonNegativeInt>
-  }
   abstract readonly changeFeed: PubSub.PubSub<[T[], "save" | "remove"]>
   abstract readonly removeAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
   ) => Effect<void>
 
-  /** @deprecated use query */
-  abstract readonly mapped: Mapped<PM, Omit<PM, "_etag">>
   abstract readonly query: {
     <A, R, From extends FieldValues, TType extends "one" | "many" | "count" = "many">(
       q: (
@@ -119,6 +106,9 @@ export abstract class RepositoryBaseC<
     //   q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
     // ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
   }
+
+  /** @deprecated use query */
+  abstract readonly mapped: Mapped<PM, Omit<PM, "_etag">>
 }
 
 export abstract class RepositoryBaseC1<
@@ -149,7 +139,6 @@ export class RepositoryBaseC2<
     this.removeAndPublish = this.impl.removeAndPublish
     this.find = this.impl.find
     this.all = this.impl.all
-    this.utils = this.impl.utils
     this.changeFeed = this.impl.changeFeed
     this.mapped = this.impl.mapped
     this.query = this.impl.query
@@ -159,7 +148,6 @@ export class RepositoryBaseC2<
   override removeAndPublish
   override find
   override all
-  override utils
   override changeFeed
   override mapped
   override query
@@ -313,31 +301,6 @@ export class RepositoryBaseC3<
         .pipe(Effect.map(([item, events, a]) => [[item], events, a]))
     )
   }
-
-  /** @deprecated use query */
-  queryLegacy<S = T>(
-    // TODO: think about collectPM, collectE, and collect(Parsed)
-    _map: { filter?: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number }
-  ) {
-    return Effect.flatMap(Effect.sync(() => _map), (f) =>
-      (f.filter ? this.utils.filter(f) : this.utils.all)
-        .pipe(
-          Effect.flatMap((_) => this.utils.parseMany(_)),
-          Effect.map((_) => f.collect ? ReadonlyArray.filterMap(_, f.collect) : _ as unknown[] as S[])
-        ))
-  }
-
-  /** @deprecated use query */
-  queryAndSavePureBatched<
-    S extends T = T
-  >(
-    // TODO: think about collectPM, collectE, and collect(Parsed)
-    map: { filter: Filter<PM>; collect?: (t: T) => Option<S>; limit?: number; skip?: number },
-    batchSize = 100
-  ) {
-    return <R2, A, E2, S2 extends T>(pure: Effect<A, E2, FixEnv<R2, Evt, readonly S[], readonly S2[]>>) =>
-      Effect.flatMap(queryEffect(this, Effect.succeed(map)), (_) => this.saveManyWithPure(_, pure, batchSize))
-  }
 }
 
 type Exact<A, B> = [A] extends [B] ? [B] extends [A] ? true : false : false
@@ -415,12 +378,8 @@ export function makeRepo<
             : () => Effect.unit
           const changeFeed = yield* $(PubSub.unbounded<[T[], "save" | "remove"]>())
 
-          const allE = store.all.pipe(Effect.flatMap((items) =>
-            Effect.gen(function*($) {
-              const { set } = yield* $(cms)
-              return items.map((_) => mapReverse(_, set))
-            })
-          ))
+          const allE = cms
+            .pipe(Effect.flatMap((cm) => Effect.map(store.all, (_) => _.map((_) => mapReverse(_, cm.set)))))
 
           const all = Effect
             .flatMap(
@@ -531,33 +490,30 @@ export function makeRepo<
             })
           }
 
-          const utils = {
-            parseMany: (items) =>
-              Effect
-                .flatMap(cms, (cm) =>
-                  decodeMany(items.map((_) => mapReverse(_, cm.set)))
-                    .pipe(Effect.orDie, Effect.withSpan("parseMany"))),
-            parseMany2: (items, schema) =>
-              Effect
-                .flatMap(cms, (cm) =>
-                  S
-                    .decode(S.array(schema))(
-                      items.map((_) => mapReverse(_, cm.set) as unknown as Omit<PM, "_etag">)
-                    )
-                    .pipe(Effect.orDie, Effect.withSpan("parseMany2"))),
-            filter: <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
-              store
-                .filter(args)
-                .pipe(Effect.tap((items) =>
-                  args.select
-                    ? Effect.unit
-                    : Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
-                )),
-            all: Effect.tap(
-              store.all,
-              (items) => Effect.map(cms, ({ set }) => items.forEach((_) => set(_.id, _._etag)))
-            )
-          } satisfies Repository<T, PM, Evt, ItemType>["utils"]
+          const parseMany = (items: readonly PM[]) =>
+            Effect
+              .flatMap(cms, (cm) =>
+                decodeMany(items.map((_) => mapReverse(_, cm.set)))
+                  .pipe(Effect.orDie, Effect.withSpan("parseMany")))
+          const parseMany2 = <A, R>(
+            items: readonly PM[],
+            schema: S.Schema<A, Omit<PM, "_etag">, R>
+          ) =>
+            Effect
+              .flatMap(cms, (cm) =>
+                S
+                  .decode(S.array(schema))(
+                    items.map((_) => mapReverse(_, cm.set) as unknown as Omit<PM, "_etag">)
+                  )
+                  .pipe(Effect.orDie, Effect.withSpan("parseMany2")))
+          const filter = <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
+            store
+              .filter(args)
+              .pipe(Effect.tap((items) =>
+                args.select
+                  ? Effect.unit
+                  : Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
+              ))
 
           // TODO: For raw we should use S.from, and drop the R...
           const query: {
@@ -580,22 +536,20 @@ export function makeRepo<
           >(q: QAll<PM, A, R>) => {
             const a = Q.toFilter(q)
             const eff = a.mode === "raw"
-              ? r
-                .utils
-                .filter(a)
+              ? filter(a)
                 // TODO: mapFrom but need to support per field and dependencies
                 .pipe(Effect.andThen(flow(S.decode(S.array(S.from(a.schema ?? schema))), Effect.provide(rctx))))
               : Effect.flatMap(
-                utils.filter(a),
+                filter(a),
                 (_) =>
                   Unify
                     .unify(
                       a.schema
-                        ? utils.parseMany2(
+                        ? parseMany2(
                           _,
                           a.schema as any
                         )
-                        : utils.parseMany(_)
+                        : parseMany(_)
                     )
               )
             return pipe(
@@ -623,40 +577,36 @@ export function makeRepo<
           }) as any
 
           const r: Repository<T, PM, Evt, ItemType> = {
-            /**
-             * @internal
-             */
-            utils,
-            mapped: <A, R>(schema: S.Schema<A, any, R>) => {
-              const dec = S.decode(schema)
-              const encMany = S.encode(S.array(schema))
-              const decMany = S.decode(S.array(schema))
-              return {
-                all: cms
-                  .pipe(
-                    Effect.flatMap((cm) => Effect.map(utils.all, (_) => _.map((_) => mapReverse(_, cm.set)))),
-                    Effect.flatMap(decMany),
-                    Effect.map((_) => _ as any[])
-                  ),
-                find: (id: PM["id"]) => flatMapOption(findE(id), dec),
-                query: (b: any) =>
-                  r
-                    .utils
-                    .filter({ filter: b })
-                    .pipe(
-                      Effect.flatMap(decMany),
-                      Effect.map((_) => _ as any[])
-                    ),
-                save: (...xes: any[]) => Effect.flatMap(encMany(xes), (_) => saveAllE(_))
-              }
-            },
             changeFeed,
             itemType: name,
             find,
             all,
             saveAndPublish,
             removeAndPublish,
-            query: (q: any) => query(typeof q === "function" ? q(makeQuery()) : q) as any
+            query: (q: any) => query(typeof q === "function" ? q(makeQuery()) : q) as any,
+
+            /**
+             * @internal
+             */
+            mapped: <A, R>(schema: S.Schema<A, any, R>) => {
+              const dec = S.decode(schema)
+              const encMany = S.encode(S.array(schema))
+              const decMany = S.decode(S.array(schema))
+              return {
+                all: allE.pipe(
+                  Effect.flatMap(decMany),
+                  Effect.map((_) => _ as any[])
+                ),
+                find: (id: PM["id"]) => flatMapOption(findE(id), dec),
+                query: (b: any) =>
+                  filter({ filter: b })
+                    .pipe(
+                      Effect.flatMap(decMany),
+                      Effect.map((_) => _ as any[])
+                    ),
+                save: (...xes: any[]) => Effect.flatMap(encMany(xes), (_) => saveAllE(_))
+              }
+            }
           }
           return r
         })
@@ -667,26 +617,9 @@ export function makeRepo<
 
     return {
       make,
-      Query: QB.QueryBuilder.make<PM>(),
       Q: Q.make<Omit<PM, "_etag">>()
     }
   }
-}
-
-/**
- * only use this as a shortcut if you don't have the item already
- * @tsplus fluent Repository removeById
- */
-export function removeById<
-  T extends { id: unknown },
-  PM extends PersistenceModelType<string>,
-  Evt,
-  ItemType extends string
->(
-  self: Repository<T, PM, Evt, ItemType>,
-  id: T["id"]
-) {
-  return get(self, id).pipe(Effect.flatMap((_) => self.removeAndPublish([_])))
 }
 
 const pluralize = (s: string) =>
@@ -799,8 +732,6 @@ export interface Repos<
       },
     f: (r: Repository<T, PM, Evt, ItemType>) => Out
   ): Effect<Out, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
-  /** @deprecated use `Q` instead */
-  readonly Query: ReturnType<typeof QB.QueryBuilder.make<PM>>
   readonly Q: ReturnType<typeof Q.make<PM>>
   readonly type: Repository<T, PM, Evt, ItemType>
 }
@@ -927,14 +858,6 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     >
   }
 
-  /** @deprecated use query */
-  queryLegacy: <S = T>(map: {
-    filter?: Filter<PM>
-    collect?: (t: T) => Option<S>
-    limit?: number
-    skip?: number
-  }) => Effect<S[], never, Service>
-
   /** @experimental */
   mapped: MM<Service, PM, Omit<PM, "_etag">>
 
@@ -951,7 +874,6 @@ const makeRepoFunctions = (tag: any) => {
     get,
     query,
     queryAndSavePure,
-    queryLegacy,
     removeAndPublish,
     removeById,
     save,
@@ -971,7 +893,6 @@ const makeRepoFunctions = (tag: any) => {
     save,
     get,
     query,
-    queryLegacy,
     mapped,
     queryAndSavePure,
     saveManyWithPure,
@@ -1014,7 +935,6 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly make = mkRepo.make
       static readonly makeWith = ((a: any, b: any) => Effect.map(mkRepo.make(a), b)) as any
 
-      static readonly Query = QB.QueryBuilder.make<PM>()
       static readonly Q = Q.make<From>()
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
@@ -1062,7 +982,6 @@ export const RepositoryDefaultImpl = <Service>() => {
       static readonly make = mkRepo.make
       static readonly makeWith = ((a: any, b: any) => Effect.map(mkRepo.make(a), b)) as any
 
-      static readonly Query = QB.QueryBuilder.make<PM>()
       static readonly Q = Q.make<From>()
 
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any

@@ -53,52 +53,6 @@ export const codeFilterStatement = <E>(p: FilterR, x: E) => {
   }
 }
 
-// const or = <E extends { id: string }, NE extends E>(filters: readonly FilterResult[], x: E): Option<NE> =>
-//   filters
-//       .some((p) => {
-//         if (p.t === "and-scope") {
-//           return and(p.result, x)
-//         }
-//         if (p.t === "or-scope") {
-//           return or(p.result, x)
-//         }
-//         if (p.t === "where-scope") {
-//           return codeFilter2(filters)(x)
-//         }
-//         return codeFilterStatement(p, x)
-//       })
-//     ? Option.some(x as unknown as NE)
-//     : Option.none()
-
-// export const and = <E extends { id: string }, NE extends E>(filters: readonly FilterResult[], x: E): Option<NE> =>
-//   filters
-//       .every((p) => {
-//         if (p.t === "and-scope") {
-//           return and(p.result, x)
-//         }
-//         if (p.t === "or-scope") {
-//           return or(p.result, x)
-//         }
-//         if (p.t === "where-scope") {
-//           return codeFilter2(filters)(x)
-//         }
-//         return codeFilterStatement(p, x)
-//       })
-//     ? Option.some(x as unknown as NE)
-//     : Option.none()
-
-// // TODO: how to handle and/or outside scopes.
-// // TODO: the scopes are not about and every, or some.. they're about logical grouping. It's a logical group + and/or etc.
-// // TODO: how to convert this to code? would we compile an actual function body instead?!
-// export function codeFilter2<E extends { id: string }, NE extends E>(filters: readonly FilterResult[]) {
-//   // TODO: handle or, and, or-scope, and-scope, where-scope
-//   return (x: E) =>
-//     // AND
-//     and<E, NE>(filters, x)
-//   // OR
-//   // or<E, NE>(filters, x)
-// }
-
 export const codeFilter3 = <E>(state: readonly FilterResult[]) => (sut: E) => codeFilter3_(state, sut)
 export const codeFilter3_ = <E>(state: readonly FilterResult[], sut: E, statements: any[] = []): boolean => {
   let s = ""
