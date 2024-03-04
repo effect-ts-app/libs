@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.211.3
+
+### Patch Changes
+
+- a83f445: fix batch
+
 ## 0.211.2
 
 ### Patch Changes
