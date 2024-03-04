@@ -465,7 +465,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               Effect.promise(() =>
                 container.items.create({
                   _partitionKey: importedMarkerId,
-                  id: importedMarkerId
+                  id: importedMarkerId,
+                  ttl: -1
                 })
               )
             )
