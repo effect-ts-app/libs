@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.210.12
+
+### Patch Changes
+
+- 8cabf7a: set ttl -1 for markers
+
 ## 0.210.11
 
 ### Patch Changes
