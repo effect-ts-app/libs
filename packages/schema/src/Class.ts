@@ -257,9 +257,15 @@ const toAnnotations = (
 }
 
 export function annotate(annotations: S.DocAnnotations) {
-  return (cls: any) => {
+  return <T extends S.Class<any, any, any, any, any, any, any, any>>(cls: T): T => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    // @ts-expect-error m
     const newCls = class extends cls {
-      static get ast() {
+      constructor(...rest: any[]) {
+        // @ts-expect-error m
+        super(...rest)
+      }
+      static override get ast() {
         return AST.mergeAnnotations(
           cls.ast,
           toAnnotations(annotations)
