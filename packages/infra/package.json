@@ -216,16 +216,6 @@
         "default": "./_cjs/errors.cjs"
       }
     },
-    "./filter": {
-      "import": {
-        "types": "./dist/filter.d.ts",
-        "default": "./dist/filter.js"
-      },
-      "require": {
-        "types": "./dist/filter.d.ts",
-        "default": "./_cjs/filter.cjs"
-      }
-    },
     "./filter/types": {
       "import": {
         "types": "./dist/filter/types.d.ts",

@@ -16,12 +16,11 @@ import {
   saveWithPure_
 } from "./Repository.js"
 import { StoreMaker } from "./Store.js"
-import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig, Where } from "./Store.js"
+import type { Filter, FilterArgs, FilterFunc, PersistenceModelType, StoreConfig } from "./Store.js"
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import { toNonEmptyArray } from "@effect-app/core/Array"
 import { flatMapOption } from "@effect-app/core/Effect"
-import { makeFilters } from "@effect-app/infra/filter"
 import type { ParseResult, Schema } from "@effect-app/schema"
 import { NonNegativeInt } from "@effect-app/schema"
 import type { Context, NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
@@ -360,8 +359,6 @@ export function makeRepo<
     mapFrom: (pm: Omit<PM, "_etag">) => From,
     mapTo: (e: From, etag: string | undefined) => PM
   ) => {
-    const where = makeWhere<PM>()
-
     function mapToPersistenceModel(
       e: From,
       getEtag: (id: string) => string | undefined
@@ -670,7 +667,6 @@ export function makeRepo<
 
     return {
       make,
-      Where: where,
       Query: QB.QueryBuilder.make<PM>(),
       Q: Q.make<Omit<PM, "_etag">>()
     }
@@ -691,31 +687,6 @@ export function removeById<
   id: T["id"]
 ) {
   return get(self, id).pipe(Effect.flatMap((_) => self.removeAndPublish([_])))
-}
-
-export function makeWhere<PM extends { id: string; _etag: string | undefined }>() {
-  const f_ = makeFilters<PM>()
-  type WhereFilter = typeof f_
-
-  function makeFilter_(filter: (f: WhereFilter) => Filter<PM>) {
-    return filter(f_)
-  }
-
-  function where(
-    makeWhere: (
-      f: WhereFilter
-    ) => Where | readonly [Where, ...Where[]],
-    mode?: "or" | "and"
-  ) {
-    return makeFilter_((f) => {
-      const m = makeWhere ? makeWhere(f) : []
-      return ({
-        mode,
-        where: (Array.isArray(m) ? m as unknown as [Where, ...Where[]] : [m]) as readonly [Where, ...Where[]]
-      })
-    })
-  }
-  return where
 }
 
 const pluralize = (s: string) =>
@@ -828,8 +799,6 @@ export interface Repos<
       },
     f: (r: Repository<T, PM, Evt, ItemType>) => Out
   ): Effect<Out, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
-  /** @deprecated use `Q` instead */
-  readonly Where: ReturnType<typeof makeWhere<PM>>
   /** @deprecated use `Q` instead */
   readonly Query: ReturnType<typeof QB.QueryBuilder.make<PM>>
   readonly Q: ReturnType<typeof Q.make<PM>>
@@ -1044,7 +1013,6 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly make = mkRepo.make
       static readonly makeWith = ((a: any, b: any) => Effect.map(mkRepo.make(a), b)) as any
 
-      static readonly Where = makeWhere<PM>()
       static readonly Query = QB.QueryBuilder.make<PM>()
       static readonly Q = Q.make<From>()
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
@@ -1093,7 +1061,6 @@ export const RepositoryDefaultImpl = <Service>() => {
       static readonly make = mkRepo.make
       static readonly makeWith = ((a: any, b: any) => Effect.map(mkRepo.make(a), b)) as any
 
-      static readonly Where = makeWhere<PM>()
       static readonly Query = QB.QueryBuilder.make<PM>()
       static readonly Q = Q.make<From>()
 

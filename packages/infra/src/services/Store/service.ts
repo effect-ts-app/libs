@@ -34,19 +34,7 @@ export type Where =
     value: readonly (SupportedValues)[]
   }
 
-// default is where
-/** @deprecated: use new Q. */
-export type StoreWhereFilter = {
-  type?: "where" | undefined
-  mode?: "and" | "or" | undefined // default is and
-  where: readonly [
-    Where,
-    ...(Where[])
-  ]
-}
-export type Filter<E extends FieldValues> =
-  | StoreWhereFilter
-  | QueryBuilder<E>
+export type Filter<E extends FieldValues> = QueryBuilder<E>
 
 export interface O<PM extends PersistenceModelType<unknown>> {
   key: keyof PM

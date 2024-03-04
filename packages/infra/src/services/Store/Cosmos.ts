@@ -6,7 +6,7 @@ import { Chunk, Duration, Effect, Layer, Option, ReadonlyArray, Secret } from "e
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { dropUndefinedT, omit, pick } from "effect-app/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
-import { buildCosmosQuery, buildWhereCosmosQuery3, logQuery } from "./Cosmos/query.js"
+import { buildWhereCosmosQuery3, logQuery } from "./Cosmos/query.js"
 import { StoreMaker } from "./service.js"
 import type { FilterArgs, PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 
@@ -225,56 +225,40 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               const limit = f?.limit
               const filter = f.filter ?? { type: "new-kid", build: () => [] }
               type M = U extends undefined ? PM : Pick<PM, U>
-              return (filter.type === "new-kid"
-                ? Effect
-                  .sync(() =>
-                    buildWhereCosmosQuery3(
-                      filter.build(),
-                      name,
-                      importedMarkerId,
-                      defaultValues,
-                      f.select as NonEmptyReadonlyArray<string> | undefined,
-                      f.order as NonEmptyReadonlyArray<{ key: string; direction: "ASC" | "DESC" }> | undefined,
-                      skip,
-                      limit
-                    )
+              return Effect
+                .sync(() =>
+                  buildWhereCosmosQuery3(
+                    filter.build(),
+                    name,
+                    importedMarkerId,
+                    defaultValues,
+                    f.select as NonEmptyReadonlyArray<string> | undefined,
+                    f.order as NonEmptyReadonlyArray<{ key: string; direction: "ASC" | "DESC" }> | undefined,
+                    skip,
+                    limit
                   )
-                  .pipe(
-                    Effect.tap((q) => logQuery(q)),
-                    Effect
-                      .flatMap((q) =>
-                        Effect.promise(() =>
-                          f.select
-                            ? container
-                              .items
-                              .query<M>(q)
-                              .fetchAll()
-                              .then(({ resources }) =>
-                                resources.map((_) => ({ ...pick(defaultValues, f.select!), ..._ }))
-                              )
-                            : container
-                              .items
-                              .query<{ f: M }>(q)
-                              .fetchAll()
-                              .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._.f })))
-                        )
-                      )
-                  )
-                : Effect
-                  .sync(() => buildCosmosQuery(filter, name, importedMarkerId, defaultValues, skip, limit))
-                  .pipe(
-                    Effect.tap((q) => logQuery(q)),
-                    Effect
-                      .flatMap((q) =>
-                        Effect.promise(() =>
-                          container
+                )
+                .pipe(
+                  Effect.tap((q) => logQuery(q)),
+                  Effect
+                    .flatMap((q) =>
+                      Effect.promise(() =>
+                        f.select
+                          ? container
+                            .items
+                            .query<M>(q)
+                            .fetchAll()
+                            .then(({ resources }) =>
+                              resources.map((_) => ({ ...pick(defaultValues, f.select!), ..._ }))
+                            )
+                          : container
                             .items
                             .query<{ f: M }>(q)
                             .fetchAll()
                             .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._.f })))
-                        )
                       )
-                  ))
+                    )
+                )
                 .pipe(Effect.withSpan("Cosmos.filter [effect-app/infra/Store]", {
                   attributes: { "repository.container_id": containerId, "repository.model_name": name }
                 }))
