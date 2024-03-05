@@ -6,6 +6,7 @@ settings:
 
 overrides:
   date-fns: ^3.3.1
+  fast-check: ^3.16.0
   vue: ^3.4.21
 
 patchedDependencies:
@@ -24,9 +25,9 @@ patchedDependencies:
   eslint-plugin-codegen@0.17.0:
     hash: 3ogk7peuefdu45q3hbzcgdiuna
     path: patches/eslint-plugin-codegen@0.17.0.patch
-  fast-check@3.15.1:
+  fast-check@3.16.0:
     hash: gmhutzas2jzobvkhr72gjyjori
-    path: patches/fast-check@3.15.1.patch
+    path: patches/fast-check@3.16.0.patch
   typescript@5.3.3:
     hash: 47b6int3mwc6awldrhxqdqbz3e
     path: patches/typescript@5.3.3.patch
@@ -41,6 +42,9 @@ importers:
       date-fns:
         specifier: ^3.3.1
         version: 3.3.1
+      fast-check:
+        specifier: ^3.16.0
+        version: 3.16.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.11.24)(typescript@5.3.3)
@@ -423,8 +427,8 @@ importers:
         specifier: ^13.11.9
         version: 13.11.9
       fast-check:
-        specifier: ~3.15.1
-        version: 3.15.1(patch_hash=gmhutzas2jzobvkhr72gjyjori)
+        specifier: ^3.16.0
+        version: 3.16.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.11.24)(typescript@5.3.3)
@@ -460,7 +464,7 @@ importers:
         version: 0.46.3(@effect/schema@0.63.2)(effect@2.4.1)
       '@effect/schema':
         specifier: ^0.63.2
-        version: 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.15.1)
+        version: 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.16.0)
       '@faker-js/faker':
         specifier: ^8.4.1
         version: 8.4.1
@@ -486,8 +490,8 @@ importers:
         specifier: ^1.6.0
         version: 1.6.0
       fast-check:
-        specifier: ~3.15.1
-        version: 3.15.1(patch_hash=gmhutzas2jzobvkhr72gjyjori)
+        specifier: ^3.16.0
+        version: 3.16.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       object-hash:
         specifier: ^3.0.0
         version: 3.0.0
@@ -569,7 +573,7 @@ importers:
         version: 0.46.3(@effect/schema@0.63.2)(effect@2.4.1)
       '@effect/schema':
         specifier: ^0.63.2
-        version: 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.15.1)
+        version: 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.16.0)
       '@fp-ts/optic':
         specifier: 0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.4.1)
@@ -657,7 +661,7 @@ importers:
         version: 0.46.3(@effect/schema@0.63.2)(effect@2.4.1)
       '@effect/schema':
         specifier: ^0.63.2
-        version: 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.15.1)
+        version: 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.16.0)
       '@fp-ts/optic':
         specifier: 0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.4.1)
@@ -711,8 +715,8 @@ importers:
         specifier: ^13.11.9
         version: 13.11.9
       fast-check:
-        specifier: ~3.15.1
-        version: 3.15.1(patch_hash=gmhutzas2jzobvkhr72gjyjori)
+        specifier: ^3.16.0
+        version: 3.16.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.11.24)(typescript@5.3.3)
@@ -730,7 +734,7 @@ importers:
         version: link:../core
       '@effect/schema':
         specifier: ^0.63.2
-        version: 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.15.1)
+        version: 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.16.0)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -760,8 +764,8 @@ importers:
         specifier: ^13.11.9
         version: 13.11.9
       fast-check:
-        specifier: ~3.15.1
-        version: 3.15.1(patch_hash=gmhutzas2jzobvkhr72gjyjori)
+        specifier: ^3.16.0
+        version: 3.16.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
       ts-toolbelt:
         specifier: ^9.6.0
         version: 9.6.0
@@ -794,7 +798,7 @@ importers:
         version: 0.30.10(@effect/platform@0.46.3)(effect@2.4.1)
       '@effect/schema':
         specifier: ^0.63.2
-        version: 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.15.1)
+        version: 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.16.0)
       '@formatjs/intl':
         specifier: ^2.10.0
         version: 2.10.0(typescript@5.3.3)
@@ -1550,21 +1554,21 @@ packages:
       '@effect/schema': ^0.63.2
       effect: ^2.4.1
     dependencies:
-      '@effect/schema': 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.15.1)
+      '@effect/schema': 0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.16.0)
       effect: 2.4.1(patch_hash=k3qxbeegzohgbxipcbhbka24oy)
       find-my-way-ts: 0.1.1
       multipasta: 0.1.21
       path-browserify: 1.0.1
     dev: false
 
-  /@effect/schema@0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.15.1):
+  /@effect/schema@0.63.2(patch_hash=q7yt4qibahb6kbwjtebvim2x5y)(effect@2.4.1)(fast-check@3.16.0):
     resolution: {integrity: sha512-piS+6dlGmcX8sAPGXdY4T6QmBbY2YXVnYjUguXpClk6FL7lQ9u2aIDib5kjCpciawJjil2VwltmPnMj0NJKKQQ==}
     peerDependencies:
       effect: ^2.4.1
-      fast-check: ^3.13.2
+      fast-check: ^3.16.0
     dependencies:
       effect: 2.4.1(patch_hash=k3qxbeegzohgbxipcbhbka24oy)
-      fast-check: 3.15.1(patch_hash=gmhutzas2jzobvkhr72gjyjori)
+      fast-check: 3.16.0(patch_hash=gmhutzas2jzobvkhr72gjyjori)
     dev: false
     patched: true
 
@@ -4959,8 +4963,8 @@ packages:
       tmp: 0.0.33
     dev: true
 
-  /fast-check@3.15.1(patch_hash=gmhutzas2jzobvkhr72gjyjori):
-    resolution: {integrity: sha512-GutOXZ+SCxGaFWfHe0Pbeq8PrkpGtPxA9/hdkI3s9YzqeMlrq5RdJ+QfYZ/S93jMX+tAyqgW0z5c9ppD+vkGUw==}
+  /fast-check@3.16.0(patch_hash=gmhutzas2jzobvkhr72gjyjori):
+    resolution: {integrity: sha512-k8GtQHi4pJoRQ1gVDFQno+/FVkowo/ehiz/aCj9O/D7HRWb1sSFzNrw+iPVU8QlWtH+jNwbuN+dDVg3QkS56DQ==}
     engines: {node: '>=8.0.0'}
     dependencies:
       pure-rand: 6.0.4

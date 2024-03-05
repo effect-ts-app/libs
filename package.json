@@ -5,7 +5,7 @@
     "patchedDependencies": {
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
-      "fast-check@3.15.1": "patches/fast-check@3.15.1.patch",
+      "fast-check@3.16.0": "patches/fast-check@3.16.0.patch",
       "@fp-ts/optic@0.22.0": "patches/@fp-ts__optic@0.22.0.patch",
       "@effect/schema@0.63.2": "patches/@effect__schema@0.63.2.patch",
       "effect@2.4.1": "patches/effect@2.4.1.patch",
@@ -44,11 +44,13 @@
   },
   "resolutions": {
     "date-fns": "$date-fns",
+    "fast-check": "$fast-check",
     "vue": "$vue"
   },
   "dependencies": {
     "date-fns": "^3.3.1",
     "cross-env": "^7.0.3",
+    "fast-check": "^3.16.0",
     "ts-node": "^10.9.2",
     "vue": "^3.4.21"
   },
