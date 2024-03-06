@@ -14,7 +14,7 @@ import {
   reduce_,
   remove,
   remove_,
-  Set,
+  type Set,
   toArray as toArrayOriginal
 } from "./Set.js"
 

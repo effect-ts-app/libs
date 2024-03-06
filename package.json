@@ -9,7 +9,7 @@
       "@fp-ts/optic@0.22.0": "patches/@fp-ts__optic@0.22.0.patch",
       "@effect/schema@0.63.2": "patches/@effect__schema@0.63.2.patch",
       "effect@2.4.1": "patches/effect@2.4.1.patch",
-      "typescript@5.3.3": "patches/typescript@5.3.3.patch"
+      "typescript@5.4.1-rc": "patches/typescript@5.4.1-rc.patch"
     }
   },
   "scripts": {
@@ -102,7 +102,7 @@
     "ts-transform-paths": "^3.0.0",
     "tsc-watch": "^6.0.4",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.1-rc",
     "typescript-transform-paths": "^3.4.7",
     "vite": "^5.1.5",
     "vitest": "^1.3.1"

@@ -11,9 +11,7 @@
         "types": [
             "vitest/globals",
             "./types/modules"
-        ],
-        // temp disbaled to support ts-plus ops
-        "importsNotUsedAsValues": "preserve",
+        ]
     },
     "include": [
         "./src/**/*.ts"
