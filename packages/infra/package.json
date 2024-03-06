@@ -17,7 +17,7 @@
     "@sendgrid/mail": "^8.1.1",
     "change-case": "^5.4.3",
     "cross-fetch": "^4.0.0",
-    "fast-check": "~3.15.1",
+    "fast-check": "~3.16.0",
     "object-hash": "^3.0.0",
     "path-parser": "^6.1.0",
     "proper-lockfile": "^4.1.2",
@@ -27,7 +27,7 @@
   "devDependencies": {
     "@babel/cli": "^7.23.9",
     "@effect-app/compiler": "workspace:*",
-    "@sentry/node": "^7.104.0",
+    "@sentry/node": "^7.105.0",
     "@types/express": "^4.17.21",
     "@types/node": "~20.11.24",
     "@types/proper-lockfile": "^4.1.4",

@@ -24,7 +24,7 @@
     "redlock": "^4.2.0",
     "strip-ansi": "^7.1.0",
     "typescript": "^5.3.3",
-    "winston": "^3.11.0"
+    "winston": "^3.12.0"
   },
   "peerDependencies": {
     "@effect/platform": "^0.46.3",
