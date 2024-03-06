@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.59.2
+
+### Patch Changes
+
+- 2fd7c69: fix for comments
+
 ## 0.59.1
 
 ### Patch Changes
