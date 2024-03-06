@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.211.5
+
+### Patch Changes
+
+- c7f1283: improve captureMessage
+
 ## 0.211.4
 
 ### Patch Changes
