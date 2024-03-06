@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.59.1
+
+### Patch Changes
+
+- 5243e13: remove need for ts compiler
+
 ## 0.59.0
 
 ### Minor Changes
