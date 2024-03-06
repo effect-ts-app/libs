@@ -1,5 +1,20 @@
 # @effect-app/infra
 
+## 0.212.0
+
+### Minor Changes
+
+- d0a1774: update ts to 5.4.1-rc
+
+### Patch Changes
+
+- Updated dependencies [d0a1774]
+  - @effect-app/fluent-extensions@0.144.0
+  - @effect-app/infra-adapters@0.138.0
+  - effect-app@0.182.0
+  - @effect-app/schema@0.204.0
+  - @effect-app/core@0.151.0
+
 ## 0.211.6
 
 ### Patch Changes

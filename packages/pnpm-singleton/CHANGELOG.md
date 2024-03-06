@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.59.0
+
+### Minor Changes
+
+- d0a1774: update ts to 5.4.1-rc
+
 ## 0.58.0
 
 ### Minor Changes

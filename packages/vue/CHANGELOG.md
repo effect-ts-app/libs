@@ -1,5 +1,20 @@
 # @effect-app/vue
 
+## 0.148.0
+
+### Minor Changes
+
+- d0a1774: update ts to 5.4.1-rc
+
+### Patch Changes
+
+- Updated dependencies [d0a1774]
+  - @effect-app/fluent-extensions@0.144.0
+  - effect-app@0.182.0
+  - @effect-app/schema@0.204.0
+  - @effect-app/core@0.151.0
+  - @effect-app/vue@0.148.0
+
 ## 0.147.19
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.60.0
+
+### Minor Changes
+
+- d0a1774: update ts to 5.4.1-rc
+
 ## 0.59.2
 
 ### Patch Changes
