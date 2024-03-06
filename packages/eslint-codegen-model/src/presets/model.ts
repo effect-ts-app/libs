@@ -35,7 +35,7 @@ export const model: Preset<{
       throw Error(`Source path is not a file: ${sourcePath}`)
     }
 
-    const clss = targetContent.matchAll(/export class (\w+)[^{]*(Extended(Tagged)?Class)|ExtendedTaggedRequest/g)
+    const clss = targetContent.matchAll(/^export class (\w+)[^{]*(Extended(Tagged)?Class)|ExtendedTaggedRequest/g)
     const them = []
     for (const cls of clss) {
       let modelName = null
