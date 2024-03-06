@@ -70,7 +70,7 @@ export function captureException(error: unknown) {
   console.error(error)
 }
 
-export function reportMessage(message: string, extras: Record<string, unknown> | undefined) {
+export function reportMessage(message: string, extras?: Record<string, unknown> | undefined) {
   return RequestContextContainer.getOption.pipe(Effect.map((ctx) => {
     const context = Option.getOrUndefined(ctx)
     const scope = new Sentry.Scope()
