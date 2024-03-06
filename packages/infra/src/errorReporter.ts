@@ -70,12 +70,14 @@ export function captureException(error: unknown) {
   console.error(error)
 }
 
-export function reportMessage(message: string) {
-  Sentry.captureMessage(message)
+export function reportMessage(message: string, extras: Record<string, unknown> | undefined) {
+  return RequestContextContainer.getOption.pipe(Effect.map((ctx) => {
+    const context = Option.getOrUndefined(ctx)
+    const scope = new Sentry.Scope()
+    if (context) scope.setContext("context", context as unknown as Record<string, unknown>)
+    if (extras) scope.setContext("extras", extras)
+    Sentry.captureMessage(message, scope)
 
-  console.warn(message)
-}
-
-export function reportMessageM(message: string) {
-  return Effect.sync(() => reportMessage(message))
+    console.warn(message)
+  }))
 }
