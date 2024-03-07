@@ -557,9 +557,8 @@ export function makeRepo<
                 ? Effect.andThen(
                   eff,
                   flow(
-                    toNonEmptyArray,
-                    Effect.mapError(() => new NotFoundError({ id: "query", /* TODO */ type: name })),
-                    Effect.map((_) => _[0])
+                    ReadonlyArray.head,
+                    Effect.mapError(() => new NotFoundError({ id: "query", /* TODO */ type: name }))
                   )
                 )
                 : a.ttype === "count"

@@ -2,9 +2,10 @@ import { Effect, flow, pipe, S } from "effect-app"
 import { TagClassMakeId } from "effect-app/service"
 import { pick } from "effect-app/utils"
 import { inspect } from "util"
-import { and, make, or, order, page, project, toFilter, where } from "./query.js"
-import { RepositoryDefaultImpl } from "./RepositoryBase.js"
-import { memFilter } from "./Store/Memory.js"
+import { expect, it } from "vitest"
+import { and, make, or, order, page, project, toFilter, where } from "../src/services/query.js"
+import { RepositoryDefaultImpl } from "../src/services/RepositoryBase.js"
+import { memFilter } from "../src/services/Store/Memory.js"
 
 export class s
   extends S.Class<s>()({ id: S.StringId.withDefault, displayName: S.NonEmptyString255, n: S.Date.withDefault })

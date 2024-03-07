@@ -1,41 +1,12 @@
 {
-    "extends": "../../tsconfig.base.json",
-    "compilerOptions": {
-        "lib": [
-            "esnext"
-        ],
-        "moduleResolution": "Node16",
-        "outDir": "./dist",
-        "rootDir": "./src",
-        "tsBuildInfoFile": "./dist/.tsbuildinfo",
-        "types": [
-            "vitest/globals",
-            "./types/modules"
-        ]
+  "compilerOptions": {},
+  "extends": "../../tsconfig.base.json",
+  "references": [
+    {
+      "path": "./tsconfig.src.json"
     },
-    "include": [
-        "./src/**/*.ts"
-    ],
-    "ts-node": {
-        "require": [
-            "tsconfig-paths/register"
-        ],
-        "compilerOptions": {
-            "module": "CommonJS"
-        }
-    },
-    "references": [
-        {
-            "path": "../prelude"
-        },
-        {
-            "path": "../infra-adapters"
-        },
-        {
-            "path": "../schema"
-        },
-        {
-            "path": "../core"
-        },
-    ]
+    {
+      "path": "./tsconfig.test.json"
+    }
+  ],
 }

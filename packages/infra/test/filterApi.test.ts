@@ -1,6 +1,7 @@
-import { codeFilter3 } from "./codeFilter.js"
-import { buildWhereCosmosQuery3 } from "./Cosmos/query.js"
-import { print, QueryBuilder } from "./filterApi/query.js"
+import { describe, expect, it } from "vitest"
+import { codeFilter3 } from "../src/services/Store/codeFilter.js"
+import { buildWhereCosmosQuery3 } from "../src/services/Store/Cosmos/query.js"
+import { print, QueryBuilder } from "../src/services/Store/filterApi/query.js"
 
 const MyEntity = {
   query: QueryBuilder

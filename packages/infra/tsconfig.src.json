@@ -1,0 +1,56 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "lib": [
+            "esnext"
+        ],
+        "tsBuildInfoFile": "./dist/.tsbuildinfo",
+        "esModuleInterop": true,
+        "baseUrl": "./",
+        "rootDir": "./src",
+        // keep in here, cause madge can't detect it from extended tsconfig
+        "moduleResolution": "Node16",
+        "types": [
+            "./types/modules"
+        ],
+        "outDir": "./dist"
+    },
+    "include": [
+        "./src/**/*.ts"
+    ],
+    "exclude": [
+        "./dist",
+        "*.test.ts",
+        "node_modules",
+        "build",
+        "lib",
+        "dist",
+        "**/*.d.ts.map",
+        ".git",
+        ".data",
+        "**/.*",
+        "**/*.tmp"
+    ],
+    "ts-node": {
+        "require": [
+            "tsconfig-paths/register"
+        ],
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    },
+    "references": [
+        {
+            "path": "../prelude"
+        },
+        {
+            "path": "../infra-adapters"
+        },
+        {
+            "path": "../schema"
+        },
+        {
+            "path": "../core"
+        },
+    ]
+}
