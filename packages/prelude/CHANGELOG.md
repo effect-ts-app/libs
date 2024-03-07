@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.182.1
+
+### Patch Changes
+
+- f188543: update accessor shape
+
 ## 0.182.0
 
 ### Minor Changes
