@@ -937,8 +937,11 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly Q = Q.make<From>()
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
-
-    return assignTag<Service>()(Object.assign(Cls, makeRepoFunctions(Cls))) as any
+    const limit = Error.stackTraceLimit
+    Error.stackTraceLimit = 2
+    const creationError = new Error()
+    Error.stackTraceLimit = limit
+    return assignTag<Service>(undefined, creationError)(Object.assign(Cls, makeRepoFunctions(Cls))) as any
   }
 }
 
@@ -985,6 +988,10 @@ export const RepositoryDefaultImpl = <Service>() => {
 
       static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
     }
-    return assignTag<Service>()(Object.assign(Cls, makeRepoFunctions(Cls))) as any // impl is missing, but its marked protected
+    const limit = Error.stackTraceLimit
+    Error.stackTraceLimit = 2
+    const creationError = new Error()
+    Error.stackTraceLimit = limit
+    return assignTag<Service>(undefined, creationError)(Object.assign(Cls, makeRepoFunctions(Cls))) as any // impl is missing, but its marked protected
   }
 }
