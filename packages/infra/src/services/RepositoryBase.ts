@@ -539,6 +539,16 @@ export function makeRepo<
               ? filter(a)
                 // TODO: mapFrom but need to support per field and dependencies
                 .pipe(Effect.andThen(flow(S.decode(S.array(S.from(a.schema ?? schema))), Effect.provide(rctx))))
+              : a.mode === "collect"
+              ? filter(a)
+                // TODO: mapFrom but need to support per field and dependencies
+                .pipe(
+                  Effect.flatMap(flow(
+                    S.decode(S.array(a.schema)),
+                    Effect.map(ReadonlyArray.getSomes),
+                    Effect.provide(rctx)
+                  ))
+                )
               : Effect.flatMap(
                 filter(a),
                 (_) =>

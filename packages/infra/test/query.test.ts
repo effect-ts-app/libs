@@ -1,4 +1,4 @@
-import { Effect, flow, Layer, pipe, S } from "effect-app"
+import { Effect, flow, Layer, Option, pipe, S } from "effect-app"
 import { TagClassMakeId } from "effect-app/service"
 import { pick } from "effect-app/utils"
 import { inspect } from "util"
@@ -94,5 +94,33 @@ it("works with repo", () =>
       )
       expect(q1).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "id", "displayName")))
       expect(q2).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "displayName")))
+    })
+    .pipe(Effect.provide(Layer.mergeAll(TestRepo.Test, SomeService.toLayer())), Effect.runPromise))
+
+it("collect", () =>
+  Effect
+    .gen(function*($) {
+      yield* $(TestRepo.saveAndPublish(items))
+
+      const q = yield* $(
+        TestRepo
+          .query(flow(
+            where("displayName", "Riley"), // TODO: work with To type translation, so Date?
+            // one,
+            project(
+              S.transformTo(
+                // TODO: sample case with narrowing down a union?
+                S.from(S.struct(pick(s.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                S.to(S.option(S.string)),
+                (_) =>
+                  _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
+                    ? Option.some(`${_.displayName}-${_.n}`)
+                    : Option.none()
+              ),
+              "collect"
+            )
+          ))
+      )
+      expect(q).toEqual(["Riley-2020-01-01T00:00:00.000Z"])
     })
     .pipe(Effect.provide(Layer.mergeAll(TestRepo.Test, SomeService.toLayer())), Effect.runPromise))
