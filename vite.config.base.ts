@@ -25,11 +25,13 @@ export default function makeConfig(dirName?: string) {
       reporters: "verbose",
       globals: true
     },
-    resolve: packages.reduce((acc, cur) => {
-      acc[JSON.parse(fs.readFileSync(cur + "/package.json", "utf-8")).name] = path.resolve(cur, "src")
+    resolve: {
+      alias: packages.reduce((acc, cur) => { // workaround for /Prelude issue
+      acc[JSON.parse(fs.readFileSync(cur + "/package.json", "utf-8")).name] = path.resolve(cur, cur.endsWith("core") ? "dist" : "src")
       return acc
-    }, {})
+    }, { }) // "@effect-app/core/Prelude": path.join(__dirname, "packages/core/src/Prelude.code.ts")
   }
-  //console.log(cfg)
+  }
+  console.log(cfg)
   return cfg
 }
