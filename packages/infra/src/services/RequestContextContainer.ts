@@ -9,11 +9,13 @@ import { restoreFromRequestContext } from "./Store/Memory.js"
  * @tsplus type RequestContextContainer
  * @tsplus companion RequestContextContainer.Ops
  */
-export class RequestContextContainer extends TagClassId("effect-app/RequestContextContainer")<RequestContextContainer, {
-  requestContext: Effect<RequestContext>
-  update: (f: (rc: RequestContext) => RequestContext) => Effect<RequestContext>
-  start: (f: RequestContext) => Effect<void>
-}>() {
+export abstract class RequestContextContainer
+  extends TagClassId("effect-app/RequestContextContainer")<RequestContextContainer, {
+    requestContext: Effect<RequestContext>
+    update: (f: (rc: RequestContext) => RequestContext) => Effect<RequestContext>
+    start: (f: RequestContext) => Effect<void>
+  }>()
+{
   static get get(): Effect<RequestContext, never, RequestContextContainer> {
     return Effect.flatMap(RequestContextContainer, (_) => _.requestContext)
   }
@@ -37,7 +39,7 @@ export class RequestContextContainer extends TagClassId("effect-app/RequestConte
     )
     .pipe(
       Effect.map((ref) =>
-        new RequestContextContainer({
+        RequestContextContainer.of({
           requestContext: FiberRef.get(ref),
           update: (f: (a: RequestContext) => RequestContext) =>
             Effect.tap(FiberRef.getAndUpdate(ref, f), (rc) => Effect.annotateCurrentSpan(spanAttributes(rc))),

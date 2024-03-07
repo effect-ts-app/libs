@@ -76,7 +76,7 @@ const make = Effect.sync(() => {
         ops.set(id, copy(_.value, { updatedAt: new Date(), progress }))
       }))
   }
-  return new Operations({
+  return Operations.of({
     cleanup,
     register: Effect.tap(
       makeOp,

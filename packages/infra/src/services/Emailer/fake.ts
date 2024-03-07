@@ -1,11 +1,11 @@
-import { Effect, Layer } from "effect-app"
+import { Effect } from "effect-app"
 import { pretty } from "effect-app/utils"
 import { Emailer } from "./service.js"
 
 const makeFake = Effect
   .logDebug("FAKE Emailer Service enabled")
   .pipe(Effect.map(() =>
-    new Emailer({
+    Emailer.of({
       sendMail(msg) {
         return Effect
           .logDebug(`Fake send mail`)
@@ -17,4 +17,4 @@ const makeFake = Effect
 /**
  * @tsplus static Emailer.Ops Fake
  */
-export const FakeSendgrid = Layer.effect(Emailer, makeFake)
+export const FakeSendgrid = Emailer.toLayer(makeFake)

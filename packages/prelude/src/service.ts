@@ -153,20 +153,19 @@ export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
   Error.stackTraceLimit = 2
   const creationError = new Error()
   Error.stackTraceLimit = limit
-  const c: {
-    new(service: ServiceImpl): Readonly<ServiceImpl>
+  const c: (abstract new() => Readonly<ServiceImpl>) & {
     toLayer: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, R>
     toLayerScoped: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, Exclude<R, Scope>>
   } = class {
-    constructor(service: ServiceImpl) {
-      Object.assign(this, service)
+    constructor() {
+      throw new Error("This class should not be instantiated")
     }
     static _key?: string
     static toLayer = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
-      return Layer.effect(this as any, Effect.map(eff, (_) => new this(_)))
+      return Layer.effect(this as any, eff)
     }
     static toLayerScoped = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
-      return Layer.scoped(this as any, Effect.map(eff, (_) => new this(_)))
+      return Layer.scoped(this as any, eff)
     }
     static get key() {
       return this._key ?? (this._key = key ?? creationError.stack?.split("\n")[2] ?? this.name)
@@ -185,24 +184,26 @@ export const TagClassMake = <ServiceImpl, R, E>(
   Error.stackTraceLimit = 2
   const creationError = new Error()
   Error.stackTraceLimit = limit
-  const c: {
-    new(service: ServiceImpl): Readonly<ServiceImpl>
-    toLayer: () => Layer<Id, E, R>
-    toLayerScoped: () => Layer<Id, E, Exclude<R, Scope>>
+  const c: (abstract new() => Readonly<ServiceImpl>) & {
+    toLayer: { (): Layer<Id, E, R>; <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, R> }
+    toLayerScoped: {
+      (): Layer<Id, E, Exclude<R, Scope>>
+      <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, Exclude<R, Scope>>
+    }
     make: Effect<Id, E, R>
   } = class {
-    constructor(service: ServiceImpl) {
-      Object.assign(this, service)
+    constructor() {
+      throw new Error("This class should not be instantiated")
     }
     static _key: string
-    static make = Effect.andThen(make, (_) => new this(_))
+    static make = make
     // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
-    static toLayer = () => {
-      return Layer.effect(this as any, this.make)
+    static toLayer = (arg?: any) => {
+      return Layer.effect(this as any, arg ?? this.make)
     }
 
-    static toLayerScoped = () => {
-      return Layer.scoped(this as any, this.make)
+    static toLayerScoped = (arg?: any) => {
+      return Layer.scoped(this as any, arg ?? this.make)
     }
 
     static get key() {
@@ -220,22 +221,20 @@ export function TagClassId<const Key extends string>(key: Key) {
     Error.stackTraceLimit = 2
     const creationError = new Error()
     Error.stackTraceLimit = limit
-    const c: {
-      new(service: ServiceImpl): Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>
+    const c: (abstract new() => Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>) & {
       toLayer: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, R>
       toLayerScoped: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, Exclude<R, Scope>>
-      wrap: (service: ServiceImpl) => Id
+      of: (service: ServiceImpl) => Id
     } = class {
-      constructor(service: ServiceImpl) {
-        // this addresses prototype inheritance, but the trade-off is that the object won't be `instanceof` the Service Id class, so it's really just used as an interface only.
-        return Object.assign(Object.create(service as any), service)
+      constructor() {
+        throw new Error("This class should not be instantiated")
       }
-      static wrap = (service: ServiceImpl) => new this(service)
+      static of = (service: ServiceImpl) => service
       static toLayer = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
-        return Layer.effect(this as any, Effect.map(eff, (_) => new this(_)))
+        return Layer.effect(this as any, eff)
       }
       static toLayerScoped = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
-        return Layer.scoped(this as any, Effect.map(eff, (_) => new this(_)))
+        return Layer.scoped(this as any, eff)
       }
     } as any
 
@@ -252,31 +251,28 @@ export const TagClassMakeId = <ServiceImpl, R, E, const Key extends string>(
   Error.stackTraceLimit = 2
   const creationError = new Error()
   Error.stackTraceLimit = limit
-  const c: {
-    new(service: ServiceImpl): Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>
+  const c: (abstract new() => Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>) & {
     toLayer: { (): Layer<Id, E, R>; <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, R> }
     toLayerScoped: {
       (): Layer<Id, E, Exclude<R, Scope>>
       <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, Exclude<R, Scope>>
     }
-
-    wrap: (service: ServiceImpl) => Id
+    of: (service: ServiceImpl) => Id
     make: Effect<Id, E, R>
   } = class {
-    constructor(service: ServiceImpl) {
-      // this addresses prototype inheritance, but the trade-off is that the object won't be `instanceof` the Service Id class, so it's really just used as an interface only.
-      return Object.assign(Object.create(service as any), service)
+    constructor() {
+      throw new Error("This class should not be instantiated")
     }
 
-    static wrap = (service: ServiceImpl) => new this(service)
-    static make = Effect.andThen(make, (_) => new this(_))
+    static of = (service: ServiceImpl) => service
+    static make = make
     // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
     static toLayer = (arg?: any) => {
-      return arg ? Layer.effect(this as any, arg) : Layer.effect(this as any, this.make)
+      return Layer.effect(this as any, arg ?? this.make)
     }
 
     static toLayerScoped = (arg?: any) => {
-      return arg ? Layer.scoped(this as any, arg) : Layer.scoped(this as any, this.make)
+      return Layer.scoped(this as any, arg ?? this.make)
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any

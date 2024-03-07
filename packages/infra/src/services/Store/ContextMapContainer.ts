@@ -11,7 +11,7 @@ import { ContextMap } from "./service.js"
 /**
  * @tsplus companion ContextMapContainer.Ops
  */
-export class ContextMapContainer extends TagClassId("effect-app/ContextMapContainer")<ContextMapContainer, {
+export abstract class ContextMapContainer extends TagClassId("effect-app/ContextMapContainer")<ContextMapContainer, {
   get: Effect<ContextMap>
   start: Effect<void>
 }>() {
@@ -34,7 +34,7 @@ export class ContextMapContainer extends TagClassId("effect-app/ContextMapContai
     .pipe(
       Effect
         .map((ref) =>
-          new ContextMapContainer({
+          ContextMapContainer.of({
             get: FiberRef.get(ref),
             start: Effect.flatMap(ContextMap.make, (_) => FiberRef.set(ref, _))
           })
