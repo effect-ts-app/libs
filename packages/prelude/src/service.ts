@@ -121,99 +121,99 @@ export const proxify = <T extends object>(TagClass: T) =>
   return done
 }
 
-export const TagMake = <ServiceImpl, R, E, const Key extends string>(
-  key: Key,
-  make: Effect<ServiceImpl, E, R>
-) =>
-<Id>() => {
-  const limit = Error.stackTraceLimit
-  Error.stackTraceLimit = 2
-  const creationError = new Error()
-  Error.stackTraceLimit = limit
-  const c: {
-    new(): Context.TagClassShape<Key, ServiceImpl>
-    toLayer: () => Layer<Id, E, R>
-    toLayerScoped: () => Layer<Id, E, Exclude<R, Scope>>
-  } = class {
-    static toLayer = () => {
-      return Layer.effect(this as any, make)
-    }
+// export const TagMake = <ServiceImpl, R, E, const Key extends string>(
+//   key: Key,
+//   make: Effect<ServiceImpl, E, R>
+// ) =>
+// <Id>() => {
+//   const limit = Error.stackTraceLimit
+//   Error.stackTraceLimit = 2
+//   const creationError = new Error()
+//   Error.stackTraceLimit = limit
+//   const c: {
+//     new(): Context.TagClassShape<Key, ServiceImpl>
+//     toLayer: () => Layer<Id, E, R>
+//     toLayerScoped: () => Layer<Id, E, Exclude<R, Scope>>
+//   } = class {
+//     static toLayer = () => {
+//       return Layer.effect(this as any, make)
+//     }
 
-    static toLayerScoped = () => {
-      return Layer.scoped(this as any, make)
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any
+//     static toLayerScoped = () => {
+//       return Layer.scoped(this as any, make)
+//     }
+//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   } as any
 
-  return proxify(assignTag<Id, ServiceImpl>(key, creationError)(c))<Id, ServiceImpl>()
-}
+//   return proxify(assignTag<Id, ServiceImpl>(key, creationError)(c))<Id, ServiceImpl>()
+// }
 
-export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
-  const limit = Error.stackTraceLimit
-  Error.stackTraceLimit = 2
-  const creationError = new Error()
-  Error.stackTraceLimit = limit
-  const c: (abstract new() => Readonly<ServiceImpl>) & {
-    toLayer: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, R>
-    toLayerScoped: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, Exclude<R, Scope>>
-  } = class {
-    constructor() {
-      throw new Error("This class should not be instantiated")
-    }
-    static _key?: string
-    static toLayer = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
-      return Layer.effect(this as any, eff)
-    }
-    static toLayerScoped = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
-      return Layer.scoped(this as any, eff)
-    }
-    static get key() {
-      return this._key ?? (this._key = key ?? creationError.stack?.split("\n")[2] ?? this.name)
-    }
-  } as any
+// export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
+//   const limit = Error.stackTraceLimit
+//   Error.stackTraceLimit = 2
+//   const creationError = new Error()
+//   Error.stackTraceLimit = limit
+//   const c: (abstract new(impl: ServiceImpl) => Readonly<ServiceImpl>) & {
+//     toLayer: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, R>
+//     toLayerScoped: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, Exclude<R, Scope>>
+//   } = class {
+//     constructor(service: ServiceImpl) {
+//       Object.assign(this, service)
+//     }
+//     static _key?: string
+//     static toLayer = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
+//       return Layer.effect(this as any, eff)
+//     }
+//     static toLayerScoped = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
+//       return Layer.scoped(this as any, eff)
+//     }
+//     static get key() {
+//       return this._key ?? (this._key = key ?? creationError.stack?.split("\n")[2] ?? this.name)
+//     }
+//   } as any
 
-  return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, ServiceImpl>()
-}
+//   return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, ServiceImpl>()
+// }
 
-export const TagClassMake = <ServiceImpl, R, E>(
-  make: Effect<ServiceImpl, E, R>,
-  key?: string
-) =>
-<Id, Service = Id>() => {
-  const limit = Error.stackTraceLimit
-  Error.stackTraceLimit = 2
-  const creationError = new Error()
-  Error.stackTraceLimit = limit
-  const c: (abstract new() => Readonly<ServiceImpl>) & {
-    toLayer: { (): Layer<Id, E, R>; <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, R> }
-    toLayerScoped: {
-      (): Layer<Id, E, Exclude<R, Scope>>
-      <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, Exclude<R, Scope>>
-    }
-    make: Effect<Id, E, R>
-  } = class {
-    constructor() {
-      throw new Error("This class should not be instantiated")
-    }
-    static _key: string
-    static make = make
-    // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
-    static toLayer = (arg?: any) => {
-      return Layer.effect(this as any, arg ?? this.make)
-    }
+// export const TagClassMake = <ServiceImpl, R, E>(
+//   make: Effect<ServiceImpl, E, R>,
+//   key?: string
+// ) =>
+// <Id, Service = Id>() => {
+//   const limit = Error.stackTraceLimit
+//   Error.stackTraceLimit = 2
+//   const creationError = new Error()
+//   Error.stackTraceLimit = limit
+//   const c: (abstract new(impl: ServiceImpl) => Readonly<ServiceImpl>) & {
+//     toLayer: { (): Layer<Id, E, R>; <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, R> }
+//     toLayerScoped: {
+//       (): Layer<Id, E, Exclude<R, Scope>>
+//       <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, Exclude<R, Scope>>
+//     }
+//     make: Effect<Id, E, R>
+//   } = class {
+//     constructor(service: ServiceImpl) {
+//       Object.assign(this, service)
+//     }
+//     static _key: string
+//     static make = make
+//     // works around an issue where defining layer on the class messes up and causes the Tag to infer to `any, any` :/
+//     static toLayer = (arg?: any) => {
+//       return Layer.effect(this as any, arg ?? this.make)
+//     }
 
-    static toLayerScoped = (arg?: any) => {
-      return Layer.scoped(this as any, arg ?? this.make)
-    }
+//     static toLayerScoped = (arg?: any) => {
+//       return Layer.scoped(this as any, arg ?? this.make)
+//     }
 
-    static get key() {
-      return this._key ?? (this._key = key ?? creationError.stack?.split("\n")[2] ?? this.name)
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } as any
+//     static get key() {
+//       return this._key ?? (this._key = key ?? creationError.stack?.split("\n")[2] ?? this.name)
+//     }
+//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   } as any
 
-  return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, ServiceImpl>()
-}
+//   return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, ServiceImpl>()
+// }
 
 export function TagClassId<const Key extends string>(key: Key) {
   return <Id, ServiceImpl>() => {
@@ -222,9 +222,11 @@ export function TagClassId<const Key extends string>(key: Key) {
     const creationError = new Error()
     Error.stackTraceLimit = limit
     const c: (abstract new() => Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>) & {
-      toLayer: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, R>
-      toLayerScoped: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, Exclude<R, Scope>>
-      of: (service: ServiceImpl) => Id
+      toLayer: <E, R>(eff: Effect<Omit<Id, keyof Context.TagClassShape<any, any>>, E, R>) => Layer<Id, E, R>
+      toLayerScoped: <E, R>(
+        eff: Effect<Omit<Id, keyof Context.TagClassShape<any, any>>, E, R>
+      ) => Layer<Id, E, Exclude<R, Scope>>
+      of: (service: Omit<Id, keyof Context.TagClassShape<any, any>>) => Id
     } = class {
       constructor() {
         throw new Error("This class should not be instantiated")
@@ -252,12 +254,15 @@ export const TagClassMakeId = <ServiceImpl, R, E, const Key extends string>(
   const creationError = new Error()
   Error.stackTraceLimit = limit
   const c: (abstract new() => Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>) & {
-    toLayer: { (): Layer<Id, E, R>; <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, R> }
+    toLayer: {
+      (): Layer<Id, E, R>
+      <E, R>(eff: Effect<Omit<Id, keyof Context.TagClassShape<any, any>>, E, R>): Layer<Id, E, R>
+    }
     toLayerScoped: {
       (): Layer<Id, E, Exclude<R, Scope>>
-      <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, Exclude<R, Scope>>
+      <E, R>(eff: Effect<Context.TagClassShape<any, any>, E, R>): Layer<Id, E, Exclude<R, Scope>>
     }
-    of: (service: ServiceImpl) => Id
+    of: (service: Context.TagClassShape<any, any>) => Id
     make: Effect<Id, E, R>
   } = class {
     constructor() {
