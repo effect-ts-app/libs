@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.60.1
+
+### Patch Changes
+
+- 326c1ce: fix model gen
+
 ## 0.60.0
 
 ### Minor Changes
