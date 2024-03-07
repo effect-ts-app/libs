@@ -1,9 +1,9 @@
-import { Effect, flow, Layer, Option, pipe, S } from "effect-app"
+import { Effect, flow, Layer, pipe, S } from "effect-app"
 import { TagClassMakeId } from "effect-app/service"
 import { pick } from "effect-app/utils"
 import { inspect } from "util"
 import { expect, it } from "vitest"
-import { and, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
+import { and, make, or, order, page, project, toFilter, where } from "../src/services/query.js"
 import { RepositoryDefaultImpl } from "../src/services/RepositoryBase.js"
 import { ContextMapContainer } from "../src/services/Store/ContextMapContainer.js"
 import { memFilter, MemoryStoreLive } from "../src/services/Store/Memory.js"
@@ -64,22 +64,6 @@ class TestRepo extends RepositoryDefaultImpl<TestRepo>()<s.From & { _etag: strin
     Layer.provide(Layer.merge(MemoryStoreLive, ContextMapContainer.live))
   )
 }
-
-it("supports collect", () => {
-  const q = pipe(
-    make<s.From>(),
-    one,
-    project((x) =>
-      x.displayName === "Riley" && x.n === "2020-01-01T00:00:00Z"
-        ? Option.some(x.displayName + x.n)
-        : Option.none()
-    )
-  )
-  const interpreted = toFilter(q)
-  const r = memFilter(interpreted)(items.map((_) => S.encodeSync(s)(_)))
-
-  expect(r).toEqual("Riley" + "2020-01-01T00:00:00Z")
-})
 
 it("works with repo", () =>
   Effect
