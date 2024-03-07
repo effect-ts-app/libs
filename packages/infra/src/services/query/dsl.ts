@@ -5,8 +5,8 @@ import type { FieldValues } from "@effect-app/infra/filter/types"
 import type { FieldPath, FieldPathValue } from "@effect-app/infra/filter/types/path/eager"
 import type { Ops } from "@effect-app/infra/services/Store/filterApi/proxy"
 import type { NonNegativeInt } from "@effect-app/schema"
-import type { S } from "effect-app"
-import { Data } from "effect-app"
+import type { Option } from "effect-app"
+import { Data, S } from "effect-app"
 import type { Covariant } from "effect/Types"
 
 export type QAll<TFieldValues extends FieldValues, A = TFieldValues, R = never, TType extends "one" | "many" = "many"> =
@@ -132,7 +132,8 @@ export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPat
 export class Project<A, TFieldValues extends FieldValues, R, TType extends "one" | "many" = "many">
   extends Data.TaggedClass("project")<{
     current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
-    schema: S.Schema<A, TFieldValues, R>
+    schema?: S.Schema<A, TFieldValues, R>
+    collect?: (a: TFieldValues) => Option<A>
     mode: "raw" | "transform"
   }>
   implements QueryProjection<TFieldValues, A, R>
@@ -213,7 +214,26 @@ export const project: {
   ): (
     current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
   ) => QueryProjection<TFieldValues, A, R, TType>
-} = (schema: any, mode = "transform") => (current: any) => new Project({ current, /* TODO: why */ schema, mode } as any)
+  <
+    TFieldValues extends FieldValues,
+    A = FieldValues,
+    TType extends "one" | "many" = "many"
+  >(
+    collect: (i: TFieldValues) => Option<A>
+  ): (
+    current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
+  ) => QueryProjection<TFieldValues, A, never, TType>
+} = (schemaOrCollect: any, mode = "transform") => (current: any) =>
+  new Project(
+    {
+      current,
+      /* TODO: why */ schema: S.isSchema(schemaOrCollect)
+        ? schemaOrCollect
+        : undefined,
+      collect: !S.isSchema(schemaOrCollect) ? schemaOrCollect : undefined,
+      mode
+    } as any
+  )
 
 export type FilterWheres = {
   <
