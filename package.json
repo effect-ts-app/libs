@@ -63,7 +63,6 @@
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.89.3",
     "@effect-app/cli": "^0.61.0",
-    "@effect-app/compiler": "workspace:*",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
     "@effect-app/infra": "workspace:*",
