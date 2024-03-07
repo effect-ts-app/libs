@@ -29,8 +29,8 @@ const q = pipe(
   page({ take: 10 }),
   project(
     S.transformOrFail(
-      S.struct({ displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-      S.struct(pick(s.fields, "displayName")),
+      S.struct({ id: S.StringId, displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+      S.struct(pick(s.fields, "id", "displayName")),
       (_) => Effect.andThen(SomeService, _),
       () => Effect.die(new Error("not implemented"))
     )
@@ -53,7 +53,7 @@ it("works", () => {
 
   const processed = memFilter(interpreted)(items.map((_) => S.encodeSync(s)(_)))
 
-  expect(processed).toEqual(items.slice(0, 2).toReversed().map(({ displayName }) => ({ displayName })))
+  expect(processed).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "id", "displayName")))
 })
 
 class TestRepo extends RepositoryDefaultImpl<TestRepo>()<s.From & { _etag: string | undefined }, never>()(
@@ -92,7 +92,7 @@ it("works with repo", () =>
             )
           ))
       )
-      expect(q1).toEqual(items.slice(0, 2).toReversed().map(({ displayName }) => ({ displayName })))
-      expect(q2).toEqual(items.slice(0, 2).toReversed().map(({ displayName }) => ({ displayName })))
+      expect(q1).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "id", "displayName")))
+      expect(q2).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "displayName")))
     })
     .pipe(Effect.provide(Layer.mergeAll(TestRepo.Test, SomeService.toLayer())), Effect.runPromise))
