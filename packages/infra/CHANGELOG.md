@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 0.213.0
+
+### Minor Changes
+
+- 77366cc: don't go through service constructor
+
+### Patch Changes
+
+- Updated dependencies [77366cc]
+  - effect-app@0.183.0
+  - @effect-app/infra-adapters@0.138.2
+
 ## 0.212.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.183.0
+
+### Minor Changes
+
+- 77366cc: don't go through service constructor
+
 ## 0.182.1
 
 ### Patch Changes
