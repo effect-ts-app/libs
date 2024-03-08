@@ -1,5 +1,20 @@
 # @effect-app/infra
 
+## 0.214.0
+
+### Minor Changes
+
+- ead74a0: add "collect" option to query project
+
+### Patch Changes
+
+- b019def: fix service stack
+- Updated dependencies [58233dd]
+  - @effect-app/core@0.151.1
+  - @effect-app/infra-adapters@0.138.3
+  - effect-app@0.183.1
+  - @effect-app/schema@0.204.1
+
 ## 0.213.0
 
 ### Minor Changes
