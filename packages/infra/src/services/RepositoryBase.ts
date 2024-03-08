@@ -517,40 +517,34 @@ export function makeRepo<
 
           // TODO: For raw we should use S.from, and drop the R...
           const query: {
-            <
-              A,
-              R,
-              From extends FieldValues
-            >(
+            <A, R, From extends FieldValues>(
               q: QueryProjection<PM extends From ? From : never, A, R>
             ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
-            <
-              A,
-              R
-            >(
-              q: QAll<NoInfer<PM>, A, R>
-            ): Effect.Effect<readonly A[], never, R>
-          } = (<
-            A,
-            R
-          >(q: QAll<PM, A, R>) => {
+            <A, R>(q: QAll<NoInfer<PM>, A, R>): Effect.Effect<readonly A[], never, R>
+          } = (<A, R>(q: QAll<PM, A, R>) => {
             const a = Q.toFilter(q)
             const eff = a.mode === "raw"
               ? filter(a)
                 // TODO: mapFrom but need to support per field and dependencies
                 .pipe(Effect.andThen(flow(S.decode(S.array(S.from(a.schema ?? schema))), Effect.provide(rctx))))
+              : a.mode === "collect"
+              ? filter(a)
+                // TODO: mapFrom but need to support per field and dependencies
+                .pipe(
+                  Effect.flatMap(flow(
+                    S.decode(S.array(a.schema)),
+                    Effect.map(ReadonlyArray.getSomes),
+                    Effect.provide(rctx)
+                  ))
+                )
               : Effect.flatMap(
                 filter(a),
                 (_) =>
-                  Unify
-                    .unify(
-                      a.schema
-                        ? parseMany2(
-                          _,
-                          a.schema as any
-                        )
-                        : parseMany(_)
-                    )
+                  Unify.unify(
+                    a.schema
+                      ? parseMany2(_, a.schema as any)
+                      : parseMany(_)
+                  )
               )
             return pipe(
               a.ttype === "one"

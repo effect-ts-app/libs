@@ -5,7 +5,7 @@ import type { FieldValues } from "@effect-app/infra/filter/types"
 import type { FieldPath, FieldPathValue } from "@effect-app/infra/filter/types/path/eager"
 import type { Ops } from "@effect-app/infra/services/Store/filterApi/proxy"
 import type { NonNegativeInt } from "@effect-app/schema"
-import type { S } from "effect-app"
+import type { Option, S } from "effect-app"
 import { Data } from "effect-app"
 import type { Covariant } from "effect/Types"
 
@@ -133,7 +133,7 @@ export class Project<A, TFieldValues extends FieldValues, R, TType extends "one"
   extends Data.TaggedClass("project")<{
     current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
     schema: S.Schema<A, TFieldValues, R>
-    mode: "raw" | "transform"
+    mode: "collect" | "raw" | "transform"
   }>
   implements QueryProjection<TFieldValues, A, R>
 {
@@ -192,6 +192,17 @@ export const count: <
 */
 
 export const project: {
+  <
+    TFieldValues extends FieldValues,
+    A = FieldValues,
+    R = never,
+    TType extends "one" | "many" = "many"
+  >(
+    schema: S.Schema<Option<A>, TFieldValues, R>,
+    mode: "collect"
+  ): (
+    current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
+  ) => QueryProjection<TFieldValues, A, R, TType>
   <
     TFieldValues extends FieldValues,
     A = FieldValues,
