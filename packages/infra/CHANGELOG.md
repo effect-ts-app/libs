@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.215.0
+
+### Minor Changes
+
+- eae0701: replace "raw" with "project" (must manually call .from when interested)
+
 ## 0.214.0
 
 ### Minor Changes
