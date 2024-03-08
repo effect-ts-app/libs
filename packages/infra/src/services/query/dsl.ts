@@ -133,7 +133,7 @@ export class Project<A, TFieldValues extends FieldValues, R, TType extends "one"
   extends Data.TaggedClass("project")<{
     current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
     schema: S.Schema<A, TFieldValues, R>
-    mode: "collect" | "raw" | "transform"
+    mode: "collect" | "project" | "transform"
   }>
   implements QueryProjection<TFieldValues, A, R>
 {
@@ -210,10 +210,10 @@ export const project: {
     TType extends "one" | "many" = "many"
   >(
     schema: S.Schema<A, TFieldValues, R>,
-    mode: "raw"
+    mode: "project"
   ): (
     current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, TType>
-  ) => QueryProjection<TFieldValues, TFieldValues, R, TType>
+  ) => QueryProjection<TFieldValues, A, R, TType>
   <
     TFieldValues extends FieldValues,
     A = FieldValues,

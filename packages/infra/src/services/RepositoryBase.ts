@@ -523,10 +523,10 @@ export function makeRepo<
             <A, R>(q: QAll<NoInfer<PM>, A, R>): Effect.Effect<readonly A[], never, R>
           } = (<A, R>(q: QAll<PM, A, R>) => {
             const a = Q.toFilter(q)
-            const eff = a.mode === "raw"
+            const eff = a.mode === "project"
               ? filter(a)
                 // TODO: mapFrom but need to support per field and dependencies
-                .pipe(Effect.andThen(flow(S.decode(S.array(S.from(a.schema ?? schema))), Effect.provide(rctx))))
+                .pipe(Effect.andThen(flow(S.decode(S.array(a.schema ?? schema)), Effect.provide(rctx))))
               : a.mode === "collect"
               ? filter(a)
                 // TODO: mapFrom but need to support per field and dependencies

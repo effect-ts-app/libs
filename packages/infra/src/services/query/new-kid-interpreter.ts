@@ -15,7 +15,7 @@ type Result<TFieldValues extends FieldValues, A = TFieldValues, R = never> = {
   skip: number | undefined
   order: { key: FieldPath<TFieldValues>; direction: "ASC" | "DESC" }[]
   ttype: "one" | "many" | "count" | undefined
-  mode: "collect" | "raw" | "transform" | undefined
+  mode: "collect" | "project" | "transform" | undefined
 }
 
 const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never>(_: QAll<TFieldValues, A, R>) => {
