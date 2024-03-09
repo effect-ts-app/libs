@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.215.1
+
+### Patch Changes
+
+- update cleanup timer
+
 ## 0.215.0
 
 ### Minor Changes
