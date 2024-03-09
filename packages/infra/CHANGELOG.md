@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.216.0
+
+### Minor Changes
+
+- 5f9bb34: improve Operations service definition
+
 ## 0.215.1
 
 ### Patch Changes
