@@ -385,26 +385,6 @@
         "default": "./_cjs/services/Operations.cjs"
       }
     },
-    "./services/Operations/live": {
-      "import": {
-        "types": "./dist/services/Operations/live.d.ts",
-        "default": "./dist/services/Operations/live.js"
-      },
-      "require": {
-        "types": "./dist/services/Operations/live.d.ts",
-        "default": "./_cjs/services/Operations/live.cjs"
-      }
-    },
-    "./services/Operations/service": {
-      "import": {
-        "types": "./dist/services/Operations/service.d.ts",
-        "default": "./dist/services/Operations/service.js"
-      },
-      "require": {
-        "types": "./dist/services/Operations/service.d.ts",
-        "default": "./_cjs/services/Operations/service.cjs"
-      }
-    },
     "./services/QueueMaker/errors": {
       "import": {
         "types": "./dist/services/QueueMaker/errors.d.ts",
