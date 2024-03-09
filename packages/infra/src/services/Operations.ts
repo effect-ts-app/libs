@@ -10,6 +10,7 @@ import { reportError } from "@effect-app/infra/errorReporter"
 import { NonEmptyString2k } from "@effect-app/schema"
 import { subHours } from "date-fns"
 import { Failure, Operation, OperationId, Success } from "effect-app/Operations"
+import { FiberBag } from "effect-app/services/FiberBag"
 
 const reportAppError = reportError("Operations.Cleanup")
 
@@ -110,10 +111,11 @@ export class Operations extends TagClassMakeId("effect-app/Operations", make)<Op
             }
           }),
         Effect.schedule(Schedule.fixed(Duration.minutes(20))),
-        Effect.forkScoped
+        Effect.map((_) => _ as never),
+        FiberBag.run
       )
     )
-    .pipe(Layer.scopedDiscard, Layer.provideMerge(this.toLayer()))
+    .pipe(Layer.effectDiscard, Layer.provide(FiberBag.Live), Layer.provideMerge(this.toLayer()))
 }
 
 /**
