@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.183.2
+
+### Patch Changes
+
+- c7b8007: bag it
+
 ## 0.183.1
 
 ### Patch Changes

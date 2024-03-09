@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.216.1
+
+### Patch Changes
+
+- c7b8007: bag it
+- Updated dependencies [c7b8007]
+  - effect-app@0.183.2
+  - @effect-app/infra-adapters@0.138.4
+
 ## 0.216.0
 
 ### Minor Changes
