@@ -93,19 +93,20 @@ const make = Effect.sync(() => {
 })
 
 const cleanupLoop = Operations
-  .pipe(
-    Effect.flatMap((_) => _.cleanup),
-    Effect.exit,
-    Effect
-      .flatMap((_) => {
-        if (Exit.isSuccess(_)) {
-          return Effect.unit
-        } else {
-          return reportAppError(_.cause)
-        }
-      }),
-    Effect.schedule(Schedule.fixed(Duration.minutes(1))),
-    Effect.forkScoped
+  .use((_) =>
+    _.cleanup.pipe(
+      Effect.exit,
+      Effect
+        .flatMap((_) => {
+          if (Exit.isSuccess(_)) {
+            return Effect.unit
+          } else {
+            return reportAppError(_.cause)
+          }
+        }),
+      Effect.schedule(Schedule.fixed(Duration.minutes(20))),
+      Effect.forkScoped
+    )
   )
 
 /**
