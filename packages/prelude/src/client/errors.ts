@@ -24,7 +24,7 @@ export class InvalidStateError extends TaggedError<InvalidStateError>()("Invalid
 
 /** @tsplus type ValidationError */
 export class ValidationError extends TaggedError<ValidationError>()("ValidationError", {
-  errors: S.array(S.unknown as S.Schema<unknown, unknown, never>) // meh
+  errors: S.array(S.unknown)
 }) {
   override get message() {
     return `Validation failed: ${this.errors.map((e) => JSON.stringify(e)).join(", ")}`
