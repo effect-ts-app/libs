@@ -147,7 +147,7 @@ it("collect", () =>
               project(
                 S.transformTo(
                   // TODO: sample case with narrowing down a union?
-                  S.encoded(S.struct(pick(s.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                  S.encodedSchema(S.struct(pick(s.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
                   S.typeSchema(S.option(S.string)),
                   (_) =>
                     _.union._tag === "string"

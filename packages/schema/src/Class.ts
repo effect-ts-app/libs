@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { Types } from "@effect-app/core"
 import type { ParseOptions } from "@effect/schema/AST"
 import type { Schema, Struct } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
@@ -10,11 +11,20 @@ import pick from "lodash/pick.js"
 import type { ParseResult } from "./index.js"
 import type { AST } from "./schema.js"
 
+type _OptionalKeys<O> = {
+  [K in keyof O]-?: {} extends Pick<O, K> ? K
+    : never
+}[keyof O]
+
+type FilterOptionalKeys<A> = Omit<A, _OptionalKeys<A>>
+
 export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, Inherited, Proto>
   extends Schema<Self, I, R>, PropsExtensions<Fields>
 {
   new(
-    props: keyof C extends never ? void | {} : C,
+    props: Types.Equals<C, {}> extends true ? void | {}
+      : Types.Equals<FilterOptionalKeys<C>, {}> extends true ? void | C
+      : C,
     disableValidation?: boolean | undefined
   ): A & Omit<Inherited, keyof A> & Proto
 

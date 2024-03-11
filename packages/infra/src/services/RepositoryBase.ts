@@ -393,12 +393,12 @@ export function makeRepo<
             _.ast._tag === "Union"
               // we need to get the TypeLiteral, incase of class it's behind a transform...
               ? S.union(..._.ast.types.map((_) =>
-                (S.make(_._tag === "Transform" ? _.from : _) as unknown as Schema<T, From>)
+                (S.make(_._tag === "Transformation" ? _.from : _) as unknown as Schema<T, From>)
                   .pipe(S.pick("id"))
               ))
               : _
                   .ast
-                  ._tag === "Transform"
+                  ._tag === "Transformation"
               ? (S
                 .make(
                   _

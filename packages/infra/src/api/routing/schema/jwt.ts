@@ -17,7 +17,7 @@ export const parseJwt = <R, I, A>(
       (s, __, ast) =>
         S.ParseResult.try({
           try: () => jwtDecode(s, options),
-          catch: (e: any) => S.ParseResult.type(ast, s, e?.message)
+          catch: (e: any) => new S.ParseResult.Type(ast, s, e?.message)
         }),
       (_): Effect<string, ParseIssue> => {
         throw new Error("not implemented")

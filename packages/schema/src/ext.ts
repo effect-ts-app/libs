@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+import type { NonEmptyReadonlyArray } from "@effect-app/core"
 import { Effect, pipe } from "@effect-app/core"
 import { extendM } from "@effect-app/core/utils"
 import type { Schema } from "@effect/schema/Schema"
@@ -18,26 +19,39 @@ export const number = Object.assign(S.number, { withDefault: S.propertySignature
 /**
  * Like the default Schema `struct` but with batching enabled by default
  */
-export const struct = flow(
-  S.struct,
-  S.batching(true)
-)
+export function struct<Fields extends S.Struct.Fields, const Records extends S.IndexSignature.NonEmptyRecords>(
+  fields: Fields,
+  ...records: Records
+): S.typeLiteral<Fields, Records>
+export function struct<Fields extends S.Struct.Fields>(fields: Fields): S.struct<Fields>
+export function struct<Fields extends S.Struct.Fields, const Records extends S.IndexSignature.Records>(
+  fields: Fields,
+  ...records: Records
+): S.typeLiteral<Fields, Records> {
+  return S.struct(fields, ...records as any).pipe(S.batching(true))
+}
 
 /**
  * Like the default Schema `tuple` but with batching enabled by default
  */
-export const tuple = flow(
-  S.tuple,
-  S.batching(true)
-)
+export function tuple<
+  const Elements extends S.TupleType.Elements,
+  Rest extends NonEmptyReadonlyArray<Schema.Any>
+>(elements: Elements, ...rest: Rest): S.tupleType<Elements, Rest>
+export function tuple<Elements extends S.TupleType.Elements>(...elements: Elements): S.tuple<Elements>
+export function tuple(...args: ReadonlyArray<any>): any {
+  return S.tuple(...args).pipe(S.batching(true))
+}
 
 /**
  * Like the default Schema `nonEmptyArray` but with batching enabled by default
  */
-export const nonEmptyArray = flow(
-  S.nonEmptyArray,
-  S.batching(true)
-)
+export function nonEmptyArray<Value extends Schema.Any>(value: Value): S.nonEmptyArray<Value> {
+  return pipe(
+    S.nonEmptyArray(value),
+    S.batching(true)
+  )
+}
 
 /**
  * Like the default Schema `array` but with `withDefault` and batching enabled by default
@@ -53,11 +67,12 @@ export function array<Value extends Schema.Any>(value: Value): S.array<Value> {
 /**
  * Like the default Schema `readonlySet` but with `withDefault` and batching enabled by default
  */
-export const readonlySet = flow(
-  S.readonlySet,
-  S.batching(true),
-  (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => new Set() }) })
-)
+export const readonlySet = <Value extends Schema.Any>(value: Value): S.readonlySet<Value> =>
+  pipe(
+    S.readonlySet(value),
+    S.batching(true),
+    (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => new Set<S.Schema.Type<Value>>() }) })
+  )
 
 /**
  * Like the default Schema `readonlyMap` but with `withDefault` and batching enabled by default
