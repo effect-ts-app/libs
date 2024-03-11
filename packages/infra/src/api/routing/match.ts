@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 import type { ValidationError } from "@effect-app/infra/errors"
-import type { Struct.Fields } from "effect-app/schema"
+import type { Struct } from "effect-app/schema"
 import { type RouteDescriptorAny } from "./schema/routing.js"
 import type {} from "effect-app/utils"
 import type { Layer, Ref, Scope } from "effect-app"

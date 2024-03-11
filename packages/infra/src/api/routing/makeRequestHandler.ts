@@ -12,7 +12,7 @@ import { Effect, FiberRef, Option, S } from "effect-app"
 import type { HttpServerError } from "effect-app/http"
 import { HttpBody, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { NonEmptyString255 } from "effect-app/schema"
-import type { REST, Schema, Struct.Fields } from "effect-app/schema"
+import type { REST, Schema, Struct } from "effect-app/schema"
 import { updateRequestContext } from "../setupRequest.js"
 import { makeRequestParsers, parseRequestParams } from "./base.js"
 import type { RequestHandler, RequestHandlerBase } from "./base.js"
@@ -131,12 +131,12 @@ export function makeRequestHandler<
   const resp = response as typeof response & { struct?: Schema<any, any, any> }
   // TODO: consider if the alternative of using the struct schema is perhaps just better.
   const encoder = "struct" in resp && resp.struct
-    ? S.encode(handler.rt === "raw" ? S.from(resp.struct) : resp.struct)
+    ? S.encode(handler.rt === "raw" ? S.encodedSchema(resp.struct) : resp.struct)
     // ? (i: any) => {
     //   if (i instanceof (response as any)) return S.encodeSync(response)(i)
     //   else return S.encodeSync(response)(new (response as any)(i))
     // }
-    : S.encode(handler.rt === "raw" ? S.from(resp) : resp)
+    : S.encode(handler.rt === "raw" ? S.encodedSchema(resp) : resp)
   // const encodeResponse = adaptResponse
   //   ? (req: ReqA) => Encoder.for(adaptResponse(req))
   //   : () => encoder

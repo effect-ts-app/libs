@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Effect } from "@effect-app/core"
+import { Effect, pipe } from "@effect-app/core"
 import { extendM } from "@effect-app/core/utils"
 import type { Schema } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
@@ -42,11 +42,13 @@ export const nonEmptyArray = flow(
 /**
  * Like the default Schema `array` but with `withDefault` and batching enabled by default
  */
-export const array = flow(
-  S.array,
-  S.batching(true),
-  (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => [] }) })
-)
+export function array<Value extends Schema.Any>(value: Value): S.array<Value> {
+  return pipe(
+    S.array(value),
+    S.batching(true),
+    (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => [] as any }) })
+  )
+}
 
 /**
  * Like the default Schema `readonlySet` but with `withDefault` and batching enabled by default

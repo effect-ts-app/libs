@@ -124,8 +124,8 @@ it("collect", () =>
               project(
                 S.transformTo(
                   // TODO: sample case with narrowing down a union?
-                  S.from(S.struct(pick(s.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                  S.to(S.option(S.string)),
+                  S.encodedSchema(S.struct(pick(s.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                  S.typeSchema(S.option(S.string)),
                   (_) =>
                     _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
                       ? Option.some(`${_.displayName}-${_.n}`)
@@ -147,8 +147,8 @@ it("collect", () =>
               project(
                 S.transformTo(
                   // TODO: sample case with narrowing down a union?
-                  S.from(S.struct(pick(s.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                  S.to(S.option(S.string)),
+                  S.encoded(S.struct(pick(s.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                  S.typeSchema(S.option(S.string)),
                   (_) =>
                     _.union._tag === "string"
                       ? Option.some(_.union.value)

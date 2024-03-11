@@ -8,7 +8,7 @@ import { ValidationError } from "@effect-app/infra/errors"
 import type { Context } from "effect-app"
 import { Cause, Effect, Exit, Option } from "effect-app"
 import type { HttpRouter, HttpServerError } from "effect-app/http"
-import type { REST, Struct.Fields } from "effect-app/schema"
+import type { REST, Struct } from "effect-app/schema"
 import type { Simplify } from "effect/Types"
 
 export type RouteMatch<
