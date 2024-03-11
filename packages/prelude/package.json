@@ -8,7 +8,7 @@
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@tsconfig/strictest": "^2.0.3",
-    "date-fns": "^3.3.1",
+    "date-fns": "^3.4.0",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.6",
     "path-parser": "^6.1.0",
