@@ -104,20 +104,20 @@ export const SupportedErrors = S.union(
 )
 // .pipe(named("SupportedErrors"))
 // .pipe(withDefaults)
-export type SupportedErrors = S.Schema.To<typeof SupportedErrors>
+export type SupportedErrors = S.Schema.Type<typeof SupportedErrors>
 
 // ideal?
 // export const QueryErrors = union({ ...GeneralErrors })
 //   .pipe(named("QueryErrors"))
 //   .pipe(withDefaults)
-// export type QueryErrors = Schema.To<typeof QueryErrors>
+// export type QueryErrors = Schema.Type<typeof QueryErrors>
 // export const MutationErrors = union({ ...GeneralErrors, ...GeneralErrors })
 //   .pipe(named("MutationErrors"))
 //   .pipe(withDefaults)
 
-// export type MutationErrors = Schema.To<typeof MutationErrors>
+// export type MutationErrors = Schema.Type<typeof MutationErrors>
 
 export const MutationErrors = SupportedErrors
 export const QueryErrors = SupportedErrors
-export type MutationErrors = S.Schema.To<typeof MutationErrors>
-export type QueryErrors = S.Schema.To<typeof QueryErrors>
+export type MutationErrors = S.Schema.Type<typeof MutationErrors>
+export type QueryErrors = S.Schema.Type<typeof QueryErrors>

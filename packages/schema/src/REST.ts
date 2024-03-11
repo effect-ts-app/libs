@@ -5,7 +5,7 @@ import { Path } from "path-parser"
 
 import type * as Methods from "./Methods.js"
 
-import type { FromStruct, Schema, StructFields, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
+import type { FromStruct, Schema, Struct, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
 import * as Context from "effect/Context"
 import type { Simplify } from "effect/Types"
@@ -60,10 +60,10 @@ export const reqBrand = Symbol()
 // Actually GET + DELETE
 export interface QueryRequest<
   M,
-  Path extends StructFields | undefined,
-  Query extends StructFields | undefined,
-  Headers extends StructFields | undefined,
-  Fields extends StructFields,
+  Path extends Struct.Fields | undefined,
+  Query extends Struct.Fields | undefined,
+  Headers extends Struct.Fields | undefined,
+  Fields extends Struct.Fields,
   PPath extends `/${string}`
 > extends
   S.Class<
@@ -89,11 +89,11 @@ export interface QueryRequest<
 // Actually all other methods except GET + DELETE
 export interface BodyRequest<
   M,
-  Path extends StructFields | undefined,
-  Body extends StructFields | undefined,
-  Query extends StructFields | undefined,
-  Headers extends StructFields | undefined,
-  Fields extends StructFields,
+  Path extends Struct.Fields | undefined,
+  Body extends Struct.Fields | undefined,
+  Query extends Struct.Fields | undefined,
+  Headers extends Struct.Fields | undefined,
+  Fields extends Struct.Fields,
   PPath extends `/${string}`
 > extends
   S.Class<
@@ -162,30 +162,30 @@ type OrAny<T> = Exclude<T, undefined>
 // type OrUndefined<T> = T extends S.Schema<any, any> ? undefined : S.Schema<any, any>
 
 // TODO: Somehow ensure that Self and M are related..
-// type Ensure<M, Self extends S.Schema<any, any>> = M extends S.Schema.To<Self> ? M : never
+// type Ensure<M, Self extends S.Schema<any, any>> = M extends S.Schema.Type<Self> ? M : never
 
 export function AutoRequest<M>(__name?: string) {
-  function a<Headers extends StructFields, PPath extends `/${string}`>(
+  function a<Headers extends Struct.Fields, PPath extends `/${string}`>(
     method: Methods.ReadMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: Headers
     }
-  ): QueryRequest<M, undefined, undefined, Headers, StructFields, PPath>
-  function a<Path extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
+  ): QueryRequest<M, undefined, undefined, Headers, Struct.Fields, PPath>
+  function a<Path extends Struct.Fields, Headers extends Struct.Fields, PPath extends `/${string}`>(
     method: Methods.ReadMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: Headers
       path: Path
     }
   ): QueryRequest<M, Path, undefined, Headers, Path, PPath>
-  function a<Query extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
+  function a<Query extends Struct.Fields, Headers extends Struct.Fields, PPath extends `/${string}`>(
     method: Methods.ReadMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     {
       headers,
       query
@@ -195,14 +195,14 @@ export function AutoRequest<M>(__name?: string) {
     }
   ): QueryRequest<M, undefined, Query, Headers, Query, PPath>
   function a<
-    QueryFields extends StructFields,
-    PathFields extends StructFields,
-    HeadersFields extends StructFields,
+    QueryFields extends Struct.Fields,
+    PathFields extends Struct.Fields,
+    HeadersFields extends Struct.Fields,
     PPath extends `/${string}`
   >(
     method: Methods.ReadMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: HeadersFields
       path: PathFields
@@ -217,14 +217,14 @@ export function AutoRequest<M>(__name?: string) {
     PPath
   >
   function a<
-    PathFields extends StructFields,
-    QueryFields extends StructFields,
-    HeadersFields extends StructFields,
+    PathFields extends Struct.Fields,
+    QueryFields extends Struct.Fields,
+    HeadersFields extends Struct.Fields,
     PPath extends `/${string}`
   >(
     method: Methods.ReadMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: HeadersFields
       path?: PathFields
@@ -254,27 +254,27 @@ export function AutoRequest<M>(__name?: string) {
 }
 
 export function QueryRequest<M>(__name?: string) {
-  function a<Headers extends StructFields, PPath extends `/${string}`>(
+  function a<Headers extends Struct.Fields, PPath extends `/${string}`>(
     method: Methods.ReadMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: Headers
     }
-  ): QueryRequest<M, undefined, undefined, Headers, StructFields, PPath>
-  function a<Path extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
+  ): QueryRequest<M, undefined, undefined, Headers, Struct.Fields, PPath>
+  function a<Path extends Struct.Fields, Headers extends Struct.Fields, PPath extends `/${string}`>(
     method: Methods.ReadMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: Headers
       path: Path
     }
   ): QueryRequest<M, Path, undefined, Headers, Path, PPath>
-  function a<Query extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
+  function a<Query extends Struct.Fields, Headers extends Struct.Fields, PPath extends `/${string}`>(
     method: Methods.ReadMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     {
       headers,
       query
@@ -284,14 +284,14 @@ export function QueryRequest<M>(__name?: string) {
     }
   ): QueryRequest<M, undefined, Query, Headers, Query, PPath>
   function a<
-    QueryFields extends StructFields,
-    PathFields extends StructFields,
-    HeadersFields extends StructFields,
+    QueryFields extends Struct.Fields,
+    PathFields extends Struct.Fields,
+    HeadersFields extends Struct.Fields,
     PPath extends `/${string}`
   >(
     method: Methods.ReadMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: HeadersFields
       path: PathFields
@@ -306,14 +306,14 @@ export function QueryRequest<M>(__name?: string) {
     PPath
   >
   function a<
-    PathFields extends StructFields,
-    QueryFields extends StructFields,
-    HeadersFields extends StructFields,
+    PathFields extends Struct.Fields,
+    QueryFields extends Struct.Fields,
+    HeadersFields extends Struct.Fields,
     PPath extends `/${string}`
   >(
     method: Methods.ReadMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: HeadersFields
       path?: PathFields
@@ -343,41 +343,41 @@ export function QueryRequest<M>(__name?: string) {
 }
 
 export function BodyRequest<M>(__name?: string) {
-  function a<Headers extends StructFields, PPath extends `/${string}`>(
+  function a<Headers extends Struct.Fields, PPath extends `/${string}`>(
     method: Methods.WriteMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: Headers
     }
   ): BodyRequest<M, undefined, undefined, undefined, Headers, {}, PPath>
-  function a<Path extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
+  function a<Path extends Struct.Fields, Headers extends Struct.Fields, PPath extends `/${string}`>(
     method: Methods.WriteMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: Headers
       path: Path
     }
   ): BodyRequest<M, Path, undefined, undefined, Headers, Path, PPath>
-  function a<Body extends StructFields, Headers extends StructFields, PPath extends `/${string}`>(
+  function a<Body extends Struct.Fields, Headers extends Struct.Fields, PPath extends `/${string}`>(
     method: Methods.WriteMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: Headers
       body: Body
     }
   ): BodyRequest<M, undefined, Body, undefined, Headers, Body, PPath>
   function a<
-    BodyFields extends StructFields,
-    QueryFields extends StructFields,
-    HeadersFields extends StructFields,
+    BodyFields extends Struct.Fields,
+    QueryFields extends Struct.Fields,
+    HeadersFields extends Struct.Fields,
     PPath extends `/${string}`
   >(
     method: Methods.WriteMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: HeadersFields
       body: BodyFields
@@ -393,14 +393,14 @@ export function BodyRequest<M>(__name?: string) {
     PPath
   >
   function a<
-    QueryFields extends StructFields,
-    PathFields extends StructFields,
-    HeadersFields extends StructFields,
+    QueryFields extends Struct.Fields,
+    PathFields extends Struct.Fields,
+    HeadersFields extends Struct.Fields,
     PPath extends `/${string}`
   >(
     method: Methods.WriteMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: HeadersFields
       path: PathFields
@@ -416,14 +416,14 @@ export function BodyRequest<M>(__name?: string) {
     PPath
   >
   function a<
-    BodyFields extends StructFields,
-    PathFields extends StructFields,
-    HeadersFields extends StructFields,
+    BodyFields extends Struct.Fields,
+    PathFields extends Struct.Fields,
+    HeadersFields extends Struct.Fields,
     PPath extends `/${string}`
   >(
     method: Methods.WriteMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: HeadersFields
       path: PathFields
@@ -439,15 +439,15 @@ export function BodyRequest<M>(__name?: string) {
     PPath
   >
   function a<
-    BodyFields extends StructFields,
-    PathFields extends StructFields,
-    QueryFields extends StructFields,
-    HeadersFields extends StructFields,
+    BodyFields extends Struct.Fields,
+    PathFields extends Struct.Fields,
+    QueryFields extends Struct.Fields,
+    HeadersFields extends Struct.Fields,
     PPath extends `/${string}`
   >(
     method: Methods.WriteMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: HeadersFields
       path: PathFields
@@ -464,15 +464,15 @@ export function BodyRequest<M>(__name?: string) {
     PPath
   >
   function a<
-    Path extends StructFields,
-    Body extends StructFields,
-    Query extends StructFields,
-    Headers extends StructFields,
+    Path extends Struct.Fields,
+    Body extends Struct.Fields,
+    Query extends Struct.Fields,
+    Headers extends Struct.Fields,
     PPath extends `/${string}`
   >(
     method: Methods.WriteMethods,
     path: PPath,
-    s: StructFields,
+    s: Struct.Fields,
     _: {
       headers?: Headers
       path?: Path
@@ -505,7 +505,7 @@ export function BodyRequest<M>(__name?: string) {
 
 export interface Request<
   M,
-  Fields extends StructFields,
+  Fields extends Struct.Fields,
   Path extends `/${string}`,
   Method extends SupportedMethods
 > extends
@@ -531,7 +531,7 @@ export type PathParams<Path extends string> = Path extends `:${infer Param}${Sep
   : Path extends `${infer _Prefix}:${infer Rest}` ? PathParams<`:${Rest}`>
   : never
 
-export type IfPathPropsProvided<Path extends string, B extends StructFields, C> =
+export type IfPathPropsProvided<Path extends string, B extends Struct.Fields, C> =
   // Must test the PathParams inside here, as when they evaluate to never, the whole type would otherwise automatically resolve to never
   PathParams<Path> extends never ? C
     : PathParams<Path> extends keyof B ? C
@@ -598,10 +598,10 @@ function MethodReqProps2_<Method extends SupportedMethods, Path extends `/${stri
       M,
       Config
     >
-    function a<Fields extends StructFields>(
+    function a<Fields extends Struct.Fields>(
       fields: Fields
     ): BuildRequest<Fields, Path, Method, M, Config>
-    function a<Fields extends StructFields>(fields?: Fields) {
+    function a<Fields extends Struct.Fields>(fields?: Fields) {
       const req = buildReq<M>(__name)
       const r = fields ? req(method, path, fields, config) : req(method, path, {}, config)
       return r
@@ -618,12 +618,12 @@ function buildReq<M>(name?: string) {
   function a<
     Path extends `/${string}`,
     Method extends SupportedMethods,
-    Fields extends StructFields,
+    Fields extends Struct.Fields,
     Config extends object = {}
   >(
     method: Method,
     path: Path,
-    self: StructFields,
+    self: Struct.Fields,
     config?: Config
   ) {
     return makeRequest<Fields, Path, Method, M, Config>(
@@ -644,7 +644,7 @@ export function parsePathParams<Path extends `/${string}`>(path: Path) {
 }
 
 type BuildRequest<
-  Fields extends StructFields,
+  Fields extends Struct.Fields,
   Path extends `/${string}`,
   Method extends SupportedMethods,
   M,
@@ -677,7 +677,7 @@ type BuildRequest<
 
 // NOTE: This ignores the original schema after building the new
 export function makeRequest<
-  Fields extends StructFields,
+  Fields extends Struct.Fields,
   Path extends `/${string}`,
   Method extends SupportedMethods,
   M,
@@ -685,7 +685,7 @@ export function makeRequest<
 >(
   method: Method,
   path: Path,
-  s: StructFields,
+  s: Struct.Fields,
   __name?: string,
   config?: Config
 ): BuildRequest<Fields, Path, Method, M, Config> {
@@ -738,7 +738,7 @@ export function makeRequest<
 }
 
 // export function adaptRequest<
-//   Fields extends StructFields,
+//   Fields extends Struct.Fields,
 //   Path extends `/${string}`,
 //   Method extends SupportedMethods,
 //   M,

@@ -15,7 +15,7 @@ import { AST } from "./schema.js"
 export interface EnhancedClass<A, I, R, C, Self, Fields, Inherited = {}, Proto = {}>
   extends S.Class<A, I, R, C, Self, Fields, Inherited, Proto>, PropsExtensions<Fields>
 {
-  readonly extend: <Extended = "Effect.orDie">() => <FieldsB extends S.StructFields>(
+  readonly extend: <Extended = "Effect.orDie">() => <FieldsB extends S.Struct.Fields>(
     fields: FieldsB
   ) => [Extended] extends ["Effect.orDie"] ? MissingSelfGeneric<"Base.extend">
     : EnhancedClass<
@@ -30,7 +30,7 @@ export interface EnhancedClass<A, I, R, C, Self, Fields, Inherited = {}, Proto =
     >
 
   readonly transformOrFail: <Transformed = "Effect.orDie">() => <
-    FieldsB extends S.StructFields,
+    FieldsB extends S.Struct.Fields,
     R2,
     R3
   >(
@@ -58,7 +58,7 @@ export interface EnhancedClass<A, I, R, C, Self, Fields, Inherited = {}, Proto =
     >
 
   readonly transformOrFailFrom: <Transformed = "Effect.orDie">() => <
-    FieldsB extends S.StructFields,
+    FieldsB extends S.Struct.Fields,
     R2,
     R3
   >(
@@ -90,27 +90,27 @@ type MissingSelfGeneric<Usage extends string, Params extends string = ""> =
   `Missing \`Self\` generic - use \`class Self extends ${Usage}<Self>()(${Params}{ ... })\``
 
 export interface PropsExtensions<Fields> {
-  include: <NewProps extends S.StructFields>(
+  include: <NewProps extends S.Struct.Fields>(
     fnc: (fields: Fields) => NewProps
   ) => NewProps
   pick: <P extends keyof Fields>(...keys: readonly P[]) => Pick<Fields, P>
   omit: <P extends keyof Fields>(...keys: readonly P[]) => Omit<Fields, P>
 }
 
-export function include<Fields extends S.StructFields>(fields: Fields) {
-  return <NewProps extends S.StructFields>(
+export function include<Fields extends S.Struct.Fields>(fields: Fields) {
+  return <NewProps extends S.Struct.Fields>(
     fnc: (fields: Fields) => NewProps
   ) => include_(fields, fnc)
 }
 
 export function include_<
-  Fields extends S.StructFields,
-  NewProps extends S.StructFields
+  Fields extends S.Struct.Fields,
+  NewProps extends S.Struct.Fields
 >(fields: Fields, fnc: (fields: Fields) => NewProps) {
   return fnc(fields)
 }
 
-export const Class: <Self = "Effect.orDie">() => <Fields extends S.StructFields>(
+export const Class: <Self = "Effect.orDie">() => <Fields extends S.Struct.Fields>(
   fields: Fields
 ) => [Self] extends ["Effect.orDie"] ? MissingSelfGeneric<"Class">
   : EnhancedClass<
@@ -129,7 +129,7 @@ export const Class: <Self = "Effect.orDie">() => <Fields extends S.StructFields>
     } as any
   }
 
-export const TaggedClass: <Self = "Effect.orDie">() => <Tag extends string, Fields extends S.StructFields>(
+export const TaggedClass: <Self = "Effect.orDie">() => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
   fields: Fields
 ) => [Self] extends ["Effect.orDie"] ? MissingSelfGeneric<"Class">
@@ -150,7 +150,7 @@ export const TaggedClass: <Self = "Effect.orDie">() => <Tag extends string, Fiel
     } as any
   }
 
-export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.StructFields>(
+export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.Struct.Fields>(
   fields: Fields
 ) =>
   & EnhancedClass<
@@ -170,7 +170,7 @@ export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.StructFields
     >
   } = Class as any
 
-export const ExtendedTaggedClass: <Self, SelfFrom>() => <Tag extends string, Fields extends S.StructFields>(
+export const ExtendedTaggedClass: <Self, SelfFrom>() => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
   fields: Fields
 ) =>
@@ -291,7 +291,7 @@ export function FromClassBase<T>() {
 }
 export function FromClass<Cls>() {
   return FromClassBase<
-    S.Schema.From<
+    S.Schema.Encoded<
       Cls extends { structFrom: S.Schema<any, any, any> } ? Cls["structFrom"]
         : Cls extends { struct: S.Schema<any, any, any> } ? Cls["struct"]
         : never

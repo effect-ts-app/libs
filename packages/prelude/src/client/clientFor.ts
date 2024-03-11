@@ -213,16 +213,18 @@ function clientFor_<M extends Requests>(models: M) {
     }, {} as Client<M>))
 }
 
-export type ExtractResponse<T> = T extends Schema<any, any, any> ? Schema.To<T>
+export type ExtractResponse<T> = T extends Schema<any, any, any> ? Schema.Type<T>
   : T extends unknown ? void
   : never
 
-export type ExtractEResponse<T> = T extends Schema<any, any, any> ? Schema.From<T>
+export type ExtractEResponse<T> = T extends Schema<any, any, any> ? Schema.Encoded<T>
   : T extends unknown ? void
   : never
 
 type HasEmptyTo<T extends Schema<any, any, any>> = T extends { struct: Schema<any, any, any> }
-  ? Schema.To<T["struct"]> extends Record<any, never> ? true : Schema.To<T> extends Record<any, never> ? true : false
+  ? Schema.Type<T["struct"]> extends Record<any, never> ? true
+  : Schema.Type<T> extends Record<any, never> ? true
+  : false
   : false
 
 type RequestHandlers<R, E, M extends Requests> = {

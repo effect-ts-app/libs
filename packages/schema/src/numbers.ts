@@ -15,9 +15,9 @@ export const PositiveInt = extendM(
     S.identifier("PositiveInt"),
     withDefaults
   ),
-  (s) => ({ withDefault: S.withDefaultConstructor(s, () => s(1)) })
+  (s) => ({ withDefault: S.propertySignature(s, { default: () => s(1) }) })
 )
-export type PositiveInt = S.Schema.To<typeof PositiveInt>
+export type PositiveInt = S.Schema.Type<typeof PositiveInt>
 
 export interface NonNegativeIntBrand extends Simplify<B.Brand<"NonNegativeInt"> & IntBrand & NonNegativeNumberBrand> {}
 export const NonNegativeInt = extendM(
@@ -27,16 +27,16 @@ export const NonNegativeInt = extendM(
     S.identifier("NonNegativeInt"),
     withDefaults
   ),
-  (s) => ({ withDefault: S.withDefaultConstructor(s, () => s(0)) })
+  (s) => ({ withDefault: S.propertySignature(s, { default: () => s(0) }) })
 )
-export type NonNegativeInt = S.Schema.To<typeof NonNegativeInt>
+export type NonNegativeInt = S.Schema.Type<typeof NonNegativeInt>
 
 export interface IntBrand extends Simplify<B.Brand<"Int">> {}
 export const Int = extendM(
   S.Int.pipe(fromBrand(nominal<IntBrand>(), { jsonSchema: {} }), S.identifier("Int"), withDefaults),
-  (s) => ({ withDefault: S.withDefaultConstructor(s, () => s(0)) })
+  (s) => ({ withDefault: S.propertySignature(s, { default: () => s(0) }) })
 )
-export type Int = S.Schema.To<typeof Int>
+export type Int = S.Schema.Type<typeof Int>
 
 export interface PositiveNumberBrand extends Simplify<B.Brand<"PositiveNumber"> & NonNegativeNumberBrand> {}
 export const PositiveNumber = extendM(
@@ -46,9 +46,9 @@ export const PositiveNumber = extendM(
     S.identifier("PositiveNumber"),
     withDefaults
   ),
-  (s) => ({ withDefault: S.withDefaultConstructor(s, () => s(1)) })
+  (s) => ({ withDefault: S.propertySignature(s, { default: () => s(1) }) })
 )
-export type PositiveNumber = S.Schema.To<typeof PositiveNumber>
+export type PositiveNumber = S.Schema.Type<typeof PositiveNumber>
 
 export interface NonNegativeNumberBrand extends Simplify<B.Brand<"NonNegativeNumber">> {}
 export const NonNegativeNumber = extendM(
@@ -60,9 +60,9 @@ export const NonNegativeNumber = extendM(
       S.identifier("NonNegativeNumber"),
       withDefaults
     ),
-  (s) => ({ withDefault: S.withDefaultConstructor(s, () => s(0)) })
+  (s) => ({ withDefault: S.propertySignature(s, { default: () => s(0) }) })
 )
-export type NonNegativeNumber = S.Schema.To<typeof NonNegativeNumber>
+export type NonNegativeNumber = S.Schema.Type<typeof NonNegativeNumber>
 
 /** @deprecated Not an actual decimal */
 export const NonNegativeDecimal = NonNegativeNumber

@@ -16,12 +16,12 @@ export class s extends S.Class<s>()({
   id: S.StringId.withDefault,
   displayName: S.NonEmptyString255,
   n: S.Date.withDefault,
-  union: someUnion.pipe(
-    S.withDefaultConstructor(() => ({ _tag: "string", value: "hi" }) as S.Schema.To<typeof someUnion>)
-  )
+  union: S.propertySignature(someUnion, {
+    default: () => ({ _tag: "string", value: "hi" }) as S.Schema.Type<typeof someUnion>
+  })
 }) {}
 export declare namespace s {
-  export type From = S.Schema.From<typeof s>
+  export type From = S.Schema.Encoded<typeof s>
 }
 
 const MakeSomeService = Effect.succeed({ a: 1 })

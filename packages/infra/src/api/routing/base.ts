@@ -8,7 +8,7 @@ import { ValidationError } from "@effect-app/infra/errors"
 import type { Context } from "effect-app"
 import { Cause, Effect, Exit, Option } from "effect-app"
 import type { HttpRouter, HttpServerError } from "effect-app/http"
-import type { REST, StructFields } from "effect-app/schema"
+import type { REST, Struct.Fields } from "effect-app/schema"
 import type { Simplify } from "effect/Types"
 
 export type RouteMatch<
@@ -49,13 +49,13 @@ export interface ReqHandler<
   rt: "raw" | "d"
 }
 
-export type ReqFromSchema<ReqSchema extends S.Schema<any, any, any>> = S.Schema.To<ReqSchema>
+export type ReqFromSchema<ReqSchema extends S.Schema<any, any, any>> = S.Schema.Type<ReqSchema>
 
 export type Extr<T> = T extends { Model: S.Schema<any, any, any> } ? T["Model"]
   : T extends S.Schema<any, any, any> ? T
   : never
 
-export type ResFromSchema<ResSchema> = S.Schema.To<Extr<ResSchema>>
+export type ResFromSchema<ResSchema> = S.Schema.Type<Extr<ResSchema>>
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<any, any, infer R>
@@ -91,11 +91,11 @@ export function decodeErrors(x: unknown) {
 
 // const structValidation = DSL.structF(ValidationApplicative)
 export function parseRequestParams<
-  PathA extends StructFields,
-  CookieA extends StructFields,
-  QueryA extends StructFields,
-  BodyA extends StructFields,
-  HeaderA extends StructFields
+  PathA extends Struct.Fields,
+  CookieA extends Struct.Fields,
+  QueryA extends Struct.Fields,
+  BodyA extends Struct.Fields,
+  HeaderA extends Struct.Fields
 >(
   parsers: RequestParsers<PathA, CookieA, QueryA, BodyA, HeaderA>
 ) {
@@ -196,13 +196,13 @@ function makeError(type: string) {
 export function makeRequestParsers<
   R,
   M,
-  PathA extends StructFields,
-  CookieA extends StructFields,
-  QueryA extends StructFields,
-  BodyA extends StructFields,
-  HeaderA extends StructFields,
+  PathA extends Struct.Fields,
+  CookieA extends Struct.Fields,
+  QueryA extends Struct.Fields,
+  BodyA extends Struct.Fields,
+  HeaderA extends Struct.Fields,
   ReqA extends PathA & QueryA & BodyA,
-  ResA extends StructFields,
+  ResA extends Struct.Fields,
   Errors,
   PPath extends `/${string}`,
   CTX,
@@ -288,11 +288,11 @@ export function makeRequestParsers<
 type Decode<A> = (u: unknown) => Effect<A, unknown>
 
 export interface RequestParsers<
-  PathA extends StructFields,
-  CookieA extends StructFields,
-  QueryA extends StructFields,
-  BodyA extends StructFields,
-  HeaderA extends StructFields
+  PathA extends Struct.Fields,
+  CookieA extends Struct.Fields,
+  QueryA extends Struct.Fields,
+  BodyA extends Struct.Fields,
+  HeaderA extends Struct.Fields
 > {
   parseHeaders: Decode<Option<Simplify<S.ToStruct<HeaderA>>>>
   parseQuery: Decode<Option<Simplify<S.ToStruct<QueryA>>>>
@@ -307,11 +307,11 @@ export type EffectDeps<A> = {
 
 export type Request<
   M,
-  PathA extends StructFields,
-  CookieA extends StructFields,
-  QueryA extends StructFields,
-  BodyA extends StructFields,
-  HeaderA extends StructFields,
+  PathA extends Struct.Fields,
+  CookieA extends Struct.Fields,
+  QueryA extends Struct.Fields,
+  BodyA extends Struct.Fields,
+  HeaderA extends Struct.Fields,
   ReqA extends PathA & QueryA & BodyA,
   PPath extends `/${string}`
 > = REST.ReqRes<any, any, any> & {
@@ -329,13 +329,13 @@ export type Request<
 export interface RequestHandlerBase<
   R,
   M,
-  PathA extends StructFields,
-  CookieA extends StructFields,
-  QueryA extends StructFields,
-  BodyA extends StructFields,
-  HeaderA extends StructFields,
+  PathA extends Struct.Fields,
+  CookieA extends Struct.Fields,
+  QueryA extends Struct.Fields,
+  BodyA extends Struct.Fields,
+  HeaderA extends Struct.Fields,
   ReqA extends PathA & QueryA & BodyA,
-  ResA extends StructFields,
+  ResA extends Struct.Fields,
   ResE,
   PPath extends `/${string}`,
   Config
@@ -353,13 +353,13 @@ export interface RequestHandlerBase<
 export interface RequestHandler<
   R,
   M,
-  PathA extends StructFields,
-  CookieA extends StructFields,
-  QueryA extends StructFields,
-  BodyA extends StructFields,
-  HeaderA extends StructFields,
+  PathA extends Struct.Fields,
+  CookieA extends Struct.Fields,
+  QueryA extends Struct.Fields,
+  BodyA extends Struct.Fields,
+  HeaderA extends Struct.Fields,
   ReqA extends PathA & QueryA & BodyA,
-  ResA extends StructFields,
+  ResA extends Struct.Fields,
   ResE,
   PPath extends `/${string}`,
   CTX,
@@ -380,13 +380,13 @@ export interface RequestHandler<
 export interface RequestHandlerOrig<
   R,
   M,
-  PathA extends StructFields,
-  CookieA extends StructFields,
-  QueryA extends StructFields,
-  BodyA extends StructFields,
-  HeaderA extends StructFields,
+  PathA extends Struct.Fields,
+  CookieA extends Struct.Fields,
+  QueryA extends Struct.Fields,
+  BodyA extends Struct.Fields,
+  HeaderA extends Struct.Fields,
   ReqA extends PathA & QueryA & BodyA,
-  ResA extends StructFields,
+  ResA extends Struct.Fields,
   ResE,
   PPath extends `/${string}`
 > {

@@ -12,7 +12,7 @@ import { Effect, FiberRef, Option, S } from "effect-app"
 import type { HttpServerError } from "effect-app/http"
 import { HttpBody, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { NonEmptyString255 } from "effect-app/schema"
-import type { REST, Schema, StructFields } from "effect-app/schema"
+import type { REST, Schema, Struct.Fields } from "effect-app/schema"
 import { updateRequestContext } from "../setupRequest.js"
 import { makeRequestParsers, parseRequestParams } from "./base.js"
 import type { RequestHandler, RequestHandlerBase } from "./base.js"
@@ -24,13 +24,13 @@ export const RequestSettings = FiberRef.unsafeMake({
 export type Middleware<
   R,
   M,
-  PathA extends StructFields,
-  CookieA extends StructFields,
-  QueryA extends StructFields,
-  BodyA extends StructFields,
-  HeaderA extends StructFields,
+  PathA extends Struct.Fields,
+  CookieA extends Struct.Fields,
+  QueryA extends Struct.Fields,
+  BodyA extends Struct.Fields,
+  HeaderA extends Struct.Fields,
   ReqA extends PathA & QueryA & BodyA,
-  ResA extends StructFields,
+  ResA extends Struct.Fields,
   ResE,
   MiddlewareE,
   PPath extends `/${string}`,
@@ -79,13 +79,13 @@ export type Middleware<
 export function makeRequestHandler<
   R,
   M,
-  PathA extends StructFields,
-  CookieA extends StructFields,
-  QueryA extends StructFields,
-  BodyA extends StructFields,
-  HeaderA extends StructFields,
+  PathA extends Struct.Fields,
+  CookieA extends Struct.Fields,
+  QueryA extends Struct.Fields,
+  BodyA extends Struct.Fields,
+  HeaderA extends Struct.Fields,
   ReqA extends PathA & QueryA & BodyA,
-  ResA extends StructFields,
+  ResA extends Struct.Fields,
   ResE,
   MiddlewareE,
   R2,

@@ -22,7 +22,7 @@ export const RequestId = extendM(
     const make = StringId.make as () => NonEmptyString255
     return ({
       make,
-      withDefault: S.withDefaultConstructor(s, make)
+      withDefault: S.propertySignature(s, { default: make })
     })
   }
 )
