@@ -30,7 +30,7 @@ const astAssignableToString = (ast: AST.AST): boolean => {
   if (ast._tag === "Union" && ast.types.every(astAssignableToString)) {
     return true
   }
-  if (ast._tag === "Refinement" || ast._tag === "Transform") {
+  if (ast._tag === "Refinement" || ast._tag === "Transformation") {
     return astAssignableToString(ast.from)
   }
 
@@ -67,12 +67,13 @@ export interface QueryRequest<
   PPath extends `/${string}`
 > extends
   S.Class<
+    M,
+    Fields,
     Simplify<Struct.Type<Fields>>,
     Simplify<Struct.Encoded<Fields>>,
     never,
-    Simplify<Struct.TypeConstructor<Fields>>,
-    M,
-    Fields,
+    Simplify<S.ToStructConstructor<Fields>>,
+    {},
     {}
   >
 { // , PropsExtensions<GetClassProps<Fields>>
@@ -97,12 +98,13 @@ export interface BodyRequest<
   PPath extends `/${string}`
 > extends
   S.Class<
+    M,
+    Fields,
     Simplify<Struct.Type<Fields>>,
     Simplify<Struct.Encoded<Fields>>,
     never,
-    Simplify<Struct.TypeConstructor<Fields>>,
-    M,
-    Fields,
+    Simplify<S.ToStructConstructor<Fields>>,
+    {},
     {}
   >
 { // , PropsExtensions<GetClassProps<Self>>
@@ -510,12 +512,13 @@ export interface Request<
   Method extends SupportedMethods
 > extends
   S.Class<
+    M,
+    Fields,
     Simplify<Struct.Type<Fields>>,
     Simplify<Struct.Encoded<Fields>>,
     never,
     Simplify<Struct.Type<Fields>>,
-    M,
-    Fields,
+    {},
     {}
   >
 {
