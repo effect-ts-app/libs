@@ -201,9 +201,9 @@ declare module "effect/Option" {
 
 declare module "effect/Either" {
   export interface Left<out L, out R> {
-    andThen<E1, A, E2, B>(this: Either.Either<A, E1>, f: (a: A) => Either.Either<B, E2>): Either.Either<B, E1 | E2>
-    andThen<E1, A, E2, B>(this: Either.Either<A, E1>, f: Either.Either<B, E2>): Either.Either<B, E1 | E2>
-    map<E, A, B>(this: Either.Either<A, E>, f: (a: A) => B): Either.Either<B, E>
+    andThen<E1, A, E2, B>(this: Either<A, E1>, f: (a: A) => Either<B, E2>): Either<B, E1 | E2>
+    andThen<E1, A, E2, B>(this: Either<A, E1>, f: Either<B, E2>): Either<B, E1 | E2>
+    map<E, A, B>(this: Either<A, E>, f: (a: A) => B): Either<B, E>
     map<A, E, R, B>(this: Effect.Effect<A, E, R>, f: (a: A) => B): Effect.Effect<B, E, R>
 
     flatMap<E1, A, E2, B>(this: Either<A, E1>, f: (a: A) => Either<B, E2>): Either<B, E1 | E2>
@@ -214,9 +214,9 @@ declare module "effect/Either" {
     get right(): R | undefined
   }
   export interface Right<out L, out R> {
-    andThen<E1, A, E2, B>(this: Either.Either<A, E1>, f: (a: A) => Either.Either<B, E2>): Either.Either<B, E1 | E2>
-    andThen<E1, A, E2, B>(this: Either.Either<A, E1>, f: Either.Either<B, E2>): Either.Either<B, E1 | E2>
-    map<E, A, B>(this: Either.Either<A, E>, f: (a: A) => B): Either.Either<B, E>
+    andThen<E1, A, E2, B>(this: Either<A, E1>, f: (a: A) => Either<B, E2>): Either<B, E1 | E2>
+    andThen<E1, A, E2, B>(this: Either<A, E1>, f: Either<B, E2>): Either<B, E1 | E2>
+    map<E, A, B>(this: Either<A, E>, f: (a: A) => B): Either<B, E>
     map<A, E, R, B>(this: Effect.Effect<A, E, R>, f: (a: A) => B): Effect.Effect<B, E, R>
 
     flatMap<E1, A, E2, B>(this: Either<A, E1>, f: (a: A) => Either<B, E2>): Either<B, E1 | E2>

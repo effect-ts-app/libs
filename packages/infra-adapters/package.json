@@ -27,10 +27,10 @@
     "winston": "^3.12.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.46.3",
-    "@effect/schema": "^0.63.2",
+    "@effect/platform": "^0.47.1",
+    "@effect/schema": "^0.63.4",
     "@fp-ts/optic": "0.22.0",
-    "effect": "^2.4.1"
+    "effect": "^2.4.3"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

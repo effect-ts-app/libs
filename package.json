@@ -7,8 +7,8 @@
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "fast-check@3.16.0": "patches/fast-check@3.16.0.patch",
       "@fp-ts/optic@0.22.0": "patches/@fp-ts__optic@0.22.0.patch",
-      "@effect/schema@0.63.2": "patches/@effect__schema@0.63.2.patch",
-      "effect@2.4.1": "patches/effect@2.4.1.patch",
+      "@effect/schema@0.63.4": "patches/@effect__schema@0.63.4.patch",
+      "effect@2.4.3": "patches/effect@2.4.3.patch",
       "typescript@5.4.2": "patches/typescript@5.4.2.patch"
     }
   },

@@ -82,10 +82,12 @@ export const demandJson = <R, E>(client: HttpClient.Client<R, E, ClientResponse>
               .get(response.headers, "Content-Type"))
             ?.startsWith("application/json")
           ? Effect.unit
-          : Effect.fail(HttpClientError.ResponseError({
-            request,
-            response,
-            reason: "Decode",
-            error: "not json response: " + Option.getOrUndefined(HttpHeaders.get(response.headers, "Content-Type"))
-          })))
+          : Effect.fail(
+            new HttpClientError.ResponseError({
+              request,
+              response,
+              reason: "Decode",
+              error: "not json response: " + Option.getOrUndefined(HttpHeaders.get(response.headers, "Content-Type"))
+            })
+          ))
     ))
