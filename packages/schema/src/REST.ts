@@ -5,7 +5,7 @@ import { Path } from "path-parser"
 
 import type * as Methods from "./Methods.js"
 
-import type { FromStruct, Schema, Struct, ToStruct, ToStructConstructor } from "@effect/schema/Schema"
+import type { Schema, Struct } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
 import * as Context from "effect/Context"
 import type { Simplify } from "effect/Types"
@@ -67,10 +67,10 @@ export interface QueryRequest<
   PPath extends `/${string}`
 > extends
   S.Class<
-    Simplify<ToStruct<Fields>>,
-    Simplify<FromStruct<Fields>>,
+    Simplify<Struct.Type<Fields>>,
+    Simplify<Struct.Encoded<Fields>>,
     never,
-    Simplify<ToStructConstructor<Fields>>,
+    Simplify<Struct.TypeConstructor<Fields>>,
     M,
     Fields,
     {}
@@ -97,10 +97,10 @@ export interface BodyRequest<
   PPath extends `/${string}`
 > extends
   S.Class<
-    Simplify<ToStruct<Fields>>,
-    Simplify<FromStruct<Fields>>,
+    Simplify<Struct.Type<Fields>>,
+    Simplify<Struct.Encoded<Fields>>,
     never,
-    Simplify<ToStructConstructor<Fields>>,
+    Simplify<Struct.TypeConstructor<Fields>>,
     M,
     Fields,
     {}
@@ -510,10 +510,10 @@ export interface Request<
   Method extends SupportedMethods
 > extends
   S.Class<
-    Simplify<ToStruct<Fields>>,
-    Simplify<FromStruct<Fields>>,
+    Simplify<Struct.Type<Fields>>,
+    Simplify<Struct.Encoded<Fields>>,
     never,
-    Simplify<ToStruct<Fields>>,
+    Simplify<Struct.Type<Fields>>,
     M,
     Fields,
     {}

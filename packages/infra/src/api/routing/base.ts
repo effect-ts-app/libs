@@ -294,11 +294,11 @@ export interface RequestParsers<
   BodyA extends Struct.Fields,
   HeaderA extends Struct.Fields
 > {
-  parseHeaders: Decode<Option<Simplify<S.ToStruct<HeaderA>>>>
-  parseQuery: Decode<Option<Simplify<S.ToStruct<QueryA>>>>
-  parseBody: Decode<Option<Simplify<S.ToStruct<BodyA>>>>
-  parsePath: Decode<Option<Simplify<S.ToStruct<PathA>>>>
-  parseCookie: Decode<Option<Simplify<S.ToStruct<CookieA>>>>
+  parseHeaders: Decode<Option<Simplify<S.Struct.Type<HeaderA>>>>
+  parseQuery: Decode<Option<Simplify<S.Struct.Type<QueryA>>>>
+  parseBody: Decode<Option<Simplify<S.Struct.Type<BodyA>>>>
+  parsePath: Decode<Option<Simplify<S.Struct.Type<PathA>>>>
+  parseCookie: Decode<Option<Simplify<S.Struct.Type<CookieA>>>>
 }
 
 export type EffectDeps<A> = {
