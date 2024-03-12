@@ -126,7 +126,8 @@ export function include_<
 }
 
 export const Class: <Self = never>() => <Fields extends S.Struct.Fields>(
-  fields: Fields
+  fields: Fields,
+  annotations?: S.Annotations<Self>
 ) => [Self] extends [never] ? MissingSelfGeneric<"Class">
   : EnhancedClass<
     Self,
@@ -137,9 +138,12 @@ export const Class: <Self = never>() => <Fields extends S.Struct.Fields>(
     Simplify<S.ToStructConstructor<Fields>>,
     {},
     {}
-  > = () => (fields) => {
+  > = () => (fields, annotations) => {
     const cls = S.Class as any
-    return class extends cls()(fields) {
+    return class extends cls()(fields, annotations) {
+      constructor(a, b = true) {
+        super(a, b)
+      }
       static readonly include = include(fields)
       static readonly pick = (...selection: any[]) => pick(fields, selection)
       static readonly omit = (...selection: any[]) => omit(fields, selection)
@@ -148,7 +152,8 @@ export const Class: <Self = never>() => <Fields extends S.Struct.Fields>(
 
 export const TaggedClass: <Self = never>() => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
-  fields: Fields
+  fields: Fields,
+  annotations?: S.Annotations<Self>
 ) => [Self] extends [never] ? MissingSelfGeneric<"Class">
   : EnhancedClass<
     Self,
@@ -159,9 +164,12 @@ export const TaggedClass: <Self = never>() => <Tag extends string, Fields extend
     Simplify<S.ToStructConstructor<Fields>>,
     {},
     {}
-  > = () => (tag, fields) => {
+  > = () => (tag, fields, annotations) => {
     const cls = S.TaggedClass as any
-    return class extends cls()(tag, fields) {
+    return class extends cls()(tag, fields, annotations) {
+      constructor(a, b = true) {
+        super(a, b)
+      }
       static readonly include = include(fields)
       static readonly pick = (...selection: any[]) => pick(fields, selection)
       static readonly omit = (...selection: any[]) => omit(fields, selection)
@@ -169,7 +177,8 @@ export const TaggedClass: <Self = never>() => <Tag extends string, Fields extend
   }
 
 export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.Struct.Fields>(
-  fields: Fields
+  fields: Fields,
+  annotations?: S.Annotations<Self>
 ) =>
   & EnhancedClass<
     Self,
@@ -191,7 +200,8 @@ export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.Struct.Field
 
 export const ExtendedTaggedClass: <Self, SelfFrom>() => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
-  fields: Fields
+  fields: Fields,
+  annotations?: S.Annotations<Self>
 ) =>
   & EnhancedClass<
     Self,
