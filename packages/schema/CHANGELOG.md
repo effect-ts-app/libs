@@ -1,5 +1,39 @@
 # @effect-app/schema
 
+## 0.206.4
+
+### Patch Changes
+
+- 511d81b: meh
+
+## 0.206.3
+
+### Patch Changes
+
+- f385129: fix legacy struct use
+
+## 0.206.2
+
+### Patch Changes
+
+- fe910fe: disable validation by default
+
+## 0.206.1
+
+### Patch Changes
+
+- dbc7c83: fix type
+
+## 0.206.0
+
+### Minor Changes
+
+- update packages
+
+### Patch Changes
+
+- @effect-app/core@0.152.1
+
 ## 0.205.0
 
 ### Minor Changes

@@ -1,10 +1,10 @@
 {
   "name": "@effect-app/fluent-extensions",
-  "version": "0.145.0",
+  "version": "0.146.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "date-fns": "^3.3.1",
+    "date-fns": "^3.4.0",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.6",
     "path-parser": "^6.1.0",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@babel/cli": "^7.23.9",
     "@faker-js/faker": "^8.4.1",
-    "@types/node": "~20.11.25",
+    "@types/node": "~20.11.26",
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.9",
     "fast-check": "~3.16.0",

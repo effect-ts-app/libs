@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Effect, flow } from "@effect-app/core"
-import type { Schema } from "effect-app/schema"
+import type { Schema, Struct } from "effect-app/schema"
 import { REST } from "effect-app/schema"
 import { Path } from "path-parser"
 import type { HttpClient } from "../http.js"
@@ -96,7 +96,10 @@ function clientFor_<M extends Requests>(models: M) {
 
       const res = Response as Schema<any>
       const parseResponse = flow(S.decodeUnknown(res), (_) => Effect.mapError(_, (err) => new ResError(err)))
-      const parseResponseE = flow(S.decodeUnknown(S.from(res)), (_) => Effect.mapError(_, (err) => new ResError(err)))
+      const parseResponseE = flow(
+        S.decodeUnknown(S.encodedSchema(res)),
+        (_) => Effect.mapError(_, (err) => new ResError(err))
+      )
 
       const path = new Path(Request.path)
 
@@ -213,16 +216,18 @@ function clientFor_<M extends Requests>(models: M) {
     }, {} as Client<M>))
 }
 
-export type ExtractResponse<T> = T extends Schema<any, any, any> ? Schema.To<T>
+export type ExtractResponse<T> = T extends Schema<any, any, any> ? Schema.Type<T>
   : T extends unknown ? void
   : never
 
-export type ExtractEResponse<T> = T extends Schema<any, any, any> ? Schema.From<T>
+export type ExtractEResponse<T> = T extends Schema<any, any, any> ? Schema.Encoded<T>
   : T extends unknown ? void
   : never
 
-type HasEmptyTo<T extends Schema<any, any, any>> = T extends { struct: Schema<any, any, any> }
-  ? Schema.To<T["struct"]> extends Record<any, never> ? true : Schema.To<T> extends Record<any, never> ? true : false
+type HasEmptyTo<T extends Schema<any, any, any>> = T extends { fields: S.Struct.Fields }
+  ? Struct.Type<T["fields"]> extends Record<any, never> ? true
+  : Schema.Type<T> extends Record<any, never> ? true
+  : false
   : false
 
 type RequestHandlers<R, E, M extends Requests> = {

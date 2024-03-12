@@ -1,5 +1,58 @@
 # @effect-app/infra-adapters
 
+## 0.140.5
+
+### Patch Changes
+
+- Updated dependencies [511d81b]
+  - @effect-app/schema@0.206.4
+  - effect-app@0.185.5
+
+## 0.140.4
+
+### Patch Changes
+
+- Updated dependencies [df3a550]
+  - effect-app@0.185.4
+
+## 0.140.3
+
+### Patch Changes
+
+- Updated dependencies [f385129]
+  - effect-app@0.185.3
+  - @effect-app/schema@0.206.3
+
+## 0.140.2
+
+### Patch Changes
+
+- Updated dependencies [fe910fe]
+  - @effect-app/schema@0.206.2
+  - effect-app@0.185.2
+
+## 0.140.1
+
+### Patch Changes
+
+- Updated dependencies [dbc7c83]
+  - @effect-app/schema@0.206.1
+  - effect-app@0.185.1
+
+## 0.140.0
+
+### Minor Changes
+
+- update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/fluent-extensions@0.146.0
+  - effect-app@0.185.0
+  - @effect-app/schema@0.206.0
+  - @effect-app/core@0.152.1
+
 ## 0.139.0
 
 ### Minor Changes

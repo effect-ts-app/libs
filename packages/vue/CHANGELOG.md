@@ -1,5 +1,65 @@
 # @effect-app/vue
 
+## 0.150.5
+
+### Patch Changes
+
+- Updated dependencies [511d81b]
+  - @effect-app/schema@0.206.4
+  - effect-app@0.185.5
+  - @effect-app/vue@0.150.5
+
+## 0.150.4
+
+### Patch Changes
+
+- Updated dependencies [df3a550]
+  - effect-app@0.185.4
+  - @effect-app/vue@0.150.4
+
+## 0.150.3
+
+### Patch Changes
+
+- f385129: fix legacy struct use
+- Updated dependencies [f385129]
+  - effect-app@0.185.3
+  - @effect-app/schema@0.206.3
+  - @effect-app/vue@0.150.3
+
+## 0.150.2
+
+### Patch Changes
+
+- Updated dependencies [fe910fe]
+  - @effect-app/schema@0.206.2
+  - effect-app@0.185.2
+  - @effect-app/vue@0.150.2
+
+## 0.150.1
+
+### Patch Changes
+
+- Updated dependencies [dbc7c83]
+  - @effect-app/schema@0.206.1
+  - effect-app@0.185.1
+  - @effect-app/vue@0.150.1
+
+## 0.150.0
+
+### Minor Changes
+
+- update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/fluent-extensions@0.146.0
+  - effect-app@0.185.0
+  - @effect-app/schema@0.206.0
+  - @effect-app/vue@0.150.0
+  - @effect-app/core@0.152.1
+
 ## 0.149.0
 
 ### Minor Changes

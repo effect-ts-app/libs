@@ -20,7 +20,7 @@ export class Failure extends S.ExtendedTaggedClass<Failure, Failure.From>()("Fai
 }) {}
 
 export const OperationResult = S.extendTaggedUnion(S.union(Success, Failure))
-export type OperationResult = S.Schema.To<typeof OperationResult>
+export type OperationResult = S.Schema.Type<typeof OperationResult>
 
 export class Operation extends S.ExtendedClass<Operation, Operation.From>()({
   id: OperationId,

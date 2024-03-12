@@ -1,5 +1,53 @@
 # @effect-app/prelude
 
+## 0.185.5
+
+### Patch Changes
+
+- Updated dependencies [511d81b]
+  - @effect-app/schema@0.206.4
+
+## 0.185.4
+
+### Patch Changes
+
+- df3a550: fup
+
+## 0.185.3
+
+### Patch Changes
+
+- f385129: fix legacy struct use
+- Updated dependencies [f385129]
+  - @effect-app/schema@0.206.3
+
+## 0.185.2
+
+### Patch Changes
+
+- Updated dependencies [fe910fe]
+  - @effect-app/schema@0.206.2
+
+## 0.185.1
+
+### Patch Changes
+
+- Updated dependencies [dbc7c83]
+  - @effect-app/schema@0.206.1
+
+## 0.185.0
+
+### Minor Changes
+
+- update packages
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/fluent-extensions@0.146.0
+  - @effect-app/schema@0.206.0
+  - @effect-app/core@0.152.1
+
 ## 0.184.0
 
 ### Minor Changes

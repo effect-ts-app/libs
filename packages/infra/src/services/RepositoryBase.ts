@@ -388,28 +388,26 @@ export function makeRepo<
             )
             .pipe(Effect.map((_) => _ as T[]))
 
-          const structSchema = schema as unknown as { struct: typeof schema }
-          const i = ("struct" in structSchema ? structSchema["struct"] : schema).pipe((_) =>
+          const fieldsSchema = schema as unknown as { fields: any }
+          const i = ("fields" in fieldsSchema ? S.struct(fieldsSchema["fields"]) as unknown as typeof schema : schema).pipe((_) =>
             _.ast._tag === "Union"
               // we need to get the TypeLiteral, incase of class it's behind a transform...
               ? S.union(..._.ast.types.map((_) =>
-                (S.make(_._tag === "Transform" ? _.from : _) as unknown as Schema<T, From>)
+                (S.make(_._tag === "Transformation" ? _.from : _) as unknown as Schema<T, From>)
                   .pipe(S.pick("id"))
               ))
               : _
                   .ast
-                  ._tag === "Transform"
+                  ._tag === "Transformation"
               ? (S
                 .make(
                   _
                     .ast
                     .from
                 ) as unknown as Schema<T, From>)
-                .pipe(S
-                  .pick("id"))
+                .pipe(S.pick("id"))
               : _
-                .pipe(S
-                  .pick("id"))
+                .pipe(S.pick("id"))
           )
           const encodeId = flow(S.encode(i), Effect.provide(rctx))
           function findEId(id: From["id"]) {

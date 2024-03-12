@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/cli",
-  "version": "0.61.0",
+  "version": "0.62.0",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",
-    "@types/node": "~20.11.25",
+    "@types/node": "~20.11.26",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",
