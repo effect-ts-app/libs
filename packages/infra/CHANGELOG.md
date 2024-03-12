@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.218.2
+
+### Patch Changes
+
+- Updated dependencies [fe910fe]
+  - @effect-app/schema@0.206.2
+  - @effect-app/infra-adapters@0.140.2
+  - effect-app@0.185.2
+
 ## 0.218.1
 
 ### Patch Changes

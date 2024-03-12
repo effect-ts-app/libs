@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.206.2
+
+### Patch Changes
+
+- fe910fe: disable validation by default
+
 ## 0.206.1
 
 ### Patch Changes
