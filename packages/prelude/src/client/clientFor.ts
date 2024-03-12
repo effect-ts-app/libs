@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Effect, flow } from "@effect-app/core"
-import type { Schema } from "effect-app/schema"
+import type { Schema, Struct } from "effect-app/schema"
 import { REST } from "effect-app/schema"
 import { Path } from "path-parser"
 import type { HttpClient } from "../http.js"
@@ -225,7 +225,7 @@ export type ExtractEResponse<T> = T extends Schema<any, any, any> ? Schema.Encod
   : never
 
 type HasEmptyTo<T extends Schema<any, any, any>> = T extends { fields: S.Struct.Fields }
-  ? Schema.Type<T["fields"]> extends Record<any, never> ? true
+  ? Struct.Type<T["fields"]> extends Record<any, never> ? true
   : Schema.Type<T> extends Record<any, never> ? true
   : false
   : false
