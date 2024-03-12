@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.206.1
+
+### Patch Changes
+
+- dbc7c83: fix type
+
 ## 0.206.0
 
 ### Minor Changes
