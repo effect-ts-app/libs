@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.206.3
+
+### Patch Changes
+
+- f385129: fix legacy struct use
+
 ## 0.206.2
 
 ### Patch Changes

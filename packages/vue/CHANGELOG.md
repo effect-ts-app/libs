@@ -1,5 +1,15 @@
 # @effect-app/vue
 
+## 0.150.3
+
+### Patch Changes
+
+- f385129: fix legacy struct use
+- Updated dependencies [f385129]
+  - effect-app@0.185.3
+  - @effect-app/schema@0.206.3
+  - @effect-app/vue@0.150.3
+
 ## 0.150.2
 
 ### Patch Changes
