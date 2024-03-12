@@ -44,7 +44,7 @@ const onlyStringsAst = (ast: AST.AST): boolean => {
 }
 
 const onlyStrings = (schema: S.Schema<any, any, any> & { fields?: S.Struct.Fields }): boolean => {
-  if ("fields" in schema && schema.fields) return onlyStrings(S.struct(schema.fields) as any)
+  if ("fields" in schema && schema.fields) return onlyStringsAst(S.struct(schema.fields).ast) // only one level..
   return onlyStringsAst(schema.ast)
 }
 
