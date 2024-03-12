@@ -75,7 +75,7 @@ importers:
         version: 0.89.3
       '@effect-app/cli':
         specifier: ^0.61.0
-        version: link:packages/cli
+        version: 0.61.0
       '@effect-app/core':
         specifier: workspace:*
         version: link:packages/core
@@ -1489,6 +1489,13 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@effect-app/cli@0.61.0:
+    resolution: {integrity: sha512-C+sNib3CkH7WRJxFlSgCRAvYquNxxeYmR83NIEReT3vHXYacpR7XbdlDptZxZTsANJLc1JXXkCRtfxWeRv2V1A==}
+    hasBin: true
+    dependencies:
+      node-watch: 0.7.4
+    dev: true
 
   /@effect/language-service@0.1.0:
     resolution: {integrity: sha512-BnlM8LlaqCAYgdRfxlbR7gXGh/FD1scL1fPgNVJEPoOM08od1jtJz+iKhwfaud8TPnnhZR+TED2h5ynjanLeCQ==}
@@ -6901,7 +6908,6 @@ packages:
   /node-watch@0.7.4:
     resolution: {integrity: sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==}
     engines: {node: '>=6'}
-    dev: false
 
   /nodemon@3.1.0:
     resolution: {integrity: sha512-xqlktYlDMCepBJd43ZQhjWwMw2obW/JRvkrLxq5RCNcuDDX1DbcPT+qT1IlIIdf+DhnWs90JpTMe+Y5KxOchvA==}

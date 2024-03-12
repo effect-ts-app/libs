@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.206.5
+
+### Patch Changes
+
+- 41bec85: make optionaly
+
 ## 0.206.4
 
 ### Patch Changes
