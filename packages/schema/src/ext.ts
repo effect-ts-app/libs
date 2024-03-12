@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import type { NonEmptyReadonlyArray } from "@effect-app/core"
 import { Effect, pipe } from "@effect-app/core"
-import { extendM } from "@effect-app/core/utils"
+import { extendM, typedKeysOf } from "@effect-app/core/utils"
 import type { Schema } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
 import { flow } from "effect"
@@ -154,39 +154,43 @@ export const inputDate = extendM(
 
 export interface UnionBrand {}
 
-// export function makeOptional<NER extends Struct.Fields>(
-//   t: NER // TODO: enforce non empty
-// ): {
-//   [K in keyof NER]: S.PropertySignature<
-//     Schema.Encoded<NER[K]> | undefined,
-//     true,
-//     Schema.Type<NER[K]> | undefined,
-//     true,
-//     Schema.Context<NER[K]>
-//   >
-// } {
-//   return typedKeysOf(t).reduce((prev, cur) => {
-//     prev[cur] = S.optional(t[cur] as any)
-//     return prev
-//   }, {} as any)
-// }
+export function makeOptional<NER extends S.Struct.Fields>(
+  t: NER // TODO: enforce non empty
+): {
+  [K in keyof NER]: S.PropertySignature<
+    "?:",
+    Schema.Type<NER[K]> | undefined,
+    never,
+    "?:",
+    Schema.Encoded<NER[K]> | undefined,
+    NER[K] extends S.PropertySignature<any, any, any, any, any, infer Z> ? Z : false,
+    Schema.Context<NER[K]>
+  >
+} {
+  return typedKeysOf(t).reduce((prev, cur) => {
+    prev[cur] = S.optional(t[cur] as any)
+    return prev
+  }, {} as any)
+}
 
-// export function makeExactOptional<NER extends Struct.Fields>(
-//   t: NER // TODO: enforce non empty
-// ): {
-//   [K in keyof NER]: S.PropertySignature<
-//     Schema.Encoded<NER[K]>,
-//     true,
-//     Schema.Type<NER[K]>,
-//     true,
-//     Schema.Context<NER[K]>
-//   >
-// } {
-//   return typedKeysOf(t).reduce((prev, cur) => {
-//     prev[cur] = S.optional(t[cur] as any, { exact: true })
-//     return prev
-//   }, {} as any)
-// }
+export function makeExactOptional<NER extends S.Struct.Fields>(
+  t: NER // TODO: enforce non empty
+): {
+  [K in keyof NER]: S.PropertySignature<
+    "?:",
+    Schema.Type<NER[K]>,
+    never,
+    "?:",
+    Schema.Encoded<NER[K]>,
+    NER[K] extends S.PropertySignature<any, any, any, any, any, infer Z> ? Z : false,
+    Schema.Context<NER[K]>
+  >
+} {
+  return typedKeysOf(t).reduce((prev, cur) => {
+    prev[cur] = S.optional(t[cur] as any, { exact: true })
+    return prev
+  }, {} as any)
+}
 
 /** A version of transform which is only a one way mapping of From->To */
 export const transformTo = <To extends Schema.Any, From extends Schema.Any>(
