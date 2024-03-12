@@ -10,7 +10,7 @@
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@formatjs/intl": "^2.10.0",
-    "@tanstack/vue-query": "^5.26.3",
+    "@tanstack/vue-query": "^5.27.3",
     "effect-app": "workspace:*",
     "query-string": "^9.0.0"
   },
@@ -24,7 +24,7 @@
   "devDependencies": {
     "@babel/cli": "^7.23.9",
     "@rollup/pluginutils": "^5.1.0",
-    "@types/node": "~20.11.25",
+    "@types/node": "~20.11.26",
     "intl-messageformat": "^10.5.11",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
