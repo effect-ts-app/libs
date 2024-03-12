@@ -56,7 +56,7 @@ export function nonEmptyArray<Value extends Schema.Any>(value: Value): S.nonEmpt
 /**
  * Like the default Schema `array` but with `withDefault` and batching enabled by default
  */
-export function array<Value extends Schema.Any>(value: Value): S.array<Value> {
+export function array<Value extends Schema.Any>(value: Value) {
   return pipe(
     S.array(value),
     S.batching(true),
@@ -67,7 +67,7 @@ export function array<Value extends Schema.Any>(value: Value): S.array<Value> {
 /**
  * Like the default Schema `readonlySet` but with `withDefault` and batching enabled by default
  */
-export const readonlySet = <Value extends Schema.Any>(value: Value): S.readonlySet<Value> =>
+export const readonlySet = <Value extends Schema.Any>(value: Value) =>
   pipe(
     S.readonlySet(value),
     S.batching(true),
