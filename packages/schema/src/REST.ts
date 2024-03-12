@@ -43,8 +43,8 @@ const onlyStringsAst = (ast: AST.AST): boolean => {
   return ast.propertySignatures.every((_) => astAssignableToString(_.type))
 }
 
-const onlyStrings = (schema: S.Schema<any, any, any>): boolean => {
-  if ("struct" in schema) return onlyStrings(schema.struct as any)
+const onlyStrings = (schema: S.Schema<any, any, any> & { fields?: S.Struct.Fields }): boolean => {
+  if ("fields" in schema && schema.fields) return onlyStrings(S.struct(schema.fields) as any)
   return onlyStringsAst(schema.ast)
 }
 

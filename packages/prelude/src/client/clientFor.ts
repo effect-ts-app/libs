@@ -224,8 +224,8 @@ export type ExtractEResponse<T> = T extends Schema<any, any, any> ? Schema.Encod
   : T extends unknown ? void
   : never
 
-type HasEmptyTo<T extends Schema<any, any, any>> = T extends { struct: Schema<any, any, any> }
-  ? Schema.Type<T["struct"]> extends Record<any, never> ? true
+type HasEmptyTo<T extends Schema<any, any, any>> = T extends { fields: S.Struct.Fields }
+  ? Schema.Type<T["fields"]> extends Record<any, never> ? true
   : Schema.Type<T> extends Record<any, never> ? true
   : false
   : false

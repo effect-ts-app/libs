@@ -25,9 +25,9 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
 }
 
 export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, To extends Record<PropertyKey, any>>(
-  fields: Schema<To, From, never>
+  schema: Schema<To, From, never> & { fields?: S.Struct.Fields}
 ) {
-  const ast = "struct" in fields ? (fields.struct as typeof fields).ast : fields.ast
+  const ast = "fields" in schema && schema.fields ? (S.struct(schema.fields) as unknown as typeof schema).ast : schema.ast
   // // todo: or look at from?
   // if (S.AST.isTransform(ast)) {
   //   if (S.AST.isDeclaration(ast.to)) {

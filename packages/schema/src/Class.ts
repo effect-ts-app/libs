@@ -189,14 +189,7 @@ export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.Struct.Field
     Simplify<S.ToStructConstructor<Fields>>,
     {},
     {}
-  >
-  & {
-    readonly structFrom: Schema<
-      Simplify<Struct.Type<Fields>>,
-      Simplify<Struct.Encoded<Fields>>,
-      Schema.Context<Fields[keyof Fields]>
-    >
-  } = Class as any
+  > = Class as any
 
 export const ExtendedTaggedClass: <Self, SelfFrom>() => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
@@ -212,14 +205,7 @@ export const ExtendedTaggedClass: <Self, SelfFrom>() => <Tag extends string, Fie
     Simplify<S.ToStructConstructor<Fields>>,
     {},
     {}
-  >
-  & {
-    readonly structFrom: Schema<
-      Simplify<{ readonly _tag: Tag } & Struct.Type<Fields>>,
-      Simplify<{ readonly _tag: Tag } & Struct.Encoded<Fields>>,
-      Schema.Context<Fields[keyof Fields]>
-    >
-  } = TaggedClass as any
+  > = TaggedClass as any
 
 // /**
 //  * Automatically assign the name of the Class to the S.
@@ -321,9 +307,8 @@ export function FromClassBase<T>() {
 }
 export function FromClass<Cls>() {
   return FromClassBase<
-    S.Schema.Encoded<
-      Cls extends { structFrom: S.Schema<any, any, any> } ? Cls["structFrom"]
-        : Cls extends { struct: S.Schema<any, any, any> } ? Cls["struct"]
+    S.Struct.Encoded<
+      Cls extends { fields: S.Struct.Fields } ? Cls["fields"]
         : never
     >
   >()
