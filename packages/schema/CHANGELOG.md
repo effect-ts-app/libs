@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.206.6
+
+### Patch Changes
+
+- 2794b0a: fix tagged fields
+
 ## 0.206.5
 
 ### Patch Changes
