@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.207.1
+
+### Patch Changes
+
+- df2a290: any
+
 ## 0.207.0
 
 ### Minor Changes
