@@ -91,24 +91,28 @@ export const nullable = flow(
   (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => null }) })
 )
 
-export const defaultDate = <S extends Schema<Date, any, any>>(s: S) =>
-  S.propertySignature(s, { default: () => new global.Date() as any }) // }TODO
+export const defaultDate = <I, R>(s: Schema<Date, I, R>) =>
+  S.propertySignature(s, {
+    default: () => new global.Date()
+  })
 
-export const defaultBool = <S extends Schema<boolean, any, any>>(s: S) =>
-  S.propertySignature(s, { default: () => false as any }) // }TODO
+export const defaultBool = <I, R>(s: Schema<boolean, I, R>) =>
+  S.propertySignature<boolean, I, R, false, () => boolean>(s, {
+    default: () => false
+  })
 
-export const defaultNullable = <S extends Schema<any, any, any>, From, To>(
-  s: S & Schema<To | null, From, Schema.Context<S>>
-) => S.propertySignature(s, { default: () => null as any }) // }TODO
+export const defaultNullable = <A, I, R>(
+  s: Schema<A | null, I, R>
+) => S.propertySignature(s, { default: () => null })
 
-export const defaultArray = <S extends Schema<ReadonlyArray<any>, any, any>>(s: S) =>
-  S.propertySignature(s, { default: () => [] as any }) // }TODO
+export const defaultArray = <A, I, R>(s: Schema<ReadonlyArray<A>, I, R>) =>
+  S.propertySignature(s, { default: () => [] })
 
-export const defaultMap = <S extends Schema<ReadonlyMap<any, any>, any, any>>(s: S) =>
-  S.propertySignature(s, { default: () => new Map() as any }) // }TODO
+export const defaultMap = <A, A2, I, R>(s: Schema<ReadonlyMap<A, A2>, I, R>) =>
+  S.propertySignature(s, { default: () => new Map() })
 
-export const defaultSet = <S extends Schema<ReadonlySet<any>, any, any>>(s: S) =>
-  S.propertySignature(s, { default: () => new Set() as any }) // }TODO
+export const defaultSet = <A, I, R>(s: Schema<ReadonlySet<A>, I, R>) =>
+  S.propertySignature(s, { default: () => new Set<A>() })
 
 /**
  * @tsplus getter effect/schema/Schema withDefaults
