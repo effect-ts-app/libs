@@ -14,6 +14,7 @@ import {
   NotFoundError,
   NotLoggedInError,
   OptimisticConcurrencyException,
+  ServiceUnavailableError,
   UnauthorizedError,
   ValidationError
 } from "./errors.js"
@@ -95,6 +96,9 @@ const getClient = Effect.flatMap(
                 }
                 if (err.response.status === 422) {
                   return toError(InvalidStateError)
+                }
+                if (err.response.status === 503) {
+                  return toError(ServiceUnavailableError)
                 }
                 if (err.response.status === 403) {
                   return toError(UnauthorizedError)

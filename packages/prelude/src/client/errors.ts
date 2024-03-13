@@ -22,6 +22,15 @@ export class InvalidStateError extends TaggedError<InvalidStateError>()("Invalid
   }
 }
 
+/** @tsplus type ServiceUnavailableError */
+export class ServiceUnavailableError extends TaggedError<ServiceUnavailableError>()("ServiceUnavailableError", {
+  message: S.string
+}) {
+  constructor(messageOrObject: string | { message: string }, disableValidation?: boolean) {
+    super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
+  }
+}
+
 /** @tsplus type ValidationError */
 export class ValidationError extends TaggedError<ValidationError>()("ValidationError", {
   errors: S.array(S.unknown)
@@ -95,7 +104,8 @@ const GeneralErrors = [
   NotLoggedInError,
   LoginError,
   UnauthorizedError,
-  ValidationError
+  ValidationError,
+  ServiceUnavailableError
 ] as const
 
 export const SupportedErrors = S.union(

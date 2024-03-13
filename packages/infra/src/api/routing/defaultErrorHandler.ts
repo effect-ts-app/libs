@@ -8,6 +8,7 @@ import {
   NotFoundError,
   NotLoggedInError,
   OptimisticConcurrencyException,
+  ServiceUnavailableError,
   UnauthorizedError,
   ValidationError
 } from "effect-app/client/errors"
@@ -91,6 +92,7 @@ export function defaultErrorHandler<R>(
           "NotLoggedInError": sendError(401, NotLoggedInError),
           "UnauthorizedError": sendError(403, UnauthorizedError),
           "InvalidStateError": sendError(422, InvalidStateError),
+          "ServiceUnavailableError": sendError(503, ServiceUnavailableError),
           // 412 or 409.. https://stackoverflow.com/questions/19122088/which-http-status-code-to-use-to-reject-a-put-due-to-optimistic-locking-failure
           "OptimisticConcurrencyException": sendError(412, OptimisticConcurrencyException)
         }),
