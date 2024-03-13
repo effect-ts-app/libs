@@ -32,7 +32,7 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, I
 
   readonly extend: <Extended = never>(identifier?: string | undefined) => <newFields extends Struct.Fields>(
     fields: newFields,
-    annotations?: S.Annotations<Extended>
+    annotations?: S.Annotations.Schema<Extended>
   ) => [Extended] extends [never] ? MissingSelfGeneric<"Base.extend">
     : EnhancedClass<
       Extended,
@@ -127,7 +127,7 @@ export function include_<
 
 export const Class: <Self = never>() => <Fields extends S.Struct.Fields>(
   fields: Fields,
-  annotations?: S.Annotations<Self>
+  annotations?: S.Annotations.Schema<Self>
 ) => [Self] extends [never] ? MissingSelfGeneric<"Class">
   : EnhancedClass<
     Self,
@@ -153,7 +153,7 @@ export const Class: <Self = never>() => <Fields extends S.Struct.Fields>(
 export const TaggedClass: <Self = never>() => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
   fields: Fields,
-  annotations?: S.Annotations<Self>
+  annotations?: S.Annotations.Schema<Self>
 ) => [Self] extends [never] ? MissingSelfGeneric<"Class">
   : EnhancedClass<
     Self,
@@ -178,7 +178,7 @@ export const TaggedClass: <Self = never>() => <Tag extends string, Fields extend
 
 export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.Struct.Fields>(
   fields: Fields,
-  annotations?: S.Annotations<Self>
+  annotations?: S.Annotations.Schema<Self>
 ) => EnhancedClass<
   Self,
   Fields,
@@ -193,7 +193,7 @@ export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.Struct.Field
 export const ExtendedTaggedClass: <Self, SelfFrom>() => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
   fields: Fields,
-  annotations?: S.Annotations<Self>
+  annotations?: S.Annotations.Schema<Self>
 ) => EnhancedClass<
   Self,
   { readonly "_tag": S.literal<[Tag]> } & Fields,

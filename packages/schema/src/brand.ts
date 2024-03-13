@@ -32,7 +32,7 @@ export interface Constructor<in out A extends B.Brand<any>> {
 
 export const fromBrand = <C extends Brand.Brand<string | symbol>>(
   constructor: Constructor<C>,
-  options?: S.FilterAnnotations<Unbranded<C>>
+  options?: S.Annotations.Filter<Unbranded<C>>
 ) =>
 <R, I, A extends Unbranded<C>>(self: S.Schema<A, I, R>): S.Schema<A & C, I, R> => {
   return S.fromBrand(constructor as any, options as any)(self as any) as any

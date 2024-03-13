@@ -155,7 +155,7 @@ export const brandedStringId = <
   withDefaults(
     Object.assign(Object.create(StringId), StringId) as S.Schema<string & Brand, string> & {
       make: () => string & Brand
-      withDefault: S.PropertySignature<":", string & Brand, never, ":", string, true>
+      withDefault: S.PropertySignature<":", string & Brand, never, ":", string, true, never>
     } & WithDefaults<S.Schema<string & Brand, string>>
   )
 
@@ -168,7 +168,7 @@ export interface PrefixedStringUtils<
   readonly unsafeFrom: (str: string) => Brand
   prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => Brand
   readonly prefix: Prefix
-  readonly withDefault: S.PropertySignature<":", Brand, never, ":", string, true>
+  readonly withDefault: S.PropertySignature<":", Brand, never, ":", string, true, never>
 }
 
 export interface UrlBrand extends Simplify<B.Brand<"Url"> & NonEmptyStringBrand> {}

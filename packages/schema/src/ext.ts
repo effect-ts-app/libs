@@ -97,7 +97,7 @@ export const defaultDate = <I, R>(s: Schema<Date, I, R>) =>
   })
 
 export const defaultBool = <I, R>(s: Schema<boolean, I, R>) =>
-  S.propertySignature<boolean, I, R, false, () => boolean>(s, {
+  S.propertySignature(s, {
     default: () => false
   })
 
@@ -167,7 +167,7 @@ export function makeOptional<NER extends S.Struct.Fields>(
     never,
     "?:",
     Schema.Encoded<NER[K]> | undefined,
-    NER[K] extends S.PropertySignature<any, any, any, any, any, infer Z> ? Z : false,
+    NER[K] extends S.PropertySignature<any, any, any, any, any, infer Z, any> ? Z : false,
     Schema.Context<NER[K]>
   >
 } {
@@ -186,7 +186,7 @@ export function makeExactOptional<NER extends S.Struct.Fields>(
     never,
     "?:",
     Schema.Encoded<NER[K]>,
-    NER[K] extends S.PropertySignature<any, any, any, any, any, infer Z> ? Z : false,
+    NER[K] extends S.PropertySignature<any, any, any, any, any, infer Z, any> ? Z : false,
     Schema.Context<NER[K]>
   >
 } {
