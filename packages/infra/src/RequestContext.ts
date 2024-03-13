@@ -19,7 +19,7 @@ export class RequestContextParent extends TaggedClass<
 export class RequestContext extends TaggedClass<
   RequestContext
 >()("RequestContext", {
-  ...RequestContextParent.omit("id"),
+  ...RequestContextParent.omit("_tag", "id"),
   id: RequestId.withDefault,
   rootId: RequestId,
   parent: S.optional(RequestContextParent),
