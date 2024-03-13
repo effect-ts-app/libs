@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.206.7
+
+### Patch Changes
+
+- 2b53680: fix default schemas
+
 ## 0.206.6
 
 ### Patch Changes
