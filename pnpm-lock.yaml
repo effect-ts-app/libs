@@ -11,7 +11,7 @@ overrides:
 
 patchedDependencies:
   '@effect/schema@0.64.1':
-    hash: bjzh2kxhj2dxm674le3uyceu6a
+    hash: bxgppmpkfu423s56ec2mtblel4
     path: patches/@effect__schema@0.64.1.patch
   '@fp-ts/optic@0.22.0':
     hash: 2yuoegl5dhwsslauskmjxbvoeu
@@ -75,7 +75,7 @@ importers:
         version: 0.89.3
       '@effect-app/cli':
         specifier: ^0.62.0
-        version: link:packages/cli
+        version: 0.62.0
       '@effect-app/core':
         specifier: workspace:*
         version: link:packages/core
@@ -433,7 +433,7 @@ importers:
         version: 0.48.1(@effect/schema@0.64.1)(effect@2.4.5)(ws@8.16.0)
       '@effect/schema':
         specifier: ^0.64.1
-        version: 0.64.1(patch_hash=bjzh2kxhj2dxm674le3uyceu6a)(effect@2.4.5)(fast-check@3.16.0)
+        version: 0.64.1(patch_hash=bxgppmpkfu423s56ec2mtblel4)(effect@2.4.5)(fast-check@3.16.0)
       '@faker-js/faker':
         specifier: ^8.4.1
         version: 8.4.1
@@ -539,7 +539,7 @@ importers:
         version: 0.48.1(@effect/schema@0.64.1)(effect@2.4.5)(ws@8.16.0)
       '@effect/schema':
         specifier: ^0.64.1
-        version: 0.64.1(patch_hash=bjzh2kxhj2dxm674le3uyceu6a)(effect@2.4.5)(fast-check@3.16.0)
+        version: 0.64.1(patch_hash=bxgppmpkfu423s56ec2mtblel4)(effect@2.4.5)(fast-check@3.16.0)
       '@fp-ts/optic':
         specifier: 0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.4.5)
@@ -627,7 +627,7 @@ importers:
         version: 0.48.1(@effect/schema@0.64.1)(effect@2.4.5)(ws@8.16.0)
       '@effect/schema':
         specifier: ^0.64.1
-        version: 0.64.1(patch_hash=bjzh2kxhj2dxm674le3uyceu6a)(effect@2.4.5)(fast-check@3.16.0)
+        version: 0.64.1(patch_hash=bxgppmpkfu423s56ec2mtblel4)(effect@2.4.5)(fast-check@3.16.0)
       '@fp-ts/optic':
         specifier: 0.22.0
         version: 0.22.0(patch_hash=2yuoegl5dhwsslauskmjxbvoeu)(@effect/typeclass@0.22.0)(effect@2.4.5)
@@ -697,7 +697,7 @@ importers:
         version: link:../core
       '@effect/schema':
         specifier: ^0.64.1
-        version: 0.64.1(patch_hash=bjzh2kxhj2dxm674le3uyceu6a)(effect@2.4.5)(fast-check@3.16.0)
+        version: 0.64.1(patch_hash=bxgppmpkfu423s56ec2mtblel4)(effect@2.4.5)(fast-check@3.16.0)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -761,7 +761,7 @@ importers:
         version: 0.31.1(@effect/platform@0.48.1)(effect@2.4.5)
       '@effect/schema':
         specifier: ^0.64.1
-        version: 0.64.1(patch_hash=bjzh2kxhj2dxm674le3uyceu6a)(effect@2.4.5)(fast-check@3.16.0)
+        version: 0.64.1(patch_hash=bxgppmpkfu423s56ec2mtblel4)(effect@2.4.5)(fast-check@3.16.0)
       '@formatjs/intl':
         specifier: ^2.10.0
         version: 2.10.0(typescript@5.4.2)
@@ -1490,6 +1490,13 @@ packages:
     dev: true
     optional: true
 
+  /@effect-app/cli@0.62.0:
+    resolution: {integrity: sha512-TyuQiINjhvj8h2KF/dZLDNFWzFkrUWa1UEX/cjaJCw4+pXg9U3tk5fRTnCuOFacNc0REhOweRGrMaj5i5O5P8Q==}
+    hasBin: true
+    dependencies:
+      node-watch: 0.7.4
+    dev: true
+
   /@effect/language-service@0.1.0:
     resolution: {integrity: sha512-BnlM8LlaqCAYgdRfxlbR7gXGh/FD1scL1fPgNVJEPoOM08od1jtJz+iKhwfaud8TPnnhZR+TED2h5ynjanLeCQ==}
     dev: true
@@ -1511,7 +1518,7 @@ packages:
       '@effect/schema': ^0.64.1
       effect: ^2.4.5
     dependencies:
-      '@effect/schema': 0.64.1(patch_hash=bjzh2kxhj2dxm674le3uyceu6a)(effect@2.4.5)(fast-check@3.16.0)
+      '@effect/schema': 0.64.1(patch_hash=bxgppmpkfu423s56ec2mtblel4)(effect@2.4.5)(fast-check@3.16.0)
       effect: 2.4.5(patch_hash=gx4ghzbqcc7f5yvwdlsq2is7ae)
       find-my-way-ts: 0.1.1
       isomorphic-ws: 5.0.0(ws@8.16.0)
@@ -1521,7 +1528,7 @@ packages:
       - ws
     dev: false
 
-  /@effect/schema@0.64.1(patch_hash=bjzh2kxhj2dxm674le3uyceu6a)(effect@2.4.5)(fast-check@3.16.0):
+  /@effect/schema@0.64.1(patch_hash=bxgppmpkfu423s56ec2mtblel4)(effect@2.4.5)(fast-check@3.16.0):
     resolution: {integrity: sha512-DyulEoi+/nNkXfg1LusABQTsFNICQn1HkeGQPG0iVnDn7TUdhD6lFWOXgr5lmBWfGKE/XlIydcneYDtpbKMuQw==}
     peerDependencies:
       effect: ^2.4.5
@@ -6902,7 +6909,6 @@ packages:
   /node-watch@0.7.4:
     resolution: {integrity: sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==}
     engines: {node: '>=6'}
-    dev: false
 
   /nodemon@3.1.0:
     resolution: {integrity: sha512-xqlktYlDMCepBJd43ZQhjWwMw2obW/JRvkrLxq5RCNcuDDX1DbcPT+qT1IlIIdf+DhnWs90JpTMe+Y5KxOchvA==}
