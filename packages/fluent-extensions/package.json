@@ -14,14 +14,14 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.0",
+    "@effect/platform": "^0.48.1",
     "@fp-ts/optic": "0.22.0",
-    "effect": "^2.4.4"
+    "effect": "^2.4.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",
     "@faker-js/faker": "^8.4.1",
-    "@types/node": "~20.11.26",
+    "@types/node": "~20.11.27",
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.9",
     "fast-check": "~3.16.0",

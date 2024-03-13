@@ -16,9 +16,7 @@ export class s extends S.Class<s>()({
   id: S.StringId.withDefault,
   displayName: S.NonEmptyString255,
   n: S.Date.withDefault,
-  union: S.propertySignature(someUnion, {
-    default: () => ({ _tag: "string", value: "hi" }) as S.Schema.Type<typeof someUnion>
-  })
+  union: someUnion.pipe(S.withDefaultConstructor(() => ({ _tag: "string" as const, value: "hi" })))
 }) {}
 export declare namespace s {
   export type From = S.Schema.Encoded<typeof s>

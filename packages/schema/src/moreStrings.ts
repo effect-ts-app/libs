@@ -143,7 +143,7 @@ export function prefixedStringId<Brand extends StringId>() {
          */
         prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => ex(str),
         prefix,
-        withDefault: S.propertySignature(schema, { default: make })
+        withDefault: schema.pipe(S.withDefaultConstructor(make))
       })
     )
   }
