@@ -60,7 +60,7 @@ export function array<Value extends Schema.Any>(value: Value) {
   return pipe(
     S.array(value),
     S.batching(true),
-    (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => [] as any }) })
+    (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => [] }) })
   )
 }
 
