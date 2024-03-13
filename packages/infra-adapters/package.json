@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra-adapters",
-  "version": "0.141.2",
+  "version": "0.142.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
