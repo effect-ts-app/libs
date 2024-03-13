@@ -157,7 +157,7 @@ export const TaggedClass: <Self = never>() => <Tag extends string, Fields extend
 ) => [Self] extends [never] ? MissingSelfGeneric<"Class">
   : EnhancedClass<
     Self,
-    Fields,
+    { readonly "_tag": S.literal<[Tag]> } & Fields,
     Simplify<{ readonly _tag: Tag } & Struct.Type<Fields>>,
     Simplify<{ readonly _tag: Tag } & Struct.Encoded<Fields>>,
     Schema.Context<Fields[keyof Fields]>,
@@ -179,33 +179,31 @@ export const TaggedClass: <Self = never>() => <Tag extends string, Fields extend
 export const ExtendedClass: <Self, SelfFrom>() => <Fields extends S.Struct.Fields>(
   fields: Fields,
   annotations?: S.Annotations<Self>
-) =>
-  & EnhancedClass<
-    Self,
-    Fields,
-    Simplify<Struct.Type<Fields>>,
-    SelfFrom,
-    Schema.Context<Fields[keyof Fields]>,
-    Simplify<S.ToStructConstructor<Fields>>,
-    {},
-    {}
-  > = Class as any
+) => EnhancedClass<
+  Self,
+  Fields,
+  Simplify<Struct.Type<Fields>>,
+  SelfFrom,
+  Schema.Context<Fields[keyof Fields]>,
+  Simplify<S.ToStructConstructor<Fields>>,
+  {},
+  {}
+> = Class as any
 
 export const ExtendedTaggedClass: <Self, SelfFrom>() => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
   fields: Fields,
   annotations?: S.Annotations<Self>
-) =>
-  & EnhancedClass<
-    Self,
-    Fields,
-    Simplify<{ readonly _tag: Tag } & Struct.Type<Fields>>,
-    SelfFrom,
-    Schema.Context<Fields[keyof Fields]>,
-    Simplify<S.ToStructConstructor<Fields>>,
-    {},
-    {}
-  > = TaggedClass as any
+) => EnhancedClass<
+  Self,
+  { readonly "_tag": S.literal<[Tag]> } & Fields,
+  Simplify<{ readonly _tag: Tag } & Struct.Type<Fields>>,
+  SelfFrom,
+  Schema.Context<Fields[keyof Fields]>,
+  Simplify<S.ToStructConstructor<Fields>>,
+  {},
+  {}
+> = TaggedClass as any
 
 // /**
 //  * Automatically assign the name of the Class to the S.
@@ -308,7 +306,7 @@ export function FromClassBase<T>() {
 export function FromClass<Cls>() {
   return FromClassBase<
     S.Struct.Encoded<
-      Cls extends { fields: S.Struct.Fields } ? Cls["fields"]
+      Cls extends { fields: S.Struct.Fields } ? Cls["fields"] // TODO: how to handle _tag on Tagged??
         : never
     >
   >()
