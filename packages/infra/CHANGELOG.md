@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 0.219.2
+
+### Patch Changes
+
+- 0a0b8e9: add ServiceUnavailableError
+- Updated dependencies [0a0b8e9]
+  - effect-app@0.186.2
+  - @effect-app/infra-adapters@0.141.2
+
 ## 0.219.1
 
 ### Patch Changes

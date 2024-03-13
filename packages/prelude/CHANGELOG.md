@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.186.2
+
+### Patch Changes
+
+- 0a0b8e9: add ServiceUnavailableError
+
 ## 0.186.1
 
 ### Patch Changes
