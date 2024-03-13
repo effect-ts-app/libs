@@ -74,8 +74,8 @@ importers:
         specifier: ^0.89.3
         version: 0.89.3
       '@effect-app/cli':
-        specifier: ^0.61.0
-        version: 0.61.0
+        specifier: ^0.62.0
+        version: link:packages/cli
       '@effect-app/core':
         specifier: workspace:*
         version: link:packages/core
@@ -104,8 +104,8 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3
       '@types/lodash':
-        specifier: ^4.14.202
-        version: 4.14.202
+        specifier: ^4.17.0
+        version: 4.17.0
       '@types/node':
         specifier: ~20.11.26
         version: 20.11.26
@@ -329,8 +329,8 @@ importers:
         specifier: 8.1.0
         version: 8.1.0
       '@types/lodash':
-        specifier: 4.14.202
-        version: 4.14.202
+        specifier: 4.17.0
+        version: 4.17.0
       effect:
         specifier: ^2.4.3
         version: 2.4.3(patch_hash=vmlg6vsy6fpoysvexvev4h2lhq)
@@ -766,8 +766,8 @@ importers:
         specifier: ^2.10.0
         version: 2.10.0(typescript@5.4.2)
       '@tanstack/vue-query':
-        specifier: ^5.27.3
-        version: 5.27.3(vue@3.4.21)
+        specifier: ^5.27.5
+        version: 5.27.5(vue@3.4.21)
       effect:
         specifier: ^2.4.3
         version: 2.4.3(patch_hash=vmlg6vsy6fpoysvexvev4h2lhq)
@@ -1489,13 +1489,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@effect-app/cli@0.61.0:
-    resolution: {integrity: sha512-C+sNib3CkH7WRJxFlSgCRAvYquNxxeYmR83NIEReT3vHXYacpR7XbdlDptZxZTsANJLc1JXXkCRtfxWeRv2V1A==}
-    hasBin: true
-    dependencies:
-      node-watch: 0.7.4
-    dev: true
 
   /@effect/language-service@0.1.0:
     resolution: {integrity: sha512-BnlM8LlaqCAYgdRfxlbR7gXGh/FD1scL1fPgNVJEPoOM08od1jtJz+iKhwfaud8TPnnhZR+TED2h5ynjanLeCQ==}
@@ -2361,12 +2354,12 @@ packages:
       remove-accents: 0.4.2
     dev: false
 
-  /@tanstack/query-core@5.27.3:
-    resolution: {integrity: sha512-1SrNjrFX8eQRQ7DF3hMUhRYzxT9lEry4Uvj2lxl819Cmlq4uWQFGjZKS6moDuZoADG9/85oDdtcHbxmYQ7+HGw==}
+  /@tanstack/query-core@5.27.5:
+    resolution: {integrity: sha512-HuYOo46NhzNX1SwXCmLf/Skr8B7T56cDHUN+iOhnu7+GOkUMThda64GwZpAqQzBT8TOTBQo6RQaNe0gi3Gi2fw==}
     dev: false
 
-  /@tanstack/vue-query@5.27.3(vue@3.4.21):
-    resolution: {integrity: sha512-R8bAon8jrxlcKtNCtJ9Culz6VcYo6DTkHhLWNwvjaZJ+Jma/3dT2qqb4dtH/ZoGEt98vxeE8GghKZXJJ8H1jPg==}
+  /@tanstack/vue-query@5.27.5(vue@3.4.21):
+    resolution: {integrity: sha512-5OrR+ha1b9n1aMYq+AToIoa6+4rObRUn3JkMCwT3MgkN35k8AbW+LkZ69eMYae14j+PAf4gz6EC+LkcPd53lfg==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^3.4.21
@@ -2375,7 +2368,7 @@ packages:
         optional: true
     dependencies:
       '@tanstack/match-sorter-utils': 8.11.8
-      '@tanstack/query-core': 5.27.3
+      '@tanstack/query-core': 5.27.5
       '@vue/devtools-api': 6.5.1
       vue: 3.4.21(typescript@5.4.2)
       vue-demi: 0.14.7(vue@3.4.21)
@@ -2542,8 +2535,8 @@ packages:
       '@types/node': 20.11.26
     dev: true
 
-  /@types/lodash@4.14.202:
-    resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
+  /@types/lodash@4.17.0:
+    resolution: {integrity: sha512-t7dhREVv6dbNj0q17X12j7yDG4bD/DHYX7o5/DbDxobP0HnGPgpRz2Ej77aL7TZT3DSw13fqUTj8J4mMnqa7WA==}
     dev: true
 
   /@types/mime@3.0.1:
@@ -3445,6 +3438,7 @@ packages:
   /bson@6.4.0:
     resolution: {integrity: sha512-6/gSSEdbkuFlSb+ufj5jUSU4+wo8xQOwm2bDSqwmxiPE17JTpsP63eAwoN8iF8Oy4gJYj+PAL3zdRCTdaw5Y1g==}
     engines: {node: '>=16.20.1'}
+    deprecated: a critical bug affecting zSeries s390x big-endian systems is fixed in bson@6.5.0
     dev: true
 
   /buffer-from@1.1.2:
@@ -6908,6 +6902,7 @@ packages:
   /node-watch@0.7.4:
     resolution: {integrity: sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==}
     engines: {node: '>=6'}
+    dev: false
 
   /nodemon@3.1.0:
     resolution: {integrity: sha512-xqlktYlDMCepBJd43ZQhjWwMw2obW/JRvkrLxq5RCNcuDDX1DbcPT+qT1IlIIdf+DhnWs90JpTMe+Y5KxOchvA==}
