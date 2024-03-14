@@ -158,7 +158,45 @@ export const inputDate = extendM(
 
 export interface UnionBrand {}
 
-export function makeOptional<NER extends S.Struct.Fields>(
+const makeOpt = (self: S.PropertySignature.Any, exact?: boolean) => {
+  const ast = self.ast
+  switch (ast._tag) {
+    case "PropertySignatureDeclaration": {
+      return new (S as any).$PropertySignature(
+        new S.PropertySignatureDeclaration(
+          exact ? ast.type : S.orUndefined(S.make(ast.type)).ast,
+          true,
+          ast.isReadonly,
+          ast.annotations,
+          ast.defaultConstructor
+        )
+      )
+    }
+    case "PropertySignatureTransformation": {
+      return new (S as any).$PropertySignature(
+        new S.PropertySignatureTransformation(
+          new S.FromPropertySignature(
+            exact ? ast.from.type : S.orUndefined(S.make(ast.from.type)).ast,
+            true,
+            ast.from.isReadonly,
+            ast.from.annotations
+          ),
+          new S.ToPropertySignature(
+            exact ? ast.to.type : S.orUndefined(S.make(ast.to.type)).ast,
+            true,
+            ast.to.isReadonly,
+            ast.to.annotations,
+            ast.to.defaultConstructor
+          ),
+          ast.decode,
+          ast.encode
+        )
+      )
+    }
+  }
+}
+
+export function makeOptional<NER extends S.Struct.Fields | S.PropertySignature.Any>(
   t: NER // TODO: enforce non empty
 ): {
   [K in keyof NER]: S.PropertySignature<
@@ -172,7 +210,11 @@ export function makeOptional<NER extends S.Struct.Fields>(
   >
 } {
   return typedKeysOf(t).reduce((prev, cur) => {
-    prev[cur] = S.optional(t[cur] as any)
+    if (S.isSchema(t[cur])) {
+      prev[cur] = S.optional(t[cur] as any)
+    } else {
+      prev[cur] = makeOpt(t[cur] as any)
+    }
     return prev
   }, {} as any)
 }
@@ -191,7 +233,11 @@ export function makeExactOptional<NER extends S.Struct.Fields>(
   >
 } {
   return typedKeysOf(t).reduce((prev, cur) => {
-    prev[cur] = S.optional(t[cur] as any, { exact: true })
+    if (S.isSchema(t[cur])) {
+      prev[cur] = S.optional(t[cur] as any, { exact: true })
+    } else {
+      prev[cur] = makeOpt(t[cur] as any)
+    }
     return prev
   }, {} as any)
 }
