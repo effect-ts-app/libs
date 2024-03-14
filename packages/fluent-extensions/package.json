@@ -14,9 +14,9 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.1",
+    "@effect/platform": "^0.48.3",
     "@fp-ts/optic": "0.22.0",
-    "effect": "^2.4.5"
+    "effect": "^2.4.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",

@@ -7,8 +7,8 @@
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "fast-check@3.16.0": "patches/fast-check@3.16.0.patch",
       "@fp-ts/optic@0.22.0": "patches/@fp-ts__optic@0.22.0.patch",
-      "@effect/schema@0.64.1": "patches/@effect__schema@0.64.1.patch",
-      "effect@2.4.5": "patches/effect@2.4.5.patch",
+      "@effect/schema@0.64.2": "patches/@effect__schema@0.64.2.patch",
+      "effect@2.4.6": "patches/effect@2.4.6.patch",
       "typescript@5.4.2": "patches/typescript@5.4.2.patch"
     }
   },
@@ -62,7 +62,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.89.3",
-    "@effect-app/cli": "^0.62.0",
+    "@effect-app/cli": "^0.63.0",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
     "@effect-app/infra": "workspace:*",
