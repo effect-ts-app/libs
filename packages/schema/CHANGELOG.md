@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.208.1
+
+### Patch Changes
+
+- fix makeOpt
+
 ## 0.208.0
 
 ### Minor Changes
