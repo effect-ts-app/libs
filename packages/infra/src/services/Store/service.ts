@@ -160,10 +160,11 @@ const makeMap = Effect.sync(() => makeContextMap())
  */
 export class ContextMap extends TagClassMakeId("effect-app/ContextMap", makeMap)<ContextMap>() {
 }
-
-export type PersistenceModelType<Encoded> = Encoded & {
+export type DistributiveJoin<T, J> = T extends unknown ? T & J
+  : never
+export type PersistenceModelType<Encoded> = DistributiveJoin<Encoded, {
   _etag?: string | undefined
-}
+}>
 
 export interface StorageConfig {
   url: Secret.Secret

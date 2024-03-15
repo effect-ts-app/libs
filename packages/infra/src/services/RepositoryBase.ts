@@ -926,11 +926,12 @@ export const RepositoryBaseImpl = <Service>() => {
     >
     & RepoFunctions<T, Encoded, Evt, ItemType, Service> =>
   {
+    type PM = PersistenceModelType<Encoded>
     const mkRepo = makeRepo<Evt>()(
       itemType,
       schema,
       jitM ? (pm) => jitM(pm as unknown as Encoded) : (pm) => pm as any,
-      (e, _etag) => ({ ...e, _etag })
+      (e, _etag) => ({ ...e, _etag } as PM)
     )
     abstract class Cls extends RepositoryBaseC1<T, Encoded, Evt, ItemType> {
       constructor() {
@@ -969,11 +970,12 @@ export const RepositoryDefaultImpl = <Service, Evt = never>() => {
     >
     & RepoFunctions<T, Encoded, Evt, ItemType, Service> =>
   {
+    type PM = PersistenceModelType<Encoded>
     const mkRepo = makeRepo<Evt>()(
       itemType,
       schema,
       jitM ? (pm) => jitM(pm) : (pm) => pm,
-      (e, _etag) => ({ ...e, _etag })
+      (e, _etag) => ({ ...e, _etag } as PM)
     )
     abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType> {
       constructor(
