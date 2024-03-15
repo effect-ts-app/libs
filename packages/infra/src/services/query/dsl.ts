@@ -36,16 +36,37 @@ export interface QueryTogether<
   }
 }
 
-export type Query<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "initial">
-export type QueryWhere<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "where">
+export type Query<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "initial"> & {
+  where: any
+  project: any
+  page: any
+  order: any
+}
+export type QueryWhereLeaf<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "where"> & {
+  or: any
+  and: any
+}
+export type QueryWhere<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, "where"> & {
+  or: any
+  and: any
+  project: any
+  page: any
+  order: any
+}
 
-export type QueryEnd<TFieldValues extends FieldValues, TType extends "many" | "one" | "count" = "many"> = QueryTogether<
-  TFieldValues,
-  "end",
-  TFieldValues,
-  never,
-  TType
->
+export type QueryEnd<TFieldValues extends FieldValues, TType extends "many" | "one" | "count" = "many"> =
+  & QueryTogether<
+    TFieldValues,
+    "end",
+    TFieldValues,
+    never,
+    TType
+  >
+  & {
+    project: any
+    page: any
+    order: any
+  }
 
 export type QueryProjection<
   TFieldValues extends FieldValues,
