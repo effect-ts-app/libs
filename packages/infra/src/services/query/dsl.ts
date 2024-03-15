@@ -6,7 +6,7 @@ import type { FieldPath, FieldPathValue } from "@effect-app/infra/filter/types/p
 import type { Ops } from "@effect-app/infra/services/Store/filterApi/proxy"
 import type { NonNegativeInt } from "@effect-app/schema"
 import type { Option, Pipeable, S } from "effect-app"
-import { Data } from "effect-app"
+import { Data, flow } from "effect-app"
 import type { Covariant } from "effect/Types"
 
 import { pipeArguments } from "effect/Pipeable"
@@ -184,10 +184,10 @@ export const make: <TFieldValues extends FieldValues>() => Query<TFieldValues> =
 export const where: FilterWhere = (...operation: any[]) => (current: any) => new Where({ current, operation } as any)
 
 export const and: FilterContinuation = (...operation: any[]) => (current: any) =>
-  new And({ current, operation: typeof operation[0] === "function" ? operation[0] : operation } as any)
+  new And({ current, operation: typeof operation[0] === "function" ? flow(...operation) : operation } as any)
 
 export const or: FilterContinuation = (...operation: any[]) => (current: any) =>
-  new Or({ current, operation: typeof operation[0] === "function" ? operation[0] : operation } as any)
+  new Or({ current, operation: typeof operation[0] === "function" ? flow(...operation) : operation } as any)
 
 export const order: <TFieldValues extends FieldValues, TFieldName extends FieldPath<TFieldValues>>(
   field: TFieldName,

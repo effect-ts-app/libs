@@ -30,29 +30,18 @@ const q = make<s.From>()
     where("displayName", "Verona"),
     or(
       where("displayName", "Riley"),
-      and("displayName", "Riley"),
-      and("displayName", "Riley"),
-      and("displayName", "Riley"),
-      and("displayName", "Riley"),
-      or("union._tag", "number"),
-      and("displayName", "Riley"),
-      and("displayName", "Riley"),
-      and("displayName", "Riley"),
-      and("displayName", "Riley"),
-      or("displayName", "Riley"),
-      and("displayName", "Riley")
-      // and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
+      and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
     ),
     order("displayName"),
-    page({ take: 10 })
-    // project(
-    //   S.transformOrFail(
-    //     S.struct({ id: S.StringId, displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-    //     S.struct(pick(s.fields, "id", "displayName")),
-    //     (_) => Effect.andThen(SomeService, _),
-    //     () => Effect.die(new Error("not implemented"))
-    //   )
-    // )
+    page({ take: 10 }),
+    project(
+      S.transformOrFail(
+        S.struct({ id: S.StringId, displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+        S.struct(pick(s.fields, "id", "displayName")),
+        (_) => Effect.andThen(SomeService, _),
+        () => Effect.die(new Error("not implemented"))
+      )
+    )
   )
 
 const items = [
@@ -98,10 +87,10 @@ it("works with repo", () =>
         TestRepo
           .query(flow(
             where("displayName", "Verona"),
-            or(flow(
+            or(
               where("displayName", "Riley"),
               and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
-            )),
+            ),
             order("displayName"),
             page({ take: 10 }),
             project(
