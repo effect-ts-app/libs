@@ -90,8 +90,8 @@ export abstract class RepositoryBaseC<
   abstract readonly query: {
     <A, R, Encoded2 extends FieldValues, TType extends "one" | "many" | "count" = "many">(
       q: (
-        initial: Query<Omit<Encoded, "_etag">>
-      ) => QueryProjection<Omit<Encoded, "_etag"> extends Encoded2 ? Encoded2 : never, A, R, TType>
+        initial: Query<Encoded>
+      ) => QueryProjection<Encoded extends Encoded2 ? Encoded2 : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -99,11 +99,11 @@ export abstract class RepositoryBaseC<
       R
     >
     <R = never, TType extends "one" | "many" = "many">(
-      q: (initial: Query<Omit<Encoded, "_etag">>) => QAll<Omit<Encoded, "_etag">, T, R, TType>
+      q: (initial: Query<Encoded>) => QAll<Encoded, T, R, TType>
     ): Effect.Effect<TType extends "many" ? readonly T[] : T, TType extends "many" ? never : NotFoundError<ItemType>, R>
-    // <R = never>(q: QAll<Omit<Encoded, "_etag">, T, R>): Effect.Effect<readonly T[], never, R>
+    // <R = never>(q: QAll<Encoded, T, R>): Effect.Effect<readonly T[], never, R>
     // <A, R, Encoded2 extends FieldValues>(
-    //   q: QueryProjection<Omit<Encoded, "_etag"> extends Encoded2 ? Encoded2 : never, A, R>
+    //   q: QueryProjection<Encoded extends Encoded2 ? Encoded2 : never, A, R>
     // ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
   }
 
@@ -181,8 +181,8 @@ export class RepositoryBaseC3<
   readonly queryAndSavePure: {
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<Encoded, "_etag">>
-      ) => QueryEnd<Omit<Encoded, "_etag">, "one">,
+        q: Query<Encoded>
+      ) => QueryEnd<Encoded, "one">,
       pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
     ): Effect.Effect<
       A,
@@ -193,11 +193,11 @@ export class RepositoryBaseC3<
     >
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<Encoded, "_etag">>
+        q: Query<Encoded>
       ) =>
-        | Query<Omit<Encoded, "_etag">>
-        | QueryWhere<Omit<Encoded, "_etag">>
-        | QueryEnd<Omit<Encoded, "_etag">, "many">,
+        | Query<Encoded>
+        | QueryWhere<Encoded>
+        | QueryEnd<Encoded, "many">,
       pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>
     ): Effect.Effect<
       A,
@@ -208,11 +208,11 @@ export class RepositoryBaseC3<
     >
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<Encoded, "_etag">>
+        q: Query<Encoded>
       ) =>
-        | Query<Omit<Encoded, "_etag">>
-        | QueryWhere<Omit<Encoded, "_etag">>
-        | QueryEnd<Omit<Encoded, "_etag">, "many">,
+        | Query<Encoded>
+        | QueryWhere<Encoded>
+        | QueryEnd<Encoded, "many">,
       pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
       batch: "batched" | number
     ): Effect.Effect<
@@ -617,7 +617,7 @@ export function makeRepo<
 
     return {
       make,
-      Q: Q.make<Omit<Encoded, "_etag">>()
+      Q: Q.make<Encoded>()
     }
   }
 }
@@ -756,8 +756,8 @@ export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: 
   queryAndSavePure: {
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<Encoded, "_etag">>
-      ) => QueryEnd<Omit<Encoded, "_etag">, "one">,
+        q: Query<Encoded>
+      ) => QueryEnd<Encoded, "one">,
       pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
     ): Effect.Effect<
       A,
@@ -769,11 +769,11 @@ export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: 
     >
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<Encoded, "_etag">>
+        q: Query<Encoded>
       ) =>
-        | Query<Omit<Encoded, "_etag">>
-        | QueryWhere<Omit<Encoded, "_etag">>
-        | QueryEnd<Omit<Encoded, "_etag">, "many">,
+        | Query<Encoded>
+        | QueryWhere<Encoded>
+        | QueryEnd<Encoded, "many">,
       pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>
     ): Effect.Effect<
       A,
@@ -785,11 +785,11 @@ export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: 
     >
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<Encoded, "_etag">>
+        q: Query<Encoded>
       ) =>
-        | Query<Omit<Encoded, "_etag">>
-        | QueryWhere<Omit<Encoded, "_etag">>
-        | QueryEnd<Omit<Encoded, "_etag">, "many">,
+        | Query<Encoded>
+        | QueryWhere<Encoded>
+        | QueryEnd<Encoded, "many">,
       pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
       batchSize: number
     ): Effect.Effect<
@@ -805,8 +805,8 @@ export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: 
   readonly query: {
     <A, R, From extends FieldValues, TType extends "one" | "many" | "count" = "many">(
       q: (
-        initial: Query<Omit<Encoded, "_etag">>
-      ) => QueryProjection<Omit<Encoded, "_etag"> extends From ? From : never, A, R, TType>
+        initial: Query<Encoded>
+      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -814,15 +814,15 @@ export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: 
       Service | R
     >
     <R = never, TType extends "one" | "many" = "many">(
-      q: (initial: Query<Omit<Encoded, "_etag">>) => QAll<Omit<Encoded, "_etag">, T, R, TType>
+      q: (initial: Query<Encoded>) => QAll<Encoded, T, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly T[] : T,
       TType extends "many" ? never : NotFoundError<ItemType>,
       Service | R
     >
-    // <R = never>(q: QAll<Omit<Encoded, "_etag">, T, R>): Effect.Effect<readonly T[], never, Service | R>
+    // <R = never>(q: QAll<Encoded, T, R>): Effect.Effect<readonly T[], never, Service | R>
     // <A, R, From extends FieldValues>(
-    //   q: QueryProjection<Omit<Encoded, "_etag"> extends From ? From : never, A, R>
+    //   q: QueryProjection<Encoded extends From ? From : never, A, R>
     // ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
   }
 
@@ -865,7 +865,7 @@ export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: 
   }
 
   /** @experimental */
-  mapped: MM<Service, Encoded, Omit<Encoded, "_etag">>
+  mapped: MM<Service, Encoded, Encoded>
 
   use: <X>(
     body: (_: Service) => X
