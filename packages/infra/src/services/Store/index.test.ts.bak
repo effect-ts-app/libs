@@ -14,7 +14,7 @@ describe("Optimistic Concurrency", () => {
       Effect.gen(function*($) {
         const existing = new Map<
           string,
-          { _etag: string | undefined; id: string; a: string }
+          { _etag?: string | undefined; id: string; a: string }
         >()
         const { make } = makeMemoryStore()
         const store = yield* $(make("test", Effect.sync(() => existing)))
@@ -48,7 +48,7 @@ describe("Optimistic Concurrency", () => {
       Effect.gen(function*($) {
         const existing = new Map<
           string,
-          { _etag: string | undefined; id: string; a: string }
+          { _etag?: string | undefined; id: string; a: string }
         >()
         const { make } = makeMemoryStore()
         const store = yield* $(make("test", Effect.sync(() => existing)))
@@ -86,7 +86,7 @@ describe("Optimistic Concurrency", () => {
       Effect.gen(function*($) {
         const existing = new Map<
           string,
-          { _etag: string | undefined; id: string; a: string }
+          { _etag?: string | undefined; id: string; a: string }
         >()
         const { make } = makeMemoryStore()
         const store = yield* $(make("test", Effect.sync(() => existing)))

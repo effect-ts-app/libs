@@ -36,26 +36,30 @@ export type Where =
 
 export type Filter<E extends FieldValues> = QueryBuilder<E>
 
-export interface O<PM extends PersistenceModelType<unknown>> {
-  key: keyof PM
+export interface O<Encoded extends { id: string }> {
+  key: keyof Encoded
   direction: "ASC" | "DESC"
 }
 
-export interface FilterArgs<PM extends PersistenceModelType<unknown>, U extends keyof PM = never> {
-  filter?: Filter<PM> | undefined
+export interface FilterArgs<Encoded extends { id: string }, U extends keyof Encoded = never> {
+  filter?: Filter<Encoded> | undefined
   select?: NonEmptyReadonlyArray<U> | undefined
-  order?: NonEmptyReadonlyArray<O<PM>>
+  order?: NonEmptyReadonlyArray<O<Encoded>>
   limit?: number | undefined
   skip?: number | undefined
 }
 
-export type FilterFunc<PM extends PersistenceModelType<unknown>> = <U extends keyof PM = never>(
-  args: FilterArgs<PM, U>
-) => Effect<(U extends undefined ? PM : Pick<PM, U>)[]>
+export type FilterFunc<Encoded extends { id: string }> = <U extends keyof Encoded = never>(
+  args: FilterArgs<Encoded, U>
+) => Effect<(U extends undefined ? Encoded : Pick<Encoded, U>)[]>
 
-export interface Store<PM extends PersistenceModelType<Id>, Id> {
+export interface Store<
+  Encoded extends { id: Id },
+  Id extends string,
+  PM extends PersistenceModelType<Encoded> = PersistenceModelType<Encoded>
+> {
   all: Effect<PM[]>
-  filter: FilterFunc<PM>
+  filter: FilterFunc<Encoded>
   find: (id: Id) => Effect<Option<PM>>
   set: (e: PM) => Effect<PM, OptimisticConcurrencyException>
   batchSet: (
@@ -65,9 +69,9 @@ export interface Store<PM extends PersistenceModelType<Id>, Id> {
     items: NonEmptyReadonlyArray<PM>
   ) => Effect<NonEmptyReadonlyArray<PM>, OptimisticConcurrencyException>
   /**
-   * Requires the PM type, not Id, because various stores may need to calculate e.g partition keys.
+   * Requires the Encoded type, not Id, because various stores may need to calculate e.g partition keys.
    */
-  remove: (e: PM) => Effect<void>
+  remove: (e: Encoded) => Effect<void>
 }
 
 /**
@@ -75,11 +79,11 @@ export interface Store<PM extends PersistenceModelType<Id>, Id> {
  * @tsplus companion StoreMaker.Ops
  */
 export class StoreMaker extends TagClassId("effect-app/StoreMaker")<StoreMaker, {
-  make: <PM extends PersistenceModelType<Id>, Id extends string, R = never, E = never>(
+  make: <Encoded extends { id: Id }, Id extends string, R = never, E = never>(
     name: string,
-    seed?: Effect<Iterable<PM>, E, R>,
-    config?: StoreConfig<PM>
-  ) => Effect<Store<PM, Id>, E, R>
+    seed?: Effect<Iterable<Encoded>, E, R>,
+    config?: StoreConfig<Encoded>
+  ) => Effect<Store<Encoded, Id>, E, R>
 }>() {
 }
 
@@ -157,9 +161,8 @@ const makeMap = Effect.sync(() => makeContextMap())
 export class ContextMap extends TagClassMakeId("effect-app/ContextMap", makeMap)<ContextMap>() {
 }
 
-export interface PersistenceModelType<Id> extends Record<string, any> {
-  id: Id
-  _etag: string | undefined
+export type PersistenceModelType<Encoded> = Encoded & {
+  _etag?: string | undefined
 }
 
 export interface StorageConfig {

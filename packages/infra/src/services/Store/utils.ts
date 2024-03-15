@@ -4,14 +4,14 @@ import { OptimisticConcurrencyException } from "../../errors.js"
 import { codeFilter3_ } from "./codeFilter.js"
 import type { Filter, PersistenceModelType, SupportedValues2 } from "./service.js"
 
-export const makeETag = <E extends PersistenceModelType<Id>, Id extends string>(
+export const makeETag = <E extends PersistenceModelType<{}>>(
   { _etag, ...e }: E
 ): E => (({
   ...e,
   _etag: objectHash(e)
 }) as any)
 export const makeUpdateETag =
-  (type: string) => <E extends PersistenceModelType<Id>, Id extends string>(e: E, current: Option<E>) =>
+  (type: string) => <E extends PersistenceModelType<{ id: string }>>(e: E, current: Option<E>) =>
     Effect.gen(function*($) {
       if (e._etag) {
         yield* $(

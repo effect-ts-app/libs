@@ -8,14 +8,15 @@ import { makeMemoryStoreInt, storeId } from "./Memory.js"
 import type { PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
 
-function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>, R, E>(
+function makeDiskStoreInt<Id extends string, Encoded extends { id: Id }, R, E>(
   prefix: string,
   namespace: string,
   dir: string,
   name: string,
-  seed?: Effect<Iterable<PM>, E, R>,
-  defaultValues?: Partial<PM>
+  seed?: Effect<Iterable<Encoded>, E, R>,
+  defaultValues?: Partial<Encoded>
 ) {
+  type PM = PersistenceModelType<Encoded>
   return Effect.gen(function*($) {
     if (namespace !== "primary") {
       dir = dir + "/" + namespace
@@ -58,7 +59,7 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
     }
 
     const store = yield* $(
-      makeMemoryStoreInt<Id, PM, R, E>(
+      makeMemoryStoreInt<Id, Encoded, R, E>(
         name,
         namespace,
         !fs.existsSync(file)
@@ -98,7 +99,7 @@ function makeDiskStoreInt<Id extends string, PM extends PersistenceModelType<Id>
         store.remove,
         Effect.tap(flushToDiskInBackground)
       )
-    } satisfies Store<PM, Id>
+    } satisfies Store<Encoded, Id>
   })
 }
 
@@ -112,15 +113,15 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
       fs.mkdirSync(dir)
     }
     return {
-      make: <Id extends string, PM extends PersistenceModelType<Id>, R, E>(
+      make: <Id extends string, Encoded extends { id: Id }, R, E>(
         name: string,
-        seed?: Effect<Iterable<PM>, E, R>,
-        config?: StoreConfig<PM>
+        seed?: Effect<Iterable<Encoded>, E, R>,
+        config?: StoreConfig<Encoded>
       ) =>
         Effect.gen(function*($) {
           const storesSem = Effect.unsafeMakeSemaphore(1)
           const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, seed, config?.defaultValues))
-          const stores = new Map<string, Store<PM, Id>>([["primary", primary]])
+          const stores = new Map<string, Store<Encoded, Id>>([["primary", primary]])
           const ctx = yield* $(Effect.context<R>())
           const getStore = !config?.allowNamespace
             ? Effect.succeed(primary)
@@ -136,7 +137,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
                 Effect.suspend(() => {
                   const existing = stores.get(namespace)
                   if (existing) return Effect.sync(() => existing)
-                  return makeDiskStoreInt<Id, PM, R, E>(prefix, namespace, dir, name, seed, config?.defaultValues)
+                  return makeDiskStoreInt<Id, Encoded, R, E>(prefix, namespace, dir, name, seed, config?.defaultValues)
                     .pipe(
                       Effect.orDie,
                       Effect.provide(ctx),
@@ -146,7 +147,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
               )
             }))
 
-          const s: Store<PM, Id> = {
+          const s: Store<Encoded, Id> = {
             all: Effect.flatMap(getStore, (_) => _.all),
             find: (...args) => Effect.flatMap(getStore, (_) => _.find(...args)),
             filter: (...args) => Effect.flatMap(getStore, (_) => _.filter(...args)),

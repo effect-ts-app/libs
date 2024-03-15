@@ -18,12 +18,13 @@ function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
     const { db } = yield* $(CosmosClient)
     return {
-      make: <Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
+      make: <Id extends string, Encoded extends { id: Id }, R = never, E = never>(
         name: string,
-        seed?: Effect<Iterable<PM>, E, R>,
-        config?: StoreConfig<PM>
+        seed?: Effect<Iterable<Encoded>, E, R>,
+        config?: StoreConfig<Encoded>
       ) =>
         Effect.gen(function*($) {
+          type PM = PersistenceModelType<Encoded>
           const containerId = `${prefix}${name}`
           yield* $(
             Effect.promise(() =>
@@ -121,7 +122,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         )
                   )
                 )
-                return batchResult.flat() as unknown as NonEmptyReadonlyArray<PM>
+                return batchResult.flat() as unknown as NonEmptyReadonlyArray<Encoded>
               })
               .pipe(Effect.withSpan("Cosmos.bulkSet [effect-app/infra/Store]", {
                 attributes: { "repository.container_id": containerId, "repository.model_name": name }
@@ -183,7 +184,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       return batch.map(([e], i) => ({
                         ...e,
                         _etag: result[i]?.eTag
-                      })) as unknown as NonEmptyReadonlyArray<PM>
+                      })) as unknown as NonEmptyReadonlyArray<Encoded>
                     })
                   ))
               })
@@ -193,7 +194,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 }))
           }
 
-          const s: Store<PM, Id> = {
+          const s: Store<Encoded, Id> = {
             all: Effect
               .sync(() => ({
                 query: `SELECT * FROM ${name} f WHERE f.id != @id`,
@@ -218,13 +219,13 @@ function makeCosmosStore({ prefix }: StorageConfig) {
             /**
              * May return duplicate results for "join_find", when matching more than once.
              */
-            filter: <U extends keyof PM = never>(
-              f: FilterArgs<PM, U>
+            filter: <U extends keyof Encoded = never>(
+              f: FilterArgs<Encoded, U>
             ) => {
               const skip = f?.skip
               const limit = f?.limit
               const filter = f.filter ?? { type: "new-kid", build: () => [] }
-              type M = U extends undefined ? PM : Pick<PM, U>
+              type M = U extends undefined ? Encoded : Pick<Encoded, U>
               return Effect
                 .sync(() =>
                   buildWhereCosmosQuery3(
@@ -267,8 +268,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               Effect
                 .promise(() =>
                   container
-                    .item(id, config?.partitionValue({ id } as PM))
-                    .read<PM>()
+                    .item(id, config?.partitionValue({ id } as Encoded))
+                    .read<Encoded>()
                     .then(({ resource }) =>
                       Option.fromNullable(resource).pipe(Option.map((_) => ({ ...defaultValues, ..._ })))
                     )
@@ -329,7 +330,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 ),
             batchSet,
             bulkSet,
-            remove: (e: PM) =>
+            remove: (e: Encoded) =>
               Effect
                 .promise(() => container.item(e.id, config?.partitionValue(e)).delete())
                 .pipe(Effect

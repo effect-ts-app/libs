@@ -36,33 +36,33 @@ import * as Q from "./query.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 import type * as QB from "./Store/filterApi/query.js"
 
-export interface Mapped1<PM extends { id: string }, X, R> {
-  all: Effect<X[], ParseResult.ParseError, R>
-  save: (...xes: readonly X[]) => Effect<void, OptimisticConcurrencyException | ParseResult.ParseError, R>
+export interface Mapped1<A, Encoded extends { id: string }, R> {
+  all: Effect<A[], ParseResult.ParseError, R>
+  save: (...xes: readonly A[]) => Effect<void, OptimisticConcurrencyException | ParseResult.ParseError, R>
   query: (
-    b: (fn: QB.FilterTest<PM>, fields: QB.Filter<PM, never>) => QB.QueryBuilder<PM>
-  ) => Effect<X[], ParseResult.ParseError, R>
-  find: (id: PM["id"]) => Effect<Option<X>, ParseResult.ParseError, R>
+    b: (fn: QB.FilterTest<Encoded>, fields: QB.Filter<Encoded, never>) => QB.QueryBuilder<Encoded>
+  ) => Effect<A[], ParseResult.ParseError, R>
+  find: (id: Encoded["id"]) => Effect<Option<A>, ParseResult.ParseError, R>
 }
 
 // TODO: auto use project, and select fields from the From side of schema only
-export interface Mapped2<PM extends { id: string }, X, R> {
-  all: Effect<X[], ParseResult.ParseError, R>
+export interface Mapped2<A, Encoded extends { id: string }, R> {
+  all: Effect<A[], ParseResult.ParseError, R>
   query: (
-    b: (fn: QB.FilterTest<PM>, fields: QB.Filter<PM, never>) => QB.QueryBuilder<PM>
-  ) => Effect<X[], ParseResult.ParseError, R>
+    b: (fn: QB.FilterTest<Encoded>, fields: QB.Filter<Encoded, never>) => QB.QueryBuilder<Encoded>
+  ) => Effect<A[], ParseResult.ParseError, R>
 }
 
-export interface Mapped<PM extends { id: string }, OriginalFrom> {
-  <X, R>(schema: S.Schema<X, OriginalFrom, R>): Mapped1<PM, X, R>
+export interface Mapped<Encoded extends { id: string }, OriginalEncoded extends { id: string } = Encoded> {
+  <A, R>(schema: S.Schema<A, OriginalEncoded, R>): Mapped1<A, Encoded, R>
   // TODO: constrain on From having to contain only fields that fit OriginalFrom
-  <X, From, R>(schema: S.Schema<X, From, R>): Mapped2<PM, X, R>
+  <A, From, R>(schema: S.Schema<A, From, R>): Mapped2<A, Encoded, R>
 }
 
-export interface MM<Repo, PM extends { id: string }, OriginalFrom> {
-  <X, R>(schema: S.Schema<X, OriginalFrom, R>): Effect<Mapped1<PM, X, R>, never, Repo>
-  // TODO: constrain on From having to contain only fields that fit OriginalFrom
-  <X, From, R>(schema: S.Schema<X, From, R>): Effect<Mapped2<PM, X, R>, never, Repo>
+export interface MM<Repo, Encoded extends { id: string }, OriginalEncoded extends { id: string }> {
+  <A, R>(schema: S.Schema<A, OriginalEncoded, R>): Effect<Mapped1<A, Encoded, R>, never, Repo>
+  // TODO: constrain on From having to contain only fields that fit OriginalEncoded
+  <A, Encoded2, R>(schema: S.Schema<A, Encoded2, R>): Effect<Mapped2<A, Encoded, R>, never, Repo>
 }
 
 /**
@@ -70,7 +70,7 @@ export interface MM<Repo, PM extends { id: string }, OriginalFrom> {
  */
 export abstract class RepositoryBaseC<
   T extends { id: unknown },
-  PM extends PersistenceModelType<string>,
+  Encoded extends { id: string },
   Evt,
   ItemType extends string
 > {
@@ -88,10 +88,10 @@ export abstract class RepositoryBaseC<
   ) => Effect<void>
 
   abstract readonly query: {
-    <A, R, From extends FieldValues, TType extends "one" | "many" | "count" = "many">(
+    <A, R, Encoded2 extends FieldValues, TType extends "one" | "many" | "count" = "many">(
       q: (
-        initial: Query<Omit<PM, "_etag">>
-      ) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R, TType>
+        initial: Query<Omit<Encoded, "_etag">>
+      ) => QueryProjection<Omit<Encoded, "_etag"> extends Encoded2 ? Encoded2 : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -99,24 +99,24 @@ export abstract class RepositoryBaseC<
       R
     >
     <R = never, TType extends "one" | "many" = "many">(
-      q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R, TType>
+      q: (initial: Query<Omit<Encoded, "_etag">>) => QAll<Omit<Encoded, "_etag">, T, R, TType>
     ): Effect.Effect<TType extends "many" ? readonly T[] : T, TType extends "many" ? never : NotFoundError<ItemType>, R>
-    // <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, R>
-    // <A, R, From extends FieldValues>(
-    //   q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
+    // <R = never>(q: QAll<Omit<Encoded, "_etag">, T, R>): Effect.Effect<readonly T[], never, R>
+    // <A, R, Encoded2 extends FieldValues>(
+    //   q: QueryProjection<Omit<Encoded, "_etag"> extends Encoded2 ? Encoded2 : never, A, R>
     // ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
   }
 
   /** @deprecated use query */
-  abstract readonly mapped: Mapped<PM, Omit<PM, "_etag">>
+  abstract readonly mapped: Mapped<Encoded>
 }
 
 export abstract class RepositoryBaseC1<
   T extends { id: unknown },
-  PM extends PersistenceModelType<string>,
+  Encoded extends { id: string },
   Evt,
   ItemType extends string
-> extends RepositoryBaseC<T, PM, Evt, ItemType> {
+> extends RepositoryBaseC<T, Encoded, Evt, ItemType> {
   constructor(
     public readonly itemType: ItemType
   ) {
@@ -126,13 +126,13 @@ export abstract class RepositoryBaseC1<
 
 export class RepositoryBaseC2<
   T extends { id: unknown },
-  PM extends PersistenceModelType<string>,
+  Encoded extends { id: string },
   Evt,
   ItemType extends string
-> extends RepositoryBaseC1<T, PM, Evt, ItemType> {
+> extends RepositoryBaseC1<T, Encoded, Evt, ItemType> {
   constructor(
     itemType: ItemType,
-    protected readonly impl: Repository<T, PM, Evt, ItemType>
+    protected readonly impl: Repository<T, Encoded, Evt, ItemType>
   ) {
     super(itemType)
     this.saveAndPublish = this.impl.saveAndPublish
@@ -155,10 +155,10 @@ export class RepositoryBaseC2<
 
 export class RepositoryBaseC3<
   T extends { id: unknown },
-  PM extends PersistenceModelType<string>,
+  Encoded extends { id: string },
   Evt,
   ItemType extends string
-> extends RepositoryBaseC2<T, PM, Evt, ItemType> {
+> extends RepositoryBaseC2<T, Encoded, Evt, ItemType> {
   get(id: T["id"]) {
     return Effect.andThen(
       this
@@ -181,8 +181,8 @@ export class RepositoryBaseC3<
   readonly queryAndSavePure: {
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<PM, "_etag">>
-      ) => QueryEnd<Omit<PM, "_etag">, "one">,
+        q: Query<Omit<Encoded, "_etag">>
+      ) => QueryEnd<Omit<Encoded, "_etag">, "one">,
       pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
     ): Effect.Effect<
       A,
@@ -193,8 +193,11 @@ export class RepositoryBaseC3<
     >
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<PM, "_etag">>
-      ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">, "many">,
+        q: Query<Omit<Encoded, "_etag">>
+      ) =>
+        | Query<Omit<Encoded, "_etag">>
+        | QueryWhere<Omit<Encoded, "_etag">>
+        | QueryEnd<Omit<Encoded, "_etag">, "many">,
       pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>
     ): Effect.Effect<
       A,
@@ -205,8 +208,11 @@ export class RepositoryBaseC3<
     >
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<PM, "_etag">>
-      ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">, "many">,
+        q: Query<Omit<Encoded, "_etag">>
+      ) =>
+        | Query<Omit<Encoded, "_etag">>
+        | QueryWhere<Omit<Encoded, "_etag">>
+        | QueryEnd<Omit<Encoded, "_etag">, "many">,
       pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
       batch: "batched" | number
     ): Effect.Effect<
@@ -303,27 +309,26 @@ export class RepositoryBaseC3<
   }
 }
 
-type Exact<A, B> = [A] extends [B] ? [B] extends [A] ? true : false : false
 /**
  * A base implementation to create a repository.
  */
 export function makeRepo<
-  PM extends { id: string; _etag: string | undefined },
   Evt = never
 >() {
   return <
     ItemType extends string,
     R,
-    From extends { id: string },
+    Encoded extends { id: string },
     T extends { id: unknown }
   >(
     name: ItemType,
-    schema: S.Schema<T, From, R>,
-    mapFrom: (pm: Omit<PM, "_etag">) => From,
-    mapTo: (e: From, etag: string | undefined) => PM
+    schema: S.Schema<T, Encoded, R>,
+    mapFrom: (pm: Encoded) => Encoded,
+    mapTo: (e: Encoded, etag: string | undefined) => PersistenceModelType<Encoded>
   ) => {
+    type PM = PersistenceModelType<Encoded>
     function mapToPersistenceModel(
-      e: From,
+      e: Encoded,
       getEtag: (id: string) => string | undefined
     ): PM {
       return mapTo(e, getEtag(e.id))
@@ -332,25 +337,25 @@ export function makeRepo<
     function mapReverse(
       { _etag, ...e }: PM,
       setEtag: (id: string, eTag: string | undefined) => void
-    ): From {
+    ): Encoded {
       setEtag(e.id, _etag)
-      return mapFrom(e)
+      return mapFrom(e as unknown as Encoded)
     }
 
-    const mkStore = makeStore<PM>()(name, schema, mapTo)
+    const mkStore = makeStore<Encoded>()(name, schema, mapTo)
 
     function make<RInitial = never, E = never, R2 = never>(
       args: [Evt] extends [never] ? {
           makeInitial?: Effect<readonly T[], E, RInitial>
-          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-            partitionValue?: (a: PM) => string
+          config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+            partitionValue?: (a: Encoded) => string
           }
         }
         : {
           publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
           makeInitial?: Effect<readonly T[], E, RInitial>
-          config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-            partitionValue?: (a: PM) => string
+          config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+            partitionValue?: (a: Encoded) => string
           }
         }
     ) {
@@ -389,28 +394,31 @@ export function makeRepo<
             .pipe(Effect.map((_) => _ as T[]))
 
           const fieldsSchema = schema as unknown as { fields: any }
-          const i = ("fields" in fieldsSchema ? S.struct(fieldsSchema["fields"]) as unknown as typeof schema : schema).pipe((_) =>
-            _.ast._tag === "Union"
-              // we need to get the TypeLiteral, incase of class it's behind a transform...
-              ? S.union(..._.ast.types.map((_) =>
-                (S.make(_._tag === "Transformation" ? _.from : _) as unknown as Schema<T, From>)
-                  .pipe(S.pick("id"))
-              ))
-              : _
-                  .ast
-                  ._tag === "Transformation"
-              ? (S
-                .make(
-                  _
+          const i = ("fields" in fieldsSchema ? S.struct(fieldsSchema["fields"]) as unknown as typeof schema : schema)
+            .pipe((_) =>
+              _.ast._tag === "Union"
+                // we need to get the TypeLiteral, incase of class it's behind a transform...
+                ? S.union(..._.ast.types.map((_) =>
+                  (S.make(_._tag === "Transformation" ? _.from : _) as unknown as Schema<T, Encoded>)
+                    .pipe(S.pick("id"))
+                ))
+                : _
                     .ast
-                    .from
-                ) as unknown as Schema<T, From>)
-                .pipe(S.pick("id"))
-              : _
-                .pipe(S.pick("id"))
-          )
+                    ._tag === "Transformation"
+                ? (S
+                  .make(
+                    _
+                      .ast
+                      .from
+                  ) as unknown as Schema<T, Encoded>)
+                  .pipe(S
+                    .pick("id"))
+                : _
+                  .pipe(S
+                    .pick("id"))
+            )
           const encodeId = flow(S.encode(i), Effect.provide(rctx))
-          function findEId(id: From["id"]) {
+          function findEId(id: Encoded["id"]) {
             return Effect.flatMap(
               store.find(id),
               (item) =>
@@ -433,7 +441,7 @@ export function makeRepo<
             return Effect.flatMapOption(findE(id), (_) => Effect.orDie(decode(_)))
           }
 
-          const saveAllE = (a: Iterable<From>) =>
+          const saveAllE = (a: Iterable<Encoded>) =>
             Effect
               .flatMapOption(
                 Effect
@@ -495,31 +503,31 @@ export function makeRepo<
                   .pipe(Effect.orDie, Effect.withSpan("parseMany")))
           const parseMany2 = <A, R>(
             items: readonly PM[],
-            schema: S.Schema<A, Omit<PM, "_etag">, R>
+            schema: S.Schema<A, Encoded, R>
           ) =>
             Effect
               .flatMap(cms, (cm) =>
                 S
                   .decode(S.array(schema))(
-                    items.map((_) => mapReverse(_, cm.set) as unknown as Omit<PM, "_etag">)
+                    items.map((_) => mapReverse(_, cm.set))
                   )
                   .pipe(Effect.orDie, Effect.withSpan("parseMany2")))
-          const filter = <U extends keyof PM = keyof PM>(args: FilterArgs<PM, U>) =>
+          const filter = <U extends keyof Encoded = keyof Encoded>(args: FilterArgs<Encoded, U>) =>
             store
               .filter(args)
               .pipe(Effect.tap((items) =>
                 args.select
                   ? Effect.unit
-                  : Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as PM).id, (_ as PM)._etag)))
+                  : Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as Encoded).id, (_ as PM)._etag)))
               ))
 
           // TODO: For raw we should use S.from, and drop the R...
           const query: {
             <A, R, From extends FieldValues>(
-              q: QueryProjection<PM extends From ? From : never, A, R>
+              q: QueryProjection<Encoded extends From ? From : never, A, R>
             ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
-            <A, R>(q: QAll<NoInfer<PM>, A, R>): Effect.Effect<readonly A[], never, R>
-          } = (<A, R>(q: QAll<PM, A, R>) => {
+            <A, R>(q: QAll<NoInfer<Encoded>, A, R>): Effect.Effect<readonly A[], never, R>
+          } = (<A, R>(q: QAll<Encoded, A, R>) => {
             const a = Q.toFilter(q)
             const eff = a.mode === "project"
               ? filter(a)
@@ -540,8 +548,9 @@ export function makeRepo<
                 (_) =>
                   Unify.unify(
                     a.schema
-                      ? parseMany2(_, a.schema as any)
-                      : parseMany(_)
+                      // TODO: partial may not match?
+                      ? parseMany2(_ as any, a.schema as any)
+                      : parseMany(_ as any)
                   )
               )
             return pipe(
@@ -567,7 +576,7 @@ export function makeRepo<
             )
           }) as any
 
-          const r: Repository<T, PM, Evt, ItemType> = {
+          const r: Repository<T, Encoded, Evt, ItemType> = {
             changeFeed,
             itemType: name,
             find,
@@ -588,7 +597,7 @@ export function makeRepo<
                   Effect.flatMap(decMany),
                   Effect.map((_) => _ as any[])
                 ),
-                find: (id: PM["id"]) => flatMapOption(findE(id), dec),
+                find: (id: Encoded["id"]) => flatMapOption(findE(id), dec),
                 query: (b: any) =>
                   filter({ filter: b })
                     .pipe(
@@ -608,7 +617,7 @@ export function makeRepo<
 
     return {
       make,
-      Q: Q.make<Omit<PM, "_etag">>()
+      Q: Q.make<Omit<Encoded, "_etag">>()
     }
   }
 }
@@ -621,7 +630,7 @@ const pluralize = (s: string) =>
     : s + "s"
 
 export function makeStore<
-  PM extends { id: string; _etag: string | undefined }
+  Encoded extends { id: string }
 >() {
   return <
     ItemType extends string,
@@ -631,9 +640,9 @@ export function makeStore<
   >(
     name: ItemType,
     schema: S.Schema<T, E, R>,
-    mapTo: (e: E, etag: string | undefined) => PM
+    mapTo: (e: E, etag: string | undefined) => Encoded
   ) => {
-    function encodeToPM() {
+    function encodeToEncoded() {
       const getEtag = () => undefined
       return (t: T) =>
         S.encode(schema)(t).pipe(
@@ -645,26 +654,26 @@ export function makeStore<
     function mapToPersistenceModel(
       e: E,
       getEtag: (id: string) => string | undefined
-    ): PM {
+    ): Encoded {
       return mapTo(e, getEtag(e.id))
     }
 
     function makeStore<RInitial = never, EInitial = never>(
       makeInitial?: Effect<readonly T[], EInitial, RInitial>,
-      config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-        partitionValue?: (a: PM) => string
+      config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+        partitionValue?: (a: Encoded) => string
       }
     ) {
       return Effect.gen(function*($) {
         const { make } = yield* $(StoreMaker)
 
         const store = yield* $(
-          make<PM, string, R | RInitial, EInitial>(
+          make<Encoded, string, R | RInitial, EInitial>(
             pluralize(name),
             makeInitial
               ? makeInitial
                 .pipe(
-                  Effect.flatMap(Effect.forEach(encodeToPM())),
+                  Effect.flatMap(Effect.forEach(encodeToEncoded())),
                   Effect.withSpan("Repository.makeInitial [effect-app/infra]", {
                     attributes: { "repository.model_name": name }
                   })
@@ -687,7 +696,7 @@ export function makeStore<
 
 export interface Repos<
   T extends { id: unknown },
-  PM extends { id: string; _etag: string | undefined },
+  Encoded extends { id: string },
   R,
   Evt,
   ItemType extends string
@@ -695,41 +704,41 @@ export interface Repos<
   make<RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
         makeInitial?: Effect<readonly T[], E, RInitial>
-        config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-          partitionValue?: (a: PM) => string
+        config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+          partitionValue?: (a: Encoded) => string
         }
       }
       : {
         publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
         makeInitial?: Effect<readonly T[], E, RInitial>
-        config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-          partitionValue?: (a: PM) => string
+        config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+          partitionValue?: (a: Encoded) => string
         }
       }
-  ): Effect<Repository<T, PM, Evt, ItemType>, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
+  ): Effect<Repository<T, Encoded, Evt, ItemType>, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
   makeWith<Out, RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
         makeInitial?: Effect<readonly T[], E, RInitial>
-        config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-          partitionValue?: (a: PM) => string
+        config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+          partitionValue?: (a: Encoded) => string
         }
       }
       : {
         publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
         makeInitial?: Effect<readonly T[], E, RInitial>
-        config?: Omit<StoreConfig<PM>, "partitionValue"> & {
-          partitionValue?: (a: PM) => string
+        config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+          partitionValue?: (a: Encoded) => string
         }
       },
-    f: (r: Repository<T, PM, Evt, ItemType>) => Out
+    f: (r: Repository<T, Encoded, Evt, ItemType>) => Out
   ): Effect<Out, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
-  readonly Q: ReturnType<typeof Q.make<PM>>
-  readonly type: Repository<T, PM, Evt, ItemType>
+  readonly Q: ReturnType<typeof Q.make<Encoded>>
+  readonly type: Repository<T, Encoded, Evt, ItemType>
 }
 
 export type GetRepoType<T> = T extends { type: infer R } ? R : never
 
-export interface RepoFunctions<T extends { id: unknown }, PM extends { id: string }, Evt, ItemType, Service> {
+export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: string }, Evt, ItemType, Service> {
   all: Effect<readonly T[], never, Service>
   find: (id: T["id"]) => Effect<Option<T>, never, Service>
   removeById: (id: T["id"]) => Effect<void, NotFoundError<ItemType>, Service>
@@ -747,8 +756,8 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   queryAndSavePure: {
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<PM, "_etag">>
-      ) => QueryEnd<Omit<PM, "_etag">, "one">,
+        q: Query<Omit<Encoded, "_etag">>
+      ) => QueryEnd<Omit<Encoded, "_etag">, "one">,
       pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
     ): Effect.Effect<
       A,
@@ -760,8 +769,11 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     >
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<PM, "_etag">>
-      ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">, "many">,
+        q: Query<Omit<Encoded, "_etag">>
+      ) =>
+        | Query<Omit<Encoded, "_etag">>
+        | QueryWhere<Omit<Encoded, "_etag">>
+        | QueryEnd<Omit<Encoded, "_etag">, "many">,
       pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>
     ): Effect.Effect<
       A,
@@ -773,8 +785,11 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
     >
     <A, E2, R2, T2 extends T>(
       q: (
-        q: Query<Omit<PM, "_etag">>
-      ) => Query<Omit<PM, "_etag">> | QueryWhere<Omit<PM, "_etag">> | QueryEnd<Omit<PM, "_etag">, "many">,
+        q: Query<Omit<Encoded, "_etag">>
+      ) =>
+        | Query<Omit<Encoded, "_etag">>
+        | QueryWhere<Omit<Encoded, "_etag">>
+        | QueryEnd<Omit<Encoded, "_etag">, "many">,
       pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
       batchSize: number
     ): Effect.Effect<
@@ -790,8 +805,8 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   readonly query: {
     <A, R, From extends FieldValues, TType extends "one" | "many" | "count" = "many">(
       q: (
-        initial: Query<Omit<PM, "_etag">>
-      ) => QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R, TType>
+        initial: Query<Omit<Encoded, "_etag">>
+      ) => QueryProjection<Omit<Encoded, "_etag"> extends From ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -799,15 +814,15 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
       Service | R
     >
     <R = never, TType extends "one" | "many" = "many">(
-      q: (initial: Query<Omit<PM, "_etag">>) => QAll<Omit<PM, "_etag">, T, R, TType>
+      q: (initial: Query<Omit<Encoded, "_etag">>) => QAll<Omit<Encoded, "_etag">, T, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly T[] : T,
       TType extends "many" ? never : NotFoundError<ItemType>,
       Service | R
     >
-    // <R = never>(q: QAll<Omit<PM, "_etag">, T, R>): Effect.Effect<readonly T[], never, Service | R>
+    // <R = never>(q: QAll<Omit<Encoded, "_etag">, T, R>): Effect.Effect<readonly T[], never, Service | R>
     // <A, R, From extends FieldValues>(
-    //   q: QueryProjection<Omit<PM, "_etag"> extends From ? From : never, A, R>
+    //   q: QueryProjection<Omit<Encoded, "_etag"> extends From ? From : never, A, R>
     // ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
   }
 
@@ -850,7 +865,7 @@ export interface RepoFunctions<T extends { id: unknown }, PM extends { id: strin
   }
 
   /** @experimental */
-  mapped: MM<Service, PM, Omit<PM, "_etag">>
+  mapped: MM<Service, Encoded, Omit<Encoded, "_etag">>
 
   use: <X>(
     body: (_: Service) => X
@@ -893,41 +908,39 @@ const makeRepoFunctions = (tag: any) => {
 
 export const RepositoryBaseImpl = <Service>() => {
   return <
-    PM extends { id: string; _etag: string | undefined },
     Evt = never
   >() =>
-  <ItemType extends string, R, From extends { id: string }, T extends { id: unknown }>(
+  <ItemType extends string, R, Encoded extends { id: string }, T extends { id: unknown }>(
     itemType: ItemType,
-    schema: S.Schema<T, From, R>,
-    jitM?: (pm: From) => From
-  ): Exact<PM, From & { _etag: string | undefined }> extends true ?
-      & (abstract new() => RepositoryBaseC1<T, PM, Evt, ItemType>)
-      & Context.Tag<Service, Service>
-      & Repos<
-        T,
-        PM,
-        R,
-        Evt,
-        ItemType
-      >
-      & RepoFunctions<T, PM, Evt, ItemType, Service>
-    : never =>
+    schema: S.Schema<T, Encoded, R>,
+    jitM?: (pm: Encoded) => Encoded
+  ):
+    & (abstract new() => RepositoryBaseC1<T, Encoded, Evt, ItemType>)
+    & Context.Tag<Service, Service>
+    & Repos<
+      T,
+      Encoded,
+      R,
+      Evt,
+      ItemType
+    >
+    & RepoFunctions<T, Encoded, Evt, ItemType, Service> =>
   {
-    const mkRepo = makeRepo<PM, Evt>()(
+    const mkRepo = makeRepo<Evt>()(
       itemType,
       schema,
-      jitM ? (pm) => jitM(pm as unknown as From) : (pm) => pm as any,
+      jitM ? (pm) => jitM(pm as unknown as Encoded) : (pm) => pm as any,
       (e, _etag) => ({ ...e, _etag })
     )
-    abstract class Cls extends RepositoryBaseC1<T, PM, Evt, ItemType> {
+    abstract class Cls extends RepositoryBaseC1<T, Encoded, Evt, ItemType> {
       constructor() {
         super(itemType)
       }
       static readonly make = mkRepo.make
       static readonly makeWith = ((a: any, b: any) => Effect.map(mkRepo.make(a), b)) as any
 
-      static readonly Q = Q.make<From>()
-      static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
+      static readonly Q = Q.make<Encoded>()
+      static readonly type: Repository<T, Encoded, Evt, ItemType> = undefined as any
     }
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 2
@@ -937,48 +950,43 @@ export const RepositoryBaseImpl = <Service>() => {
   }
 }
 
-export const RepositoryDefaultImpl = <Service>() => {
-  return <
-    PM extends { id: string; _etag: string | undefined },
-    Evt = never
-  >() =>
-  <ItemType extends string, R, From extends { id: string }, T extends { id: unknown }>(
+export const RepositoryDefaultImpl = <Service, Evt = never>() => {
+  return <ItemType extends string, R, Encoded extends { id: string }, T extends { id: unknown }>(
     itemType: ItemType,
-    schema: S.Schema<T, From, R>,
-    jitM?: (pm: From) => From
-  ): Exact<PM, From & { _etag: string | undefined }> extends true ?
-      & (abstract new(
-        impl: Repository<T, PM, Evt, ItemType>
-      ) => RepositoryBaseC3<T, PM, Evt, ItemType>)
-      & Context.Tag<Service, Service>
-      & Repos<
-        T,
-        PM,
-        R,
-        Evt,
-        ItemType
-      >
-      & RepoFunctions<T, PM, Evt, ItemType, Service>
-    : never =>
+    schema: S.Schema<T, Encoded, R>,
+    jitM?: (pm: Encoded) => Encoded
+  ):
+    & (abstract new(
+      impl: Repository<T, Encoded, Evt, ItemType>
+    ) => RepositoryBaseC3<T, Encoded, Evt, ItemType>)
+    & Context.Tag<Service, Service>
+    & Repos<
+      T,
+      Encoded,
+      R,
+      Evt,
+      ItemType
+    >
+    & RepoFunctions<T, Encoded, Evt, ItemType, Service> =>
   {
-    const mkRepo = makeRepo<PM, Evt>()(
+    const mkRepo = makeRepo<Evt>()(
       itemType,
       schema,
-      jitM ? (pm) => jitM(pm as unknown as From) : (pm) => pm as any,
+      jitM ? (pm) => jitM(pm) : (pm) => pm,
       (e, _etag) => ({ ...e, _etag })
     )
-    abstract class Cls extends RepositoryBaseC3<T, PM, Evt, ItemType> {
+    abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType> {
       constructor(
-        impl: Repository<T, PM, Evt, ItemType>
+        impl: Repository<T, Encoded, Evt, ItemType>
       ) {
         super(itemType, impl)
       }
       static readonly make = mkRepo.make
       static readonly makeWith = ((a: any, b: any) => Effect.map(mkRepo.make(a), b)) as any
 
-      static readonly Q = Q.make<From>()
+      static readonly Q = Q.make<Encoded>()
 
-      static readonly type: Repository<T, PM, Evt, ItemType> = undefined as any
+      static readonly type: Repository<T, Encoded, Evt, ItemType> = undefined as any
     }
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 2

@@ -67,7 +67,7 @@ it("works", () => {
   expect(processed).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "id", "displayName")))
 })
 
-class TestRepo extends RepositoryDefaultImpl<TestRepo>()<s.From & { _etag: string | undefined }, never>()(
+class TestRepo extends RepositoryDefaultImpl<TestRepo>()(
   "test",
   s
 ) {

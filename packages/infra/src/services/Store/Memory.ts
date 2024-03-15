@@ -8,7 +8,7 @@ import type { FilterArgs, PersistenceModelType, Store, StoreConfig } from "./ser
 import { StoreMaker } from "./service.js"
 import { codeFilter, makeUpdateETag } from "./utils.js"
 
-export function memFilter<T extends PersistenceModelType<string>, U extends keyof T = never>(f: FilterArgs<T, U>) {
+export function memFilter<T extends { id: string }, U extends keyof T = never>(f: FilterArgs<T, U>) {
   type M = U extends undefined ? T : Pick<T, U>
   return ((c: T[]): M[] => {
     const select = (r: T[]): M[] => (f.select ? r.map((_) => pick(_, f.select!)) : r) as any
@@ -78,18 +78,19 @@ function logQuery(f: FilterArgs<any, any>, defaultValues?: any) {
     }))
 }
 
-export function makeMemoryStoreInt<Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
+export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }, R = never, E = never>(
   modelName: string,
   namespace: string,
-  seed?: Effect<Iterable<PM>, E, R>,
-  _defaultValues?: Partial<PM>
+  seed?: Effect<Iterable<Encoded>, E, R>,
+  _defaultValues?: Partial<Encoded>
 ) {
+  type PM = PersistenceModelType<Encoded>
   return Effect.gen(function*($) {
     const updateETag = makeUpdateETag(modelName)
     const items_ = yield* $(seed ?? Effect.sync(() => []))
     const defaultValues = _defaultValues ?? {}
 
-    const items = new Map([...items_].map((_) => [_.id, { ...defaultValues, ..._ }] as const))
+    const items = new Map([...items_].map((_) => [_.id, { _etag: undefined, ...defaultValues, ..._ }] as const))
     const store = Ref.unsafeMake<ReadonlyMap<Id, PM>>(items)
     const sem = Effect.unsafeMakeSemaphore(1)
     const withPermit = sem.withPermits(1)
@@ -120,7 +121,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
             .map((_) => _ as NonEmptyArray<PM>),
           withPermit
         )
-    const s: Store<PM, Id> = {
+    const s: Store<Encoded, Id> = {
       all: all.pipe(Effect.withSpan("Memory.all [effect-app/infra/Store]", {
         attributes: {
           modelName,
@@ -189,7 +190,7 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
             attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
           }))
       ),
-      remove: (e: PM) =>
+      remove: (e: Encoded) =>
         Ref
           .get(store)
           .pipe(
@@ -206,14 +207,14 @@ export function makeMemoryStoreInt<Id extends string, PM extends PersistenceMode
 }
 
 export const makeMemoryStore = () => ({
-  make: <Id extends string, PM extends PersistenceModelType<Id>, R = never, E = never>(
+  make: <Id extends string, Encoded extends { id: Id }, R = never, E = never>(
     modelName: string,
-    seed?: Effect<Iterable<PM>, E, R>,
-    config?: StoreConfig<PM>
+    seed?: Effect<Iterable<Encoded>, E, R>,
+    config?: StoreConfig<Encoded>
   ) =>
     Effect.gen(function*($) {
       const storesSem = Effect.unsafeMakeSemaphore(1)
-      const primary = yield* $(makeMemoryStoreInt<Id, PM, R, E>(modelName, "primary", seed, config?.defaultValues))
+      const primary = yield* $(makeMemoryStoreInt<Id, Encoded, R, E>(modelName, "primary", seed, config?.defaultValues))
       const ctx = yield* $(Effect.context<R>())
       const stores = new Map([["primary", primary]])
       const getStore = !config?.allowNamespace
@@ -239,7 +240,7 @@ export const makeMemoryStore = () => ({
               )
           }))
         }))
-      const s: Store<PM, Id> = {
+      const s: Store<Encoded, Id> = {
         all: Effect.flatMap(getStore, (_) => _.all),
         find: (...args) => Effect.flatMap(getStore, (_) => _.find(...args)),
         filter: (...args) => Effect.flatMap(getStore, (_) => _.filter(...args)),
