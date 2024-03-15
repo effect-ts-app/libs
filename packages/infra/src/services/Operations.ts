@@ -98,7 +98,7 @@ const make = Effect.sync(() => {
 })
 
 export class Operations extends TagClassMakeId("effect-app/Operations", make)<Operations>() {
-  static readonly Live = this
+  private static readonly CleanupLive = this
     .use((_) =>
       _.cleanup.pipe(
         Effect.exit,
@@ -115,7 +115,9 @@ export class Operations extends TagClassMakeId("effect-app/Operations", make)<Op
         FiberBag.run
       )
     )
-    .pipe(Layer.effectDiscard, Layer.provide(FiberBag.Live), Layer.provideMerge(this.toLayer()))
+    .pipe(Layer.effectDiscard, Layer.provide(FiberBag.Live))
+
+  static readonly Live = this.CleanupLive.pipe(Layer.provideMerge(this.toLayer()))
 }
 
 /**
