@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "date-fns": "^3.4.0",
+    "date-fns": "^3.5.0",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.6",
     "path-parser": "^6.1.0",
@@ -14,9 +14,9 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.3",
+    "@effect/platform": "^0.48.7",
     "@fp-ts/optic": "0.22.0",
-    "effect": "^2.4.6"
+    "effect": "^2.4.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",

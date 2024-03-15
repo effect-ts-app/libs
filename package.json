@@ -7,8 +7,8 @@
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "fast-check@3.16.0": "patches/fast-check@3.16.0.patch",
       "@fp-ts/optic@0.22.0": "patches/@fp-ts__optic@0.22.0.patch",
-      "@effect/schema@0.64.2": "patches/@effect__schema@0.64.2.patch",
-      "effect@2.4.6": "patches/effect@2.4.6.patch",
+      "@effect/schema@0.64.4": "patches/@effect__schema@0.64.4.patch",
+      "effect@2.4.7": "patches/effect@2.4.7.patch",
       "typescript@5.4.2": "patches/typescript@5.4.2.patch"
     }
   },
@@ -48,7 +48,7 @@
     "vue": "$vue"
   },
   "dependencies": {
-    "date-fns": "^3.4.0",
+    "date-fns": "^3.5.0",
     "cross-env": "^7.0.3",
     "fast-check": "^3.16.0",
     "ts-node": "^10.9.2",
@@ -97,7 +97,7 @@
     "madge": "^6.1.0",
     "module-alias": "^2.2.3",
     "nodemon": "^3.1.0",
-    "npm-check-updates": "^16.14.15",
+    "npm-check-updates": "^16.14.16",
     "ts-transform-paths": "^3.0.0",
     "tsc-watch": "^6.0.4",
     "tsconfig-paths": "^4.2.0",

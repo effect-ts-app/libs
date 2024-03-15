@@ -14,9 +14,9 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "effect": "^2.4.6",
+    "effect": "^2.4.7",
     "@fp-ts/optic": "0.22.0",
-    "@effect/platform": "^0.48.3"
+    "@effect/platform": "^0.48.7"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8",
