@@ -1,4 +1,4 @@
-import { Effect, flow, Layer, Option, S } from "effect-app"
+import { Effect, flow, Layer, Option, pipe, S } from "effect-app"
 import { TagClassMakeId } from "effect-app/service"
 import { pick } from "effect-app/utils"
 import { inspect } from "util"
@@ -53,6 +53,30 @@ const items = [
     union: { _tag: "number", value: 1 }
   })
 ]
+
+// TODO: .merge queries?
+// where(x, y).or(a, b) + where(z, v) = (where(x, y) or(a,b)) and where(z, v)) ?
+
+it("merge", () => {
+  const a = make().pipe(where("a", "b"), or("c", "d"))
+  const b = make().pipe(where("d", "e"), or("f", "g"))
+
+  const merge = (b: any) => (a: any) => pipe(a, and(() => b))
+
+  const r = pipe(a, merge(b), toFilter, (_) => _.filter.build())
+
+  // TODO: instead this should probably scope the first where/or together e.g (where x, or y) and (...)
+  const expected = make().pipe(
+    where("a", "b"),
+    or("c", "d"),
+    and(where("d", "e"), or("f", "g")),
+    toFilter,
+    (_) => _.filter.build()
+  )
+
+  console.log(JSON.stringify({ r, expected }, undefined, 2))
+  expect(r).toEqual(expected)
+})
 
 it("works", () => {
   console.log("raw", inspect(q, undefined, 25))
