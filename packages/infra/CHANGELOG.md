@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.223.0
+
+### Minor Changes
+
+- 02777cf: cleanup PersistenceModel type param
+
 ## 0.222.0
 
 ### Minor Changes
