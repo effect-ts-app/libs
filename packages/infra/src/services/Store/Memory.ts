@@ -90,7 +90,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
     const items_ = yield* $(seed ?? Effect.sync(() => []))
     const defaultValues = _defaultValues ?? {}
 
-    const items = new Map([...items_].map((_) => [_.id, { _etag: undefined, ...defaultValues, ..._ }] as const))
+    const items = new Map([...items_].map((_) => [_.id, { _etag: undefined, ...defaultValues, ..._ } as PM] as const))
     const store = Ref.unsafeMake<ReadonlyMap<Id, PM>>(items)
     const sem = Effect.unsafeMakeSemaphore(1)
     const withPermit = sem.withPermits(1)
