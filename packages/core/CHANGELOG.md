@@ -1,5 +1,16 @@
 # @effect-app/core
 
+## 0.156.0
+
+### Minor Changes
+
+- 498deb0: update packages
+
+### Patch Changes
+
+- Updated dependencies [498deb0]
+  - @effect-app/fluent-extensions@0.150.0
+
 ## 0.155.0
 
 ### Minor Changes

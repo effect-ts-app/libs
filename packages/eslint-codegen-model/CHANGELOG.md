@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.66.0
+
+### Minor Changes
+
+- 498deb0: update packages
+
 ## 0.65.0
 
 ### Minor Changes
