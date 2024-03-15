@@ -53,15 +53,15 @@ export interface Mapped2<A, Encoded extends { id: string }, R> {
   ) => Effect<A[], ParseResult.ParseError, R>
 }
 
-export interface Mapped<Encoded extends { id: string }, OriginalEncoded extends { id: string } = Encoded> {
-  <A, R>(schema: S.Schema<A, OriginalEncoded, R>): Mapped1<A, Encoded, R>
-  // TODO: constrain on From having to contain only fields that fit OriginalFrom
-  <A, From, R>(schema: S.Schema<A, From, R>): Mapped2<A, Encoded, R>
+export interface Mapped<Encoded extends { id: string }> {
+  <A, R>(schema: S.Schema<A, Encoded, R>): Mapped1<A, Encoded, R>
+  // TODO: constrain on Encoded2 having to contain only fields that fit Encoded
+  <A, Encoded2, R>(schema: S.Schema<A, Encoded2, R>): Mapped2<A, Encoded, R>
 }
 
-export interface MM<Repo, Encoded extends { id: string }, OriginalEncoded extends { id: string }> {
-  <A, R>(schema: S.Schema<A, OriginalEncoded, R>): Effect<Mapped1<A, Encoded, R>, never, Repo>
-  // TODO: constrain on From having to contain only fields that fit OriginalEncoded
+export interface MM<Repo, Encoded extends { id: string }> {
+  <A, R>(schema: S.Schema<A, Encoded, R>): Effect<Mapped1<A, Encoded, R>, never, Repo>
+  // TODO: constrain on Encoded2 having to contain only fields that fit Encoded
   <A, Encoded2, R>(schema: S.Schema<A, Encoded2, R>): Effect<Mapped2<A, Encoded, R>, never, Repo>
 }
 
@@ -865,7 +865,7 @@ export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: 
   }
 
   /** @experimental */
-  mapped: MM<Service, Encoded, Encoded>
+  mapped: MM<Service, Encoded>
 
   use: <X>(
     body: (_: Service) => X
