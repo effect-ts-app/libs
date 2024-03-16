@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra-adapters",
-  "version": "0.144.1",
+  "version": "0.145.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -29,7 +29,6 @@
   "peerDependencies": {
     "@effect/platform": "^0.48.8",
     "@effect/schema": "^0.64.5",
-    "@fp-ts/optic": "0.22.0",
     "effect": "^2.4.7"
   },
   "scripts": {

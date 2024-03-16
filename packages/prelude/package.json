@@ -1,6 +1,6 @@
 {
   "name": "effect-app",
-  "version": "0.189.1",
+  "version": "0.190.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -31,8 +31,7 @@
   "peerDependencies": {
     "@effect/platform": "^0.48.8",
     "effect": "^2.4.7",
-    "@effect/schema": "^0.64.5",
-    "@fp-ts/optic": "0.22.0"
+    "@effect/schema": "^0.64.5"
   },
   "typesVersions": {
     "*": {
@@ -230,16 +229,6 @@
       "require": {
         "types": "./dist/lib.d.ts",
         "default": "./_cjs/lib.cjs"
-      }
-    },
-    "./refinements": {
-      "import": {
-        "types": "./dist/refinements.d.ts",
-        "default": "./dist/refinements.js"
-      },
-      "require": {
-        "types": "./dist/refinements.d.ts",
-        "default": "./_cjs/refinements.cjs"
       }
     },
     "./schema": {

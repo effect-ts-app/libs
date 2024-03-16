@@ -5,7 +5,6 @@ module.exports = {
             "@effect/cache",
             "@effect/data",
             "@effect/io",
-            "@fp-ts/optic",
             "@fp-ts/schema",
             "date-fns"
             //"vue",

@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/core",
-  "version": "0.156.1",
+  "version": "0.157.0",
   "license": "MIT",
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/core",
@@ -15,7 +15,6 @@
   },
   "peerDependencies": {
     "effect": "^2.4.7",
-    "@fp-ts/optic": "0.22.0",
     "@effect/platform": "^0.48.8"
   },
   "devDependencies": {
@@ -157,16 +156,6 @@
       "require": {
         "types": "./dist/Object.d.ts",
         "default": "./_cjs/Object.cjs"
-      }
-    },
-    "./Optic": {
-      "import": {
-        "types": "./dist/Optic.d.ts",
-        "default": "./dist/Optic.js"
-      },
-      "require": {
-        "types": "./dist/Optic.d.ts",
-        "default": "./_cjs/Optic.cjs"
       }
     },
     "./Option": {

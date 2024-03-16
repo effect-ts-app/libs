@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.152.0
+
+### Minor Changes
+
+- 790bfc2: cleanup
+
 ## 0.151.0
 
 ### Minor Changes

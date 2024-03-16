@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Clone } from "@fp-ts/optic"
-import { cloneTrait } from "@fp-ts/optic"
 import * as Either from "effect/Either"
 import { dual, isFunction } from "effect/Function"
 import type { Types } from "effect/Match"
@@ -12,6 +10,11 @@ import * as D from "./Dictionary.js"
 import { identity, pipe } from "./Function.js"
 import { Match } from "./index.js"
 import { Effect, Option } from "./Prelude.js"
+
+export const cloneTrait = Symbol.for("clone-trait")
+export interface Clone {
+  [cloneTrait](this: this, that: any): this
+}
 
 const { get, omit: omit_, pick } = ld.default ?? ld
 
