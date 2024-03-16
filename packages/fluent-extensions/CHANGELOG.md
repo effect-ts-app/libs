@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 0.153.0
+
+### Minor Changes
+
+- cb84068: replace lodash with builtin and cleanup
+
 ## 0.152.0
 
 ### Minor Changes

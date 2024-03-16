@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.211.0
+
+### Minor Changes
+
+- cb84068: replace lodash with builtin and cleanup
+
+### Patch Changes
+
+- Updated dependencies [cb84068]
+  - @effect-app/core@0.158.0
+
 ## 0.210.2
 
 ### Patch Changes
