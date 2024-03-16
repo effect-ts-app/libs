@@ -12,47 +12,70 @@ const str = S.struct({ _tag: S.literal("string"), value: S.string })
 const num = S.struct({ _tag: S.literal("number"), value: S.number })
 const someUnion = S.union(str, num)
 
-export class s extends S.Class<s>()({
+export class Something extends S.Class<Something>()({
   id: S.StringId.withDefault,
   displayName: S.NonEmptyString255,
   n: S.Date.withDefault,
   union: someUnion.pipe(S.withDefaultConstructor(() => ({ _tag: "string" as const, value: "hi" })))
 }) {}
-export declare namespace s {
-  export type From = S.Schema.Encoded<typeof s>
+export declare namespace Something {
+  export interface Encoded extends S.Schema.Encoded<typeof Something> {}
 }
 
 const MakeSomeService = Effect.succeed({ a: 1 })
 export class SomeService extends TagClassMakeId("SomeService", MakeSomeService)<SomeService>() {}
 
-const q = pipe(
-  make<s.From>(), // provided automatically inside Repo.q2()
-  where("displayName", "Verona"),
-  or(flow(
-    where("displayName", "Riley"),
-    and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
-  )),
-  order("displayName"),
-  page({ take: 10 }),
-  project(
-    S.transformOrFail(
-      S.struct({ id: S.StringId, displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-      S.struct(pick(s.fields, "id", "displayName")),
-      (_) => Effect.andThen(SomeService, _),
-      () => Effect.die(new Error("not implemented"))
+const q = make<Something.Encoded>()
+  .pipe( // provided automatically inside Repo.q2()
+    where("displayName", "Verona"),
+    or(
+      where("displayName", "Riley"),
+      and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
+    ),
+    order("displayName"),
+    page({ take: 10 }),
+    project(
+      S.transformToOrFail(
+        S.struct({ id: S.StringId, displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+        S.struct(pick(Something.fields, "id", "displayName")),
+        (_) => Effect.andThen(SomeService, _)
+      )
     )
   )
-)
 
 const items = [
-  new s({ displayName: S.NonEmptyString255("Verona"), n: new Date("2020-01-01T00:00:00Z") }),
-  new s({ displayName: S.NonEmptyString255("Riley") }),
-  new s({
+  new Something({ displayName: S.NonEmptyString255("Verona"), n: new Date("2020-01-01T00:00:00Z") }),
+  new Something({ displayName: S.NonEmptyString255("Riley") }),
+  new Something({
     displayName: S.NonEmptyString255("Riley"),
     n: new Date("2020-01-01T00:00:00Z"),
     union: { _tag: "number", value: 1 }
   })
 ]
+
+// TODO: .merge queries?
+// where(x, y).or(a, b) + where(z, v) = (where(x, y) or(a,b)) and where(z, v)) ?
+
+it("merge", () => {
+  const a = make().pipe(where("a", "b"), or("c", "d"))
+  const b = make().pipe(where("d", "e"), or("f", "g"))
+
+  const merge = (b: any) => (a: any) => pipe(a, and(() => b))
+
+  const r = pipe(a, merge(b), toFilter, (_) => _.filter.build())
+
+  // TODO: instead this should probably scope the first where/or together e.g (where x, or y) and (...)
+  const expected = make().pipe(
+    where("a", "b"),
+    or("c", "d"),
+    and(where("d", "e"), or("f", "g")),
+    toFilter,
+    (_) => _.filter.build()
+  )
+
+  console.log(JSON.stringify({ r, expected }, undefined, 2))
+  expect(r).toEqual(expected)
+})
 
 it("works", () => {
   console.log("raw", inspect(q, undefined, 25))
@@ -62,16 +85,16 @@ it("works", () => {
   console
     .log("filtersBuilt", inspect(filtersBuilt, undefined, 25))
 
-  const processed = memFilter(interpreted)(items.map((_) => S.encodeSync(s)(_)))
+  const processed = memFilter(interpreted)(items.map((_) => S.encodeSync(Something)(_)))
 
   expect(processed).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "id", "displayName")))
 })
 
-class TestRepo extends RepositoryDefaultImpl<TestRepo>()(
+class SomethingRepo extends RepositoryDefaultImpl<SomethingRepo>()(
   "test",
-  s
+  Something
 ) {
-  static readonly Test = Layer.effect(TestRepo, TestRepo.makeWith({}, (_) => new TestRepo(_))).pipe(
+  static readonly Test = Layer.effect(SomethingRepo, SomethingRepo.makeWith({}, (_) => new SomethingRepo(_))).pipe(
     Layer.provide(Layer.merge(MemoryStoreLive, ContextMapContainer.live))
   )
 }
@@ -79,24 +102,24 @@ class TestRepo extends RepositoryDefaultImpl<TestRepo>()(
 it("works with repo", () =>
   Effect
     .gen(function*($) {
-      yield* $(TestRepo.saveAndPublish(items))
+      yield* $(SomethingRepo.saveAndPublish(items))
 
-      const q1 = yield* $(TestRepo.query(() => q))
+      const q1 = yield* $(SomethingRepo.query(() => q))
       // same as above, but with the `flow` helper
       const q2 = yield* $(
-        TestRepo
+        SomethingRepo
           .query(flow(
             where("displayName", "Verona"),
-            or(flow(
+            or(
               where("displayName", "Riley"),
               and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
-            )),
+            ),
             order("displayName"),
             page({ take: 10 }),
             project(
               S.transformOrFail(
                 S.struct({ displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                S.struct(pick(s.fields, "displayName")),
+                S.struct(pick(Something.fields, "displayName")),
                 (_) => Effect.andThen(SomeService, _),
                 () => Effect.die(new Error("not implemented"))
               )
@@ -106,23 +129,23 @@ it("works with repo", () =>
       expect(q1).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "id", "displayName")))
       expect(q2).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "displayName")))
     })
-    .pipe(Effect.provide(Layer.mergeAll(TestRepo.Test, SomeService.toLayer())), Effect.runPromise))
+    .pipe(Effect.provide(Layer.mergeAll(SomethingRepo.Test, SomeService.toLayer())), Effect.runPromise))
 
 it("collect", () =>
   Effect
     .gen(function*($) {
-      yield* $(TestRepo.saveAndPublish(items))
+      yield* $(SomethingRepo.saveAndPublish(items))
 
       expect(
         yield* $(
-          TestRepo
+          SomethingRepo
             .query(flow(
               where("displayName", "Riley"), // TODO: work with To type translation, so Date?
               // one,
               project(
                 S.transformTo(
                   // TODO: sample case with narrowing down a union?
-                  S.encodedSchema(S.struct(pick(s.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                  S.encodedSchema(S.struct(pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
                   S.typeSchema(S.option(S.string)),
                   (_) =>
                     _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
@@ -138,14 +161,14 @@ it("collect", () =>
 
       expect(
         yield* $(
-          TestRepo
+          SomethingRepo
             .query(flow(
               where("union._tag", "string"),
               one,
               project(
                 S.transformTo(
                   // TODO: sample case with narrowing down a union?
-                  S.encodedSchema(S.struct(pick(s.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                  S.encodedSchema(S.struct(pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
                   S.typeSchema(S.option(S.string)),
                   (_) =>
                     _.union._tag === "string"
@@ -159,4 +182,4 @@ it("collect", () =>
       )
         .toEqual("hi")
     })
-    .pipe(Effect.provide(Layer.mergeAll(TestRepo.Test, SomeService.toLayer())), Effect.runPromise))
+    .pipe(Effect.provide(Layer.mergeAll(SomethingRepo.Test, SomeService.toLayer())), Effect.runPromise))

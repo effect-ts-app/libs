@@ -5,9 +5,11 @@ import type { FieldValues } from "@effect-app/infra/filter/types"
 import type { FieldPath, FieldPathValue } from "@effect-app/infra/filter/types/path/eager"
 import type { Ops } from "@effect-app/infra/services/Store/filterApi/proxy"
 import type { NonNegativeInt } from "@effect-app/schema"
-import type { Option, S } from "effect-app"
-import { Data } from "effect-app"
+import type { Option, Pipeable, S } from "effect-app"
+import { Data, flow } from "effect-app"
 import type { Covariant } from "effect/Types"
+
+import { pipeArguments } from "effect/Pipeable"
 
 export type QAll<TFieldValues extends FieldValues, A = TFieldValues, R = never, TType extends "one" | "many" = "many"> =
   | Query<TFieldValues>
@@ -24,7 +26,7 @@ export interface QueryTogether<
   out A = TFieldValues,
   out R = never,
   out TType extends "many" | "one" | "count" = "many"
-> {
+> extends Pipeable.Pipeable {
   readonly [QId]: {
     readonly _TFieldValues: Covariant<TFieldValues>
     readonly _T: Covariant<T>
@@ -75,6 +77,10 @@ export class Initial<TFieldValues extends FieldValues> extends Data.TaggedClass(
   constructor() {
     super({ value: "initial" as const })
   }
+  pipe() {
+    // eslint-disable-next-line prefer-rest-params
+    return pipeArguments(this, arguments)
+  }
 }
 
 export class Where<TFieldValues extends FieldValues> extends Data.TaggedClass("where")<{
@@ -82,6 +88,11 @@ export class Where<TFieldValues extends FieldValues> extends Data.TaggedClass("w
   operation: [string, Ops, any] | [string, any]
 }> implements QueryWhere<TFieldValues> {
   readonly [QId]!: any
+
+  pipe() {
+    // eslint-disable-next-line prefer-rest-params
+    return pipeArguments(this, arguments)
+  }
 }
 
 export class And<TFieldValues extends FieldValues> extends Data.TaggedClass("and")<{
@@ -89,6 +100,10 @@ export class And<TFieldValues extends FieldValues> extends Data.TaggedClass("and
   operation: [string, Ops, any] | [string, any] | ((q: Query<TFieldValues>) => QueryWhere<TFieldValues>)
 }> implements QueryWhere<TFieldValues> {
   readonly [QId]!: any
+  pipe() {
+    // eslint-disable-next-line prefer-rest-params
+    return pipeArguments(this, arguments)
+  }
 }
 
 export class Or<TFieldValues extends FieldValues> extends Data.TaggedClass("or")<{
@@ -96,6 +111,10 @@ export class Or<TFieldValues extends FieldValues> extends Data.TaggedClass("or")
   operation: [string, Ops, any] | [string, any] | ((q: Query<TFieldValues>) => QueryWhere<TFieldValues>)
 }> implements QueryWhere<TFieldValues> {
   readonly [QId]!: any
+  pipe() {
+    // eslint-disable-next-line prefer-rest-params
+    return pipeArguments(this, arguments)
+  }
 }
 
 export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("page")<{
@@ -104,18 +123,30 @@ export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("pa
   skip?: number | undefined
 }> implements QueryEnd<TFieldValues> {
   readonly [QId]!: any
+  pipe() {
+    // eslint-disable-next-line prefer-rest-params
+    return pipeArguments(this, arguments)
+  }
 }
 
 export class One<TFieldValues extends FieldValues> extends Data.TaggedClass("one")<{
   current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
 }> implements QueryEnd<TFieldValues, "one"> {
   readonly [QId]!: any
+  pipe() {
+    // eslint-disable-next-line prefer-rest-params
+    return pipeArguments(this, arguments)
+  }
 }
 
 export class Count<TFieldValues extends FieldValues> extends Data.TaggedClass("count")<{
   current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
 }> implements QueryEnd<TFieldValues, "count"> {
   readonly [QId]!: any
+  pipe() {
+    // eslint-disable-next-line prefer-rest-params
+    return pipeArguments(this, arguments)
+  }
 }
 
 export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPath<TFieldValues>>
@@ -127,6 +158,10 @@ export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPat
   implements QueryEnd<TFieldValues>
 {
   readonly [QId]!: any
+  pipe() {
+    // eslint-disable-next-line prefer-rest-params
+    return pipeArguments(this, arguments)
+  }
 }
 
 export class Project<A, TFieldValues extends FieldValues, R, TType extends "one" | "many" = "many">
@@ -138,6 +173,10 @@ export class Project<A, TFieldValues extends FieldValues, R, TType extends "one"
   implements QueryProjection<TFieldValues, A, R>
 {
   readonly [QId]!: any
+  pipe() {
+    // eslint-disable-next-line prefer-rest-params
+    return pipeArguments(this, arguments)
+  }
 }
 
 export const make: <TFieldValues extends FieldValues>() => Query<TFieldValues> = () => new Initial()
@@ -145,10 +184,10 @@ export const make: <TFieldValues extends FieldValues>() => Query<TFieldValues> =
 export const where: FilterWhere = (...operation: any[]) => (current: any) => new Where({ current, operation } as any)
 
 export const and: FilterContinuation = (...operation: any[]) => (current: any) =>
-  new And({ current, operation: typeof operation[0] === "function" ? operation[0] : operation } as any)
+  new And({ current, operation: typeof operation[0] === "function" ? flow(...operation as [any]) : operation } as any)
 
 export const or: FilterContinuation = (...operation: any[]) => (current: any) =>
-  new Or({ current, operation: typeof operation[0] === "function" ? operation[0] : operation } as any)
+  new Or({ current, operation: typeof operation[0] === "function" ? flow(...operation as [any]) : operation } as any)
 
 export const order: <TFieldValues extends FieldValues, TFieldName extends FieldPath<TFieldValues>>(
   field: TFieldName,
@@ -308,24 +347,25 @@ export type FilterContinuations = {
   ): (
     current: QueryWhere<TFieldValues>
   ) => QueryWhere<TFieldValues>
+  // breaks flow pipe type inference
+  // <
+  //   TFieldValues extends FieldValues,
+  //   TFieldName extends FieldPath<TFieldValues>,
+  //   V extends FieldPathValue<TFieldValues, TFieldName>
+  // >(
+  //   path: TFieldName,
+  //   op: "neq",
+  //   value: V
+  // ): (
+  //   current: QueryWhere<TFieldValues>
+  // ) => QueryWhere<TFieldValues>
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(
     path: TFieldName,
-    op: "neq",
-    value: V
-  ): (
-    current: QueryWhere<TFieldValues>
-  ) => QueryWhere<TFieldValues>
-  <
-    TFieldValues extends FieldValues,
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    op: "gt" | "gte" | "lt" | "lte",
+    op: "gt" | "gte" | "lt" | "lte" | "neq",
     value: V // only numbers?
   ): (
     current: QueryWhere<TFieldValues>
@@ -354,23 +394,135 @@ export type FilterContinuations = {
   ) => QueryWhere<TFieldValues>
 }
 
-export type FilterContinuation = {
+export type FilterContinuationClosure = {
   <TFieldValues extends FieldValues>(
-    fb: (
-      current: Query<TFieldValues>
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fd: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fd: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fe: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fd: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fe: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    ff: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fd: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fe: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fg: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fd: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fe: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fg: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fh: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fd: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fe: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fg: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fh: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fi: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fd: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fe: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fg: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fh: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fi: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fj: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fd: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fe: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fg: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fh: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fi: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fj: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fk: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fd: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fe: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fg: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fh: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fi: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fj: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fk: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fl: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fd: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fe: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fg: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fh: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fi: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fj: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fk: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fl: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fm: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  <TFieldValues extends FieldValues>(
+    fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues>,
+    fc: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fd: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fe: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fg: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fh: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fi: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fj: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fk: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fl: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fm: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>,
+    fn: (query: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+  ): (current: QueryWhere<TFieldValues>) => QueryWhere<TFieldValues>
+}
+
+export type FilterContinuation =
+  & FilterContinuationClosure
+  & {
+    <
+      TFieldValues extends FieldValues,
+      TFieldName extends FieldPath<TFieldValues>,
+      V extends FieldPathValue<TFieldValues, TFieldName>
+    >(f: {
+      path: TFieldName
+      op: Ops
+      value: V
+    }): (
+      current: QueryWhere<TFieldValues>
     ) => QueryWhere<TFieldValues>
-  ): (
-    current: QueryWhere<TFieldValues>
-  ) => QueryWhere<TFieldValues>
-  <
-    TFieldValues extends FieldValues,
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(f: {
-    path: TFieldName
-    op: Ops
-    value: V
-  }): (
-    current: QueryWhere<TFieldValues>
-  ) => QueryWhere<TFieldValues>
-} & FilterContinuations
+  }
+  & FilterContinuations
