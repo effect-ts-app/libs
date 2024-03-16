@@ -7,7 +7,6 @@
     "@effect-app/core": "workspace:*",
     "cross-fetch": "^4.0.0",
     "nanoid": "^5.0.6",
-    "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
     "uuid": "^9.0.1",
     "validator": "^13.11.0"

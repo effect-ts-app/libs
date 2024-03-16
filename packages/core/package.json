@@ -7,7 +7,6 @@
   "dependencies": {
     "@effect-app/fluent-extensions": "workspace:*",
     "cross-fetch": "^4.0.0",
-    "lodash": "^4.17.21",
     "path-parser": "^6.1.0",
     "query-string": "^9.0.0",
     "uuid": "^9.0.1",
@@ -176,6 +175,16 @@
       "require": {
         "types": "./dist/Set.d.ts",
         "default": "./_cjs/Set.cjs"
+      }
+    },
+    "./Struct": {
+      "import": {
+        "types": "./dist/Struct.d.ts",
+        "default": "./dist/Struct.js"
+      },
+      "require": {
+        "types": "./dist/Struct.d.ts",
+        "default": "./_cjs/Struct.cjs"
       }
     },
     "./Tag": {

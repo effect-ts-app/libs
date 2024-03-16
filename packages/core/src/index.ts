@@ -28,3 +28,5 @@ export {
   Ref,
   Scope
 } from "./Prelude.js"
+
+export * as Struct from "./Struct.js"

@@ -2,9 +2,9 @@
 
 import { toNonEmptyArray } from "@effect-app/core/Array"
 import { CosmosClient, CosmosClientLayer } from "@effect-app/infra-adapters/cosmos-client"
-import { Chunk, Duration, Effect, Layer, Option, ReadonlyArray, Secret } from "effect-app"
+import { Chunk, Duration, Effect, Layer, Option, pipe, ReadonlyArray, Secret, Struct } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
-import { dropUndefinedT, omit, pick } from "effect-app/utils"
+import { dropUndefinedT } from "effect-app/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
 import { buildWhereCosmosQuery3, logQuery } from "./Cosmos/query.js"
 import { StoreMaker } from "./service.js"
@@ -18,7 +18,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*($) {
     const { db } = yield* $(CosmosClient)
     return {
-      make: <Id extends string, Encoded extends { id: Id }, R = never, E = never>(
+      make: <Id extends string, Encoded extends Record<string, any> & { id: Id }, R = never, E = never>(
         name: string,
         seed?: Effect<Iterable<Encoded>, E, R>,
         config?: StoreConfig<Encoded>
@@ -56,7 +56,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                           dropUndefinedT({
                             operationType: "Create" as const,
                             resourceBody: {
-                              ...omit(x, "_etag"),
+                              ...Struct.omit(x, "_etag"),
                               _partitionKey: config?.partitionValue(x)
                             },
                             partitionKey: config?.partitionValue(x)
@@ -66,7 +66,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                             operationType: "Replace" as const,
                             id: x.id,
                             resourceBody: {
-                              ...omit(x, "_etag"),
+                              ...Struct.omit(x, "_etag"),
                               _partitionKey: config?.partitionValue(x)
                             },
                             ifMatch: eTag,
@@ -139,7 +139,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         onNone: () => ({
                           operationType: "Create" as const,
                           resourceBody: {
-                            ...omit(x, "_etag"),
+                            ...Struct.omit(x, "_etag"),
                             _partitionKey: config?.partitionValue(x)
                           }
                         }),
@@ -147,7 +147,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                           operationType: "Replace" as const,
                           id: x.id,
                           resourceBody: {
-                            ...omit(x, "_etag"),
+                            ...Struct.omit(x, "_etag"),
                             _partitionKey: config?.partitionValue(x)
                           },
                           ifMatch: eTag
@@ -250,7 +250,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                             .query<M>(q)
                             .fetchAll()
                             .then(({ resources }) =>
-                              resources.map((_) => ({ ...pick(defaultValues, f.select!), ..._ }))
+                              resources.map((_) => ({ ...pipe(defaultValues, Struct.pick(...f.select!)), ..._ }))
                             )
                           : container
                             .items

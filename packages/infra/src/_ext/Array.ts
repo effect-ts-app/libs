@@ -1,6 +1,4 @@
 import { Chunk, Effect, Equal } from "effect-app"
-import type { ObjectOps } from "effect-app/utils"
-import { inspect } from "util"
 import { NotFoundError } from "../errors.js"
 
 /**
@@ -21,16 +19,4 @@ export function getFirstById<A extends { id: unknown }, Type extends string>(
       Chunk.findFirst((_) => Equal.equals(_.id, id)),
       Effect.mapError(() => new NotFoundError<Type>({ type, id }))
     )
-}
-
-/**
- * @tsplus fluent Object.Ops inspect
- */
-export function RecordInspect<TT extends object>(
-  o: ObjectOps<TT>,
-  showHidden?: boolean | undefined,
-  depth?: number | null | undefined,
-  color?: boolean | undefined
-) {
-  return inspect(o.subject, showHidden, depth, color)
 }
