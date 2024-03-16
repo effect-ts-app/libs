@@ -35,11 +35,10 @@ const q = make<s.From>()
     order("displayName"),
     page({ take: 10 }),
     project(
-      S.transformOrFail(
+      S.transformToOrFail(
         S.struct({ id: S.StringId, displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
         S.struct(pick(s.fields, "id", "displayName")),
-        (_) => Effect.andThen(SomeService, _),
-        () => Effect.die(new Error("not implemented"))
+        (_) => Effect.andThen(SomeService, _)
       )
     )
   )

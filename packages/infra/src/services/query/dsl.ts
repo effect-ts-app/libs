@@ -184,10 +184,10 @@ export const make: <TFieldValues extends FieldValues>() => Query<TFieldValues> =
 export const where: FilterWhere = (...operation: any[]) => (current: any) => new Where({ current, operation } as any)
 
 export const and: FilterContinuation = (...operation: any[]) => (current: any) =>
-  new And({ current, operation: typeof operation[0] === "function" ? flow(...operation) : operation } as any)
+  new And({ current, operation: typeof operation[0] === "function" ? flow(...operation as [any]) : operation } as any)
 
 export const or: FilterContinuation = (...operation: any[]) => (current: any) =>
-  new Or({ current, operation: typeof operation[0] === "function" ? flow(...operation) : operation } as any)
+  new Or({ current, operation: typeof operation[0] === "function" ? flow(...operation as [any]) : operation } as any)
 
 export const order: <TFieldValues extends FieldValues, TFieldName extends FieldPath<TFieldValues>>(
   field: TFieldName,
