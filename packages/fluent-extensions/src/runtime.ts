@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as RT from "effect/Runtime"
 import type { Runtime } from "effect/Runtime"
 import "./index.js"
@@ -12,15 +13,15 @@ export const installFluentRuntimeExtensions = <R>(runtime: Runtime<R>) => {
   Object.defineProperty(Object.prototype, "runPromise", {
     enumerable: false,
     configurable: true,
-    value() {
-      return runPromise(this)
+    value(...args: any[]) {
+      return runPromise(this, ...args)
     }
   })
   Object.defineProperty(Object.prototype, "runFork", {
     enumerable: false,
     configurable: true,
-    value(arg: any) {
-      return runFork(this, arg)
+    value(...args: any[]) {
+      return runFork(this, ...args)
     }
   })
   Object.defineProperty(Object.prototype, "runSync", {
@@ -36,27 +37,29 @@ export const installFluentRuntimeExtensions = <R>(runtime: Runtime<R>) => {
 /*
 declare module "effect/Effect" {
   export interface Effect<A, E, R> {
-    // @ts-expect-error meh
-    runPromise(this: Effect<A, E, RT>): Promise<A>
-    // @ts-expect-error meh
-    runSync(this: Effect<A, E, RT>): A
+    runPromise<A, E>(this: Effect<A, E, RT>, options?: { readonly signal?: AbortSignal } | undefined): Promise<A>
+    runSync<A, E>(this: Effect<A, E, RT>): A
     runFork<A, E>(
       this: Effect<A, E, RT>,
-      options?: Runtime.RunForkOptions,
+      options?: Runtime.RunForkOptions
     ): Fiber.RuntimeFiber<A, E>
   }
 }
 
 declare module "effect/Cause" {
   export interface YieldableError {
-    // @ts-expect-error meh
-    runPromise(this: Effect<never, typeof this, RT>): Promise<never>
+    runPromise(
+      // @ts-expect-error meh
+      this: Effect<never, typeof this, RT>,
+      options?: { readonly signal?: AbortSignal } | undefined
+    ): Promise<never>
     // @ts-expect-error meh
     runSync(this: Effect<never, typeof this, RT>): never
-    runFork<A, E>(
-      this: Effect<A, E, RT>,
-      options?: Runtime.RunForkOptions,
-    ): Fiber.RuntimeFiber<A, E>
+    runFork(
+      // @ts-expect-error meh
+      this: Effect<never, typeof this, RT>,
+      options?: Runtime.RunForkOptions
+    ): Fiber.RuntimeFiber<never, typeof this>
   }
 }
 */

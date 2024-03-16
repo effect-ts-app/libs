@@ -2,9 +2,10 @@
 import { tuple } from "@effect-app/core/Function"
 import type * as HttpClient from "@effect/platform/Http/Client"
 import { useQueryClient } from "@tanstack/vue-query"
-import { Cause, Effect, Exit, Fiber, Option } from "effect-app"
+import { Cause, Effect, Exit, Option } from "effect-app"
 import { hasValue, Initial, isInitializing, Loading, queryResult, Refreshing } from "effect-app/client"
 import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
+import { dropUndefinedT } from "effect-app/utils"
 import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
 import type { ComputedRef, Ref } from "vue"
@@ -69,13 +70,13 @@ export const useSafeMutation: {
     Readonly<Ref<MutationResult<E, A>>>,
     (
       i: I,
-      abortSignal?: AbortSignal
+      signal?: AbortSignal
     ) => Promise<Either.Either<A, E>>
   ]
   <E, A>(self: { handler: Effect<A, E, ApiConfig | HttpClient.Client.Default>; name: string }): readonly [
     Readonly<Ref<MutationResult<E, A>>>,
     (
-      abortSignal?: AbortSignal
+      signal?: AbortSignal
     ) => Promise<Either.Either<A, E>>
   ]
 } = <I, E, A>(
@@ -116,13 +117,13 @@ export const useSafeMutation: {
 
   const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
     let effect: Effect<A, E, ApiConfig | HttpClient.Client.Default>
-    let abortSignal: AbortSignal | undefined
+    let signal: AbortSignal | undefined
     if (Effect.isEffect(self.handler)) {
       effect = self.handler as any
-      abortSignal = fst as AbortSignal | undefined
+      signal = fst as AbortSignal | undefined
     } else {
       effect = self.handler(fst as I)
-      abortSignal = snd
+      signal = snd
     }
 
     return run.value(
@@ -148,14 +149,9 @@ export const useSafeMutation: {
             })
           ),
           Effect.exit,
-          Effect.flatMap(handleExit),
-          Effect.fork,
-          Effect.flatMap((f) => {
-            const cancel = () => run.value(Fiber.interrupt(f))
-            abortSignal?.addEventListener("abort", () => void cancel().catch(console.error))
-            return Fiber.join(f)
-          })
-        )
+          Effect.flatMap(handleExit)
+        ),
+      dropUndefinedT({ signal })
     )
   }
 

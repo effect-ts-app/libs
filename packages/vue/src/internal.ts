@@ -4,14 +4,20 @@ import { pipe, Runtime } from "effect-app"
 import type { ApiConfig } from "effect-app/client"
 
 export const run = {
-  value<E, A>(_: Effect<A, E, ApiConfig | HttpClient.Client.Default>): Promise<A> {
+  value<E, A>(
+    _: Effect<A, E, ApiConfig | HttpClient.Client.Default>,
+    _options?: { readonly signal?: AbortSignal } | undefined
+  ): Promise<A> {
     throw new Error("Runtime not initialized, please run `initRuntime` first")
   }
 }
 export function initRuntime<A>(rt: Runtime.Runtime<A | ApiConfig | HttpClient.Client.Default>) {
   const runPromise = Runtime.runPromise(rt)
-  run.value = function<E, A>(self: Effect<A, E, ApiConfig | HttpClient.Client.Default>): Promise<A> {
-    return runPromise(self)
+  run.value = function<E, A>(
+    self: Effect<A, E, ApiConfig | HttpClient.Client.Default>,
+    options?: { readonly signal?: AbortSignal } | undefined
+  ): Promise<A> {
+    return runPromise(self, options)
   }
 }
 

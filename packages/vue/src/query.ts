@@ -119,9 +119,9 @@ export const useSafeQuery_ = <I, A, E>(
       ? {
         ...options,
         queryKey,
-        queryFn: () =>
+        queryFn: ({ signal }) =>
           run
-            .value(q.handler as any)
+            .value(q.handler as any, { signal })
             .then((_) => (_ as any).body)
             .catch((_) => {
               if (!Runtime.isFiberFailure(_)) throw _
@@ -132,9 +132,9 @@ export const useSafeQuery_ = <I, A, E>(
       : {
         ...options,
         queryKey: [...queryKey, req],
-        queryFn: () =>
+        queryFn: ({ signal }) =>
           run
-            .value((q.handler as any)(req.value))
+            .value((q.handler as any)(req.value), { signal })
             .then((_) => (_ as any).body)
             .catch((_) => {
               if (!Runtime.isFiberFailure(_)) throw _
