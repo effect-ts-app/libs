@@ -74,7 +74,7 @@ importers:
         specifier: ^0.89.3
         version: 0.89.3
       '@effect-app/cli':
-        specifier: ^0.63.0
+        specifier: ^0.63.1
         version: link:packages/cli
       '@effect-app/core':
         specifier: workspace:*
