@@ -1,5 +1,20 @@
 # @effect-app/infra
 
+## 0.224.0
+
+### Minor Changes
+
+- cb84068: replace lodash with builtin and cleanup
+
+### Patch Changes
+
+- Updated dependencies [cb84068]
+  - @effect-app/fluent-extensions@0.153.0
+  - effect-app@0.191.0
+  - @effect-app/schema@0.211.0
+  - @effect-app/core@0.158.0
+  - @effect-app/infra-adapters@0.145.1
+
 ## 0.223.2
 
 ### Patch Changes
