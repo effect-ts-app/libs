@@ -50,7 +50,7 @@ const program = Effect.gen(function*($) {
       and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
     ),
     order("displayName"),
-    page({ take: 10 }),
+    page({ take: 1 }),
     project(S.struct(Something.pick("id", "displayName")))
   )))
   console.log("$$ result", r)
