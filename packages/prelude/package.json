@@ -20,18 +20,18 @@
   "devDependencies": {
     "@babel/cli": "^7.23.9",
     "@faker-js/faker": "^8.4.1",
-    "@types/node": "~20.11.27",
+    "@types/node": "~20.11.28",
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.9",
     "fast-check": "~3.16.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",
-    "vitest": "^1.3.1"
+    "vitest": "^1.4.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.7",
+    "@effect/platform": "^0.48.8",
     "effect": "^2.4.7",
-    "@effect/schema": "^0.64.4",
+    "@effect/schema": "^0.64.5",
     "@fp-ts/optic": "0.22.0"
   },
   "typesVersions": {

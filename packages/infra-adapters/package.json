@@ -27,8 +27,8 @@
     "winston": "^3.12.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.7",
-    "@effect/schema": "^0.64.4",
+    "@effect/platform": "^0.48.8",
+    "@effect/schema": "^0.64.5",
     "@fp-ts/optic": "0.22.0",
     "effect": "^2.4.7"
   },
