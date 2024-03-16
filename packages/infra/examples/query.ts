@@ -1,0 +1,60 @@
+import { RepositoryDefaultImpl } from "@effect-app/infra/services/RepositoryBase"
+import { Effect, flow, Layer, ManagedRuntime, S } from "effect-app"
+import { and, or, order, page, project, where } from "../src/services/query.js"
+import { ContextMapContainer } from "../src/services/Store/ContextMapContainer.js"
+import { MemoryStoreLive } from "../src/services/Store/Memory.js"
+
+const str = S.struct({ _tag: S.literal("string"), value: S.string })
+const num = S.struct({ _tag: S.literal("number"), value: S.number })
+const someUnion = S.union(str, num)
+
+export class Something extends S.Class<Something>()({
+  id: S.StringId.withDefault,
+  displayName: S.NonEmptyString255,
+  n: S.Date.withDefault,
+  union: someUnion.pipe(S.withDefaultConstructor(() => ({ _tag: "string" as const, value: "hi" })))
+}) {}
+export declare namespace Something {
+  export interface Encoded extends S.Schema.Encoded<typeof Something> {}
+}
+
+const items = [
+  new Something({ displayName: S.NonEmptyString255("Verona"), n: new Date("2020-01-01T00:00:00Z") }),
+  new Something({ displayName: S.NonEmptyString255("Riley") }),
+  new Something({
+    displayName: S.NonEmptyString255("Riley"),
+    n: new Date("2020-01-01T00:00:00Z"),
+    union: { _tag: "number", value: 1 }
+  })
+]
+
+class SomethingRepo extends RepositoryDefaultImpl<SomethingRepo>()(
+  "Something",
+  Something
+) {
+  static readonly Test = Layer
+    .effect(
+      SomethingRepo,
+      SomethingRepo.makeWith({ makeInitial: Effect.sync(() => items) }, (_) => new SomethingRepo(_))
+    )
+    .pipe(
+      Layer.provide(Layer.merge(MemoryStoreLive, ContextMapContainer.live))
+    )
+}
+
+const program = Effect.gen(function*($) {
+  const r = yield* $(SomethingRepo.query(flow(
+    where("displayName", "Verona"),
+    or(
+      where("displayName", "Riley"),
+      and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
+    ),
+    order("displayName"),
+    page({ take: 1 }),
+    project(S.struct(Something.pick("id", "displayName")))
+  )))
+  console.log("$$ result", r)
+})
+
+const rt = ManagedRuntime.make(SomethingRepo.Test)
+rt.runFork(program)
