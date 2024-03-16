@@ -1,5 +1,13 @@
 # @effect-app/schema
 
+## 0.210.1
+
+### Patch Changes
+
+- 0334285: update packages
+- Updated dependencies [0334285]
+  - @effect-app/core@0.156.1
+
 ## 0.210.0
 
 ### Minor Changes

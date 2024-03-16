@@ -1,5 +1,15 @@
 # @effect-app/fluent-extensions
 
+## 0.151.0
+
+### Minor Changes
+
+- b9f35eb: add missing abort signal support
+
+### Patch Changes
+
+- 0334285: update packages
+
 ## 0.150.0
 
 ### Minor Changes

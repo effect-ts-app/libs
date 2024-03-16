@@ -1,5 +1,22 @@
 # @effect-app/vue
 
+## 0.155.0
+
+### Minor Changes
+
+- b9f35eb: add missing abort signal support
+
+### Patch Changes
+
+- 0334285: update packages
+- Updated dependencies [0334285]
+- Updated dependencies [b9f35eb]
+  - @effect-app/fluent-extensions@0.151.0
+  - effect-app@0.189.1
+  - @effect-app/schema@0.210.1
+  - @effect-app/core@0.156.1
+  - @effect-app/vue@0.155.0
+
 ## 0.154.0
 
 ### Minor Changes
