@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Effect, FiberRef, flow, Option, Order, pipe, ReadonlyArray, Ref } from "effect-app"
+import { Effect, FiberRef, flow, Option, Order, pipe, ReadonlyArray, Ref, Struct } from "effect-app"
 import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
-import { get, pick } from "effect-app/utils"
+import { get } from "effect-app/utils"
 import type { RequestContext } from "../../RequestContext.js"
 import type { FilterArgs, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
@@ -11,7 +11,7 @@ import { codeFilter, makeUpdateETag } from "./utils.js"
 export function memFilter<T extends { id: string }, U extends keyof T = never>(f: FilterArgs<T, U>) {
   type M = U extends undefined ? T : Pick<T, U>
   return ((c: T[]): M[] => {
-    const select = (r: T[]): M[] => (f.select ? r.map((_) => pick(_, f.select!)) : r) as any
+    const select = (r: T[]): M[] => (f.select ? r.map(Struct.pick(...f.select)) : r) as any
     const skip = f?.skip
     const limit = f?.limit
     const ords = Option.map(Option.fromNullable(f.order), (_) =>

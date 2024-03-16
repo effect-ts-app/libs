@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Types } from "@effect-app/core"
+import { type Effect, pipe, Struct as Struct2, type Types } from "@effect-app/core"
 import type { ParseOptions } from "@effect/schema/AST"
 import type { Schema, Struct } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
-import type { Effect } from "effect"
 import type { Simplify } from "effect/Types"
-import omit from "lodash/omit.js"
-import pick from "lodash/pick.js"
 import type { ParseResult } from "./index.js"
 import type { AST } from "./schema.js"
 
@@ -145,8 +142,8 @@ export const Class: <Self = never>() => <Fields extends S.Struct.Fields>(
         super(a, b)
       }
       static readonly include = include(fields)
-      static readonly pick = (...selection: any[]) => pick(fields, selection)
-      static readonly omit = (...selection: any[]) => omit(fields, selection)
+      static readonly pick = (...selection: any[]) => pipe(fields, Struct2.pick(...selection))
+      static readonly omit = (...selection: any[]) => pipe(fields, Struct2.omit(...selection))
     } as any
   }
 
@@ -171,8 +168,8 @@ export const TaggedClass: <Self = never>() => <Tag extends string, Fields extend
         super(a, b)
       }
       static readonly include = include(fields)
-      static readonly pick = (...selection: any[]) => pick(fields, selection)
-      static readonly omit = (...selection: any[]) => omit(fields, selection)
+      static readonly pick = (...selection: any[]) => pipe(fields, Struct2.pick(...selection))
+      static readonly omit = (...selection: any[]) => pipe(fields, Struct2.omit(...selection))
     } as any
   }
 

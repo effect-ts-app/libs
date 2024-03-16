@@ -2,13 +2,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Either from "effect/Either"
 import { dual, isFunction } from "effect/Function"
-import type { Types } from "effect/Match"
 import type { NoInfer } from "effect/Types"
-import * as ld from "lodash"
+import type { GetFieldType, NumericDictionary, PropertyPath } from "lodash"
 import type { Dictionary } from "./Dictionary.js"
 import * as D from "./Dictionary.js"
 import { identity, pipe } from "./Function.js"
-import { Match } from "./index.js"
 import { Effect, Option } from "./Prelude.js"
 
 export const cloneTrait = Symbol.for("clone-trait")
@@ -16,7 +14,112 @@ export interface Clone {
   [cloneTrait](this: this, that: any): this
 }
 
-const { get, omit: omit_, pick } = ld.default ?? ld
+function get<TObject extends object, TKey extends keyof TObject>(object: TObject, path: TKey | [TKey]): TObject[TKey]
+function get<TObject extends object, TKey extends keyof TObject>(
+  object: TObject | null | undefined,
+  path: TKey | [TKey]
+): TObject[TKey] | undefined
+function get<TObject extends object, TKey extends keyof TObject, TDefault>(
+  object: TObject | null | undefined,
+  path: TKey | [TKey],
+  defaultValue: TDefault
+): Exclude<TObject[TKey], undefined> | TDefault
+function get<TObject extends object, TKey1 extends keyof TObject, TKey2 extends keyof TObject[TKey1]>(
+  object: TObject,
+  path: [TKey1, TKey2]
+): TObject[TKey1][TKey2]
+function get<TObject extends object, TKey1 extends keyof TObject, TKey2 extends keyof TObject[TKey1]>(
+  object: TObject | null | undefined,
+  path: [TKey1, TKey2]
+): TObject[TKey1][TKey2] | undefined
+function get<TObject extends object, TKey1 extends keyof TObject, TKey2 extends keyof TObject[TKey1], TDefault>(
+  object: TObject | null | undefined,
+  path: [TKey1, TKey2],
+  defaultValue: TDefault
+): Exclude<TObject[TKey1][TKey2], undefined> | TDefault
+function get<
+  TObject extends object,
+  TKey1 extends keyof TObject,
+  TKey2 extends keyof TObject[TKey1],
+  TKey3 extends keyof TObject[TKey1][TKey2]
+>(object: TObject, path: [TKey1, TKey2, TKey3]): TObject[TKey1][TKey2][TKey3]
+function get<
+  TObject extends object,
+  TKey1 extends keyof TObject,
+  TKey2 extends keyof TObject[TKey1],
+  TKey3 extends keyof TObject[TKey1][TKey2]
+>(object: TObject | null | undefined, path: [TKey1, TKey2, TKey3]): TObject[TKey1][TKey2][TKey3] | undefined
+function get<
+  TObject extends object,
+  TKey1 extends keyof TObject,
+  TKey2 extends keyof TObject[TKey1],
+  TKey3 extends keyof TObject[TKey1][TKey2],
+  TDefault
+>(
+  object: TObject | null | undefined,
+  path: [TKey1, TKey2, TKey3],
+  defaultValue: TDefault
+): Exclude<TObject[TKey1][TKey2][TKey3], undefined> | TDefault
+function get<
+  TObject extends object,
+  TKey1 extends keyof TObject,
+  TKey2 extends keyof TObject[TKey1],
+  TKey3 extends keyof TObject[TKey1][TKey2],
+  TKey4 extends keyof TObject[TKey1][TKey2][TKey3]
+>(object: TObject, path: [TKey1, TKey2, TKey3, TKey4]): TObject[TKey1][TKey2][TKey3][TKey4]
+function get<
+  TObject extends object,
+  TKey1 extends keyof TObject,
+  TKey2 extends keyof TObject[TKey1],
+  TKey3 extends keyof TObject[TKey1][TKey2],
+  TKey4 extends keyof TObject[TKey1][TKey2][TKey3]
+>(
+  object: TObject | null | undefined,
+  path: [TKey1, TKey2, TKey3, TKey4]
+): TObject[TKey1][TKey2][TKey3][TKey4] | undefined
+function get<
+  TObject extends object,
+  TKey1 extends keyof TObject,
+  TKey2 extends keyof TObject[TKey1],
+  TKey3 extends keyof TObject[TKey1][TKey2],
+  TKey4 extends keyof TObject[TKey1][TKey2][TKey3],
+  TDefault
+>(
+  object: TObject | null | undefined,
+  path: [TKey1, TKey2, TKey3, TKey4],
+  defaultValue: TDefault
+): Exclude<TObject[TKey1][TKey2][TKey3][TKey4], undefined> | TDefault
+function get<T>(object: NumericDictionary<T>, path: number): T
+function get<T>(object: NumericDictionary<T> | null | undefined, path: number): T | undefined
+function get<T, TDefault>(
+  object: NumericDictionary<T> | null | undefined,
+  path: number,
+  defaultValue: TDefault
+): T | TDefault
+function get<TDefault>(object: null | undefined, path: PropertyPath, defaultValue: TDefault): TDefault
+function get(object: null | undefined, path: PropertyPath): undefined
+function get<TObject, TPath extends string>(
+  data: TObject,
+  path: TPath
+): string extends TPath ? any : GetFieldType<TObject, TPath>
+function get<TObject, TPath extends string, TDefault = GetFieldType<TObject, TPath>>(
+  data: TObject,
+  path: TPath,
+  defaultValue: TDefault
+): Exclude<GetFieldType<TObject, TPath>, null | undefined> | TDefault
+function get(object: any, path: PropertyPath, defaultValue?: any): any
+function get(obj, path, defaultValue = undefined) {
+  // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore?tab=readme-ov-file#_get
+  const travel = (regexp) =>
+    String
+      .prototype
+      .split
+      .call(path, regexp)
+      .filter(Boolean)
+      .reduce((res, key) => (res !== null && res !== undefined ? res[key] : res), obj)
+  const result = travel(/[,[\]]+?/) || travel(/[,[\].]+?/)
+  return result === undefined || result === obj ? defaultValue : result
+}
 
 // codegen:start {preset: barrel, include: ./utils/*.ts }
 export * from "./utils/effectify.js"
@@ -508,14 +611,6 @@ export function assertUnreachable(x: never): never {
   throw new Error("Unknown case " + x)
 }
 
-export const omit: {
-  <T extends object, K extends PropertyKey[]>(
-    object: T | null | undefined,
-    ...paths: K
-  ): DistributiveOmit<T, K[number]>
-  <T extends object, K extends keyof T>(object: T | null | undefined, ...paths: Array<Many<K>>): DistributiveOmit<T, K>
-} = omit_
-
 export type OptPromise<T extends () => any> = (
   ...args: Parameters<T>
 ) => Promise<ReturnType<T>> | ReturnType<T>
@@ -586,23 +681,6 @@ export const copy = dual<
 >(2, <A>(self: A, f: Partial<A> | ((a: A) => Partial<A>)) => clone(self, { ...self, ...(isFunction(f) ? f(self) : f) }))
 
 /**
- * @tsplus fluent Object.Ops clone
- */
-export const $clone = <A extends Object>({ subject: original }: ObjectOps<A>, copy: A) => {
-  return clone(original, copy)
-}
-
-/**
- * @tsplus fluent Object.Ops copy
- */
-export const $copy = <A extends Object>(
-  { subject: original }: ObjectOps<A>,
-  _copy: Partial<A>
-): A => {
-  return copy(original, _copy)
-}
-
-/**
  * @tsplus fluent Any.Ops debug
  * @tsplus fluent Object.Ops debug
  */
@@ -643,124 +721,6 @@ export function spreadS<
   Fields extends Record<any, any>
 >(fields: Fields, fnc: (fields: Fields) => Fields) {
   return fnc(fields)
-}
-
-type Key<T> = T extends Record<infer TKey, any> ? TKey : never
-type Values<T> = T extends { [s: string]: infer S } ? S : any
-
-function object_$<T extends object>(self: T) {
-  return {
-    get subject() {
-      return self
-    },
-
-    // TODO: move to extensions
-    spread<P>(this: void, fnc: (t: T) => P) {
-      return spread(self, fnc)
-    },
-    spreadS(this: void, fnc: (t: T) => T) {
-      return spreadS(self, fnc)
-    }
-  }
-}
-
-type BasicObjectOps<T extends object> = ReturnType<typeof object_$<T>>
-
-/**
- * @tsplus getter Object $$
- */
-export function object$<T extends object>(self: T): ObjectOps<T> {
-  return object_$(self)
-}
-
-/**
- * @tsplus type Object.Ops
- */
-export interface ObjectOps<T extends object> extends BasicObjectOps<T> {}
-
-function entries<TT extends object>(o: TT): [Key<TT>, Values<TT>][] {
-  return Object.entries(o) as any
-}
-
-/**
- * @tsplus getter Object.Ops entries
- */
-export function RecordEntries<TT extends object>(o: ObjectOps<TT>) {
-  return entries(o.subject)
-}
-
-type Many<T> = T | ReadonlyArray<T>
-
-/**
- * @tsplus fluent Object.Ops omit
- */
-export function RecordOmitold<TT extends object, K extends keyof TT>(o: ObjectOps<TT>, ...paths: Many<K>[]) {
-  return omit(o.subject, ...paths)
-}
-export const RecordOmit: {
-  <TT extends object, K extends PropertyKey[]>(
-    object: TT,
-    ...paths: K
-  ): DistributiveOmit<TT, K[number]>
-  <TT extends object, K extends keyof TT>(object: TT, ...paths: Array<Many<K>>): DistributiveOmit<TT, K>
-} = (o: ObjectOps<any>, ...paths: Many<any>[]) => omit(o.subject, ...paths)
-
-/**
- * @tsplus fluent Object.Ops pick
- */
-export function RecordPick<TT extends object, K extends keyof TT>(o: ObjectOps<TT>, ...paths: Many<K>[]) {
-  return pick(o.subject, ...paths)
-}
-
-// TODO: "get" extension
-
-/**
- * @tsplus getter Object.Ops keys
- */
-export function RecordKeys<TT extends object>(o: ObjectOps<TT>) {
-  return typedKeysOf(o.subject)
-}
-
-/**
- * @tsplus getter Object.Ops values
- */
-export function RecordValues<TT extends object>(o: ObjectOps<TT>): Values<TT>[] {
-  return Object.values(o.subject)
-}
-
-/**
- * @tsplus getter Any.Ops pretty
- */
-export function AnyPretty<TT>(o: AnyOps<TT>) {
-  return pretty(o.subject)
-}
-
-/** @tsplus getter Object.Ops matcher */
-export function matchValue<TT extends object>(o: ObjectOps<TT>) {
-  return Match.value(o.subject)
-}
-
-/** @tsplus pipeable Object.Ops matchTags */
-export function matchValueTags<
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  const I extends Object,
-  P extends
-    & {
-      readonly [Tag in Types.Tags<"_tag", I> & string]: (
-        _: Extract<I, { readonly _tag: Tag }>
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ) => any
-    }
-    & { readonly [Tag in Exclude<keyof P, Types.Tags<"_tag", I>>]: never }
->(m: P) {
-  return (o: ObjectOps<I>) => Match.valueTags(m)(o.subject)
-}
-
-/**
- * @tsplus getter Object.Ops pretty
- */
-export function RecordPretty<TT extends object>(o: ObjectOps<TT>) {
-  return pretty(o.subject)
 }
 
 export function makeAzureFriendly(path: string) {
@@ -817,7 +777,7 @@ export function setMoveElDropUndefined<T>(el: T, newIndex: number) {
     pipe([...arrInput], arMoveElDropUndefined(el, newIndex), Option.map((ar) => new Set(ar)))
 }
 
-export { get, pick }
+export { get }
 
 export type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K>
   : never

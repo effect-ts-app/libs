@@ -1,6 +1,5 @@
-import { Effect, flow, Layer, Option, pipe, S } from "effect-app"
+import { Effect, flow, Layer, Option, pipe, S, Struct } from "effect-app"
 import { TagClassMakeId } from "effect-app/service"
-import { pick } from "effect-app/utils"
 import { inspect } from "util"
 import { expect, it } from "vitest"
 import { and, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
@@ -37,7 +36,7 @@ const q = make<Something.Encoded>()
     project(
       S.transformToOrFail(
         S.struct({ id: S.StringId, displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-        S.struct(pick(Something.fields, "id", "displayName")),
+        S.struct(Struct.pick(Something.fields, "id", "displayName")),
         (_) => Effect.andThen(SomeService, _)
       )
     )
@@ -87,7 +86,7 @@ it("works", () => {
 
   const processed = memFilter(interpreted)(items.map((_) => S.encodeSync(Something)(_)))
 
-  expect(processed).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "id", "displayName")))
+  expect(processed).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("id", "displayName")))
 })
 
 class SomethingRepo extends RepositoryDefaultImpl<SomethingRepo>()(
@@ -117,17 +116,16 @@ it("works with repo", () =>
             order("displayName"),
             page({ take: 10 }),
             project(
-              S.transformOrFail(
+              S.transformToOrFail(
                 S.struct({ displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                S.struct(pick(Something.fields, "displayName")),
-                (_) => Effect.andThen(SomeService, _),
-                () => Effect.die(new Error("not implemented"))
+                S.struct(Struct.pick(Something.fields, "displayName")),
+                (_) => Effect.andThen(SomeService, _)
               )
             )
           ))
       )
-      expect(q1).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "id", "displayName")))
-      expect(q2).toEqual(items.slice(0, 2).toReversed().map((_) => pick(_, "displayName")))
+      expect(q1).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("id", "displayName")))
+      expect(q2).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("displayName")))
     })
     .pipe(Effect.provide(Layer.mergeAll(SomethingRepo.Test, SomeService.toLayer())), Effect.runPromise))
 
@@ -145,7 +143,7 @@ it("collect", () =>
               project(
                 S.transformTo(
                   // TODO: sample case with narrowing down a union?
-                  S.encodedSchema(S.struct(pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                  S.encodedSchema(S.struct(Struct.pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
                   S.typeSchema(S.option(S.string)),
                   (_) =>
                     _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
@@ -168,7 +166,7 @@ it("collect", () =>
               project(
                 S.transformTo(
                   // TODO: sample case with narrowing down a union?
-                  S.encodedSchema(S.struct(pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                  S.encodedSchema(S.struct(Struct.pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
                   S.typeSchema(S.option(S.string)),
                   (_) =>
                     _.union._tag === "string"
