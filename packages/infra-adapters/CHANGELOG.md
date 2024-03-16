@@ -1,5 +1,19 @@
 # @effect-app/infra-adapters
 
+## 0.145.0
+
+### Minor Changes
+
+- 790bfc2: cleanup
+
+### Patch Changes
+
+- Updated dependencies [790bfc2]
+  - @effect-app/fluent-extensions@0.152.0
+  - effect-app@0.190.0
+  - @effect-app/core@0.157.0
+  - @effect-app/schema@0.210.2
+
 ## 0.144.1
 
 ### Patch Changes
