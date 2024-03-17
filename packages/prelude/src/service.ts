@@ -89,29 +89,29 @@ export type ServiceAcessorShape<Self, Type> =
     ) => X extends Effect<infer A, infer E, infer R> ? Effect<A, E, R | Self> : Effect<X, never, Self>
   }
 
-export const proxify = <T extends object>(TagClass: T) =>
+export const proxify = <T extends object>(Tag: T) =>
 <Self, Shape>():
   & T
   & ServiceAcessorShape<Self, Shape> =>
 {
   const cache = new Map()
-  const done = new Proxy(TagClass, {
+  const done = new Proxy(Tag, {
     get(_target: any, prop: any, _receiver) {
       if (prop === "use") {
         // @ts-expect-error abc
-        return (body) => Effect.andThen(TagClass, body)
+        return (body) => Effect.andThen(Tag, body)
       }
-      if (prop in TagClass) {
+      if (prop in Tag) {
         // @ts-expect-error abc
-        return TagClass[prop]
+        return Tag[prop]
       }
       if (cache.has(prop)) {
         return cache.get(prop)
       }
       // @ts-expect-error abc
-      const fn = (...args: Array<any>) => Effect.andThen(TagClass, (s: any) => s[prop](...args))
+      const fn = (...args: Array<any>) => Effect.andThen(Tag, (s: any) => s[prop](...args))
       // @ts-expect-error abc
-      const cn = Effect.andThen(TagClass, (s) => s[prop])
+      const cn = Effect.andThen(Tag, (s) => s[prop])
       Object.assign(fn, cn)
       Object.setPrototypeOf(fn, Object.getPrototypeOf(cn))
       cache.set(prop, fn)
@@ -148,7 +148,7 @@ export const proxify = <T extends object>(TagClass: T) =>
 //   return proxify(assignTag<Id, ServiceImpl>(key, creationError)(c))<Id, ServiceImpl>()
 // }
 
-// export function TagClass<Id, ServiceImpl, Service = Id>(key?: string) {
+// export function Tag<Id, ServiceImpl, Service = Id>(key?: string) {
 //   const limit = Error.stackTraceLimit
 //   Error.stackTraceLimit = 2
 //   const creationError = new Error()
@@ -175,7 +175,7 @@ export const proxify = <T extends object>(TagClass: T) =>
 //   return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, ServiceImpl>()
 // }
 
-// export const TagClassMake = <ServiceImpl, R, E>(
+// export const TagMake = <ServiceImpl, R, E>(
 //   make: Effect<ServiceImpl, E, R>,
 //   key?: string
 // ) =>
@@ -215,7 +215,7 @@ export const proxify = <T extends object>(TagClass: T) =>
 //   return proxify(assignTag<Id, Service>(key, creationError)(c))<Id, ServiceImpl>()
 // }
 
-export function TagClassId<const Key extends string>(key: Key) {
+export function TagId<const Key extends string>(key: Key) {
   return <Id, ServiceImpl>() => {
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 2
@@ -249,7 +249,7 @@ export function TagClassId<const Key extends string>(key: Key) {
   }
 }
 
-export const TagClassMakeId = <ServiceImpl, R, E, const Key extends string>(
+export const TagMakeId = <ServiceImpl, R, E, const Key extends string>(
   key: Key,
   make: Effect<ServiceImpl, E, R>
 ) =>

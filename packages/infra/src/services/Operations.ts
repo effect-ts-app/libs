@@ -1,7 +1,7 @@
 import type { StringId } from "@effect-app/schema"
 import { Cause, copy, Duration, Effect, Exit, Layer, Option, S, Schedule } from "effect-app"
 import type { OperationProgress } from "effect-app/Operations"
-import { TagClassMakeId } from "effect-app/service"
+import { TagMakeId } from "effect-app/service"
 import * as Scope from "effect/Scope"
 import { forkDaemonReportRequestUnexpected } from "../api/reportError.js"
 
@@ -97,7 +97,7 @@ const make = Effect.sync(() => {
   }
 })
 
-export class Operations extends TagClassMakeId("effect-app/Operations", make)<Operations>() {
+export class Operations extends TagMakeId("effect-app/Operations", make)<Operations>() {
   private static readonly CleanupLive = this
     .use((_) =>
       _.cleanup.pipe(

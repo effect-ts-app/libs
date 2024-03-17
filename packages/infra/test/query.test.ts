@@ -1,5 +1,5 @@
 import { Effect, flow, Layer, Option, pipe, S, Struct } from "effect-app"
-import { TagClassMakeId } from "effect-app/service"
+import { TagMakeId } from "effect-app/service"
 import { inspect } from "util"
 import { expect, it } from "vitest"
 import { and, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
@@ -22,7 +22,7 @@ export declare namespace Something {
 }
 
 const MakeSomeService = Effect.succeed({ a: 1 })
-export class SomeService extends TagClassMakeId("SomeService", MakeSomeService)<SomeService>() {}
+export class SomeService extends TagMakeId("SomeService", MakeSomeService)<SomeService>() {}
 
 const q = make<Something.Encoded>()
   .pipe( // provided automatically inside Repo.q2()

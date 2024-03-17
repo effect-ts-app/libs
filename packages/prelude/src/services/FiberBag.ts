@@ -1,5 +1,5 @@
 import { Effect, Fiber, FiberSet, Layer } from "@effect-app/core"
-import { TagClassMakeId } from "../service.js"
+import { TagMakeId } from "../service.js"
 
 import type {} from "effect/Scope"
 import type {} from "effect/Context"
@@ -30,7 +30,7 @@ const make = Effect.gen(function*($) {
  * you should register these long running fibers in a `FiberBag`, and join them at the end of your main program.
  * This way any errors will blow up the main program instead of fibers dying unknowingly.
  */
-export class FiberBag extends TagClassMakeId("FiberBag", make)<FiberBag>() {
+export class FiberBag extends TagMakeId("FiberBag", make)<FiberBag>() {
   static readonly Live = this.toLayerScoped()
   static readonly JoinLive = this.pipe(Effect.andThen((_) => _.join), Layer.effectDiscard, Layer.provide(this.Live))
   static readonly run = <R>(self: Effect<never, never, R>) => this.use((_) => _.run(self))

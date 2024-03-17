@@ -28,7 +28,7 @@
       " * @tsplus type $1",
       " * @tsplus companion $1.Ops",
       " */",
-      "export class $1 extends TagClass<$1> {",
+      "export class $1 extends Tag<$1> {",
       "  $2",
       "}",
       "",
