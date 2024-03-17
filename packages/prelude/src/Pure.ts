@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Chunk, Context, Effect, Either, Layer } from "@effect-app/core"
 import { tuple } from "@effect-app/core/Function"
-import type { ServiceTagged } from "./service.js"
 
 const S1 = Symbol()
 const S2 = Symbol()
@@ -120,7 +119,7 @@ function castTag<W, S, S2>() {
 }
 
 export const PureEnvEnv = Symbol()
-export interface PureEnvEnv<W, S, S2> extends ServiceTagged<typeof PureEnvEnv> {
+export interface PureEnvEnv<W, S, S2> extends Context.ServiceTagged<typeof PureEnvEnv> {
   env: PureEnv<W, S, S2>
 }
 

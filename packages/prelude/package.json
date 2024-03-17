@@ -240,16 +240,6 @@
         "default": "./_cjs/schema.cjs"
       }
     },
-    "./service": {
-      "import": {
-        "types": "./dist/service.d.ts",
-        "default": "./dist/service.js"
-      },
-      "require": {
-        "types": "./dist/service.d.ts",
-        "default": "./_cjs/service.cjs"
-      }
-    },
     "./services/FiberBag": {
       "import": {
         "types": "./dist/services/FiberBag.d.ts",

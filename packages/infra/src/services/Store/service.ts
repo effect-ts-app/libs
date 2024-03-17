@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UniqueKey } from "@azure/cosmos"
-import { Effect } from "effect-app"
+import { Context, Effect } from "effect-app"
 import type { NonEmptyReadonlyArray, Option, Secret } from "effect-app"
-import { TagId, TagMakeId } from "effect-app/service"
 import type { OptimisticConcurrencyException } from "../../errors.js"
 import type { FieldValues } from "../../filter/types.js"
 import type { QueryBuilder } from "./filterApi/query.js"
@@ -78,7 +77,7 @@ export interface Store<
  * @tsplus type StoreMaker
  * @tsplus companion StoreMaker.Ops
  */
-export class StoreMaker extends TagId("effect-app/StoreMaker")<StoreMaker, {
+export class StoreMaker extends Context.TagId("effect-app/StoreMaker")<StoreMaker, {
   make: <Encoded extends { id: Id }, Id extends string, R = never, E = never>(
     name: string,
     seed?: Effect<Iterable<Encoded>, E, R>,
@@ -158,7 +157,7 @@ const makeMap = Effect.sync(() => makeContextMap())
  * @tsplus type ContextMap
  * @tsplus companion ContextMap.Ops
  */
-export class ContextMap extends TagMakeId("effect-app/ContextMap", makeMap)<ContextMap>() {
+export class ContextMap extends Context.TagMakeId("effect-app/ContextMap", makeMap)<ContextMap>() {
 }
 
 export type PersistenceModelType<Encoded extends Object> = Encoded & {

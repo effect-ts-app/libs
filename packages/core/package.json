@@ -87,6 +87,16 @@
         "default": "./_cjs/Chunk.cjs"
       }
     },
+    "./Context": {
+      "import": {
+        "types": "./dist/Context.d.ts",
+        "default": "./dist/Context.js"
+      },
+      "require": {
+        "types": "./dist/Context.d.ts",
+        "default": "./_cjs/Context.cjs"
+      }
+    },
     "./Dictionary": {
       "import": {
         "types": "./dist/Dictionary.d.ts",

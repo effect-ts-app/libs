@@ -9,13 +9,13 @@
 
 import "./global.js"
 
+import type * as CTX from "@effect-app/core/Context"
 import type * as EFFECT from "@effect-app/core/Effect"
 import type * as NS from "@effect-app/core/NonEmptySet"
 import type * as SET from "@effect-app/core/Set"
 import type * as C from "effect/Cause"
 import type * as CNK from "effect/Chunk"
 import type * as CFG from "effect/Config"
-import type * as CTX from "effect/Context"
 import type * as DUR from "effect/Duration"
 import type * as EITHER from "effect/Either"
 import type * as EQL from "effect/Equal"
@@ -79,7 +79,7 @@ export type Duration = DUR.Duration
 
 export namespace Context {
   // @ts-expect-error abc
-  export * from "effect/Context"
+  export * from "@effect-app/core/Context"
 }
 /** @tsplus type effect/data/Context */
 export type Context<A> = CTX.Context<A>

@@ -1,5 +1,4 @@
 import { Context, Effect, FiberRef, Layer, Option } from "effect-app"
-import { TagId } from "effect-app/service"
 import { ContextMap } from "./service.js"
 
 // TODO: we have to create a new contextmap on every request.
@@ -11,7 +10,7 @@ import { ContextMap } from "./service.js"
 /**
  * @tsplus companion ContextMapContainer.Ops
  */
-export abstract class ContextMapContainer extends TagId("effect-app/ContextMapContainer")<ContextMapContainer, {
+export abstract class ContextMapContainer extends Context.TagId("effect-app/ContextMapContainer")<ContextMapContainer, {
   get: Effect<ContextMap>
   start: Effect<void>
 }>() {

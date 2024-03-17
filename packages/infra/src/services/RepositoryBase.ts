@@ -22,11 +22,10 @@ import { toNonEmptyArray } from "@effect-app/core/Array"
 import { flatMapOption } from "@effect-app/core/Effect"
 import type { ParseResult, Schema } from "@effect-app/schema"
 import { NonNegativeInt } from "@effect-app/schema"
-import type { Context, NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
-import { Chunk, Effect, flow, Option, pipe, PubSub, ReadonlyArray, S, Unify } from "effect-app"
+import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
+import { Chunk, Context, Effect, flow, Option, pipe, PubSub, ReadonlyArray, S, Unify } from "effect-app"
 import { runTerm } from "effect-app/Pure"
 import type { FixEnv, PureEnv } from "effect-app/Pure"
-import { assignTag } from "effect-app/service"
 import type { NoInfer } from "effect/Types"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import type { FieldValues } from "../filter/types.js"
@@ -946,7 +945,7 @@ export const RepositoryBaseImpl = <Service>() => {
     Error.stackTraceLimit = 2
     const creationError = new Error()
     Error.stackTraceLimit = limit
-    return assignTag<Service>(undefined, creationError)(Object.assign(Cls, makeRepoFunctions(Cls))) as any
+    return Context.assignTag<Service>(undefined, creationError)(Object.assign(Cls, makeRepoFunctions(Cls))) as any
   }
 }
 
@@ -992,6 +991,6 @@ export const RepositoryDefaultImpl = <Service, Evt = never>() => {
     Error.stackTraceLimit = 2
     const creationError = new Error()
     Error.stackTraceLimit = limit
-    return assignTag<Service>(undefined, creationError)(Object.assign(Cls, makeRepoFunctions(Cls))) as any // impl is missing, but its marked protected
+    return Context.assignTag<Service>(undefined, creationError)(Object.assign(Cls, makeRepoFunctions(Cls))) as any // impl is missing, but its marked protected
   }
 }

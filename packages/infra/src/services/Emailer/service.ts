@@ -2,14 +2,13 @@ import type { Email, NonEmptyString255 } from "@effect-app/schema"
 import type { MailContent, MailData } from "@sendgrid/helpers/classes/mail.js"
 import type { ResponseError } from "@sendgrid/mail"
 import type sgMail from "@sendgrid/mail"
-import type { Effect, NonEmptyReadonlyArray, Secret } from "effect-app"
-import { TagId } from "effect-app/service"
+import { Context, type Effect, type NonEmptyReadonlyArray, type Secret } from "effect-app"
 
 /**
  * @tsplus type Emailer
  * @tsplus companion Emailer.Ops
  */
-export class Emailer extends TagId("effect-app/Emailer")<Emailer, {
+export class Emailer extends Context.TagId("effect-app/Emailer")<Emailer, {
   sendMail: (msg: EmailMsgOptionalFrom) => Effect<void, Error | ResponseError>
 }>() {}
 

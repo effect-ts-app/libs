@@ -1,7 +1,6 @@
 import { NonEmptyString255 } from "@effect-app/schema"
 import { Context, Effect, FiberRef, Layer, Option } from "effect-app"
 import { RequestId } from "effect-app/ids"
-import { TagId } from "effect-app/service"
 import { RequestContext } from "../RequestContext.js"
 import { restoreFromRequestContext } from "./Store/Memory.js"
 
@@ -10,7 +9,7 @@ import { restoreFromRequestContext } from "./Store/Memory.js"
  * @tsplus companion RequestContextContainer.Ops
  */
 export abstract class RequestContextContainer
-  extends TagId("effect-app/RequestContextContainer")<RequestContextContainer, {
+  extends Context.TagId("effect-app/RequestContextContainer")<RequestContextContainer, {
     requestContext: Effect<RequestContext>
     update: (f: (rc: RequestContext) => RequestContext) => Effect<RequestContext>
     start: (f: RequestContext) => Effect<void>

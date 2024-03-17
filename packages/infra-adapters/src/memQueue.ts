@@ -1,5 +1,4 @@
-import { Effect, type Queue } from "effect-app"
-import { TagMakeId } from "effect-app/service"
+import { Context, Effect, type Queue } from "effect-app"
 import * as Q from "effect/Queue"
 
 const make = Effect
@@ -22,6 +21,6 @@ const make = Effect
  * @tsplus type MemQueue
  * @tsplus companion MemQueue.Ops
  */
-export class MemQueue extends TagMakeId("effect-app/MemQueue", make)<MemQueue>() {
+export class MemQueue extends Context.TagMakeId("effect-app/MemQueue", make)<MemQueue>() {
   static readonly Live = this.toLayer()
 }

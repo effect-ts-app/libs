@@ -7,7 +7,10 @@
  */
 
 import type { Scope } from "@effect-app/core"
-import { Context, Effect, Layer } from "@effect-app/core"
+import { Effect, Layer } from "@effect-app/core"
+import * as Context from "effect/Context"
+
+export * from "effect/Context"
 
 export const ServiceTag = Symbol()
 export type ServiceTag = typeof ServiceTag
@@ -33,13 +36,6 @@ export abstract class ServiceTagged<ServiceKey> extends PhantomTypeParameter<str
  */
 export function makeService<T extends ServiceTagged<any>>(_: Omit<T, ServiceTag>) {
   return _ as T
-}
-
-/**
- * @tsplus fluent effect/data/Context/Tag make
- */
-export function make<T extends ServiceTagged<any>, I = T>(_: Context.Tag<I, T>, t: Omit<T, ServiceTag>) {
-  return t as T
 }
 
 let i = 0
@@ -102,7 +98,6 @@ export const proxify = <T extends object>(Tag: T) =>
         return (body) => Effect.andThen(Tag, body)
       }
       if (prop in Tag) {
-        // @ts-expect-error abc
         return Tag[prop]
       }
       if (cache.has(prop)) {
