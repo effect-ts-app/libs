@@ -1,9 +1,9 @@
 // TODO: Export order seems to be important? Somehow some cyclics?
+export * as Context from "@effect-app/core/Context"
 export * as Effect from "@effect-app/core/Effect"
 export * as Cause from "effect/Cause"
 export * as Chunk from "effect/Chunk"
 export * as Config from "effect/Config"
-export * as Context from "effect/Context"
 export * as Duration from "effect/Duration"
 export * as Either from "effect/Either"
 export * as Equal from "effect/Equal"
