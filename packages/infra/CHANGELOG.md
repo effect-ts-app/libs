@@ -1,5 +1,21 @@
 # @effect-app/infra
 
+## 0.225.0
+
+### Minor Changes
+
+- 215071f: cleanup TagClass
+- af56c32: Integrate Service in Context
+
+### Patch Changes
+
+- Updated dependencies [215071f]
+- Updated dependencies [af56c32]
+  - @effect-app/infra-adapters@0.146.0
+  - effect-app@0.192.0
+  - @effect-app/core@0.159.0
+  - @effect-app/schema@0.211.1
+
 ## 0.224.0
 
 ### Minor Changes

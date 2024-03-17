@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.159.0
+
+### Minor Changes
+
+- af56c32: Integrate Service in Context
+
 ## 0.158.0
 
 ### Minor Changes

@@ -1,5 +1,18 @@
 # @effect-app/prelude
 
+## 0.192.0
+
+### Minor Changes
+
+- 215071f: cleanup TagClass
+- af56c32: Integrate Service in Context
+
+### Patch Changes
+
+- Updated dependencies [af56c32]
+  - @effect-app/core@0.159.0
+  - @effect-app/schema@0.211.1
+
 ## 0.191.0
 
 ### Minor Changes
