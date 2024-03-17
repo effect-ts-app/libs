@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.159.1
+
+### Patch Changes
+
+- 413bdee: fix export
+
 ## 0.159.0
 
 ### Minor Changes
