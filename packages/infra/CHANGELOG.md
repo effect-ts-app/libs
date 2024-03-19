@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.225.2
+
+### Patch Changes
+
+- c1624b7: add repo metadata
+
 ## 0.225.1
 
 ### Patch Changes
