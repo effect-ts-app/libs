@@ -23,7 +23,21 @@ import { flatMapOption } from "@effect-app/core/Effect"
 import type { ParseResult, Schema } from "@effect-app/schema"
 import { NonNegativeInt } from "@effect-app/schema"
 import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
-import { Chunk, Context, Effect, flow, Option, pipe, PubSub, ReadonlyArray, S, Unify } from "effect-app"
+import {
+  Chunk,
+  Context,
+  Effect,
+  Exit,
+  flow,
+  Option,
+  pipe,
+  PubSub,
+  ReadonlyArray,
+  Request,
+  RequestResolver,
+  S,
+  Unify
+} from "effect-app"
 import { runTerm } from "effect-app/Pure"
 import type { FixEnv, PureEnv } from "effect-app/Pure"
 import type { NoInfer } from "effect/Types"
@@ -1000,4 +1014,48 @@ export const RepositoryDefaultImpl = <Service, Evt = never>() => {
       Object.assign(Cls, makeRepoFunctions(Cls, itemType))
     ) as any // impl is missing, but its marked protected
   }
+}
+
+// TODO: integrate with repo
+export const makeRequest = <
+  ItemType extends string,
+  T extends { id: unknown },
+  Encoded extends { id: string } & FieldValues,
+  Evt,
+  Service
+>(repo: Context.Tag<Service, Service> & RepoFunctions<T, Encoded, Evt, ItemType, Service>) => {
+  type Req =
+    & Request.Request<T, NotFoundError<ItemType>>
+    & { _tag: `Get${ItemType}`; id: T["id"] }
+  const _request = Request.tagged<Req>(`Get${repo.itemType}`)
+
+  const requestResolver = RequestResolver
+    .makeBatched((requests: Req[]) =>
+      (repo
+        .query(Q.where("id", "in", requests.map((_) => _.id)) as any) as Effect<readonly T[], never, Service>) // TODO
+        .pipe(
+          Effect.andThen((items) =>
+            Effect.forEach(requests, (r) =>
+              Request.complete(
+                r,
+                ReadonlyArray
+                  .findFirst(items, (_) => _.id === r.id)
+                  .pipe(Option.match({
+                    onNone: () => Exit.fail(new NotFoundError({ type: repo.itemType, id: r.id })),
+                    onSome: Exit.succeed
+                  }))
+              ), { discard: true })
+          ),
+          Effect
+            .catchAllCause((cause) =>
+              Effect.forEach(requests, Request.complete(Exit.failCause(cause)), { discard: true })
+            )
+        )
+    )
+    .pipe(
+      RequestResolver.batchN(20),
+      RequestResolver.contextFromServices(repo)
+    )
+
+  return (id: T["id"]) => Effect.request(_request({ id }), requestResolver)
 }
