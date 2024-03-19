@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.225.3
+
+### Patch Changes
+
+- 08afd99: add makeRequest
+
 ## 0.225.2
 
 ### Patch Changes
