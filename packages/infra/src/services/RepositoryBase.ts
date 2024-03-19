@@ -738,6 +738,8 @@ export interface Repos<
 export type GetRepoType<T> = T extends { type: infer R } ? R : never
 
 export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: string }, Evt, ItemType, Service> {
+  itemType: ItemType
+  T: T
   all: Effect<readonly T[], never, Service>
   find: (id: T["id"]) => Effect<Option<T>, never, Service>
   removeById: (id: T["id"]) => Effect<void, NotFoundError<ItemType>, Service>
@@ -871,7 +873,7 @@ export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: 
   ) => X extends Effect<infer A, infer E, infer R> ? Effect<A, E, R | Service> : Effect<X, never, Service>
 }
 
-const makeRepoFunctions = (tag: any) => {
+const makeRepoFunctions = (tag: any, itemType: any) => {
   const { all } = Effect.serviceConstants(tag) as any
   const {
     byIdAndSaveWithPure,
@@ -889,6 +891,7 @@ const makeRepoFunctions = (tag: any) => {
   const mapped = (s: any) => tag.map((_: any) => _.mapped(s))
 
   return {
+    itemType,
     all,
     byIdAndSaveWithPure,
     find,
@@ -945,7 +948,9 @@ export const RepositoryBaseImpl = <Service>() => {
     Error.stackTraceLimit = 2
     const creationError = new Error()
     Error.stackTraceLimit = limit
-    return Context.assignTag<Service>(undefined, creationError)(Object.assign(Cls, makeRepoFunctions(Cls))) as any
+    return Context.assignTag<Service>(undefined, creationError)(
+      Object.assign(Cls, makeRepoFunctions(Cls, itemType))
+    ) as any
   }
 }
 
@@ -991,6 +996,8 @@ export const RepositoryDefaultImpl = <Service, Evt = never>() => {
     Error.stackTraceLimit = 2
     const creationError = new Error()
     Error.stackTraceLimit = limit
-    return Context.assignTag<Service>(undefined, creationError)(Object.assign(Cls, makeRepoFunctions(Cls))) as any // impl is missing, but its marked protected
+    return Context.assignTag<Service>(undefined, creationError)(
+      Object.assign(Cls, makeRepoFunctions(Cls, itemType))
+    ) as any // impl is missing, but its marked protected
   }
 }
