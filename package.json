@@ -6,7 +6,7 @@
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "fast-check@3.16.0": "patches/fast-check@3.16.0.patch",
-      "@effect/schema@0.64.5": "patches/@effect__schema@0.64.5.patch",
+      "@effect/schema@0.64.8": "patches/@effect__schema@0.64.8.patch",
       "typescript@5.4.2": "patches/typescript@5.4.2.patch"
     }
   },
@@ -46,18 +46,18 @@
     "vue": "$vue"
   },
   "dependencies": {
-    "date-fns": "^3.5.0",
+    "date-fns": "^3.6.0",
     "cross-env": "^7.0.3",
     "fast-check": "^3.16.0",
     "ts-node": "^10.9.2",
     "vue": "^3.4.21"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.9",
-    "@babel/core": "^7.24.0",
-    "@babel/plugin-syntax-import-attributes": "^7.23.3",
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.1",
+    "@babel/plugin-syntax-import-attributes": "^7.24.1",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
-    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.89.3",
     "@effect-app/cli": "^0.63.1",
@@ -72,10 +72,10 @@
     "@phaphoso/eslint-plugin-dprint": "^0.5.2",
     "@tsconfig/strictest": "^2.0.3",
     "@types/lodash": "^4.17.0",
-    "@types/node": "~20.11.28",
-    "@typescript-eslint/eslint-plugin": "7.2.0",
-    "@typescript-eslint/parser": "7.2.0",
-    "@typescript-eslint/scope-manager": "7.2.0",
+    "@types/node": "~20.11.30",
+    "@typescript-eslint/eslint-plugin": "7.3.1",
+    "@typescript-eslint/parser": "7.3.1",
+    "@typescript-eslint/scope-manager": "7.3.1",
     "babel-plugin-replace-import-extension": "^1.1.4",
     "concurrently": "^8.2.2",
     "dprint": "^0.45.0",

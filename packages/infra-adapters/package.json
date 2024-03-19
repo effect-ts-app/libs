@@ -27,9 +27,9 @@
     "winston": "^3.12.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.8",
-    "@effect/schema": "^0.64.5",
-    "effect": "^2.4.7"
+    "@effect/platform": "^0.48.12",
+    "@effect/schema": "^0.64.8",
+    "effect": "^2.4.9"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

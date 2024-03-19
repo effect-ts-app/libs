@@ -12,8 +12,8 @@
     "node-watch": "^0.7.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.9",
-    "@types/node": "~20.11.28",
+    "@babel/cli": "^7.24.1",
+    "@types/node": "~20.11.30",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2",

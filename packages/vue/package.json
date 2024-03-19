@@ -15,16 +15,16 @@
     "query-string": "^9.0.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.8",
-    "@effect/platform-browser": "^0.31.8",
-    "@effect/schema": "^0.64.5",
-    "effect": "^2.4.7",
+    "@effect/platform": "^0.48.12",
+    "@effect/platform-browser": "^0.31.12",
+    "@effect/schema": "^0.64.8",
+    "effect": "^2.4.9",
     "vue": "^3.4.21"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.9",
+    "@babel/cli": "^7.24.1",
     "@rollup/pluginutils": "^5.1.0",
-    "@types/node": "~20.11.28",
+    "@types/node": "~20.11.30",
     "intl-messageformat": "^10.5.11",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
