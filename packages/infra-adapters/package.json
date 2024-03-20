@@ -27,8 +27,8 @@
     "winston": "^3.12.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.12",
-    "@effect/schema": "^0.64.8",
+    "@effect/platform": "^0.48.13",
+    "@effect/schema": "^0.64.9",
     "effect": "^2.4.9"
   },
   "scripts": {

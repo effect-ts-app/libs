@@ -6,7 +6,7 @@
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "fast-check@3.16.0": "patches/fast-check@3.16.0.patch",
-      "@effect/schema@0.64.8": "patches/@effect__schema@0.64.8.patch",
+      "@effect/schema@0.64.9": "patches/@effect__schema@0.64.9.patch",
       "typescript@5.4.2": "patches/typescript@5.4.2.patch"
     }
   },
@@ -54,13 +54,13 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.1",
+    "@babel/core": "^7.24.3",
     "@babel/plugin-syntax-import-attributes": "^7.24.1",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.89.3",
-    "@effect-app/cli": "^0.63.1",
+    "@effect-app/cli": "^0.64.0",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
     "@effect-app/infra": "workspace:*",
@@ -103,7 +103,7 @@
     "typescript": "^5.4.2",
     "typescript-transform-paths": "^3.4.7",
     "unplugin-auto-import": "^0.17.5",
-    "vite": "^5.1.6",
+    "vite": "^5.2.2",
     "vitest": "^1.4.0"
   }
 }

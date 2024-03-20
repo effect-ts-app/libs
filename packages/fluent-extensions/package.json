@@ -13,7 +13,7 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.12",
+    "@effect/platform": "^0.48.13",
     "effect": "^2.4.9"
   },
   "devDependencies": {

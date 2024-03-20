@@ -32,7 +32,7 @@
     "@types/proper-lockfile": "^4.1.4",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.7",
-    "express": "^4.18.3",
+    "express": "^4.19.0",
     "jwks-rsa": "2.1.4",
     "jwt-decode": "^4.0.0",
     "mongodb": "6.5.0",
@@ -42,9 +42,9 @@
     "vitest": "^1.4.0"
   },
   "peerDependencies": {
-    "express": "^4.18.3",
-    "@effect/platform": "^0.48.12",
-    "@effect/schema": "^0.64.8",
+    "express": "^4.19.0",
+    "@effect/platform": "^0.48.13",
+    "@effect/schema": "^0.64.9",
     "effect": "^2.4.9"
   },
   "typesVersions": {

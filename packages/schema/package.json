@@ -20,7 +20,7 @@
     "vitest": "^1.4.0"
   },
   "peerDependencies": {
-    "@effect/schema": "^0.64.8",
+    "@effect/schema": "^0.64.9",
     "effect": "^2.4.9"
   },
   "scripts": {
