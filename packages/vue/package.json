@@ -10,15 +10,15 @@
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@formatjs/intl": "^2.10.0",
-    "@tanstack/vue-query": "^5.28.4",
+    "@tanstack/vue-query": "^5.28.7",
     "effect-app": "workspace:*",
     "query-string": "^9.0.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.13",
-    "@effect/platform-browser": "^0.31.13",
-    "@effect/schema": "^0.64.9",
-    "effect": "^2.4.9",
+    "@effect/platform": "^0.48.14",
+    "@effect/platform-browser": "^0.31.14",
+    "@effect/schema": "^0.64.10",
+    "effect": "^2.4.10",
     "vue": "^3.4.21"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "intl-messageformat": "^10.5.11",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.2",
+    "typescript": "^5.4.3",
     "vite": "^5.2.2",
     "vitest": "^1.4.0"
   },

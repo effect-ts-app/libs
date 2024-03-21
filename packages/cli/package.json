@@ -16,7 +16,7 @@
     "@types/node": "~20.11.30",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.2",
+    "typescript": "^5.4.3",
     "vitest": "^1.4.0"
   },
   "typesVersions": {

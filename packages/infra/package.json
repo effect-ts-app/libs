@@ -21,7 +21,7 @@
     "object-hash": "^3.0.0",
     "path-parser": "^6.1.0",
     "proper-lockfile": "^4.1.2",
-    "pure-rand": "6.0.4",
+    "pure-rand": "6.1.0",
     "redlock": "^4.2.0"
   },
   "devDependencies": {
@@ -32,20 +32,20 @@
     "@types/proper-lockfile": "^4.1.4",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.7",
-    "express": "^4.19.0",
+    "express": "^4.19.1",
     "jwks-rsa": "2.1.4",
     "jwt-decode": "^4.0.0",
     "mongodb": "6.5.0",
     "redis": "^3.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.2",
+    "typescript": "^5.4.3",
     "vitest": "^1.4.0"
   },
   "peerDependencies": {
-    "express": "^4.19.0",
-    "@effect/platform": "^0.48.13",
-    "@effect/schema": "^0.64.9",
-    "effect": "^2.4.9"
+    "express": "^4.19.1",
+    "@effect/platform": "^0.48.14",
+    "@effect/schema": "^0.64.10",
+    "effect": "^2.4.10"
   },
   "typesVersions": {
     "*": {
