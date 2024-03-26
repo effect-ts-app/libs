@@ -13,6 +13,10 @@ export class NestedSchema extends S.Class<NestedSchema>()({
   })
 }) {}
 
+export class SchemaContainsClass extends S.Class<SchemaContainsClass>()({
+  inner: NestedSchema
+}) {}
+
 export class UnionSchema extends S.Class<UnionSchema>()({
   union: S.union(S.string, S.struct({ unionNested: NestedSchema }))
 }) {}
@@ -123,16 +127,37 @@ it("buildFieldInfo", () =>
       expectTypeOf(nestedFieldInfos.nested.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]["nested"]>>()
       expectTypeOf(nestedFieldInfos.nested.nested.deepest).toEqualTypeOf<FieldInfo<number>>()
 
-      const unionFieldInfos = buildFieldInfoFromFields(UnionSchema)
-      expectTypeOf(unionFieldInfos).toEqualTypeOf<NestedFieldInfo<UnionSchema>>()
-      expectTypeOf(unionFieldInfos.union).toEqualTypeOf<NestedFieldInfo<{ _: UnionSchema["union"] }>["_"]>()
-      expectTypeOf(unionFieldInfos.union.infos).toEqualTypeOf<
-        NestedFieldInfo<{ _: UnionSchema["union"] }>["_"]["infos"]
-      >()
+      // it's a recursive check on actual runtime structure
+      testNestedFieldInfo(nestedFieldInfos)
+    })
+    .pipe(Effect.runPromise))
+
+it("buildFieldInfo schema containing class schema", () =>
+  Effect
+    .gen(function*() {
+      const nestedFieldInfos = buildFieldInfoFromFields(NestedSchema)
+      expectTypeOf(nestedFieldInfos).toEqualTypeOf<NestedFieldInfo<NestedSchema>>()
+      expectTypeOf(nestedFieldInfos.shallow).toEqualTypeOf<FieldInfo<string>>()
+      expectTypeOf(nestedFieldInfos.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]>>()
+      expectTypeOf(nestedFieldInfos.nested.deep).toEqualTypeOf<FieldInfo<string & S.NonEmptyStringBrand>>()
+      expectTypeOf(nestedFieldInfos.nested.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]["nested"]>>()
+      expectTypeOf(nestedFieldInfos.nested.nested.deepest).toEqualTypeOf<FieldInfo<number>>()
 
       // it's a recursive check on actual runtime structure
       testNestedFieldInfo(nestedFieldInfos)
-      testNestedFieldInfo(unionFieldInfos)
+    })
+    .pipe(Effect.runPromise))
+
+it("buildFieldInfo with simple union", () =>
+  Effect
+    .gen(function*() {
+      const fieldInfos = buildFieldInfoFromFields(SchemaContainsClass)
+
+      // the type system says that this is a NestedFieldInfo<NestedSchema>
+      // is it really?
+      testNestedFieldInfo(fieldInfos.inner)
+
+      // it's a recursive check on actual runtime structure
     })
     .pipe(Effect.runPromise))
 
