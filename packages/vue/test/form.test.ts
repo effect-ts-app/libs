@@ -3,17 +3,15 @@ import { S } from "effect-app"
 import type { FieldInfo, NestedFieldInfo } from "../src/form.js"
 import { buildFieldInfoFromFields, FieldInfoTag } from "../src/form.js"
 
-const NestedSchema = S.struct({
+export class NestedSchema extends S.Class<NestedSchema>()({
   shallow: S.string,
   nested: S.struct({
-    deep: S.string,
+    deep: S.NonEmptyString,
     nested: S.struct({
       deepest: S.number
     })
   })
-})
-
-type NestedSchema = S.Schema.Type<typeof NestedSchema>
+}) {}
 
 function testFieldInfo<T>(fi: FieldInfo<T>) {
   expect(fi).toBeInstanceOf(Object)
@@ -53,7 +51,7 @@ it("buildFieldInfo", () =>
       expectTypeOf(nestedFieldInfos).toEqualTypeOf<NestedFieldInfo<NestedSchema>>()
       expectTypeOf(nestedFieldInfos.shallow).toEqualTypeOf<FieldInfo<string>>()
       expectTypeOf(nestedFieldInfos.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]>>()
-      expectTypeOf(nestedFieldInfos.nested.deep).toEqualTypeOf<FieldInfo<string>>()
+      expectTypeOf(nestedFieldInfos.nested.deep).toEqualTypeOf<FieldInfo<string & S.NonEmptyStringBrand>>()
       expectTypeOf(nestedFieldInfos.nested.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]["nested"]>>()
       expectTypeOf(nestedFieldInfos.nested.nested.deepest).toEqualTypeOf<FieldInfo<number>>()
 
