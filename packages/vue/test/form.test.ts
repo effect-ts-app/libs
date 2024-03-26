@@ -26,7 +26,7 @@ function testFieldInfo<T>(fi: FieldInfo<T>) {
   expect(fi.metadata).toBeInstanceOf(Object)
   expect(fi.metadata.maxLength === void 0 || typeof fi.metadata.maxLength === "number").toBeTruthy()
   expect(fi.metadata.minLength === void 0 || typeof fi.metadata.minLength === "number").toBeTruthy()
-  expect(typeof fi.metadata.required === "boolean")
+  expect(typeof fi.metadata.required === "boolean").toBeTruthy()
 }
 
 function testNestedFieldInfo(nfi: NestedFieldInfo<any>) {
