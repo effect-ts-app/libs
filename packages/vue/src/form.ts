@@ -46,8 +46,9 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
   if (!S.AST.isTypeLiteral(ast)) throw new Error("not a struct type")
   return ast.propertySignatures.reduce(
     (acc, cur) => {
+      const schema = S.make(cur.type)
       try {
-        ;(acc as any)[cur.name] = buildFieldInfoFromFields(S.make(cur))
+        ;(acc as any)[cur.name] = buildFieldInfoFromFields(schema as any)
       } catch (e) {
         // it wasn't a struct XD
         ;(acc as any)[cur.name] = buildFieldInfo(cur)
