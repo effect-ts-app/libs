@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.158.1
+
+### Patch Changes
+
+- 9234597: fix fieldinfo for branded
+- Updated dependencies [9234597]
+  - @effect-app/vue@0.158.1
+
 ## 0.158.0
 
 ### Minor Changes
