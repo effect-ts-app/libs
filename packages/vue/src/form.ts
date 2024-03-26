@@ -24,14 +24,18 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
   return set(convertOutInt(v, type))
 }
 
-type NextedFieldInfos<To extends Record<PropertyKey, any>> = {
-  [K in keyof To]-?: To[K] extends Record<PropertyKey, any> ? NextedFieldInfos<To[K]>
-    : FieldInfo<To[K]>
-}
+export const FieldInfoTag = Symbol()
+
+export type NestedFieldInfo<To extends Record<PropertyKey, any>> =
+  & {
+    [K in keyof To]-?: To[K] extends Record<PropertyKey, any> ? NestedFieldInfo<To[K]>
+      : FieldInfo<To[K]>
+  }
+  & { [FieldInfoTag]: "NestedFieldInfo" }
 
 export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, To extends Record<PropertyKey, any>>(
   schema: Schema<To, From, never> & { fields?: S.Struct.Fields }
-) {
+): NestedFieldInfo<To> {
   const ast = "fields" in schema && schema.fields
     ? (S.struct(schema.fields) as unknown as typeof schema).ast
     : schema.ast
@@ -54,7 +58,7 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
 
       return acc
     },
-    {} as NextedFieldInfos<To>
+    { [FieldInfoTag]: "NestedFieldInfo" } as NestedFieldInfo<To>
   )
 }
 
@@ -77,6 +81,7 @@ export interface FieldInfo<Tout> extends PhantomTypeParameter<typeof f, { out: T
   rules: ((v: string) => boolean | string)[]
   metadata: FieldMetadata
   type: "text" | "float" | "int" // todo; multi-line vs single line text
+  [FieldInfoTag]: "FieldInfo"
 }
 const defaultIntl = createIntl({ locale: "en" })
 
@@ -208,7 +213,8 @@ function buildFieldInfo(
         return true
       }
     ],
-    metadata
+    metadata,
+    [FieldInfoTag]: "FieldInfo"
   }
 
   return info as any
