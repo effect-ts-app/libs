@@ -73,7 +73,7 @@ function handlePropertySignature(
 
   switch (schema.ast._tag) {
     case "Transformation": {
-      // TODO: this handle schemas which uses class schemas as inner props schema
+      // TODO: this handles schemas which contains class schemas
       // but I'm not sure it's the right way to do it
       return handlePropertySignature(
         new S.AST.PropertySignature(
