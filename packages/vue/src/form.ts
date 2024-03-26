@@ -24,6 +24,12 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
   return set(convertOutInt(v, type))
 }
 
+type NextedFieldInfos<To extends Record<PropertyKey, any>> = {
+  [K in keyof To]-?: To[K] extends Schema<infer _To extends Record<PropertyKey, any>, any, never>
+    ? NextedFieldInfos<_To>
+    : FieldInfo<To[K]>
+}
+
 export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, To extends Record<PropertyKey, any>>(
   schema: Schema<To, From, never> & { fields?: S.Struct.Fields }
 ) {
@@ -36,15 +42,20 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
   //     ast = ast.to.type //no longer eists
   //   }
   // }
+
   if (!S.AST.isTypeLiteral(ast)) throw new Error("not a struct type")
   return ast.propertySignatures.reduce(
-    (prev, cur) => {
-      ;(prev as any)[cur.name] = buildFieldInfo(cur)
-      return prev
+    (acc, cur) => {
+      try {
+        ;(acc as any)[cur.name] = buildFieldInfoFromFields(S.make(cur))
+      } catch (e) {
+        // it wasn't a struct XD
+        ;(acc as any)[cur.name] = buildFieldInfo(cur)
+      }
+
+      return acc
     },
-    {} as {
-      [K in keyof To]-?: FieldInfo<To[K]>
-    }
+    {} as NextedFieldInfos<To>
   )
 }
 
