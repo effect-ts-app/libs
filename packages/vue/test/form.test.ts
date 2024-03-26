@@ -177,12 +177,22 @@ it("buildFieldInfo with tagged unions", () =>
         switch (i.___tag) {
           case "CircleStruct":
             expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof CircleStruct>>>()
+            // manual check of runtime structure
+            testFieldInfo(i._tag)
+            testFieldInfo(i.radius)
             break
           case "SquareStruct":
             expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof SquareStruct>>>()
+            // manual check of runtime structure
+            testFieldInfo(i._tag)
+            testFieldInfo(i.sideLength)
             break
           case "TriangleStruct":
             expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof TriangleStruct>>>()
+            // manual check of runtime structure
+            testFieldInfo(i._tag)
+            testFieldInfo(i.base)
+            testFieldInfo(i.height)
             break
         }
       })
@@ -194,12 +204,22 @@ it("buildFieldInfo with tagged unions", () =>
         switch (i.___tag) {
           case "Circle":
             expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<Circle>>()
+            // manual check of runtime structure
+            testFieldInfo(i._tag)
+            testFieldInfo(i.radius)
             break
           case "Square":
             expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<Square>>()
+            // manual check of runtime structure
+            testFieldInfo(i._tag)
+            testFieldInfo(i.sideLength)
             break
           case "Triangle":
             expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<Triangle>>()
+            // manual check of runtime structure
+            testFieldInfo(i._tag)
+            testFieldInfo(i.base)
+            testFieldInfo(i.height)
             break
         }
       })
