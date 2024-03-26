@@ -24,12 +24,12 @@
     "redlock": "^4.2.0",
     "strip-ansi": "^7.1.0",
     "typescript": "^5.4.3",
-    "winston": "^3.12.0"
+    "winston": "^3.13.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.14",
-    "@effect/schema": "^0.64.10",
-    "effect": "^2.4.10"
+    "@effect/platform": "^0.48.20",
+    "@effect/schema": "^0.64.14",
+    "effect": "^2.4.14"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

@@ -9,16 +9,16 @@
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
-    "@formatjs/intl": "^2.10.0",
-    "@tanstack/vue-query": "^5.28.7",
+    "@formatjs/intl": "^2.10.1",
+    "@tanstack/vue-query": "^5.28.8",
     "effect-app": "workspace:*",
     "query-string": "^9.0.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.14",
-    "@effect/platform-browser": "^0.31.14",
-    "@effect/schema": "^0.64.10",
-    "effect": "^2.4.10",
+    "@effect/platform": "^0.48.20",
+    "@effect/platform-browser": "^0.31.20",
+    "@effect/schema": "^0.64.14",
+    "effect": "^2.4.14",
     "vue": "^3.4.21"
   },
   "devDependencies": {
@@ -29,7 +29,7 @@
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3",
-    "vite": "^5.2.2",
+    "vite": "^5.2.6",
     "vitest": "^1.4.0"
   },
   "typesVersions": {

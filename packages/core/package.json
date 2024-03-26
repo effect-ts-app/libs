@@ -13,8 +13,8 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "effect": "^2.4.10",
-    "@effect/platform": "^0.48.14"
+    "effect": "^2.4.14",
+    "@effect/platform": "^0.48.20"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8",
@@ -23,7 +23,7 @@
     "ts-toolbelt": "^9.6.0",
     "typescript": "^5.4.3",
     "vitest": "^1.4.0",
-    "winston": "^3.12.0"
+    "winston": "^3.13.0"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

@@ -13,8 +13,8 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.14",
-    "effect": "^2.4.10"
+    "@effect/platform": "^0.48.20",
+    "effect": "^2.4.14"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
@@ -22,7 +22,7 @@
     "@types/node": "~20.11.30",
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.9",
-    "fast-check": "~3.16.0",
+    "fast-check": "~3.17.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3",
     "vitest": "^1.4.0"
