@@ -173,6 +173,7 @@ it("buildFieldInfo with tagged unions", () =>
 
       shapeFieldInfos.shapeWithStruct.infos.forEach((i) => {
         expect(["CircleStruct", "SquareStruct", "TriangleStruct"]).toContain(i.___tag)
+        testNestedFieldInfo(i)
         switch (i.___tag) {
           case "CircleStruct":
             expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof CircleStruct>>>()
@@ -186,8 +187,10 @@ it("buildFieldInfo with tagged unions", () =>
         }
       })
 
+      // check if inner classes are correctly tagged
       shapeFieldInfos.shapeWithClasses.infos.forEach((i) => {
         expect(["Circle", "Square", "Triangle"]).toContain(i.___tag)
+        testNestedFieldInfo(i)
         switch (i.___tag) {
           case "Circle":
             expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<Circle>>()
