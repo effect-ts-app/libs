@@ -1,13 +1,13 @@
 {
   "name": "effect-app",
-  "version": "0.193.0",
+  "version": "0.194.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@tsconfig/strictest": "^2.0.3",
+    "@tsconfig/strictest": "^2.0.4",
     "date-fns": "^3.6.0",
     "nanoid": "^5.0.6",
     "path-parser": "^6.1.0",
@@ -22,15 +22,15 @@
     "@types/node": "~20.11.30",
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.9",
-    "fast-check": "~3.16.0",
+    "fast-check": "~3.17.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3",
     "vitest": "^1.4.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.14",
-    "effect": "^2.4.10",
-    "@effect/schema": "^0.64.10"
+    "@effect/platform": "^0.48.20",
+    "effect": "^2.4.14",
+    "@effect/schema": "^0.64.14"
   },
   "typesVersions": {
     "*": {

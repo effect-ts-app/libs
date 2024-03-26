@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/schema",
-  "version": "0.212.0",
+  "version": "0.213.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -14,14 +14,14 @@
   "devDependencies": {
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.9",
-    "fast-check": "~3.16.0",
+    "fast-check": "~3.17.0",
     "ts-toolbelt": "^9.6.0",
     "typescript": "^5.4.3",
     "vitest": "^1.4.0"
   },
   "peerDependencies": {
-    "@effect/schema": "^0.64.10",
-    "effect": "^2.4.10"
+    "@effect/schema": "^0.64.14",
+    "effect": "^2.4.14"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",
