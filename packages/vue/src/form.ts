@@ -25,8 +25,7 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
 }
 
 type NextedFieldInfos<To extends Record<PropertyKey, any>> = {
-  [K in keyof To]-?: To[K] extends Schema<infer _To extends Record<PropertyKey, any>, any, never>
-    ? NextedFieldInfos<_To>
+  [K in keyof To]-?: To[K] extends Record<PropertyKey, any> ? NextedFieldInfos<To[K]>
     : FieldInfo<To[K]>
 }
 
