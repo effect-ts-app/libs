@@ -1,7 +1,5 @@
 import { Effect, Either, Option, type Scope } from "@effect-app/core"
 import type { LazyArg } from "@effect-app/core/Function"
-import type { ClientRequest } from "@effect/platform/Http/ClientRequest"
-import type { HttpClient, HttpClientRequest } from "../http.js"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<any, any, infer R>
@@ -81,18 +79,3 @@ export function flatMapScoped<R, E, A, R2, E2, A2>(
 // ): Effect<Exclude<R | R2, Scope>, E | E2, A2> {
 //   return scopedEffect.flatMap(effect).scoped
 // }
-
-/** @tsplus fluent effect/platform/Http/Client request */
-export const client: {
-  <A, B, C, R, E>(
-    client: HttpClient.Client<A, B, C>,
-    req: Effect<HttpClientRequest.ClientRequest, E, R>
-  ): Effect<C, B | E, A | R>
-  <A, B, C>(client: HttpClient.Client<A, B, C>, req: ClientRequest): Effect<C, B, A>
-} = (
-  client: HttpClient.Client<any, any, any>,
-  req: Effect<HttpClientRequest.ClientRequest, any, any> | HttpClientRequest.ClientRequest
-) =>
-  Effect.isEffect(req)
-    ? Effect.flatMap(req, client)
-    : client(req)
