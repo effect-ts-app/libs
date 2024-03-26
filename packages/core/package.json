@@ -22,8 +22,7 @@
     "@babel/cli": "^7.24.1",
     "ts-toolbelt": "^9.6.0",
     "typescript": "^5.4.3",
-    "vitest": "^1.4.0",
-    "winston": "^3.13.0"
+    "vitest": "^1.4.0"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",
