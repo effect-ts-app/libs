@@ -47,12 +47,11 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
   return ast.propertySignatures.reduce(
     (acc, cur) => {
       const schema = S.make(cur.type)
-      try {
-        ;(acc as any)[cur.name] = buildFieldInfoFromFields(schema as any)
-      } catch (e) {
-        // it wasn't a struct XD
-        ;(acc as any)[cur.name] = buildFieldInfo(cur)
-      }
+      ;(acc as any)[cur.name] = S.AST.isTypeLiteral(schema.ast)
+        ? buildFieldInfoFromFields(
+          schema as S.Schema<Record<PropertyKey, any>, Record<PropertyKey, any>, never>
+        )
+        : buildFieldInfo(cur)
 
       return acc
     },
