@@ -22,31 +22,31 @@ export class UnionSchema extends S.Class<UnionSchema>()({
 }) {}
 
 class Circle extends S.TaggedClass<Circle>()("Circle", {
-  radius: S.Positive
+  radius: S.PositiveInt
 }) {}
 
 class Square extends S.TaggedClass<Square>()("Square", {
-  sideLength: S.Positive
+  sideLength: S.PositiveInt
 }) {}
 
 class Triangle extends S.TaggedClass<Triangle>()("Triangle", {
-  base: S.Positive,
+  base: S.PositiveInt,
   height: S.number
 }) {}
 
 const CircleStruct = S.struct({
   _tag: S.literal("CircleStruct"),
-  radius: S.Positive
+  radius: S.PositiveInt
 })
 
 const SquareStruct = S.struct({
   _tag: S.literal("SquareStruct"),
-  sideLength: S.Positive
+  sideLength: S.PositiveInt
 })
 
 const TriangleStruct = S.struct({
   _tag: S.literal("TriangleStruct"),
-  base: S.Positive,
+  base: S.PositiveInt,
   height: S.number
 })
 
