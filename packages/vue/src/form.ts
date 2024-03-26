@@ -71,9 +71,20 @@ function handlePropertySignature(
 {
   const schema = S.make(propertySignature.type)
 
-  propertySignature.name === "unionNested" && console.log({ schema, propertySignature })
-
   switch (schema.ast._tag) {
+    case "Transformation": {
+      // TODO: this handle schemas which uses class schemas as inner props schema
+      // but I'm not sure it's the right way to do it
+      return handlePropertySignature(
+        new S.AST.PropertySignature(
+          propertySignature.name,
+          schema.ast.from,
+          propertySignature.isOptional,
+          propertySignature.isReadonly,
+          propertySignature.annotations
+        )
+      )
+    }
     case "TypeLiteral": {
       return buildFieldInfoFromFields(
         schema as S.Schema<Record<PropertyKey, any>, Record<PropertyKey, any>, never>

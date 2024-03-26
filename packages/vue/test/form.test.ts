@@ -21,39 +21,41 @@ export class UnionSchema extends S.Class<UnionSchema>()({
   union: S.union(S.string, S.struct({ unionNested: NestedSchema }))
 }) {}
 
-// class Circle extends S.TaggedClass<Circle>()("Circle", {
-//   radius: S.number
-// }) {}
+class Circle extends S.TaggedClass<Circle>()("Circle", {
+  radius: S.Positive
+}) {}
 
-// class Square extends S.TaggedClass<Square>()("Square", {
-//   sideLength: S.number
-// }) {}
+class Square extends S.TaggedClass<Square>()("Square", {
+  sideLength: S.Positive
+}) {}
 
-// class Triangle extends S.TaggedClass<Triangle>()("Triangle", {
-//   base: S.number,
-//   height: S.number
-// }) {}
+class Triangle extends S.TaggedClass<Triangle>()("Triangle", {
+  base: S.Positive,
+  height: S.number
+}) {}
 
 const CircleStruct = S.struct({
   _tag: S.literal("CircleStruct"),
-  radius: S.number
+  radius: S.Positive
 })
 
 const SquareStruct = S.struct({
   _tag: S.literal("SquareStruct"),
-  sideLength: S.number
+  sideLength: S.Positive
 })
 
 const TriangleStruct = S.struct({
   _tag: S.literal("TriangleStruct"),
-  base: S.number,
+  base: S.Positive,
   height: S.number
 })
 
 const ShapeWithStructs = S.union(CircleStruct, SquareStruct, TriangleStruct)
+const ShapeWithClasses = S.union(Circle, Square, Triangle)
 
 export class ShapeContainer extends S.Class<ShapeContainer>()({
-  shape: ShapeWithStructs
+  shapeWithStruct: ShapeWithStructs,
+  shapeWithClasses: ShapeWithClasses
 }) {}
 
 function testFieldInfo<T>(fi: FieldInfo<T>) {
@@ -132,43 +134,44 @@ it("buildFieldInfo", () =>
     })
     .pipe(Effect.runPromise))
 
-it("buildFieldInfo schema containing class schema", () =>
+it("buildFieldInfo schema containing class", () =>
   Effect
     .gen(function*() {
-      const nestedFieldInfos = buildFieldInfoFromFields(NestedSchema)
-      expectTypeOf(nestedFieldInfos).toEqualTypeOf<NestedFieldInfo<NestedSchema>>()
-      expectTypeOf(nestedFieldInfos.shallow).toEqualTypeOf<FieldInfo<string>>()
-      expectTypeOf(nestedFieldInfos.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]>>()
-      expectTypeOf(nestedFieldInfos.nested.deep).toEqualTypeOf<FieldInfo<string & S.NonEmptyStringBrand>>()
-      expectTypeOf(nestedFieldInfos.nested.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]["nested"]>>()
-      expectTypeOf(nestedFieldInfos.nested.nested.deepest).toEqualTypeOf<FieldInfo<number>>()
+      const fieldInfos = buildFieldInfoFromFields(SchemaContainsClass)
 
-      // it's a recursive check on actual runtime structure
-      testNestedFieldInfo(nestedFieldInfos)
+      // the type system says that these are NestedFieldInfo<NestedSchema>s
+      // are they really? let's check
+      testNestedFieldInfo(fieldInfos.inner)
+      testNestedFieldInfo(fieldInfos.inner.nested.nested)
     })
     .pipe(Effect.runPromise))
 
 it("buildFieldInfo with simple union", () =>
   Effect
     .gen(function*() {
-      const fieldInfos = buildFieldInfoFromFields(SchemaContainsClass)
-
-      // the type system says that this is a NestedFieldInfo<NestedSchema>
-      // is it really?
-      testNestedFieldInfo(fieldInfos.inner)
+      const unionFieldInfos = buildFieldInfoFromFields(UnionSchema)
+      expectTypeOf(unionFieldInfos).toEqualTypeOf<NestedFieldInfo<UnionSchema>>()
+      expectTypeOf(unionFieldInfos.union).toEqualTypeOf<NestedFieldInfo<{ _: UnionSchema["union"] }>["_"]>()
+      expectTypeOf(unionFieldInfos.union.infos).toEqualTypeOf<
+        NestedFieldInfo<{ _: UnionSchema["union"] }>["_"]["infos"]
+      >()
 
       // it's a recursive check on actual runtime structure
+
+      testNestedFieldInfo(unionFieldInfos)
     })
     .pipe(Effect.runPromise))
 
-it("buildFieldInfo with tagged union", () =>
+it("buildFieldInfo with tagged unions", () =>
   Effect
     .gen(function*() {
       const shapeFieldInfos = buildFieldInfoFromFields(ShapeContainer)
 
-      testNestedFieldInfo(shapeFieldInfos)
+      // check at runtime if the structure is really an union
+      testUnionFieldInfo(shapeFieldInfos.shapeWithClasses)
+      testUnionFieldInfo(shapeFieldInfos.shapeWithStruct)
 
-      shapeFieldInfos.shape.infos.forEach((i) => {
+      shapeFieldInfos.shapeWithStruct.infos.forEach((i) => {
         expect(["CircleStruct", "SquareStruct", "TriangleStruct"]).toContain(i.___tag)
         switch (i.___tag) {
           case "CircleStruct":
@@ -179,6 +182,21 @@ it("buildFieldInfo with tagged union", () =>
             break
           case "TriangleStruct":
             expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof TriangleStruct>>>()
+            break
+        }
+      })
+
+      shapeFieldInfos.shapeWithClasses.infos.forEach((i) => {
+        expect(["Circle", "Square", "Triangle"]).toContain(i.___tag)
+        switch (i.___tag) {
+          case "Circle":
+            expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<Circle>>()
+            break
+          case "Square":
+            expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<Square>>()
+            break
+          case "Triangle":
+            expectTypeOf(i).toEqualTypeOf<NestedFieldInfo<Triangle>>()
             break
         }
       })
