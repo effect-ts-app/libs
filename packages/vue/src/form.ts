@@ -107,7 +107,6 @@ function handlePropertySignature(
           )
           .flatMap((ps) => {
             // try to retrieve the _tag literal to set ___tag later
-
             const typeLiteral = S.AST.isTypeLiteral(ps.type)
               ? ps.type
               : S.AST.isTransform(ps.type) && S.AST.isTypeLiteral(ps.type.from)
