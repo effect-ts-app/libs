@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 0.158.0
+
+### Minor Changes
+
+- 05f76a0: support nested field infos
+
+### Patch Changes
+
+- Updated dependencies [05f76a0]
+  - @effect-app/vue@0.158.0
+
 ## 0.157.0
 
 ### Minor Changes
