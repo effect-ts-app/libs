@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.69.0
+
+### Minor Changes
+
+- bbaa558: bs
+
 ## 0.68.0
 
 ### Minor Changes

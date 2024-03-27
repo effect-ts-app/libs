@@ -1,5 +1,18 @@
 # @effect-app/infra-adapters
 
+## 0.149.0
+
+### Minor Changes
+
+- bbaa558: bs
+
+### Patch Changes
+
+- Updated dependencies [bbaa558]
+  - @effect-app/core@0.162.0
+  - effect-app@0.195.0
+  - @effect-app/schema@0.214.0
+
 ## 0.148.1
 
 ### Patch Changes
