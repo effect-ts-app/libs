@@ -7,7 +7,6 @@
     "@azure/cosmos": "^4.0.0",
     "@azure/service-bus": "^7.9.4",
     "@effect-app/core": "workspace:*",
-    "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
     "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",

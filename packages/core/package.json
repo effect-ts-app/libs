@@ -5,7 +5,6 @@
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/core",
   "dependencies": {
-    "@effect-app/fluent-extensions": "workspace:*",
     "cross-fetch": "^4.0.0",
     "path-parser": "^6.1.0",
     "query-string": "^9.0.0",

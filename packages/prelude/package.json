@@ -5,7 +5,6 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@tsconfig/strictest": "^2.0.4",
     "date-fns": "^3.6.0",

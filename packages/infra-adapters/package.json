@@ -5,7 +5,6 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect-app/fluent-extensions": "workspace:*",
     "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "query-string": "^9.0.0"
