@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect/core": "workspace:*",
+    "@effect-app/core": "workspace:*",
     "date-fns": "^3.6.0",
     "nanoid": "^5.0.6",
     "path-parser": "^6.1.0",
