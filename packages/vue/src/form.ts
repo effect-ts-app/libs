@@ -4,7 +4,7 @@ import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type {} from "intl-messageformat"
 import type { Unbranded } from "@effect-app/schema/brand"
 import { Either, Option, pipe, S } from "effect-app"
-import { type Schema } from "effect-app/schema"
+import type { Schema, Simplify } from "effect-app/schema"
 
 import type { IsUnion } from "effect-app/utils"
 import type { Ref } from "vue"
@@ -47,20 +47,21 @@ type NestedFieldInfoKey<Key> = Key extends Record<PropertyKey, any>
   : FieldInfo<Key>
   : FieldInfo<Key>
 
-type _NestedFieldInfo<To extends Record<PropertyKey, any>> =
-  & (Record<PropertyKey, any> extends To ? {}
-    : {
-      [K in keyof To]-?: NestedFieldInfoKey<To[K]> extends infer NestedInfo
-        ? IsUnion<NestedInfo> extends false ? NestedInfo : UnionFieldInfo<NestedInfo[]>
-        : never
-    })
-  & { [FieldInfoTag]: "NestedFieldInfo" }
+type _NestedFieldInfo<To extends Record<PropertyKey, any>> = Record<PropertyKey, any> extends To ? {}
+  : {
+    [K in keyof To]-?: NestedFieldInfoKey<To[K]> extends infer NestedInfo
+      ? IsUnion<NestedInfo> extends false ? NestedInfo : UnionFieldInfo<NestedInfo[]>
+      : never
+  }
 
-export type NestedFieldInfo<To extends Record<PropertyKey, any>> = _NestedFieldInfo<To> extends infer Res
+export type NestedFieldInfo<To extends Record<PropertyKey, any>> =
   // exploit eventual _tag field to propagate the unique tag
-  ? To extends { "_tag": S.AST.LiteralValue } ? Res & { ___tag: To["_tag"] }
-  : Res
-  : never
+  {
+    infos: Simplify<
+      _NestedFieldInfo<To> & (To extends { "_tag": S.AST.LiteralValue } ? { ___tag: To["_tag"] } : unknown)
+    >
+    [FieldInfoTag]: "NestedFieldInfo"
+  }
 
 function handlePropertySignature(
   propertySignature: S.AST.PropertySignature
@@ -122,7 +123,8 @@ function handlePropertySignature(
             if (toRet[FieldInfoTag] === "UnionFieldInfo") {
               return toRet.infos
             } else if (toRet[FieldInfoTag] === "NestedFieldInfo") {
-              return [{ ...toRet, ...(tagLiteral !== void 0) && { ___tag: tagLiteral } }]
+              ;(tagLiteral !== void 0) && (toRet.infos = { ...toRet.infos, ___tag: tagLiteral })
+              return [toRet]
             } else {
               return [toRet]
             }
@@ -153,11 +155,11 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
   if (!S.AST.isTypeLiteral(ast)) throw new Error("not a struct type")
   return ast.propertySignatures.reduce(
     (acc, cur) => {
-      ;(acc as any)[cur.name] = handlePropertySignature(cur)
+      ;(acc.infos as any)[cur.name] = handlePropertySignature(cur)
 
       return acc
     },
-    { [FieldInfoTag]: "NestedFieldInfo" } as NestedFieldInfo<To>
+    { [FieldInfoTag]: "NestedFieldInfo", infos: {} } as NestedFieldInfo<To>
   )
 }
 
