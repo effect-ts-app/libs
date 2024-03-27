@@ -38,7 +38,7 @@ export interface FieldInfo<Tout> extends PhantomTypeParameter<typeof f, { out: T
 }
 
 export interface UnionFieldInfo<T> {
-  infos: T
+  info: T
   [FieldInfoTag]: "UnionFieldInfo"
 }
 
@@ -57,7 +57,7 @@ type _NestedFieldInfo<To extends Record<PropertyKey, any>> = Record<PropertyKey,
 export type NestedFieldInfo<To extends Record<PropertyKey, any>> =
   // exploit eventual _tag field to propagate the unique tag
   {
-    infos: Simplify<
+    info: Simplify<
       _NestedFieldInfo<To> & (To extends { "_tag": S.AST.LiteralValue } ? { ___tag: To["_tag"] } : unknown)
     >
     [FieldInfoTag]: "NestedFieldInfo"
@@ -93,7 +93,7 @@ function handlePropertySignature(
     }
     case "Union": {
       return {
-        infos: schema
+        info: schema
           .ast
           .types
           .map((elAst) =>
@@ -121,9 +121,9 @@ function handlePropertySignature(
             const toRet = handlePropertySignature(ps)
 
             if (toRet[FieldInfoTag] === "UnionFieldInfo") {
-              return toRet.infos
+              return toRet.info
             } else if (toRet[FieldInfoTag] === "NestedFieldInfo") {
-              ;(tagLiteral !== void 0) && (toRet.infos = { ...toRet.infos, ___tag: tagLiteral })
+              ;(tagLiteral !== void 0) && (toRet.info = { ...toRet.info, ___tag: tagLiteral })
               return [toRet]
             } else {
               return [toRet]
@@ -155,11 +155,11 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
   if (!S.AST.isTypeLiteral(ast)) throw new Error("not a struct type")
   return ast.propertySignatures.reduce(
     (acc, cur) => {
-      ;(acc.infos as any)[cur.name] = handlePropertySignature(cur)
+      ;(acc.info as any)[cur.name] = handlePropertySignature(cur)
 
       return acc
     },
-    { [FieldInfoTag]: "NestedFieldInfo", infos: {} } as NestedFieldInfo<To>
+    { [FieldInfoTag]: "NestedFieldInfo", info: {} } as NestedFieldInfo<To>
   )
 }
 
@@ -383,7 +383,7 @@ export function getMetadataFromSchema(
     const { $ref: _, ...rest } = jschema
     jschema = { ...jschema["$defs"][jschema["$ref"].replace("#/$defs/", "")], ...rest }
   }
-  // or we need to add these infos directly in the refinement like the minimum
+  // or we need to add these info directly in the refinement like the minimum
   // or find a jsonschema parser whojoins all of them
   // todo, we have to use $ref: "#/$defs/Int"
   // and look up

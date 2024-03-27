@@ -75,8 +75,8 @@ function testFieldInfo<T>(fi: FieldInfo<T>) {
 function testUnionFieldInfo(ufi: UnionFieldInfo<any>) {
   expect(ufi).toBeInstanceOf(Object)
   expect(ufi[FieldInfoTag]).toBe("UnionFieldInfo")
-  expect(ufi.infos).toBeInstanceOf(Array)
-  ufi.infos.forEach(
+  expect(ufi.info).toBeInstanceOf(Array)
+  ufi.info.forEach(
     (
       i: any
     ) => {
@@ -98,7 +98,7 @@ function testUnionFieldInfo(ufi: UnionFieldInfo<any>) {
 function testNestedFieldInfo(nfi: NestedFieldInfo<any>) {
   expect(nfi).toBeInstanceOf(Object)
   expect(nfi[FieldInfoTag]).toBe("NestedFieldInfo")
-  expect(nfi.infos).toBeInstanceOf(Object)
+  expect(nfi.info).toBeInstanceOf(Object)
 
   Object.values(nfi).forEach(
     (
@@ -122,39 +122,39 @@ function testNestedFieldInfo(nfi: NestedFieldInfo<any>) {
 it("buildFieldInfo", () =>
   Effect
     .gen(function*() {
-      const nestedFieldInfos = buildFieldInfoFromFields(NestedSchema)
-      expectTypeOf(nestedFieldInfos).toEqualTypeOf<NestedFieldInfo<NestedSchema>>()
-      expectTypeOf(nestedFieldInfos.infos.shallow).toEqualTypeOf<FieldInfo<string>>()
-      expectTypeOf(nestedFieldInfos.infos.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]>>()
-      expectTypeOf(nestedFieldInfos.infos.nested.infos.deep).toEqualTypeOf<FieldInfo<string & S.NonEmptyStringBrand>>()
-      expectTypeOf(nestedFieldInfos.infos.nested.infos.nested).toEqualTypeOf<
+      const nestedFieldinfo = buildFieldInfoFromFields(NestedSchema)
+      expectTypeOf(nestedFieldinfo).toEqualTypeOf<NestedFieldInfo<NestedSchema>>()
+      expectTypeOf(nestedFieldinfo.info.shallow).toEqualTypeOf<FieldInfo<string>>()
+      expectTypeOf(nestedFieldinfo.info.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]>>()
+      expectTypeOf(nestedFieldinfo.info.nested.info.deep).toEqualTypeOf<FieldInfo<string & S.NonEmptyStringBrand>>()
+      expectTypeOf(nestedFieldinfo.info.nested.info.nested).toEqualTypeOf<
         NestedFieldInfo<NestedSchema["nested"]["nested"]>
       >()
-      expectTypeOf(nestedFieldInfos.infos.nested.infos.nested.infos.deepest).toEqualTypeOf<FieldInfo<number>>()
+      expectTypeOf(nestedFieldinfo.info.nested.info.nested.info.deepest).toEqualTypeOf<FieldInfo<number>>()
 
       // it's a recursive check on actual runtime structure
-      testNestedFieldInfo(nestedFieldInfos)
+      testNestedFieldInfo(nestedFieldinfo)
     })
     .pipe(Effect.runPromise))
 
 it("buildFieldInfo schema containing class", () =>
   Effect
     .gen(function*() {
-      const fieldInfos = buildFieldInfoFromFields(SchemaContainsClass)
+      const fieldinfo = buildFieldInfoFromFields(SchemaContainsClass)
 
       // the type system says that these are NestedFieldInfo<NestedSchema>s
       // are they really? let's check
-      testNestedFieldInfo(fieldInfos.infos.inner)
-      testNestedFieldInfo(fieldInfos.infos.inner.infos.nested.infos.nested)
+      testNestedFieldInfo(fieldinfo.info.inner)
+      testNestedFieldInfo(fieldinfo.info.inner.info.nested.info.nested)
     })
     .pipe(Effect.runPromise))
 
 it("buildFieldInfo with simple union", () =>
   Effect
     .gen(function*() {
-      const unionFieldInfos = buildFieldInfoFromFields(UnionSchema)
-      expectTypeOf(unionFieldInfos).toEqualTypeOf<NestedFieldInfo<UnionSchema>>()
-      expectTypeOf(unionFieldInfos.infos.union).toEqualTypeOf<
+      const unionFieldinfo = buildFieldInfoFromFields(UnionSchema)
+      expectTypeOf(unionFieldinfo).toEqualTypeOf<NestedFieldInfo<UnionSchema>>()
+      expectTypeOf(unionFieldinfo.info.union).toEqualTypeOf<
         UnionFieldInfo<(
           | FieldInfo<string>
           | NestedFieldInfo<{
@@ -162,7 +162,7 @@ it("buildFieldInfo with simple union", () =>
           }>
         )[]>
       >()
-      expectTypeOf(unionFieldInfos.infos.union.infos).toEqualTypeOf<(
+      expectTypeOf(unionFieldinfo.info.union.info).toEqualTypeOf<(
         | FieldInfo<string>
         | NestedFieldInfo<{
           readonly unionNested: NestedSchema
@@ -171,70 +171,70 @@ it("buildFieldInfo with simple union", () =>
 
       // it's a recursive check on actual runtime structure
 
-      testNestedFieldInfo(unionFieldInfos)
+      testNestedFieldInfo(unionFieldinfo)
     })
     .pipe(Effect.runPromise))
 
 it("buildFieldInfo with tagged unions", () =>
   Effect
     .gen(function*() {
-      const shapeFieldInfos = buildFieldInfoFromFields(ShapeContainer)
+      const shapeFieldinfo = buildFieldInfoFromFields(ShapeContainer)
 
       // check at runtime if the structure is really an union
-      testUnionFieldInfo(shapeFieldInfos.infos.shapeWithClasses)
-      testUnionFieldInfo(shapeFieldInfos.infos.shapeWithStruct)
+      testUnionFieldInfo(shapeFieldinfo.info.shapeWithClasses)
+      testUnionFieldInfo(shapeFieldinfo.info.shapeWithStruct)
 
-      shapeFieldInfos.infos.shapeWithStruct.infos.forEach((i) => {
-        expect(["CircleStruct", "SquareStruct", "TriangleStruct"]).toContain(i.infos.___tag)
+      shapeFieldinfo.info.shapeWithStruct.info.forEach((i) => {
+        expect(["CircleStruct", "SquareStruct", "TriangleStruct"]).toContain(i.info.___tag)
         testNestedFieldInfo(i)
-        const infos = i.infos
-        switch (infos.___tag) {
+        const info = i.info
+        switch (info.___tag) {
           case "CircleStruct":
-            expectTypeOf(infos).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof CircleStruct>>["infos"]>()
+            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof CircleStruct>>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(infos._tag)
-            testFieldInfo(infos.radius)
+            testFieldInfo(info._tag)
+            testFieldInfo(info.radius)
             break
           case "SquareStruct":
-            expectTypeOf(infos).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof SquareStruct>>["infos"]>()
+            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof SquareStruct>>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(infos._tag)
-            testFieldInfo(infos.sideLength)
+            testFieldInfo(info._tag)
+            testFieldInfo(info.sideLength)
             break
           case "TriangleStruct":
-            expectTypeOf(infos).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof TriangleStruct>>["infos"]>()
+            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof TriangleStruct>>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(infos._tag)
-            testFieldInfo(infos.base)
-            testFieldInfo(infos.height)
+            testFieldInfo(info._tag)
+            testFieldInfo(info.base)
+            testFieldInfo(info.height)
             break
         }
       })
 
       // check if inner classes are correctly tagged
-      shapeFieldInfos.infos.shapeWithClasses.infos.forEach((i) => {
-        expect(["Circle", "Square", "Triangle"]).toContain(i.infos.___tag)
+      shapeFieldinfo.info.shapeWithClasses.info.forEach((i) => {
+        expect(["Circle", "Square", "Triangle"]).toContain(i.info.___tag)
         testNestedFieldInfo(i)
-        const infos = i.infos
-        switch (infos.___tag) {
+        const info = i.info
+        switch (info.___tag) {
           case "Circle":
-            expectTypeOf(infos).toEqualTypeOf<NestedFieldInfo<Circle>["infos"]>()
+            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<Circle>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(infos._tag)
-            testFieldInfo(infos.radius)
+            testFieldInfo(info._tag)
+            testFieldInfo(info.radius)
             break
           case "Square":
-            expectTypeOf(infos).toEqualTypeOf<NestedFieldInfo<Square>["infos"]>()
+            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<Square>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(infos._tag)
-            testFieldInfo(infos.sideLength)
+            testFieldInfo(info._tag)
+            testFieldInfo(info.sideLength)
             break
           case "Triangle":
-            expectTypeOf(infos).toEqualTypeOf<NestedFieldInfo<Triangle>["infos"]>()
+            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<Triangle>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(infos._tag)
-            testFieldInfo(infos.base)
-            testFieldInfo(infos.height)
+            testFieldInfo(info._tag)
+            testFieldInfo(info.base)
+            testFieldInfo(info.height)
             break
         }
       })
