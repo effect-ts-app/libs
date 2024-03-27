@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 0.227.1
+
+### Patch Changes
+
+- Updated dependencies [ac37ff7]
+  - @effect-app/fluent-extensions@0.155.1
+  - @effect-app/core@0.161.1
+  - @effect-app/infra-adapters@0.148.1
+  - effect-app@0.194.1
+  - @effect-app/schema@0.213.1
+
 ## 0.227.0
 
 ### Minor Changes
