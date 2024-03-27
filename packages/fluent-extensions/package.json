@@ -4,6 +4,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "@effect/core": "workspace:*",
     "date-fns": "^3.6.0",
     "nanoid": "^5.0.6",
     "path-parser": "^6.1.0",
@@ -13,8 +14,8 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.20",
-    "effect": "^2.4.14"
+    "@effect/platform": "^0.48.21",
+    "effect": "^2.4.15"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",

@@ -12,8 +12,8 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "effect": "^2.4.14",
-    "@effect/platform": "^0.48.20"
+    "effect": "^2.4.15",
+    "@effect/platform": "^0.48.21"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8",
@@ -243,6 +243,16 @@
       "require": {
         "types": "./dist/_ext/pipe.ext.d.ts",
         "default": "./_cjs/_ext/pipe.ext.cjs"
+      }
+    },
+    "./builtin": {
+      "import": {
+        "types": "./dist/builtin.d.ts",
+        "default": "./dist/builtin.js"
+      },
+      "require": {
+        "types": "./dist/builtin.d.ts",
+        "default": "./_cjs/builtin.cjs"
       }
     },
     "./global": {

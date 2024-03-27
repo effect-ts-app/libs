@@ -5,7 +5,7 @@ import type { Either } from "effect/Either"
 import type { Option } from "effect/Option"
 import type { NonEmptyArray } from "effect/ReadonlyArray"
 import type { Concurrency, NoInfer, NotFunction } from "effect/Types"
-import "./builtin.js"
+import "@effect-app/core/builtin"
 import type { LazyArg } from "effect/Function"
 
 // we had to put the patches inside effect, for it to work with vite
