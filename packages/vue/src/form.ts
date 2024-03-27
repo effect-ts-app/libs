@@ -27,19 +27,17 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
   return set(convertOutInt(v, type))
 }
 
-export const FieldInfoTag = Symbol()
-
 const f = Symbol()
 export interface FieldInfo<Tout> extends PhantomTypeParameter<typeof f, { out: Tout }> {
   rules: ((v: string) => boolean | string)[]
   metadata: FieldMetadata
   type: "text" | "float" | "int" // todo; multi-line vs single line text
-  [FieldInfoTag]: "FieldInfo"
+  _tag: "FieldInfo"
 }
 
 export interface UnionFieldInfo<T> {
   info: T
-  [FieldInfoTag]: "UnionFieldInfo"
+  _tag: "UnionFieldInfo"
 }
 
 type NestedFieldInfoKey<Key> = Key extends Record<PropertyKey, any>
@@ -58,9 +56,9 @@ export type NestedFieldInfo<To extends Record<PropertyKey, any>> =
   // exploit eventual _tag field to propagate the unique tag
   & {
     info: _NestedFieldInfo<To>
-    [FieldInfoTag]: "NestedFieldInfo"
+    _tag: "NestedFieldInfo"
   }
-  & { [K in "___tag" as To extends { "_tag": S.AST.LiteralValue } ? K : never]: To["_tag"] }
+  & { [K in "_infoTag" as To extends { "_tag": S.AST.LiteralValue } ? K : never]: To["_tag"] }
 
 function handlePropertySignature(
   propertySignature: S.AST.PropertySignature
@@ -106,7 +104,7 @@ function handlePropertySignature(
             )
           )
           .flatMap((ps) => {
-            // try to retrieve the _tag literal to set ___tag later
+            // try to retrieve the _tag literal to set _infoTag later
             const typeLiteral = S.AST.isTypeLiteral(ps.type)
               ? ps.type
               : S.AST.isTransform(ps.type) && S.AST.isTypeLiteral(ps.type.from)
@@ -119,15 +117,15 @@ function handlePropertySignature(
 
             const toRet = handlePropertySignature(ps)
 
-            if (toRet[FieldInfoTag] === "UnionFieldInfo") {
+            if (toRet._tag === "UnionFieldInfo") {
               return toRet.info
-            } else if (toRet[FieldInfoTag] === "NestedFieldInfo") {
-              return [{ ...toRet, ...!!tagLiteral && { ___tag: tagLiteral } }]
+            } else if (toRet._tag === "NestedFieldInfo") {
+              return [{ ...toRet, ...!!tagLiteral && { _infoTag: tagLiteral } }]
             } else {
               return [toRet]
             }
           }),
-        [FieldInfoTag]: "UnionFieldInfo"
+        _tag: "UnionFieldInfo"
       }
     }
 
@@ -157,7 +155,7 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
 
       return acc
     },
-    { [FieldInfoTag]: "NestedFieldInfo", info: {} } as NestedFieldInfo<To>
+    { _tag: "NestedFieldInfo", info: {} } as NestedFieldInfo<To>
   )
 }
 
@@ -307,7 +305,7 @@ function buildFieldInfo(
       }
     ],
     metadata,
-    [FieldInfoTag]: "FieldInfo"
+    _tag: "FieldInfo"
   }
 
   return info as any

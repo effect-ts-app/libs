@@ -1,7 +1,7 @@
 import { Effect } from "@effect-app/core"
 import { S } from "effect-app"
 import type { FieldInfo, NestedFieldInfo, UnionFieldInfo } from "../src/form.js"
-import { buildFieldInfoFromFields, FieldInfoTag } from "../src/form.js"
+import { buildFieldInfoFromFields } from "../src/form.js"
 
 export class NestedSchema extends S.Class<NestedSchema>()({
   shallow: S.string,
@@ -60,7 +60,7 @@ export class ShapeContainer extends S.Class<ShapeContainer>()({
 
 function testFieldInfo<T>(fi: FieldInfo<T>) {
   expect(fi).toBeInstanceOf(Object)
-  expect(fi[FieldInfoTag]).toBe("FieldInfo")
+  expect(fi._tag).toBe("FieldInfo")
   expect(["text", "float", "int"]).toContain(fi.type)
   expect(fi.rules).toBeInstanceOf(Array)
   fi.rules.forEach((r) => {
@@ -74,13 +74,13 @@ function testFieldInfo<T>(fi: FieldInfo<T>) {
 
 function testUnionFieldInfo(ufi: UnionFieldInfo<any>) {
   expect(ufi).toBeInstanceOf(Object)
-  expect(ufi[FieldInfoTag]).toBe("UnionFieldInfo")
+  expect(ufi._tag).toBe("UnionFieldInfo")
   expect(ufi.info).toBeInstanceOf(Array)
   ufi.info.forEach(
     (
       i: any
     ) => {
-      switch (i[FieldInfoTag]) {
+      switch (i._tag) {
         case "FieldInfo":
           testFieldInfo(i as FieldInfo<any>)
           break
@@ -97,14 +97,14 @@ function testUnionFieldInfo(ufi: UnionFieldInfo<any>) {
 
 function testNestedFieldInfo(nfi: NestedFieldInfo<Record<PropertyKey, any>>) {
   expect(nfi).toBeInstanceOf(Object)
-  expect(nfi[FieldInfoTag]).toBe("NestedFieldInfo")
+  expect(nfi._tag).toBe("NestedFieldInfo")
   expect(nfi.info).toBeInstanceOf(Object)
 
   Object.values(nfi).forEach(
     (
       i: any
     ) => {
-      switch (i[FieldInfoTag]) {
+      switch (i._tag) {
         case "FieldInfo":
           testFieldInfo(i as FieldInfo<any>)
           break
@@ -185,9 +185,9 @@ it("buildFieldInfo with tagged unions", () =>
       testUnionFieldInfo(shapeFieldinfo.info.shapeWithStruct)
 
       shapeFieldinfo.info.shapeWithStruct.info.forEach((i) => {
-        expect(["CircleStruct", "SquareStruct", "TriangleStruct"]).toContain(i.___tag)
+        expect(["CircleStruct", "SquareStruct", "TriangleStruct"]).toContain(i._infoTag)
         testNestedFieldInfo(i)
-        switch (i.___tag) {
+        switch (i._infoTag) {
           case "CircleStruct":
             expectTypeOf(i.info).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof CircleStruct>>["info"]>()
             // manual check of runtime structure
@@ -212,10 +212,10 @@ it("buildFieldInfo with tagged unions", () =>
 
       // check if inner classes are correctly tagged
       shapeFieldinfo.info.shapeWithClasses.info.forEach((i) => {
-        expect(["Circle", "Square", "Triangle"]).toContain(i.___tag)
+        expect(["Circle", "Square", "Triangle"]).toContain(i._infoTag)
         testNestedFieldInfo(i)
 
-        switch (i.___tag) {
+        switch (i._infoTag) {
           case "Circle":
             expectTypeOf(i.info).toEqualTypeOf<NestedFieldInfo<Circle>["info"]>()
             // manual check of runtime structure
