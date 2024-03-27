@@ -4,7 +4,7 @@ import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type {} from "intl-messageformat"
 import type { Unbranded } from "@effect-app/schema/brand"
 import { Either, Option, pipe, S } from "effect-app"
-import type { Schema, Simplify } from "effect-app/schema"
+import type { Schema } from "effect-app/schema"
 
 import type { IsUnion } from "effect-app/utils"
 import type { Ref } from "vue"
@@ -56,12 +56,11 @@ type _NestedFieldInfo<To extends Record<PropertyKey, any>> = Record<PropertyKey,
 
 export type NestedFieldInfo<To extends Record<PropertyKey, any>> =
   // exploit eventual _tag field to propagate the unique tag
-  {
-    info: Simplify<
-      _NestedFieldInfo<To> & (To extends { "_tag": S.AST.LiteralValue } ? { ___tag: To["_tag"] } : unknown)
-    >
+  & {
+    info: _NestedFieldInfo<To>
     [FieldInfoTag]: "NestedFieldInfo"
   }
+  & { [K in "___tag" as To extends { "_tag": S.AST.LiteralValue } ? K : never]: To["_tag"] }
 
 function handlePropertySignature(
   propertySignature: S.AST.PropertySignature
@@ -123,8 +122,7 @@ function handlePropertySignature(
             if (toRet[FieldInfoTag] === "UnionFieldInfo") {
               return toRet.info
             } else if (toRet[FieldInfoTag] === "NestedFieldInfo") {
-              ;(tagLiteral !== void 0) && (toRet.info = { ...toRet.info, ___tag: tagLiteral })
-              return [toRet]
+              return [{ ...toRet, ...!!tagLiteral && { ___tag: tagLiteral } }]
             } else {
               return [toRet]
             }

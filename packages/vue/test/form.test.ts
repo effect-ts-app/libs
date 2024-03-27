@@ -95,7 +95,7 @@ function testUnionFieldInfo(ufi: UnionFieldInfo<any>) {
   )
 }
 
-function testNestedFieldInfo(nfi: NestedFieldInfo<any>) {
+function testNestedFieldInfo(nfi: NestedFieldInfo<Record<PropertyKey, any>>) {
   expect(nfi).toBeInstanceOf(Object)
   expect(nfi[FieldInfoTag]).toBe("NestedFieldInfo")
   expect(nfi.info).toBeInstanceOf(Object)
@@ -185,56 +185,55 @@ it("buildFieldInfo with tagged unions", () =>
       testUnionFieldInfo(shapeFieldinfo.info.shapeWithStruct)
 
       shapeFieldinfo.info.shapeWithStruct.info.forEach((i) => {
-        expect(["CircleStruct", "SquareStruct", "TriangleStruct"]).toContain(i.info.___tag)
+        expect(["CircleStruct", "SquareStruct", "TriangleStruct"]).toContain(i.___tag)
         testNestedFieldInfo(i)
-        const info = i.info
-        switch (info.___tag) {
+        switch (i.___tag) {
           case "CircleStruct":
-            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof CircleStruct>>["info"]>()
+            expectTypeOf(i.info).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof CircleStruct>>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(info._tag)
-            testFieldInfo(info.radius)
+            testFieldInfo(i.info._tag)
+            testFieldInfo(i.info.radius)
             break
           case "SquareStruct":
-            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof SquareStruct>>["info"]>()
+            expectTypeOf(i.info).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof SquareStruct>>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(info._tag)
-            testFieldInfo(info.sideLength)
+            testFieldInfo(i.info._tag)
+            testFieldInfo(i.info.sideLength)
             break
           case "TriangleStruct":
-            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof TriangleStruct>>["info"]>()
+            expectTypeOf(i.info).toEqualTypeOf<NestedFieldInfo<S.Schema.Type<typeof TriangleStruct>>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(info._tag)
-            testFieldInfo(info.base)
-            testFieldInfo(info.height)
+            testFieldInfo(i.info._tag)
+            testFieldInfo(i.info.base)
+            testFieldInfo(i.info.height)
             break
         }
       })
 
       // check if inner classes are correctly tagged
       shapeFieldinfo.info.shapeWithClasses.info.forEach((i) => {
-        expect(["Circle", "Square", "Triangle"]).toContain(i.info.___tag)
+        expect(["Circle", "Square", "Triangle"]).toContain(i.___tag)
         testNestedFieldInfo(i)
-        const info = i.info
-        switch (info.___tag) {
+
+        switch (i.___tag) {
           case "Circle":
-            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<Circle>["info"]>()
+            expectTypeOf(i.info).toEqualTypeOf<NestedFieldInfo<Circle>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(info._tag)
-            testFieldInfo(info.radius)
+            testFieldInfo(i.info._tag)
+            testFieldInfo(i.info.radius)
             break
           case "Square":
-            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<Square>["info"]>()
+            expectTypeOf(i.info).toEqualTypeOf<NestedFieldInfo<Square>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(info._tag)
-            testFieldInfo(info.sideLength)
+            testFieldInfo(i.info._tag)
+            testFieldInfo(i.info.sideLength)
             break
           case "Triangle":
-            expectTypeOf(info).toEqualTypeOf<NestedFieldInfo<Triangle>["info"]>()
+            expectTypeOf(i.info).toEqualTypeOf<NestedFieldInfo<Triangle>["info"]>()
             // manual check of runtime structure
-            testFieldInfo(info._tag)
-            testFieldInfo(info.base)
-            testFieldInfo(info.height)
+            testFieldInfo(i.info._tag)
+            testFieldInfo(i.info.base)
+            testFieldInfo(i.info.height)
             break
         }
       })
