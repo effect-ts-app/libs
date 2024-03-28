@@ -1,5 +1,16 @@
 # @effect-app/fluent-extensions
 
+## 0.158.0
+
+### Minor Changes
+
+- a9a81a1: cleanup ext
+
+### Patch Changes
+
+- Updated dependencies [a9a81a1]
+  - @effect-app/core@0.164.0
+
 ## 0.157.0
 
 ### Minor Changes

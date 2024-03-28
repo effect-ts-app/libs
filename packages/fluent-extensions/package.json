@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/fluent-extensions",
-  "version": "0.157.0",
+  "version": "0.158.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -44,16 +44,6 @@
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./_cjs/index.cjs"
-      }
-    },
-    "./builtin": {
-      "import": {
-        "types": "./dist/builtin.d.ts",
-        "default": "./dist/builtin.js"
-      },
-      "require": {
-        "types": "./dist/builtin.d.ts",
-        "default": "./_cjs/builtin.cjs"
       }
     },
     "./runtime": {
