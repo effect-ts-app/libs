@@ -170,8 +170,8 @@ it("buildFieldInfo with simple union", () =>
       )[]>()
 
       // it's a recursive check on actual runtime structure
-
       testNestedFieldInfo(unionFieldinfo)
+      testUnionFieldInfo(unionFieldinfo.fields.union)
     })
     .pipe(Effect.runPromise))
 
