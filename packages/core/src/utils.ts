@@ -196,9 +196,6 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
 ) => void ? I
   : never
 
-// generally A | B is not assignable to A & B
-export type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true
-
 export type EnforceNonEmptyRecord<R> = keyof R extends never ? never : R
 
 export function intersect<AS extends unknown[] & { 0: unknown }>(
