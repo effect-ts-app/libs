@@ -47,3 +47,18 @@ declare global {
     ): NonEmptyReadonlyArray<B>
   }
 }
+
+declare module "effect/Option" {
+  export interface None<out A> {
+    get value(): A | undefined
+  }
+}
+
+declare module "effect/Either" {
+  export interface Left<out L, out R> {
+    get right(): R | undefined
+  }
+  export interface Right<out L, out R> {
+    get left(): L | undefined
+  }
+}

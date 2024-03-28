@@ -15,7 +15,7 @@ export {}
 
 // TODO: add map for Effect, as it's needed for http routes and incase something returns unknown etc
 declare module "effect/Effect" {
-  export interface Effect<A, E, R> {
+  export interface Effect<out A, out E = never, out R = never> {
     andThen<A, X, E, R>(
       this: Effect<A, E, R>,
       f: (a: NoInfer<A>) => X
@@ -171,7 +171,6 @@ declare module "effect/Cause" {
 
 declare module "effect/Option" {
   export interface None<out A> {
-    get value(): A | undefined
     andThen<A, B>(this: Option<A>, f: (a: A) => Option<B>): Option<B>
     andThen<A, B>(this: Option<A>, f: Option<B>): Option<B>
     tap<A, _>(this: Option<A>, f: (a: A) => Option<_>): Option<A>
@@ -211,7 +210,6 @@ declare module "effect/Either" {
       this: Effect<A, E, R>,
       f: (a: A) => Effect<B, E1, R1>
     ): Effect<B, E | E1, R | R1>
-    get right(): R | undefined
   }
   export interface Right<out L, out R> {
     andThen<E1, A, E2, B>(this: Either<A, E1>, f: (a: A) => Either<B, E2>): Either<B, E1 | E2>
@@ -224,7 +222,6 @@ declare module "effect/Either" {
       this: Effect<A, E, R>,
       f: (a: A) => Effect<B, E1, R1>
     ): Effect<B, E | E1, R | R1>
-    get left(): L | undefined
   }
 }
 

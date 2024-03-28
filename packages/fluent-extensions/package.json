@@ -46,16 +46,6 @@
         "default": "./_cjs/index.cjs"
       }
     },
-    "./builtin": {
-      "import": {
-        "types": "./dist/builtin.d.ts",
-        "default": "./dist/builtin.js"
-      },
-      "require": {
-        "types": "./dist/builtin.d.ts",
-        "default": "./_cjs/builtin.cjs"
-      }
-    },
     "./runtime": {
       "import": {
         "types": "./dist/runtime.d.ts",

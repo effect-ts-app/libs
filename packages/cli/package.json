@@ -47,6 +47,16 @@
         "default": "./_cjs/link.cjs"
       }
     },
+    "./shared": {
+      "import": {
+        "types": "./dist/shared.d.ts",
+        "default": "./dist/shared.js"
+      },
+      "require": {
+        "types": "./dist/shared.d.ts",
+        "default": "./_cjs/shared.cjs"
+      }
+    },
     "./unlink": {
       "import": {
         "types": "./dist/unlink.d.ts",
