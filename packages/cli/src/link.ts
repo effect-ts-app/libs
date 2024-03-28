@@ -6,14 +6,14 @@ const pj = (await import(process.cwd() + "/package.json", { assert: { type: "jso
 
 pj.resolutions = {
   ...pj.resolutions,
-  "@effect-app/core": "file:" + EFFECT_APP_LIBS + "/effect-app/libs/packages/core",
-  "@effect-app/eslint-codegen-model": "file:" + EFFECT_APP_LIBS + "/effect-app/libs/packages/eslint-codegen-model",
-  "effect-app": "file:" + EFFECT_APP_LIBS + "/effect-app/libs/packages/prelude",
-  "@effect-app/fluent-extensions": "file:" + EFFECT_APP_LIBS + "/effect-app/libs/packages/fluent-extensions",
-  "@effect-app/infra": "file:" + EFFECT_APP_LIBS + "/effect-app/libs/packages/infra",
-  "@effect-app/infra-adapters": "file:" + EFFECT_APP_LIBS + "/effect-app/libs/packages/infra-adapters",
-  "@effect-app/schema": "file:" + EFFECT_APP_LIBS + "/effect-app/libs/packages/schema",
-  "@effect-app/vue": "file:" + EFFECT_APP_LIBS + "/effect-app/libs/packages/vue",
+  "@effect-app/core": "file:" + EFFECT_APP_LIBS + "/packages/core",
+  "@effect-app/eslint-codegen-model": "file:" + EFFECT_APP_LIBS + "/packages/eslint-codegen-model",
+  "effect-app": "file:" + EFFECT_APP_LIBS + "/packages/prelude",
+  "@effect-app/fluent-extensions": "file:" + EFFECT_APP_LIBS + "/packages/fluent-extensions",
+  "@effect-app/infra": "file:" + EFFECT_APP_LIBS + "/packages/infra",
+  "@effect-app/infra-adapters": "file:" + EFFECT_APP_LIBS + "/packages/infra-adapters",
+  "@effect-app/schema": "file:" + EFFECT_APP_LIBS + "/packages/schema",
+  "@effect-app/vue": "file:" + EFFECT_APP_LIBS + "/packages/vue",
   ...packages.reduce((acc, p) => ({ ...acc, [p]: `file:${EFFECT_APP_LIBS}/node_modules/${p}` }), {})
 }
 
