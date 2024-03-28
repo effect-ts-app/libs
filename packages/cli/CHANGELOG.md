@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.67.1
+
+### Patch Changes
+
+- 8dc2b62: improve link
+
 ## 0.67.0
 
 ### Minor Changes
