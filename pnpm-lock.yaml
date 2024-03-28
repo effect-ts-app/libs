@@ -68,8 +68,8 @@ importers:
         specifier: ^0.89.3
         version: 0.89.3
       '@effect-app/cli':
-        specifier: ^0.66.0
-        version: 0.66.0
+        specifier: ^0.68.0
+        version: link:packages/cli
       '@effect-app/core':
         specifier: workspace:*
         version: link:packages/core
@@ -191,8 +191,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       tsc-watch:
-        specifier: ^6.0.5
-        version: 6.0.5(typescript@5.4.3)
+        specifier: ^6.1.0
+        version: 6.1.0(typescript@5.4.3)
       tsconfig-paths:
         specifier: ^4.2.0
         version: 4.2.0
@@ -1437,13 +1437,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@effect-app/cli@0.66.0:
-    resolution: {integrity: sha512-A54F6MomnLJrNamJVbgjSaKpIo2PkX2/mXI9OwuG5yJ57Q69LcohCXHWtNTIFjYk02VR3+LroVaIDrMJZ14xDw==}
-    hasBin: true
-    dependencies:
-      node-watch: 0.7.4
-    dev: true
 
   /@effect/language-service@0.1.0:
     resolution: {integrity: sha512-BnlM8LlaqCAYgdRfxlbR7gXGh/FD1scL1fPgNVJEPoOM08od1jtJz+iKhwfaud8TPnnhZR+TED2h5ynjanLeCQ==}
@@ -7137,6 +7130,7 @@ packages:
   /node-watch@0.7.4:
     resolution: {integrity: sha512-RinNxoz4W1cep1b928fuFhvAQ5ag/+1UlMDV7rbyGthBIgsiEouS4kvRayvvboxii4m8eolKOIBo3OjDqbc+uQ==}
     engines: {node: '>=6'}
+    dev: false
 
   /nodemon@3.1.0:
     resolution: {integrity: sha512-xqlktYlDMCepBJd43ZQhjWwMw2obW/JRvkrLxq5RCNcuDDX1DbcPT+qT1IlIIdf+DhnWs90JpTMe+Y5KxOchvA==}
@@ -9032,8 +9026,8 @@ packages:
     resolution: {integrity: sha512-6zaET4Gz6/65Zia2jzQkh2v4WJA1NK3IvxXP0GlFkfWL9rwnInIMzQbjDunJb+m22L9S9I4XZVgW6xC+fZ2n6g==}
     dev: true
 
-  /tsc-watch@6.0.5(typescript@5.4.3):
-    resolution: {integrity: sha512-6pcEFEHJPsuJIzKBT/h/sX3CUmrFDJjHamCjtuQRWqb02rYX3eEnRTdL8nwDYIng8Y1AD/NHn4iLCi8a5MEKRg==}
+  /tsc-watch@6.1.0(typescript@5.4.3):
+    resolution: {integrity: sha512-bNjUt25O/qZb4Yb+PyrnKnJzu4rpCtGHGb0HE737mGnfxrRDbILxsUM1321o87Bl00BETZ0Ry+wDEJbYzcxRTA==}
     engines: {node: '>=12.12.0'}
     hasBin: true
     peerDependencies:
