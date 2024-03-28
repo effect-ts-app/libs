@@ -36,7 +36,7 @@ export interface FieldInfo<Tout> extends PhantomTypeParameter<typeof f, { out: T
 }
 
 export interface UnionFieldInfo<T> {
-  info: T
+  members: T
   _tag: "UnionFieldInfo"
 }
 
@@ -55,7 +55,7 @@ type _NestedFieldInfo<To extends Record<PropertyKey, any>> = Record<PropertyKey,
 export type NestedFieldInfo<To extends Record<PropertyKey, any>> =
   // exploit eventual _tag field to propagate the unique tag
   & {
-    info: _NestedFieldInfo<To>
+    fields: _NestedFieldInfo<To>
     _tag: "NestedFieldInfo"
   }
   & { [K in "_infoTag" as To extends { "_tag": S.AST.LiteralValue } ? K : never]: To["_tag"] }
@@ -90,7 +90,7 @@ function handlePropertySignature(
     }
     case "Union": {
       return {
-        info: schema
+        members: schema
           .ast
           .types
           .map((elAst) =>
@@ -118,7 +118,7 @@ function handlePropertySignature(
             const toRet = handlePropertySignature(ps)
 
             if (toRet._tag === "UnionFieldInfo") {
-              return toRet.info
+              return toRet.members
             } else if (toRet._tag === "NestedFieldInfo") {
               return [{ ...toRet, ...!!tagLiteral && { _infoTag: tagLiteral } }]
             } else {
@@ -151,11 +151,11 @@ export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, 
   if (!S.AST.isTypeLiteral(ast)) throw new Error("not a struct type")
   return ast.propertySignatures.reduce(
     (acc, cur) => {
-      ;(acc.info as any)[cur.name] = handlePropertySignature(cur)
+      ;(acc.fields as any)[cur.name] = handlePropertySignature(cur)
 
       return acc
     },
-    { _tag: "NestedFieldInfo", info: {} } as NestedFieldInfo<To>
+    { _tag: "NestedFieldInfo", fields: {} } as NestedFieldInfo<To>
   )
 }
 
@@ -324,7 +324,7 @@ export const buildFormFromSchema = <
   state: Ref<From>,
   onSubmit: (a: To) => Promise<OnSubmitA>
 ) => {
-  const fields = buildFieldInfoFromFields(s)
+  const fields = buildFieldInfoFromFields(s).fields
   const parse = S.decodeSync(s)
   const isDirty = ref(false)
   const isValid = ref(true)
