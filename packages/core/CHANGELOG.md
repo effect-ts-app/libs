@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.164.0
+
+### Minor Changes
+
+- a9a81a1: cleanup ext
+
 ## 0.163.0
 
 ### Minor Changes
