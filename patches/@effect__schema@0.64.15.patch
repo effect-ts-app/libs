@@ -1,113 +1,3 @@
-diff --git a/AST/package.json b/AST/package.json
-index d904d6e79b53e69082fe1dbae93fd2ef6e82351a..fea1f6d98b41806c85eb88ecc7a8f57b8237f864 100644
---- a/AST/package.json
-+++ b/AST/package.json
-@@ -1,6 +1,5 @@
- {
-   "main": "../dist/cjs/AST.js",
-   "module": "../dist/esm/AST.js",
--  "types": "../dist/dts/AST.d.ts",
-   "sideEffects": []
- }
-diff --git a/Arbitrary/package.json b/Arbitrary/package.json
-index f45be95e26000f07851d71aeed8ced44702422a5..fd3431bf1689c4b7bc5b136c0661b5f7491489a0 100644
---- a/Arbitrary/package.json
-+++ b/Arbitrary/package.json
-@@ -1,6 +1,5 @@
- {
-   "main": "../dist/cjs/Arbitrary.js",
-   "module": "../dist/esm/Arbitrary.js",
--  "types": "../dist/dts/Arbitrary.d.ts",
-   "sideEffects": []
- }
-diff --git a/ArrayFormatter/package.json b/ArrayFormatter/package.json
-index 749e742e389b46c7950a8758b08bfff5494ef9f9..8c4b94c98340c864a4436195ef0a60133500abf4 100644
---- a/ArrayFormatter/package.json
-+++ b/ArrayFormatter/package.json
-@@ -1,6 +1,5 @@
- {
-   "main": "../dist/cjs/ArrayFormatter.js",
-   "module": "../dist/esm/ArrayFormatter.js",
--  "types": "../dist/dts/ArrayFormatter.d.ts",
-   "sideEffects": []
- }
-diff --git a/Equivalence/package.json b/Equivalence/package.json
-index 2ca4efac34d67d8fe71b3c61eeb6bfcf11cee4b6..c90588b7453d9ccecacbf17d998f2c5cf3874d2e 100644
---- a/Equivalence/package.json
-+++ b/Equivalence/package.json
-@@ -1,6 +1,5 @@
- {
-   "main": "../dist/cjs/Equivalence.js",
-   "module": "../dist/esm/Equivalence.js",
--  "types": "../dist/dts/Equivalence.d.ts",
-   "sideEffects": []
- }
-diff --git a/JSONSchema/package.json b/JSONSchema/package.json
-index f19ab8a9d743185be8fe7d076173424e802728c6..dd8ead963feaaaae8636e2721cdfa364812e42ca 100644
---- a/JSONSchema/package.json
-+++ b/JSONSchema/package.json
-@@ -1,6 +1,5 @@
- {
-   "main": "../dist/cjs/JSONSchema.js",
-   "module": "../dist/esm/JSONSchema.js",
--  "types": "../dist/dts/JSONSchema.d.ts",
-   "sideEffects": []
- }
-diff --git a/ParseResult/package.json b/ParseResult/package.json
-index 9fc0fa71b185e083e89a8c22c3ac1ce0513eacbd..8a2a841e1f3ccf944bf79c0055cf6440de7ac85b 100644
---- a/ParseResult/package.json
-+++ b/ParseResult/package.json
-@@ -1,6 +1,5 @@
- {
-   "main": "../dist/cjs/ParseResult.js",
-   "module": "../dist/esm/ParseResult.js",
--  "types": "../dist/dts/ParseResult.d.ts",
-   "sideEffects": []
- }
-diff --git a/Pretty/package.json b/Pretty/package.json
-index dee6cb15679e8e3ba36df8872705c925bf0fd5c1..fc4af3039c948f457abcb4f4b8b62b83af59e0d2 100644
---- a/Pretty/package.json
-+++ b/Pretty/package.json
-@@ -1,6 +1,5 @@
- {
-   "main": "../dist/cjs/Pretty.js",
-   "module": "../dist/esm/Pretty.js",
--  "types": "../dist/dts/Pretty.d.ts",
-   "sideEffects": []
- }
-diff --git a/Schema/package.json b/Schema/package.json
-index 6f657865b0654b663c3507de3209401547eb2f25..36251d6226d997832ba2dddef9ac1405d3dd04dc 100644
---- a/Schema/package.json
-+++ b/Schema/package.json
-@@ -1,6 +1,5 @@
- {
-   "main": "../dist/cjs/Schema.js",
-   "module": "../dist/esm/Schema.js",
--  "types": "../dist/dts/Schema.d.ts",
-   "sideEffects": []
- }
-diff --git a/Serializable/package.json b/Serializable/package.json
-index 092e61830457e1347b3c25a31ab62ec1a1cfbd14..4cddc28dd142371ba666b2721bf04af471051100 100644
---- a/Serializable/package.json
-+++ b/Serializable/package.json
-@@ -1,6 +1,5 @@
- {
-   "main": "../dist/cjs/Serializable.js",
-   "module": "../dist/esm/Serializable.js",
--  "types": "../dist/dts/Serializable.d.ts",
-   "sideEffects": []
- }
-diff --git a/TreeFormatter/package.json b/TreeFormatter/package.json
-index 87d84c8e4cf75638025d5757a690877de9e4aef2..70a5c208c6aea373f6ce16ede16f5099202a881a 100644
---- a/TreeFormatter/package.json
-+++ b/TreeFormatter/package.json
-@@ -1,6 +1,5 @@
- {
-   "main": "../dist/cjs/TreeFormatter.js",
-   "module": "../dist/esm/TreeFormatter.js",
--  "types": "../dist/dts/TreeFormatter.d.ts",
-   "sideEffects": []
- }
 diff --git a/dist/cjs/AST.d.ts b/dist/cjs/AST.d.ts
 new file mode 100644
 index 0000000000000000000000000000000000000000..dcc5643346f9808cbb68f3f9bd55ef5bbd6d1bbd
@@ -896,10 +786,10 @@ index 0000000000000000000000000000000000000000..21cefede6a0bc9146a38e02ba0bf5e5b
 +export * from "../dts/index.js"
 \ No newline at end of file
 diff --git a/package.json b/package.json
-index d1de04a684653255087eb68f85de718704013f19..1cae47ff3e4ae2ea0874b13d4f8d6560de7056de 100644
+index d1de04a684653255087eb68f85de718704013f19..3759267beb30749f8c37408389618ee91dca4b35 100644
 --- a/package.json
 +++ b/package.json
-@@ -10,66 +10,55 @@
+@@ -10,8 +10,8 @@
    },
    "sideEffects": [],
    "peerDependencies": {
@@ -910,65 +800,6 @@ index d1de04a684653255087eb68f85de718704013f19..1cae47ff3e4ae2ea0874b13d4f8d6560
    },
    "main": "./dist/cjs/index.js",
    "module": "./dist/esm/index.js",
--  "types": "./dist/dts/index.d.ts",
-+  "types": "./dist/cjs/index.d.ts",
-   "exports": {
-     "./package.json": "./package.json",
-     ".": {
--      "types": "./dist/dts/index.d.ts",
-       "import": "./dist/esm/index.js",
-       "default": "./dist/cjs/index.js"
-     },
-     "./AST": {
--      "types": "./dist/dts/AST.d.ts",
-       "import": "./dist/esm/AST.js",
-       "default": "./dist/cjs/AST.js"
-     },
-     "./Arbitrary": {
--      "types": "./dist/dts/Arbitrary.d.ts",
-       "import": "./dist/esm/Arbitrary.js",
-       "default": "./dist/cjs/Arbitrary.js"
-     },
-     "./ArrayFormatter": {
--      "types": "./dist/dts/ArrayFormatter.d.ts",
-       "import": "./dist/esm/ArrayFormatter.js",
-       "default": "./dist/cjs/ArrayFormatter.js"
-     },
-     "./Equivalence": {
--      "types": "./dist/dts/Equivalence.d.ts",
-       "import": "./dist/esm/Equivalence.js",
-       "default": "./dist/cjs/Equivalence.js"
-     },
-     "./JSONSchema": {
--      "types": "./dist/dts/JSONSchema.d.ts",
-       "import": "./dist/esm/JSONSchema.js",
-       "default": "./dist/cjs/JSONSchema.js"
-     },
-     "./ParseResult": {
--      "types": "./dist/dts/ParseResult.d.ts",
-       "import": "./dist/esm/ParseResult.js",
-       "default": "./dist/cjs/ParseResult.js"
-     },
-     "./Pretty": {
--      "types": "./dist/dts/Pretty.d.ts",
-       "import": "./dist/esm/Pretty.js",
-       "default": "./dist/cjs/Pretty.js"
-     },
-     "./Schema": {
--      "types": "./dist/dts/Schema.d.ts",
-       "import": "./dist/esm/Schema.js",
-       "default": "./dist/cjs/Schema.js"
-     },
-     "./Serializable": {
--      "types": "./dist/dts/Serializable.d.ts",
-       "import": "./dist/esm/Serializable.js",
-       "default": "./dist/cjs/Serializable.js"
-     },
-     "./TreeFormatter": {
--      "types": "./dist/dts/TreeFormatter.d.ts",
-       "import": "./dist/esm/TreeFormatter.js",
-       "default": "./dist/cjs/TreeFormatter.js"
-     }
 diff --git a/src/Schema.ts b/src/Schema.ts
 index f57d7a770077cb76aa57155857e996c58502c288..aec4470f205e222b2f862f84e33cf739e9a06968 100644
 --- a/src/Schema.ts
