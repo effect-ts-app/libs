@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.69.0
+
+### Minor Changes
+
+- revert form changes
+
 ## 0.68.0
 
 ### Minor Changes

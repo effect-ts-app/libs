@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.166.0
+
+### Minor Changes
+
+- revert form changes
+
 ## 0.165.0
 
 ### Minor Changes

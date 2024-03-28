@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.71.0
+
+### Minor Changes
+
+- revert form changes
+
 ## 0.70.0
 
 ### Minor Changes
