@@ -10,7 +10,8 @@ export class NestedSchema extends S.Class<NestedSchema>()({
     nested: S.struct({
       deepest: S.number
     })
-  })
+  }),
+  age: S.propertySignature(S.struct({ nfs: S.NumberFromString }))
 }) {}
 
 export class SchemaContainsClass extends S.Class<SchemaContainsClass>()({
@@ -125,6 +126,8 @@ it("buildFieldInfo", () =>
       const nestedFieldinfo = buildFieldInfoFromFields(NestedSchema)
       expectTypeOf(nestedFieldinfo).toEqualTypeOf<NestedFieldInfo<NestedSchema>>()
       expectTypeOf(nestedFieldinfo.fields.shallow).toEqualTypeOf<FieldInfo<string>>()
+      expectTypeOf(nestedFieldinfo.fields.age).toEqualTypeOf<NestedFieldInfo<NestedSchema["age"]>>()
+      expectTypeOf(nestedFieldinfo.fields.age.fields.nfs).toEqualTypeOf<FieldInfo<number>>()
       expectTypeOf(nestedFieldinfo.fields.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]>>()
       expectTypeOf(nestedFieldinfo.fields.nested.fields.deep).toEqualTypeOf<FieldInfo<string & S.NonEmptyStringBrand>>()
       expectTypeOf(nestedFieldinfo.fields.nested.fields.nested).toEqualTypeOf<
@@ -134,6 +137,7 @@ it("buildFieldInfo", () =>
 
       // it's a recursive check on actual runtime structure
       testNestedFieldInfo(nestedFieldinfo)
+      testNestedFieldInfo(nestedFieldinfo.fields.age)
     })
     .pipe(Effect.runPromise))
 
