@@ -2,6 +2,7 @@ import * as JSONSchema from "@effect/schema/JSONSchema"
 import type { ParseError } from "@effect/schema/ParseResult"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type {} from "intl-messageformat"
+import type { Unbranded } from "@effect-app/schema/brand"
 import { Either, Option, pipe, S } from "effect-app"
 import type { Schema } from "effect-app/schema"
 import type { Ref } from "vue"
@@ -28,7 +29,7 @@ export const FieldInfoTag = Symbol()
 
 export type NestedFieldInfo<To extends Record<PropertyKey, any>> =
   & {
-    [K in keyof To]-?: To[K] extends Record<PropertyKey, any> ? NestedFieldInfo<To[K]>
+    [K in keyof To]-?: Unbranded<To[K]> extends Record<PropertyKey, any> ? NestedFieldInfo<To[K]>
       : FieldInfo<To[K]>
   }
   & { [FieldInfoTag]: "NestedFieldInfo" }
