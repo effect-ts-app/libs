@@ -1,3 +1,3 @@
-import "@effect-app/fluent-extensions/builtin"
+import "@effect-app/core/builtin"
 
 export * from "./lib.js"

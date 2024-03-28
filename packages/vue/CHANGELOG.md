@@ -1,5 +1,44 @@
 # @effect-app/vue
 
+## 0.160.0
+
+### Minor Changes
+
+- 7a3f05c: update packages
+
+### Patch Changes
+
+- Updated dependencies [7a3f05c]
+  - @effect-app/core@0.163.0
+  - effect-app@0.196.0
+  - @effect-app/schema@0.215.0
+  - @effect-app/vue@0.160.0
+
+## 0.159.0
+
+### Minor Changes
+
+- bbaa558: bs
+
+### Patch Changes
+
+- Updated dependencies [bbaa558]
+  - @effect-app/core@0.162.0
+  - effect-app@0.195.0
+  - @effect-app/schema@0.214.0
+  - @effect-app/vue@0.159.0
+
+## 0.158.2
+
+### Patch Changes
+
+- Updated dependencies [ac37ff7]
+  - @effect-app/fluent-extensions@0.155.1
+  - @effect-app/core@0.161.1
+  - effect-app@0.194.1
+  - @effect-app/vue@0.158.2
+  - @effect-app/schema@0.213.1
+
 ## 0.158.1
 
 ### Patch Changes

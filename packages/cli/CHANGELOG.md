@@ -1,5 +1,23 @@
 # @effect-app/cli
 
+## 0.67.1
+
+### Patch Changes
+
+- 8dc2b62: improve link
+
+## 0.67.0
+
+### Minor Changes
+
+- 7a3f05c: update packages
+
+## 0.66.0
+
+### Minor Changes
+
+- bbaa558: bs
+
 ## 0.65.0
 
 ### Minor Changes

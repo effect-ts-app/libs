@@ -1,24 +1,23 @@
 {
   "name": "@effect-app/vue",
-  "version": "0.158.1",
+  "version": "0.160.0",
   "license": "MIT",
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "@effect-app/fluent-extensions": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@formatjs/intl": "^2.10.1",
-    "@tanstack/vue-query": "^5.28.8",
+    "@tanstack/vue-query": "^5.28.9",
     "effect-app": "workspace:*",
     "query-string": "^9.0.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.20",
-    "@effect/platform-browser": "^0.31.20",
-    "@effect/schema": "^0.64.14",
-    "effect": "^2.4.14",
+    "@effect/platform": "^0.48.21",
+    "@effect/platform-browser": "^0.31.21",
+    "@effect/schema": "^0.64.15",
+    "effect": "^2.4.15",
     "vue": "^3.4.21"
   },
   "devDependencies": {

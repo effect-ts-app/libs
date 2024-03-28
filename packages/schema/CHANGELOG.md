@@ -1,5 +1,33 @@
 # @effect-app/schema
 
+## 0.215.0
+
+### Minor Changes
+
+- 7a3f05c: update packages
+
+### Patch Changes
+
+- Updated dependencies [7a3f05c]
+  - @effect-app/core@0.163.0
+
+## 0.214.0
+
+### Minor Changes
+
+- bbaa558: bs
+
+### Patch Changes
+
+- Updated dependencies [bbaa558]
+  - @effect-app/core@0.162.0
+
+## 0.213.1
+
+### Patch Changes
+
+- @effect-app/core@0.161.1
+
 ## 0.213.0
 
 ### Minor Changes

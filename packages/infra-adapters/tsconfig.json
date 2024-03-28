@@ -23,9 +23,6 @@
     ],
     "references": [
         {
-            "path": "../fluent-extensions"
-        },
-        {
             "path": "../core"
         },
         {

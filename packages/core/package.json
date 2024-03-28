@@ -1,11 +1,10 @@
 {
   "name": "@effect-app/core",
-  "version": "0.161.0",
+  "version": "0.163.0",
   "license": "MIT",
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/core",
   "dependencies": {
-    "@effect-app/fluent-extensions": "workspace:*",
     "cross-fetch": "^4.0.0",
     "path-parser": "^6.1.0",
     "query-string": "^9.0.0",
@@ -13,8 +12,8 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "effect": "^2.4.14",
-    "@effect/platform": "^0.48.20"
+    "effect": "^2.4.15",
+    "@effect/platform": "^0.48.21"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8",
@@ -244,6 +243,16 @@
       "require": {
         "types": "./dist/_ext/pipe.ext.d.ts",
         "default": "./_cjs/_ext/pipe.ext.cjs"
+      }
+    },
+    "./builtin": {
+      "import": {
+        "types": "./dist/builtin.d.ts",
+        "default": "./dist/builtin.js"
+      },
+      "require": {
+        "types": "./dist/builtin.d.ts",
+        "default": "./_cjs/builtin.cjs"
       }
     },
     "./global": {
