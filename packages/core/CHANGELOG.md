@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.165.0
+
+### Minor Changes
+
+- 2044733: form updates
+
 ## 0.164.0
 
 ### Minor Changes
