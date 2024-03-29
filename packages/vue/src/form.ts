@@ -73,10 +73,6 @@ type _NestedFieldInfo<To extends Record<PropertyKey, any>> = Record<PropertyKey,
     }[`${IsUnion<To[K]>}-${To[K] extends object ? "true" : "false"}`]
   }
 
-// NestedFieldInfoKey<To[K]> extends infer NestedInfo
-//     ? [To[K], IsUnion<NestedInfo>] extends [object, true] ? UnionFieldInfo<NestedInfo[]> : NestedInfo
-//     : never
-
 export type NestedFieldInfo<To extends Record<PropertyKey, any>> =
   // exploit eventual _tag field to propagate the unique tag
   & {
