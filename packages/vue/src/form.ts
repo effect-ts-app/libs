@@ -3,7 +3,7 @@ import type { ParseError } from "@effect/schema/ParseResult"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type {} from "intl-messageformat"
 import type { Unbranded } from "@effect-app/schema/brand"
-import { Either, Equal, flow, Option, pipe, ReadonlyArray, S } from "effect-app"
+import { Either, Option, pipe, S } from "effect-app"
 import type { Schema } from "effect-app/schema"
 
 import type { IsUnion } from "effect-app/utils"
@@ -56,6 +56,11 @@ export interface UnionFieldInfo<T> {
   _tag: "UnionFieldInfo"
 }
 
+export interface DiscriminatedUnionFieldInfo<T> {
+  members: T
+  _tag: "DiscriminatedUnionFieldInfo"
+}
+
 type NestedFieldInfoKey<Key> = [Key] extends [Record<PropertyKey, any>]
   ? Unbranded<Key> extends Record<PropertyKey, any> ? NestedFieldInfo<Key>
   : FieldInfo<Key>
@@ -63,21 +68,23 @@ type NestedFieldInfoKey<Key> = [Key] extends [Record<PropertyKey, any>]
 
 type DistributiveNestedFieldInfoKey<Key> = Key extends any ? NestedFieldInfoKey<Key> : never
 
-export type NestedFieldInfo<To extends Record<PropertyKey, any>> =
-  // exploit eventual _tag field to propagate the unique tag
-  & {
+export type NestedFieldInfo<To extends Record<PropertyKey, any>> = // exploit eventual _tag field to propagate the unique tag
+  {
     fields: {
       [K in keyof To]-?: {
         "true": {
-          "true": UnionFieldInfo<DistributiveNestedFieldInfoKey<To[K]>[]>
+          "true": To[K] extends { "_tag": string } ? DiscriminatedUnionFieldInfo<
+              { [P in DistributiveNestedFieldInfoKey<To[K]> as (P["_infoTag" & keyof P] & string)]: P }
+            >
+            : UnionFieldInfo<DistributiveNestedFieldInfoKey<To[K]>[]>
           "false": NestedFieldInfoKey<To[K]>
         }[`${To[K] extends object ? true : false}`]
         "false": NestedFieldInfoKey<To[K]>
       }[`${IsUnion<To[K]>}`]
     }
     _tag: "NestedFieldInfo"
+    _infoTag: To extends { "_tag": string } ? To["_tag"] : undefined
   }
-  & { [K in "_infoTag" as To extends { "_tag": S.AST.LiteralValue } ? K : never]: To["_tag"] }
 
 function handlePropertySignature(
   propertySignature: S.AST.PropertySignature
@@ -85,6 +92,7 @@ function handlePropertySignature(
   | NestedFieldInfo<Record<PropertyKey, any>>
   | FieldInfo<any>
   | UnionFieldInfo<(NestedFieldInfo<Record<PropertyKey, any>> | FieldInfo<any>)[]>
+  | DiscriminatedUnionFieldInfo<Record<PropertyKey, any>>
 {
   const schema = S.make(propertySignature.type)
 
@@ -110,53 +118,65 @@ function handlePropertySignature(
       )
     }
     case "Union": {
-      const allTypeLiterals = pipe(
-        schema.ast.types,
-        ReadonlyArray.filterMap(flow(getTypeLiteralAST, Option.fromNullable)),
-        ReadonlyArray.length,
-        Equal.equals(schema.ast.types.length)
-      )
+      const allTypeLiterals = schema.ast.types.every(getTypeLiteralAST)
 
-      return allTypeLiterals
-        ? {
-          members: schema
-            .ast
-            .types
-            .map((elAst) =>
-              // syntehtic property signature as if each union member were the only member
-              new S.AST.PropertySignature(
-                propertySignature.name,
-                elAst,
-                propertySignature.isOptional,
-                propertySignature.isReadonly,
-                propertySignature.annotations
-              )
+      if (allTypeLiterals) {
+        const members = schema
+          .ast
+          .types
+          .map((elAst) =>
+            // syntehtic property signature as if each union member were the only member
+            new S.AST.PropertySignature(
+              propertySignature.name,
+              elAst,
+              propertySignature.isOptional,
+              propertySignature.isReadonly,
+              propertySignature.annotations
             )
-            .flatMap((ps) => {
-              // try to retrieve the _tag literal to set _infoTag later
-              const typeLiteral = S.AST.isTypeLiteral(ps.type)
-                ? ps.type
-                : S.AST.isTransform(ps.type) && S.AST.isTypeLiteral(ps.type.from)
-                ? ps.type.from
-                : void 0
-              const tagPropertySignature = typeLiteral?.propertySignatures.find((_) => _.name === "_tag")
-              const tagLiteral = tagPropertySignature
+          )
+          .flatMap((ps) => {
+            // try to retrieve the _tag literal to set _infoTag later
+            const typeLiteral = getTypeLiteralAST(ps.type)
+
+            const tagPropertySignature = typeLiteral?.propertySignatures.find((_) => _.name === "_tag")
+            const tagLiteral = tagPropertySignature
                 && S.AST.isLiteral(tagPropertySignature.type)
-                && tagPropertySignature.type.literal
+                && typeof tagPropertySignature.type.literal === "string"
+              ? tagPropertySignature.type.literal
+              : void 0
 
-              const toRet = handlePropertySignature(ps)
+            const toRet = handlePropertySignature(ps)
 
-              if (toRet._tag === "UnionFieldInfo") {
-                return toRet.members
-              } else if (toRet._tag === "NestedFieldInfo") {
-                return [{ ...toRet, ...!!tagLiteral && { _infoTag: tagLiteral } }]
-              } else {
-                return [toRet]
-              }
-            }),
-          _tag: "UnionFieldInfo"
+            if (toRet._tag === "UnionFieldInfo") {
+              return toRet.members
+            } else if (toRet._tag === "NestedFieldInfo") {
+              return [{ ...toRet, _infoTag: tagLiteral as never }]
+            } else if (toRet._tag === "DiscriminatedUnionFieldInfo") {
+              return Object.values(toRet.members) as (NestedFieldInfo<Record<PropertyKey, any>> | FieldInfo<any>)[]
+            } else {
+              return [toRet]
+            }
+          })
+
+        // support only _tag as discriminated key and it has to be a string
+        const isDiscriminatedUnion = members.every((_) => _._tag === "NestedFieldInfo" && _._infoTag !== undefined)
+
+        if (isDiscriminatedUnion) {
+          return {
+            members: members.reduce((acc, cur) => {
+              // see the definiton of isDiscriminatedUnion
+              const tag = (cur as NestedFieldInfo<Record<PropertyKey, any>>)._infoTag as unknown as string
+              acc[tag] = cur
+              return acc
+            }, {} as Record<string, NestedFieldInfo<Record<PropertyKey, any>> | FieldInfo<any>>),
+            _tag: "DiscriminatedUnionFieldInfo"
+          }
+        } else {
+          return { members, _tag: "UnionFieldInfo" }
         }
-        : buildFieldInfo(propertySignature)
+      } else {
+        return buildFieldInfo(propertySignature)
+      }
     }
 
     default: {
