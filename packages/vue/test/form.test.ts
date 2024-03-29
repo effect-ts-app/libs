@@ -11,7 +11,7 @@ export class NestedSchema extends S.Class<NestedSchema>()({
       deepest: S.number
     })
   }),
-  age: S.propertySignature(S.struct({ nfs: S.NumberFromString }))
+  age: S.propertySignature(S.struct({ nfs: S.NumberFromString.pipe(S.compose(S.PositiveInt)) }))
 }) {}
 
 export class SchemaContainsClass extends S.Class<SchemaContainsClass>()({
@@ -19,7 +19,10 @@ export class SchemaContainsClass extends S.Class<SchemaContainsClass>()({
 }) {}
 
 export class UnionSchema extends S.Class<UnionSchema>()({
-  union: S.union(S.string, S.struct({ unionNested: NestedSchema }))
+  generalUnion: S.union(S.string, S.struct({ unionNested: NestedSchema })),
+  structsUnion: S.union(NestedSchema, SchemaContainsClass),
+  optional: S.optional(S.string),
+  nullable: S.nullable(S.string)
 }) {}
 
 class Circle extends S.TaggedClass<Circle>()("Circle", {
@@ -127,7 +130,7 @@ it("buildFieldInfo", () =>
       expectTypeOf(nestedFieldinfo).toEqualTypeOf<NestedFieldInfo<NestedSchema>>()
       expectTypeOf(nestedFieldinfo.fields.shallow).toEqualTypeOf<FieldInfo<string>>()
       expectTypeOf(nestedFieldinfo.fields.age).toEqualTypeOf<NestedFieldInfo<NestedSchema["age"]>>()
-      expectTypeOf(nestedFieldinfo.fields.age.fields.nfs).toEqualTypeOf<FieldInfo<number>>()
+      expectTypeOf(nestedFieldinfo.fields.age.fields.nfs).toEqualTypeOf<FieldInfo<number & S.PositiveIntBrand>>()
       expectTypeOf(nestedFieldinfo.fields.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]>>()
       expectTypeOf(nestedFieldinfo.fields.nested.fields.deep).toEqualTypeOf<FieldInfo<string & S.NonEmptyStringBrand>>()
       expectTypeOf(nestedFieldinfo.fields.nested.fields.nested).toEqualTypeOf<
@@ -137,6 +140,7 @@ it("buildFieldInfo", () =>
 
       // it's a recursive check on actual runtime structure
       testNestedFieldInfo(nestedFieldinfo)
+      testNestedFieldInfo(nestedFieldinfo.fields.nested)
       testNestedFieldInfo(nestedFieldinfo.fields.age)
     })
     .pipe(Effect.runPromise))
@@ -158,24 +162,29 @@ it("buildFieldInfo with simple union", () =>
     .gen(function*() {
       const unionFieldinfo = buildFieldInfoFromFields(UnionSchema)
       expectTypeOf(unionFieldinfo).toEqualTypeOf<NestedFieldInfo<UnionSchema>>()
-      expectTypeOf(unionFieldinfo.fields.union).toEqualTypeOf<
-        UnionFieldInfo<(
-          | FieldInfo<string>
-          | NestedFieldInfo<{
-            readonly unionNested: NestedSchema
-          }>
-        )[]>
+      expectTypeOf(unionFieldinfo.fields.nullable).toEqualTypeOf<
+        FieldInfo<string | null>
       >()
-      expectTypeOf(unionFieldinfo.fields.union.members).toEqualTypeOf<(
-        | FieldInfo<string>
-        | NestedFieldInfo<{
-          readonly unionNested: NestedSchema
-        }>
-      )[]>()
+      expectTypeOf(unionFieldinfo.fields.optional).toEqualTypeOf<
+        FieldInfo<string | undefined>
+      >()
+      expectTypeOf(unionFieldinfo.fields.structsUnion).toEqualTypeOf<
+        UnionFieldInfo<(NestedFieldInfo<NestedSchema> | NestedFieldInfo<SchemaContainsClass>)[]>
+      >()
+      expectTypeOf(unionFieldinfo.fields.generalUnion).toEqualTypeOf<
+        FieldInfo<
+          string | {
+            readonly unionNested: NestedSchema
+          }
+        >
+      >
 
       // it's a recursive check on actual runtime structure
       testNestedFieldInfo(unionFieldinfo)
-      testUnionFieldInfo(unionFieldinfo.fields.union)
+      testFieldInfo(unionFieldinfo.fields.nullable)
+      testFieldInfo(unionFieldinfo.fields.optional)
+      testUnionFieldInfo(unionFieldinfo.fields.structsUnion)
+      testFieldInfo(unionFieldinfo.fields.generalUnion)
     })
     .pipe(Effect.runPromise))
 

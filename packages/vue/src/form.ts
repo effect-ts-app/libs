@@ -13,6 +13,22 @@ import { capitalize, ref, watch } from "vue"
 // type GetSchemaFromProp<T> = T extends Field<infer S, any, any, any> ? S
 //   : never
 
+function getTypeLiteralAST(ast: S.AST.AST): S.AST.TypeLiteral | null {
+  switch (ast._tag) {
+    case "TypeLiteral": {
+      return ast
+    }
+    case "Transformation": {
+      // this may be not correct for transformations from a type literal to something
+      // that is not a type literal nor a class because we would prefer the from AST
+      return getTypeLiteralAST(ast.to) ?? getTypeLiteralAST(ast.from)
+    }
+    default: {
+      return null
+    }
+  }
+}
+
 export function convertIn(v: string | null, type?: "text" | "float" | "int") {
   return v === null ? "" : type === "text" ? v : `${v}`
 }
@@ -40,17 +56,26 @@ export interface UnionFieldInfo<T> {
   _tag: "UnionFieldInfo"
 }
 
-type NestedFieldInfoKey<Key> = Key extends Record<PropertyKey, any>
+type NestedFieldInfoKey<Key> = [Key] extends [Record<PropertyKey, any>]
   ? Unbranded<Key> extends Record<PropertyKey, any> ? NestedFieldInfo<Key>
   : FieldInfo<Key>
   : FieldInfo<Key>
 
+type DistributiveNestedFieldInfoKey<Key> = Key extends any ? NestedFieldInfoKey<Key> : never
+
 type _NestedFieldInfo<To extends Record<PropertyKey, any>> = Record<PropertyKey, any> extends To ? {}
   : {
-    [K in keyof To]-?: NestedFieldInfoKey<To[K]> extends infer NestedInfo
-      ? IsUnion<NestedInfo> extends false ? NestedInfo : UnionFieldInfo<NestedInfo[]>
-      : never
+    [K in keyof To]-?: {
+      "true-true": UnionFieldInfo<DistributiveNestedFieldInfoKey<To[K]>[]>
+      "true-false": NestedFieldInfoKey<To[K]>
+      "false-true": NestedFieldInfoKey<To[K]>
+      "false-false": NestedFieldInfoKey<To[K]>
+    }[`${IsUnion<To[K]>}-${To[K] extends object ? "true" : "false"}`]
   }
+
+// NestedFieldInfoKey<To[K]> extends infer NestedInfo
+//     ? [To[K], IsUnion<NestedInfo>] extends [object, true] ? UnionFieldInfo<NestedInfo[]> : NestedInfo
+//     : never
 
 export type NestedFieldInfo<To extends Record<PropertyKey, any>> =
   // exploit eventual _tag field to propagate the unique tag
@@ -71,17 +96,19 @@ function handlePropertySignature(
 
   switch (schema.ast._tag) {
     case "Transformation": {
-      // TODO: this handles schemas which contains class schemas
-      // but I'm not sure it's the right way to do it
-      return handlePropertySignature(
-        new S.AST.PropertySignature(
-          propertySignature.name,
-          schema.ast.from,
-          propertySignature.isOptional,
-          propertySignature.isReadonly,
-          propertySignature.annotations
+      const tl = getTypeLiteralAST(schema.ast)
+
+      return tl
+        ? handlePropertySignature(
+          new S.AST.PropertySignature(
+            propertySignature.name,
+            tl,
+            propertySignature.isOptional,
+            propertySignature.isReadonly,
+            propertySignature.annotations
+          )
         )
-      )
+        : buildFieldInfo(propertySignature)
     }
     case "TypeLiteral": {
       return buildFieldInfoFromFields(
@@ -89,44 +116,56 @@ function handlePropertySignature(
       )
     }
     case "Union": {
-      return {
-        members: schema
+      const allTypeLiterals = schema
+        .ast
+        .types
+        .map(getTypeLiteralAST)
+        .filter((_): _ is S.AST.TypeLiteral => _ !== null)
+        .length
+        === schema
           .ast
           .types
-          .map((elAst) =>
-            // syntehtic property signature as if each union member were the only member
-            new S.AST.PropertySignature(
-              propertySignature.name,
-              elAst,
-              propertySignature.isOptional,
-              propertySignature.isReadonly,
-              propertySignature.annotations
+          .length
+      return allTypeLiterals
+        ? {
+          members: schema
+            .ast
+            .types
+            .map((elAst) =>
+              // syntehtic property signature as if each union member were the only member
+              new S.AST.PropertySignature(
+                propertySignature.name,
+                elAst,
+                propertySignature.isOptional,
+                propertySignature.isReadonly,
+                propertySignature.annotations
+              )
             )
-          )
-          .flatMap((ps) => {
-            // try to retrieve the _tag literal to set _infoTag later
-            const typeLiteral = S.AST.isTypeLiteral(ps.type)
-              ? ps.type
-              : S.AST.isTransform(ps.type) && S.AST.isTypeLiteral(ps.type.from)
-              ? ps.type.from
-              : void 0
-            const tagPropertySignature = typeLiteral?.propertySignatures.find((_) => _.name === "_tag")
-            const tagLiteral = tagPropertySignature
-              && S.AST.isLiteral(tagPropertySignature.type)
-              && tagPropertySignature.type.literal
+            .flatMap((ps) => {
+              // try to retrieve the _tag literal to set _infoTag later
+              const typeLiteral = S.AST.isTypeLiteral(ps.type)
+                ? ps.type
+                : S.AST.isTransform(ps.type) && S.AST.isTypeLiteral(ps.type.from)
+                ? ps.type.from
+                : void 0
+              const tagPropertySignature = typeLiteral?.propertySignatures.find((_) => _.name === "_tag")
+              const tagLiteral = tagPropertySignature
+                && S.AST.isLiteral(tagPropertySignature.type)
+                && tagPropertySignature.type.literal
 
-            const toRet = handlePropertySignature(ps)
+              const toRet = handlePropertySignature(ps)
 
-            if (toRet._tag === "UnionFieldInfo") {
-              return toRet.members
-            } else if (toRet._tag === "NestedFieldInfo") {
-              return [{ ...toRet, ...!!tagLiteral && { _infoTag: tagLiteral } }]
-            } else {
-              return [toRet]
-            }
-          }),
-        _tag: "UnionFieldInfo"
-      }
+              if (toRet._tag === "UnionFieldInfo") {
+                return toRet.members
+              } else if (toRet._tag === "NestedFieldInfo") {
+                return [{ ...toRet, ...!!tagLiteral && { _infoTag: tagLiteral } }]
+              } else {
+                return [toRet]
+              }
+            }),
+          _tag: "UnionFieldInfo"
+        }
+        : buildFieldInfo(propertySignature)
     }
 
     default: {
@@ -138,17 +177,9 @@ function handlePropertySignature(
 export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, To extends Record<PropertyKey, any>>(
   schema: Schema<To, From, never> & { fields?: S.Struct.Fields }
 ): NestedFieldInfo<To> {
-  const ast = "fields" in schema && schema.fields
-    ? (S.struct(schema.fields) as unknown as typeof schema).ast
-    : schema.ast
-  // // todo: or look at from?
-  // if (S.AST.isTransform(ast)) {
-  //   if (S.AST.isDeclaration(ast.to)) {
-  //     ast = ast.to.type //no longer eists
-  //   }
-  // }
+  const ast = getTypeLiteralAST(schema.ast)
 
-  if (!S.AST.isTypeLiteral(ast)) throw new Error("not a struct type")
+  if (!ast) throw new Error("not a struct type")
   return ast.propertySignatures.reduce(
     (acc, cur) => {
       ;(acc.fields as any)[cur.name] = handlePropertySignature(cur)
@@ -269,7 +300,9 @@ function buildFieldInfo(
 
   const parseRule = (v: unknown) =>
     pipe(
-      parse(v),
+      v,
+      (v: unknown) => (console.log({ v: parse(v) }, v)),
+      parse,
       Either.match({
         onLeft: (_) => renderError(_, v),
         onRight: () => true
@@ -280,7 +313,9 @@ function buildFieldInfo(
   const rules: UnknownRule[] = [
     ...(metadata.type === "text"
       ? stringRules
-      : numberRules) as UnknownRule[],
+      : metadata.type === "float" || metadata.type === "int"
+      ? numberRules
+      : []) as UnknownRule[],
     parseRule as UnknownRule
   ]
 
