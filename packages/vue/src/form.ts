@@ -63,20 +63,18 @@ type NestedFieldInfoKey<Key> = [Key] extends [Record<PropertyKey, any>]
 
 type DistributiveNestedFieldInfoKey<Key> = Key extends any ? NestedFieldInfoKey<Key> : never
 
-type _NestedFieldInfo<To extends Record<PropertyKey, any>> = Record<PropertyKey, any> extends To ? {}
-  : {
-    [K in keyof To]-?: {
-      "true-true": UnionFieldInfo<DistributiveNestedFieldInfoKey<To[K]>[]>
-      "true-false": NestedFieldInfoKey<To[K]>
-      "false-true": NestedFieldInfoKey<To[K]>
-      "false-false": NestedFieldInfoKey<To[K]>
-    }[`${IsUnion<To[K]>}-${To[K] extends object ? "true" : "false"}`]
-  }
-
 export type NestedFieldInfo<To extends Record<PropertyKey, any>> =
   // exploit eventual _tag field to propagate the unique tag
   & {
-    fields: _NestedFieldInfo<To>
+    fields: {
+      [K in keyof To]-?: {
+        "true": {
+          "true": UnionFieldInfo<DistributiveNestedFieldInfoKey<To[K]>[]>
+          "false": NestedFieldInfoKey<To[K]>
+        }[`${To[K] extends object ? true : false}`]
+        "false": NestedFieldInfoKey<To[K]>
+      }[`${IsUnion<To[K]>}`]
+    }
     _tag: "NestedFieldInfo"
   }
   & { [K in "_infoTag" as To extends { "_tag": S.AST.LiteralValue } ? K : never]: To["_tag"] }
