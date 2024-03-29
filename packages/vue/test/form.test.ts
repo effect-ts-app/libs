@@ -235,15 +235,28 @@ it("buildFieldInfo with tagged unions", () =>
 
       testNestedFieldInfo(shapeFieldinfo.fields.shapeWithClasses.members.Square)
       expect(shapeFieldinfo.fields.shapeWithClasses.members.Square._infoTag).toBe("Square")
+      testFieldInfo(shapeFieldinfo.fields.shapeWithClasses.members.Square.fields.sideLength)
+
       testNestedFieldInfo(shapeFieldinfo.fields.shapeWithClasses.members.Triangle)
       expect(shapeFieldinfo.fields.shapeWithClasses.members.Triangle._infoTag).toBe("Triangle")
+      testFieldInfo(shapeFieldinfo.fields.shapeWithClasses.members.Triangle.fields.base)
+      testFieldInfo(shapeFieldinfo.fields.shapeWithClasses.members.Triangle.fields.height)
+
       testNestedFieldInfo(shapeFieldinfo.fields.shapeWithClasses.members.Circle)
       expect(shapeFieldinfo.fields.shapeWithClasses.members.Circle._infoTag).toBe("Circle")
-      testNestedFieldInfo(shapeFieldinfo.fields.shapeWithStruct.members.CircleStruct)
-      expect(shapeFieldinfo.fields.shapeWithStruct.members.CircleStruct._infoTag).toBe("CircleStruct")
+      testFieldInfo(shapeFieldinfo.fields.shapeWithClasses.members.Circle.fields.radius)
+
       testNestedFieldInfo(shapeFieldinfo.fields.shapeWithStruct.members.SquareStruct)
       expect(shapeFieldinfo.fields.shapeWithStruct.members.SquareStruct._infoTag).toBe("SquareStruct")
+      testFieldInfo(shapeFieldinfo.fields.shapeWithStruct.members.SquareStruct.fields.sideLength)
+
       testNestedFieldInfo(shapeFieldinfo.fields.shapeWithStruct.members.TriangleStruct)
       expect(shapeFieldinfo.fields.shapeWithStruct.members.TriangleStruct._infoTag).toBe("TriangleStruct")
+      testFieldInfo(shapeFieldinfo.fields.shapeWithStruct.members.TriangleStruct.fields.base)
+      testFieldInfo(shapeFieldinfo.fields.shapeWithStruct.members.TriangleStruct.fields.height)
+
+      testNestedFieldInfo(shapeFieldinfo.fields.shapeWithStruct.members.CircleStruct)
+      expect(shapeFieldinfo.fields.shapeWithStruct.members.CircleStruct._infoTag).toBe("CircleStruct")
+      testFieldInfo(shapeFieldinfo.fields.shapeWithStruct.members.CircleStruct.fields.radius)
     })
     .pipe(Effect.runPromise))
