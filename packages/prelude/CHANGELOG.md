@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.198.0
+
+### Minor Changes
+
+- 01f8283: cleanup: drop legacy `FromClass`
+
+### Patch Changes
+
+- Updated dependencies [01f8283]
+  - @effect-app/schema@0.217.0
+
 ## 0.197.0
 
 ### Minor Changes

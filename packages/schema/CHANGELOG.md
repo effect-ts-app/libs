@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.217.0
+
+### Minor Changes
+
+- 01f8283: cleanup: drop legacy `FromClass`
+
 ## 0.216.0
 
 ### Minor Changes
