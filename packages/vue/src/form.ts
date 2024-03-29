@@ -158,7 +158,7 @@ function handlePropertySignature(
             }
           })
 
-        // support only _tag as discriminated key and it has to be a string
+        // support only _tag as discriminating key and it has to be a string
         const isDiscriminatedUnion = members.every((_) => _._tag === "NestedFieldInfo" && _._infoTag !== undefined)
 
         if (isDiscriminatedUnion) {
