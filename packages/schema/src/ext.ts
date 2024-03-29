@@ -5,7 +5,6 @@ import { Effect, pipe } from "@effect-app/core"
 import { extendM, typedKeysOf } from "@effect-app/core/utils"
 import type { Schema } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
-import { flow } from "effect"
 import type { AST, ParseResult } from "./index.js"
 
 export const Date = Object.assign(S.Date, {
@@ -77,19 +76,24 @@ export const readonlySet = <Value extends Schema.Any>(value: Value) =>
 /**
  * Like the default Schema `readonlyMap` but with `withDefault` and batching enabled by default
  */
-export const readonlyMap = flow(
-  S.readonlyMap,
-  S.batching(true),
-  (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => new Map() }) })
-)
+export const readonlyMap = <K extends Schema.Any, V extends Schema.Any>(pair: {
+  readonly key: K
+  readonly value: V
+}) =>
+  pipe(
+    S.readonlyMap(pair),
+    S.batching(true),
+    (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => new Map() }) })
+  )
 
 /**
  * Like the default Schema `record` but with `withDefault`
  */
-export const nullable = flow(
-  S.nullable,
-  (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => null }) })
-)
+export const nullable = <S extends Schema.Any>(self: S) =>
+  pipe(
+    S.nullable(self),
+    (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => null }) })
+  )
 
 export const defaultDate = <I, R>(s: Schema<Date, I, R>) =>
   S.propertySignature(s, {
