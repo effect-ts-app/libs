@@ -300,9 +300,7 @@ function buildFieldInfo(
 
   const parseRule = (v: unknown) =>
     pipe(
-      v,
-      (v: unknown) => (console.log({ v: parse(v) }, v)),
-      parse,
+      parse(v),
       Either.match({
         onLeft: (_) => renderError(_, v),
         onRight: () => true
