@@ -3,7 +3,7 @@ import type { ParseError } from "@effect/schema/ParseResult"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type {} from "intl-messageformat"
 import type { Unbranded } from "@effect-app/schema/brand"
-import { Either, Option, pipe, S } from "effect-app"
+import { Either, Equal, flow, Option, pipe, ReadonlyArray, S } from "effect-app"
 import type { Schema } from "effect-app/schema"
 
 import type { IsUnion } from "effect-app/utils"
@@ -110,16 +110,13 @@ function handlePropertySignature(
       )
     }
     case "Union": {
-      const allTypeLiterals = schema
-        .ast
-        .types
-        .map(getTypeLiteralAST)
-        .filter((_): _ is S.AST.TypeLiteral => _ !== null)
-        .length
-        === schema
-          .ast
-          .types
-          .length
+      const allTypeLiterals = pipe(
+        schema.ast.types,
+        ReadonlyArray.filterMap(flow(getTypeLiteralAST, Option.fromNullable)),
+        ReadonlyArray.length,
+        Equal.equals(schema.ast.types.length)
+      )
+
       return allTypeLiterals
         ? {
           members: schema
