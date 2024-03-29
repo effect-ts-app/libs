@@ -26,7 +26,7 @@ export interface ConfigExtensionMeta {
 
 export type Schema = Effect<JSONSchema | SubSchema, never, References>
 
-export const SchemaURI = "SchemaURI" as const
+export const SchemaURI = "SchemaURI"
 export type SchemaURI = typeof SchemaURI
 
 export function referenced(x?: ConfigExtensionRef) {

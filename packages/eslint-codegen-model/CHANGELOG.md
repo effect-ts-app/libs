@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.72.0
+
+### Minor Changes
+
+- 01f8283: cleanup: drop legacy `FromClass`
+
 ## 0.71.0
 
 ### Minor Changes
