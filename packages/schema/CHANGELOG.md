@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.217.1
+
+### Patch Changes
+
+- e165c07: fix: nullable inference and readonlyMap inference.
+
 ## 0.217.0
 
 ### Minor Changes
