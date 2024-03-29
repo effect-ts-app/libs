@@ -113,7 +113,7 @@ function handlePropertySignature(
         : buildFieldInfo(propertySignature)
     }
     case "TypeLiteral": {
-      return buildFieldInfoFromFields(
+      return buildFieldInfoFromFieldsRoot(
         schema as S.Schema<Record<PropertyKey, any>, Record<PropertyKey, any>, never>
       )
     }
@@ -185,7 +185,19 @@ function handlePropertySignature(
   }
 }
 
-export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, To extends Record<PropertyKey, any>>(
+export function buildFieldInfoFromFields<
+  From extends Record<PropertyKey, any>,
+  To extends Record<PropertyKey, any>
+>(
+  schema: Schema<To, From, never> & { fields?: S.Struct.Fields }
+) {
+  return buildFieldInfoFromFieldsRoot(schema).fields
+}
+
+export function buildFieldInfoFromFieldsRoot<
+  From extends Record<PropertyKey, any>,
+  To extends Record<PropertyKey, any>
+>(
   schema: Schema<To, From, never> & { fields?: S.Struct.Fields }
 ): NestedFieldInfo<To> {
   const ast = getTypeLiteralAST(schema.ast)
@@ -368,7 +380,7 @@ export const buildFormFromSchema = <
   state: Ref<From>,
   onSubmit: (a: To) => Promise<OnSubmitA>
 ) => {
-  const fields = buildFieldInfoFromFields(s).fields
+  const fields = buildFieldInfoFromFieldsRoot(s).fields
   const parse = S.decodeSync(s)
   const isDirty = ref(false)
   const isValid = ref(true)

@@ -1,7 +1,7 @@
 import { Effect } from "@effect-app/core"
 import { S } from "effect-app"
 import type { DiscriminatedUnionFieldInfo, FieldInfo, NestedFieldInfo, UnionFieldInfo } from "../src/form.js"
-import { buildFieldInfoFromFields } from "../src/form.js"
+import { buildFieldInfoFromFieldsRoot } from "../src/form.js"
 
 export class NestedSchema extends S.Class<NestedSchema>()({
   shallow: S.string,
@@ -161,7 +161,7 @@ function testDiscriminatedUnionFieldInfo<T extends Record<PropertyKey, any>>(duf
 it("buildFieldInfo", () =>
   Effect
     .gen(function*() {
-      const nestedFieldinfo = buildFieldInfoFromFields(NestedSchema)
+      const nestedFieldinfo = buildFieldInfoFromFieldsRoot(NestedSchema)
       expectTypeOf(nestedFieldinfo).toEqualTypeOf<NestedFieldInfo<NestedSchema>>()
       expectTypeOf(nestedFieldinfo.fields.shallow).toEqualTypeOf<FieldInfo<string>>()
       expectTypeOf(nestedFieldinfo.fields.age).toEqualTypeOf<NestedFieldInfo<NestedSchema["age"]>>()
@@ -183,7 +183,7 @@ it("buildFieldInfo", () =>
 it("buildFieldInfo schema containing class", () =>
   Effect
     .gen(function*() {
-      const fieldinfo = buildFieldInfoFromFields(SchemaContainsClass)
+      const fieldinfo = buildFieldInfoFromFieldsRoot(SchemaContainsClass)
 
       // the type system says that these are NestedFieldInfo<NestedSchema>s
       // are they really? let's check
@@ -195,7 +195,7 @@ it("buildFieldInfo schema containing class", () =>
 it("buildFieldInfo with simple union", () =>
   Effect
     .gen(function*() {
-      const unionFieldinfo = buildFieldInfoFromFields(UnionSchema)
+      const unionFieldinfo = buildFieldInfoFromFieldsRoot(UnionSchema)
       expectTypeOf(unionFieldinfo).toEqualTypeOf<NestedFieldInfo<UnionSchema>>()
       expectTypeOf(unionFieldinfo.fields.nullable).toEqualTypeOf<
         FieldInfo<string | null>
@@ -227,7 +227,7 @@ it("buildFieldInfo with simple union", () =>
 it("buildFieldInfo with tagged unions", () =>
   Effect
     .gen(function*() {
-      const shapeFieldinfo = buildFieldInfoFromFields(ShapeContainer)
+      const shapeFieldinfo = buildFieldInfoFromFieldsRoot(ShapeContainer)
 
       // check at runtime if the structure is really an union
       testDiscriminatedUnionFieldInfo(shapeFieldinfo.fields.shapeWithClasses)
