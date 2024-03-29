@@ -2,13 +2,32 @@ import * as JSONSchema from "@effect/schema/JSONSchema"
 import type { ParseError } from "@effect/schema/ParseResult"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type {} from "intl-messageformat"
+import type { Unbranded } from "@effect-app/schema/brand"
 import { Either, Option, pipe, S } from "effect-app"
 import type { Schema } from "effect-app/schema"
+
+import type { IsUnion } from "effect-app/utils"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
 
 // type GetSchemaFromProp<T> = T extends Field<infer S, any, any, any> ? S
 //   : never
+
+function getTypeLiteralAST(ast: S.AST.AST): S.AST.TypeLiteral | null {
+  switch (ast._tag) {
+    case "TypeLiteral": {
+      return ast
+    }
+    case "Transformation": {
+      // this may be not correct for transformations from a type literal to something
+      // that is not a type literal nor a class because we would prefer the from AST
+      return getTypeLiteralAST(ast.to) ?? getTypeLiteralAST(ast.from)
+    }
+    default: {
+      return null
+    }
+  }
+}
 
 export function convertIn(v: string | null, type?: "text" | "float" | "int") {
   return v === null ? "" : type === "text" ? v : `${v}`
@@ -24,27 +43,161 @@ export function convertOut(v: string, set: (v: unknown | null) => void, type?: "
   return set(convertOutInt(v, type))
 }
 
+const f = Symbol()
+export interface FieldInfo<Tout> extends PhantomTypeParameter<typeof f, { out: Tout }> {
+  rules: ((v: string) => boolean | string)[]
+  metadata: FieldMetadata
+  type: "text" | "float" | "int" // todo; multi-line vs single line text
+  _tag: "FieldInfo"
+}
+
+export interface UnionFieldInfo<T> {
+  members: T
+  _tag: "UnionFieldInfo"
+}
+
+export interface DiscriminatedUnionFieldInfo<T> {
+  members: T
+  _tag: "DiscriminatedUnionFieldInfo"
+}
+
+type NestedFieldInfoKey<Key> = [Key] extends [Record<PropertyKey, any>]
+  ? Unbranded<Key> extends Record<PropertyKey, any> ? NestedFieldInfo<Key>
+  : FieldInfo<Key>
+  : FieldInfo<Key>
+
+type DistributiveNestedFieldInfoKey<Key> = Key extends any ? NestedFieldInfoKey<Key> : never
+
+export type NestedFieldInfo<To extends Record<PropertyKey, any>> = // exploit eventual _tag field to propagate the unique tag
+  {
+    fields: {
+      [K in keyof To]-?: {
+        "true": {
+          "true": To[K] extends { "_tag": string } ? DiscriminatedUnionFieldInfo<
+              { [P in DistributiveNestedFieldInfoKey<To[K]> as (P["_infoTag" & keyof P] & string)]: P }
+            >
+            : UnionFieldInfo<DistributiveNestedFieldInfoKey<To[K]>[]>
+          "false": NestedFieldInfoKey<To[K]>
+        }[`${To[K] extends object ? true : false}`]
+        "false": NestedFieldInfoKey<To[K]>
+      }[`${IsUnion<To[K]>}`]
+    }
+    _tag: "NestedFieldInfo"
+    _infoTag: To extends { "_tag": string } ? To["_tag"] : undefined
+  }
+
+function handlePropertySignature(
+  propertySignature: S.AST.PropertySignature
+):
+  | NestedFieldInfo<Record<PropertyKey, any>>
+  | FieldInfo<any>
+  | UnionFieldInfo<(NestedFieldInfo<Record<PropertyKey, any>> | FieldInfo<any>)[]>
+  | DiscriminatedUnionFieldInfo<Record<PropertyKey, any>>
+{
+  const schema = S.make(propertySignature.type)
+
+  switch (schema.ast._tag) {
+    case "Transformation": {
+      const tl = getTypeLiteralAST(schema.ast)
+
+      return tl
+        ? handlePropertySignature(
+          new S.AST.PropertySignature(
+            propertySignature.name,
+            tl,
+            propertySignature.isOptional,
+            propertySignature.isReadonly,
+            propertySignature.annotations
+          )
+        )
+        : buildFieldInfo(propertySignature)
+    }
+    case "TypeLiteral": {
+      return buildFieldInfoFromFields(
+        schema as S.Schema<Record<PropertyKey, any>, Record<PropertyKey, any>, never>
+      )
+    }
+    case "Union": {
+      const allTypeLiterals = schema.ast.types.every(getTypeLiteralAST)
+
+      if (allTypeLiterals) {
+        const members = schema
+          .ast
+          .types
+          .map((elAst) =>
+            // syntehtic property signature as if each union member were the only member
+            new S.AST.PropertySignature(
+              propertySignature.name,
+              elAst,
+              propertySignature.isOptional,
+              propertySignature.isReadonly,
+              propertySignature.annotations
+            )
+          )
+          .flatMap((ps) => {
+            // try to retrieve the _tag literal to set _infoTag later
+            const typeLiteral = getTypeLiteralAST(ps.type)
+
+            const tagPropertySignature = typeLiteral?.propertySignatures.find((_) => _.name === "_tag")
+            const tagLiteral = tagPropertySignature
+                && S.AST.isLiteral(tagPropertySignature.type)
+                && typeof tagPropertySignature.type.literal === "string"
+              ? tagPropertySignature.type.literal
+              : void 0
+
+            const toRet = handlePropertySignature(ps)
+
+            if (toRet._tag === "UnionFieldInfo") {
+              return toRet.members
+            } else if (toRet._tag === "NestedFieldInfo") {
+              return [{ ...toRet, _infoTag: tagLiteral as never }]
+            } else if (toRet._tag === "DiscriminatedUnionFieldInfo") {
+              return Object.values(toRet.members) as (NestedFieldInfo<Record<PropertyKey, any>> | FieldInfo<any>)[]
+            } else {
+              return [toRet]
+            }
+          })
+
+        // support only _tag as discriminating key and it has to be a string
+        const isDiscriminatedUnion = members.every((_) => _._tag === "NestedFieldInfo" && _._infoTag !== undefined)
+
+        if (isDiscriminatedUnion) {
+          return {
+            members: members.reduce((acc, cur) => {
+              // see the definiton of isDiscriminatedUnion
+              const tag = (cur as NestedFieldInfo<Record<PropertyKey, any>>)._infoTag as unknown as string
+              acc[tag] = cur
+              return acc
+            }, {} as Record<string, NestedFieldInfo<Record<PropertyKey, any>> | FieldInfo<any>>),
+            _tag: "DiscriminatedUnionFieldInfo"
+          }
+        } else {
+          return { members, _tag: "UnionFieldInfo" }
+        }
+      } else {
+        return buildFieldInfo(propertySignature)
+      }
+    }
+
+    default: {
+      return buildFieldInfo(propertySignature)
+    }
+  }
+}
+
 export function buildFieldInfoFromFields<From extends Record<PropertyKey, any>, To extends Record<PropertyKey, any>>(
   schema: Schema<To, From, never> & { fields?: S.Struct.Fields }
-) {
-  const ast = "fields" in schema && schema.fields
-    ? (S.struct(schema.fields) as unknown as typeof schema).ast
-    : schema.ast
-  // // todo: or look at from?
-  // if (S.AST.isTransform(ast)) {
-  //   if (S.AST.isDeclaration(ast.to)) {
-  //     ast = ast.to.type //no longer eists
-  //   }
-  // }
-  if (!S.AST.isTypeLiteral(ast)) throw new Error("not a struct type")
+): NestedFieldInfo<To> {
+  const ast = getTypeLiteralAST(schema.ast)
+
+  if (!ast) throw new Error("not a struct type")
   return ast.propertySignatures.reduce(
-    (prev, cur) => {
-      ;(prev as any)[cur.name] = buildFieldInfo(cur)
-      return prev
+    (acc, cur) => {
+      ;(acc.fields as any)[cur.name] = handlePropertySignature(cur)
+
+      return acc
     },
-    {} as {
-      [K in keyof To]-?: FieldInfo<To[K]>
-    }
+    { _tag: "NestedFieldInfo", fields: {} } as NestedFieldInfo<To>
   )
 }
 
@@ -54,7 +207,6 @@ export interface FieldMetadata {
   required: boolean
 }
 
-const f = Symbol()
 abstract class PhantomTypeParameter<
   Identifier extends keyof any,
   InstantiatedType
@@ -63,11 +215,7 @@ abstract class PhantomTypeParameter<
     readonly [NameP in Identifier]: (_: InstantiatedType) => InstantiatedType
   }
 }
-export interface FieldInfo<Tout> extends PhantomTypeParameter<typeof f, { out: Tout }> {
-  rules: ((v: string) => boolean | string)[]
-  metadata: FieldMetadata
-  type: "text" | "float" | "int" // todo; multi-line vs single line text
-}
+
 const defaultIntl = createIntl({ locale: "en" })
 
 export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage.bind(defaultIntl))
@@ -174,7 +322,9 @@ function buildFieldInfo(
   const rules: UnknownRule[] = [
     ...(metadata.type === "text"
       ? stringRules
-      : numberRules) as UnknownRule[],
+      : metadata.type === "float" || metadata.type === "int"
+      ? numberRules
+      : []) as UnknownRule[],
     parseRule as UnknownRule
   ]
 
@@ -198,7 +348,8 @@ function buildFieldInfo(
         return true
       }
     ],
-    metadata
+    metadata,
+    _tag: "FieldInfo"
   }
 
   return info as any
@@ -217,7 +368,7 @@ export const buildFormFromSchema = <
   state: Ref<From>,
   onSubmit: (a: To) => Promise<OnSubmitA>
 ) => {
-  const fields = buildFieldInfoFromFields(s)
+  const fields = buildFieldInfoFromFields(s).fields
   const parse = S.decodeSync(s)
   const isDirty = ref(false)
   const isValid = ref(true)
@@ -272,7 +423,7 @@ export function getMetadataFromSchema(
     const { $ref: _, ...rest } = jschema
     jschema = { ...jschema["$defs"][jschema["$ref"].replace("#/$defs/", "")], ...rest }
   }
-  // or we need to add these infos directly in the refinement like the minimum
+  // or we need to add these info directly in the refinement like the minimum
   // or find a jsonschema parser whojoins all of them
   // todo, we have to use $ref: "#/$defs/Int"
   // and look up
