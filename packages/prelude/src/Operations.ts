@@ -34,16 +34,16 @@ export class Operation extends S.ExtendedClass<Operation, Operation.From>()({
 //
 /* eslint-disable */
 export namespace OperationProgress {
-  export class From extends S.FromClass<typeof OperationProgress>() {}
+  export interface From extends S.Struct.Encoded<typeof OperationProgress["fields"]> {}
 }
 export namespace Success {
-  export class From extends S.FromClass<typeof Success>() {}
+  export interface From extends S.Struct.Encoded<typeof Success["fields"]> {}
 }
 export namespace Failure {
-  export class From extends S.FromClass<typeof Failure>() {}
+  export interface From extends S.Struct.Encoded<typeof Failure["fields"]> {}
 }
 export namespace Operation {
-  export class From extends S.FromClass<typeof Operation>() {}
+  export interface From extends S.Struct.Encoded<typeof Operation["fields"]> {}
 }
 /* eslint-enable */
 //
