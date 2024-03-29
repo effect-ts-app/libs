@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.167.0
+
+### Minor Changes
+
+- 7b1ff1c: enhance field info generation
+
 ## 0.166.0
 
 ### Minor Changes
