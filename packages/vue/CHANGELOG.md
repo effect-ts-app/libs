@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.163.1
+
+### Patch Changes
+
+- a67ecf4: keep original signature
+- Updated dependencies [a67ecf4]
+  - @effect-app/vue@0.163.1
+
 ## 0.163.0
 
 ### Minor Changes
