@@ -24,6 +24,7 @@ export type OperationResult = S.Schema.Type<typeof OperationResult>
 
 export class Operation extends S.ExtendedClass<Operation, Operation.From>()({
   id: OperationId,
+  title: S.NonEmptyString2k,
   progress: S.optional(OperationProgress),
   result: S.optional(OperationResult),
   createdAt: S.Date.withDefault,
