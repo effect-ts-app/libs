@@ -1,5 +1,18 @@
 # @effect-app/prelude
 
+## 0.199.0
+
+### Minor Changes
+
+- ecb05f6: update packages
+- fbfa538: add title to Operations and expose all
+
+### Patch Changes
+
+- Updated dependencies [ecb05f6]
+  - @effect-app/schema@0.218.0
+  - @effect-app/core@0.168.0
+
 ## 0.198.2
 
 ### Patch Changes

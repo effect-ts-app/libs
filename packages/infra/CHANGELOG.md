@@ -1,5 +1,21 @@
 # @effect-app/infra
 
+## 0.231.0
+
+### Minor Changes
+
+- ecb05f6: update packages
+- fbfa538: add title to Operations and expose all
+
+### Patch Changes
+
+- Updated dependencies [ecb05f6]
+- Updated dependencies [fbfa538]
+  - @effect-app/infra-adapters@0.152.0
+  - effect-app@0.199.0
+  - @effect-app/schema@0.218.0
+  - @effect-app/core@0.168.0
+
 ## 0.230.3
 
 ### Patch Changes

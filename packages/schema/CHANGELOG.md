@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 0.218.0
+
+### Minor Changes
+
+- ecb05f6: update packages
+
+### Patch Changes
+
+- Updated dependencies [ecb05f6]
+  - @effect-app/core@0.168.0
+
 ## 0.217.2
 
 ### Patch Changes
