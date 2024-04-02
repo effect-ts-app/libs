@@ -14,21 +14,21 @@
     "query-string": "^9.0.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.21",
-    "@effect/platform-browser": "^0.31.21",
-    "@effect/schema": "^0.64.15",
+    "@effect/platform": "^0.48.22",
+    "@effect/platform-browser": "^0.31.22",
+    "@effect/schema": "^0.64.16",
     "effect": "^2.4.15",
     "vue": "^3.4.21"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
     "@rollup/pluginutils": "^5.1.0",
-    "@types/node": "~20.11.30",
+    "@types/node": "~20.12.2",
     "intl-messageformat": "^10.5.11",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3",
-    "vite": "^5.2.6",
+    "vite": "^5.2.7",
     "vitest": "^1.4.0"
   },
   "typesVersions": {

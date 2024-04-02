@@ -22,5 +22,6 @@ export function generate<T>(arb: fc.Arbitrary<T>) {
  * @tsplus getter effect/schema/Arbitrary generate
  */
 export function generateFromArbitrary<T>(arb: A.Arbitrary<T>) {
-  return generate(arb(fc))
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
+  return generate(arb(fc as any))
 }

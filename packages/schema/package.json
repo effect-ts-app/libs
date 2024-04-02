@@ -14,13 +14,13 @@
   "devDependencies": {
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.9",
-    "fast-check": "~3.17.0",
+    "fast-check": "~3.17.1",
     "ts-toolbelt": "^9.6.0",
     "typescript": "^5.4.3",
     "vitest": "^1.4.0"
   },
   "peerDependencies": {
-    "@effect/schema": "^0.64.15",
+    "@effect/schema": "^0.64.16",
     "effect": "^2.4.15"
   },
   "scripts": {
@@ -102,16 +102,6 @@
       "require": {
         "types": "./dist/REST.d.ts",
         "default": "./_cjs/REST.cjs"
-      }
-    },
-    "./arbitrary": {
-      "import": {
-        "types": "./dist/arbitrary.d.ts",
-        "default": "./dist/arbitrary.js"
-      },
-      "require": {
-        "types": "./dist/arbitrary.d.ts",
-        "default": "./_cjs/arbitrary.cjs"
       }
     },
     "./brand": {
