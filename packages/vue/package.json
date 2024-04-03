@@ -9,21 +9,21 @@
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@formatjs/intl": "^2.10.1",
-    "@tanstack/vue-query": "^5.28.9",
+    "@tanstack/vue-query": "^5.28.13",
     "effect-app": "workspace:*",
     "query-string": "^9.0.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.22",
-    "@effect/platform-browser": "^0.31.22",
-    "@effect/schema": "^0.64.16",
-    "effect": "^2.4.15",
+    "@effect/platform": "^0.48.24",
+    "@effect/platform-browser": "^0.31.24",
+    "@effect/schema": "^0.64.18",
+    "effect": "^2.4.17",
     "vue": "^3.4.21"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
     "@rollup/pluginutils": "^5.1.0",
-    "@types/node": "~20.12.2",
+    "@types/node": "~20.12.3",
     "intl-messageformat": "^10.5.11",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
