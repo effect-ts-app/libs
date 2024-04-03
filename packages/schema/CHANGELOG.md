@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.220.1
+
+### Patch Changes
+
+- 89bdcf0: fix missing customised id
+
 ## 0.220.0
 
 ### Minor Changes

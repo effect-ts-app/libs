@@ -1,5 +1,12 @@
 # @effect-app/prelude
 
+## 0.201.1
+
+### Patch Changes
+
+- Updated dependencies [89bdcf0]
+  - @effect-app/schema@0.220.1
+
 ## 0.201.0
 
 ### Minor Changes
