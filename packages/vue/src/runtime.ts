@@ -1,10 +1,9 @@
+import * as HttpClient from "@effect/platform/Http/Client"
+import { Config, Exit, Runtime } from "effect"
+import { Effect, Layer, Logger } from "effect-app"
 import { ApiConfig } from "effect-app/client"
 import * as Scope from "effect/Scope"
 import { initRuntime } from "./internal.js"
-
-import * as HttpClient from "@effect/platform/Http/Client"
-import { Config, Exit, Runtime } from "effect"
-import { Effect, Layer } from "effect-app"
 
 export { initRuntime } from "./internal.js"
 
@@ -27,6 +26,7 @@ export function makeApiLayers(config: ApiConfig) {
 
 export function makeAppRuntime<R, E, A>(layer: Layer<A, E, R>) {
   return Effect.gen(function*($) {
+    layer = layer.pipe(Layer.provide(Logger.replace(Logger.defaultLogger, Logger.structuredLogger)))
     const scope = yield* $(Scope.make())
     const env = yield* $(layer.pipe(Layer.buildWithScope(scope)))
     const runtime = yield* $(Effect.runtime<A>().pipe(Effect.scoped, Effect.provide(env)))
