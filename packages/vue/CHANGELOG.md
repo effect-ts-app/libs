@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.165.2
+
+### Patch Changes
+
+- 8f88923: set default browser logger to structured
+- Updated dependencies [8f88923]
+  - @effect-app/vue@0.165.2
+
 ## 0.165.1
 
 ### Patch Changes
