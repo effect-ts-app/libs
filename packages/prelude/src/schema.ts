@@ -1,37 +1,30 @@
 import { Option, pipe, ReadonlyArray } from "@effect-app/core"
-import { isValidEmail, isValidPhone } from "@effect-app/core/validation"
-import { type A, type Email as EmailT, fromBrand, nominal, type PhoneNumber as PhoneNumberT } from "@effect-app/schema"
+import { type A, type Email as EmailT, type PhoneNumber as PhoneNumberT } from "@effect-app/schema"
 import * as S from "@effect-app/schema"
 import { fakerArb } from "./faker.js"
 import { extendM } from "./utils.js"
 
+export * from "@effect-app/schema"
+
 export const Email = S
-  .string
+  .Email
   .pipe(
-    S.filter(isValidEmail, {
-      title: "Email",
-      description: "an email according to RFC 5322",
-      jsonSchema: { format: "email" },
+    S.annotations({
       // eslint-disable-next-line @typescript-eslint/unbound-method
-      arbitrary: (): A.Arbitrary<string> => fakerArb((faker) => faker.internet.exampleEmail)
+      arbitrary: (): A.Arbitrary<Email> => (fc) => fakerArb((faker) => faker.internet.exampleEmail)(fc).map(Email)
     }),
-    fromBrand(nominal<Email>(), { jsonSchema: {} }),
     S.withDefaults
   )
 
 export type Email = EmailT
 
 export const PhoneNumber = S
-  .string
+  .PhoneNumber
   .pipe(
-    S.filter(isValidPhone, {
-      title: "PhoneNumber",
-      description: "a phone number with at least 7 digits",
-      jsonSchema: { format: "phone" },
+    S.annotations({
       // eslint-disable-next-line @typescript-eslint/unbound-method
-      arbitrary: (): A.Arbitrary<string> => fakerArb((faker) => faker.phone.number)
+      arbitrary: (): A.Arbitrary<PhoneNumber> => (fc) => fakerArb((faker) => faker.phone.number)(fc).map(PhoneNumber)
     }),
-    fromBrand(nominal<PhoneNumber>(), { jsonSchema: {} }),
     S.withDefaults
   )
 
@@ -92,5 +85,3 @@ export const taggedUnion = <Members extends readonly S.Schema<{ _tag: string }, 
   pipe(S.union(...a), (_) => extendM(_, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_) })))
 
 export type PhoneNumber = PhoneNumberT
-
-export * from "@effect-app/schema"

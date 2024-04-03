@@ -27,9 +27,8 @@ export type NonEmptyString50 = string & NonEmptyString50Brand
  * A string that is at least 1 character long and a maximum of 50.
  */
 export const NonEmptyString50 = NonEmptyString.pipe(
-  S.maxLength(50, { title: "NonEmptyString50" }),
-  fromBrand(nominal<NonEmptyString2k>(), { jsonSchema: {} }),
-  S.identifier("NonEmptyString50"),
+  S.maxLength(50),
+  fromBrand(nominal<NonEmptyString2k>(), { identifier: "NonEmptyString50", title: "NonEmptyString50", jsonSchema: {} }),
   withDefaults
 )
 
@@ -49,9 +48,8 @@ export type Min3String255 = string & Min3String255Brand
 export const Min3String255 = pipe(
   S.string,
   S.minLength(3),
-  S.maxLength(255, { title: "Min3String255" }),
-  fromBrand(nominal<NonEmptyString2k>(), { jsonSchema: {} }),
-  S.identifier("Min3String255"),
+  S.maxLength(255),
+  fromBrand(nominal<NonEmptyString2k>(), { identifier: "Min3String255", title: "Min3String255", jsonSchema: {} }),
   withDefaults
 )
 
@@ -82,9 +80,13 @@ export const StringId = extendM(
   pipe(
     S.string,
     S.minLength(minLength),
-    S.maxLength(maxLength, { title: "StringId", arbitrary: StringIdArb }),
-    S.identifier("StringId"),
-    fromBrand(nominal<StringIdBrand>(), { jsonSchema: {} })
+    S.maxLength(maxLength),
+    fromBrand(nominal<StringIdBrand>(), {
+      identifier: "StringId",
+      title: "StringId",
+      arbitrary: StringIdArb,
+      jsonSchema: {}
+    })
   ),
   (s) => ({
     make: makeStringId,
@@ -125,7 +127,11 @@ export function prefixedStringId<Brand extends StringId>() {
       )
     const s: S.Schema<string & Brand, string> = StringId
       .pipe(
-        S.filter((x: StringId): x is Brand => x.startsWith(pref), { arbitrary: arb, title: name })
+        S.filter((x: StringId): x is string & Brand => x.startsWith(pref), {
+          arbitrary: arb,
+          identifier: name,
+          title: name
+        })
       )
     const schema = s.pipe(withDefaults)
     const make = () => (pref + StringId.make().substring(0, 50 - pref.length)) as Brand
@@ -173,20 +179,20 @@ export interface PrefixedStringUtils<
 
 export interface UrlBrand extends Simplify<B.Brand<"Url"> & NonEmptyStringBrand> {}
 
-export type Url = NonEmptyString & UrlBrand
+export type Url = string & UrlBrand
 
 const isUrl: Refinement<string, Url> = (s: string): s is Url => {
   return validator.default.isURL(s, { require_tld: false })
 }
 
-export const Url = NonEmptyString
+export const Url = S
+  .string
   .pipe(
     S.filter(isUrl, {
       arbitrary: (): Arbitrary<string> => (fc) => fc.webUrl(),
+      identifier: "Url",
       title: "Url",
       jsonSchema: { format: "uri" }
     }),
-    fromBrand(nominal<UrlBrand>(), { jsonSchema: {} }),
-    S.identifier("Url"),
     withDefaults
   )
