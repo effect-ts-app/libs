@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.219.0
+
+### Minor Changes
+
+- 564a95c: fix branded schemas
+
 ## 0.218.0
 
 ### Minor Changes

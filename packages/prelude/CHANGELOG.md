@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 0.200.0
+
+### Minor Changes
+
+- 564a95c: fix branded schemas
+
+### Patch Changes
+
+- Updated dependencies [564a95c]
+  - @effect-app/schema@0.219.0
+
 ## 0.199.0
 
 ### Minor Changes
