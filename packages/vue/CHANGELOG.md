@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 0.165.0
+
+### Minor Changes
+
+- 290a709: update packages
+
+### Patch Changes
+
+- Updated dependencies [290a709]
+  - effect-app@0.201.0
+  - @effect-app/schema@0.220.0
+  - @effect-app/core@0.169.0
+  - @effect-app/vue@0.165.0
+
 ## 0.164.1
 
 ### Patch Changes
