@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.220.2
+
+### Patch Changes
+
+- fix REST
+
 ## 0.220.1
 
 ### Patch Changes
