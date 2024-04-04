@@ -11,7 +11,7 @@ overrides:
 
 patchedDependencies:
   '@effect/schema@0.64.18':
-    hash: 7hnzcloeoya4xtz3uueiiderau
+    hash: ap6yanvizqcxf7ooeotokfgbla
     path: patches/@effect__schema@0.64.18.patch
   '@phaphoso/eslint-plugin-dprint@0.5.2':
     hash: 5r3oafqkulzxdb6awceadivssy
@@ -96,7 +96,7 @@ importers:
         version: 0.45.26(@effect/platform@0.48.24)(effect@2.4.17)
       '@effect/schema':
         specifier: ^0.64.18
-        version: 0.64.18(patch_hash=7hnzcloeoya4xtz3uueiiderau)(effect@2.4.17)(fast-check@3.17.1)
+        version: 0.64.18(patch_hash=ap6yanvizqcxf7ooeotokfgbla)(effect@2.4.17)(fast-check@3.17.1)
       '@phaphoso/eslint-plugin-dprint':
         specifier: ^0.5.2
         version: 0.5.2(patch_hash=5r3oafqkulzxdb6awceadivssy)(eslint@8.57.0)
@@ -421,7 +421,7 @@ importers:
         version: 0.48.24(@effect/schema@0.64.18)(effect@2.4.17)(ws@8.16.0)
       '@effect/schema':
         specifier: ^0.64.18
-        version: 0.64.18(patch_hash=7hnzcloeoya4xtz3uueiiderau)(effect@2.4.17)(fast-check@3.17.1)
+        version: 0.64.18(patch_hash=ap6yanvizqcxf7ooeotokfgbla)(effect@2.4.17)(fast-check@3.17.1)
       '@faker-js/faker':
         specifier: ^8.4.1
         version: 8.4.1
@@ -524,7 +524,7 @@ importers:
         version: 0.48.24(@effect/schema@0.64.18)(effect@2.4.17)(ws@8.16.0)
       '@effect/schema':
         specifier: ^0.64.18
-        version: 0.64.18(patch_hash=7hnzcloeoya4xtz3uueiiderau)(effect@2.4.17)(fast-check@3.17.1)
+        version: 0.64.18(patch_hash=ap6yanvizqcxf7ooeotokfgbla)(effect@2.4.17)(fast-check@3.17.1)
       effect:
         specifier: ^2.4.17
         version: 2.4.17
@@ -594,7 +594,7 @@ importers:
         version: 0.48.24(@effect/schema@0.64.18)(effect@2.4.17)(ws@8.16.0)
       '@effect/schema':
         specifier: ^0.64.18
-        version: 0.64.18(patch_hash=7hnzcloeoya4xtz3uueiiderau)(effect@2.4.17)(fast-check@3.17.1)
+        version: 0.64.18(patch_hash=ap6yanvizqcxf7ooeotokfgbla)(effect@2.4.17)(fast-check@3.17.1)
       '@tsconfig/strictest':
         specifier: ^2.0.5
         version: 2.0.5
@@ -658,7 +658,7 @@ importers:
         version: link:../core
       '@effect/schema':
         specifier: ^0.64.18
-        version: 0.64.18(patch_hash=7hnzcloeoya4xtz3uueiiderau)(effect@2.4.17)(fast-check@3.17.1)
+        version: 0.64.18(patch_hash=ap6yanvizqcxf7ooeotokfgbla)(effect@2.4.17)(fast-check@3.17.1)
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0
@@ -716,7 +716,7 @@ importers:
         version: 0.31.24(@effect/platform@0.48.24)(effect@2.4.17)
       '@effect/schema':
         specifier: ^0.64.18
-        version: 0.64.18(patch_hash=7hnzcloeoya4xtz3uueiiderau)(effect@2.4.17)(fast-check@3.17.1)
+        version: 0.64.18(patch_hash=ap6yanvizqcxf7ooeotokfgbla)(effect@2.4.17)(fast-check@3.17.1)
       '@formatjs/intl':
         specifier: ^2.10.1
         version: 2.10.1(typescript@5.4.3)
@@ -1492,7 +1492,7 @@ packages:
       '@effect/schema': ^0.64.18
       effect: ^2.4.17
     dependencies:
-      '@effect/schema': 0.64.18(patch_hash=7hnzcloeoya4xtz3uueiiderau)(effect@2.4.17)(fast-check@3.17.1)
+      '@effect/schema': 0.64.18(patch_hash=ap6yanvizqcxf7ooeotokfgbla)(effect@2.4.17)(fast-check@3.17.1)
       effect: 2.4.17
       find-my-way-ts: 0.1.1
       isomorphic-ws: 5.0.0(ws@8.16.0)
@@ -1501,7 +1501,7 @@ packages:
     transitivePeerDependencies:
       - ws
 
-  /@effect/schema@0.64.18(patch_hash=7hnzcloeoya4xtz3uueiiderau)(effect@2.4.17)(fast-check@3.17.1):
+  /@effect/schema@0.64.18(patch_hash=ap6yanvizqcxf7ooeotokfgbla)(effect@2.4.17)(fast-check@3.17.1):
     resolution: {integrity: sha512-utMVAjcKqmNlkJ8hzdXf3FWBOsekKbe3xhYzWLLLFCpdbTMkCFeN52l1QRXTk7rla87sNTYdMA+xcES9maOEog==}
     peerDependencies:
       effect: ^2.4.17
