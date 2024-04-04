@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.232.3
+
+### Patch Changes
+
+- 3b5e18f: add basic requestInput to Span
+
 ## 0.232.2
 
 ### Patch Changes
