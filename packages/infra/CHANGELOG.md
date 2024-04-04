@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.232.5
+
+### Patch Changes
+
+- aa081df: fix render for null/undefined
+
 ## 0.232.4
 
 ### Patch Changes
