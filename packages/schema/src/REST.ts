@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Path } from "path-parser"
-
-import type * as Methods from "./Methods.js"
-
 import type { Schema, Struct } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
 import * as Context from "effect/Context"
 import type { Simplify } from "effect/Types"
+import { Path } from "path-parser"
+import * as CS from "./Class.js"
+import type * as Methods from "./Methods.js"
 import type { AST } from "./schema.js"
 
 export type StringRecord = Record<string, string>
@@ -240,7 +239,7 @@ export function AutoRequest<M>(__name?: string) {
     PathFields & QueryFields,
     PPath
   > {
-    class Self extends S.Class<Self>()(s) {
+    class Self extends CS.Class<Self>()(s) {
       static Body = undefined
       static Path = _.path
       static Auto: any = (_ as any).auto
@@ -329,7 +328,7 @@ export function QueryRequest<M>(__name?: string) {
     PathFields & QueryFields,
     PPath
   > {
-    class Self extends S.Class<Self>()(s) {
+    class Self extends CS.Class<Self>()(s) {
       static Body = undefined
       static Path = _.path
       static Query = _.query
@@ -490,7 +489,7 @@ export function BodyRequest<M>(__name?: string) {
     OrAny<typeof _.path & typeof _.body & typeof _.query>,
     PPath
   > {
-    class Self extends S.Class<Self>()(s) {
+    class Self extends CS.Class<Self>()(s) {
       static Path = _.path
       static Body = _.body
       static Query = _.query
