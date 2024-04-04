@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.232.4
+
+### Patch Changes
+
+- c37ad01: indeed
+
 ## 0.232.3
 
 ### Patch Changes
