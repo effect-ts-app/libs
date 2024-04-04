@@ -218,6 +218,8 @@ export function makeRequestHandler<
                                 : value
                               : Array.isArray(value)
                               ? `Array[${value.length}]`
+                              : value === null || value === undefined
+                              ? `${value}`
                               : typeof value === "object" && value
                               ? `Object[${Object.keys(value).length}]`
                               : typeof value
