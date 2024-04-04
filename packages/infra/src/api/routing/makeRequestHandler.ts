@@ -206,22 +206,38 @@ export function makeRequestHandler<
                         } as unknown as ReqA
                         return hn
                       }),
-                      Effect
-                        .flatMap((parsedReq) =>
-                          handle(parsedReq)
-                            .pipe(
-                              Effect.provideService(handler.Request.Tag, parsedReq as any),
-                              Effect
-                                .flatMap(encoder),
-                              Effect
-                                .map((r) =>
-                                  res.pipe(
-                                    HttpServerResponse.setBody(HttpBody.unsafeJson(r)),
-                                    HttpServerResponse.setStatus(r === undefined ? 204 : 200)
-                                  )
-                                )
-                            )
+                      Effect.tap((parsedReq) =>
+                        Effect.annotateCurrentSpan(
+                          "requestInput",
+                          Object.entries(parsedReq).reduce((prev, [key, value]: [string, unknown]) => {
+                            prev[key] =
+                              typeof value === "string" || typeof value === "number" || typeof value === "boolean"
+                                ? typeof value === "string" && value.length > 256
+                                  ? (value.substring(0, 253) + "...")
+                                  : value
+                                : Array.isArray(value)
+                                ? `Array[${value.length}]`
+                                : typeof value === "object" && value
+                                ? `Object[${Object.keys(value).length}]`
+                                : typeof value
+                            return prev
+                          }, {} as Record<string, string | number | boolean>)
                         )
+                      ),
+                      Effect.flatMap((parsedReq) =>
+                        handle(parsedReq)
+                          .pipe(
+                            Effect.provideService(handler.Request.Tag, parsedReq as any),
+                            Effect.flatMap(encoder),
+                            Effect
+                              .map((r) =>
+                                res.pipe(
+                                  HttpServerResponse.setBody(HttpBody.unsafeJson(r)),
+                                  HttpServerResponse.setStatus(r === undefined ? 204 : 200)
+                                )
+                              )
+                          )
+                      )
                     ) as Effect<
                       HttpServerResponse.ServerResponse,
                       ValidationError | ResE,
