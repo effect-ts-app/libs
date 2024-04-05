@@ -15,6 +15,9 @@ export class NestedSchema extends S.Class<NestedSchema>()({
   password: Password
 }) {}
 
+type NestedSchemaFrom = S.Schema.Encoded<typeof NestedSchema>
+type NestedSchemaTo = S.Schema.Type<typeof NestedSchema>
+
 export class SchemaContainsClass extends S.Class<SchemaContainsClass>()({
   inner: NestedSchema
 }) {}
@@ -220,7 +223,6 @@ it("buildFieldInfo with simple union", () =>
       testNestedFieldInfo(unionFieldinfo)
       testFieldInfo(unionFieldinfo.fields.nullable)
       testFieldInfo(unionFieldinfo.fields.optional)
-      console.log({ asd: unionFieldinfo.fields.structsUnion })
       testUnionFieldInfo(unionFieldinfo.fields.structsUnion)
       testFieldInfo(unionFieldinfo.fields.generalUnion)
     })

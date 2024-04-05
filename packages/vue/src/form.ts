@@ -2,10 +2,10 @@ import * as JSONSchema from "@effect/schema/JSONSchema"
 import type { ParseError } from "@effect/schema/ParseResult"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type {} from "intl-messageformat"
+import type { Unbranded } from "@effect-app/schema/brand"
 import { Either, Option, pipe, S } from "effect-app"
 import type { Schema } from "effect-app/schema"
 
-import type { Unbranded } from "@effect-app/schema/brand"
 import type { IsUnion } from "effect-app/utils"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
@@ -61,13 +61,14 @@ export interface DiscriminatedUnionFieldInfo<T> {
   _tag: "DiscriminatedUnionFieldInfo"
 }
 
-type NestedFieldInfoKey<Key> = string | null | undefined | boolean | number | bigint | {} extends Unbranded<Key>
-  ? FieldInfo<Key>
-  : Key extends Record<PropertyKey, any> ? NestedFieldInfo<Key>
+type NestedFieldInfoKey<Key> = [Key] extends [Record<PropertyKey, any>]
+  ? Unbranded<Key> extends Record<PropertyKey, any> ? NestedFieldInfo<Key>
+  : FieldInfo<Key>
   : FieldInfo<Key>
 
 type DistributiveNestedFieldInfoKey<Key> = Key extends any ? NestedFieldInfoKey<Key> : never
 
+// IDEA: keep track of both From and To types, maybe we can gather more information
 export type NestedFieldInfo<To extends Record<PropertyKey, any>> = // exploit eventual _tag field to propagate the unique tag
   {
     fields: {
