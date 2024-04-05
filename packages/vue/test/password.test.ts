@@ -21,14 +21,10 @@ export const passwordString = S.string.pipe(
     verifyPasswordComplexity,
     {
       message: () =>
-        "a Password with at least 8 characters, one uppercase, one lowercase, one number and one special character e.g. "
+        "Expected a Password with at least 8 characters, one uppercase, one lowercase, one number and one special character e.g. "
         + symbols
     }
-  ),
-  S.minLength(8),
-  S.maxLength(50),
-  // arbitrary removes brand benefit
-  S.fromBrand(S.nominal<Password>())
+  )
 )
 
 const SecretPassword = S.SecretFromSelf as unknown as Schema<PasswordSecret>

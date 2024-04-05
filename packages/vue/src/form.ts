@@ -2,10 +2,10 @@ import * as JSONSchema from "@effect/schema/JSONSchema"
 import type { ParseError } from "@effect/schema/ParseResult"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type {} from "intl-messageformat"
-import type { Unbranded } from "@effect-app/schema/brand"
 import { Either, Option, pipe, S } from "effect-app"
 import type { Schema } from "effect-app/schema"
 
+import type { Unbranded } from "@effect-app/schema/brand"
 import type { IsUnion } from "effect-app/utils"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
@@ -61,9 +61,9 @@ export interface DiscriminatedUnionFieldInfo<T> {
   _tag: "DiscriminatedUnionFieldInfo"
 }
 
-type NestedFieldInfoKey<Key> = [Key] extends [Record<PropertyKey, any>]
-  ? Unbranded<Key> extends Record<PropertyKey, any> ? NestedFieldInfo<Key>
-  : FieldInfo<Key>
+type NestedFieldInfoKey<Key> = string | null | undefined | boolean | number | bigint | {} extends Unbranded<Key>
+  ? FieldInfo<Key>
+  : Key extends Record<PropertyKey, any> ? NestedFieldInfo<Key>
   : FieldInfo<Key>
 
 type DistributiveNestedFieldInfoKey<Key> = Key extends any ? NestedFieldInfoKey<Key> : never
@@ -268,7 +268,10 @@ function buildFieldInfo(
       ?? (Option.isSome(id2) ? customSchemaErrors.value.get(id2.value) : undefined)
 
     return custom ? custom(err, e, v) : translate.value(
-      { defaultMessage: "The entered value is not a valid {type}: {message}", id: "validation.not_a_valid" },
+      {
+        defaultMessage: `The entered value is not a valid {type}: {message}`,
+        id: "validation.not_a_valid"
+      },
       {
         type: translate.value({
           defaultMessage: capitalize(propertyKey.toString()),
