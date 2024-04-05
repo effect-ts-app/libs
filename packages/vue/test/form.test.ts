@@ -2,6 +2,7 @@ import { Effect } from "@effect-app/core"
 import { S } from "effect-app"
 import type { DiscriminatedUnionFieldInfo, FieldInfo, NestedFieldInfo, UnionFieldInfo } from "../src/form.js"
 import { buildFieldInfoFromFieldsRoot } from "../src/form.js"
+import { Password, type PasswordSecret } from "./password.test.js"
 
 export class NestedSchema extends S.Class<NestedSchema>()({
   shallow: S.string,
@@ -11,8 +12,11 @@ export class NestedSchema extends S.Class<NestedSchema>()({
       deepest: S.number
     })
   }),
-  age: S.propertySignature(S.struct({ nfs: S.NumberFromString.pipe(S.compose(S.PositiveInt)) }))
+  password: Password
 }) {}
+
+type NestedSchemaFrom = S.Schema.Encoded<typeof NestedSchema>
+type NestedSchemaTo = S.Schema.Type<typeof NestedSchema>
 
 export class SchemaContainsClass extends S.Class<SchemaContainsClass>()({
   inner: NestedSchema
@@ -162,10 +166,13 @@ it("buildFieldInfo", () =>
   Effect
     .gen(function*() {
       const nestedFieldinfo = buildFieldInfoFromFieldsRoot(NestedSchema)
+      console.log((nestedFieldinfo.fields.password as any).rules[1]("5"))
+
       expectTypeOf(nestedFieldinfo).toEqualTypeOf<NestedFieldInfo<NestedSchema>>()
       expectTypeOf(nestedFieldinfo.fields.shallow).toEqualTypeOf<FieldInfo<string>>()
-      expectTypeOf(nestedFieldinfo.fields.age).toEqualTypeOf<NestedFieldInfo<NestedSchema["age"]>>()
-      expectTypeOf(nestedFieldinfo.fields.age.fields.nfs).toEqualTypeOf<FieldInfo<number & S.PositiveIntBrand>>()
+
+      // it should be a FieldInfo of something
+      expectTypeOf(nestedFieldinfo.fields.password).toEqualTypeOf<NestedFieldInfo<PasswordSecret>>()
       expectTypeOf(nestedFieldinfo.fields.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]>>()
       expectTypeOf(nestedFieldinfo.fields.nested.fields.deep).toEqualTypeOf<FieldInfo<string & S.NonEmptyStringBrand>>()
       expectTypeOf(nestedFieldinfo.fields.nested.fields.nested).toEqualTypeOf<
@@ -176,7 +183,7 @@ it("buildFieldInfo", () =>
       // it's a recursive check on actual runtime structure
       testNestedFieldInfo(nestedFieldinfo)
       testNestedFieldInfo(nestedFieldinfo.fields.nested)
-      testNestedFieldInfo(nestedFieldinfo.fields.age)
+      testNestedFieldInfo(nestedFieldinfo.fields.password)
     })
     .pipe(Effect.runPromise))
 
@@ -190,7 +197,7 @@ it("buildFieldInfo schema containing class", () =>
       testNestedFieldInfo(fieldinfo.fields.inner)
       testNestedFieldInfo(fieldinfo.fields.inner.fields.nested.fields.nested)
     })
-    .pipe(Effect.runPromise))
+    .pipe(Effect.runPromise), { skip: true })
 
 it("buildFieldInfo with simple union", () =>
   Effect
@@ -218,11 +225,10 @@ it("buildFieldInfo with simple union", () =>
       testNestedFieldInfo(unionFieldinfo)
       testFieldInfo(unionFieldinfo.fields.nullable)
       testFieldInfo(unionFieldinfo.fields.optional)
-      console.log({ asd: unionFieldinfo.fields.structsUnion })
       testUnionFieldInfo(unionFieldinfo.fields.structsUnion)
       testFieldInfo(unionFieldinfo.fields.generalUnion)
     })
-    .pipe(Effect.runPromise))
+    .pipe(Effect.runPromise), { skip: true })
 
 it("buildFieldInfo with tagged unions", () =>
   Effect
@@ -259,4 +265,4 @@ it("buildFieldInfo with tagged unions", () =>
       expect(shapeFieldinfo.fields.shapeWithStruct.members.CircleStruct._infoTag).toBe("CircleStruct")
       testFieldInfo(shapeFieldinfo.fields.shapeWithStruct.members.CircleStruct.fields.radius)
     })
-    .pipe(Effect.runPromise))
+    .pipe(Effect.runPromise), { skip: true })

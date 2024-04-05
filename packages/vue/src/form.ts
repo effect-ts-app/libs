@@ -68,6 +68,7 @@ type NestedFieldInfoKey<Key> = [Key] extends [Record<PropertyKey, any>]
 
 type DistributiveNestedFieldInfoKey<Key> = Key extends any ? NestedFieldInfoKey<Key> : never
 
+// IDEA: keep track of both From and To types, maybe we can gather more information
 export type NestedFieldInfo<To extends Record<PropertyKey, any>> = // exploit eventual _tag field to propagate the unique tag
   {
     fields: {
@@ -110,7 +111,15 @@ function handlePropertySignature(
             propertySignature.annotations
           )
         )
-        : buildFieldInfo(propertySignature)
+        : buildFieldInfo(
+          new S.AST.PropertySignature(
+            propertySignature.name,
+            schema.ast.from,
+            propertySignature.isOptional,
+            propertySignature.isReadonly,
+            propertySignature.annotations
+          )
+        )
     }
     case "TypeLiteral": {
       return buildFieldInfoFromFieldsRoot(
@@ -260,7 +269,10 @@ function buildFieldInfo(
       ?? (Option.isSome(id2) ? customSchemaErrors.value.get(id2.value) : undefined)
 
     return custom ? custom(err, e, v) : translate.value(
-      { defaultMessage: "The entered value is not a valid {type}: {message}", id: "validation.not_a_valid" },
+      {
+        defaultMessage: `The entered value is not a valid {type}: {message}`,
+        id: "validation.not_a_valid"
+      },
       {
         type: translate.value({
           defaultMessage: capitalize(propertyKey.toString()),
