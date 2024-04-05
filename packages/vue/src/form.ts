@@ -110,7 +110,15 @@ function handlePropertySignature(
             propertySignature.annotations
           )
         )
-        : buildFieldInfo(propertySignature)
+        : buildFieldInfo(
+          new S.AST.PropertySignature(
+            propertySignature.name,
+            schema.ast.from,
+            propertySignature.isOptional,
+            propertySignature.isReadonly,
+            propertySignature.annotations
+          )
+        )
     }
     case "TypeLiteral": {
       return buildFieldInfoFromFieldsRoot(
