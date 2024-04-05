@@ -170,6 +170,8 @@ it("buildFieldInfo", () =>
 
       expectTypeOf(nestedFieldinfo).toEqualTypeOf<NestedFieldInfo<NestedSchema>>()
       expectTypeOf(nestedFieldinfo.fields.shallow).toEqualTypeOf<FieldInfo<string>>()
+
+      // it should be a FieldInfo of something
       expectTypeOf(nestedFieldinfo.fields.password).toEqualTypeOf<NestedFieldInfo<PasswordSecret>>()
       expectTypeOf(nestedFieldinfo.fields.nested).toEqualTypeOf<NestedFieldInfo<NestedSchema["nested"]>>()
       expectTypeOf(nestedFieldinfo.fields.nested.fields.deep).toEqualTypeOf<FieldInfo<string & S.NonEmptyStringBrand>>()
