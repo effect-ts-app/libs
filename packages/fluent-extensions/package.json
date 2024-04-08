@@ -6,26 +6,26 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "date-fns": "^3.6.0",
-    "nanoid": "^5.0.6",
+    "nanoid": "^5.0.7",
     "path-parser": "^6.1.0",
     "query-string": "^9.0.0",
-    "ts-pattern": "^5.1.0",
+    "ts-pattern": "^5.1.1",
     "uuid": "^9.0.1",
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.24",
-    "effect": "^2.4.17"
+    "@effect/platform": "^0.48.27",
+    "effect": "^2.4.18"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
     "@faker-js/faker": "^8.4.1",
-    "@types/node": "~20.12.3",
+    "@types/node": "~20.12.5",
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.9",
     "fast-check": "~3.17.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.3",
+    "typescript": "^5.4.4",
     "vitest": "^1.4.0"
   },
   "typesVersions": {

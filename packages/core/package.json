@@ -12,15 +12,15 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "effect": "^2.4.17",
-    "@effect/platform": "^0.48.24"
+    "effect": "^2.4.18",
+    "@effect/platform": "^0.48.27"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.9",
     "@babel/cli": "^7.24.1",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "^5.4.3",
+    "typescript": "^5.4.4",
     "vitest": "^1.4.0"
   },
   "scripts": {
