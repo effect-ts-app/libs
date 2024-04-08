@@ -477,15 +477,19 @@ export function makeRepo<
               )
 
           const saveAndPublish = (items: Iterable<T>, events: Iterable<Evt> = []) => {
-            const it = Chunk.fromIterable(items)
-            return saveAll(it)
-              .pipe(
-                Effect.andThen(Effect.sync(() => toNonEmptyArray([...events]))),
-                // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
-                (_) => Effect.flatMapOption(_, pub),
-                Effect.andThen(changeFeed.publish([Chunk.toArray(it), "save"])),
-                Effect.asUnit
-              )
+            return Effect
+              .suspend(() => {
+                const it = Chunk.fromIterable(items)
+                return saveAll(it)
+                  .pipe(
+                    Effect.andThen(Effect.sync(() => toNonEmptyArray([...events]))),
+                    // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
+                    (_) => Effect.flatMapOption(_, pub),
+                    Effect.andThen(changeFeed.publish([Chunk.toArray(it), "save"])),
+                    Effect.asUnit
+                  )
+              })
+              .pipe(Effect.withSpan("saveAndPublish"))
           }
 
           function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
@@ -617,7 +621,8 @@ export function makeRepo<
                       Effect.flatMap(decMany),
                       Effect.map((_) => _ as any[])
                     ),
-                save: (...xes: any[]) => Effect.flatMap(encMany(xes), (_) => saveAllE(_))
+                save: (...xes: any[]) =>
+                  Effect.flatMap(encMany(xes), (_) => saveAllE(_)).pipe(Effect.withSpan("mapped.save"))
               }
             }
           }
