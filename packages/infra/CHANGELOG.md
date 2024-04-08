@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.232.6
+
+### Patch Changes
+
+- f80c0f0: add saveAndPublish span
+
 ## 0.232.5
 
 ### Patch Changes
