@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 0.153.4
+
+### Patch Changes
+
+- c152282: enable multi receiver for servicebus
+
 ## 0.153.3
 
 ### Patch Changes
