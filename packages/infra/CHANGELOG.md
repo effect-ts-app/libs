@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.232.9
+
+### Patch Changes
+
+- c6942f1: improve parent span queue handling
+
 ## 0.232.8
 
 ### Patch Changes
