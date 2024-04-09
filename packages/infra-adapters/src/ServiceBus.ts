@@ -8,7 +8,7 @@ import type {
   ServiceBusSender
 } from "@azure/service-bus"
 import { ServiceBusClient } from "@azure/service-bus"
-import { Context, Effect, Layer, Runtime } from "effect-app"
+import { Context, Effect, Layer, Runtime, Scope } from "effect-app"
 
 function makeClient(url: string) {
   return Effect.acquireRelease(
@@ -51,9 +51,9 @@ function makeReceiver(queueName: string) {
   })
 }
 
-export const Receiver = Context.GenericTag<ServiceBusReceiver>("@services/Receiver")
+export const Receiver = Context.GenericTag<{ make: Effect<ServiceBusReceiver, never, Scope>}>("@services/Receiver")
 export function LiveReceiver(queueName: string) {
-  return Layer.scoped(Receiver, makeReceiver(queueName))
+  return Layer.effect(Receiver, Client.pipe(Effect.andThen((cl) => ({ make: makeReceiver(queueName).pipe(Effect.provideService(Client, cl)) }))))
 }
 
 export function sendMessages(
@@ -68,7 +68,8 @@ export function sendMessages(
 
 export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
   return Effect.gen(function*($) {
-    const r = yield* $(Receiver)
+    const rf = yield* $(Receiver)
+    const r = yield* $(rf.make)
 
     yield* $(
       Effect.acquireRelease(
@@ -96,11 +97,6 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
   })
 }
 
-const SubscribeTag = Context.GenericTag<Effect.Success<ReturnType<typeof subscribe>>>("@services/SubscribeTag")
-
-export function Subscription<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
-  return Layer.scoped(SubscribeTag, subscribe(hndlr))
-}
 
 export interface MessageHandlers<RMsg, RErr> {
   /**
