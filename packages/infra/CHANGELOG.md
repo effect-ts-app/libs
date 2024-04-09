@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 0.233.0
+
+### Minor Changes
+
+- feat: queue sessionId (service bus)
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/infra-adapters@0.154.0
+
 ## 0.232.10
 
 ### Patch Changes
