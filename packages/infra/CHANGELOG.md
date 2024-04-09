@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.232.10
+
+### Patch Changes
+
+- 44ab467: include quename at drain request name
+
 ## 0.232.9
 
 ### Patch Changes
