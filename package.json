@@ -83,7 +83,7 @@
     "concurrently": "^8.2.2",
     "dprint": "^0.45.1",
     "enhanced-resolve": "^5.16.0",
-    "eslint": "^9.0.0",
+    "eslint": "^8.57.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-import-resolver-webpack": "^0.13.8",
     "eslint-plugin-codegen": "0.17.0",
