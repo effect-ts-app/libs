@@ -79,7 +79,7 @@ export function makeMemQueue<
                             RequestContext.inherit(meta.requestContext, {
                               id: RequestId(body.id),
                               locale: "en" as const,
-                              name: NonEmptyString255(body._tag)
+                              name: NonEmptyString255(`${queueDrainName}.${body._tag}`)
                             })
                           ),
                         Effect
