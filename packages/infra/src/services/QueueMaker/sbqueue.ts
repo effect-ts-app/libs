@@ -10,7 +10,7 @@ import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { Tracer } from "effect"
-import { Effect, flow, Layer, S } from "effect-app"
+import { Effect, flow, Layer, Option, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import type { StringId } from "effect-app/schema"
 import { NonEmptyString255, struct } from "effect-app/schema"
@@ -63,18 +63,16 @@ export function makeServiceBusQueue<
                   Effect.flatMap((x) => parseDrain(x)),
                   Effect.orDie,
                   Effect
-                    .flatMap(({ body, meta }) =>
-                      Effect
+                    .flatMap(({ body, meta }) => {
+                      let effect = Effect
                         .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
                         .pipe(
                           Effect.annotateLogs({
                             body: pretty(body),
                             meta: pretty(meta)
                           }),
-                          Effect
-                            .zipRight(handleEvent(body)),
-                          Effect
-                            .orDie
+                          Effect.zipRight(handleEvent(body)),
+                          Effect.orDie
                         )
                         // we silenceAndReportError here, so that the error is reported, and moves into the Exit.
                         .pipe(
@@ -89,14 +87,15 @@ export function makeServiceBusQueue<
                               })
                             ),
                           Effect
-                            .withSpan("queue.drain", {
-                              attributes: { "queue.name": queueDrainName },
-                              parent: meta.span
-                                ? Tracer.externalSpan(meta.span)
-                                : undefined
+                            .withSpan(`queue.drain: ${queueDrainName}`, {
+                              attributes: { "queue.name": queueDrainName }
                             })
                         )
-                    ),
+                      if (meta.span) {
+                        effect = Effect.withParentSpan(effect, Tracer.externalSpan(meta.span))
+                      }
+                      return effect
+                    }),
                   Effect
                     // we reportError here, so that we report the error only, and keep flowing
                     .tapErrorCause(reportError)
@@ -117,15 +116,17 @@ export function makeServiceBusQueue<
         Effect
           .gen(function*($) {
             const requestContext = yield* $(rcc.requestContext)
-            const currentSpan = yield* $(Effect.currentSpan.pipe(Effect.orDie))
-            const span = Tracer.externalSpan(currentSpan)
+            const span = yield* $(Effect.serviceOption(Tracer.ParentSpan))
             return yield* $(
               Effect
                 .promise(() =>
                   s.sendMessages(
                     messages.map((m) => ({
                       body: JSON.stringify(
-                        S.encodeSync(wireSchema)({ body: m, meta: { requestContext, span } })
+                        S.encodeSync(wireSchema)({
+                          body: m,
+                          meta: { requestContext, span: Option.getOrUndefined(span) }
+                        })
                       ),
                       messageId: m.id, /* correllationid: requestId */
                       contentType: "application/json"

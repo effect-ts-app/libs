@@ -2,7 +2,7 @@ import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { NonEmptyString255, struct } from "@effect-app/schema"
 import { Tracer } from "effect"
-import { Effect, Fiber, flow, S } from "effect-app"
+import { Effect, Fiber, flow, Option, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import { pretty } from "effect-app/utils"
 import { setupRequestContext } from "../../api/setupRequest.js"
@@ -39,13 +39,12 @@ export function makeMemQueue<
         Effect
           .gen(function*($) {
             const requestContext = yield* $(rcc.requestContext)
-            const currentSpan = yield* $(Effect.currentSpan.pipe(Effect.orDie))
-            const span = Tracer.externalSpan(currentSpan)
+            const span = yield* $(Effect.serviceOption(Tracer.ParentSpan))
             return yield* $(
               Effect
                 .forEach(messages, (m) =>
                   // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-                  S.encode(wireSchema)({ body: m, meta: { requestContext, span } }).pipe(
+                  S.encode(wireSchema)({ body: m, meta: { requestContext, span: Option.getOrUndefined(span) } }).pipe(
                     Effect.orDie,
                     Effect
                       .andThen(JSON.stringify),
@@ -65,11 +64,10 @@ export function makeMemQueue<
               .sync(() => JSON.parse(msg))
               .pipe(
                 Effect.flatMap(parseDrain),
+                Effect.orDie,
                 Effect
-                  .orDie,
-                Effect
-                  .flatMap(({ body, meta }) =>
-                    Effect
+                  .flatMap(({ body, meta }) => {
+                    let effect = Effect
                       .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
                       .pipe(
                         Effect.annotateLogs({ body: pretty(body), meta: pretty(meta) }),
@@ -85,14 +83,15 @@ export function makeMemQueue<
                             })
                           ),
                         Effect
-                          .withSpan("queue.drain", {
-                            attributes: { "queue.name": queueDrainName },
-                            parent: meta.span
-                              ? Tracer.externalSpan(meta.span)
-                              : undefined
+                          .withSpan(`queue.drain: ${queueDrainName}`, {
+                            attributes: { "queue.name": queueDrainName }
                           })
                       )
-                  )
+                    if (meta.span) {
+                      effect = Effect.withParentSpan(effect, Tracer.externalSpan(meta.span))
+                    }
+                    return effect
+                  })
               )
           return yield* $(
             qDrain
