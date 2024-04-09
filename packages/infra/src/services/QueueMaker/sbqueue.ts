@@ -51,7 +51,8 @@ export function makeServiceBusQueue<
 
     return {
       drain: <DrainE, DrainR>(
-        handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>
+        handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>,
+        sessionId?: string
       ) =>
         Effect
           .gen(function*($) {
@@ -87,8 +88,8 @@ export function makeServiceBusQueue<
                               })
                             ),
                           Effect
-                            .withSpan(`queue.drain: ${queueDrainName}`, {
-                              attributes: { "queue.name": queueDrainName }
+                            .withSpan(`queue.drain: ${queueDrainName}${sessionId ? `#${sessionId}` : ""}`, {
+                              attributes: { "queue.name": queueDrainName, "queue.sessionId": sessionId }
                             })
                         )
                       if (meta.span) {
@@ -106,7 +107,7 @@ export function makeServiceBusQueue<
               subscribe({
                 processMessage: (x) => processMessage(x.body).pipe(Effect.uninterruptible),
                 processError: (err) => Effect.sync(() => captureException(err.error))
-              })
+              }, sessionId)
                 .pipe(Effect.provide(receiverLayer))
             )
           })
@@ -129,7 +130,8 @@ export function makeServiceBusQueue<
                         })
                       ),
                       messageId: m.id, /* correllationid: requestId */
-                      contentType: "application/json"
+                      contentType: "application/json",
+                      sessionId: "sessionId" in m ? m.sessionId : undefined
                     }))
                   )
                 )

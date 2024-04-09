@@ -8,7 +8,8 @@ import type {
   ServiceBusSender
 } from "@azure/service-bus"
 import { ServiceBusClient } from "@azure/service-bus"
-import { Context, Effect, Layer, Runtime, Scope } from "effect-app"
+import type { Scope } from "effect-app"
+import { Context, Effect, Layer, Runtime } from "effect-app"
 
 function makeClient(url: string) {
   return Effect.acquireRelease(
@@ -38,22 +39,35 @@ export function LiveSender(queueName: string) {
   return Layer.scoped(Sender, makeSender(queueName))
 }
 
-function makeReceiver(queueName: string) {
+function makeReceiver(queueName: string, sessionId?: string) {
   return Effect.gen(function*($) {
     const serviceBusClient = yield* $(Client)
 
     return yield* $(
       Effect.acquireRelease(
-        Effect.sync(() => serviceBusClient.createReceiver(queueName)),
+        sessionId
+          ? Effect.promise(() => serviceBusClient.acceptSession(queueName, sessionId))
+          : Effect.sync(() => serviceBusClient.createReceiver(queueName)),
         (r) => Effect.promise(() => r.close())
       )
     )
   })
 }
 
-export const Receiver = Context.GenericTag<{ make: Effect<ServiceBusReceiver, never, Scope>}>("@services/Receiver")
+export const Receiver = Context.GenericTag<
+  {
+    make: Effect<ServiceBusReceiver, never, Scope>
+    makeSession: (sessionId: string) => Effect<ServiceBusReceiver, never, Scope>
+  }
+>("@services/Receiver")
 export function LiveReceiver(queueName: string) {
-  return Layer.effect(Receiver, Client.pipe(Effect.andThen((cl) => ({ make: makeReceiver(queueName).pipe(Effect.provideService(Client, cl)) }))))
+  return Layer.effect(
+    Receiver,
+    Client.pipe(Effect.andThen((cl) => ({
+      make: makeReceiver(queueName).pipe(Effect.provideService(Client, cl)),
+      makeSession: (sessionId: string) => makeReceiver(queueName, sessionId).pipe(Effect.provideService(Client, cl))
+    })))
+  )
 }
 
 export function sendMessages(
@@ -66,37 +80,34 @@ export function sendMessages(
   })
 }
 
-export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>) {
+export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>, sessionId?: string) {
   return Effect.gen(function*($) {
     const rf = yield* $(Receiver)
-    const r = yield* $(rf.make)
+    const r = yield* $(sessionId ? rf.makeSession(sessionId) : rf.make)
 
     yield* $(
       Effect.acquireRelease(
         Effect.map(
-          Effect
-            .runtime<RMsg | RErr>(),
-          (rt) =>
-            r.subscribe({
+          Effect.runtime<RMsg | RErr>(),
+          (rt) => {
+            const runPromise = Runtime.runPromise(rt)
+            return r.subscribe({
               processError: (err) =>
-                Runtime.runPromise(rt)(
+                runPromise(
                   hndlr
                     .processError(err)
                     .pipe(Effect.catchAllCause((cause) => Effect.logError("ServiceBus Error", cause)))
                 ),
-              processMessage: (msg) =>
-                Runtime.runPromise(rt)(
-                  hndlr.processMessage(msg)
-                )
+              processMessage: (msg) => runPromise(hndlr.processMessage(msg))
               // DO NOT CATCH ERRORS here as they should return to the queue!
             })
+          }
         ),
         (subscription) => Effect.promise(() => subscription.close())
       )
     )
   })
 }
-
 
 export interface MessageHandlers<RMsg, RErr> {
   /**
