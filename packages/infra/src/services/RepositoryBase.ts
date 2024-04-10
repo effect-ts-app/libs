@@ -47,35 +47,34 @@ import { make as makeQuery } from "./query.js"
 import type { QAll, Query, QueryEnd, QueryProjection, QueryWhere } from "./query.js"
 import * as Q from "./query.js"
 import { ContextMapContainer } from "./Store/ContextMapContainer.js"
-import type * as QB from "./Store/filterApi/query.js"
 
 export interface Mapped1<A, Encoded extends { id: string }, R> {
   all: Effect<A[], ParseResult.ParseError, R>
   save: (...xes: readonly A[]) => Effect<void, OptimisticConcurrencyException | ParseResult.ParseError, R>
-  query: (
-    b: (fn: QB.FilterTest<Encoded>, fields: QB.Filter<Encoded, never>) => QB.QueryBuilder<Encoded>
-  ) => Effect<A[], ParseResult.ParseError, R>
+  // query: (
+  //   b: (fn: QB.FilterTest<Encoded>, fields: QB.Filter<Encoded, never>) => QB.QueryBuilder<Encoded>
+  // ) => Effect<A[], ParseResult.ParseError, R>
   find: (id: Encoded["id"]) => Effect<Option<A>, ParseResult.ParseError, R>
 }
 
 // TODO: auto use project, and select fields from the From side of schema only
-export interface Mapped2<A, Encoded extends { id: string }, R> {
+export interface Mapped2<A, R> {
   all: Effect<A[], ParseResult.ParseError, R>
-  query: (
-    b: (fn: QB.FilterTest<Encoded>, fields: QB.Filter<Encoded, never>) => QB.QueryBuilder<Encoded>
-  ) => Effect<A[], ParseResult.ParseError, R>
+  // query: (
+  //   b: (fn: QB.FilterTest<Encoded>, fields: QB.Filter<Encoded, never>) => QB.QueryBuilder<Encoded>
+  // ) => Effect<A[], ParseResult.ParseError, R>
 }
 
 export interface Mapped<Encoded extends { id: string }> {
   <A, R>(schema: S.Schema<A, Encoded, R>): Mapped1<A, Encoded, R>
   // TODO: constrain on Encoded2 having to contain only fields that fit Encoded
-  <A, Encoded2, R>(schema: S.Schema<A, Encoded2, R>): Mapped2<A, Encoded, R>
+  <A, Encoded2, R>(schema: S.Schema<A, Encoded2, R>): Mapped2<A, R>
 }
 
 export interface MM<Repo, Encoded extends { id: string }> {
   <A, R>(schema: S.Schema<A, Encoded, R>): Effect<Mapped1<A, Encoded, R>, never, Repo>
   // TODO: constrain on Encoded2 having to contain only fields that fit Encoded
-  <A, Encoded2, R>(schema: S.Schema<A, Encoded2, R>): Effect<Mapped2<A, Encoded, R>, never, Repo>
+  <A, Encoded2, R>(schema: S.Schema<A, Encoded2, R>): Effect<Mapped2<A, R>, never, Repo>
 }
 
 /**
@@ -587,7 +586,7 @@ export function makeRepo<
               Effect.withSpan("Repository.query [effect-app/infra]", {
                 attributes: {
                   "repository.model_name": name,
-                  query: { ...a, schema: a.schema ? "__SCHEMA__" : a.schema }
+                  query: { ...a, schema: a.schema ? "__SCHEMA__" : a.schema, filter: a.filter.build() }
                 }
               })
             )
@@ -615,12 +614,21 @@ export function makeRepo<
                   Effect.map((_) => _ as any[])
                 ),
                 find: (id: Encoded["id"]) => flatMapOption(findE(id), dec),
-                query: (b: any) =>
-                  filter({ filter: b })
-                    .pipe(
-                      Effect.flatMap(decMany),
-                      Effect.map((_) => _ as any[])
-                    ),
+                // query: (q: any) => {
+                //   const a = Q.toFilter(q)
+
+                //   return filter(a)
+                //     .pipe(
+                //       Effect.flatMap(decMany),
+                //       Effect.map((_) => _ as any[]),
+                //       Effect.withSpan("Repository.mapped.query [effect-app/infra]", {
+                //         attributes: {
+                //           "repository.model_name": name,
+                //           query: { ...a, schema: a.schema ? "__SCHEMA__" : a.schema, filter: a.filter.build() }
+                //         }
+                //       })
+                //     )
+                // },
                 save: (...xes: any[]) =>
                   Effect.flatMap(encMany(xes), (_) => saveAllE(_)).pipe(Effect.withSpan("mapped.save"))
               }
