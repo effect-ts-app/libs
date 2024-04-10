@@ -66,7 +66,7 @@ export function makeServiceBusQueue<
                   Effect
                     .flatMap(({ body, meta }) => {
                       let effect = Effect
-                        .logDebug(`$$ [${queueDrainName}] Processing incoming message`)
+                        .logInfo(`$$ [${queueDrainName}] Processing incoming message`)
                         .pipe(
                           Effect.annotateLogs({
                             body: pretty(body),
