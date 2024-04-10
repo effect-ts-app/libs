@@ -54,7 +54,8 @@ export function makeMemQueue<
             )
           }),
       drain: <DrainE, DrainR>(
-        handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>
+        handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>,
+        sessionId?: string
       ) =>
         Effect.gen(function*($) {
           const silenceAndReportError = reportNonInterruptedFailure({ name: "MemQueue.drain." + queueDrainName })
@@ -84,7 +85,28 @@ export function makeMemQueue<
                           ),
                         Effect
                           .withSpan(`queue.drain: ${queueDrainName}`, {
-                            attributes: { "queue.name": queueDrainName }
+                            attributes: {
+                              "queue.name": queueDrainName,
+                              "queue.sessionId": sessionId,
+                              "queue.input": Object.entries(body).reduce((prev, [key, value]: [string, unknown]) => {
+                                prev[key] = key === "password"
+                                  ? "<redacted>"
+                                  : typeof value === "string"
+                                      || typeof value === "number"
+                                      || typeof value === "boolean"
+                                  ? typeof value === "string" && value.length > 256
+                                    ? (value.substring(0, 253) + "...")
+                                    : value
+                                  : Array.isArray(value)
+                                  ? `Array[${value.length}]`
+                                  : value === null || value === undefined
+                                  ? `${value}`
+                                  : typeof value === "object" && value
+                                  ? `Object[${Object.keys(value).length}]`
+                                  : typeof value
+                                return prev
+                              }, {} as Record<string, string | number | boolean>)
+                            }
                           })
                       )
                     if (meta.span) {
