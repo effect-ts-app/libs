@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.233.2
+
+### Patch Changes
+
+- bcacc01: log incoming messages to info
+
 ## 0.233.1
 
 ### Patch Changes
