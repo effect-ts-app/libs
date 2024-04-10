@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.233.1
+
+### Patch Changes
+
+- 8bb7624: improve: add queue.input to span
+
 ## 0.233.0
 
 ### Minor Changes
