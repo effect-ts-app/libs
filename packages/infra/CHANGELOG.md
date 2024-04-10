@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.233.3
+
+### Patch Changes
+
+- 9a20c41: improve query trace
+
 ## 0.233.2
 
 ### Patch Changes
