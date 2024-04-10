@@ -9,7 +9,8 @@
     "redis",
     "@types/redis",
     "react-hook-form",
-    "eslint-plugin-codegen"
+    "eslint-plugin-codegen",
+    "eslint"
   ],
   "dep": [
     "prod",
