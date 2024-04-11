@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.233.4
+
+### Patch Changes
+
+- 4b4e40a: fix: recording updated requestcontext attributes
+
 ## 0.233.3
 
 ### Patch Changes
