@@ -155,6 +155,9 @@ export type ThenArg<T> = T extends Promise<infer U> ? U
   : T extends (...args: any[]) => Promise<infer V> ? V
   : T
 
+/**
+ * @deprecated TODO: does not filter optional fields!
+ */
 type NoUndefinedField<T> = { [P in keyof T]: Exclude<T[P], undefined> }
 export function dropUndefinedT<A extends Record<string, any>>(
   input: A

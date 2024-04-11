@@ -586,7 +586,7 @@ export function makeRepo<
               Effect.withSpan("Repository.query [effect-app/infra]", {
                 attributes: {
                   "repository.model_name": name,
-                  query: { ...a, schema: a.schema ? "__SCHEMA__" : a.schema, filter: a.filter.build() }
+                  query: { ...a, schema: a.schema ? "__SCHEMA__" : a.schema, filter: a.filter?.build() }
                 }
               })
             )
