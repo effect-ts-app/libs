@@ -37,7 +37,7 @@
     "mongodb": "6.5.0",
     "redis": "^3.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.4",
+    "typescript": "^5.4.5",
     "vitest": "^1.4.0"
   },
   "peerDependencies": {

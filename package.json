@@ -6,7 +6,7 @@
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "@effect/schema@0.64.20": "patches/@effect__schema@0.64.20.patch",
-      "typescript@5.4.4": "patches/typescript@5.4.4.patch"
+      "typescript@5.4.5": "patches/typescript@5.4.5.patch"
     }
   },
   "scripts": {
@@ -103,7 +103,7 @@
     "tsc-watch": "^6.2.0",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.7.2",
-    "typescript": "^5.4.4",
+    "typescript": "^5.4.5",
     "typescript-transform-paths": "^3.4.7",
     "unplugin-auto-import": "^0.17.5",
     "vite": "^5.2.8",
