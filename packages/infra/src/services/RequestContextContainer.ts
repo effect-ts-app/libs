@@ -41,7 +41,7 @@ export abstract class RequestContextContainer
         RequestContextContainer.of({
           requestContext: FiberRef.get(ref),
           update: (f: (a: RequestContext) => RequestContext) =>
-            Effect.tap(FiberRef.getAndUpdate(ref, f), (rc) => Effect.annotateCurrentSpan(spanAttributes(rc))),
+            Effect.tap(FiberRef.updateAndGet(ref, f), (rc) => Effect.annotateCurrentSpan(spanAttributes(rc))),
           start: (a: RequestContext) => Effect.zipRight(FiberRef.set(ref, a), restoreFromRequestContext(a))
         })
       ),
@@ -57,6 +57,7 @@ export const RCTag = Context.GenericTag<RequestContext>("@services/RCTag")
  */
 export const spanAttributes = (ctx: RequestContext) => ({
   "request.id": ctx.id,
+  "request.root.id": ctx.rootId,
   "request.name": ctx.name,
   "request.locale": ctx.locale,
   "request.namespace": ctx.namespace,
