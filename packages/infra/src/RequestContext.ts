@@ -1,9 +1,10 @@
-import { literal, NonEmptyString255, struct, TaggedClass } from "@effect-app/schema"
+import { ExtendedTaggedClass, literal, NonEmptyString255, struct } from "@effect-app/schema"
 import { S } from "effect-app"
 import { RequestId, UserProfileId } from "effect-app/ids"
 
-export class RequestContextParent extends TaggedClass<
-  RequestContextParent
+export class RequestContextParent extends ExtendedTaggedClass<
+  RequestContextParent,
+  RequestContextParent.From
 >()("RequestContext", {
   id: RequestId,
   name: NonEmptyString255,
@@ -16,8 +17,9 @@ export class RequestContextParent extends TaggedClass<
  * @tsplus type RequestContext
  * @tsplus companion RequestContext.Ops
  */
-export class RequestContext extends TaggedClass<
-  RequestContext
+export class RequestContext extends ExtendedTaggedClass<
+  RequestContext,
+  RequestContext.From
 >()("RequestContext", {
   ...RequestContextParent.omit("_tag", "id"),
   id: RequestId.withDefault,
@@ -56,9 +58,34 @@ export class RequestContext extends TaggedClass<
   }
 }
 
+export const spanAttributes = (ctx: RequestContext) => ({
+  "request.id": ctx.id,
+  "request.root.id": ctx.rootId,
+  "request.name": ctx.name,
+  "request.locale": ctx.locale,
+  "request.namespace": ctx.namespace,
+  ...(ctx.userProfile?.sub
+    ? {
+      "request.user.sub": ctx
+        .userProfile
+        .sub,
+      "request.user.roles": "roles" in ctx
+          .userProfile
+        ? ctx.userProfile.roles
+        : undefined
+    }
+    : {})
+})
+
 // codegen:start {preset: model}
 //
 /* eslint-disable */
+export namespace RequestContextParent {
+  export interface From extends S.Struct.Encoded<typeof RequestContextParent["fields"]> {}
+}
+export namespace RequestContext {
+  export interface From extends S.Struct.Encoded<typeof RequestContext["fields"]> {}
+}
 /* eslint-enable */
 //
 // codegen:end

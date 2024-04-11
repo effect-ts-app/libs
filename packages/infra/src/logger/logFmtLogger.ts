@@ -1,5 +1,5 @@
 import { HashMap, Logger, Option } from "effect-app"
-import { spanAttributes } from "src/services/RequestContextContainer.js"
+import { spanAttributes } from "../RequestContext.js"
 import { getRequestContext } from "./shared.js"
 
 export const logfmtLogger = Logger.make<unknown, void>(

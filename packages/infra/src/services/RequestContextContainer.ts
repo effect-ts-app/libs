@@ -1,7 +1,7 @@
 import { NonEmptyString255 } from "@effect-app/schema"
 import { Context, Effect, FiberRef, Layer, Option } from "effect-app"
 import { RequestId } from "effect-app/ids"
-import { RequestContext } from "../RequestContext.js"
+import { RequestContext, spanAttributes } from "../RequestContext.js"
 import { restoreFromRequestContext } from "./Store/Memory.js"
 
 /**
@@ -51,25 +51,3 @@ export abstract class RequestContextContainer
 
 /** @tsplus static RequestContext.Ops Tag */
 export const RCTag = Context.GenericTag<RequestContext>("@services/RCTag")
-
-/**
- * @tsplus getter RequestContext spanAttributes
- */
-export const spanAttributes = (ctx: RequestContext) => ({
-  "request.id": ctx.id,
-  "request.root.id": ctx.rootId,
-  "request.name": ctx.name,
-  "request.locale": ctx.locale,
-  "request.namespace": ctx.namespace,
-  ...(ctx.userProfile?.sub
-    ? {
-      "request.user.sub": ctx
-        .userProfile
-        .sub,
-      "request.user.roles": "roles" in ctx
-          .userProfile
-        ? ctx.userProfile.roles
-        : undefined
-    }
-    : {})
-})

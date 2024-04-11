@@ -1,8 +1,8 @@
 import { NonEmptyString255 } from "@effect-app/schema"
 import { Effect, Layer, pipe } from "effect-app"
 import { RequestId } from "effect-app/ids"
-import { RequestContext } from "../RequestContext.js"
-import { RequestContextContainer, spanAttributes } from "../services/RequestContextContainer.js"
+import { RequestContext, spanAttributes } from "../RequestContext.js"
+import { RequestContextContainer } from "../services/RequestContextContainer.js"
 import { ContextMapContainer } from "../services/Store/ContextMapContainer.js"
 
 function makeInternalRequestContext(name: string) {
