@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.169.1
+
+### Patch Changes
+
+- fix opt
+
 ## 0.169.0
 
 ### Minor Changes
