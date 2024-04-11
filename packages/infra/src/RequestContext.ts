@@ -24,6 +24,7 @@ export class RequestContext extends ExtendedTaggedClass<
   ...RequestContextParent.omit("_tag", "id"),
   id: RequestId.withDefault,
   rootId: RequestId,
+  sourceId: S.optional(NonEmptyString255),
   parent: S.optional(RequestContextParent),
   namespace: S.optional(NonEmptyString255)
   // ...RequestContextParent.omit("id").extend({
@@ -64,6 +65,7 @@ export const spanAttributes = (ctx: RequestContext) => ({
   "request.name": ctx.name,
   "request.locale": ctx.locale,
   "request.namespace": ctx.namespace,
+  ...ctx.sourceId ? { "request.source.id": ctx.sourceId } : {},
   ...(ctx.userProfile?.sub
     ? {
       "request.user.sub": ctx
