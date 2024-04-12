@@ -1,14 +1,11 @@
-import { Context, Effect, Fiber, FiberSet, Layer } from "@effect-app/core"
+import type { Fiber } from "@effect-app/core"
+import { Context, Effect, FiberSet, Layer } from "@effect-app/core"
 
 import type {} from "effect/Scope"
 import type {} from "effect/Context"
 
 const make = Effect.gen(function*($) {
   const set = yield* $(FiberSet.make<never, never>())
-  const join = Effect.sync(() => [...set]).pipe(
-    Effect.tap((bag) => Effect.logDebug("[FiberBag] Joining " + bag.length + " fibers")),
-    Effect.andThen(Fiber.joinAll)
-  )
   const add = (...fibers: Fiber.RuntimeFiber<never, never>[]) =>
     Effect.sync(() => fibers.forEach((_) => FiberSet.unsafeAdd(set, _)))
   const addAll = (fibers: readonly Fiber.RuntimeFiber<never, never>[]) =>
@@ -17,7 +14,7 @@ const make = Effect.gen(function*($) {
   const run = FiberSet.run(set)
 
   return {
-    join,
+    join: FiberSet.join(set),
     run,
     add,
     addAll
