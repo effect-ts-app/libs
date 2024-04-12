@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 0.154.4
+
+### Patch Changes
+
+- 9397724: use fiberset
+
 ## 0.154.3
 
 ### Patch Changes
