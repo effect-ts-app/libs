@@ -9,7 +9,7 @@ import type {
 } from "@azure/service-bus"
 import { ServiceBusClient } from "@azure/service-bus"
 import type { Scope } from "effect-app"
-import { Context, Effect, Layer, Runtime } from "effect-app"
+import { Cause, Context, Effect, Exit, FiberSet, Layer } from "effect-app"
 
 function makeClient(url: string) {
   return Effect.acquireRelease(
@@ -88,17 +88,27 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>, sessio
     yield* $(
       Effect.acquireRelease(
         Effect.map(
-          Effect.runtime<RMsg | RErr>(),
+          FiberSet.makeRuntime<RMsg | RErr>(),
           (rt) => {
-            const runPromise = Runtime.runPromise(rt)
+            const runEffect = <E>(effect: Effect<void, E, RMsg | RErr>) =>
+              new Promise<void>((resolve, reject) =>
+                rt(effect)
+                  .addObserver((exit) => {
+                    if (Exit.isSuccess(exit)) {
+                      resolve(exit.value)
+                    } else {
+                      reject(Cause.pretty(exit.cause))
+                    }
+                  })
+              )
             return r.subscribe({
               processError: (err) =>
-                runPromise(
+                runEffect(
                   hndlr
                     .processError(err)
                     .pipe(Effect.catchAllCause((cause) => Effect.logError("ServiceBus Error", cause)))
                 ),
-              processMessage: (msg) => runPromise(hndlr.processMessage(msg))
+              processMessage: (msg) => runEffect(hndlr.processMessage(msg))
               // DO NOT CATCH ERRORS here as they should return to the queue!
             })
           }
