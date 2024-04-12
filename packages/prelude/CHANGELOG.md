@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.201.6
+
+### Patch Changes
+
+- 4a242e9: use built in FiberSet.join
+
 ## 0.201.5
 
 ### Patch Changes
