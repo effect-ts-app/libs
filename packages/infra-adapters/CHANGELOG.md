@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 0.154.5
+
+### Patch Changes
+
+- f4b0deb: wait until outstanding responses are done.
+
 ## 0.154.4
 
 ### Patch Changes
