@@ -1,9 +1,8 @@
 import {
-  LiveReceiver,
   LiveSender,
   LiveServiceBusClient,
-  Receiver,
   Sender,
+  ServiceBusReceiverFactory,
   subscribe
 } from "@effect-app/infra-adapters/ServiceBus"
 import type {} from "@azure/service-bus"
@@ -43,8 +42,7 @@ export function makeServiceBusQueue<
 
   return Effect.gen(function*($) {
     const s = yield* $(Sender)
-    const receiver = yield* $(Receiver)
-    const receiverLayer = Layer.succeed(Receiver, receiver)
+    const receiver = yield* $(ServiceBusReceiverFactory)
     const silenceAndReportError = reportNonInterruptedFailure({ name: "ServiceBusQueue.drain." + queueDrainName })
     const reportError = reportNonInterruptedFailureCause({ name: "ServiceBusQueue.drain." + queueDrainName })
     const rcc = yield* $(RequestContextContainer)
@@ -129,7 +127,7 @@ export function makeServiceBusQueue<
                 processMessage: (x) => processMessage(x.body).pipe(Effect.uninterruptible),
                 processError: (err) => Effect.sync(() => captureException(err.error))
               }, sessionId)
-                .pipe(Effect.provide(receiverLayer))
+                .pipe(Effect.provideService(ServiceBusReceiverFactory, receiver))
             )
           })
           .pipe(Effect.andThen(Effect.never)),
@@ -166,5 +164,7 @@ export function makeServiceBusQueue<
  * @tsplus static QueueMaker.Ops makeServiceBusLayers
  */
 export function makeServiceBusLayers(url: string, queueName: string, queueDrainName: string) {
-  return Layer.merge(LiveReceiver(queueDrainName), LiveSender(queueName)).pipe(Layer.provide(LiveServiceBusClient(url)))
+  return Layer.merge(ServiceBusReceiverFactory.Live(queueDrainName), LiveSender(queueName)).pipe(
+    Layer.provide(LiveServiceBusClient(url))
+  )
 }

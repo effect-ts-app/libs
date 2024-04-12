@@ -39,7 +39,7 @@ export function LiveSender(queueName: string) {
   return Layer.scoped(Sender, makeSender(queueName))
 }
 
-function makeReceiver(queueName: string, sessionId?: string) {
+function makeReceiver(queueName: string, waitTillEmpty: Effect<void>, sessionId?: string) {
   return Effect.gen(function*($) {
     const serviceBusClient = yield* $(Client)
 
@@ -48,26 +48,24 @@ function makeReceiver(queueName: string, sessionId?: string) {
         sessionId
           ? Effect.promise(() => serviceBusClient.acceptSession(queueName, sessionId))
           : Effect.sync(() => serviceBusClient.createReceiver(queueName)),
-        (r) => Effect.promise(() => r.close())
+        (r) => waitTillEmpty.pipe(Effect.andThen(Effect.promise(() => r.close())))
       )
     )
   })
 }
 
-export const Receiver = Context.GenericTag<
-  {
-    make: Effect<ServiceBusReceiver, never, Scope>
-    makeSession: (sessionId: string) => Effect<ServiceBusReceiver, never, Scope>
-  }
->("@services/Receiver")
-export function LiveReceiver(queueName: string) {
-  return Layer.effect(
-    Receiver,
-    Client.pipe(Effect.andThen((cl) => ({
-      make: makeReceiver(queueName).pipe(Effect.provideService(Client, cl)),
-      makeSession: (sessionId: string) => makeReceiver(queueName, sessionId).pipe(Effect.provideService(Client, cl))
-    })))
-  )
+export class ServiceBusReceiverFactory extends Context.TagId(
+  "ServiceBusReceiverFactory"
+)<ServiceBusReceiverFactory, {
+  make: (waitTillEmpty: Effect<void>) => Effect<ServiceBusReceiver, never, Scope>
+  makeSession: (sessionId: string, waitTillEmpty: Effect<void>) => Effect<ServiceBusReceiver, never, Scope>
+}>() {
+  static readonly Live = (queueName: string) =>
+    this.toLayer(Client.pipe(Effect.andThen((cl) => ({
+      make: (waitTillEmpty) => makeReceiver(queueName, waitTillEmpty).pipe(Effect.provideService(Client, cl)),
+      makeSession: (sessionId: string, waitTillEmpty) =>
+        makeReceiver(queueName, waitTillEmpty, sessionId).pipe(Effect.provideService(Client, cl))
+    }))))
 }
 
 export function sendMessages(
@@ -82,36 +80,44 @@ export function sendMessages(
 
 export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>, sessionId?: string) {
   return Effect.gen(function*($) {
-    const rf = yield* $(Receiver)
-    const r = yield* $(sessionId ? rf.makeSession(sessionId) : rf.make)
-
+    const rf = yield* $(ServiceBusReceiverFactory)
+    const fs = yield* $(FiberSet.make())
+    const fr = yield* $(FiberSet.runtime(fs)<RMsg | RErr>())
+    const wait = Effect.gen(function*($) {
+      while ((yield* $(FiberSet.size(fs))) > 0) yield* $(Effect.sleep("250 millis"))
+    })
+    const r = yield* $(
+      sessionId
+        ? rf.makeSession(
+          sessionId,
+          wait
+        )
+        : rf.make(wait)
+    )
+    const runEffect = <E>(effect: Effect<void, E, RMsg | RErr>) =>
+      new Promise<void>((resolve, reject) =>
+        fr(effect)
+          .addObserver((exit) => {
+            if (Exit.isSuccess(exit)) {
+              resolve(exit.value)
+            } else {
+              reject(Cause.pretty(exit.cause))
+            }
+          })
+      )
     yield* $(
       Effect.acquireRelease(
-        Effect.map(
-          FiberSet.makeRuntime<RMsg | RErr>(),
-          (rt) => {
-            const runEffect = <E>(effect: Effect<void, E, RMsg | RErr>) =>
-              new Promise<void>((resolve, reject) =>
-                rt(effect)
-                  .addObserver((exit) => {
-                    if (Exit.isSuccess(exit)) {
-                      resolve(exit.value)
-                    } else {
-                      reject(Cause.pretty(exit.cause))
-                    }
-                  })
-              )
-            return r.subscribe({
-              processError: (err) =>
-                runEffect(
-                  hndlr
-                    .processError(err)
-                    .pipe(Effect.catchAllCause((cause) => Effect.logError("ServiceBus Error", cause)))
-                ),
-              processMessage: (msg) => runEffect(hndlr.processMessage(msg))
-              // DO NOT CATCH ERRORS here as they should return to the queue!
-            })
-          }
+        Effect.sync(() =>
+          r.subscribe({
+            processError: (err) =>
+              runEffect(
+                hndlr
+                  .processError(err)
+                  .pipe(Effect.catchAllCause((cause) => Effect.logError("ServiceBus Error", cause)))
+              ),
+            processMessage: (msg) => runEffect(hndlr.processMessage(msg))
+            // DO NOT CATCH ERRORS here as they should return to the queue!
+          })
         ),
         (subscription) => Effect.promise(() => subscription.close())
       )
