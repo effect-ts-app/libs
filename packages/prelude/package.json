@@ -239,14 +239,14 @@
         "default": "./_cjs/schema.cjs"
       }
     },
-    "./services/FiberBag": {
+    "./services/MainFiberSet": {
       "import": {
-        "types": "./dist/services/FiberBag.d.ts",
-        "default": "./dist/services/FiberBag.js"
+        "types": "./dist/services/MainFiberSet.d.ts",
+        "default": "./dist/services/MainFiberSet.js"
       },
       "require": {
-        "types": "./dist/services/FiberBag.d.ts",
-        "default": "./_cjs/services/FiberBag.cjs"
+        "types": "./dist/services/MainFiberSet.d.ts",
+        "default": "./_cjs/services/MainFiberSet.cjs"
       }
     },
     "./utils": {

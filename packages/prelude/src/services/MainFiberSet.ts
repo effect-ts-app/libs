@@ -23,10 +23,10 @@ const make = Effect.gen(function*($) {
 
 /**
  * Whenever you fork long running fibers e.g via `Effect.forkScoped` or `Effect.forkDaemon`
- * you should register these long running fibers in a `FiberBag`, and join them at the end of your main program.
+ * you should register these long running fibers in a FiberSet, and join them at the end of your main program.
  * This way any errors will blow up the main program instead of fibers dying unknowingly.
  */
-export class FiberBag extends Context.TagMakeId("FiberBag", make)<FiberBag>() {
+export class MainFiberSet extends Context.TagMakeId("MainFiberSet", make)<MainFiberSet>() {
   static readonly Live = this.toLayerScoped()
   static readonly JoinLive = this.pipe(Effect.andThen((_) => _.join), Layer.effectDiscard, Layer.provide(this.Live))
   static readonly run = <R>(self: Effect<never, never, R>) => this.use((_) => _.run(self))

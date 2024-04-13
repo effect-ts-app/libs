@@ -6,7 +6,7 @@ import { subHours } from "date-fns"
 import { Cause, Context, copy, Duration, Effect, Exit, Layer, Option, S, Schedule } from "effect-app"
 import type { OperationProgress } from "effect-app/Operations"
 import { Failure, Operation, OperationId, Success } from "effect-app/Operations"
-import { FiberBag } from "effect-app/services/FiberBag"
+import { MainFiberSet } from "effect-app/services/MainFiberSet"
 import * as Scope from "effect/Scope"
 import { forkDaemonReportRequestUnexpected } from "../api/reportError.js"
 
@@ -112,10 +112,10 @@ export class Operations extends Context.TagMakeId("effect-app/Operations", make)
           }),
         Effect.schedule(Schedule.fixed(Duration.minutes(20))),
         Effect.map((_) => _ as never),
-        FiberBag.run
+        MainFiberSet.run
       )
     )
-    .pipe(Layer.effectDiscard, Layer.provide(FiberBag.Live))
+    .pipe(Layer.effectDiscard, Layer.provide(MainFiberSet.Live))
 
   static readonly Live = this.CleanupLive.pipe(Layer.provideMerge(this.toLayer()))
 }
