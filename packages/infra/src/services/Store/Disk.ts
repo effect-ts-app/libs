@@ -3,7 +3,7 @@ import * as fu from "@effect-app/infra-adapters/fileUtil"
 
 import fs from "fs"
 
-import { Effect, FiberRef, flow } from "effect-app"
+import { Console, Effect, FiberRef, flow } from "effect-app"
 import { makeMemoryStoreInt, storeId } from "./Memory.js"
 import type { PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
@@ -76,7 +76,7 @@ function makeDiskStoreInt<Id extends string, Encoded extends { id: Id }, R, E>(
     const flushToDisk = Effect.flatMap(store.all, fsStore.setRaw).pipe(withPermit)
     const flushToDiskInBackground = flushToDisk
       .pipe(
-        Effect.tapErrorCause((err) => Effect.sync(() => console.error(err))),
+        Effect.tapErrorCause(Console.error),
         Effect.uninterruptible,
         Effect.forkDaemon
       )

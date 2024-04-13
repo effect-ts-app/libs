@@ -8,7 +8,7 @@ import type { ValidationError } from "@effect-app/infra/errors"
 import type { RequestContextContainer } from "@effect-app/infra/services/RequestContextContainer"
 import type { ContextMapContainer } from "@effect-app/infra/services/Store/ContextMapContainer"
 import type { Layer } from "effect-app"
-import { Effect, FiberRef, Option, S } from "effect-app"
+import { Console, Effect, FiberRef, Option, S } from "effect-app"
 import type { HttpServerError } from "effect-app/http"
 import { HttpBody, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { NonEmptyString255 } from "effect-app/schema"
@@ -304,9 +304,7 @@ export function makeRequestHandler<
                         ], { concurrency: "inherit" })
                     ))
                   .pipe(
-                    Effect.tapErrorCause((cause) =>
-                      Effect.sync(() => console.error("Error occurred while reporting error", cause))
-                    )
+                    Effect.tapErrorCause((cause) => Console.error("Error occurred while reporting error", cause))
                   )
               ),
             Effect
