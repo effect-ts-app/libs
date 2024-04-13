@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.202.0
+
+### Minor Changes
+
+- c0a2bb1: rename FiberBag to MainFiberSet
+
 ## 0.201.6
 
 ### Patch Changes

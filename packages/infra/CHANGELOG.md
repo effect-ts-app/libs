@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 0.234.0
+
+### Minor Changes
+
+- c0a2bb1: rename FiberBag to MainFiberSet
+
+### Patch Changes
+
+- 15f228c: cleanup
+- Updated dependencies [c0a2bb1]
+  - effect-app@0.202.0
+  - @effect-app/infra-adapters@0.154.6
+
 ## 0.233.11
 
 ### Patch Changes
