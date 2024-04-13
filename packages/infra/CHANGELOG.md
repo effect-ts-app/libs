@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.234.2
+
+### Patch Changes
+
+- 790f0bc: daemon the fork, not the children!
+
 ## 0.234.1
 
 ### Patch Changes
