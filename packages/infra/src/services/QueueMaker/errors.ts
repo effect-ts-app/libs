@@ -16,7 +16,7 @@ export const reportQueueError = <E>(cause: Cause<E>, extras?: Record<string, unk
  * @tsplus getter effect/io/Effect forkDaemonReportQueue
  */
 export function forkDaemonReportQueue<R, E, A>(self: Effect<A, E, R>) {
-  return self.pipe(Effect.tapErrorCause(reportNonInterruptedFailureCause({})), Effect.fork, Effect.daemonChildren)
+  return self.pipe(Effect.tapErrorCause(reportNonInterruptedFailureCause({})), Effect.forkDaemon)
 }
 
 export const reportFatalQueueError = reportError(

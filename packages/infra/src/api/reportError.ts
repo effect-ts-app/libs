@@ -13,8 +13,7 @@ import { logError, reportError } from "../errorReporter.js"
 export function forkDaemonReportRequest<R, E, A>(self: Effect<A, E, R>) {
   return self.pipe(
     Effect.tapErrorCause(reportError("Request")),
-    Effect.fork,
-    Effect.daemonChildren
+    Effect.forkDaemon
   )
 }
 
@@ -35,7 +34,6 @@ export function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<A, E, R>
           ? reportError("request")(cause)
           : logError("request")(cause)
       ),
-      Effect.fork,
-      Effect.daemonChildren
+      Effect.forkDaemon
     )
 }
