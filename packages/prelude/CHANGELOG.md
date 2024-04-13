@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 0.202.1
+
+### Patch Changes
+
+- 45770ea: re-add MainFiberSet join logging
+
 ## 0.202.0
 
 ### Minor Changes
