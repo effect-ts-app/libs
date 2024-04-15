@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.234.7
+
+### Patch Changes
+
+- 60ba891: fork ops dual
+
 ## 0.234.6
 
 ### Patch Changes
