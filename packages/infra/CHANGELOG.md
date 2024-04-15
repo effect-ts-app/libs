@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.234.3
+
+### Patch Changes
+
+- 6fd8d12: improve: http handler should be uninterruptible except for the user's handler.
+
 ## 0.234.2
 
 ### Patch Changes
