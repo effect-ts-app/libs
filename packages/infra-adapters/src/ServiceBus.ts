@@ -88,7 +88,9 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>, sessio
     const fs = yield* $(FiberSet.make())
     const fr = yield* $(FiberSet.runtime(fs)<RMsg | RErr>())
     const wait = Effect.gen(function*($) {
-      yield* $(Effect.logDebug("Waiting ServiceBusFiberSet to be empty: " + (yield* $(FiberSet.size(fs)))))
+      if ((yield* $(FiberSet.size(fs))) > 0) {
+        yield* $(Effect.logDebug("Waiting ServiceBusFiberSet to be empty: " + (yield* $(FiberSet.size(fs)))))
+      }
       while ((yield* $(FiberSet.size(fs))) > 0) yield* $(Effect.sleep("250 millis"))
     })
     const r = yield* $(

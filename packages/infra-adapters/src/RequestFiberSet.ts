@@ -12,7 +12,9 @@ const make = Effect.gen(function*($) {
     Effect.andThen(FiberSet.join(set))
   )
   const waitUntilEmpty = Effect.gen(function*($) {
-    yield* $(Effect.logDebug("Waiting RequestFiberSet to be empty: " + (yield* $(FiberSet.size(set)))))
+    if ((yield* $(FiberSet.size(set))) > 0) {
+      yield* $(Effect.logDebug("Waiting RequestFiberSet to be empty: " + (yield* $(FiberSet.size(set)))))
+    }
     while ((yield* $(FiberSet.size(set))) > 0) yield* $(Effect.sleep("250 millis"))
   })
   const run = FiberSet.run(set)
