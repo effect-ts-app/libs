@@ -1,4 +1,5 @@
-import { annotateLogscoped } from "@effect-app/core/Effect"
+import { annotateLogscoped, flatMap } from "@effect-app/core/Effect"
+import { dual } from "@effect-app/core/Function"
 import { reportError } from "@effect-app/infra/errorReporter"
 import type { StringId } from "@effect-app/schema"
 import { NonEmptyString2k } from "@effect-app/schema"
@@ -120,26 +121,17 @@ export class Operations extends Context.TagMakeId("effect-app/Operations", make)
   static readonly Live = this.CleanupLive.pipe(Layer.provideMerge(this.toLayer()))
 }
 
-export function forkOperation<R, E, A>(self: Effect<A, E, R>, title: NonEmptyString2k) {
-  return Effect.flatMap(
-    Scope.make(),
-    (scope) =>
-      Operations
-        .register(title)
-        .pipe(
-          Scope.extend(scope),
-          Effect
-            .tap(() => forkDaemonReportRequestUnexpected(Scope.use(self, scope)))
-        )
-  )
-}
-
-export function forkOperationFunction<R, E, A, Inp>(fnc: (inp: Inp) => Effect<A, E, R>, title: NonEmptyString2k) {
-  return (inp: Inp) => fnc(inp).pipe((_) => forkOperation(_, title))
-}
-
-export function forkOperation2<R, E, A>(self: (opId: OperationId) => Effect<A, E, R>, title: NonEmptyString2k) {
-  return Effect.flatMap(Operations, (Operations) =>
+export const forkOperation: {
+  <R, E, A>(
+    self: Effect<A, E, R>
+  ): (title: NonEmptyString2k) => Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
+  <R, E, A>(
+    self: Effect<A, E, R>,
+    title: NonEmptyString2k
+  ): Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
+} = dual(
+  2,
+  <R, E, A>(self: Effect<A, E, R>, title: NonEmptyString2k) =>
     Effect.flatMap(
       Scope.make(),
       (scope) =>
@@ -148,10 +140,39 @@ export function forkOperation2<R, E, A>(self: (opId: OperationId) => Effect<A, E
           .pipe(
             Scope.extend(scope),
             Effect
-              .tap((id) => forkDaemonReportRequestUnexpected(Scope.use(self(id), scope)))
+              .tap(() => forkDaemonReportRequestUnexpected(Scope.use(self, scope)))
           )
-    ))
+    )
+)
+
+export function forkOperationFunction<R, E, A, Inp>(fnc: (inp: Inp) => Effect<A, E, R>, title: NonEmptyString2k) {
+  return (inp: Inp) => fnc(inp).pipe((_) => forkOperation(_, title))
 }
+
+export const forkOperation2: {
+  <R, E, A>(
+    self: (opId: OperationId) => Effect<A, E, R>
+  ): (title: NonEmptyString2k) => Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
+  <R, E, A>(
+    self: (opId: OperationId) => Effect<A, E, R>,
+    title: NonEmptyString2k
+  ): Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
+} = dual(
+  2,
+  <R, E, A>(self: (opId: OperationId) => Effect<A, E, R>, title: NonEmptyString2k) =>
+    flatMap(Operations, (Operations) =>
+      Effect.flatMap(
+        Scope.make(),
+        (scope) =>
+          Operations
+            .register(title)
+            .pipe(
+              Scope.extend(scope),
+              Effect
+                .tap((id) => forkDaemonReportRequestUnexpected(Scope.use(self(id), scope)))
+            )
+      ))
+)
 
 export function forkOperationWithEffect<R, R2, E, E2, A, A2>(
   self: (id: OperationId) => Effect<A, E, R>,
