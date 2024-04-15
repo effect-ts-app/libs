@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 0.154.9
+
+### Patch Changes
+
+- 3a97c81: add RequestFiberSet
+
 ## 0.154.8
 
 ### Patch Changes
