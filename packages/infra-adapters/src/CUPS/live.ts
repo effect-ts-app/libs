@@ -6,6 +6,7 @@ import fs from "fs"
 import os from "os"
 import path from "path"
 import util from "util"
+import type { FileOptions } from "../fileUtil.js"
 import { tempFile } from "../fileUtil.js"
 import { CUPS } from "./service.js"
 import type { PrinterId } from "./service.js"
@@ -19,15 +20,20 @@ export function CUPSLayer(cupsServer?: URL) {
 
 export function makeCUPS(cupsServer?: URL) {
   return Effect.sync(() => {
-    function print_(buffer: ArrayBuffer, printerId: PrinterId, ...options: string[]) {
-      const print = printBuffer({
+    function print(buffer: ArrayBuffer, printerId: PrinterId, ...options: string[]) {
+      const _print = printBuffer({
         id: printerId,
         url: cupsServer
       }, options)
-      return print(buffer)
+      return _print(buffer)
     }
     return {
-      print: print_,
+      print,
+      printFile: (filePath: string, printerId: PrinterId, ...options: string[]) =>
+        printFile({
+          id: printerId,
+          url: cupsServer
+        }, options)(filePath),
       getAvailablePrinters: getAvailablePrinters(cupsServer?.host)
     }
   })
@@ -83,11 +89,13 @@ export const prepareTempDir = Effect.sync(() => {
 })
 
 const makeTempFile = tempFile("effect-ts-app")
-const makePrintJobTempFile = makeTempFile("print-job")
+export const makePrintJobTempFile = makeTempFile("print-job")
+export const makePrintJobTempFileArrayBuffer = (buffer: ArrayBuffer, options?: FileOptions | undefined) =>
+  makePrintJobTempFile(Buffer.from(buffer), options)
 
 function printBuffer(printer: PrinterConfig, options: string[]) {
   return (buffer: ArrayBuffer) =>
-    makePrintJobTempFile(Buffer.from(buffer))
+    makePrintJobTempFileArrayBuffer(buffer)
       .pipe(
         Effect.flatMap(printFile(printer, options)),
         Effect.scoped

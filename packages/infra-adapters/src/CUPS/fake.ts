@@ -19,6 +19,18 @@ export const FAKECups = CUPS.toLayer(Effect.sync(() => {
               "bufferSize": buffer.byteLength.toString()
             })
         ),
+    printFile: (filePath, printerId, ...options) =>
+      Effect
+        .logInfo("Printing to fake printer")
+        .pipe(
+          Effect.zipRight(Effect.sync(() => ({ stdout: "fake", stderr: "" }))),
+          Effect
+            .annotateLogs({
+              printerId,
+              filePath,
+              "options": pretty(options)
+            })
+        ),
     getAvailablePrinters: Effect.sync(() => [])
   }
 }))

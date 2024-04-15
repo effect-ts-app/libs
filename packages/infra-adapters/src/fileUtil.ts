@@ -22,7 +22,7 @@ export function openFile(fileName: string) {
 export function tempFile(
   folder: string
 ) {
-  return (prefix: string) => (data: Data, options?: Options) => tempFile_(folder, prefix, data, options)
+  return (prefix: string) => (data: Data, options?: FileOptions) => tempFile_(folder, prefix, data, options)
 }
 
 type Data =
@@ -32,7 +32,7 @@ type Data =
   | AsyncIterable<string | NodeJS.ArrayBufferView>
   | internal.Stream
 
-type Options =
+export type FileOptions =
   | (ObjectEncodingOptions & {
     mode?: Mode | undefined
     flag?: OpenMode | undefined
@@ -43,7 +43,7 @@ export function tempFile_(
   folder: string,
   prefix: string,
   data: Data,
-  options?: Options
+  options?: FileOptions
 ) {
   return Effect.flatMap(
     Effect
