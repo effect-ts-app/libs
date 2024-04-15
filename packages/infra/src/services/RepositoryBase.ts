@@ -819,7 +819,7 @@ export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: 
         | QueryWhere<Encoded>
         | QueryEnd<Encoded, "many">,
       pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
-      batchSize: number
+      batch: "batched" | number
     ): Effect.Effect<
       A[],
       InvalidStateError | OptimisticConcurrencyException | E2,
