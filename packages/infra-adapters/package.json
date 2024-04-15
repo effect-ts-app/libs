@@ -157,6 +157,16 @@
         "default": "./_cjs/Openapi/atlas-plutus/Spec/index.cjs"
       }
     },
+    "./RequestFiberSet": {
+      "import": {
+        "types": "./dist/RequestFiberSet.d.ts",
+        "default": "./dist/RequestFiberSet.js"
+      },
+      "require": {
+        "types": "./dist/RequestFiberSet.d.ts",
+        "default": "./_cjs/RequestFiberSet.cjs"
+      }
+    },
     "./ServiceBus": {
       "import": {
         "types": "./dist/ServiceBus.d.ts",

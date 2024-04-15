@@ -10,6 +10,7 @@ import type {
 import { ServiceBusClient } from "@azure/service-bus"
 import type { Scope } from "effect-app"
 import { Cause, Context, Effect, Exit, FiberSet, Layer } from "effect-app"
+import { RequestFiberSet } from "./RequestFiberSet.js"
 
 function makeClient(url: string) {
   return Effect.acquireRelease(
@@ -28,7 +29,8 @@ function makeSender(queueName: string) {
     return yield* $(
       Effect.acquireRelease(
         Effect.sync(() => serviceBusClient.createSender(queueName)),
-        (subscription) => Effect.promise(() => subscription.close())
+        (subscription) =>
+          RequestFiberSet.waitUntilEmpty.pipe(Effect.andThen(Effect.promise(() => subscription.close())))
       )
     )
   })
@@ -36,7 +38,9 @@ function makeSender(queueName: string) {
 export const Sender = Context.GenericTag<ServiceBusSender>("@services/Sender")
 
 export function LiveSender(queueName: string) {
-  return Layer.scoped(Sender, makeSender(queueName))
+  return Layer
+    .scoped(Sender, makeSender(queueName))
+    .pipe(Layer.provide(RequestFiberSet.Live))
 }
 
 function makeReceiver(queueName: string, waitTillEmpty: Effect<void>, sessionId?: string) {
@@ -84,6 +88,7 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>, sessio
     const fs = yield* $(FiberSet.make())
     const fr = yield* $(FiberSet.runtime(fs)<RMsg | RErr>())
     const wait = Effect.gen(function*($) {
+      yield* $(Effect.logDebug("Waiting ServiceBusFiberSet to be empty: " + (yield* $(FiberSet.size(fs)))))
       while ((yield* $(FiberSet.size(fs))) > 0) yield* $(Effect.sleep("250 millis"))
     })
     const r = yield* $(
