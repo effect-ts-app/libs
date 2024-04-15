@@ -6,7 +6,8 @@
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "@effect/schema@0.64.20": "patches/@effect__schema@0.64.20.patch",
-      "typescript@5.4.5": "patches/typescript@5.4.5.patch"
+      "typescript@5.4.5": "patches/typescript@5.4.5.patch",
+      "effect@2.4.18": "patches/effect@2.4.18.patch"
     }
   },
   "scripts": {

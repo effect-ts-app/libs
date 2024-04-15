@@ -16,6 +16,9 @@ patchedDependencies:
   '@phaphoso/eslint-plugin-dprint@0.5.2':
     hash: 5r3oafqkulzxdb6awceadivssy
     path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
+  effect@2.4.18:
+    hash: zt2zp4yndz3eqqzk3szpaaeitu
+    path: patches/effect@2.4.18.patch
   eslint-plugin-codegen@0.17.0:
     hash: 3ogk7peuefdu45q3hbzcgdiuna
     path: patches/eslint-plugin-codegen@0.17.0.patch
@@ -129,7 +132,7 @@ importers:
         version: 0.45.1
       effect:
         specifier: ^2.4.18
-        version: 2.4.18
+        version: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       effect-app:
         specifier: workspace:*
         version: link:packages/prelude
@@ -247,7 +250,7 @@ importers:
         version: 4.0.0
       effect:
         specifier: ^2.4.18
-        version: 2.4.18
+        version: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       path-parser:
         specifier: ^6.1.0
         version: 6.1.0
@@ -327,7 +330,7 @@ importers:
         version: 4.17.0
       effect:
         specifier: ^2.4.18
-        version: 2.4.18
+        version: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       madge:
         specifier: 7.0.0
         version: 7.0.0(typescript@5.4.5)
@@ -351,7 +354,7 @@ importers:
         version: 3.6.0
       effect:
         specifier: ^2.4.18
-        version: 2.4.18
+        version: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       nanoid:
         specifier: ^5.0.7
         version: 5.0.7
@@ -439,7 +442,7 @@ importers:
         version: 4.0.0
       effect:
         specifier: ^2.4.18
-        version: 2.4.18
+        version: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       effect-app:
         specifier: workspace:*
         version: link:../prelude
@@ -527,7 +530,7 @@ importers:
         version: 0.64.20(patch_hash=frnqv6vfxkawiery3gbg4q6qju)(effect@2.4.18)(fast-check@3.17.1)
       effect:
         specifier: ^2.4.18
-        version: 2.4.18
+        version: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       effect-app:
         specifier: workspace:*
         version: link:../prelude
@@ -603,7 +606,7 @@ importers:
         version: 3.6.0
       effect:
         specifier: ^2.4.18
-        version: 2.4.18
+        version: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       nanoid:
         specifier: ^5.0.7
         version: 5.0.7
@@ -664,7 +667,7 @@ importers:
         version: 4.0.0
       effect:
         specifier: ^2.4.18
-        version: 2.4.18
+        version: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       nanoid:
         specifier: ^5.0.7
         version: 5.0.7
@@ -725,7 +728,7 @@ importers:
         version: 5.29.0(vue@3.4.21)
       effect:
         specifier: ^2.4.18
-        version: 2.4.18
+        version: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       effect-app:
         specifier: workspace:*
         version: link:../prelude
@@ -1454,7 +1457,7 @@ packages:
       effect: ^2.4.18
     dependencies:
       '@effect/platform': 0.48.27(@effect/schema@0.64.20)(effect@2.4.18)(ws@8.16.0)
-      effect: 2.4.18
+      effect: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       multipasta: 0.2.0
     dev: false
 
@@ -1466,7 +1469,7 @@ packages:
     dependencies:
       '@effect/platform': 0.48.27(@effect/schema@0.64.20)(effect@2.4.18)(ws@8.16.0)
       '@parcel/watcher': 2.4.1
-      effect: 2.4.18
+      effect: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       multipasta: 0.2.0
     dev: true
 
@@ -1478,7 +1481,7 @@ packages:
     dependencies:
       '@effect/platform': 0.48.27(@effect/schema@0.64.20)(effect@2.4.18)(ws@8.16.0)
       '@effect/platform-node-shared': 0.3.27(@effect/platform@0.48.27)(effect@2.4.18)
-      effect: 2.4.18
+      effect: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       mime: 3.0.0
       undici: 6.10.2
       ws: 8.16.0
@@ -1494,7 +1497,7 @@ packages:
       effect: ^2.4.18
     dependencies:
       '@effect/schema': 0.64.20(patch_hash=frnqv6vfxkawiery3gbg4q6qju)(effect@2.4.18)(fast-check@3.17.1)
-      effect: 2.4.18
+      effect: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       find-my-way-ts: 0.1.1
       isows: 1.0.4(ws@8.16.0)
       multipasta: 0.2.0
@@ -1508,7 +1511,7 @@ packages:
       effect: ^2.4.18
       fast-check: ^3.17.1
     dependencies:
-      effect: 2.4.18
+      effect: 2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu)
       fast-check: 3.17.1
     patched: true
 
@@ -4421,8 +4424,9 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /effect@2.4.18:
+  /effect@2.4.18(patch_hash=zt2zp4yndz3eqqzk3szpaaeitu):
     resolution: {integrity: sha512-8nNzkhSzFLhG9YxowXKawlk4+b3zwwOsbZwaaYhy1OjZGcEgcE6i0ywMFieXNSfOtsQ8swV1+5hvF+VBEtwwqg==}
+    patched: true
 
   /electron-to-chromium@1.4.610:
     resolution: {integrity: sha512-mqi2oL1mfeHYtOdCxbPQYV/PL7YrQlxbvFEZ0Ee8GbDdShimqt2/S6z2RWqysuvlwdOrQdqvE0KZrBTipAeJzg==}
