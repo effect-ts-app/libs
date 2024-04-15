@@ -3,7 +3,7 @@ import { JSONSchema } from "@effect/schema"
 import { ReadonlyArray, S } from "effect-app"
 import { test } from "vitest"
 
-const A = S.struct({ a: S.NonEmptyString255, email: S.nullable(S.Email) })
+const A = S.Struct({ a: S.NonEmptyString255, email: S.NullOr(S.Email) })
 test("works", () => {
   console.log(S.StringId.make())
   // console.log(generateFromArbitrary(S.A.make(A)).value)

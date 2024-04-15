@@ -1,6 +1,6 @@
 import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { RequestContext } from "@effect-app/infra/RequestContext"
-import { NonEmptyString255, struct } from "@effect-app/schema"
+import { NonEmptyString255 } from "@effect-app/schema"
 import { Tracer } from "effect"
 import { Effect, Fiber, flow, Option, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
@@ -30,8 +30,8 @@ export function makeMemQueue<
     const qDrain = yield* $(mem.getOrCreateQueue(queueDrainName))
     const rcc = yield* $(RequestContextContainer)
 
-    const wireSchema = struct({ body: schema, meta: QueueMeta })
-    const drainW = struct({ body: drainSchema, meta: QueueMeta })
+    const wireSchema = S.Struct({ body: schema, meta: QueueMeta })
+    const drainW = S.Struct({ body: drainSchema, meta: QueueMeta })
     const parseDrain = flow(S.decodeUnknown(drainW), Effect.orDie)
 
     return {

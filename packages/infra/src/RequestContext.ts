@@ -1,5 +1,6 @@
-import { ExtendedTaggedClass, literal, NonEmptyString255, struct } from "@effect-app/schema"
-import { S } from "effect-app"
+import { ExtendedTaggedClass, NonEmptyString255 } from "@effect-app/schema"
+import * as S from "@effect/schema/Schema"
+import { S as S2 } from "effect-app"
 import { RequestId, UserProfileId } from "effect-app/ids"
 
 export class RequestContextParent extends ExtendedTaggedClass<
@@ -8,9 +9,9 @@ export class RequestContextParent extends ExtendedTaggedClass<
 >()("RequestContext", {
   id: RequestId,
   name: NonEmptyString255,
-  userProfile: S.optional(struct({ sub: UserProfileId })),
-  locale: literal("en", "de"),
-  createdAt: S.Date.withDefault
+  userProfile: S.optional(S.Struct({ sub: UserProfileId })),
+  locale: S.Literal("en", "de"),
+  createdAt: S2.Date.withDefault
 }) {}
 
 /**

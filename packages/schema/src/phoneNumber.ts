@@ -11,7 +11,7 @@ export interface PhoneNumberBrand extends Simplify<B.Brand<"PhoneNumber"> & NonE
 export type PhoneNumber = string & PhoneNumberBrand
 
 export const PhoneNumber = S
-  .string
+  .String
   .pipe(
     S.filter(isValidPhone as Refinement<string, PhoneNumber>, {
       identifier: "PhoneNumber",

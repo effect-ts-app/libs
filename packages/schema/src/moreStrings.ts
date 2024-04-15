@@ -1,6 +1,6 @@
 import type { Refinement } from "@effect-app/core/Function"
 import { extendM } from "@effect-app/core/utils"
-import type { Arbitrary } from "@effect/schema/Arbitrary"
+import type { LazyArbitrary } from "@effect/schema/Arbitrary"
 import * as S from "@effect/schema/Schema"
 import { pipe } from "effect"
 import type { Simplify } from "effect/Types"
@@ -46,7 +46,7 @@ export type Min3String255 = string & Min3String255Brand
  * A string that is at least 3 character long and a maximum of 255.
  */
 export const Min3String255 = pipe(
-  S.string,
+  S.String,
   S.minLength(3),
   S.maxLength(255),
   fromBrand(nominal<NonEmptyString2k>(), { identifier: "Min3String255", title: "Min3String255", jsonSchema: {} }),
@@ -68,7 +68,7 @@ const minLength = 6
 const maxLength = 50
 const size = 21
 const length = 10 * size
-const StringIdArb = (): Arbitrary<string> => (fc) =>
+const StringIdArb = (): LazyArbitrary<string> => (fc) =>
   fc
     .uint8Array({ minLength: length, maxLength: length })
     .map((_) => customRandom(urlAlphabet, size, (size) => _.subarray(0, size))())
@@ -78,7 +78,7 @@ const StringIdArb = (): Arbitrary<string> => (fc) =>
  */
 export const StringId = extendM(
   pipe(
-    S.string,
+    S.String,
     S.minLength(minLength),
     S.maxLength(maxLength),
     fromBrand(nominal<StringIdBrand>(), {
@@ -121,7 +121,7 @@ export function prefixedStringId<Brand extends StringId>() {
     //     )
     //   )
     // )
-    const arb = (): Arbitrary<StringId> => (fc) =>
+    const arb = (): LazyArbitrary<StringId> => (fc) =>
       StringIdArb()(fc).map(
         (x) => (pref + x.substring(0, 50 - pref.length)) as Brand
       )
@@ -186,10 +186,10 @@ const isUrl: Refinement<string, Url> = (s: string): s is Url => {
 }
 
 export const Url = S
-  .string
+  .String
   .pipe(
     S.filter(isUrl, {
-      arbitrary: (): Arbitrary<string> => (fc) => fc.webUrl(),
+      arbitrary: (): LazyArbitrary<string> => (fc) => fc.webUrl(),
       identifier: "Url",
       title: "Url",
       jsonSchema: { format: "uri" }

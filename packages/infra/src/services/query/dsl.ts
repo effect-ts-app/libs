@@ -219,7 +219,7 @@ export const count: <
 >(
   current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues, "many">
 ) => QueryProjection<TFieldValues, NonNegativeInt, never, "count"> = (current) =>
-  // new Project({ current: current as any, /* TODO: why */ schema: S.struct({ id: S.unknown }) })
+  // new Project({ current: current as any, /* TODO: why */ schema: S.Struct({ id: S.unknown }) })
   new Count({ current })
 
 /*

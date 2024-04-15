@@ -1,4 +1,3 @@
-import { struct } from "@effect-app/schema"
 import { S } from "effect-app"
 import type { Effect, NonEmptyReadonlyArray, Scope } from "effect-app"
 import { RequestContext } from "../../RequestContext.js"
@@ -21,11 +20,11 @@ export interface QueueBase<Evt, DrainEvt> {
 export interface QueueMakerOps {}
 export const QueueMaker: QueueMakerOps = {}
 
-export const QueueMeta = struct({
+export const QueueMeta = S.Struct({
   requestContext: RequestContext,
-  span: S.optional(struct({
-    spanId: S.string,
-    traceId: S.string,
-    sampled: S.boolean
+  span: S.optional(S.Struct({
+    spanId: S.String,
+    traceId: S.String,
+    sampled: S.Boolean
   }))
 })

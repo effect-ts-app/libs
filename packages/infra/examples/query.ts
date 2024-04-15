@@ -4,9 +4,9 @@ import { and, or, order, page, project, where } from "../src/services/query.js"
 import { ContextMapContainer } from "../src/services/Store/ContextMapContainer.js"
 import { MemoryStoreLive } from "../src/services/Store/Memory.js"
 
-const str = S.struct({ _tag: S.literal("string"), value: S.string })
-const num = S.struct({ _tag: S.literal("number"), value: S.number })
-const someUnion = S.union(str, num)
+const str = S.Struct({ _tag: S.Literal("string"), value: S.String })
+const num = S.Struct({ _tag: S.Literal("number"), value: S.Number })
+const someUnion = S.Union(str, num)
 
 export class Something extends S.Class<Something>()({
   id: S.StringId.withDefault,
@@ -51,7 +51,7 @@ const program = Effect.gen(function*($) {
     ),
     order("displayName"),
     page({ take: 1 }),
-    project(S.struct(Something.pick("id", "displayName")))
+    project(S.Struct(Something.pick("id", "displayName")))
   )))
   console.log("$$ result", r)
 })

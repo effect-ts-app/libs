@@ -6,6 +6,7 @@ import type { Unbranded } from "@effect-app/schema/brand"
 import { Either, Option, pipe, S } from "effect-app"
 import type { Schema } from "effect-app/schema"
 
+import type { Struct } from "@effect/schema/Schema"
 import type { IsUnion } from "effect-app/utils"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
@@ -189,7 +190,7 @@ export function buildFieldInfoFromFields<
   From extends Record<PropertyKey, any>,
   To extends Record<PropertyKey, any>
 >(
-  schema: Schema<To, From, never> & { fields?: S.Struct.Fields }
+  schema: Schema<To, From, never> & { fields?: Struct.Fields }
 ) {
   return buildFieldInfoFromFieldsRoot(schema).fields
 }
@@ -198,7 +199,7 @@ export function buildFieldInfoFromFieldsRoot<
   From extends Record<PropertyKey, any>,
   To extends Record<PropertyKey, any>
 >(
-  schema: Schema<To, From, never> & { fields?: S.Struct.Fields }
+  schema: Schema<To, From, never> & { fields?: Struct.Fields }
 ): NestedFieldInfo<To> {
   const ast = getTypeLiteralAST(schema.ast)
 
@@ -244,9 +245,9 @@ function buildFieldInfo(
   const parse = S.decodeUnknownEither(schema)
 
   const nullableOrUndefined = S.AST.isUnion(property.type)
-    && (property.type.types.includes(S.null.ast) || property.type.types.some((_) => _._tag === "UndefinedKeyword"))
+    && (property.type.types.includes(S.Null.ast) || property.type.types.some((_) => _._tag === "UndefinedKeyword"))
   const realSelf = nullableOrUndefined && S.AST.isUnion(property.type)
-    ? property.type.types.filter((_) => _ !== S.null.ast && _._tag !== "UndefinedKeyword")[0]!
+    ? property.type.types.filter((_) => _ !== S.Null.ast && _._tag !== "UndefinedKeyword")[0]!
     : property.type
   const id = S.AST.getIdentifierAnnotation(property.type)
   const id2 = S.AST.getIdentifierAnnotation(realSelf)
@@ -419,9 +420,9 @@ export function getMetadataFromSchema(
   required: boolean
   description?: string
 } {
-  const nullable = S.AST.isUnion(ast) && ast.types.includes(S.null.ast)
+  const nullable = S.AST.isUnion(ast) && ast.types.includes(S.Null.ast)
   const realSelf = nullable && S.AST.isUnion(ast)
-    ? ast.types.filter((_) => _ !== S.null.ast)[0]!
+    ? ast.types.filter((_) => _ !== S.Null.ast)[0]!
     : ast
 
   let jschema: any

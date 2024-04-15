@@ -4,14 +4,14 @@ import type { DiscriminatedUnionFieldInfo, FieldInfo, NestedFieldInfo, UnionFiel
 import { buildFieldInfoFromFieldsRoot } from "../src/form.js"
 
 export class NestedSchema extends S.Class<NestedSchema>()({
-  shallow: S.string,
-  nested: S.struct({
+  shallow: S.String,
+  nested: S.Struct({
     deep: S.NonEmptyString,
-    nested: S.struct({
-      deepest: S.number
+    nested: S.Struct({
+      deepest: S.Number
     })
   }),
-  age: S.propertySignature(S.struct({ nfs: S.NumberFromString.pipe(S.compose(S.PositiveInt)) }))
+  age: S.propertySignature(S.Struct({ nfs: S.NumberFromString.pipe(S.compose(S.PositiveInt)) }))
 }) {}
 
 export class SchemaContainsClass extends S.Class<SchemaContainsClass>()({
@@ -19,10 +19,10 @@ export class SchemaContainsClass extends S.Class<SchemaContainsClass>()({
 }) {}
 
 export class UnionSchema extends S.Class<UnionSchema>()({
-  generalUnion: S.union(S.string, S.struct({ unionNested: NestedSchema })),
-  structsUnion: S.union(NestedSchema, SchemaContainsClass),
-  optional: S.optional(S.string),
-  nullable: S.nullable(S.string)
+  generalUnion: S.Union(S.String, S.Struct({ unionNested: NestedSchema })),
+  structsUnion: S.Union(NestedSchema, SchemaContainsClass),
+  optional: S.optional(S.String),
+  nullable: S.NullOr(S.String)
 }) {}
 
 class Circle extends S.TaggedClass<Circle>()("Circle", {
@@ -35,27 +35,27 @@ class Square extends S.TaggedClass<Square>()("Square", {
 
 class Triangle extends S.TaggedClass<Triangle>()("Triangle", {
   base: S.PositiveInt,
-  height: S.number
+  height: S.Number
 }) {}
 
-const CircleStruct = S.struct({
-  _tag: S.literal("CircleStruct"),
+const CircleStruct = S.Struct({
+  _tag: S.Literal("CircleStruct"),
   radius: S.PositiveInt
 })
 
-const SquareStruct = S.struct({
-  _tag: S.literal("SquareStruct"),
+const SquareStruct = S.Struct({
+  _tag: S.Literal("SquareStruct"),
   sideLength: S.PositiveInt
 })
 
-const TriangleStruct = S.struct({
-  _tag: S.literal("TriangleStruct"),
+const TriangleStruct = S.Struct({
+  _tag: S.Literal("TriangleStruct"),
   base: S.PositiveInt,
-  height: S.number
+  height: S.Number
 })
 
-const ShapeWithStructs = S.union(CircleStruct, SquareStruct, TriangleStruct)
-const ShapeWithClasses = S.union(Circle, Square, Triangle)
+const ShapeWithStructs = S.Union(CircleStruct, SquareStruct, TriangleStruct)
+const ShapeWithClasses = S.Union(Circle, Square, Triangle)
 
 export class ShapeContainer extends S.Class<ShapeContainer>()({
   shapeWithStruct: ShapeWithStructs,

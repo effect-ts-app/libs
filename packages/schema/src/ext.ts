@@ -10,88 +10,88 @@ import type { AST, ParseResult } from "./index.js"
 export const Date = Object.assign(S.Date, {
   withDefault: S.propertySignature(S.Date, { default: () => new global.Date() })
 })
-export const boolean = Object.assign(S.boolean, {
-  withDefault: S.propertySignature(S.boolean, { default: () => false })
+export const Boolean = Object.assign(S.Boolean, {
+  withDefault: S.propertySignature(S.Boolean, { default: () => false })
 })
-export const number = Object.assign(S.number, { withDefault: S.propertySignature(S.number, { default: () => 0 }) })
+export const Number = Object.assign(S.Number, { withDefault: S.propertySignature(S.Number, { default: () => 0 }) })
 
 /**
- * Like the default Schema `struct` but with batching enabled by default
+ * Like the default Schema `Struct` but with batching enabled by default
  */
-export function struct<Fields extends S.Struct.Fields, const Records extends S.IndexSignature.NonEmptyRecords>(
+export function Struct<Fields extends S.Struct.Fields, const Records extends S.IndexSignature.NonEmptyRecords>(
   fields: Fields,
   ...records: Records
-): S.typeLiteral<Fields, Records>
-export function struct<Fields extends S.Struct.Fields>(fields: Fields): S.struct<Fields>
-export function struct<Fields extends S.Struct.Fields, const Records extends S.IndexSignature.Records>(
+): S.TypeLiteral<Fields, Records>
+export function Struct<Fields extends S.Struct.Fields>(fields: Fields): S.Struct<Fields>
+export function Struct<Fields extends S.Struct.Fields, const Records extends S.IndexSignature.Records>(
   fields: Fields,
   ...records: Records
-): S.typeLiteral<Fields, Records> {
-  return S.struct(fields, ...records as any).pipe(S.batching(true))
+): S.TypeLiteral<Fields, Records> {
+  return S.Struct(fields, ...records as any).pipe(S.batching(true))
 }
 
 /**
  * Like the default Schema `tuple` but with batching enabled by default
  */
-export function tuple<
+export function Tuple<
   const Elements extends S.TupleType.Elements,
   Rest extends NonEmptyReadonlyArray<Schema.Any>
->(elements: Elements, ...rest: Rest): S.tupleType<Elements, Rest>
-export function tuple<Elements extends S.TupleType.Elements>(...elements: Elements): S.tuple<Elements>
-export function tuple(...args: ReadonlyArray<any>): any {
-  return S.tuple(...args).pipe(S.batching(true))
+>(elements: Elements, ...rest: Rest): S.TupleType<Elements, Rest>
+export function Tuple<Elements extends S.TupleType.Elements>(...elements: Elements): S.Tuple<Elements>
+export function Tuple(...args: ReadonlyArray<any>): any {
+  return S.Tuple(...args).pipe(S.batching(true))
 }
 
 /**
- * Like the default Schema `nonEmptyArray` but with batching enabled by default
+ * Like the default Schema `NonEmptyArray` but with batching enabled by default
  */
-export function nonEmptyArray<Value extends Schema.Any>(value: Value): S.nonEmptyArray<Value> {
+export function NonEmptyArray<Value extends Schema.Any>(value: Value): S.NonEmptyArray<Value> {
   return pipe(
-    S.nonEmptyArray(value),
+    S.NonEmptyArray(value),
     S.batching(true)
   )
 }
 
 /**
- * Like the default Schema `array` but with `withDefault` and batching enabled by default
+ * Like the default Schema `Array` but with `withDefault` and batching enabled by default
  */
-export function array<Value extends Schema.Any>(value: Value) {
+export function Array<Value extends Schema.Any>(value: Value) {
   return pipe(
-    S.array(value),
+    S.Array(value),
     S.batching(true),
     (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => [] }) })
   )
 }
 
 /**
- * Like the default Schema `readonlySet` but with `withDefault` and batching enabled by default
+ * Like the default Schema `ReadonlySet` but with `withDefault` and batching enabled by default
  */
-export const readonlySet = <Value extends Schema.Any>(value: Value) =>
+export const ReadonlySet = <Value extends Schema.Any>(value: Value) =>
   pipe(
-    S.readonlySet(value),
+    S.ReadonlySet(value),
     S.batching(true),
     (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => new Set<S.Schema.Type<Value>>() }) })
   )
 
 /**
- * Like the default Schema `readonlyMap` but with `withDefault` and batching enabled by default
+ * Like the default Schema `ReadonlyMap` but with `withDefault` and batching enabled by default
  */
-export const readonlyMap = <K extends Schema.Any, V extends Schema.Any>(pair: {
+export const ReadonlyMap = <K extends Schema.Any, V extends Schema.Any>(pair: {
   readonly key: K
   readonly value: V
 }) =>
   pipe(
-    S.readonlyMap(pair),
+    S.ReadonlyMap(pair),
     S.batching(true),
     (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => new Map() }) })
   )
 
 /**
- * Like the default Schema `record` but with `withDefault`
+ * Like the default Schema `NullOr` but with `withDefault`
  */
-export const nullable = <S extends Schema.Any>(self: S) =>
+export const NullOr = <S extends Schema.Any>(self: S) =>
   pipe(
-    S.nullable(self),
+    S.NullOr(self),
     (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => null }) })
   )
 
@@ -129,13 +129,6 @@ export const withDefaults = <Self extends S.Schema<any, any, never>>(s: Self) =>
   // return s as Self & WithDefaults<Self>
 }
 
-/**
- * Like the original Schema `literal`, but with `literals` property exposed
- */
-export const literal = <Literals extends ReadonlyArray<AST.LiteralValue>>(
-  ...literals: Literals
-) => Object.assign(S.literal(...literals) as Schema<Literals[number]>, { literals })
-
 export type WithDefaults<Self extends S.Schema<any, any, never>> = (
   i: S.Schema.Encoded<Self>,
   options?: AST.ParseOptions
@@ -156,7 +149,7 @@ export type WithDefaults<Self extends S.Schema<any, any, never>> = (
 //   : never
 
 export const inputDate = extendM(
-  S.union(S.ValidDateFromSelf, S.Date),
+  S.Union(S.ValidDateFromSelf, S.Date),
   (s) => ({ withDefault: S.propertySignature(s, { default: () => new global.Date() }) })
 )
 
@@ -168,7 +161,7 @@ const makeOpt = (self: S.PropertySignature.Any, exact?: boolean) => {
     case "PropertySignatureDeclaration": {
       return new (S as any).PropertySignatureImpl(
         new S.PropertySignatureDeclaration(
-          exact ? ast.type : S.orUndefined(S.make(ast.type)).ast,
+          exact ? ast.type : S.UndefinedOr(S.make(ast.type)).ast,
           true,
           ast.isReadonly,
           ast.annotations,
@@ -180,13 +173,13 @@ const makeOpt = (self: S.PropertySignature.Any, exact?: boolean) => {
       return new (S as any).PropertySignatureImpl(
         new S.PropertySignatureTransformation(
           new S.FromPropertySignature(
-            exact ? ast.from.type : S.orUndefined(S.make(ast.from.type)).ast,
+            exact ? ast.from.type : S.UndefinedOr(S.make(ast.from.type)).ast,
             true,
             ast.from.isReadonly,
             ast.from.annotations
           ),
           new S.ToPropertySignature(
-            exact ? ast.to.type : S.orUndefined(S.make(ast.to.type)).ast,
+            exact ? ast.to.type : S.UndefinedOr(S.make(ast.to.type)).ast,
             true,
             ast.to.isReadonly,
             ast.to.annotations,
@@ -259,8 +252,7 @@ export const transformTo = <To extends Schema.Any, From extends Schema.Any>(
   S.transformOrFail<To, From, never, never>(
     from,
     to,
-    (...args) => Effect.sync(() => decode(...args)),
-    () => Effect.die("one way schema")
+    { decode: (...args) => Effect.sync(() => decode(...args)), encode: () => Effect.die("one way schema") }
   )
 
 /** A version of transformOrFail which is only a one way mapping of From->To */
@@ -272,4 +264,4 @@ export const transformToOrFail = <To extends Schema.Any, From extends Schema.Any
     options: AST.ParseOptions,
     ast: AST.Transformation
   ) => Effect.Effect<Schema.Encoded<To>, ParseResult.ParseIssue, RD>
-) => S.transformOrFail<To, From, RD, never>(from, to, decode, () => Effect.die("one way schema"))
+) => S.transformOrFail<To, From, RD, never>(from, to, { decode, encode: () => Effect.die("one way schema") })

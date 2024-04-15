@@ -8,12 +8,13 @@ import { reportError } from "@effect-app/infra/errorReporter"
 import type { ValidationError } from "@effect-app/infra/errors"
 import type { RequestContextContainer } from "@effect-app/infra/services/RequestContextContainer"
 import type { ContextMapContainer } from "@effect-app/infra/services/Store/ContextMapContainer"
+import type { Struct } from "@effect/schema/Schema"
 import type { Layer } from "effect-app"
 import { Console, Effect, FiberRef, Option, S } from "effect-app"
 import type { HttpServerError } from "effect-app/http"
 import { HttpBody, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { NonEmptyString255 } from "effect-app/schema"
-import type { REST, Struct } from "effect-app/schema"
+import type { REST } from "effect-app/schema"
 import { updateRequestContext } from "../setupRequest.js"
 import { makeRequestParsers, parseRequestParams } from "./base.js"
 import type { RequestHandler, RequestHandlerBase } from "./base.js"
@@ -129,11 +130,11 @@ export function makeRequestHandler<
 > {
   const { Request, Response, h: handle } = handler
 
-  const response: REST.ReqRes<any, any, any> = Response ? Response : S.void
-  const resp = response as typeof response & { fields?: S.Struct.Fields }
+  const response: REST.ReqRes<any, any, any> = Response ? Response : S.Void
+  const resp = response as typeof response & { fields?: Struct.Fields }
   // TODO: consider if the alternative of using the struct schema is perhaps just better.
   const encoder = "fields" in resp && resp.fields
-    ? S.encode(handler.rt === "raw" ? S.encodedSchema(S.struct(resp.fields)) : S.struct(resp.fields))
+    ? S.encode(handler.rt === "raw" ? S.encodedSchema(S.Struct(resp.fields)) : S.Struct(resp.fields))
     // ? (i: any) => {
     //   if (i instanceof (response as any)) return S.encodeSync(response)(i)
     //   else return S.encodeSync(response)(new (response as any)(i))

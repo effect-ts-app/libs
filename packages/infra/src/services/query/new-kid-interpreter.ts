@@ -102,7 +102,7 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
       count: ({ current }) => {
         upd(interpret(current))
         data.ttype = "count"
-        data.schema = S.struct({ id: S.string }) as any
+        data.schema = S.Struct({ id: S.String }) as any
       },
       order: ({ current, direction, field }) => {
         upd(interpret(current))
@@ -137,7 +137,7 @@ export const toFilter = <
   let select: (keyof TFieldValues)[] = []
   if (schema) {
     let t = schema.ast
-    if (S.AST.isTransform(t)) {
+    if (S.AST.isTransformation(t)) {
       t = t.from
     }
     if (S.AST.isTypeLiteral(t)) {

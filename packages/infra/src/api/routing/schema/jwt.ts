@@ -10,8 +10,8 @@ export const parseJwt = <R, I, A>(
 ): S.Schema<A, string, R> =>
   S
     .transformToOrFail(
-      S.string,
-      S.unknown,
+      S.String,
+      S.Unknown,
       (s, __, ast) =>
         S.ParseResult.try({
           try: () => jwtDecode(s, options),

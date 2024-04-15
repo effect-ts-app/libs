@@ -5,7 +5,7 @@
     "patchedDependencies": {
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
-      "@effect/schema@0.64.20": "patches/@effect__schema@0.64.20.patch",
+      "@effect/schema@0.65.0": "patches/@effect__schema@0.65.0.patch",
       "typescript@5.4.5": "patches/typescript@5.4.5.patch"
     }
   },
@@ -58,11 +58,11 @@
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@changesets/cli": "^2.27.1",
-    "@dprint/typescript": "^0.90.0",
-    "effect": "^2.4.18",
-    "@effect/platform": "^0.48.27",
-    "@effect/platform-node": "^0.45.29",
-    "@effect/schema": "^0.64.20",
+    "@dprint/typescript": "^0.90.1",
+    "effect": "^2.4.19",
+    "@effect/platform": "^0.48.28",
+    "@effect/platform-node": "^0.45.30",
+    "@effect/schema": "^0.65.0",
     "@effect-app/cli": "^0.71.0",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
@@ -89,7 +89,7 @@
     "eslint-plugin-codegen": "0.17.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier-vue": "^5.0.0",
-    "eslint-plugin-simple-import-sort": "^12.0.0",
+    "eslint-plugin-simple-import-sort": "^12.1.0",
     "eslint-plugin-sort-destructure-keys": "^1.5.0",
     "eslint-plugin-unused-imports": "^3.1.0",
     "eslint-watch": "^8.0.0",
@@ -107,6 +107,6 @@
     "typescript-transform-paths": "^3.4.7",
     "unplugin-auto-import": "^0.17.5",
     "vite": "^5.2.8",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.0"
   }
 }

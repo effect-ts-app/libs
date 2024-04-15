@@ -5,8 +5,8 @@ import { S } from "../lib.js"
 // eslint-disable-next-line unused-imports/no-unused-vars
 // @ts-expect-error type not used
 export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<ItemType>>()("NotFoundError", {
-  type: S.string,
-  id: S.unknown
+  type: S.String,
+  id: S.Unknown
 }) {
   override get message() {
     return `Didn't find ${this.type}#${JSON.stringify(this.id)}`
@@ -15,7 +15,7 @@ export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<
 
 /** @tsplus type InvalidStateError */
 export class InvalidStateError extends TaggedError<InvalidStateError>()("InvalidStateError", {
-  message: S.string
+  message: S.String
 }) {
   constructor(messageOrObject: string | { message: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
@@ -24,7 +24,7 @@ export class InvalidStateError extends TaggedError<InvalidStateError>()("Invalid
 
 /** @tsplus type ServiceUnavailableError */
 export class ServiceUnavailableError extends TaggedError<ServiceUnavailableError>()("ServiceUnavailableError", {
-  message: S.string
+  message: S.String
 }) {
   constructor(messageOrObject: string | { message: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
@@ -33,7 +33,7 @@ export class ServiceUnavailableError extends TaggedError<ServiceUnavailableError
 
 /** @tsplus type ValidationError */
 export class ValidationError extends TaggedError<ValidationError>()("ValidationError", {
-  errors: S.array(S.unknown)
+  errors: S.Array(S.Unknown)
 }) {
   override get message() {
     return `Validation failed: ${this.errors.map((e) => JSON.stringify(e)).join(", ")}`
@@ -42,7 +42,7 @@ export class ValidationError extends TaggedError<ValidationError>()("ValidationE
 
 /** @tsplus type NotLoggedInError */
 export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLoggedInError", {
-  message: S.optional(S.string)
+  message: S.optional(S.String)
 }) {
   constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
@@ -54,7 +54,7 @@ export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLogged
  */
 /** @tsplus type LoginError */
 export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
-  message: S.optional(S.string)
+  message: S.optional(S.String)
 }) {
   constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
@@ -63,7 +63,7 @@ export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
 
 /** @tsplus type UnauthorizedError */
 export class UnauthorizedError extends TaggedError<UnauthorizedError>()("UnauthorizedError", {
-  message: S.optional(S.string)
+  message: S.optional(S.String)
 }) {
   constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
@@ -80,7 +80,7 @@ type OptimisticConcurrencyDetails = {
 /** @tsplus type OptimisticConcurrencyException */
 export class OptimisticConcurrencyException extends TaggedError<OptimisticConcurrencyException>()(
   "OptimisticConcurrencyException",
-  { message: S.string }
+  { message: S.String }
 ) {
   readonly details?: OptimisticConcurrencyDetails
   constructor(
@@ -108,7 +108,7 @@ const GeneralErrors = [
   ServiceUnavailableError
 ] as const
 
-export const SupportedErrors = S.union(
+export const SupportedErrors = S.Union(
   ...MutationOnlyErrors,
   ...GeneralErrors
 )

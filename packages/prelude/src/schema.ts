@@ -11,7 +11,7 @@ export const Email = S
   .pipe(
     S.annotations({
       // eslint-disable-next-line @typescript-eslint/unbound-method
-      arbitrary: (): A.Arbitrary<Email> => (fc) => fakerArb((faker) => faker.internet.exampleEmail)(fc).map(Email)
+      arbitrary: (): A.LazyArbitrary<Email> => (fc) => fakerArb((faker) => faker.internet.exampleEmail)(fc).map(Email)
     }),
     S.withDefaults
   )
@@ -22,8 +22,9 @@ export const PhoneNumber = S
   .PhoneNumber
   .pipe(
     S.annotations({
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      arbitrary: (): A.Arbitrary<PhoneNumber> => (fc) => fakerArb((faker) => faker.phone.number)(fc).map(PhoneNumber)
+      arbitrary: (): A.LazyArbitrary<PhoneNumber> => (fc) =>
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        fakerArb((faker) => faker.phone.number)(fc).map(PhoneNumber)
     }),
     S.withDefaults
   )
@@ -33,7 +34,7 @@ export const makeIs = <A extends { _tag: string }, I, R>(
 ) => {
   if (S.AST.isUnion(schema.ast)) {
     return schema.ast.types.reduce((acc, t) => {
-      if (S.AST.isTransform(t)) {
+      if (S.AST.isTransformation(t)) {
         if (S.AST.isDeclaration(t.to)) {
           t = t.from
         } else {
@@ -70,7 +71,7 @@ export const makeIsAnyOf = <A extends { _tag: string }, I, R>(
   throw new Error("Unsupported")
 }
 
-export const extendTaggedUnion = <A extends { _tag: string }, I, R>(
+export const ExtendTaggedUnion = <A extends { _tag: string }, I, R>(
   schema: S.Schema<A, I, R>
 ) => extendM(schema, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_) }))
 
@@ -81,7 +82,7 @@ export interface IsAny<A extends { _tag: string }> {
   <Keys extends A["_tag"][]>(...keys: Keys): (a: A) => a is ExtractUnion<A, ElemType<Keys>>
 }
 
-export const taggedUnion = <Members extends readonly S.Schema<{ _tag: string }, any, any>[]>(...a: Members) =>
-  pipe(S.union(...a), (_) => extendM(_, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_) })))
+export const TaggedUnion = <Members extends readonly S.Schema<{ _tag: string }, any, any>[]>(...a: Members) =>
+  pipe(S.Union(...a), (_) => extendM(_, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_) })))
 
 export type PhoneNumber = PhoneNumberT

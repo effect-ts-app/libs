@@ -12,7 +12,7 @@ import { Tracer } from "effect"
 import { Effect, flow, Layer, Option, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import type { StringId } from "effect-app/schema"
-import { NonEmptyString255, struct } from "effect-app/schema"
+import { NonEmptyString255 } from "effect-app/schema"
 import { pretty } from "effect-app/utils"
 import { setupRequestContext } from "../../api/setupRequest.js"
 import { RequestContextContainer } from "../RequestContextContainer.js"
@@ -33,11 +33,11 @@ export function makeServiceBusQueue<
   schema: S.Schema<Evt, EvtE>,
   drainSchema: S.Schema<DrainEvt, DrainEvtE>
 ) {
-  const wireSchema = struct({
+  const wireSchema = S.Struct({
     body: schema,
     meta: QueueMeta
   })
-  const drainW = struct({ body: drainSchema, meta: QueueMeta })
+  const drainW = S.Struct({ body: drainSchema, meta: QueueMeta })
   const parseDrain = flow(S.decodeUnknown(drainW), Effect.orDie)
 
   return Effect.gen(function*($) {
