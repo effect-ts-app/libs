@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 0.234.6
+
+### Patch Changes
+
+- bf01de2: fix type
+
 ## 0.234.5
 
 ### Patch Changes
