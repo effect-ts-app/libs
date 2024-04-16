@@ -1,5 +1,12 @@
 # @effect-app/infra-adapters
 
+## 0.154.10
+
+### Patch Changes
+
+- a239df9: attach RequestFibers to root span
+- 256a4d1: clean messages
+
 ## 0.154.9
 
 ### Patch Changes
