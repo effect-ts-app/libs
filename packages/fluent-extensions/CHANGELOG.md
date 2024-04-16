@@ -1,5 +1,11 @@
 # @effect-app/fluent-extensions
 
+## 1.0.1
+
+### Patch Changes
+
+- 4599a2e: fix ext
+
 ## 1.0.0
 
 ### Major Changes
