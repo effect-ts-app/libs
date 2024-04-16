@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.72.0
+
+### Minor Changes
+
+- 0d1b378: update to latest schema
+
 ## 0.71.0
 
 ### Minor Changes

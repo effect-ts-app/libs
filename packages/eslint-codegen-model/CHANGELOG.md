@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 0.75.0
+
+### Minor Changes
+
+- 0d1b378: update to latest schema
+
 ## 0.74.0
 
 ### Minor Changes

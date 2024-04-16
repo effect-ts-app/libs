@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 0.203.0
+
+### Minor Changes
+
+- 0d1b378: update to latest schema
+
+### Patch Changes
+
+- Updated dependencies [0d1b378]
+  - @effect-app/schema@0.221.0
+  - @effect-app/core@0.170.0
+
 ## 0.202.1
 
 ### Patch Changes
