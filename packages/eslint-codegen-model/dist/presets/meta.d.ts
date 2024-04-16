@@ -1,4 +1,4 @@
-import type { Preset } from 'eslint-plugin-codegen';
+import type { Preset } from "eslint-plugin-codegen";
 /**
  * Adds file meta
  */
