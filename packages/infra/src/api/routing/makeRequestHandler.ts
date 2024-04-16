@@ -60,7 +60,7 @@ export type Middleware<
   >
 ) => {
   handler: RequestHandler<
-    R2 | PR | RequestContextContainer | ContextMapContainer,
+    R2 | PR | RequestContextContainer | ContextMapContainer | RequestFiberSet,
     M,
     PathA,
     CookieA,
