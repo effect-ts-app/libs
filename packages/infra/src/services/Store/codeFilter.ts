@@ -1,4 +1,4 @@
-import { ReadonlyArray } from "effect-app"
+import { Array } from "effect-app"
 import { assertUnreachable, get } from "effect-app/utils"
 import type { FilterR, FilterResult } from "./filterApi/query.js"
 import { compare, greaterThan, greaterThanExclusive, lowerThan, lowerThanExclusive } from "./utils.js"
@@ -58,7 +58,7 @@ export const codeFilter3_ = <E>(state: readonly FilterResult[], sut: E, statemen
   let s = ""
   let l = 0
   const printN = (n: number) => {
-    return n === 0 ? "" : ReadonlyArray.range(1, n).map(() => "  ").join("")
+    return n === 0 ? "" : Array.range(1, n).map(() => "  ").join("")
   }
   // TODO: path str updates
 

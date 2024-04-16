@@ -1,4 +1,4 @@
-import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect/ReadonlyArray"
+import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect/Array"
 
 declare global {
   interface String {

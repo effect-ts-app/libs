@@ -24,6 +24,7 @@ import type { ParseResult, Schema } from "@effect-app/schema"
 import { NonNegativeInt } from "@effect-app/schema"
 import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
 import {
+  Array,
   Chunk,
   Context,
   Effect,
@@ -32,7 +33,6 @@ import {
   Option,
   pipe,
   PubSub,
-  ReadonlyArray,
   Request,
   RequestResolver,
   S,
@@ -40,7 +40,6 @@ import {
 } from "effect-app"
 import { runTerm } from "effect-app/Pure"
 import type { FixEnv, PureEnv } from "effect-app/Pure"
-import type { NoInfer } from "effect/Types"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import type { FieldValues } from "../filter/types.js"
 import { make as makeQuery } from "./query.js"
@@ -239,8 +238,8 @@ export class RepositoryBaseC3<
       Effect.andThen((_) =>
         Array.isArray(_)
           ? batch === undefined
-            ? saveManyWithPure_(this, _, pure as any)
-            : saveManyWithPureBatched_(this, _, pure as any, batch === "batched" ? 100 : batch)
+            ? saveManyWithPure_(this, _ as readonly T[], pure as any)
+            : saveManyWithPureBatched_(this, _ as readonly T[], pure as any, batch === "batched" ? 100 : batch)
           : saveWithPure_(this, _ as any, pure as any)
       )
     ) as any
@@ -278,7 +277,7 @@ export class RepositoryBaseC3<
   } = (items, pure, batch?: "batched" | number) =>
     batch
       ? Effect.forEach(
-        ReadonlyArray.chunk_(items, batch === "batched" ? 100 : batch),
+        Array.chunk_(items, batch === "batched" ? 100 : batch),
         (batch) =>
           saveAllWithEffectInt(
             this,
@@ -392,7 +391,7 @@ export function makeRepo<
           const pubCfg = yield* $(Effect.context<R2>())
           const pub = "publishEvents" in args
             ? flow(args.publishEvents, Effect.provide(pubCfg))
-            : () => Effect.unit
+            : () => Effect.void
           const changeFeed = yield* $(PubSub.unbounded<[T[], "save" | "remove"]>())
 
           const allE = cms
@@ -466,10 +465,10 @@ export function makeRepo<
                     ret.forEach((_) => set(_.id, _._etag))
                   })
               )
-              .pipe(Effect.asUnit)
+              .pipe(Effect.asVoid)
 
           const saveAll = (a: Iterable<T>) =>
-            encodeMany(Array.from(a))
+            encodeMany(Array.fromIterable(a))
               .pipe(
                 Effect.orDie,
                 Effect.andThen(saveAllE)
@@ -485,7 +484,7 @@ export function makeRepo<
                     // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
                     (_) => Effect.flatMapOption(_, pub),
                     Effect.andThen(changeFeed.publish([Chunk.toArray(it), "save"])),
-                    Effect.asUnit
+                    Effect.asVoid
                   )
               })
               .pipe(Effect.withSpan("saveAndPublish"))
@@ -533,7 +532,7 @@ export function makeRepo<
               .filter(args)
               .pipe(Effect.tap((items) =>
                 args.select
-                  ? Effect.unit
+                  ? Effect.void
                   : Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as Encoded).id, (_ as PM)._etag)))
               ))
 
@@ -555,7 +554,7 @@ export function makeRepo<
                 .pipe(
                   Effect.flatMap(flow(
                     S.decode(S.Array(a.schema)),
-                    Effect.map(ReadonlyArray.getSomes),
+                    Effect.map(Array.getSomes),
                     Effect.provide(rctx)
                   ))
                 )
@@ -574,7 +573,7 @@ export function makeRepo<
                 ? Effect.andThen(
                   eff,
                   flow(
-                    ReadonlyArray.head,
+                    Array.head,
                     Effect.mapError(() => new NotFoundError({ id: "query", /* TODO */ type: name }))
                   )
                 )
@@ -1051,7 +1050,7 @@ export const makeRequest = <
             Effect.forEach(requests, (r) =>
               Request.complete(
                 r,
-                ReadonlyArray
+                Array
                   .findFirst(items, (_) => _.id === r.id)
                   .pipe(Option.match({
                     onNone: () => Exit.fail(new NotFoundError({ type: repo.itemType, id: r.id })),

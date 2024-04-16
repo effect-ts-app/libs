@@ -106,7 +106,7 @@ export class Operations extends Context.TagMakeId("effect-app/Operations", make)
         Effect
           .flatMap((_) => {
             if (Exit.isSuccess(_)) {
-              return Effect.unit
+              return Effect.void
             } else {
               return reportAppError(_.cause)
             }

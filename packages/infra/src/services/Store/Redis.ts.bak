@@ -43,7 +43,7 @@ function makeRedisStore({ prefix }: StorageConfig) {
           const withPermit = sem.withPermits(1)
 
           const asMap = get.map((x) => new Map(x.map((x) => [x.id, x] as const)))
-          const all = get.map(ReadonlyArray.fromIterable)
+          const all = get.map(Array.fromIterable)
           const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
             Effect
               .forEach(items, (e) => s.find(e.id).flatMap((current) => updateETag(e, current)))

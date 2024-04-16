@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { NonEmptyArray } from "effect/Array"
 import type { UnknownException } from "effect/Cause"
 import type { Effect } from "effect/Effect"
 import type { Either } from "effect/Either"
 import type { Option } from "effect/Option"
-import type { NonEmptyArray } from "effect/ReadonlyArray"
-import type { Concurrency, NoInfer, NotFunction } from "effect/Types"
+import type { Concurrency, NotFunction } from "effect/Types"
 import "@effect-app/core/builtin"
 import type { LazyArg } from "effect/Function"
 

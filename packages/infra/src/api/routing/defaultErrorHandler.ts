@@ -38,7 +38,7 @@ export function defaultBasicErrorHandler<R>(
   const sendError = (code: number) => (body: unknown) =>
     Effect.sync(() => setBody(res, HttpBody.unsafeJson(body)).pipe(setStatus(code)))
   return r2.pipe(
-    Effect.tapErrorCause((cause) => Cause.isFailure(cause) ? logRequestError(cause) : Effect.unit),
+    Effect.tapErrorCause((cause) => Cause.isFailure(cause) ? logRequestError(cause) : Effect.void),
     Effect.catchTag("ValidationError", (err) => sendError(400)(err.errors)),
     Effect
       // final catch all; expecting never so that unhandled known errors will show up
@@ -75,7 +75,7 @@ export function defaultErrorHandler<R>(
       )
   return r3
     .pipe(
-      Effect.tapErrorCause((cause) => Cause.isFailure(cause) ? logRequestError(cause) : Effect.unit),
+      Effect.tapErrorCause((cause) => Cause.isFailure(cause) ? logRequestError(cause) : Effect.void),
       Effect
         .catchTags({
           "JWTError": (err) =>

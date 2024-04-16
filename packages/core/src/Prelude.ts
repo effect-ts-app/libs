@@ -164,23 +164,35 @@ export namespace NonEmptySet {
 /** @tsplus type ets/NonEmptySet */
 export type NonEmptySet<A> = NS.NonEmptySet<A>
 
-export namespace ReadonlyArray {
+export namespace Record {
+  // @ts-expect-error
+  export * from "@effect-app/core/Record"
+}
+/**
+ * @tsplus type Record
+ * @tsplus type Iterable
+ * @tsplus companion effect/data/Record.Ops
+ * @tsplus companion effect/data/Record.Ops
+ */
+export type Record<K extends string | symbol | number, V> = globalThis.Record<K, V>
+
+export namespace Array {
   // @ts-expect-error
   export * from "@effect-app/core/Array"
 }
 /**
- * @tsplus type ReadonlyArray
+ * @tsplus type Array
  * @tsplus type Iterable
- * @tsplus companion effect/data/ReadonlyArray.Ops
- * @tsplus companion effect/data/ReadonlyArray.Ops
+ * @tsplus companion effect/data/Array.Ops
+ * @tsplus companion effect/data/Array.Ops
  */
-export type ReadonlyArray<A> = globalThis.ReadonlyArray<A>
+export type Array<A> = globalThis.ReadonlyArray<A>
 
 // /**
 //  * @tsplus type NonEmptyReadonlyArray
 //  * @tsplus type Iterable
-//  * @tsplus companion effect/data/NonEmptyReadonlyArray.Ops
-//  * @tsplus companion effect/data/NonEmptyReadonlyArray.Ops
+//  * @tsplus companion effect/data/NonEmptyArray.Ops
+//  * @tsplus companion effect/data/NonEmptyArray.Ops
 //  */
 // export type NonEmptyReadonlyArray<A> = ARR.NonEmptyReadonlyArray<A>
 

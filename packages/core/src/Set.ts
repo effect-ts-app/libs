@@ -1,6 +1,6 @@
 // ets_tracing: off
 
-import { Option, ReadonlyArray } from "effect"
+import { Array, Option } from "effect"
 import type { Either } from "effect"
 import { not } from "effect/Predicate"
 import type { Predicate, Refinement } from "./Function.js"
@@ -38,7 +38,7 @@ export function findFirstMap_<A, B>(
   set: ReadonlySet<A>,
   f: (a: A) => Option.Option<B>
 ): Option.Option<B> {
-  return ReadonlyArray.findFirst([...set], f)
+  return Array.findFirst([...set], f)
 }
 
 export type MutableSet<A> = globalThis.Set<A>

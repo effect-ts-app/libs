@@ -85,7 +85,7 @@ export const makeRedisClient = (makeClient: () => Client) =>
     (cl) =>
       Effect
         .async<void, Error>((res) => {
-          cl.client.quit((err) => res(err ? Effect.fail(err) : Effect.unit))
+          cl.client.quit((err) => res(err ? Effect.fail(err) : Effect.void))
         })
         .pipe(Effect.uninterruptible, Effect.orDie)
   )

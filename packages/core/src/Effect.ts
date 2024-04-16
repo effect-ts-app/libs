@@ -100,7 +100,7 @@ export function ifDiff_<I, R, E, A>(
   orig: I,
   f: (i: I) => Effect.Effect<A, E, R>
 ) {
-  return n !== orig ? f(n) : Effect.unit
+  return n !== orig ? f(n) : Effect.void
 }
 
 export function ifDiff<I, R, E, A>(n: I, orig: I) {

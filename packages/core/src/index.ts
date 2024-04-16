@@ -9,6 +9,7 @@ export * from "effect"
 export * from "./Prelude.js"
 
 export {
+  Array,
   Cause,
   Chunk,
   Config,
@@ -24,7 +25,6 @@ export {
   Layer,
   Option,
   Order,
-  ReadonlyArray,
   Ref,
   Scope
 } from "./Prelude.js"

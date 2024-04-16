@@ -9,7 +9,7 @@ export const meta: Preset<{ sourcePrefix?: string }> = ({ meta, options }) => {
   const moduleName = pipe(
     meta.filename.substring(meta.filename.indexOf(sourcePrefix) + sourcePrefix.length, meta.filename.length - 3)
             .split("/"),
-            ReadonlyArray.dedupeAdjacent
+            Array.dedupeAdjacent
   ).join("/")
   const expectedContent = `export const meta = { moduleName: "${moduleName}" }`
 

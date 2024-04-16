@@ -2,7 +2,7 @@
 import { Effect, HashMap, Option } from "@effect-app/core"
 import { constant } from "@effect-app/core/Function"
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
-import { ReadonlyRecord } from "effect"
+import { Record } from "effect"
 import type { REST, Schema } from "effect-app/schema"
 import { StringId } from "effect-app/schema"
 import { Path } from "path-parser"
@@ -226,7 +226,7 @@ export function makePathWithQuery(
     | null
   >
 ) {
-  const forQs = ReadonlyRecord.filter(pars, (_, k) => !path.params.includes(k))
+  const forQs = Record.filter(pars, (_, k) => !path.params.includes(k))
   const q = forQs // { ...forQs, _: JSON.stringify(forQs) } // TODO: drop completely individual keys from query?, sticking to json only
   return (
     path.build(pars, { ignoreSearch: true, ignoreConstraints: true })

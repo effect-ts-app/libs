@@ -27,9 +27,9 @@ export const responseWithJsonBody = (
 /**
  * @tsplus fluent effect/platform/Http/Client schemaJsonBody
  */
-export const schemaJsonBody = <R, To, From, A, B>(
-  client: HttpClient.Client<A, B, ClientResponse>,
-  schema: Schema<To, From, R>
+export const schemaJsonBody = <RS, To, From, E, R>(
+  client: HttpClient.Client<ClientResponse, E, R>,
+  schema: Schema<To, From, RS>
 ) => {
   return HttpClient.mapEffect(client, (_) => Effect.flatMap(_.json, S.decodeUnknown(schema)))
 }
@@ -37,8 +37,8 @@ export const schemaJsonBody = <R, To, From, A, B>(
 /**
  * @tsplus fluent effect/platform/Http/Client schemaJsonBodyUnsafe
  */
-export const schemaJsonBodyUnsafe = <To, From, A, B>(
-  client: HttpClient.Client<A, B, ClientResponse>,
+export const schemaJsonBodyUnsafe = <To, From, E, R>(
+  client: HttpClient.Client<ClientResponse, E, R>,
   schema: Schema<To, From>
 ) => {
   return HttpClient.mapEffect(client, (_) => Effect.map(_.json, S.decodeUnknownSync(schema)))
@@ -48,18 +48,18 @@ export const schemaJsonBodyUnsafe = <To, From, A, B>(
  * @tsplus fluent effect/platform/Http/Client responseWithSchemaBody
  */
 export const responseWithSchemaBody = <
-  R,
+  To,
   From extends {
     readonly status?: number
     readonly headers?: Headers
     readonly body?: unknown
   },
-  To,
-  A,
-  B
+  RS,
+  E,
+  R
 >(
-  client: HttpClient.Client<A, B, ClientResponse>,
-  schema: Schema<To, From, R>
+  client: HttpClient.Client<ClientResponse, E, R>,
+  schema: Schema<To, From, RS>
 ) => {
   return HttpClient.mapEffect(
     client,
@@ -72,7 +72,7 @@ export const responseWithSchemaBody = <
 }
 
 /** @tsplus getter effect/platform/Http/Client demandJson */
-export const demandJson = <R, E>(client: HttpClient.Client<R, E, ClientResponse>) =>
+export const demandJson = <E, R>(client: HttpClient.Client<ClientResponse, E, R>) =>
   HttpClient
     .mapRequest(client, (_) => HttpClientRequest.acceptJson(_))
     .pipe(HttpClient.transform((r, request) =>
@@ -81,7 +81,7 @@ export const demandJson = <R, E>(client: HttpClient.Client<R, E, ClientResponse>
             .getOrUndefined(HttpHeaders
               .get(response.headers, "Content-Type"))
             ?.startsWith("application/json")
-          ? Effect.unit
+          ? Effect.void
           : Effect.fail(
             new HttpClientError.ResponseError({
               request,

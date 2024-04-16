@@ -1,4 +1,4 @@
-import { Option, pipe, ReadonlyArray } from "@effect-app/core"
+import { Array, Option, pipe } from "@effect-app/core"
 import { type A, type Email as EmailT, type PhoneNumber as PhoneNumberT } from "@effect-app/schema"
 import * as S from "@effect-app/schema"
 import { fakerArb } from "./faker.js"
@@ -42,7 +42,7 @@ export const makeIs = <A extends { _tag: string }, I, R>(
         }
       }
       if (!S.AST.isTypeLiteral(t)) return acc
-      const tag = ReadonlyArray.findFirst(t.propertySignatures, (_) => {
+      const tag = Array.findFirst(t.propertySignatures, (_) => {
         if (_.name === "_tag" && S.AST.isLiteral(_.type)) {
           return Option.some(_.type)
         }

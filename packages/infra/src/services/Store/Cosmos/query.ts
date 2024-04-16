@@ -1,4 +1,4 @@
-import { Effect, Equivalence, pipe, ReadonlyArray } from "effect-app"
+import { Array, Effect, Equivalence, pipe } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { assertUnreachable } from "effect-app/utils"
 import type { FilterR, FilterResult } from "../filterApi/query.js"
@@ -100,7 +100,7 @@ export function buildWhereCosmosQuery3(
     let s = ""
     let l = 0
     const printN = (n: number) => {
-      return n === 0 ? "" : ReadonlyArray.range(1, n).map(() => "  ").join("")
+      return n === 0 ? "" : Array.range(1, n).map(() => "  ").join("")
     }
     for (const e of state) {
       switch (e.t) {
@@ -175,7 +175,7 @@ export function buildWhereCosmosQuery3(
           .filter((_) => _.path.includes(".-1."))
           .map((_) => _.path.split(".-1.")[0])
           .map((_) => `JOIN ${_} IN f.${_}`),
-        ReadonlyArray.dedupeWith(Equivalence.string)
+        Array.dedupeWith(Equivalence.string)
       )
         .join("\n")
     }

@@ -39,7 +39,7 @@ export function makeAppRuntime<R, E, A>(layer: Layer<A, E, R>) {
         runSyncExit: Runtime.runSyncExit(runtime),
         runFork: Runtime.runFork(runtime)
       }),
-      clean: Scope.close(scope, Exit.unit)
+      clean: Scope.close(scope, Exit.void)
     }
   })
 }

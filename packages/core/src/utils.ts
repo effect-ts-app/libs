@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Either from "effect/Either"
 import { dual, isFunction } from "effect/Function"
-import type { NoInfer } from "effect/Types"
 import type { GetFieldType, NumericDictionary, PropertyPath } from "lodash"
 import type { Dictionary } from "./Dictionary.js"
 import * as D from "./Dictionary.js"

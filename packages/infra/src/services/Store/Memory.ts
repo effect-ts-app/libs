@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Effect, FiberRef, flow, Option, Order, pipe, ReadonlyArray, Ref, Struct } from "effect-app"
+import { Array, Effect, FiberRef, flow, Option, Order, pipe, Ref, Struct } from "effect-app"
 import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
 import { get } from "effect-app/utils"
 import type { RequestContext } from "../../RequestContext.js"
@@ -30,24 +30,24 @@ export function memFilter<T extends { id: string }, U extends keyof T = never>(f
         })
       ))
     if (Option.isSome(ords)) {
-      c = ReadonlyArray.sortBy(...ords.value)(c)
+      c = Array.sortBy(...ords.value)(c)
     }
     if (!skip && limit === 1) {
       return select(
-        ReadonlyArray.findFirst(c, f.filter ? codeFilter(f.filter) : (_) => Option.some(_)).pipe(
-          Option.map(ReadonlyArray.make),
+        Array.findFirst(c, f.filter ? codeFilter(f.filter) : (_) => Option.some(_)).pipe(
+          Option.map(Array.make),
           Option.getOrElse(
             () => []
           )
         )
       )
     }
-    let r = f.filter ? ReadonlyArray.filterMap(c, codeFilter(f.filter)) : c
+    let r = f.filter ? Array.filterMap(c, codeFilter(f.filter)) : c
     if (skip) {
-      r = ReadonlyArray.drop(r, skip)
+      r = Array.drop(r, skip)
     }
     if (limit !== undefined) {
-      r = ReadonlyArray.take(r, limit)
+      r = Array.take(r, limit)
     }
 
     return select(r)
@@ -96,7 +96,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
     const withPermit = sem.withPermits(1)
     const values = Effect.map(Ref.get(store), (s) => s.values())
 
-    const all = Effect.map(values, ReadonlyArray.fromIterable)
+    const all = Effect.map(values, Array.fromIterable)
 
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
       Effect

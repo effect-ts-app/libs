@@ -1,4 +1,4 @@
-import { ReadonlyArray } from "effect-app"
+import { Array } from "effect-app"
 import type { FieldValues } from "../../../filter/types.js"
 import type { FieldPath, FieldPathValue } from "../../../filter/types/path/eager.js"
 import type { Filter, Ops } from "./proxy.js"
@@ -40,7 +40,7 @@ export const print = (state: readonly FilterResult[]) => {
   let s = ""
   let l = 0
   const printN = (n: number) => {
-    return n === 0 ? "" : ReadonlyArray.range(1, n).map(() => "  ").join("")
+    return n === 0 ? "" : Array.range(1, n).map(() => "  ").join("")
   }
   for (const e of state) {
     switch (e.t) {

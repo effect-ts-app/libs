@@ -2,7 +2,7 @@
 
 import { toNonEmptyArray } from "@effect-app/core/Array"
 import { CosmosClient, CosmosClientLayer } from "@effect-app/infra-adapters/cosmos-client"
-import { Chunk, Duration, Effect, Layer, Option, pipe, ReadonlyArray, Secret, Struct } from "effect-app"
+import { Array, Chunk, Duration, Effect, Layer, Option, pipe, Secret, Struct } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { dropUndefinedT } from "effect-app/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
@@ -75,7 +75,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       })
                     ] as const
                 )
-                const batches = Chunk.toReadonlyArray(ReadonlyArray.chunk_(b, config?.maxBulkSize ?? 10))
+                const batches = Chunk.toReadonlyArray(Array.chunk_(b, config?.maxBulkSize ?? 10))
 
                 const batchResult = yield* $(
                   Effect.forEach(

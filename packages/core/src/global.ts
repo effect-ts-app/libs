@@ -4,8 +4,8 @@ declare global {
    * @tsplus type effect/data/ReadonlyArray
    * @tsplus type ReadonlyArray
    * @tsplus type Iterable
-   * @tsplus companion effect/data/ReadonlyArray.Ops
-   * @tsplus companion ReadonlyArray.Ops
+   * @tsplus companion effect/data/Array.Ops
+   * @tsplus companion Array.Ops
    */
   interface ReadonlyArray<T> {}
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Update = Must return updated items
 // Modify = Must `set` updated items, and can return anything.
-import { Effect, ReadonlyArray } from "effect-app"
+import { Array, Effect } from "effect-app"
 import type { NonEmptyArray } from "effect-app"
 import { type FixEnv, runTerm } from "effect-app/Pure"
 import { NotFoundError } from "../../errors.js"
@@ -166,7 +166,7 @@ export function saveManyWithPureBatched_<
   batchSize = 100
 ) {
   return Effect.forEach(
-    ReadonlyArray.chunk_(items, batchSize),
+    Array.chunk_(items, batchSize),
     (batch) =>
       saveAllWithEffectInt(
         self,

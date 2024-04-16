@@ -14,11 +14,11 @@
     "query-string": "^9.0.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.28",
-    "@effect/platform-browser": "^0.31.28",
-    "@effect/schema": "^0.65.0",
-    "effect": "^2.4.19",
-    "vue": "^3.4.21"
+    "@effect/platform": "^0.49.0",
+    "@effect/platform-browser": "^0.32.0",
+    "@effect/schema": "^0.66.0",
+    "effect": "^3.0.0",
+    "vue": "^3.4.22"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
@@ -28,7 +28,7 @@
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
-    "vite": "^5.2.8",
+    "vite": "^5.2.9",
     "vitest": "^1.5.0"
   },
   "typesVersions": {

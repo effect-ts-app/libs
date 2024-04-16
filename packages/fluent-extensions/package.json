@@ -14,8 +14,8 @@
     "validator": "^13.11.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.28",
-    "effect": "^2.4.19"
+    "@effect/platform": "^0.49.0",
+    "effect": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
