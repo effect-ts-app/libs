@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 0.170.0
+
+### Minor Changes
+
+- 0d1b378: update to latest schema
+
 ## 0.169.1
 
 ### Patch Changes

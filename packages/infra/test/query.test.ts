@@ -6,9 +6,9 @@ import { RepositoryDefaultImpl } from "../src/services/RepositoryBase.js"
 import { ContextMapContainer } from "../src/services/Store/ContextMapContainer.js"
 import { memFilter, MemoryStoreLive } from "../src/services/Store/Memory.js"
 
-const str = S.struct({ _tag: S.literal("string"), value: S.string })
-const num = S.struct({ _tag: S.literal("number"), value: S.number })
-const someUnion = S.union(str, num)
+const str = S.Struct({ _tag: S.Literal("string"), value: S.String })
+const num = S.Struct({ _tag: S.Literal("number"), value: S.Number })
+const someUnion = S.Union(str, num)
 
 export class Something extends S.Class<Something>()({
   id: S.StringId.withDefault,
@@ -34,8 +34,8 @@ const q = make<Something.Encoded>()
     page({ take: 10 }),
     project(
       S.transformToOrFail(
-        S.struct({ id: S.StringId, displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-        S.struct(Struct.pick(Something.fields, "id", "displayName")),
+        S.Struct({ id: S.StringId, displayName: S.String }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+        S.Struct(Struct.pick(Something.fields, "id", "displayName")),
         (_) => Effect.andThen(SomeService, _)
       )
     )
@@ -116,8 +116,8 @@ it("works with repo", () =>
             page({ take: 10 }),
             project(
               S.transformToOrFail(
-                S.struct({ displayName: S.string }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                S.struct(Struct.pick(Something.fields, "displayName")),
+                S.Struct({ displayName: S.String }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                S.Struct(Struct.pick(Something.fields, "displayName")),
                 (_) => Effect.andThen(SomeService, _)
               )
             )
@@ -142,8 +142,8 @@ it("collect", () =>
               project(
                 S.transformTo(
                   // TODO: sample case with narrowing down a union?
-                  S.encodedSchema(S.struct(Struct.pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                  S.typeSchema(S.option(S.string)),
+                  S.encodedSchema(S.Struct(Struct.pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                  S.typeSchema(S.Option(S.String)),
                   (_) =>
                     _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
                       ? Option.some(`${_.displayName}-${_.n}`)
@@ -165,8 +165,8 @@ it("collect", () =>
               project(
                 S.transformTo(
                   // TODO: sample case with narrowing down a union?
-                  S.encodedSchema(S.struct(Struct.pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                  S.typeSchema(S.option(S.string)),
+                  S.encodedSchema(S.Struct(Struct.pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                  S.typeSchema(S.Option(S.String)),
                   (_) =>
                     _.union._tag === "string"
                       ? Option.some(_.union.value)

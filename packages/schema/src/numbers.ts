@@ -42,7 +42,7 @@ export type Int = S.Schema.Type<typeof Int>
 
 export interface PositiveNumberBrand extends Simplify<B.Brand<"PositiveNumber"> & NonNegativeNumberBrand> {}
 export const PositiveNumber = extendM(
-  S.number.pipe(
+  S.Number.pipe(
     S.positive(),
     fromBrand(nominal<PositiveNumberBrand>(), {
       identifier: "PositiveNumber",
@@ -58,7 +58,7 @@ export type PositiveNumber = S.Schema.Type<typeof PositiveNumber>
 export interface NonNegativeNumberBrand extends Simplify<B.Brand<"NonNegativeNumber">> {}
 export const NonNegativeNumber = extendM(
   S
-    .number
+    .Number
     .pipe(
       S.nonNegative(),
       fromBrand(nominal<NonNegativeNumberBrand>(), {

@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/vue",
-  "version": "0.165.9",
+  "version": "0.166.2",
   "license": "MIT",
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
@@ -14,10 +14,10 @@
     "query-string": "^9.0.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.48.27",
-    "@effect/platform-browser": "^0.31.27",
-    "@effect/schema": "^0.64.20",
-    "effect": "^2.4.18",
+    "@effect/platform": "^0.48.28",
+    "@effect/platform-browser": "^0.31.28",
+    "@effect/schema": "^0.65.0",
+    "effect": "^2.4.19",
     "vue": "^3.4.21"
   },
   "devDependencies": {
@@ -29,7 +29,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "vite": "^5.2.8",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.0"
   },
   "typesVersions": {
     "*": {

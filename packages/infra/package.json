@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra",
-  "version": "0.234.7",
+  "version": "0.235.2",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
-    "@sentry/node": "^7.109.0",
+    "@sentry/node": "^7.110.1",
     "@types/express": "^4.17.21",
     "@types/node": "~20.12.7",
     "@types/proper-lockfile": "^4.1.4",
@@ -38,13 +38,13 @@
     "redis": "^3.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.0"
   },
   "peerDependencies": {
     "express": "^4.19.2",
-    "@effect/platform": "^0.48.27",
-    "@effect/schema": "^0.64.20",
-    "effect": "^2.4.18"
+    "@effect/platform": "^0.48.28",
+    "@effect/schema": "^0.65.0",
+    "effect": "^2.4.19"
   },
   "typesVersions": {
     "*": {

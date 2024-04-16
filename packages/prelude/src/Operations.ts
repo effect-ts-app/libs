@@ -12,14 +12,14 @@ export class OperationProgress extends S.ExtendedClass<
 }) {}
 
 export class Success extends S.ExtendedTaggedClass<Success, Success.From>()("Success", {
-  message: S.nullable(S.NonEmptyString2k).withDefault
+  message: S.NullOr(S.NonEmptyString2k).withDefault
 }) {}
 
 export class Failure extends S.ExtendedTaggedClass<Failure, Failure.From>()("Failure", {
-  message: S.nullable(S.NonEmptyString2k).withDefault
+  message: S.NullOr(S.NonEmptyString2k).withDefault
 }) {}
 
-export const OperationResult = S.extendTaggedUnion(S.union(Success, Failure))
+export const OperationResult = S.ExtendTaggedUnion(S.Union(Success, Failure))
 export type OperationResult = S.Schema.Type<typeof OperationResult>
 
 export class Operation extends S.ExtendedClass<Operation, Operation.From>()({
@@ -28,7 +28,7 @@ export class Operation extends S.ExtendedClass<Operation, Operation.From>()({
   progress: S.optional(OperationProgress),
   result: S.optional(OperationResult),
   createdAt: S.Date.withDefault,
-  updatedAt: S.nullable(S.Date).withDefault
+  updatedAt: S.NullOr(S.Date).withDefault
 }) {}
 
 // codegen:start {preset: model}

@@ -11,7 +11,7 @@ export interface EmailBrand extends Simplify<NonEmptyStringBrand & B.Brand<"Emai
 export type Email = string & EmailBrand
 
 export const Email = S
-  .string
+  .String
   .pipe(
     S.filter(isValidEmail as Refinement<string, Email>, {
       identifier: "Email",

@@ -43,7 +43,7 @@ const onlyStringsAst = (ast: AST.AST): boolean => {
 }
 
 const onlyStrings = (schema: S.Schema<any, any, any> & { fields?: S.Struct.Fields }): boolean => {
-  if ("fields" in schema && schema.fields) return onlyStringsAst(S.struct(schema.fields).ast) // only one level..
+  if ("fields" in schema && schema.fields) return onlyStringsAst(S.Struct(schema.fields).ast) // only one level..
   return onlyStringsAst(schema.ast)
 }
 
@@ -131,7 +131,7 @@ export type GetResponseKey<U extends Record<ResponseString, any>> = FilterRespon
 >
 export type GetResponse<U extends Record<ResponseString, any>> = FilterResponse<
   keyof U
-> extends never ? typeof S.void
+> extends never ? typeof S.Void
   : U[FilterResponse<keyof U>]
 
 export function extractRequest<TModule extends Record<string, any>>(
@@ -148,10 +148,10 @@ export function extractRequest<TModule extends Record<string, any>>(
 
 export function extractResponse<TModule extends Record<string, any>>(
   h: TModule
-): GetResponse<TModule> | typeof S.void {
+): GetResponse<TModule> | typeof S.Void {
   const resKey = Object.keys(h).find((x) => x.endsWith("Response"))
   if (!resKey) {
-    return S.void
+    return S.Void
   }
   const Response = h[resKey]
   return Response
@@ -692,7 +692,7 @@ export function makeRequest<
   config?: Config
 ): BuildRequest<Fields, Path, Method, M, Config> {
   const pathParams = parsePathParams(path)
-  const self = S.struct(s)
+  const self = S.Struct(s)
   // TODO: path struct must be parsed "from string"
   const remainSchema = pathParams.length ? self.pipe(S.omit(...pathParams as any)) : self
   const pathSchema = pathParams.length

@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable @typescript-eslint/ban-types */
-import * as S from "effect-app/schema"
-
 import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import { ValidationError } from "@effect-app/infra/errors"
+import type { Struct } from "@effect/schema/Schema"
+import * as S from "@effect/schema/Schema"
 import type { Context } from "effect-app"
 import { Cause, Effect, Exit, Option } from "effect-app"
 import type { HttpRouter, HttpServerError } from "effect-app/http"
-import type { REST, Struct } from "effect-app/schema"
+import type { REST } from "effect-app/schema"
 import type { Simplify } from "effect/Types"
 
 export type RouteMatch<

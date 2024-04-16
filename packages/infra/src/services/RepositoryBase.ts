@@ -374,10 +374,10 @@ export function makeRepo<
       return Effect
         .gen(function*($) {
           const rctx = yield* $(Effect.context<R>())
-          const encodeMany = flow(S.encode(S.array(schema)), Effect.provide(rctx), Effect.withSpan("encodeMany"))
+          const encodeMany = flow(S.encode(S.Array(schema)), Effect.provide(rctx), Effect.withSpan("encodeMany"))
           const decode = flow(S.decode(schema), Effect.provide(rctx))
           const decodeMany = flow(
-            S.decode(S.array(schema)),
+            S.decode(S.Array(schema)),
             Effect.provide(rctx),
             Effect.withSpan("decodeMany")
           )
@@ -406,11 +406,11 @@ export function makeRepo<
             .pipe(Effect.map((_) => _ as T[]))
 
           const fieldsSchema = schema as unknown as { fields: any }
-          const i = ("fields" in fieldsSchema ? S.struct(fieldsSchema["fields"]) as unknown as typeof schema : schema)
+          const i = ("fields" in fieldsSchema ? S.Struct(fieldsSchema["fields"]) as unknown as typeof schema : schema)
             .pipe((_) =>
               _.ast._tag === "Union"
                 // we need to get the TypeLiteral, incase of class it's behind a transform...
-                ? S.union(..._.ast.types.map((_) =>
+                ? S.Union(..._.ast.types.map((_) =>
                   (S.make(_._tag === "Transformation" ? _.from : _) as unknown as Schema<T, Encoded>)
                     .pipe(S.pick("id"))
                 ))
@@ -524,7 +524,7 @@ export function makeRepo<
             Effect
               .flatMap(cms, (cm) =>
                 S
-                  .decode(S.array(schema))(
+                  .decode(S.Array(schema))(
                     items.map((_) => mapReverse(_, cm.set))
                   )
                   .pipe(Effect.orDie, Effect.withSpan("parseMany2")))
@@ -548,13 +548,13 @@ export function makeRepo<
             const eff = a.mode === "project"
               ? filter(a)
                 // TODO: mapFrom but need to support per field and dependencies
-                .pipe(Effect.andThen(flow(S.decode(S.array(a.schema ?? schema)), Effect.provide(rctx))))
+                .pipe(Effect.andThen(flow(S.decode(S.Array(a.schema ?? schema)), Effect.provide(rctx))))
               : a.mode === "collect"
               ? filter(a)
                 // TODO: mapFrom but need to support per field and dependencies
                 .pipe(
                   Effect.flatMap(flow(
-                    S.decode(S.array(a.schema)),
+                    S.decode(S.Array(a.schema)),
                     Effect.map(ReadonlyArray.getSomes),
                     Effect.provide(rctx)
                   ))
@@ -606,8 +606,8 @@ export function makeRepo<
              */
             mapped: <A, R>(schema: S.Schema<A, any, R>) => {
               const dec = S.decode(schema)
-              const encMany = S.encode(S.array(schema))
-              const decMany = S.decode(S.array(schema))
+              const encMany = S.encode(S.Array(schema))
+              const decMany = S.decode(S.Array(schema))
               return {
                 all: allE.pipe(
                   Effect.flatMap(decMany),

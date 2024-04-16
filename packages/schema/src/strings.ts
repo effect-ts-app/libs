@@ -4,7 +4,7 @@ import type { Simplify } from "effect/Types"
 import { fromBrand, nominal } from "./brand.js"
 import { withDefaults } from "./ext.js"
 
-const nonEmptyString = S.string.pipe(S.nonEmpty())
+const nonEmptyString = S.String.pipe(S.nonEmpty())
 
 export type NonEmptyStringBrand = B.Brand<"NonEmptyString">
 export type NonEmptyString = string & NonEmptyStringBrand

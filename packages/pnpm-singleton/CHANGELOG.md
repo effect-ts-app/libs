@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.69.0
+
+### Minor Changes
+
+- 0d1b378: update to latest schema
+
 ## 0.68.0
 
 ### Minor Changes
