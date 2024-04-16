@@ -1,35 +1,34 @@
-import * as S from "@effect/Schema/Schema"
-import * as S2 from "./schema.js"
+import * as S from "./schema.js"
 
-export type OperationId = S2.StringId
-export const OperationId = S2.StringId
+export type OperationId = S.StringId
+export const OperationId = S.StringId
 
-export class OperationProgress extends S2.ExtendedClass<
+export class OperationProgress extends S.ExtendedClass<
   OperationProgress,
   OperationProgress.From
 >()({
-  completed: S2.NonNegativeInt,
-  total: S2.NonNegativeInt
+  completed: S.NonNegativeInt,
+  total: S.NonNegativeInt
 }) {}
 
-export class Success extends S2.ExtendedTaggedClass<Success, Success.From>()("Success", {
-  message: S2.NullOr(S2.NonEmptyString2k).withDefault
+export class Success extends S.ExtendedTaggedClass<Success, Success.From>()("Success", {
+  message: S.NullOr(S.NonEmptyString2k).withDefault
 }) {}
 
-export class Failure extends S2.ExtendedTaggedClass<Failure, Failure.From>()("Failure", {
-  message: S2.NullOr(S2.NonEmptyString2k).withDefault
+export class Failure extends S.ExtendedTaggedClass<Failure, Failure.From>()("Failure", {
+  message: S.NullOr(S.NonEmptyString2k).withDefault
 }) {}
 
-export const OperationResult = S2.ExtendTaggedUnion(S.Union(Success, Failure))
+export const OperationResult = S.ExtendTaggedUnion(S.Union(Success, Failure))
 export type OperationResult = S.Schema.Type<typeof OperationResult>
 
-export class Operation extends S2.ExtendedClass<Operation, Operation.From>()({
+export class Operation extends S.ExtendedClass<Operation, Operation.From>()({
   id: OperationId,
-  title: S2.NonEmptyString2k,
+  title: S.NonEmptyString2k,
   progress: S.optional(OperationProgress),
   result: S.optional(OperationResult),
-  createdAt: S2.Date.withDefault,
-  updatedAt: S2.NullOr(S.Date).withDefault
+  createdAt: S.Date.withDefault,
+  updatedAt: S.NullOr(S.Date).withDefault
 }) {}
 
 // codegen:start {preset: model}

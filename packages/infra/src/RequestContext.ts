@@ -1,6 +1,5 @@
 import { ExtendedTaggedClass, NonEmptyString255 } from "@effect-app/schema"
-import * as S from "@effect/schema/Schema"
-import { S as S2 } from "effect-app"
+import { S } from "effect-app"
 import { RequestId, UserProfileId } from "effect-app/ids"
 
 export class RequestContextParent extends ExtendedTaggedClass<
@@ -11,7 +10,7 @@ export class RequestContextParent extends ExtendedTaggedClass<
   name: NonEmptyString255,
   userProfile: S.optional(S.Struct({ sub: UserProfileId })),
   locale: S.Literal("en", "de"),
-  createdAt: S2.Date.withDefault
+  createdAt: S.Date.withDefault
 }) {}
 
 /**

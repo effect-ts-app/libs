@@ -30,6 +30,13 @@ export function Struct<Fields extends S.Struct.Fields, const Records extends S.I
   return S.Struct(fields, ...records as any).pipe(S.batching(true))
 }
 
+export declare namespace Struct {
+  export type Fields = S.Struct.Fields
+  export type Type<F extends Fields> = S.Struct.Type<F>
+  export type Encoded<F extends Fields> = S.Struct.Encoded<F>
+  export type Context<F extends Fields> = Schema.Context<F[keyof F]>
+}
+
 /**
  * Like the default Schema `tuple` but with batching enabled by default
  */
