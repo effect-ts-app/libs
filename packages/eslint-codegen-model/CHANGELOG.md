@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 1.0.0
+
+### Major Changes
+
+- 4e9992f: effect 3.0!
+
 ## 0.75.0
 
 ### Minor Changes

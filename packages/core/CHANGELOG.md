@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.0.0
+
+### Major Changes
+
+- 4e9992f: effect 3.0!
+
 ## 0.170.0
 
 ### Minor Changes

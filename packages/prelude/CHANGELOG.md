@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 1.0.0
+
+### Major Changes
+
+- 4e9992f: effect 3.0!
+
+### Patch Changes
+
+- Updated dependencies [4e9992f]
+  - @effect-app/schema@1.0.0
+  - @effect-app/core@1.0.0
+
 ## 0.204.0
 
 ### Minor Changes
