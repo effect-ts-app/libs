@@ -43,7 +43,7 @@ declare module "effect/Effect" {
       : Effect<A, E, R>
     flatMap<A, E, R, B, E1, R1>(this: Effect<A, E, R>, f: (a: A) => Effect<B, E1, R1>): Effect<B, E | E1, R | R1>
     map<A, E, R, B>(this: Effect<A, E, R>, f: (a: A) => B): Effect<B, E, R>
-    asUnit(): Effect<void, E, R>
+    asVoid(): Effect<void, E, R>
     orDie(): Effect<A, never, R>
   }
 }
@@ -81,7 +81,7 @@ declare module "effect/Cause" {
       f: (a: A) => Effect<B, E1, R1>
     ): Effect<B, E | E1, R | R1>
     map<A, E, R, B>(this: Effect<A, E, R>, f: (a: A) => B): Effect<B, E, R>
-    asUnit(): Effect<void, this, never>
+    asVoid(): Effect<void, this, never>
     orDie(): Effect<never, never, never>
   }
 }
