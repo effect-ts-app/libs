@@ -1,5 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Context, Effect, Fiber, FiberSet } from "@effect-app/core"
+import { Context, Effect, Fiber, FiberSet, Option } from "@effect-app/core"
+
+const getRootSpan = Effect.gen(function*($) {
+  let root = yield* $(Effect.currentParentSpan)
+  while (root._tag === "Span" && Option.isSome(root.parent)) {
+    root = Option.getOrNull(root.parent)!
+  }
+
+  return root
+})
 
 const make = Effect.gen(function*($) {
   const set = yield* $(FiberSet.make<any, any>())
@@ -17,10 +26,19 @@ const make = Effect.gen(function*($) {
     }
     while ((yield* $(FiberSet.size(set))) > 0) yield* $(Effect.sleep("250 millis"))
   })
-  const run = FiberSet.run(set)
+
+  const run = <R, XE, XA>(
+    effect: Effect.Effect<XA, XE, R>
+  ): Effect.Effect<Fiber.RuntimeFiber<XA, XE>, never, R> =>
+    getRootSpan.pipe(Effect.orDie, Effect.andThen((span) => FiberSet.run(set, Effect.withParentSpan(effect, span))))
 
   const register = <A, E, R>(self: Effect<A, E, R>) =>
-    self.pipe(Effect.fork, Effect.tap(add), Effect.andThen(Fiber.join))
+    getRootSpan.pipe(
+      Effect.orDie,
+      Effect.andThen((span) =>
+        self.pipe(Effect.withParentSpan(span), Effect.fork, Effect.tap(add), Effect.andThen(Fiber.join))
+      )
+    )
 
   return {
     join,
@@ -33,8 +51,9 @@ const make = Effect.gen(function*($) {
 })
 
 /**
- * Whenever you fork a fiber for a Request, and you want to prevent dependent services to close prematurely on interruption,
+ * Whenever you fork a fiber for a Request to keep running after the request finishes, and you want to prevent dependent services to close prematurely on interruption,
  * like the ServiceBus Sender, you should register these fibers in this FiberSet.
+ * Attaches to the root span as parent, so it outlives the request.
  */
 export class RequestFiberSet extends Context.TagMakeId("RequestFiberSet", make)<RequestFiberSet>() {
   static readonly Live = this.toLayerScoped()
