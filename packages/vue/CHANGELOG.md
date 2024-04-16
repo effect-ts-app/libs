@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 0.166.2
+
+### Patch Changes
+
+- Updated dependencies
+  - effect-app@0.204.0
+  - @effect-app/vue@0.166.2
+
 ## 0.166.1
 
 ### Patch Changes
