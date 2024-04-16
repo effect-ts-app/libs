@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 0.203.1
+
+### Patch Changes
+
+- ff5d466: cleanup Struct type
+- Updated dependencies [ff5d466]
+  - @effect-app/schema@0.221.1
+
 ## 0.203.0
 
 ### Minor Changes

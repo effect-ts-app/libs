@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 0.221.1
+
+### Patch Changes
+
+- ff5d466: cleanup Struct type
+
 ## 0.221.0
 
 ### Minor Changes

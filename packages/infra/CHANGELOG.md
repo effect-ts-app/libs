@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 0.235.1
+
+### Patch Changes
+
+- ff5d466: cleanup Struct type
+- Updated dependencies [ff5d466]
+  - effect-app@0.203.1
+  - @effect-app/schema@0.221.1
+  - @effect-app/infra-adapters@0.155.1
+
 ## 0.235.0
 
 ### Minor Changes
