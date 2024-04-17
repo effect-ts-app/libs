@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.0.3
+
+### Patch Changes
+
+- 3b88705: fix dual
+
 ## 1.0.2
 
 ### Patch Changes
