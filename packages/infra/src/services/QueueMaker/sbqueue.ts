@@ -1,3 +1,4 @@
+import type { ServiceBusError } from "@azure/service-bus"
 import {
   LiveSender,
   LiveServiceBusClient,
@@ -5,11 +6,10 @@ import {
   ServiceBusReceiverFactory,
   subscribe
 } from "@effect-app/infra-adapters/ServiceBus"
-import type {} from "@azure/service-bus"
 import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { Tracer } from "effect"
-import { Effect, flow, Layer, Option, S } from "effect-app"
+import { Deferred, Effect, flow, Layer, Option, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import type { StringId } from "effect-app/schema"
 import { NonEmptyString255 } from "effect-app/schema"
@@ -46,6 +46,10 @@ export function makeServiceBusQueue<
     const silenceAndReportError = reportNonInterruptedFailure({ name: "ServiceBusQueue.drain." + queueDrainName })
     const reportError = reportNonInterruptedFailureCause({ name: "ServiceBusQueue.drain." + queueDrainName })
     const rcc = yield* $(RequestContextContainer)
+
+    // TODO: or do async?
+    // This will make sure that the host receives the error (MainFiberSet.join), who will then interrupt everything and commence a shutdown and restart of app
+    const deferred = yield* $(Deferred.make<never, ServiceBusError | Error>())
 
     return {
       drain: <DrainE, DrainR>(
@@ -125,12 +129,18 @@ export function makeServiceBusQueue<
             return yield* $(
               subscribe({
                 processMessage: (x) => processMessage(x.body).pipe(Effect.uninterruptible),
-                processError: (err) => Effect.sync(() => captureException(err.error))
+                processError: (err) =>
+                  Deferred.completeWith(
+                    deferred,
+                    Effect
+                      .sync(() => captureException(err.error))
+                      .pipe(Effect.andThen(Effect.fail(err.error)))
+                  )
               }, sessionId)
                 .pipe(Effect.provideService(ServiceBusReceiverFactory, receiver))
             )
           })
-          .pipe(Effect.andThen(Effect.never)),
+          .pipe(Effect.andThen(Deferred.await(deferred).pipe(Effect.orDie))),
 
       publish: (...messages) =>
         Effect
@@ -139,7 +149,7 @@ export function makeServiceBusQueue<
             const span = yield* $(Effect.serviceOption(Tracer.ParentSpan))
             return yield* $(
               Effect
-                .promise(() =>
+                .promise((abortSignal) =>
                   s.sendMessages(
                     messages.map((m) => ({
                       body: JSON.stringify(
@@ -151,7 +161,8 @@ export function makeServiceBusQueue<
                       messageId: m.id, /* correllationid: requestId */
                       contentType: "application/json",
                       sessionId: "sessionId" in m ? m.sessionId : undefined
-                    }))
+                    })),
+                    { abortSignal }
                   )
                 )
             )
