@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.0.1
+
+### Patch Changes
+
+- fix class transform params
+
 ## 1.0.0
 
 ### Major Changes

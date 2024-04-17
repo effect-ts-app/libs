@@ -48,16 +48,18 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, I
     R3
   >(
     fields: newFields,
-    decode: (
-      input: A,
-      options: ParseOptions,
-      ast: AST.Transformation
-    ) => Effect.Effect<Simplify<A & Struct.Type<newFields>>, ParseResult.ParseIssue, R2>,
-    encode: (
-      input: Simplify<A & Struct.Type<newFields>>,
-      options: ParseOptions,
-      ast: AST.Transformation
-    ) => Effect.Effect<A, ParseResult.ParseIssue, R3>
+    options: {
+      readonly decode: (
+        input: A,
+        options: ParseOptions,
+        ast: AST.Transformation
+      ) => Effect.Effect<Types.Simplify<A & Struct.Type<newFields>>, ParseResult.ParseIssue, R2>
+      readonly encode: (
+        input: Types.Simplify<A & Struct.Type<newFields>>,
+        options: ParseOptions,
+        ast: AST.Transformation
+      ) => Effect.Effect<A, ParseResult.ParseIssue, R3>
+    }
   ) => [Transformed] extends [never] ? MissingSelfGeneric<"Base.transform">
     : EnhancedClass<
       Transformed,
@@ -76,16 +78,18 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, I
     R3
   >(
     fields: newFields,
-    decode: (
-      input: I,
-      options: ParseOptions,
-      ast: AST.Transformation
-    ) => Effect.Effect<Simplify<I & Struct.Encoded<newFields>>, ParseResult.ParseIssue, R2>,
-    encode: (
-      input: Simplify<I & Struct.Encoded<newFields>>,
-      options: ParseOptions,
-      ast: AST.Transformation
-    ) => Effect.Effect<I, ParseResult.ParseIssue, R3>
+    options: {
+      readonly decode: (
+        input: A,
+        options: ParseOptions,
+        ast: AST.Transformation
+      ) => Effect.Effect<Types.Simplify<A & Struct.Type<newFields>>, ParseResult.ParseIssue, R2>
+      readonly encode: (
+        input: Types.Simplify<A & Struct.Type<newFields>>,
+        options: ParseOptions,
+        ast: AST.Transformation
+      ) => Effect.Effect<A, ParseResult.ParseIssue, R3>
+    }
   ) => [Transformed] extends [never] ? MissingSelfGeneric<"Base.transformFrom">
     : EnhancedClass<
       Transformed,
