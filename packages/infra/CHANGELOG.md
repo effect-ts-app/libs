@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.0.4
+
+### Patch Changes
+
+- d0d4fd7: reduce logging noise
+
 ## 1.0.3
 
 ### Patch Changes
