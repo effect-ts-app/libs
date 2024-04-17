@@ -122,9 +122,9 @@ export class Operations extends Context.TagMakeId("effect-app/Operations", make)
 }
 
 export const forkOperation: {
-  <R, E, A>(
+  (title: NonEmptyString2k): <R, E, A>(
     self: Effect<A, E, R>
-  ): (title: NonEmptyString2k) => Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
+  ) => Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
   <R, E, A>(
     self: Effect<A, E, R>,
     title: NonEmptyString2k
@@ -150,9 +150,9 @@ export function forkOperationFunction<R, E, A, Inp>(fnc: (inp: Inp) => Effect<A,
 }
 
 export const forkOperation2: {
-  <R, E, A>(
+  (title: NonEmptyString2k): <R, E, A>(
     self: (opId: OperationId) => Effect<A, E, R>
-  ): (title: NonEmptyString2k) => Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
+  ) => Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
   <R, E, A>(
     self: (opId: OperationId) => Effect<A, E, R>,
     title: NonEmptyString2k
