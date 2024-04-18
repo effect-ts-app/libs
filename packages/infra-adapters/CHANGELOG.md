@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 1.0.4
+
+### Patch Changes
+
+- 7986bb3: fix
+
 ## 1.0.3
 
 ### Patch Changes
