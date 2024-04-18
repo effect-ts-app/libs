@@ -1,27 +1,3 @@
-diff --git a/lib/lib.dom.d.ts b/lib/lib.dom.d.ts
-index e92f60642308738dd97ecad415b86d62deffbbf1..b67858bd605a08a869eca780f084e99b740a1a14 100644
---- a/lib/lib.dom.d.ts
-+++ b/lib/lib.dom.d.ts
-@@ -26007,6 +26007,9 @@ interface Window extends EventTarget, AnimationFrameProvider, GlobalEventHandler
-     addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-     removeEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: Window, ev: WindowEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-     removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-+    Option: {
-+        new(text?: string, value?: string, defaultSelected?: boolean, selected?: boolean): HTMLOptionElement;
-+    };
-     [index: number]: Window;
- }
- 
-@@ -27366,9 +27369,6 @@ declare var Audio: {
- declare var Image: {
-     new(width?: number, height?: number): HTMLImageElement;
- };
--declare var Option: {
--    new(text?: string, value?: string, defaultSelected?: boolean, selected?: boolean): HTMLOptionElement;
--};
- /**
-  * @deprecated This is a legacy alias of `navigator`.
-  *
 diff --git a/lib/tsc.js b/lib/tsc.js
 index 49a42a27bb0974198146da06ddcac8a25683c697..232692963fef5de6fb0ae01a3fc18a796461c4f9 100644
 --- a/lib/tsc.js

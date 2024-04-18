@@ -20,8 +20,8 @@
     "vitest": "^1.5.0"
   },
   "peerDependencies": {
-    "@effect/schema": "^0.66.0",
-    "effect": "^3.0.0"
+    "@effect/schema": "^0.66.1",
+    "effect": "^3.0.1"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",
