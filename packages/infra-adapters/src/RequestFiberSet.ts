@@ -24,7 +24,7 @@ const make = Effect.gen(function*($) {
     self.pipe(Effect.fork, Effect.tap(add), Effect.andThen(Fiber.join))
 
   const getRootParentSpan = Effect.gen(function*($) {
-    let span: Tracer.AnySpan = yield* $(Effect.currentSpan)
+    let span: Tracer.AnySpan = yield* $(Effect.currentSpan.pipe(Effect.orDie))
     while (span._tag === "Span" && Option.isSome(span.parent)) {
       span = span.parent.value
     }
@@ -53,4 +53,5 @@ export class RequestFiberSet extends Context.TagMakeId("RequestFiberSet", make)<
   static readonly Live = this.toLayerScoped()
   static readonly register = <A, E, R>(self: Effect<A, E, R>) => this.use((_) => _.register(self))
   static readonly run = <A, E, R>(self: Effect<A, E, R>) => this.use((_) => _.run(self))
+  static readonly setRootParentSpan = <A, E, R>(self: Effect<A, E, R>) => this.use((_) => _.setRootParentSpan(self))
 }
