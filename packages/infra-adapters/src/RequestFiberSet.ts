@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Context, Effect, Fiber, FiberSet } from "@effect-app/core"
+import type { Tracer } from "@effect-app/core"
+import { Context, Effect, Fiber, FiberSet, Option } from "@effect-app/core"
 
 const make = Effect.gen(function*($) {
   const set = yield* $(FiberSet.make<any, any>())
@@ -22,13 +23,25 @@ const make = Effect.gen(function*($) {
   const register = <A, E, R>(self: Effect<A, E, R>) =>
     self.pipe(Effect.fork, Effect.tap(add), Effect.andThen(Fiber.join))
 
+  const getRootParentSpan = Effect.gen(function*($) {
+    let span: Tracer.AnySpan = yield* $(Effect.currentSpan)
+    while (span._tag === "Span" && Option.isSome(span.parent)) {
+      span = span.parent.value
+    }
+    return span
+  })
+
+  const setRootParentSpan = <R, XE, XA>(effect: Effect.Effect<XA, XE, R>) =>
+    getRootParentSpan.pipe(Effect.andThen((span) => Effect.withParentSpan(effect, span)))
+
   return {
     join,
     waitUntilEmpty,
     run,
     add,
     addAll,
-    register
+    register,
+    setRootParentSpan
   }
 })
 
