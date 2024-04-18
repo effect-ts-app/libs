@@ -14,6 +14,12 @@ import { Chunk, Effect } from "./Prelude.js"
 export const toNonEmptyArray = <A>(a: ReadonlyArray<A>): Option.Option<NonEmptyReadonlyArray<A>> =>
   a.length ? Option.some(a as NonEmptyReadonlyArray<A>) : Option.none()
 
+export const isArray: {
+  // uses ReadonlyArray here because otherwise the second overload don't work when ROA is involved.
+  (self: unknown): self is ReadonlyArray<unknown>
+  <T>(self: T): self is Extract<T, ReadonlyArray<any>>
+} = Array.isArray
+
 /**
  * @tsplus static effect/data/ReadonlyArray/NonEmptyArray.Ops fromArray
  */
