@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 1.0.3
+
+### Patch Changes
+
+- 9ce85b2: add setRootParentSpan
+
 ## 1.0.2
 
 ### Patch Changes
