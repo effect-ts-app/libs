@@ -14,8 +14,6 @@ import { Chunk, Effect } from "./Prelude.js"
 export const toNonEmptyArray = <A>(a: ReadonlyArray<A>): Option.Option<NonEmptyReadonlyArray<A>> =>
   a.length ? Option.some(a as NonEmptyReadonlyArray<A>) : Option.none()
 
-export const { isArray } = Array
-
 /**
  * @tsplus static effect/data/ReadonlyArray/NonEmptyArray.Ops fromArray
  */
