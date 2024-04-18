@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.0.2
+
+### Patch Changes
+
+- 6363ff5: fix override
+
 ## 1.0.1
 
 ### Patch Changes
