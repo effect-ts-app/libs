@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.0.1
+
+### Patch Changes
+
+- bf702ba: update packages
+
 ## 1.0.0
 
 ### Major Changes

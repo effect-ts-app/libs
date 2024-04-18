@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 1.0.9
+
+### Patch Changes
+
+- bf702ba: update packages
+- Updated dependencies [bf702ba]
+  - @effect-app/infra-adapters@1.0.5
+  - effect-app@1.0.3
+  - @effect-app/schema@1.0.3
+  - @effect-app/core@1.0.1
+
 ## 1.0.8
 
 ### Patch Changes

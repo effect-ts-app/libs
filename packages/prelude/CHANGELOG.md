@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 1.0.3
+
+### Patch Changes
+
+- bf702ba: update packages
+- Updated dependencies [bf702ba]
+  - @effect-app/schema@1.0.3
+  - @effect-app/core@1.0.1
+
 ## 1.0.2
 
 ### Patch Changes
