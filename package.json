@@ -5,9 +5,12 @@
     "patchedDependencies": {
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
-      "@effect/schema@0.66.1": "patches/@effect__schema@0.66.1.patch",
+      "@effect/schema@0.66.5": "patches/@effect__schema@0.66.5.patch",
       "typescript@5.4.5": "patches/typescript@5.4.5.patch"
     }
+  },
+  "engines": {
+    "pnpm": ">= 9.0.4"
   },
   "scripts": {
     "all": "pnpm -r --filter=!./packages/pnpm-singleton",
@@ -47,7 +50,7 @@
   "dependencies": {
     "date-fns": "^3.6.0",
     "cross-env": "^7.0.3",
-    "fast-check": "^3.17.1",
+    "fast-check": "^3.17.2",
     "ts-node": "^10.9.2",
     "vue": "^3.4.23"
   },
@@ -58,11 +61,11 @@
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@changesets/cli": "^2.27.1",
-    "@dprint/typescript": "^0.90.2",
-    "effect": "^3.0.1",
-    "@effect/platform": "^0.49.3",
-    "@effect/platform-node": "^0.46.3",
-    "@effect/schema": "^0.66.1",
+    "@dprint/typescript": "^0.90.3",
+    "effect": "^3.0.3",
+    "@effect/platform": "^0.50.2",
+    "@effect/platform-node": "^0.47.2",
+    "@effect/schema": "^0.66.5",
     "@effect-app/cli": "^0.72.0",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
@@ -106,7 +109,7 @@
     "typescript": "^5.4.5",
     "typescript-transform-paths": "^3.4.7",
     "unplugin-auto-import": "^0.17.5",
-    "vite": "^5.2.9",
+    "vite": "^5.2.10",
     "vitest": "^1.5.0"
   }
 }
