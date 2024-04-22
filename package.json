@@ -5,7 +5,7 @@
     "patchedDependencies": {
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
-      "@effect/schema@0.66.5": "patches/@effect__schema@0.66.5.patch",
+      "@effect/schema@0.66.6": "patches/@effect__schema@0.66.6.patch",
       "typescript@5.4.5": "patches/typescript@5.4.5.patch"
     }
   },
@@ -63,9 +63,9 @@
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.90.3",
     "effect": "^3.0.3",
-    "@effect/platform": "^0.50.2",
-    "@effect/platform-node": "^0.47.2",
-    "@effect/schema": "^0.66.5",
+    "@effect/platform": "^0.50.3",
+    "@effect/platform-node": "^0.47.3",
+    "@effect/schema": "^0.66.6",
     "@effect-app/cli": "^0.72.0",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
