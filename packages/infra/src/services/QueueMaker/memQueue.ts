@@ -52,7 +52,8 @@ export function makeMemQueue<
                     Effect.flatMap((_) => q.offer(_))
                   ), { discard: true })
             )
-          }),
+          })
+          .pipe(Effect.withSpan("queue.publish: " + queueName, { kind: "producer" })),
       drain: <DrainE, DrainR>(
         handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>,
         sessionId?: string
@@ -84,7 +85,8 @@ export function makeMemQueue<
                             })
                           ),
                         Effect
-                          .withSpan(`queue.drain: ${queueDrainName}`, {
+                          .withSpan(`queue.drain: ${queueDrainName}.${body._tag}`, {
+                            kind: "consumer",
                             attributes: {
                               "queue.name": queueDrainName,
                               "queue.sessionId": sessionId,
