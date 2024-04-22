@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.1.0
+
+### Minor Changes
+
+- dd1f45f: feat: build RequestFiberSet usage into forkOperation
+
 ## 1.0.11
 
 ### Patch Changes
