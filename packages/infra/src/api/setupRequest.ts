@@ -29,6 +29,17 @@ const withRequestSpan = <R, E, A>(f: Effect<A, E, R>) =>
       )
   )
 
+const withExistingRequestSpan = <R, E, A>(f: Effect<A, E, R>) =>
+  Effect.andThen(
+    RequestContextContainer.get,
+    (ctx) =>
+      Effect.annotateCurrentSpan(spanAttributes(ctx)).pipe(
+        Effect.andThen(f),
+        // request context info is picked up directly in the logger for annotations.
+        Effect.withLogSpan("request")
+      )
+  )
+
 const setupContextMap = Effect.andThen(ContextMapContainer, (_) => _.start).pipe(Layer.effectDiscard)
 
 // const RequestContextLiveFromRequestContext = (requestContext: RequestContext) =>
@@ -53,13 +64,18 @@ const RequestContextStartLive = (requestContext: RequestContext | string) =>
     )
     : RequestContextStartLiveFromRequestContext(requestContext)
 
-/**
- * @tsplus fluent effect/io/Effect setupRequestContext
- */
 export function setupRequestContext<R, E, A>(self: Effect<A, E, R>, requestContext: RequestContext | string) {
   return self
     .pipe(
       withRequestSpan,
+      Effect.provide(RequestContextStartLive(requestContext))
+    )
+}
+
+export function setupExistingRequestContext<R, E, A>(self: Effect<A, E, R>, requestContext: RequestContext | string) {
+  return self
+    .pipe(
+      withExistingRequestSpan,
       Effect.provide(RequestContextStartLive(requestContext))
     )
 }

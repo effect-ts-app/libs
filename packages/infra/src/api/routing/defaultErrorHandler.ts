@@ -76,6 +76,24 @@ export function defaultErrorHandler<R>(
   return r3
     .pipe(
       Effect.tapErrorCause((cause) => Cause.isFailure(cause) ? logRequestError(cause) : Effect.void),
+      Effect.tapErrorCause((cause) =>
+        Effect.annotateCurrentSpan({
+          "exception.escaped": true,
+          "exception.message": "Request Error",
+          "exception.stacktrace": Cause.pretty(cause),
+          "exception.type": Cause.squashWith(
+            cause,
+            (_) => _._tag
+            // Predicate.hasProperty(_, "_tag")
+            //   ? _._tag
+            //   : Predicate.hasProperty(_, "name")
+            //   ? _.name
+            //   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+            //   : `${_}`
+          ),
+          "error.type": cause._tag
+        })
+      ),
       Effect
         .catchTags({
           "JWTError": (err) =>
