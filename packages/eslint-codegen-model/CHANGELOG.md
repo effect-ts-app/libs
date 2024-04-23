@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 1.0.2
+
+### Patch Changes
+
+- caa40e4: update packagesy
+
 ## 1.0.1
 
 ### Patch Changes

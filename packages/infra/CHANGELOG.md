@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.1.4
+
+### Patch Changes
+
+- caa40e4: update packagesy
+
 ## 1.1.3
 
 ### Patch Changes

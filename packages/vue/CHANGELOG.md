@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.0.7
+
+### Patch Changes
+
+- caa40e4: update packagesy
+- Updated dependencies [caa40e4]
+  - @effect-app/vue@1.0.7
+
 ## 1.0.6
 
 ### Patch Changes
