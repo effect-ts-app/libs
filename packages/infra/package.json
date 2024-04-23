@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
-    "@sentry/node": "^7.111.0",
+    "@sentry/node": "^7.112.0",
     "@types/express": "^4.17.21",
     "@types/node": "~20.12.7",
     "@types/proper-lockfile": "^4.1.4",
