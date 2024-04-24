@@ -143,13 +143,9 @@ export const forkOperation: {
             Effect
               .tap(() =>
                 forkDaemonReportRequestUnexpected(Scope.use(
-                  self.pipe(
-                    Effect.withSpan(title),
-                    RequestFiberSet.setRootParentSpan
-                  ),
+                  self.pipe(Effect.withSpan(title)),
                   scope
                 ))
-                  .pipe(Effect.andThen(RequestFiberSet.add))
               )
           )
     )
@@ -181,14 +177,9 @@ export const forkOperation2: {
               Effect
                 .tap((id) =>
                   forkDaemonReportRequestUnexpected(Scope.use(
-                    self(id)
-                      .pipe(
-                        Effect.withSpan(title),
-                        RequestFiberSet.setRootParentSpan
-                      ),
+                    self(id).pipe(Effect.withSpan(title)),
                     scope
                   ))
-                    .pipe(Effect.andThen(RequestFiberSet.add))
                 )
             )
       ))
@@ -209,10 +200,9 @@ export function forkOperationWithEffect<R, R2, E, E2, A, A2>(
             Scope.extend(scope),
             Effect.tap((opId) =>
               forkDaemonReportRequestUnexpected(Scope.use(
-                self(opId).pipe(Effect.withSpan(title), RequestFiberSet.setRootParentSpan),
+                self(opId).pipe(Effect.withSpan(title)),
                 scope
               ))
-                .pipe(Effect.andThen(RequestFiberSet.add))
             ),
             Effect.tap((opId) =>
               Effect.interruptible(fnc(opId)).pipe(
