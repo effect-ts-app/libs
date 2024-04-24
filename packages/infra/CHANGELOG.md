@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.1.5
+
+### Patch Changes
+
+- 372c2c0: move RequestFiberSet usage to forkDaemonReportRequest
+
 ## 1.1.4
 
 ### Patch Changes
