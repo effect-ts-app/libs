@@ -1,3 +1,4 @@
+import { RequestFiberSet } from "@effect-app/infra-adapters/RequestFiberSet"
 import { reportError } from "@effect-app/infra/errorReporter"
 import { Cause, Effect, Exit } from "effect-app"
 
@@ -16,7 +17,11 @@ export const reportQueueError = <E>(cause: Cause<E>, extras?: Record<string, unk
  * @tsplus getter effect/io/Effect forkDaemonReportQueue
  */
 export function forkDaemonReportQueue<R, E, A>(self: Effect<A, E, R>) {
-  return self.pipe(Effect.tapErrorCause(reportNonInterruptedFailureCause({})), Effect.forkDaemon)
+  return self.pipe(
+    Effect.tapErrorCause(reportNonInterruptedFailureCause({})),
+    RequestFiberSet.setRootParentSpan,
+    Effect.forkDaemon
+  )
 }
 
 export const reportFatalQueueError = reportError(
