@@ -238,8 +238,8 @@ export class RepositoryBaseC3<
       Effect.andThen((_) =>
         Array.isArray(_)
           ? batch === undefined
-            ? saveManyWithPure_(this, _ as readonly T[], pure as any)
-            : saveManyWithPureBatched_(this, _ as readonly T[], pure as any, batch === "batched" ? 100 : batch)
+            ? saveManyWithPure_(this, _, pure as any)
+            : saveManyWithPureBatched_(this, _, pure as any, batch === "batched" ? 100 : batch)
           : saveWithPure_(this, _ as any, pure as any)
       )
     ) as any
@@ -1042,7 +1042,7 @@ export const makeRequest = <
   const _request = Request.tagged<Req>(`Get${repo.itemType}`)
 
   const requestResolver = RequestResolver
-    .makeBatched((requests: Req[]) =>
+    .makeBatched((requests: NonEmptyReadonlyArray<Req>) =>
       (repo
         .query(Q.where("id", "in", requests.map((_) => _.id)) as any) as Effect<readonly T[], never, Service>) // TODO
         .pipe(
