@@ -1,6 +1,6 @@
+import { RequestFiberSet, setRootParentSpan } from "@effect-app/infra-adapters/RequestFiberSet"
 import { Cause, Effect } from "effect-app"
 import { logError, reportError } from "../errorReporter.js"
-import { RequestFiberSet } from "@effect-app/infra-adapters/RequestFiberSet"
 
 /**
  * Forks the effect into a new fiber attached to the global scope. Because the
@@ -14,7 +14,7 @@ import { RequestFiberSet } from "@effect-app/infra-adapters/RequestFiberSet"
 export function forkDaemonReportRequest<R, E, A>(self: Effect<A, E, R>) {
   return self.pipe(
     Effect.tapErrorCause(reportError("Request")),
-    RequestFiberSet.setRootParentSpan,
+    setRootParentSpan,
     Effect.forkDaemon,
     Effect.tap(RequestFiberSet.add)
   )
@@ -37,7 +37,7 @@ export function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<A, E, R>
           ? reportError("request")(cause)
           : logError("request")(cause)
       ),
-      RequestFiberSet.setRootParentSpan,
+      setRootParentSpan,
       Effect.forkDaemon,
       Effect.tap(RequestFiberSet.add)
     )
