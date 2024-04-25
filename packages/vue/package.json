@@ -14,10 +14,10 @@
     "query-string": "^9.0.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.50.4",
-    "@effect/platform-browser": "^0.33.4",
-    "@effect/schema": "^0.66.7",
-    "effect": "^3.0.4",
+    "@effect/platform": "^0.50.5",
+    "@effect/platform-browser": "^0.33.5",
+    "@effect/schema": "^0.66.8",
+    "effect": "^3.0.5",
     "vue": "^3.4.25"
   },
   "devDependencies": {
