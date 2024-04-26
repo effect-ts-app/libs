@@ -1,7 +1,7 @@
 import { TaggedError } from "effect-app/schema"
-import { S } from "../lib.js"
+import { makeFiberFailure } from "effect/Runtime"
+import { Cause, S } from "../lib.js"
 
-/** @tsplus type NotFoundError */
 // eslint-disable-next-line unused-imports/no-unused-vars
 // @ts-expect-error type not used
 export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<ItemType>>()("NotFoundError", {
@@ -13,7 +13,6 @@ export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<
   }
 }
 
-/** @tsplus type InvalidStateError */
 export class InvalidStateError extends TaggedError<InvalidStateError>()("InvalidStateError", {
   message: S.String
 }) {
@@ -22,7 +21,6 @@ export class InvalidStateError extends TaggedError<InvalidStateError>()("Invalid
   }
 }
 
-/** @tsplus type ServiceUnavailableError */
 export class ServiceUnavailableError extends TaggedError<ServiceUnavailableError>()("ServiceUnavailableError", {
   message: S.String
 }) {
@@ -31,7 +29,6 @@ export class ServiceUnavailableError extends TaggedError<ServiceUnavailableError
   }
 }
 
-/** @tsplus type ValidationError */
 export class ValidationError extends TaggedError<ValidationError>()("ValidationError", {
   errors: S.Array(S.Unknown)
 }) {
@@ -40,7 +37,6 @@ export class ValidationError extends TaggedError<ValidationError>()("ValidationE
   }
 }
 
-/** @tsplus type NotLoggedInError */
 export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLoggedInError", {
   message: S.optional(S.String)
 }) {
@@ -52,7 +48,6 @@ export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLogged
 /**
  * The user carries a valid Userprofile, but there is a problem with the login none the less.
  */
-/** @tsplus type LoginError */
 export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
   message: S.optional(S.String)
 }) {
@@ -61,7 +56,6 @@ export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
   }
 }
 
-/** @tsplus type UnauthorizedError */
 export class UnauthorizedError extends TaggedError<UnauthorizedError>()("UnauthorizedError", {
   message: S.optional(S.String)
 }) {
@@ -77,7 +71,6 @@ type OptimisticConcurrencyDetails = {
   readonly found?: string | undefined
 }
 
-/** @tsplus type OptimisticConcurrencyException */
 export class OptimisticConcurrencyException extends TaggedError<OptimisticConcurrencyException>()(
   "OptimisticConcurrencyException",
   { message: S.String }
@@ -131,3 +124,34 @@ export const MutationErrors = SupportedErrors
 export const QueryErrors = SupportedErrors
 export type MutationErrors = S.Schema.Type<typeof MutationErrors>
 export type QueryErrors = S.Schema.Type<typeof QueryErrors>
+
+export class CauseException<E> extends Error {
+  constructor(readonly originalCause: Cause<E>, readonly _tag: string) {
+    const limit = Error.stackTraceLimit
+    Error.stackTraceLimit = 0
+    super()
+    Error.stackTraceLimit = limit
+    const ff = makeFiberFailure(originalCause)
+    this.name = ff.name
+    this.message = ff.message
+    if (ff.stack) {
+      this.stack = ff.stack
+    }
+  }
+  toJSON() {
+    return {
+      _tag: this._tag,
+      name: this.name,
+      message: this.message,
+      pretty: this.toString(),
+      cause: this.originalCause.toJSON()
+    }
+  }
+
+  [Symbol.for("nodejs.util.inspect.custom")]() {
+    return this.toJSON()
+  }
+  override toString() {
+    return `[${this._tag}] ` + Cause.pretty(this.originalCause)
+  }
+}

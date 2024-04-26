@@ -17,6 +17,7 @@
     "@effect/platform": "^0.50.5",
     "@effect/platform-browser": "^0.33.5",
     "@effect/schema": "^0.66.8",
+    "@sentry/browser": "^7.112.2",
     "effect": "^3.0.5",
     "vue": "^3.4.25"
   },
@@ -47,6 +48,16 @@
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./_cjs/index.cjs"
+      }
+    },
+    "./errorReporter": {
+      "import": {
+        "types": "./dist/errorReporter.d.ts",
+        "default": "./dist/errorReporter.js"
+      },
+      "require": {
+        "types": "./dist/errorReporter.d.ts",
+        "default": "./_cjs/errorReporter.cjs"
       }
     },
     "./form": {
