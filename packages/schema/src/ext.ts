@@ -8,12 +8,12 @@ import * as S from "@effect/schema/Schema"
 import type { AST, ParseResult } from "./index.js"
 
 export const Date = Object.assign(S.Date, {
-  withDefault: S.propertySignature(S.Date, { default: () => new global.Date() })
+  withDefault: S.Date.pipe(S.withDefaultConstructor(() => new global.Date()))
 })
 export const Boolean = Object.assign(S.Boolean, {
-  withDefault: S.propertySignature(S.Boolean, { default: () => false })
+  withDefault: S.Boolean.pipe(S.withDefaultConstructor(() => false))
 })
-export const Number = Object.assign(S.Number, { withDefault: S.propertySignature(S.Number, { default: () => 0 }) })
+export const Number = Object.assign(S.Number, { withDefault: S.Number.pipe(S.withDefaultConstructor(() => 0)) })
 
 /**
  * Like the default Schema `Struct` but with batching enabled by default
@@ -66,7 +66,7 @@ export function Array<Value extends Schema.Any>(value: Value) {
   return pipe(
     S.Array(value),
     S.batching(true),
-    (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => [] }) })
+    (s) => Object.assign(s, { withDefault: s.pipe(S.withDefaultConstructor(() => [])) })
   )
 }
 
@@ -77,7 +77,7 @@ export const ReadonlySet = <Value extends Schema.Any>(value: Value) =>
   pipe(
     S.ReadonlySet(value),
     S.batching(true),
-    (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => new Set<S.Schema.Type<Value>>() }) })
+    (s) => Object.assign(s, { withDefault: s.pipe(S.withDefaultConstructor(() => new Set<S.Schema.Type<Value>>())) })
   )
 
 /**
@@ -90,7 +90,7 @@ export const ReadonlyMap = <K extends Schema.Any, V extends Schema.Any>(pair: {
   pipe(
     S.ReadonlyMap(pair),
     S.batching(true),
-    (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => new Map() }) })
+    (s) => Object.assign(s, { withDefault: s.pipe(S.withDefaultConstructor(() => new Map())) })
   )
 
 /**
@@ -99,31 +99,24 @@ export const ReadonlyMap = <K extends Schema.Any, V extends Schema.Any>(pair: {
 export const NullOr = <S extends Schema.Any>(self: S) =>
   pipe(
     S.NullOr(self),
-    (s) => Object.assign(s, { withDefault: S.propertySignature(s, { default: () => null }) })
+    (s) => Object.assign(s, { withDefault: s.pipe(S.withDefaultConstructor(() => null)) })
   )
 
-export const defaultDate = <I, R>(s: Schema<Date, I, R>) =>
-  S.propertySignature(s, {
-    default: () => new global.Date()
-  })
+export const defaultDate = <I, R>(s: Schema<Date, I, R>) => s.pipe(S.withDefaultConstructor(() => new global.Date()))
 
-export const defaultBool = <I, R>(s: Schema<boolean, I, R>) =>
-  S.propertySignature(s, {
-    default: () => false
-  })
+export const defaultBool = <I, R>(s: Schema<boolean, I, R>) => s.pipe(S.withDefaultConstructor(() => false))
 
 export const defaultNullable = <A, I, R>(
   s: Schema<A | null, I, R>
-) => S.propertySignature(s, { default: () => null })
+) => s.pipe(S.withDefaultConstructor(() => null))
 
-export const defaultArray = <A, I, R>(s: Schema<ReadonlyArray<A>, I, R>) =>
-  S.propertySignature(s, { default: () => [] })
+export const defaultArray = <A, I, R>(s: Schema<ReadonlyArray<A>, I, R>) => s.pipe(S.withDefaultConstructor(() => []))
 
 export const defaultMap = <A, A2, I, R>(s: Schema<ReadonlyMap<A, A2>, I, R>) =>
-  S.propertySignature(s, { default: () => new Map() })
+  s.pipe(S.withDefaultConstructor(() => new Map()))
 
 export const defaultSet = <A, I, R>(s: Schema<ReadonlySet<A>, I, R>) =>
-  S.propertySignature(s, { default: () => new Set<A>() })
+  s.pipe(S.withDefaultConstructor(() => new Set<A>()))
 
 /**
  * @tsplus getter effect/schema/Schema withDefaults
@@ -157,7 +150,7 @@ export type WithDefaults<Self extends S.Schema<any, any, never>> = (
 
 export const inputDate = extendM(
   S.Union(S.ValidDateFromSelf, S.Date),
-  (s) => ({ withDefault: S.propertySignature(s, { default: () => new global.Date() }) })
+  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => new globalThis.Date())) })
 )
 
 export interface UnionBrand {}
@@ -172,7 +165,7 @@ const makeOpt = (self: S.PropertySignature.Any, exact?: boolean) => {
           true,
           ast.isReadonly,
           ast.annotations,
-          ast.defaultConstructor
+          ast.defaultValue
         )
       )
     }
@@ -190,7 +183,7 @@ const makeOpt = (self: S.PropertySignature.Any, exact?: boolean) => {
             true,
             ast.to.isReadonly,
             ast.to.annotations,
-            ast.to.defaultConstructor
+            ast.to.defaultValue
           ),
           ast.decode,
           ast.encode

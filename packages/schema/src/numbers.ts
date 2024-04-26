@@ -14,7 +14,7 @@ export const PositiveInt = extendM(
     fromBrand(nominal<PositiveIntBrand>(), { identifier: "PositiveInt", title: "PositiveInt", jsonSchema: {} }),
     withDefaults
   ),
-  (s) => ({ withDefault: S.propertySignature(s, { default: () => s(1) }) })
+  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => s(1))) })
 )
 export type PositiveInt = S.Schema.Type<typeof PositiveInt>
 
@@ -29,14 +29,14 @@ export const NonNegativeInt = extendM(
     }),
     withDefaults
   ),
-  (s) => ({ withDefault: S.propertySignature(s, { default: () => s(0) }) })
+  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => s(0))) })
 )
 export type NonNegativeInt = S.Schema.Type<typeof NonNegativeInt>
 
 export interface IntBrand extends Simplify<B.Brand<"Int">> {}
 export const Int = extendM(
   S.Int.pipe(fromBrand(nominal<IntBrand>(), { identifier: "Int", title: "Int", jsonSchema: {} }), withDefaults),
-  (s) => ({ withDefault: S.propertySignature(s, { default: () => s(0) }) })
+  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => s(0))) })
 )
 export type Int = S.Schema.Type<typeof Int>
 
@@ -51,7 +51,7 @@ export const PositiveNumber = extendM(
     }),
     withDefaults
   ),
-  (s) => ({ withDefault: S.propertySignature(s, { default: () => s(1) }) })
+  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => s(1))) })
 )
 export type PositiveNumber = S.Schema.Type<typeof PositiveNumber>
 
@@ -68,7 +68,7 @@ export const NonNegativeNumber = extendM(
       }),
       withDefaults
     ),
-  (s) => ({ withDefault: S.propertySignature(s, { default: () => s(0) }) })
+  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => s(0))) })
 )
 export type NonNegativeNumber = S.Schema.Type<typeof NonNegativeNumber>
 

@@ -37,7 +37,7 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, I
       Simplify<A & Struct.Type<newFields>>,
       Simplify<I & Struct.Encoded<newFields>>,
       R | Struct.Context<newFields>,
-      Simplify<C & S.ToStructConstructor<newFields>>,
+      Simplify<C & S.Struct.Constructor<newFields>>,
       Self,
       Proto
     >
@@ -68,7 +68,7 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, I
       Simplify<A & Struct.Type<newFields>>,
       I,
       R | Struct.Context<newFields> | R2 | R3,
-      Simplify<C & S.ToStructConstructor<newFields>>,
+      Simplify<C & S.Struct.Constructor<newFields>>,
       Self,
       Proto
     >
@@ -99,7 +99,7 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, I
       Simplify<A & Struct.Type<newFields>>,
       I,
       R | Struct.Context<newFields> | R2 | R3,
-      Simplify<C & S.ToStructConstructor<newFields>>,
+      Simplify<C & S.Struct.Constructor<newFields>>,
       Self,
       Proto
     >
@@ -138,7 +138,7 @@ export const Class: <Self = never>(identifier?: string) => <Fields extends S.Str
     Simplify<Struct.Type<Fields>>,
     Simplify<Struct.Encoded<Fields>>,
     Schema.Context<Fields[keyof Fields]>,
-    Simplify<S.ToStructConstructor<Fields>>,
+    Simplify<S.Struct.Constructor<Fields>>,
     {},
     {}
   > = (identifier) => (fields, annotations) => {
@@ -164,7 +164,7 @@ export const TaggedClass: <Self = never>(identifier?: string) => <Tag extends st
     Simplify<{ readonly _tag: Tag } & Struct.Type<Fields>>,
     Simplify<{ readonly _tag: Tag } & Struct.Encoded<Fields>>,
     Schema.Context<Fields[keyof Fields]>,
-    Simplify<S.ToStructConstructor<Fields>>,
+    Simplify<S.Struct.Constructor<Fields>>,
     {},
     {}
   > = (identifier) => (tag, fields, annotations) => {
@@ -188,7 +188,7 @@ export const ExtendedClass: <Self, SelfFrom>(identifier?: string) => <Fields ext
   Simplify<Struct.Type<Fields>>,
   SelfFrom,
   Schema.Context<Fields[keyof Fields]>,
-  Simplify<S.ToStructConstructor<Fields>>,
+  Simplify<S.Struct.Constructor<Fields>>,
   {},
   {}
 > = Class as any
@@ -205,7 +205,7 @@ export const ExtendedTaggedClass: <Self, SelfFrom>(
   Simplify<{ readonly _tag: Tag } & Struct.Type<Fields>>,
   SelfFrom,
   Schema.Context<Fields[keyof Fields]>,
-  Simplify<S.ToStructConstructor<Fields>>,
+  Simplify<S.Struct.Constructor<Fields>>,
   {},
   {}
 > = TaggedClass as any

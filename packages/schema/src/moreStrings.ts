@@ -90,7 +90,7 @@ export const StringId = extendM(
   ),
   (s) => ({
     make: makeStringId,
-    withDefault: S.propertySignature(s, { default: makeStringId })
+    withDefault: s.pipe(S.withDefaultConstructor(makeStringId))
   })
 )
   .pipe(withDefaults)
@@ -106,25 +106,12 @@ export function prefixedStringId<Brand extends StringId>() {
     separator?: Separator
   ) => {
     type FullPrefix = `${Prefix}${Separator}`
-    // type PrefixedId = `${FullPrefix}${string}`
-
     const pref = `${prefix}${separator ?? "-"}` as FullPrefix
-    // const fromString = pipe(
-    //   stringIdFromString,
-    //   refine(
-    //     refinement,
-    //     (n) => leafE(customE(n, `a StringId prefixed with '${pref}'`))
-    //   ),
-    //   arbitrary((FC) =>
-    //     stringIdArb(FC).map(
-    //       (x) => (pref + x.substring(0, 50 - pref.length)) as Brand
-    //     )
-    //   )
-    // )
-    const arb = (): LazyArbitrary<StringId> => (fc) =>
+    const arb = (): LazyArbitrary<string & Brand> => (fc) =>
       StringIdArb()(fc).map(
         (x) => (pref + x.substring(0, 50 - pref.length)) as Brand
       )
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const s: S.Schema<string & Brand, string> = StringId
       .pipe(
         S.filter((x: StringId): x is string & Brand => x.startsWith(pref), {
@@ -189,7 +176,7 @@ export const Url = S
   .String
   .pipe(
     S.filter(isUrl, {
-      arbitrary: (): LazyArbitrary<string> => (fc) => fc.webUrl(),
+      arbitrary: (): LazyArbitrary<Url> => (fc) => fc.webUrl().map((_) => _ as Url),
       identifier: "Url",
       title: "Url",
       jsonSchema: { format: "uri" }

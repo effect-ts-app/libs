@@ -2,7 +2,6 @@ import type { Refinement } from "@effect-app/core/Function"
 import { isValidEmail } from "@effect-app/core/validation"
 import * as S from "@effect/schema/Schema"
 import type { Simplify } from "effect/Types"
-import { withDefaults } from "./ext.js"
 import type { B } from "./schema.js"
 import type { NonEmptyStringBrand } from "./strings.js"
 
@@ -18,7 +17,6 @@ export const Email = S
       title: "Email",
       description: "an email according to RFC 5322",
       jsonSchema: { format: "email" },
-      arbitrary: () => (fc) => fc.emailAddress()
-    }),
-    withDefaults
+      arbitrary: () => (fc) => fc.emailAddress().map((_) => _ as Email)
+    })
   )

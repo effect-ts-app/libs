@@ -17,7 +17,7 @@ export const PhoneNumber = S
       identifier: "PhoneNumber",
       title: "PhoneNumber",
       description: "a phone number with at least 7 digits",
-      arbitrary: () => Numbers(7, 10),
+      arbitrary: () => (fc) => Numbers(7, 10)(fc).map((_) => _ as PhoneNumber),
       jsonSchema: { format: "phone" }
     }),
     withDefaults
