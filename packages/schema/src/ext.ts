@@ -123,7 +123,7 @@ export const defaultSet = <A, I, R>(s: Schema<ReadonlySet<A>, I, R>) =>
  */
 export const withDefaults = <Self extends S.Schema<any, any, never>>(s: Self) => {
   const a = Object.assign(S.decodeSync(s) as WithDefaults<Self>, s)
-  Object.setPrototypeOf(a, Object.getPrototypeOf(s))
+  Object.setPrototypeOf(a, s)
   return a
 
   // return s as Self & WithDefaults<Self>
