@@ -47,7 +47,7 @@ const getClient = Effect.flatMap(
                 HttpClientRequest
                   .setHeaders({
                     "request-id": Option.getOrUndefined(Option.flatMap(headers, (_) => HashMap.get(_, "request-id")))
-                      ?? StringId.make(),
+                      ?? StringId.generate(),
                     ...Option.getOrUndefined(Option.map(headers, (_) => Object.fromEntries(_)))
                   })
               )

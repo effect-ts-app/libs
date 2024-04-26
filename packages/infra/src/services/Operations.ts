@@ -1,6 +1,6 @@
 import { annotateLogscoped, flatMap } from "@effect-app/core/Effect"
 import { dual } from "@effect-app/core/Function"
-import { RequestFiberSet } from "@effect-app/infra-adapters/RequestFiberSet"
+import type { RequestFiberSet } from "@effect-app/infra-adapters/RequestFiberSet"
 import { reportError } from "@effect-app/infra/errorReporter"
 import type { StringId } from "@effect-app/schema"
 import { NonEmptyString2k } from "@effect-app/schema"
@@ -16,7 +16,7 @@ const reportAppError = reportError("Operations.Cleanup")
 
 const make = Effect.sync(() => {
   const ops = new Map<OperationId, Operation>()
-  const makeOp = Effect.sync(() => OperationId.make())
+  const makeOp = Effect.sync(() => OperationId.generate())
 
   const cleanup = Effect
     .sync(() => {

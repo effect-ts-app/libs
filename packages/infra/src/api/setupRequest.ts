@@ -7,7 +7,7 @@ import { ContextMapContainer } from "../services/Store/ContextMapContainer.js"
 
 function makeInternalRequestContext(name: string) {
   return Effect.sync(() => {
-    const id = RequestId.make()
+    const id = RequestId.generate()
     return new RequestContext({
       id,
       rootId: id,

@@ -5,7 +5,7 @@ import { test } from "vitest"
 
 const A = S.Struct({ a: S.NonEmptyString255, email: S.NullOr(S.Email) })
 test("works", () => {
-  console.log(S.StringId.make())
+  console.log(S.StringId.generate())
   // console.log(generateFromArbitrary(S.A.make(A)).value)
   console.log(S.AST.getTitleAnnotation(S.Email.ast))
   console.log(S.AST.getDescriptionAnnotation(S.Email.ast))

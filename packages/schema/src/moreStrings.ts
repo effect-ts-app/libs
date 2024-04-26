@@ -89,13 +89,13 @@ export const StringId = extendM(
     })
   ),
   (s) => ({
-    make: makeStringId,
+    generate: makeStringId,
     withDefault: s.pipe(S.withDefaultConstructor(makeStringId))
   })
 )
   .pipe(withDefaults)
 
-// const prefixedStringIdUnsafe = (prefix: string) => StringId(prefix + StringId.make())
+// const prefixedStringIdUnsafe = (prefix: string) => StringId(prefix + StringId.generate())
 
 // const prefixedStringIdUnsafeThunk = (prefix: string) => () => prefixedStringIdUnsafe(prefix)
 
@@ -121,12 +121,12 @@ export function prefixedStringId<Brand extends StringId>() {
         })
       )
     const schema = s.pipe(withDefaults)
-    const make = () => (pref + StringId.make().substring(0, 50 - pref.length)) as Brand
+    const generate = () => (pref + StringId.generate().substring(0, 50 - pref.length)) as Brand
 
     return extendM(
       schema,
       (ex): PrefixedStringUtils<Brand, Prefix, Separator> => ({
-        make,
+        generate,
         /**
          * Automatically adds the prefix.
          */
@@ -136,7 +136,7 @@ export function prefixedStringId<Brand extends StringId>() {
          */
         prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => ex(str),
         prefix,
-        withDefault: schema.pipe(S.withDefaultConstructor(make))
+        withDefault: schema.pipe(S.withDefaultConstructor(generate))
       })
     )
   }
@@ -147,7 +147,7 @@ export const brandedStringId = <
 >() =>
   withDefaults(
     Object.assign(Object.create(StringId), StringId) as S.Schema<string & Brand, string> & {
-      make: () => string & Brand
+      generate: () => string & Brand
       withDefault: S.PropertySignature<":", string & Brand, never, ":", string, true, never>
     } & WithDefaults<S.Schema<string & Brand, string>>
   )
@@ -157,7 +157,7 @@ export interface PrefixedStringUtils<
   Prefix extends string,
   Separator extends string
 > {
-  readonly make: () => Brand
+  readonly generate: () => Brand
   readonly unsafeFrom: (str: string) => Brand
   prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => Brand
   readonly prefix: Prefix

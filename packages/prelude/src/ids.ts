@@ -19,10 +19,10 @@ export const RequestId = extendM(
     // eslint-disable-next-line @typescript-eslint/ban-types
     .assign(Object.create(NonEmptyString255) as {}, NonEmptyString255 as Schema<NonEmptyString255, string>),
   (s) => {
-    const make = StringId.make as () => NonEmptyString255
+    const generate = StringId.generate as () => NonEmptyString255
     return ({
-      make,
-      withDefault: s.pipe(S.withDefaultConstructor(make))
+      generate,
+      withDefault: s.pipe(S.withDefaultConstructor(generate))
     })
   }
 )
