@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.0.9
+
+### Patch Changes
+
+- f202812: fix StringId.make etc
+
 ## 1.0.8
 
 ### Patch Changes
