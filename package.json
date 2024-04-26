@@ -103,15 +103,15 @@
     "madge": "^7.0.0",
     "module-alias": "^2.2.3",
     "nodemon": "^3.1.0",
-    "npm-check-updates": "^16.14.18",
+    "npm-check-updates": "^16.14.20",
     "ts-transform-paths": "^3.0.0",
     "tsc-watch": "^6.2.0",
     "tsconfig-paths": "^4.2.0",
-    "tsx": "^4.7.2",
+    "tsx": "^4.7.3",
     "typescript": "^5.4.5",
     "typescript-transform-paths": "^3.4.7",
     "unplugin-auto-import": "^0.17.5",
     "vite": "^5.2.10",
-    "vitest": "^1.5.1"
+    "vitest": "^1.5.2"
   }
 }

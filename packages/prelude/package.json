@@ -24,7 +24,7 @@
     "fast-check": "~3.17.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
-    "vitest": "^1.5.1"
+    "vitest": "^1.5.2"
   },
   "peerDependencies": {
     "@effect/platform": "^0.50.5",

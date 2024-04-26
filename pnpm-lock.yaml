@@ -190,8 +190,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0
       npm-check-updates:
-        specifier: ^16.14.18
-        version: 16.14.18
+        specifier: ^16.14.20
+        version: 16.14.20
       ts-transform-paths:
         specifier: ^3.0.0
         version: 3.0.0
@@ -202,8 +202,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0
       tsx:
-        specifier: ^4.7.2
-        version: 4.7.2
+        specifier: ^4.7.3
+        version: 4.7.3
       typescript:
         specifier: ^5.4.5
         version: 5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm)
@@ -217,8 +217,8 @@ importers:
         specifier: ^5.2.10
         version: 5.2.10(@types/node@20.12.7)(terser@5.16.8)
       vitest:
-        specifier: ^1.5.1
-        version: 1.5.1(@types/node@20.12.7)(terser@5.16.8)
+        specifier: ^1.5.2
+        version: 1.5.2(@types/node@20.12.7)(terser@5.16.8)
 
   packages/cli:
     dependencies:
@@ -242,8 +242,8 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm)
       vitest:
-        specifier: ^1.5.1
-        version: 1.5.1(@types/node@20.12.7)(terser@5.16.8)
+        specifier: ^1.5.2
+        version: 1.5.2(@types/node@20.12.7)(terser@5.16.8)
 
   packages/core:
     dependencies:
@@ -285,8 +285,8 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm)
       vitest:
-        specifier: ^1.5.1
-        version: 1.5.1(@types/node@20.12.7)(terser@5.16.8)
+        specifier: ^1.5.2
+        version: 1.5.2(@types/node@20.12.7)(terser@5.16.8)
 
   packages/eslint-codegen-model:
     dependencies:
@@ -404,8 +404,8 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm)
       vitest:
-        specifier: ^1.5.1
-        version: 1.5.1(@types/node@20.12.7)(terser@5.16.8)
+        specifier: ^1.5.2
+        version: 1.5.2(@types/node@20.12.7)(terser@5.16.8)
 
   packages/infra:
     dependencies:
@@ -516,8 +516,8 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm)
       vitest:
-        specifier: ^1.5.1
-        version: 1.5.1(@types/node@20.12.7)(terser@5.16.8)
+        specifier: ^1.5.2
+        version: 1.5.2(@types/node@20.12.7)(terser@5.16.8)
 
   packages/infra-adapters:
     dependencies:
@@ -586,8 +586,8 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm)
       vitest:
-        specifier: ^1.5.1
-        version: 1.5.1(@types/node@20.12.7)(terser@5.16.8)
+        specifier: ^1.5.2
+        version: 1.5.2(@types/node@20.12.7)(terser@5.16.8)
 
   packages/prelude:
     dependencies:
@@ -656,8 +656,8 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm)
       vitest:
-        specifier: ^1.5.1
-        version: 1.5.1(@types/node@20.12.7)(terser@5.16.8)
+        specifier: ^1.5.2
+        version: 1.5.2(@types/node@20.12.7)(terser@5.16.8)
 
   packages/schema:
     dependencies:
@@ -702,8 +702,8 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm)
       vitest:
-        specifier: ^1.5.1
-        version: 1.5.1(@types/node@20.12.7)(terser@5.16.8)
+        specifier: ^1.5.2
+        version: 1.5.2(@types/node@20.12.7)(terser@5.16.8)
 
   packages/vue:
     dependencies:
@@ -772,8 +772,8 @@ importers:
         specifier: ^5.2.10
         version: 5.2.10(@types/node@20.12.7)(terser@5.16.8)
       vitest:
-        specifier: ^1.5.1
-        version: 1.5.1(@types/node@20.12.7)(terser@5.16.8)
+        specifier: ^1.5.2
+        version: 1.5.2(@types/node@20.12.7)(terser@5.16.8)
 
 packages:
 
@@ -2043,20 +2043,20 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@vitest/expect@1.5.1':
-    resolution: {integrity: sha512-w3Bn+VUMqku+oWmxvPhTE86uMTbfmBl35aGaIPlwVW7Q89ZREC/icfo2HBsEZ3AAW6YR9lObfZKPEzstw9tJOQ==}
+  '@vitest/expect@1.5.2':
+    resolution: {integrity: sha512-rf7MTD1WCoDlN3FfYJ9Llfp0PbdtOMZ3FIF0AVkDnKbp3oiMW1c8AmvRZBcqbAhDUAvF52e9zx4WQM1r3oraVA==}
 
-  '@vitest/runner@1.5.1':
-    resolution: {integrity: sha512-mt372zsz0vFR7L1xF/ert4t+teD66oSuXoTyaZbl0eJgilvyzCKP1tJ21gVa8cDklkBOM3DLnkE1ljj/BskyEw==}
+  '@vitest/runner@1.5.2':
+    resolution: {integrity: sha512-7IJ7sJhMZrqx7HIEpv3WrMYcq8ZNz9L6alo81Y6f8hV5mIE6yVZsFoivLZmr0D777klm1ReqonE9LyChdcmw6g==}
 
-  '@vitest/snapshot@1.5.1':
-    resolution: {integrity: sha512-h/1SGaZYXmjn6hULRBOlqam2z4oTlEe6WwARRzLErAPBqljAs6eX7tfdyN0K+MpipIwSZ5sZsubDWkCPAiVXZQ==}
+  '@vitest/snapshot@1.5.2':
+    resolution: {integrity: sha512-CTEp/lTYos8fuCc9+Z55Ga5NVPKUgExritjF5VY7heRFUfheoAqBneUlvXSUJHUZPjnPmyZA96yLRJDP1QATFQ==}
 
-  '@vitest/spy@1.5.1':
-    resolution: {integrity: sha512-vsqczk6uPJjmPLy6AEtqfbFqgLYcGBe9BTY+XL8L6y8vrGOhyE23CJN9P/hPimKXnScbqiZ/r/UtUSOQ2jIDGg==}
+  '@vitest/spy@1.5.2':
+    resolution: {integrity: sha512-xCcPvI8JpCtgikT9nLpHPL1/81AYqZy1GCy4+MCHBE7xi8jgsYkULpW5hrx5PGLgOQjUpb6fd15lqcriJ40tfQ==}
 
-  '@vitest/utils@1.5.1':
-    resolution: {integrity: sha512-92pE17bBXUxA0Y7goPcvnATMCuq4NQLOmqsG0e2BtzRi7KLwZB5jpiELi/8ybY8IQNWemKjSD5rMoO7xTdv8ug==}
+  '@vitest/utils@1.5.2':
+    resolution: {integrity: sha512-sWOmyofuXLJ85VvXNsroZur7mOJGiQeM0JN3/0D1uU8U9bGFM69X1iqHaRXl6R8BwaLY6yPCogP257zxTzkUdA==}
 
   '@vue/compiler-core@3.4.25':
     resolution: {integrity: sha512-Y2pLLopaElgWnMNolgG8w3C5nNUVev80L7hdQ5iIKPtMJvhVpG0zhnBG/g3UajJmZdvW0fktyZTotEHD1Srhbg==}
@@ -4261,8 +4261,8 @@ packages:
     resolution: {integrity: sha512-Vq0eyEQy+elFpzsKjMss9kxqb9tG3YHg4dsyWuUENuzvSUWe1TCnW/vV9FkhvBk/brEDoDiVd+M1Btosa6ImdQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
-  npm-check-updates@16.14.18:
-    resolution: {integrity: sha512-9iaRe9ohx9ykdbLjPRIYcq1A0RkrPYUx9HmQK1JIXhfxtJCNE/+497H9Z4PGH6GWRALbz5KF+1iZoySK2uSEpQ==}
+  npm-check-updates@16.14.20:
+    resolution: {integrity: sha512-sYbIhun4DrjO7NFOTdvs11nCar0etEhZTsEjL47eM0TuiGMhmYughRCxG2SpGRmGAQ7AkwN7bw2lWzoE7q6yOQ==}
     engines: {node: '>=14.14'}
     hasBin: true
 
@@ -5305,8 +5305,8 @@ packages:
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
 
-  tsx@4.7.2:
-    resolution: {integrity: sha512-BCNd4kz6fz12fyrgCTEdZHGJ9fWTGeUzXmQysh0RVocDY3h4frk05ZNCXSy4kIenF7y/QnrdiVpTsyNRn6vlAw==}
+  tsx@4.7.3:
+    resolution: {integrity: sha512-+fQnMqIp/jxZEXLcj6WzYy9FhcS5/Dfk8y4AtzJ6ejKcKqmfTF8Gso/jtrzDggCF2zTU20gJa6n8XqPYwDAUYQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -5506,8 +5506,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vite-node@1.5.1:
-    resolution: {integrity: sha512-HNpfV7BrAsjkYVNWIcPleJwvJmydJqqJRrRbpoQ/U7QDwJKyEzNa4g5aYg8MjXJyKsk29IUCcMLFRcsEvqUIsA==}
+  vite-node@1.5.2:
+    resolution: {integrity: sha512-Y8p91kz9zU+bWtF7HGt6DVw2JbhyuB2RlZix3FPYAYmUyZ3n7iTp8eSyLyY6sxtPegvxQtmlTMhfPhUfCUF93A==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
@@ -5539,15 +5539,15 @@ packages:
       terser:
         optional: true
 
-  vitest@1.5.1:
-    resolution: {integrity: sha512-3GvBMpoRnUNbZRX1L3mJCv3Ou3NAobb4dM48y8k9ZGwDofePpclTOyO+lqJFKSQpubH1V8tEcAEw/Y3mJKGJQQ==}
+  vitest@1.5.2:
+    resolution: {integrity: sha512-l9gwIkq16ug3xY7BxHwcBQovLZG75zZL0PlsiYQbf76Rz6QGs54416UWMtC0jXeihvHvcHrf2ROEjkQRVpoZYw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
       '@edge-runtime/vm': '*'
       '@types/node': ^18.0.0 || >=20.0.0
-      '@vitest/browser': 1.5.1
-      '@vitest/ui': 1.5.1
+      '@vitest/browser': 1.5.2
+      '@vitest/ui': 1.5.2
       happy-dom: '*'
       jsdom: '*'
     peerDependenciesMeta:
@@ -7154,29 +7154,29 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitest/expect@1.5.1':
+  '@vitest/expect@1.5.2':
     dependencies:
-      '@vitest/spy': 1.5.1
-      '@vitest/utils': 1.5.1
+      '@vitest/spy': 1.5.2
+      '@vitest/utils': 1.5.2
       chai: 4.3.10
 
-  '@vitest/runner@1.5.1':
+  '@vitest/runner@1.5.2':
     dependencies:
-      '@vitest/utils': 1.5.1
+      '@vitest/utils': 1.5.2
       p-limit: 5.0.0
       pathe: 1.1.1
 
-  '@vitest/snapshot@1.5.1':
+  '@vitest/snapshot@1.5.2':
     dependencies:
       magic-string: 0.30.10
       pathe: 1.1.1
       pretty-format: 29.7.0
 
-  '@vitest/spy@1.5.1':
+  '@vitest/spy@1.5.2':
     dependencies:
       tinyspy: 2.2.0
 
-  '@vitest/utils@1.5.1':
+  '@vitest/utils@1.5.2':
     dependencies:
       diff-sequences: 29.6.3
       estree-walker: 3.0.3
@@ -9676,7 +9676,7 @@ snapshots:
     dependencies:
       npm-normalize-package-bin: 3.0.0
 
-  npm-check-updates@16.14.18:
+  npm-check-updates@16.14.20:
     dependencies:
       '@types/semver-utils': 1.1.3
       chalk: 5.3.0
@@ -10817,7 +10817,7 @@ snapshots:
       tslib: 1.14.1
       typescript: 5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm)
 
-  tsx@4.7.2:
+  tsx@4.7.3:
     dependencies:
       esbuild: 0.19.12
       get-tsconfig: 4.7.3
@@ -11046,7 +11046,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite-node@1.5.1(@types/node@20.12.7)(terser@5.16.8):
+  vite-node@1.5.2(@types/node@20.12.7)(terser@5.16.8):
     dependencies:
       cac: 6.7.14
       debug: 4.3.4(supports-color@5.5.0)
@@ -11073,13 +11073,13 @@ snapshots:
       fsevents: 2.3.3
       terser: 5.16.8
 
-  vitest@1.5.1(@types/node@20.12.7)(terser@5.16.8):
+  vitest@1.5.2(@types/node@20.12.7)(terser@5.16.8):
     dependencies:
-      '@vitest/expect': 1.5.1
-      '@vitest/runner': 1.5.1
-      '@vitest/snapshot': 1.5.1
-      '@vitest/spy': 1.5.1
-      '@vitest/utils': 1.5.1
+      '@vitest/expect': 1.5.2
+      '@vitest/runner': 1.5.2
+      '@vitest/snapshot': 1.5.2
+      '@vitest/spy': 1.5.2
+      '@vitest/utils': 1.5.2
       acorn-walk: 8.3.2
       chai: 4.3.10
       debug: 4.3.4(supports-color@5.5.0)
@@ -11093,7 +11093,7 @@ snapshots:
       tinybench: 2.5.1
       tinypool: 0.8.4
       vite: 5.2.10(@types/node@20.12.7)(terser@5.16.8)
-      vite-node: 1.5.1(@types/node@20.12.7)(terser@5.16.8)
+      vite-node: 1.5.2(@types/node@20.12.7)(terser@5.16.8)
       why-is-node-running: 2.2.2
     optionalDependencies:
       '@types/node': 20.12.7
