@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 1.0.9
+
+### Patch Changes
+
+- 86d33e8: add error reporter for vue
+- Updated dependencies [86d33e8]
+  - effect-app@1.0.8
+  - @effect-app/vue@1.0.9
+
 ## 1.0.8
 
 ### Patch Changes

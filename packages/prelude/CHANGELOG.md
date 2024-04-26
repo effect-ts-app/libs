@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.0.8
+
+### Patch Changes
+
+- 86d33e8: add error reporter for vue
+
 ## 1.0.7
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 1.1.10
+
+### Patch Changes
+
+- 86d33e8: add error reporter for vue
+- Updated dependencies [86d33e8]
+  - effect-app@1.0.8
+  - @effect-app/infra-adapters@1.0.12
+
 ## 1.1.9
 
 ### Patch Changes
