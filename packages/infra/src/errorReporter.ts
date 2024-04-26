@@ -1,7 +1,7 @@
 import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/node"
 import { Cause, Effect, Option, Predicate } from "effect-app"
-import { CauseException } from "./errors.js"
+import { CauseException, ErrorReported } from "./errors.js"
 import { RequestContextContainer } from "./services/RequestContextContainer.js"
 
 export function reportError(
@@ -23,8 +23,9 @@ export function reportError(
         yield* $(Effect.logDebug("Interrupted").pipe(Effect.annotateLogs("extras", JSON.stringify(extras ?? {}))))
         return
       }
-      yield* $(reportSentry(cause, name, extras))
       const error = new CauseException(cause, name)
+
+      yield* $(reportSentry(error, extras))
       yield* $(
         Effect
           .logError("Reporting error", cause)
@@ -34,12 +35,13 @@ export function reportError(
             __error_name__: name
           })))
       )
+      error[ErrorReported] = true
+      return error
     })
 }
 
 function reportSentry(
-  cause: Cause<unknown>,
-  name: string,
+  error: CauseException<unknown>,
   extras: Record<string, unknown> | undefined
 ) {
   return RequestContextContainer.getOption.pipe(Effect.map((ctx) => {
@@ -47,7 +49,6 @@ function reportSentry(
     const scope = new Sentry.Scope()
     if (context) scope.setContext("context", context as unknown as Record<string, unknown>)
     if (extras) scope.setContext("extras", extras)
-    const error = new CauseException(cause, name)
     scope.setContext("error", error.toJSON() as any)
     Sentry.captureException(error, scope)
   }))

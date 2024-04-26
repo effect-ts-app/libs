@@ -125,6 +125,10 @@ export const QueryErrors = SupportedErrors
 export type MutationErrors = S.Schema.Type<typeof MutationErrors>
 export type QueryErrors = S.Schema.Type<typeof QueryErrors>
 
+export const ErrorReported = Symbol.for("effect-app/error-reported")
+export const isErrorReported = (e: unknown): boolean =>
+  typeof e === "object" && e !== null && ErrorReported in e ? !!e[ErrorReported] : false
+
 export class CauseException<E> extends Error {
   constructor(readonly originalCause: Cause<E>, readonly _tag: string) {
     const limit = Error.stackTraceLimit
@@ -154,4 +158,6 @@ export class CauseException<E> extends Error {
   override toString() {
     return `[${this._tag}] ` + Cause.pretty(this.originalCause)
   }
+
+  [ErrorReported] = false
 }

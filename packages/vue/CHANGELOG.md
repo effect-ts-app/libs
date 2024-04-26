@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 1.0.12
+
+### Patch Changes
+
+- feat: improve error reported state.
+- Updated dependencies
+  - effect-app@1.0.11
+  - @effect-app/vue@1.0.12
+
 ## 1.0.11
 
 ### Patch Changes

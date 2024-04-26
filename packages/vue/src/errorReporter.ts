@@ -3,7 +3,7 @@
 import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/browser"
 import { Cause, Effect, Predicate } from "effect-app"
-import { CauseException } from "effect-app/client/errors"
+import { CauseException, ErrorReported } from "effect-app/client/errors"
 
 export function reportError(
   name: string
@@ -36,6 +36,7 @@ export function reportError(
             __error_name__: name
           })))
       )
+      error[ErrorReported] = true
       return error
     })
 }

@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.0.11
+
+### Patch Changes
+
+- feat: improve error reported state.
+
 ## 1.0.10
 
 ### Patch Changes

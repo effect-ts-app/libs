@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 1.1.13
+
+### Patch Changes
+
+- feat: improve error reported state.
+- Updated dependencies
+  - effect-app@1.0.11
+  - @effect-app/infra-adapters@1.0.15
+
 ## 1.1.12
 
 ### Patch Changes
