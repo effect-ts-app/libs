@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.0.8
+
+### Patch Changes
+
+- 83f19e1: schema next minor
+
 ## 1.0.7
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 1.0.9
+
+### Patch Changes
+
+- 83f19e1: schema next minor
+- Updated dependencies [83f19e1]
+  - @effect-app/schema@1.0.8
+
 ## 1.0.8
 
 ### Patch Changes
