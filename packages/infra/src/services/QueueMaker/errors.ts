@@ -1,3 +1,4 @@
+import { setRootParentSpan } from "@effect-app/infra-adapters/RequestFiberSet"
 import { reportError } from "@effect-app/infra/errorReporter"
 import { Cause, Effect, Exit } from "effect-app"
 
@@ -18,8 +19,7 @@ export const reportQueueError = <E>(cause: Cause<E>, extras?: Record<string, unk
 export function forkDaemonReportQueue<R, E, A>(self: Effect<A, E, R>) {
   return self.pipe(
     Effect.tapErrorCause(reportNonInterruptedFailureCause({})),
-    // for queues not important because they have a kind of producer on publish?
-    // setRootParentSpan,
+    setRootParentSpan,
     Effect.forkDaemon
   )
 }
