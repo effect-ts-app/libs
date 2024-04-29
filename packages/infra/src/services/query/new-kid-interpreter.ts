@@ -6,7 +6,7 @@ import { dropUndefinedT } from "effect-app/utils"
 import type { FieldValues } from "../../filter/types.js"
 import type { FieldPath } from "../../filter/types/path/eager.js"
 import { make, type Q, type QAll } from "../query.js"
-import type { FilterResult, QueryBuilder } from "../Store/filterApi/query.js"
+import type { FilterResult } from "../Store/filterApi/query.js"
 
 type Result<TFieldValues extends FieldValues, A = TFieldValues, R = never> = {
   filter: FilterResult[]
@@ -51,14 +51,20 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
       },
       where: ({ current, operation }) => {
         upd(interpret(current))
-        data.filter.push(
-          {
-            t: "where",
-            path: operation[0],
-            op: operation.length === 2 ? "eq" : operation[1],
-            value: operation.length === 2 ? operation[1] : operation[2]
-          }
-        )
+        if (typeof operation === "function") {
+          data.filter.push(
+            { t: "where-scope", result: interpret(operation(make())).filter }
+          )
+        } else {
+          data.filter.push(
+            {
+              t: "where",
+              path: operation[0],
+              op: operation.length === 2 ? "eq" : operation[1],
+              value: operation.length === 2 ? operation[1] : operation[2]
+            }
+          )
+        }
       },
       and: ({ current, operation }) => {
         upd(interpret(current))
@@ -153,10 +159,7 @@ export const toFilter = <
     ttype: a.ttype,
     mode: a.mode ?? "transform",
     filter: a.filter.length
-      ? {
-        type: "new-kid" as const,
-        build: () => a.filter
-      } as QueryBuilder<any>
+      ? a.filter
       : undefined
   })
 }

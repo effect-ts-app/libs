@@ -50,18 +50,12 @@ import { ContextMapContainer } from "./Store/ContextMapContainer.js"
 export interface Mapped1<A, Encoded extends { id: string }, R> {
   all: Effect<A[], ParseResult.ParseError, R>
   save: (...xes: readonly A[]) => Effect<void, OptimisticConcurrencyException | ParseResult.ParseError, R>
-  // query: (
-  //   b: (fn: QB.FilterTest<Encoded>, fields: QB.Filter<Encoded, never>) => QB.QueryBuilder<Encoded>
-  // ) => Effect<A[], ParseResult.ParseError, R>
   find: (id: Encoded["id"]) => Effect<Option<A>, ParseResult.ParseError, R>
 }
 
 // TODO: auto use project, and select fields from the From side of schema only
 export interface Mapped2<A, R> {
   all: Effect<A[], ParseResult.ParseError, R>
-  // query: (
-  //   b: (fn: QB.FilterTest<Encoded>, fields: QB.Filter<Encoded, never>) => QB.QueryBuilder<Encoded>
-  // ) => Effect<A[], ParseResult.ParseError, R>
 }
 
 export interface Mapped<Encoded extends { id: string }> {
@@ -585,7 +579,7 @@ export function makeRepo<
               Effect.withSpan("Repository.query [effect-app/infra]", {
                 attributes: {
                   "repository.model_name": name,
-                  query: { ...a, schema: a.schema ? "__SCHEMA__" : a.schema, filter: a.filter?.build() }
+                  query: { ...a, schema: a.schema ? "__SCHEMA__" : a.schema, filter: a.filter }
                 }
               })
             )

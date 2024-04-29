@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Array, Effect, FiberRef, flow, Option, Order, pipe, Ref, Struct } from "effect-app"
-import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
+import type { NonEmptyReadonlyArray } from "effect-app"
 import { get } from "effect-app/utils"
 import type { RequestContext } from "../../RequestContext.js"
 import type { FilterArgs, PersistenceModelType, Store, StoreConfig } from "./service.js"
@@ -66,7 +66,7 @@ function logQuery(f: FilterArgs<any, any>, defaultValues?: any) {
     .logDebug("mem query")
     .pipe(Effect.annotateLogs({
       filter: JSON.stringify(
-        f.filter ? f.filter.type === "new-kid" ? f.filter.build() : f.filter : f.filter,
+        f.filter,
         undefined,
         2
       ),
@@ -118,7 +118,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
                 )
             ),
           Effect
-            .map((_) => _ as NonEmptyArray<PM>),
+            .map((_) => _),
           withPermit
         )
     const s: Store<Encoded, Id> = {

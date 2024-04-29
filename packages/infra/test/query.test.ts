@@ -60,7 +60,7 @@ it("merge", () => {
 
   const merge = (b: any) => (a: any) => pipe(a, and(() => b))
 
-  const r = pipe(a, merge(b), toFilter, (_) => _.filter.build())
+  const r = pipe(a, merge(b), toFilter, (_) => _.filter)
 
   // TODO: instead this should probably scope the first where/or together e.g (where x, or y) and (...)
   const expected = make().pipe(
@@ -68,7 +68,7 @@ it("merge", () => {
     or("c", "d"),
     and(where("d", "e"), or("f", "g")),
     toFilter,
-    (_) => _.filter.build()
+    (_) => _.filter
   )
 
   console.log(JSON.stringify({ r, expected }, undefined, 2))
@@ -79,9 +79,6 @@ it("works", () => {
   console.log("raw", inspect(q, undefined, 25))
   const interpreted = toFilter(q)
   console.log("interpreted", inspect(interpreted, undefined, 25))
-  const filtersBuilt = interpreted.filter.build()
-  console
-    .log("filtersBuilt", inspect(filtersBuilt, undefined, 25))
 
   const processed = memFilter(interpreted)(items.map((_) => S.encodeSync(Something)(_)))
 

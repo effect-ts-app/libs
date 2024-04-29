@@ -224,12 +224,12 @@ function makeCosmosStore({ prefix }: StorageConfig) {
             ) => {
               const skip = f?.skip
               const limit = f?.limit
-              const filter = f.filter ?? { type: "new-kid", build: () => [] }
+              const filter = f.filter
               type M = U extends undefined ? Encoded : Pick<Encoded, U>
               return Effect
                 .sync(() =>
                   buildWhereCosmosQuery3(
-                    filter.build(),
+                    filter ?? [],
                     name,
                     importedMarkerId,
                     defaultValues,

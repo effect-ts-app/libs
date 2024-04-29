@@ -554,16 +554,6 @@
         "default": "./_cjs/services/Store/codeFilter.cjs"
       }
     },
-    "./services/Store/filterApi/proxy": {
-      "import": {
-        "types": "./dist/services/Store/filterApi/proxy.d.ts",
-        "default": "./dist/services/Store/filterApi/proxy.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/filterApi/proxy.d.ts",
-        "default": "./_cjs/services/Store/filterApi/proxy.cjs"
-      }
-    },
     "./services/Store/filterApi/query": {
       "import": {
         "types": "./dist/services/Store/filterApi/query.d.ts",

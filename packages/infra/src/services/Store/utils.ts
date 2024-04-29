@@ -35,8 +35,8 @@ export const makeUpdateETag =
       return newE
     })
 
-export function codeFilter<E extends { id: string }, NE extends E>(filter: Filter<NE>) {
-  return (x: E) => codeFilter3_(filter.build(), x) ? Option.some(x as unknown as NE) : Option.none()
+export function codeFilter<E extends { id: string }, NE extends E>(filter: Filter) {
+  return (x: E) => codeFilter3_(filter, x) ? Option.some(x as unknown as NE) : Option.none()
 }
 
 export function lowercaseIfString<T>(val: T) {
