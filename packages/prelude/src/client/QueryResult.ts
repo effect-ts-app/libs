@@ -1,21 +1,23 @@
 // TODO: Convert to effect/core
 
 /* eslint-disable @typescript-eslint/ban-types */
+import type { Cause } from "@effect-app/core"
 import { Data, Effect, Option } from "@effect-app/core"
 import * as Either from "effect/Either"
 
+// TODO: re-eval https://github.com/tim-smart/effect-rx/blob/main/packages/rx/src/Result.ts
 export class Initial extends Data.TaggedClass("Initial")<{}> {}
 
 export class Loading extends Data.TaggedClass("Loading")<{}> {}
 
 export class Refreshing<E, A> extends Data.TaggedClass("Refreshing")<{
-  readonly current: Either.Either<A, E>
+  readonly current: Either.Either<A, Cause.Cause<E>>
   readonly previous: Option<A>
 }> {
   static succeed<A, E = never>(a: A) {
     return new Refreshing<E, A>({ current: Either.right(a), previous: Option.none() })
   }
-  static fail<E, A = never>(e: E, previous?: A) {
+  static fail<E, A = never>(e: Cause.Cause<E>, previous?: A) {
     return new Refreshing<E, A>({
       current: Either.left(e),
       previous: previous === undefined ? Option.none() : Option.some(previous)
@@ -27,13 +29,13 @@ export class Refreshing<E, A> extends Data.TaggedClass("Refreshing")<{
 }
 
 export class Done<E, A> extends Data.TaggedClass("Done")<{
-  readonly current: Either.Either<A, E>
+  readonly current: Either.Either<A, Cause.Cause<E>>
   readonly previous: Option<A>
 }> {
   static succeed<A, E = never>(this: void, a: A) {
     return new Done<E, A>({ current: Either.right(a), previous: Option.none() })
   }
-  static fail<E, A = never>(this: void, e: E, previous?: A) {
+  static fail<E, A = never>(this: void, e: Cause.Cause<E>, previous?: A) {
     return new Done<E, A>({
       current: Either.left(e),
       previous: previous === undefined ? Option.none() : Option.some(previous)
@@ -57,7 +59,7 @@ type Result<E, A> = Omit<Done<E, A>, "current"> | Omit<Refreshing<E, A>, "curren
  */
 export function isSuccess<E, A>(
   qr: QueryResult<E, A>
-): qr is Result<E, A> & { current: Either.Right<E, A> } {
+): qr is Result<E, A> & { current: Either.Right<Cause.Cause<E>, A> } {
   return hasValue(qr) && Either.isRight(qr.current)
 }
 
@@ -102,7 +104,7 @@ export function isInitializing<E, A>(
  */
 export function isFailed<E, A>(
   qr: QueryResult<E, A>
-): qr is Result<E, A> & { current: Either.Left<E, A> } {
+): qr is Result<E, A> & { current: Either.Left<Cause.Cause<E>, A> } {
   return hasValue(qr) && Either.isLeft(qr.current)
 }
 
