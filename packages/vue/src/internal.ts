@@ -2,6 +2,7 @@ import type * as HttpClient from "@effect/platform/Http/Client"
 import type { Effect } from "effect-app"
 import { pipe, Runtime } from "effect-app"
 import type { ApiConfig } from "effect-app/client"
+import { reportError } from "./errorReporter.js"
 
 export const run = {
   value<E, A>(
@@ -11,7 +12,7 @@ export const run = {
     throw new Error("Runtime not initialized, please run `initRuntime` first")
   }
 }
-// const reportRuntimeError = reportError("Runtime")
+export const reportRuntimeError = reportError("Runtime")
 export function initRuntime<A>(rt: Runtime.Runtime<A | ApiConfig | HttpClient.Client.Default>) {
   const runPromise = Runtime.runPromise(rt)
   run.value = function<E, A>(

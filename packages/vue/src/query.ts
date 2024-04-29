@@ -17,7 +17,7 @@ import type { ApiConfig, FetchResponse } from "effect-app/client"
 import type { HttpClient } from "effect-app/http"
 import { computed, ref } from "vue"
 import type { ComputedRef, WatchSource } from "vue"
-import { makeQueryKey, run } from "./internal.js"
+import { makeQueryKey, reportRuntimeError, run } from "./internal.js"
 
 export interface QueryObserverOptionsCustom<
   TQueryFnData = unknown,
@@ -101,7 +101,7 @@ export interface KnownFiberFailure<E> extends Runtime.FiberFailure {
 export const useSafeQuery_ = <I, A, E>(
   q:
     | {
-      handler: (
+      readonly handler: (
         req: I
       ) => Effect<
         FetchResponse<A>,
@@ -112,7 +112,7 @@ export const useSafeQuery_ = <I, A, E>(
       name: string
     }
     | {
-      handler: Effect<
+      readonly handler: Effect<
         FetchResponse<A>,
         E,
         ApiConfig | HttpClient.Client.Default
@@ -134,19 +134,31 @@ export const useSafeQuery_ = <I, A, E>(
     } as any)
     : ref(arg)
   const queryKey = makeQueryKey(q.name)
+  const handler = q.handler
   const r = useQuery<unknown, KnownFiberFailure<E>, A>(
-    Effect.isEffect(q.handler)
+    Effect.isEffect(handler)
       ? {
         ...options,
         queryKey,
-        queryFn: ({ signal }) => run.value(Effect.map(q.handler as any, (_) => (_ as any).body), { signal })
+        queryFn: ({ signal }) =>
+          run.value(
+            Effect
+              .map(handler, (_) => _.body)
+              .pipe(Effect.tapDefect(reportRuntimeError)),
+            { signal }
+          )
       }
       : {
         ...options,
         queryKey: [...queryKey, req],
         queryFn: ({ signal }) =>
           run
-            .value(Effect.map((q.handler as any)(req.value), (_) => (_ as any).body), { signal })
+            .value(
+              Effect
+                .map(handler(req.value), (_) => _.body)
+                .pipe(Effect.tapDefect(reportRuntimeError)),
+              { signal }
+            )
       }
   )
 

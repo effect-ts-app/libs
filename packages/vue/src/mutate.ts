@@ -9,7 +9,7 @@ import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
-import { makeQueryKey, run } from "./internal.js"
+import { makeQueryKey, reportRuntimeError, run } from "./internal.js"
 
 import * as Result from "@effect-rx/rx/Result"
 
@@ -140,6 +140,7 @@ export const useSafeMutation: {
               // }))
             })
           ),
+          Effect.tapDefect(reportRuntimeError),
           Effect.exit,
           Effect.flatMap(handleExit)
         ),
