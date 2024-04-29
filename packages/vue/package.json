@@ -8,6 +8,8 @@
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
+    "@effect-rx/rx": "^0.29.1",
+    "@effect-rx/rx-vue": "^0.8.1",
     "@formatjs/intl": "^2.10.1",
     "@tanstack/vue-query": "^5.32.0",
     "effect-app": "workspace:*",
