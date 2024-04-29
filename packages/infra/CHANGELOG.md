@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.1.14
+
+### Patch Changes
+
+- 9d4f168: disable setParent for queue fork
+
 ## 1.1.13
 
 ### Patch Changes
