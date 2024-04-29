@@ -157,7 +157,7 @@ export const useSafeQuery_ = <I, A, E>(
       isValidating: r.isFetching.value
     })
   )
-  const latestSuccess = computed(() => Result.value(result.value))
+  const latestSuccess = computed(() => Option.getOrUndefined(Result.value(result.value)))
   return [result, latestSuccess, r.refetch, r] as const
 }
 

@@ -28,7 +28,7 @@ export function make<A, E, R>(self: Effect<FetchResponse<A>, E, R>) {
       Effect.flatMap((r) => Effect.sync(() => result.value = r))
     )
 
-  const latestSuccess = computed(() => Result.value(result.value))
+  const latestSuccess = computed(() => Option.getOrUndefined(Result.value(result.value)))
 
   return tuple(result, latestSuccess, execute)
 }
