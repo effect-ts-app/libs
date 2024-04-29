@@ -1,5 +1,17 @@
 # @effect-app/vue
 
+## 1.2.0
+
+### Minor Changes
+
+- b8b729e: adopt @effect-rx
+
+### Patch Changes
+
+- Updated dependencies [b8b729e]
+  - effect-app@1.1.0
+  - @effect-app/vue@1.2.0
+
 ## 1.1.0
 
 ### Minor Changes

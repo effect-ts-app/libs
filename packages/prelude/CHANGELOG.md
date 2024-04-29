@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.1.0
+
+### Minor Changes
+
+- b8b729e: adopt @effect-rx
+
 ## 1.0.12
 
 ### Patch Changes
