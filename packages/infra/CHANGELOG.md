@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.2.2
+
+### Patch Changes
+
+- 2339df9: revert forkDaemonReportQueue use root span
+
 ## 1.2.1
 
 ### Patch Changes
