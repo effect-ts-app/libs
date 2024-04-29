@@ -6,9 +6,9 @@
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "typescript@5.4.5": "patches/typescript@5.4.5.patch",
-      "effect@3.0.5": "patches/effect@3.0.5.patch",
-      "@effect/schema@0.66.8": "patches/@effect__schema@0.66.8.patch",
-      "@effect/platform@0.50.5": "patches/@effect__platform@0.50.5.patch"
+      "effect@3.0.7": "patches/effect@3.0.7.patch",
+      "@effect/schema@0.66.10": "patches/@effect__schema@0.66.10.patch",
+      "@effect/platform@0.50.7": "patches/@effect__platform@0.50.7.patch"
     }
   },
   "engines": {
@@ -52,7 +52,7 @@
   "dependencies": {
     "date-fns": "^3.6.0",
     "cross-env": "^7.0.3",
-    "fast-check": "^3.17.2",
+    "fast-check": "^3.18.0",
     "ts-node": "^10.9.2",
     "vue": "^3.4.25"
   },
@@ -64,10 +64,10 @@
     "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.90.4",
-    "effect": "^3.0.5",
-    "@effect/platform": "^0.50.5",
-    "@effect/platform-node": "^0.47.5",
-    "@effect/schema": "^0.66.8",
+    "effect": "^3.0.7",
+    "@effect/platform": "^0.50.7",
+    "@effect/platform-node": "^0.47.7",
+    "@effect/schema": "^0.66.10",
     "@effect-app/cli": "^0.72.1",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
