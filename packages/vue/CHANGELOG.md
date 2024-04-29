@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.0.14
+
+### Patch Changes
+
+- 37be3bb: remove intermediate error handler
+- Updated dependencies [37be3bb]
+  - @effect-app/vue@1.0.14
+
 ## 1.0.13
 
 ### Patch Changes
