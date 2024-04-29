@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.0.6
+
+### Patch Changes
+
+- c99cdbb: update packages
+
 ## 1.0.5
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 1.0.12
+
+### Patch Changes
+
+- c99cdbb: update packages
+- Updated dependencies [c99cdbb]
+  - @effect-app/schema@1.0.10
+  - @effect-app/core@1.0.6
+
 ## 1.0.11
 
 ### Patch Changes

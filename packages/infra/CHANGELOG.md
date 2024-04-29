@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 1.1.15
+
+### Patch Changes
+
+- c99cdbb: update packages
+- Updated dependencies [c99cdbb]
+  - @effect-app/infra-adapters@1.0.16
+  - effect-app@1.0.12
+  - @effect-app/schema@1.0.10
+  - @effect-app/core@1.0.6
+
 ## 1.1.14
 
 ### Patch Changes

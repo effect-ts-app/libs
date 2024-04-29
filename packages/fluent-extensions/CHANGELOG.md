@@ -1,5 +1,13 @@
 # @effect-app/fluent-extensions
 
+## 1.0.7
+
+### Patch Changes
+
+- c99cdbb: update packages
+- Updated dependencies [c99cdbb]
+  - @effect-app/core@1.0.6
+
 ## 1.0.6
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @effect-app/schema
 
+## 1.0.10
+
+### Patch Changes
+
+- c99cdbb: update packages
+- Updated dependencies [c99cdbb]
+  - @effect-app/core@1.0.6
+
 ## 1.0.9
 
 ### Patch Changes
