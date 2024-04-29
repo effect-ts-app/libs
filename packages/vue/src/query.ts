@@ -2,17 +2,33 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import type { QueryObserverOptions, QueryObserverResult, RefetchOptions, UseQueryReturnType } from "@tanstack/vue-query"
+import * as Result from "@effect-rx/rx/Result"
+import type {
+  QueryKey,
+  QueryObserverOptions,
+  QueryObserverResult,
+  RefetchOptions,
+  UseQueryReturnType
+} from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
-import { Cause, Effect, Either, Option, Runtime } from "effect-app"
-import { Done, Initial, isSuccess, Loading, Refreshing } from "effect-app/client"
-import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
+import type { Cause } from "effect-app"
+import { Effect, Option, Runtime } from "effect-app"
+import type { ApiConfig, FetchResponse } from "effect-app/client"
 import type { HttpClient } from "effect-app/http"
 import { computed, ref } from "vue"
 import type { ComputedRef, WatchSource } from "vue"
-import { makeQueryKey, run } from "./internal.js"
+import { makeQueryKey, reportRuntimeError, run } from "./internal.js"
 
-export interface QueryObserverOptionsCustom extends Omit<QueryObserverOptions, "queryKey" | "queryFn"> {}
+export interface QueryObserverOptionsCustom<
+  TQueryFnData = unknown,
+  TError = Error,
+  TData = TQueryFnData,
+  TQueryData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
+  TPageParam = never
+> extends
+  Omit<QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey, TPageParam>, "queryKey" | "queryFn">
+{}
 
 export function useSafeQuery<E, A>(
   self: {
@@ -22,7 +38,7 @@ export function useSafeQuery<E, A>(
   },
   options?: QueryObserverOptionsCustom | undefined // TODO
 ): readonly [
-  ComputedRef<QueryResult<E, A>>,
+  ComputedRef<Result.Result<A, E>>,
   ComputedRef<A | undefined>,
   (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>,
   UseQueryReturnType<any, any>
@@ -36,7 +52,7 @@ export function useSafeQuery<Arg, E, A>(
   arg: Arg | WatchSource<Arg>,
   options?: QueryObserverOptionsCustom | undefined // TODO
 ): readonly [
-  ComputedRef<QueryResult<E, A>>,
+  ComputedRef<Result.Result<A, E>>,
   ComputedRef<A | undefined>,
   (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>,
   UseQueryReturnType<any, any>
@@ -74,6 +90,10 @@ export function useSafeQuery(
     : useSafeQuery_(self, argOrOptions, options)
 }
 
+export interface KnownFiberFailure<E> extends Runtime.FiberFailure {
+  readonly [Runtime.FiberFailureCauseId]: Cause.Cause<E>
+}
+
 // TODO: options
 // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
 // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
@@ -81,7 +101,7 @@ export function useSafeQuery(
 export const useSafeQuery_ = <I, A, E>(
   q:
     | {
-      handler: (
+      readonly handler: (
         req: I
       ) => Effect<
         FetchResponse<A>,
@@ -92,7 +112,7 @@ export const useSafeQuery_ = <I, A, E>(
       name: string
     }
     | {
-      handler: Effect<
+      readonly handler: Effect<
         FetchResponse<A>,
         E,
         ApiConfig | HttpClient.Client.Default
@@ -101,7 +121,7 @@ export const useSafeQuery_ = <I, A, E>(
       name: string
     },
   arg?: I | WatchSource<I>,
-  options: QueryObserverOptionsCustom = {} // TODO
+  options: QueryObserverOptionsCustom<unknown, KnownFiberFailure<E>, A> = {} // TODO
 ) => {
   const arr = arg
   const req: { value: I } = !arg
@@ -114,69 +134,60 @@ export const useSafeQuery_ = <I, A, E>(
     } as any)
     : ref(arg)
   const queryKey = makeQueryKey(q.name)
-  const r = useQuery(
-    Effect.isEffect(q.handler)
+  const handler = q.handler
+  const r = useQuery<unknown, KnownFiberFailure<E>, A>(
+    Effect.isEffect(handler)
       ? {
         ...options,
         queryKey,
         queryFn: ({ signal }) =>
-          run
-            .value(Effect.map(q.handler as any, (_) => (_ as any).body), { signal })
-            .catch((_) => {
-              if (!Runtime.isFiberFailure(_)) throw _
-              const cause = _[Runtime.FiberFailureCauseId]
-              throw Cause.squash(cause)
-            })
+          run.value(
+            Effect
+              .map(handler, (_) => _.body)
+              .pipe(Effect.tapDefect(reportRuntimeError)),
+            { signal }
+          )
       }
       : {
         ...options,
         queryKey: [...queryKey, req],
         queryFn: ({ signal }) =>
           run
-            .value(Effect.map((q.handler as any)(req.value), (_) => (_ as any).body), { signal })
-            .catch((_) => {
-              if (!Runtime.isFiberFailure(_)) throw _
-              const cause = _[Runtime.FiberFailureCauseId]
-              throw Cause.squash(cause)
-            })
+            .value(
+              Effect
+                .map(handler(req.value), (_) => _.body)
+                .pipe(Effect.tapDefect(reportRuntimeError)),
+              { signal }
+            )
       }
   )
 
   const result = computed(() =>
     swrToQuery({
-      error: r.error.value,
+      error: r.error.value ?? undefined,
       data: r.data.value,
       isValidating: r.isFetching.value
     })
   )
-  const latestSuccess = computed(() => {
-    const value = result.value
-    return isSuccess(value)
-      ? Either.isRight(value.current)
-        ? value.current.right
-        : Option.isSome(value.previous)
-        ? value.previous.value
-        : undefined
-      : undefined
-  })
+  const latestSuccess = computed(() => Option.getOrUndefined(Result.value(result.value)))
   return [result, latestSuccess, r.refetch, r] as const
 }
 
 function swrToQuery<E, A>(r: {
-  error: E | undefined
+  error: KnownFiberFailure<E> | undefined
   data: A | undefined
   isValidating: boolean
-}): QueryResult<E, A> {
+}): Result.Result<A, E> {
   if (r.error) {
-    return r.isValidating
-      ? Refreshing.fail<E, A>(r.error, r.data)
-      : Done.fail<E, A>(r.error, r.data)
+    return Result.failureWithPrevious(
+      r.error[Runtime.FiberFailureCauseId],
+      r.data === undefined ? Option.none() : Option.some(Result.success(r.data)),
+      r.isValidating
+    )
   }
   if (r.data !== undefined) {
-    return r.isValidating
-      ? Refreshing.succeed<A, E>(r.data)
-      : Done.succeed<A, E>(r.data)
+    return Result.success<A, E>(r.data, r.isValidating)
   }
 
-  return r.isValidating ? new Loading() : new Initial()
+  return Result.initial(r.isValidating)
 }

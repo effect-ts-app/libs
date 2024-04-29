@@ -139,16 +139,6 @@
         "default": "./_cjs/client.cjs"
       }
     },
-    "./client/QueryResult": {
-      "import": {
-        "types": "./dist/client/QueryResult.d.ts",
-        "default": "./dist/client/QueryResult.js"
-      },
-      "require": {
-        "types": "./dist/client/QueryResult.d.ts",
-        "default": "./_cjs/client/QueryResult.cjs"
-      }
-    },
     "./client/clientFor": {
       "import": {
         "types": "./dist/client/clientFor.d.ts",

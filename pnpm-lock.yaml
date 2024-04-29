@@ -716,6 +716,12 @@ importers:
       '@effect-app/vue':
         specifier: workspace:*
         version: 'link:'
+      '@effect-rx/rx':
+        specifier: ^0.29.1
+        version: 0.29.1(effect@3.0.7(patch_hash=n2byx4mxq3rrbn2qoh74vlroyq))
+      '@effect-rx/rx-vue':
+        specifier: ^0.8.1
+        version: 0.8.1(effect@3.0.7(patch_hash=n2byx4mxq3rrbn2qoh74vlroyq))(vue@3.4.25(typescript@5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm)))
       '@effect/platform':
         specifier: ^0.50.7
         version: 0.50.7(patch_hash=tpms5vycnibd4dxmmitkbwgbvu)(@effect/schema@0.66.10(patch_hash=42byqzagftbkawjvmqi4cq3qvu)(effect@3.0.7(patch_hash=n2byx4mxq3rrbn2qoh74vlroyq))(fast-check@3.18.0))(effect@3.0.7(patch_hash=n2byx4mxq3rrbn2qoh74vlroyq))(ws@8.16.0)
@@ -1074,6 +1080,17 @@ packages:
   '@effect-app/cli@0.72.1':
     resolution: {integrity: sha512-+q/MxptA4C7E02Vhek62yQ08IuadaQkOUuen6p8N8Mf2rFsl2GExaBqJDFHs1U0WS030yZxnvBUx+NiWb45xfA==}
     hasBin: true
+
+  '@effect-rx/rx-vue@0.8.1':
+    resolution: {integrity: sha512-5u0Wte3JGTnYuztYNpHr095ExhX9CFprG3us8rvrN1t6fZ6O4hIaf4WI8/F0YPKbFCIx+188fd71i7Nd8X23jA==}
+    peerDependencies:
+      effect: ^3.0.5
+      vue: ^3.4.25
+
+  '@effect-rx/rx@0.29.1':
+    resolution: {integrity: sha512-3fH65J3IqkwgkYI2UJc0PICGGfnuYCbI+ItlSZ2wZOqGnieki3aElJVs4Q4FLvxmseZhY8C6e3HX26eiV+8SdA==}
+    peerDependencies:
+      effect: ^3.0.5
 
   '@effect/language-service@0.1.0':
     resolution: {integrity: sha512-BnlM8LlaqCAYgdRfxlbR7gXGh/FD1scL1fPgNVJEPoOM08od1jtJz+iKhwfaud8TPnnhZR+TED2h5ynjanLeCQ==}
@@ -6238,6 +6255,16 @@ snapshots:
   '@effect-app/cli@0.72.1':
     dependencies:
       node-watch: 0.7.4
+
+  '@effect-rx/rx-vue@0.8.1(effect@3.0.7(patch_hash=n2byx4mxq3rrbn2qoh74vlroyq))(vue@3.4.25(typescript@5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm)))':
+    dependencies:
+      '@effect-rx/rx': 0.29.1(effect@3.0.7(patch_hash=n2byx4mxq3rrbn2qoh74vlroyq))
+      effect: 3.0.7(patch_hash=n2byx4mxq3rrbn2qoh74vlroyq)
+      vue: 3.4.25(typescript@5.4.5(patch_hash=o72pyyepyod6ibex2ph2czxshm))
+
+  '@effect-rx/rx@0.29.1(effect@3.0.7(patch_hash=n2byx4mxq3rrbn2qoh74vlroyq))':
+    dependencies:
+      effect: 3.0.7(patch_hash=n2byx4mxq3rrbn2qoh74vlroyq)
 
   '@effect/language-service@0.1.0': {}
 
