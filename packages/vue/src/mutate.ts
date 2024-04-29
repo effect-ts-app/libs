@@ -3,8 +3,7 @@ import { tuple } from "@effect-app/core/Function"
 import type * as HttpClient from "@effect/platform/Http/Client"
 import { useQueryClient } from "@tanstack/vue-query"
 import { Cause, Effect, Exit, Option } from "effect-app"
-import { hasValue, Initial, isInitializing, Loading, queryResult, Refreshing } from "effect-app/client"
-import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
+import type { ApiConfig, FetchResponse } from "effect-app/client"
 import { dropUndefinedT } from "effect-app/utils"
 import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
@@ -12,31 +11,24 @@ import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
 import { makeQueryKey, run } from "./internal.js"
 
+import * as Result from "@effect-rx/rx/Result"
+
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
-export function make<R, E, A>(self: Effect<FetchResponse<A>, E, R>) {
-  const result = shallowRef(new Initial() as QueryResult<E, A>)
+export function make<A, E, R>(self: Effect<FetchResponse<A>, E, R>) {
+  const result = shallowRef(Result.initial() as Result.Result<A, E>)
 
   const execute = Effect
     .sync(() => {
-      result.value = isInitializing(result.value)
-        ? new Loading()
-        : new Refreshing(result.value)
+      result.value = Result.waiting(result.value)
     })
     .pipe(
-      Effect.andThen(queryResult(Effect.map(self, (_) => _.body))),
+      Effect.andThen(Effect.map(self, (_) => _.body)),
+      Effect.exit,
+      Effect.andThen(Result.fromExit),
       Effect.flatMap((r) => Effect.sync(() => result.value = r))
     )
 
-  const latestSuccess = computed(() => {
-    const value = result.value
-    return hasValue(value)
-      ? Either.isRight(value.current)
-        ? value.current.right
-        : Option.isSome(value.previous)
-        ? value.previous.value
-        : undefined
-      : undefined
-  })
+  const latestSuccess = computed(() => Result.value(result.value))
 
   return tuple(result, latestSuccess, execute)
 }
@@ -59,7 +51,7 @@ export interface MutationError<E> {
   readonly error: E
 }
 
-export type MutationResult<E, A> = MutationInitial | MutationLoading | MutationSuccess<A> | MutationError<E>
+export type MutationResult<A, E> = MutationInitial | MutationLoading | MutationSuccess<A> | MutationError<E>
 
 /**
  * Pass a function that returns an Effect, e.g from a client action, or an Effect
@@ -67,14 +59,14 @@ export type MutationResult<E, A> = MutationInitial | MutationLoading | MutationS
  */
 export const useSafeMutation: {
   <I, E, A>(self: { handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.Client.Default>; name: string }): readonly [
-    Readonly<Ref<MutationResult<E, A>>>,
+    Readonly<Ref<MutationResult<A, E>>>,
     (
       i: I,
       signal?: AbortSignal
     ) => Promise<Either.Either<A, E>>
   ]
   <E, A>(self: { handler: Effect<A, E, ApiConfig | HttpClient.Client.Default>; name: string }): readonly [
-    Readonly<Ref<MutationResult<E, A>>>,
+    Readonly<Ref<MutationResult<A, E>>>,
     (
       signal?: AbortSignal
     ) => Promise<Either.Either<A, E>>
@@ -88,7 +80,7 @@ export const useSafeMutation: {
   }
 ) => {
   const queryClient = useQueryClient()
-  const state: Ref<MutationResult<E, A>> = ref<MutationResult<E, A>>({ _tag: "Initial" }) as any
+  const state: Ref<MutationResult<A, E>> = ref<MutationResult<A, E>>({ _tag: "Initial" }) as any
 
   function handleExit(exit: Exit.Exit<A, E>): Effect<Either.Either<A, E>, never, never> {
     return Effect.sync(() => {
