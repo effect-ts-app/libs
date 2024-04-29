@@ -2,9 +2,16 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import type { QueryObserverOptions, QueryObserverResult, RefetchOptions, UseQueryReturnType } from "@tanstack/vue-query"
+import type {
+  QueryKey,
+  QueryObserverOptions,
+  QueryObserverResult,
+  RefetchOptions,
+  UseQueryReturnType
+} from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
-import { Cause, Effect, Either, Option, Runtime } from "effect-app"
+import type { Cause, Runtime } from "effect-app"
+import { Effect, Either, Option } from "effect-app"
 import { Done, Initial, isSuccess, Loading, Refreshing } from "effect-app/client"
 import type { ApiConfig, FetchResponse, QueryResult } from "effect-app/client"
 import type { HttpClient } from "effect-app/http"
@@ -12,7 +19,16 @@ import { computed, ref } from "vue"
 import type { ComputedRef, WatchSource } from "vue"
 import { makeQueryKey, run } from "./internal.js"
 
-export interface QueryObserverOptionsCustom extends Omit<QueryObserverOptions, "queryKey" | "queryFn"> {}
+export interface QueryObserverOptionsCustom<
+  TQueryFnData = unknown,
+  TError = Error,
+  TData = TQueryFnData,
+  TQueryData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
+  TPageParam = never
+> extends
+  Omit<QueryObserverOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey, TPageParam>, "queryKey" | "queryFn">
+{}
 
 export function useSafeQuery<E, A>(
   self: {
@@ -74,6 +90,10 @@ export function useSafeQuery(
     : useSafeQuery_(self, argOrOptions, options)
 }
 
+export interface KnownFiberFailure<E> extends Runtime.FiberFailure {
+  readonly [Runtime.FiberFailureCauseId]: Cause.Cause<E>
+}
+
 // TODO: options
 // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
 // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
@@ -101,7 +121,7 @@ export const useSafeQuery_ = <I, A, E>(
       name: string
     },
   arg?: I | WatchSource<I>,
-  options: QueryObserverOptionsCustom = {} // TODO
+  options: QueryObserverOptionsCustom<any, KnownFiberFailure<E>> = {} // TODO
 ) => {
   const arr = arg
   const req: { value: I } = !arg
@@ -114,19 +134,12 @@ export const useSafeQuery_ = <I, A, E>(
     } as any)
     : ref(arg)
   const queryKey = makeQueryKey(q.name)
-  const r = useQuery(
+  const r = useQuery<any, KnownFiberFailure<E>>(
     Effect.isEffect(q.handler)
       ? {
         ...options,
         queryKey,
-        queryFn: ({ signal }) =>
-          run
-            .value(Effect.map(q.handler as any, (_) => (_ as any).body), { signal })
-            .catch((_) => {
-              if (!Runtime.isFiberFailure(_)) throw _
-              const cause = _[Runtime.FiberFailureCauseId]
-              throw Cause.squash(cause)
-            })
+        queryFn: ({ signal }) => run.value(Effect.map(q.handler as any, (_) => (_ as any).body), { signal })
       }
       : {
         ...options,
@@ -134,11 +147,6 @@ export const useSafeQuery_ = <I, A, E>(
         queryFn: ({ signal }) =>
           run
             .value(Effect.map((q.handler as any)(req.value), (_) => (_ as any).body), { signal })
-            .catch((_) => {
-              if (!Runtime.isFiberFailure(_)) throw _
-              const cause = _[Runtime.FiberFailureCauseId]
-              throw Cause.squash(cause)
-            })
       }
   )
 
