@@ -121,8 +121,7 @@ export const useSafeQuery_ = <I, A, E>(
         queryKey,
         queryFn: ({ signal }) =>
           run
-            .value(q.handler as any, { signal })
-            .then((_) => (_ as any).body)
+            .value(Effect.map(q.handler as any, (_) => (_ as any).body), { signal })
             .catch((_) => {
               if (!Runtime.isFiberFailure(_)) throw _
               const cause = _[Runtime.FiberFailureCauseId]
@@ -134,8 +133,7 @@ export const useSafeQuery_ = <I, A, E>(
         queryKey: [...queryKey, req],
         queryFn: ({ signal }) =>
           run
-            .value((q.handler as any)(req.value), { signal })
-            .then((_) => (_ as any).body)
+            .value(Effect.map((q.handler as any)(req.value), (_) => (_ as any).body), { signal })
             .catch((_) => {
               if (!Runtime.isFiberFailure(_)) throw _
               const cause = _[Runtime.FiberFailureCauseId]

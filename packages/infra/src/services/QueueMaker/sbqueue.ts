@@ -174,7 +174,10 @@ export function makeServiceBusQueue<
                 )
             )
           })
-          .pipe(Effect.withSpan("queue.publish: " + queueName, { kind: "producer" }))
+          .pipe(Effect.withSpan("queue.publish: " + queueName, {
+            kind: "producer",
+            attributes: { "message_tags": messages.map((_) => _._tag) }
+          }))
     } satisfies QueueBase<Evt, DrainEvt>
   })
 }

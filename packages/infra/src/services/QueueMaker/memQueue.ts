@@ -53,7 +53,12 @@ export function makeMemQueue<
                   ), { discard: true })
             )
           })
-          .pipe(Effect.withSpan("queue.publish: " + queueName, { kind: "producer" })),
+          .pipe(
+            Effect.withSpan("queue.publish: " + queueName, {
+              kind: "producer",
+              attributes: { "message_tags": messages.map((_) => _._tag) }
+            })
+          ),
       drain: <DrainE, DrainR>(
         handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>,
         sessionId?: string
