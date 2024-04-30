@@ -1,4 +1,4 @@
-import type { ServiceBusError } from "@azure/service-bus"
+import type {} from "@azure/service-bus"
 import {
   LiveSender,
   LiveServiceBusClient,
@@ -8,14 +8,14 @@ import {
 } from "@effect-app/infra-adapters/ServiceBus"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { Tracer } from "effect"
-import { Cause, Deferred, Effect, flow, Layer, Option, S } from "effect-app"
+import { Cause, Effect, flow, Layer, Option, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import type { StringId } from "effect-app/schema"
 import { NonEmptyString255 } from "effect-app/schema"
 import { pretty } from "effect-app/utils"
 import { setupRequestContext } from "../../api/setupRequest.js"
 import { RequestContextContainer } from "../RequestContextContainer.js"
-import { reportFatalQueueError, reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
+import { reportNonInterruptedFailure, reportNonInterruptedFailureCause, reportQueueError } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
 /**
@@ -48,7 +48,7 @@ export function makeServiceBusQueue<
 
     // TODO: or do async?
     // This will make sure that the host receives the error (MainFiberSet.join), who will then interrupt everything and commence a shutdown and restart of app
-    const deferred = yield* $(Deferred.make<never, ServiceBusError | Error>())
+    // const deferred = yield* $(Deferred.make<never, ServiceBusError | Error>())
 
     return {
       drain: <DrainE, DrainR>(
@@ -135,17 +135,18 @@ export function makeServiceBusQueue<
             return yield* $(
               subscribe({
                 processMessage: (x) => processMessage(x.body).pipe(Effect.uninterruptible),
-                processError: (err) =>
-                  Deferred.completeWith(
-                    deferred,
-                    reportFatalQueueError(Cause.fail(err.error))
-                      .pipe(Effect.andThen(Effect.fail(err.error)))
-                  )
+                processError: (err) => reportQueueError(Cause.fail(err.error))
+                // Deferred.completeWith(
+                //   deferred,
+                //   reportFatalQueueError(Cause.fail(err.error))
+                //     .pipe(Effect.andThen(Effect.fail(err.error)))
+                // )
               }, sessionId)
                 .pipe(Effect.provideService(ServiceBusReceiverFactory, receiver))
             )
           })
-          .pipe(Effect.andThen(Deferred.await(deferred).pipe(Effect.orDie))),
+          // .pipe(Effect.andThen(Deferred.await(deferred).pipe(Effect.orDie))),
+          .pipe(Effect.andThen(Effect.never)),
 
       publish: (...messages) =>
         Effect
