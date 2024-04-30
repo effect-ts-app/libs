@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.3.3
+
+### Patch Changes
+
+- fix zero length filter cosmos
+
 ## 1.3.2
 
 ### Patch Changes

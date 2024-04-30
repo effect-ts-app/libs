@@ -180,7 +180,7 @@ export function buildWhereCosmosQuery3(
         .join("\n")
     }
 
-    WHERE f.id != @id ${filter.length ? `AND (${print(filter)}` : ""})
+    WHERE f.id != @id ${filter.length ? `AND (${print(filter)})` : ""}
     ${order ? `ORDER BY ${order.map((_) => `f.${_.key} ${_.direction}`).join(", ")}` : ""}
     ${skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""}`,
     parameters: [
