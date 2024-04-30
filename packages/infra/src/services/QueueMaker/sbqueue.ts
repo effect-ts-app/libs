@@ -6,17 +6,16 @@ import {
   ServiceBusReceiverFactory,
   subscribe
 } from "@effect-app/infra-adapters/ServiceBus"
-import { captureException } from "@effect-app/infra/errorReporter"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { Tracer } from "effect"
-import { Deferred, Effect, flow, Layer, Option, S } from "effect-app"
+import { Cause, Deferred, Effect, flow, Layer, Option, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import type { StringId } from "effect-app/schema"
 import { NonEmptyString255 } from "effect-app/schema"
 import { pretty } from "effect-app/utils"
 import { setupRequestContext } from "../../api/setupRequest.js"
 import { RequestContextContainer } from "../RequestContextContainer.js"
-import { reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
+import { reportFatalQueueError, reportNonInterruptedFailure, reportNonInterruptedFailureCause } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
 /**
@@ -139,8 +138,7 @@ export function makeServiceBusQueue<
                 processError: (err) =>
                   Deferred.completeWith(
                     deferred,
-                    Effect
-                      .sync(() => captureException(err.error))
+                    reportFatalQueueError(Cause.fail(err.error))
                       .pipe(Effect.andThen(Effect.fail(err.error)))
                   )
               }, sessionId)
