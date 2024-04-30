@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.3.1
+
+### Patch Changes
+
+- 4f8177a: better fatalqueue error report
+
 ## 1.3.0
 
 ### Minor Changes
