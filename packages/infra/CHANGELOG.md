@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.3.2
+
+### Patch Changes
+
+- 6dc1258: remove deferred
+
 ## 1.3.1
 
 ### Patch Changes
