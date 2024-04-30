@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.3.5
+
+### Patch Changes
+
+- 6c18162: include spans with logs
+
 ## 1.3.4
 
 ### Patch Changes

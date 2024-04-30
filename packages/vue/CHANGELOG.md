@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.3.2
+
+### Patch Changes
+
+- 6c18162: include spans with logs
+- Updated dependencies [6c18162]
+  - @effect-app/vue@1.3.2
+
 ## 1.3.1
 
 ### Patch Changes
