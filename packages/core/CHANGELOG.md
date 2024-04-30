@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.1.1
+
+### Patch Changes
+
+- 132bbc4: simply effect
+
 ## 1.1.0
 
 ### Minor Changes
