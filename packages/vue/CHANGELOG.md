@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 1.3.0
+
+### Minor Changes
+
+- 2e29520: update packages
+
+### Patch Changes
+
+- Updated dependencies [2e29520]
+  - effect-app@1.2.0
+  - @effect-app/schema@1.1.0
+  - @effect-app/core@1.1.0
+  - @effect-app/vue@1.3.0
+
 ## 1.2.1
 
 ### Patch Changes
