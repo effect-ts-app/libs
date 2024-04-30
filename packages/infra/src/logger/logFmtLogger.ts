@@ -18,4 +18,4 @@ export const logfmtLogger = Logger.make<unknown, void>(
   }
 )
 
-export const logFmt = Logger.replace(Logger.defaultLogger, logfmtLogger)
+export const logFmt = Logger.replace(Logger.defaultLogger, Logger.withSpanAnnotations(logfmtLogger))

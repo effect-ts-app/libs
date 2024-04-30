@@ -28,4 +28,4 @@ export const jsonLogger = Logger.make<unknown, void>(
   }
 )
 
-export const logJson = Logger.replace(Logger.defaultLogger, jsonLogger)
+export const logJson = Logger.replace(Logger.defaultLogger, Logger.withSpanAnnotations(jsonLogger))
