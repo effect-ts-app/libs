@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 1.2.1
+
+### Patch Changes
+
+- 4dba4a5: add annotateSpanWithError
+- Updated dependencies [4dba4a5]
+  - effect-app@1.1.1
+  - @effect-app/vue@1.2.1
+
 ## 1.2.0
 
 ### Minor Changes

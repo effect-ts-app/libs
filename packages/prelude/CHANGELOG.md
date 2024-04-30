@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.1.1
+
+### Patch Changes
+
+- 4dba4a5: add annotateSpanWithError
+
 ## 1.1.0
 
 ### Minor Changes

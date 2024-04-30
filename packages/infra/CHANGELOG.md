@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 1.2.4
+
+### Patch Changes
+
+- 4dba4a5: add annotateSpanWithError
+- Updated dependencies [4dba4a5]
+  - effect-app@1.1.1
+  - @effect-app/infra-adapters@1.0.18
+
 ## 1.2.3
 
 ### Patch Changes
