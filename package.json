@@ -6,9 +6,9 @@
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "typescript@5.4.5": "patches/typescript@5.4.5.patch",
-      "effect@3.0.7": "patches/effect@3.0.7.patch",
-      "@effect/schema@0.66.10": "patches/@effect__schema@0.66.10.patch",
-      "@effect/platform@0.50.7": "patches/@effect__platform@0.50.7.patch"
+      "effect@3.1.0": "patches/effect@3.1.0.patch",
+      "@effect/schema@0.66.12": "patches/@effect__schema@0.66.12.patch",
+      "@effect/platform@0.51.0": "patches/@effect__platform@0.51.0.patch"
     }
   },
   "engines": {
@@ -54,20 +54,20 @@
     "cross-env": "^7.0.3",
     "fast-check": "^3.18.0",
     "ts-node": "^10.9.2",
-    "vue": "^3.4.25"
+    "vue": "^3.4.26"
   },
   "devDependencies": {
-    "@babel/cli": "^7.24.1",
-    "@babel/core": "^7.24.4",
+    "@babel/cli": "^7.24.5",
+    "@babel/core": "^7.24.5",
     "@babel/plugin-syntax-import-attributes": "^7.24.1",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.90.4",
-    "effect": "^3.0.7",
-    "@effect/platform": "^0.50.7",
-    "@effect/platform-node": "^0.47.7",
-    "@effect/schema": "^0.66.10",
+    "effect": "^3.1.0",
+    "@effect/platform": "^0.51.0",
+    "@effect/platform-node": "^0.48.0",
+    "@effect/schema": "^0.66.12",
     "@effect-app/cli": "^0.72.1",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
@@ -81,9 +81,9 @@
     "@tsconfig/strictest": "^2.0.5",
     "@types/lodash": "^4.17.0",
     "@types/node": "~20.12.7",
-    "@typescript-eslint/eslint-plugin": "7.7.1",
-    "@typescript-eslint/parser": "7.7.1",
-    "@typescript-eslint/scope-manager": "7.7.1",
+    "@typescript-eslint/eslint-plugin": "7.8.0",
+    "@typescript-eslint/parser": "7.8.0",
+    "@typescript-eslint/scope-manager": "7.8.0",
     "babel-plugin-replace-import-extension": "^1.1.4",
     "concurrently": "^8.2.2",
     "dprint": "^0.45.1",

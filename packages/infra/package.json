@@ -24,7 +24,7 @@
     "redlock": "^4.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.24.1",
+    "@babel/cli": "^7.24.5",
     "@sentry/node": "^7.112.2",
     "@types/express": "^4.17.21",
     "@types/node": "~20.12.7",
@@ -42,9 +42,9 @@
   },
   "peerDependencies": {
     "express": "^4.19.2",
-    "@effect/platform": "^0.50.7",
-    "@effect/schema": "^0.66.10",
-    "effect": "^3.0.7"
+    "@effect/platform": "^0.51.0",
+    "@effect/schema": "^0.66.12",
+    "effect": "^3.1.0"
   },
   "typesVersions": {
     "*": {
