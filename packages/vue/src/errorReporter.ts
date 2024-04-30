@@ -2,24 +2,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/browser"
-import { Cause, Effect, Predicate } from "effect-app"
-import { CauseException, ErrorReported } from "effect-app/client/errors"
+import { Cause, Effect } from "effect-app"
+import { annotateSpanWithError, CauseException, ErrorReported } from "effect-app/client/errors"
 
 export function reportError(
   name: string
 ) {
   return (cause: Cause<unknown>, extras?: Record<string, unknown>) =>
     Effect.gen(function*($) {
-      yield* $(Effect.annotateCurrentSpan({
-        "exception.escaped": true,
-        "exception.message": "Reported error for " + name,
-        "exception.stacktrace": Cause.pretty(cause),
-        "exception.type": Cause.squashWith(
-          cause,
-          (_) => Predicate.hasProperty(_, "_tag") ? _._tag : Predicate.hasProperty(_, "name") ? _.name : `${_}`
-        ),
-        "error.type": cause._tag
-      }))
+      yield* $(annotateSpanWithError(cause, name))
       if (Cause.isInterrupted(cause)) {
         yield* $(Effect.logDebug("Interrupted").pipe(Effect.annotateLogs("extras", JSON.stringify(extras ?? {}))))
         return Cause.squash(cause)

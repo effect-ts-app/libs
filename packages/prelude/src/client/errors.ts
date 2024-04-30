@@ -1,6 +1,6 @@
 import { TaggedError } from "effect-app/schema"
 import { makeFiberFailure } from "effect/Runtime"
-import { Cause, S } from "../lib.js"
+import { Cause, Effect, Predicate, S } from "../lib.js"
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 // @ts-expect-error type not used
@@ -161,3 +161,15 @@ export class CauseException<E> extends Error {
 
   [ErrorReported] = false
 }
+
+export const annotateSpanWithError = (cause: Cause<unknown>, name?: string) =>
+  Effect.annotateCurrentSpan({
+    "exception.escaped": true,
+    "exception.message": "Reported error for " + name ?? cause._tag,
+    "exception.stacktrace": Cause.pretty(cause),
+    "exception.type": Cause.squashWith(
+      cause,
+      (_) => Predicate.hasProperty(_, "_tag") ? _._tag : Predicate.hasProperty(_, "name") ? _.name : `${_}`
+    ),
+    "error.type": cause._tag
+  })

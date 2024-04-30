@@ -1,7 +1,7 @@
 import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/node"
-import { Cause, Effect, Option, Predicate } from "effect-app"
-import { CauseException, ErrorReported } from "./errors.js"
+import { Cause, Effect, Option } from "effect-app"
+import { annotateSpanWithError, CauseException, ErrorReported } from "./errors.js"
 import { RequestContextContainer } from "./services/RequestContextContainer.js"
 
 export function reportError(
@@ -9,16 +9,7 @@ export function reportError(
 ) {
   return (cause: Cause<unknown>, extras?: Record<string, unknown>) =>
     Effect.gen(function*($) {
-      yield* $(Effect.annotateCurrentSpan({
-        "exception.escaped": true,
-        "exception.message": "Reported error for " + name,
-        "exception.stacktrace": Cause.pretty(cause),
-        "exception.type": Cause.squashWith(
-          cause,
-          (_) => Predicate.hasProperty(_, "_tag") ? _._tag : Predicate.hasProperty(_, "name") ? _.name : `${_}`
-        ),
-        "error.type": cause._tag
-      }))
+      yield* $(annotateSpanWithError(cause, name))
       if (Cause.isInterrupted(cause)) {
         yield* $(Effect.logDebug("Interrupted").pipe(Effect.annotateLogs("extras", JSON.stringify(extras ?? {}))))
         return
