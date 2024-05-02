@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 1.3.3
+
+### Patch Changes
+
+- 128f636: update packages
+- Updated dependencies [128f636]
+  - effect-app@1.2.2
+  - @effect-app/schema@1.1.2
+  - @effect-app/core@1.1.2
+  - @effect-app/vue@1.3.3
+
 ## 1.3.2
 
 ### Patch Changes

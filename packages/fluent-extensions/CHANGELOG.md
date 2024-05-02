@@ -1,5 +1,13 @@
 # @effect-app/fluent-extensions
 
+## 1.1.2
+
+### Patch Changes
+
+- 128f636: update packages
+- Updated dependencies [128f636]
+  - @effect-app/core@1.1.2
+
 ## 1.1.1
 
 ### Patch Changes
