@@ -17,11 +17,11 @@
     "fast-check": "~3.18.0",
     "ts-toolbelt": "^9.6.0",
     "typescript": "^5.4.5",
-    "vitest": "^1.5.2"
+    "vitest": "^1.5.3"
   },
   "peerDependencies": {
-    "@effect/schema": "^0.66.12",
-    "effect": "^3.1.0"
+    "@effect/schema": "^0.66.13",
+    "effect": "^3.1.1"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

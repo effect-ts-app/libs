@@ -666,7 +666,7 @@ index 0000000000000000000000000000000000000000..ef33f5fdb1a491789756df94765013a8
 +  "sideEffects": []
 +}
 diff --git a/package.json b/package.json
-index c8f6d07d82ce5cd8ba1b9fea8b5ca5fc041cb28b..4f2279fd48397b92b61b3fda068b07703d3b8580 100644
+index 975cb0bf2a47b054136d418f85db2b1ed8c93ff1..67c0aeea28c6a13260ad312d859bc8268ccce6f7 100644
 --- a/package.json
 +++ b/package.json
 @@ -8,7 +8,12 @@

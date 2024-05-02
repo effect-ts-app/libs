@@ -120,6 +120,7 @@ export function makeRequestHandler<
   HttpServerResponse.ServerResponse,
   HttpServerError.RequestError,
   | HttpRouter.RouteContext
+  | HttpServerRequest.ParsedSearchParams
   | HttpServerRequest.ServerRequest
   | RequestContextContainer
   | ContextMapContainer
@@ -151,16 +152,17 @@ export function makeRequestHandler<
     Effect
       .all({
         rcx: HttpRouter.RouteContext,
+        searchParms: HttpServerRequest.ParsedSearchParams,
         req: Effect.flatMap(
           HttpServerRequest.ServerRequest,
           (req) => req.json.pipe(Effect.map((body) => ({ body, headers: req.headers })))
         )
       }),
     (
-      { rcx, req }
+      { rcx, req, searchParms }
     ) => ({
       params: rcx.params,
-      query: rcx.searchParams,
+      query: searchParms,
       body: req.body,
       headers: req.headers,
       cookies: {} // req.cookies

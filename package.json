@@ -6,9 +6,9 @@
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "typescript@5.4.5": "patches/typescript@5.4.5.patch",
-      "effect@3.1.0": "patches/effect@3.1.0.patch",
-      "@effect/schema@0.66.12": "patches/@effect__schema@0.66.12.patch",
-      "@effect/platform@0.51.0": "patches/@effect__platform@0.51.0.patch"
+      "effect@3.1.1": "patches/effect@3.1.1.patch",
+      "@effect/schema@0.66.13": "patches/@effect__schema@0.66.13.patch",
+      "@effect/platform@0.52.1": "patches/@effect__platform@0.52.1.patch"
     }
   },
   "engines": {
@@ -64,11 +64,11 @@
     "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.90.4",
-    "effect": "^3.1.0",
-    "@effect/platform": "^0.51.0",
-    "@effect/platform-node": "^0.48.0",
-    "@effect/schema": "^0.66.12",
-    "@effect-app/cli": "^0.72.1",
+    "effect": "^3.1.1",
+    "@effect/platform": "^0.52.1",
+    "@effect/platform-node": "^0.48.2",
+    "@effect/schema": "^0.66.13",
+    "@effect-app/cli": "^0.73.0",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
     "@effect-app/infra": "workspace:*",
@@ -80,7 +80,7 @@
     "@phaphoso/eslint-plugin-dprint": "^0.5.2",
     "@tsconfig/strictest": "^2.0.5",
     "@types/lodash": "^4.17.0",
-    "@types/node": "~20.12.7",
+    "@types/node": "~20.12.8",
     "@typescript-eslint/eslint-plugin": "7.8.0",
     "@typescript-eslint/parser": "7.8.0",
     "@typescript-eslint/scope-manager": "7.8.0",
@@ -96,7 +96,7 @@
     "eslint-plugin-prettier-vue": "^5.0.0",
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "eslint-plugin-sort-destructure-keys": "^2.0.0",
-    "eslint-plugin-unused-imports": "^3.1.0",
+    "eslint-plugin-unused-imports": "^3.2.0",
     "eslint-watch": "^8.0.0",
     "history": "^5.3.0",
     "json5": "^2.2.3",
@@ -107,11 +107,11 @@
     "ts-transform-paths": "^3.0.0",
     "tsc-watch": "^6.2.0",
     "tsconfig-paths": "^4.2.0",
-    "tsx": "^4.7.3",
+    "tsx": "^4.8.2",
     "typescript": "^5.4.5",
     "typescript-transform-paths": "^3.4.7",
     "unplugin-auto-import": "^0.17.5",
-    "vite": "^5.2.10",
-    "vitest": "^1.5.2"
+    "vite": "^5.2.11",
+    "vitest": "^1.5.3"
   }
 }
