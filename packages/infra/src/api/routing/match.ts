@@ -114,7 +114,9 @@ export function match<
     const route = HttpRouter.makeRoute(
       requestHandler.Request.method,
       requestHandler.Request.path,
-      handler
+      handler,
+      undefined,
+      requestHandler.Request.method !== "GET" // we don't want commands to be interruptible
     )
     // TODO
     // rdesc.push(makeRouteDescriptor(

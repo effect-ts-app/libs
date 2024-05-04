@@ -170,178 +170,173 @@ export function makeRequestHandler<
   )
 
   return Effect
-    .uninterruptibleMask((restore) =>
-      Effect
-        .gen(function*($) {
-          const req = yield* $(HttpServerRequest.ServerRequest)
-          const res = HttpServerResponse
-            .empty()
-            .pipe((_) => req.method === "GET" ? HttpServerResponse.setHeader(_, "Cache-Control", "no-store") : _)
+    .gen(function*($) {
+      const req = yield* $(HttpServerRequest.ServerRequest)
+      const res = HttpServerResponse
+        .empty()
+        .pipe((_) => req.method === "GET" ? HttpServerResponse.setHeader(_, "Cache-Control", "no-store") : _)
 
-          const pars = yield* $(getParams)
+      const pars = yield* $(getParams)
 
-          const settings = yield* $(FiberRef.get(RequestSettings))
+      const settings = yield* $(FiberRef.get(RequestSettings))
 
-          const eff =
-            // TODO: we don;t have access to user id here cause context is not yet created
+      const eff =
+        // TODO: we don;t have access to user id here cause context is not yet created
+        Effect
+          .logInfo("Incoming request")
+          .pipe(
+            Effect.annotateLogs({
+              method: req.method,
+              path: req.originalUrl,
+              ...(settings.verbose
+                ? {
+                  reqPath: pretty(pars.params),
+                  reqQuery: pretty(pars.query),
+                  reqBody: pretty(pars.body),
+                  reqCookies: pretty(pars.cookies),
+                  reqHeaders: pretty(pars.headers)
+                }
+                : undefined)
+            }),
             Effect
-              .logInfo("Incoming request")
-              .pipe(
-                Effect.annotateLogs({
-                  method: req.method,
-                  path: req.originalUrl,
-                  ...(settings.verbose
-                    ? {
-                      reqPath: pretty(pars.params),
-                      reqQuery: pretty(pars.query),
-                      reqBody: pretty(pars.body),
-                      reqCookies: pretty(pars.cookies),
-                      reqHeaders: pretty(pars.headers)
-                    }
-                    : undefined)
-                }),
-                Effect
-                  .andThen(
-                    Effect.suspend(() => {
-                      const handleRequest = parseRequest(pars)
-                        .pipe(
-                          Effect.map(({ body, path, query }) => {
-                            const hn = {
-                              ...body.pipe(Option.getOrUndefined) ?? {},
-                              ...query.pipe(Option.getOrUndefined) ?? {},
-                              ...path.pipe(Option.getOrUndefined) ?? {}
-                            } as unknown as ReqA
-                            return hn
-                          }),
-                          Effect.tap((parsedReq) =>
-                            Effect.annotateCurrentSpan(
-                              "requestInput",
-                              Object.entries(parsedReq).reduce((prev, [key, value]: [string, unknown]) => {
-                                prev[key] = key === "password"
-                                  ? "<redacted>"
-                                  : typeof value === "string" || typeof value === "number" || typeof value === "boolean"
-                                  ? typeof value === "string" && value.length > 256
-                                    ? (value.substring(0, 253) + "...")
-                                    : value
-                                  : Array.isArray(value)
-                                  ? `Array[${value.length}]`
-                                  : value === null || value === undefined
-                                  ? `${value}`
-                                  : typeof value === "object" && value
-                                  ? `Object[${Object.keys(value).length}]`
-                                  : typeof value
-                                return prev
-                              }, {} as Record<string, string | number | boolean>)
-                            )
-                          ),
-                          Effect.flatMap((parsedReq) =>
-                            handle(parsedReq)
-                              .pipe(
-                                Effect.provideService(handler.Request.Tag, parsedReq as any),
-                                Effect.flatMap(encoder),
-                                Effect
-                                  .map((r) =>
-                                    res.pipe(
-                                      HttpServerResponse.setBody(HttpBody.unsafeJson(r)),
-                                      HttpServerResponse.setStatus(r === undefined ? 204 : 200)
-                                    )
-                                  )
+              .andThen(
+                Effect.suspend(() => {
+                  const handleRequest = parseRequest(pars)
+                    .pipe(
+                      Effect.map(({ body, path, query }) => {
+                        const hn = {
+                          ...body.pipe(Option.getOrUndefined) ?? {},
+                          ...query.pipe(Option.getOrUndefined) ?? {},
+                          ...path.pipe(Option.getOrUndefined) ?? {}
+                        } as unknown as ReqA
+                        return hn
+                      }),
+                      Effect.tap((parsedReq) =>
+                        Effect.annotateCurrentSpan(
+                          "requestInput",
+                          Object.entries(parsedReq).reduce((prev, [key, value]: [string, unknown]) => {
+                            prev[key] = key === "password"
+                              ? "<redacted>"
+                              : typeof value === "string" || typeof value === "number" || typeof value === "boolean"
+                              ? typeof value === "string" && value.length > 256
+                                ? (value.substring(0, 253) + "...")
+                                : value
+                              : Array.isArray(value)
+                              ? `Array[${value.length}]`
+                              : value === null || value === undefined
+                              ? `${value}`
+                              : typeof value === "object" && value
+                              ? `Object[${Object.keys(value).length}]`
+                              : typeof value
+                            return prev
+                          }, {} as Record<string, string | number | boolean>)
+                        )
+                      ),
+                      Effect.flatMap((parsedReq) =>
+                        handle(parsedReq)
+                          .pipe(
+                            Effect.provideService(handler.Request.Tag, parsedReq as any),
+                            Effect.flatMap(encoder),
+                            Effect
+                              .map((r) =>
+                                res.pipe(
+                                  HttpServerResponse.setBody(HttpBody.unsafeJson(r)),
+                                  HttpServerResponse.setStatus(r === undefined ? 204 : 200)
+                                )
                               )
                           )
-                        ) as Effect<
-                          HttpServerResponse.ServerResponse,
-                          ValidationError | ResE,
-                          Exclude<R, EnforceNonEmptyRecord<M>>
-                        >
-
-                      // Commands should not be interruptable.
-                      const r = req.method !== "GET" ? Effect.uninterruptible(handleRequest) : restore(handleRequest) // .instrument("Performance.RequestResponse")
-                      const r2 = middlewareLayer
-                        ? Effect.provide(r, middlewareLayer)
-                        // PR is not relevant here
-                        : (r as Effect<
-                          HttpServerResponse.ServerResponse,
-                          ResE | MiddlewareE | ValidationError,
-                          Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>
-                        >)
-                      return errorHandler(
-                        req,
-                        res,
-                        r2.pipe(Effect.andThen(RequestFiberSet.register))
                       )
-                    })
-                  ),
-                Effect
-                  .catchAllCause((cause) =>
-                    Effect
-                      .sync(() => HttpServerResponse.setStatus(res, 500))
-                      .pipe(Effect
-                        .tap((res) =>
-                          Effect
-                            .all([
-                              reportError("request")(cause, {
-                                path: req.originalUrl,
-                                method: req.method
-                              }),
-                              Effect.suspend(() => {
-                                const headers = res.headers
-                                return Effect
-                                  .logError("Finished request", cause)
-                                  .pipe(Effect.annotateLogs({
-                                    method: req.method,
-                                    path: req.originalUrl,
-                                    statusCode: res.status.toString(),
+                    ) as Effect<
+                      HttpServerResponse.ServerResponse,
+                      ValidationError | ResE,
+                      Exclude<R, EnforceNonEmptyRecord<M>>
+                    >
 
-                                    reqPath: pretty(pars.params),
-                                    reqQuery: pretty(pars.query),
-                                    reqBody: pretty(pars.body),
-                                    reqCookies: pretty(pars.cookies),
-                                    reqHeaders: pretty(pars.headers),
-
-                                    resHeaders: pretty(
-                                      Object
-                                        .entries(headers)
-                                        .reduce((prev, [key, value]) => {
-                                          prev[key] = value && typeof value === "string" ? snipString(value) : value
-                                          return prev
-                                        }, {} as Record<string, any>)
-                                    )
-                                  }))
-                              })
-                            ], { concurrency: "inherit" })
-                        ))
-                      .pipe(
-                        Effect.tapErrorCause((cause) => Console.error("Error occurred while reporting error", cause))
-                      )
-                  ),
-                Effect
-                  .tap((res) =>
-                    Effect
-                      .logInfo("Finished request")
-                      .pipe(Effect.annotateLogs({
-                        method: req.method,
-                        path: req.originalUrl,
-                        statusCode: res.status.toString(),
-                        ...(settings.verbose
-                          ? {
-                            resHeaders: pretty(res.headers)
-                          }
-                          : undefined)
-                      }))
+                  const r = middlewareLayer
+                    ? Effect.provide(handleRequest, middlewareLayer)
+                    // PR is not relevant here
+                    : (handleRequest as Effect<
+                      HttpServerResponse.ServerResponse,
+                      ResE | MiddlewareE | ValidationError,
+                      Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>
+                    >)
+                  return errorHandler(
+                    req,
+                    res,
+                    r.pipe(Effect.andThen(RequestFiberSet.register))
                   )
-              )
+                })
+              ),
+            Effect
+              .catchAllCause((cause) =>
+                Effect
+                  .sync(() => HttpServerResponse.setStatus(res, 500))
+                  .pipe(Effect
+                    .tap((res) =>
+                      Effect
+                        .all([
+                          reportError("request")(cause, {
+                            path: req.originalUrl,
+                            method: req.method
+                          }),
+                          Effect.suspend(() => {
+                            const headers = res.headers
+                            return Effect
+                              .logError("Finished request", cause)
+                              .pipe(Effect.annotateLogs({
+                                method: req.method,
+                                path: req.originalUrl,
+                                statusCode: res.status.toString(),
 
-          return yield* $(eff)
-        })
-        .pipe((_) =>
-          updateRequestContext(
-            _,
-            copy((_) => ({
-              name: NonEmptyString255(
-                handler.name
+                                reqPath: pretty(pars.params),
+                                reqQuery: pretty(pars.query),
+                                reqBody: pretty(pars.body),
+                                reqCookies: pretty(pars.cookies),
+                                reqHeaders: pretty(pars.headers),
+
+                                resHeaders: pretty(
+                                  Object
+                                    .entries(headers)
+                                    .reduce((prev, [key, value]) => {
+                                      prev[key] = value && typeof value === "string" ? snipString(value) : value
+                                      return prev
+                                    }, {} as Record<string, any>)
+                                )
+                              }))
+                          })
+                        ], { concurrency: "inherit" })
+                    ))
+                  .pipe(
+                    Effect.tapErrorCause((cause) => Console.error("Error occurred while reporting error", cause))
+                  )
+              ),
+            Effect
+              .tap((res) =>
+                Effect
+                  .logInfo("Finished request")
+                  .pipe(Effect.annotateLogs({
+                    method: req.method,
+                    path: req.originalUrl,
+                    statusCode: res.status.toString(),
+                    ...(settings.verbose
+                      ? {
+                        resHeaders: pretty(res.headers)
+                      }
+                      : undefined)
+                  }))
               )
-            }))
           )
-        )
+
+      return yield* $(eff)
+    })
+    .pipe((_) =>
+      updateRequestContext(
+        _,
+        copy((_) => ({
+          name: NonEmptyString255(
+            handler.name
+          )
+        }))
+      )
     )
 }
