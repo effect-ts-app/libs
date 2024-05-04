@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.1.3
+
+### Patch Changes
+
+- 3411e78: update packages
+
 ## 1.1.2
 
 ### Patch Changes

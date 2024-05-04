@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 1.3.7
+
+### Patch Changes
+
+- 3411e78: update packages
+- Updated dependencies [3411e78]
+  - @effect-app/infra-adapters@1.1.3
+  - effect-app@1.2.3
+  - @effect-app/schema@1.1.3
+  - @effect-app/core@1.1.3
+
 ## 1.3.6
 
 ### Patch Changes
