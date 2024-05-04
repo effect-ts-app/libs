@@ -15,16 +15,16 @@
     "@types/express": "^4.17.21",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.7",
-    "mongodb": "6.5.0",
+    "mongodb": "6.6.0",
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
     "strip-ansi": "^7.1.0",
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.52.1",
-    "@effect/schema": "^0.66.13",
-    "effect": "^3.1.1"
+    "@effect/platform": "^0.52.2",
+    "@effect/schema": "^0.66.14",
+    "effect": "^3.1.2"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

@@ -68,7 +68,6 @@ export interface QueryRequest<
   S.Class<
     M,
     Fields,
-    Simplify<Struct.Type<Fields>>,
     Simplify<Struct.Encoded<Fields>>,
     never,
     Simplify<S.Struct.Constructor<Fields>>,
@@ -99,7 +98,6 @@ export interface BodyRequest<
   S.Class<
     M,
     Fields,
-    Simplify<Struct.Type<Fields>>,
     Simplify<Struct.Encoded<Fields>>,
     never,
     Simplify<S.Struct.Constructor<Fields>>,
@@ -513,7 +511,6 @@ export interface Request<
   S.Class<
     M,
     Fields,
-    Simplify<Struct.Type<Fields>>,
     Simplify<Struct.Encoded<Fields>>,
     never,
     Simplify<Struct.Type<Fields>>,

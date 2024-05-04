@@ -15,7 +15,7 @@ type _OptionalKeys<O> = {
 
 type FilterOptionalKeys<A> = Omit<A, _OptionalKeys<A>>
 
-export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, Inherited, Proto>
+export interface EnhancedClass<Self, Fields extends Struct.Fields, I, R, C, Inherited, Proto>
   extends Schema<Self, I, R>, PropsExtensions<Fields>
 {
   new(
@@ -23,7 +23,7 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, I
       : Types.Equals<FilterOptionalKeys<C>, {}> extends true ? void | C
       : C,
     disableValidation?: boolean | undefined
-  ): A & Omit<Inherited, keyof A> & Proto
+  ): Struct.Type<Fields> & Omit<Inherited, keyof Fields> & Proto
 
   readonly fields: Simplify<Fields>
 
@@ -34,7 +34,6 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, I
     : EnhancedClass<
       Extended,
       Fields & newFields,
-      Simplify<A & Struct.Type<newFields>>,
       Simplify<I & Struct.Encoded<newFields>>,
       R | Struct.Context<newFields>,
       Simplify<C & S.Struct.Constructor<newFields>>,
@@ -50,25 +49,24 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, I
     fields: newFields,
     options: {
       readonly decode: (
-        input: A,
+        input: Types.Simplify<Struct.Type<Fields>>,
         options: ParseOptions,
         ast: AST.Transformation
-      ) => Effect.Effect<Types.Simplify<A & Struct.Type<newFields>>, ParseResult.ParseIssue, R2>
+      ) => Effect.Effect<Types.Simplify<Struct.Type<Fields & newFields>>, ParseResult.ParseIssue, R2>
       readonly encode: (
-        input: Types.Simplify<A & Struct.Type<newFields>>,
+        input: Types.Simplify<Struct.Type<Fields & newFields>>,
         options: ParseOptions,
         ast: AST.Transformation
-      ) => Effect.Effect<A, ParseResult.ParseIssue, R3>
+      ) => Effect.Effect<Struct.Type<Fields>, ParseResult.ParseIssue, R3>
     },
     annotations?: S.Annotations.Schema<Transformed>
   ) => [Transformed] extends [never] ? MissingSelfGeneric<"Base.transform">
     : EnhancedClass<
       Transformed,
       Fields & newFields,
-      Simplify<A & Struct.Type<newFields>>,
       I,
       R | Struct.Context<newFields> | R2 | R3,
-      Simplify<C & S.Struct.Constructor<newFields>>,
+      C & Struct.Constructor<newFields>,
       Self,
       Proto
     >
@@ -81,7 +79,7 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, I
     fields: newFields,
     options: {
       readonly decode: (
-        input: I,
+        input: Types.Simplify<I>,
         options: ParseOptions,
         ast: AST.Transformation
       ) => Effect.Effect<Types.Simplify<I & Struct.Encoded<newFields>>, ParseResult.ParseIssue, R2>
@@ -96,7 +94,6 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, A, I, R, C, I
     : EnhancedClass<
       Transformed,
       Fields & newFields,
-      Simplify<A & Struct.Type<newFields>>,
       I,
       R | Struct.Context<newFields> | R2 | R3,
       Simplify<C & S.Struct.Constructor<newFields>>,
@@ -135,7 +132,6 @@ export const Class: <Self = never>(identifier?: string) => <Fields extends S.Str
   : EnhancedClass<
     Self,
     Fields,
-    Simplify<Struct.Type<Fields>>,
     Simplify<Struct.Encoded<Fields>>,
     Schema.Context<Fields[keyof Fields]>,
     Simplify<S.Struct.Constructor<Fields>>,
@@ -161,7 +157,6 @@ export const TaggedClass: <Self = never>(identifier?: string) => <Tag extends st
   : EnhancedClass<
     Self,
     { readonly "_tag": S.Literal<[Tag]> } & Fields,
-    Simplify<{ readonly _tag: Tag } & Struct.Type<Fields>>,
     Simplify<{ readonly _tag: Tag } & Struct.Encoded<Fields>>,
     Schema.Context<Fields[keyof Fields]>,
     Simplify<S.Struct.Constructor<Fields>>,
@@ -185,7 +180,6 @@ export const ExtendedClass: <Self, SelfFrom>(identifier?: string) => <Fields ext
 ) => EnhancedClass<
   Self,
   Fields,
-  Simplify<Struct.Type<Fields>>,
   SelfFrom,
   Schema.Context<Fields[keyof Fields]>,
   Simplify<S.Struct.Constructor<Fields>>,
@@ -202,7 +196,6 @@ export const ExtendedTaggedClass: <Self, SelfFrom>(
 ) => EnhancedClass<
   Self,
   { readonly "_tag": S.Literal<[Tag]> } & Fields,
-  Simplify<{ readonly _tag: Tag } & Struct.Type<Fields>>,
   SelfFrom,
   Schema.Context<Fields[keyof Fields]>,
   Simplify<S.Struct.Constructor<Fields>>,
