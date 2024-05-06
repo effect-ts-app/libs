@@ -8,7 +8,7 @@
       "typescript@5.4.5": "patches/typescript@5.4.5.patch",
       "effect@3.1.2": "patches/effect@3.1.2.patch",
       "@effect/schema@0.66.14": "patches/@effect__schema@0.66.14.patch",
-      "@effect/platform@0.52.2": "patches/@effect__platform@0.52.2.patch"
+      "@effect/platform@0.52.3": "patches/@effect__platform@0.52.3.patch"
     }
   },
   "engines": {
@@ -63,12 +63,12 @@
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@changesets/cli": "^2.27.1",
-    "@dprint/typescript": "^0.90.4",
+    "@dprint/typescript": "^0.90.5",
     "effect": "^3.1.2",
-    "@effect/platform": "^0.52.2",
-    "@effect/platform-node": "^0.48.3",
+    "@effect/platform": "^0.52.3",
+    "@effect/platform-node": "^0.48.4",
     "@effect/schema": "^0.66.14",
-    "@effect-app/cli": "^0.73.1",
+    "@effect-app/cli": "^0.73.2",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
     "@effect-app/infra": "workspace:*",
@@ -79,7 +79,7 @@
     "@effect/language-service": "0.1.0",
     "@phaphoso/eslint-plugin-dprint": "^0.5.2",
     "@tsconfig/strictest": "^2.0.5",
-    "@types/lodash": "^4.17.0",
+    "@types/lodash": "^4.17.1",
     "@types/node": "~20.12.8",
     "@typescript-eslint/eslint-plugin": "7.8.0",
     "@typescript-eslint/parser": "7.8.0",
@@ -107,7 +107,7 @@
     "ts-transform-paths": "^3.0.0",
     "tsc-watch": "^6.2.0",
     "tsconfig-paths": "^4.2.0",
-    "tsx": "^4.9.0",
+    "tsx": "^4.9.3",
     "typescript": "^5.4.5",
     "typescript-transform-paths": "^3.4.7",
     "unplugin-auto-import": "^0.17.5",
