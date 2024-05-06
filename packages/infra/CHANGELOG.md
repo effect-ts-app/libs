@@ -1,5 +1,13 @@
 # @effect-app/infra
 
+## 1.4.1
+
+### Patch Changes
+
+- Updated dependencies [6335139]
+  - effect-app@1.2.4
+  - @effect-app/infra-adapters@1.1.4
+
 ## 1.4.0
 
 ### Minor Changes

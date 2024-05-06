@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.2.4
+
+### Patch Changes
+
+- 6335139: allow error
+
 ## 1.2.3
 
 ### Patch Changes
