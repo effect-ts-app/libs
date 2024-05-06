@@ -1,10 +1,10 @@
 import { annotateLogscoped, flatMap } from "@effect-app/core/Effect"
 import { dual } from "@effect-app/core/Function"
-import { RequestFiberSet } from "@effect-app/infra-adapters/RequestFiberSet"
+import type { RequestFiberSet } from "@effect-app/infra-adapters/RequestFiberSet"
 import { reportError } from "@effect-app/infra/errorReporter"
-import type { StringId } from "@effect-app/schema"
 import { NonEmptyString2k } from "@effect-app/schema"
 import { subHours } from "date-fns"
+import type { Fiber } from "effect-app"
 import { Cause, Context, copy, Duration, Effect, Exit, Layer, Option, S, Schedule } from "effect-app"
 import type { OperationProgress } from "effect-app/Operations"
 import { Failure, Operation, OperationId, Success } from "effect-app/Operations"
@@ -122,14 +122,19 @@ export class Operations extends Context.TagMakeId("effect-app/Operations", make)
   static readonly Live = this.CleanupLive.pipe(Layer.provideMerge(this.toLayer()))
 }
 
+export interface RunningOperation<A, E> {
+  id: OperationId
+  fiber: Fiber.RuntimeFiber<A, E>
+}
+
 export const forkOperation: {
   (title: NonEmptyString2k): <R, E, A>(
     self: Effect<A, E, R>
-  ) => Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
+  ) => Effect<RunningOperation<A, E>, never, Operations | Exclude<R, Scope.Scope>>
   <R, E, A>(
     self: Effect<A, E, R>,
     title: NonEmptyString2k
-  ): Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
+  ): Effect<RunningOperation<A, E>, never, Operations | Exclude<R, Scope.Scope>>
 } = dual(
   2,
   <R, E, A>(self: Effect<A, E, R>, title: NonEmptyString2k) =>
@@ -141,11 +146,12 @@ export const forkOperation: {
           .pipe(
             Scope.extend(scope),
             Effect
-              .tap(() =>
+              .flatMap((id) =>
                 forkDaemonReportRequestUnexpected(Scope.use(
                   self.pipe(Effect.withSpan(title)),
                   scope
                 ))
+                  .pipe(Effect.map((fiber): RunningOperation<A, E> => ({ fiber, id })))
               )
           )
     )
@@ -158,11 +164,11 @@ export function forkOperationFunction<R, E, A, Inp>(fnc: (inp: Inp) => Effect<A,
 export const forkOperation2: {
   (title: NonEmptyString2k): <R, E, A>(
     self: (opId: OperationId) => Effect<A, E, R>
-  ) => Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
+  ) => Effect<RunningOperation<A, E>, never, Operations | Exclude<R, Scope.Scope>>
   <R, E, A>(
     self: (opId: OperationId) => Effect<A, E, R>,
     title: NonEmptyString2k
-  ): Effect<StringId, never, Operations | Exclude<R, Scope.Scope>>
+  ): Effect<RunningOperation<A, E>, never, Operations | Exclude<R, Scope.Scope>>
 } = dual(
   2,
   <R, E, A>(self: (opId: OperationId) => Effect<A, E, R>, title: NonEmptyString2k) =>
@@ -175,11 +181,12 @@ export const forkOperation2: {
             .pipe(
               Scope.extend(scope),
               Effect
-                .tap((id) =>
+                .flatMap((id) =>
                   forkDaemonReportRequestUnexpected(Scope.use(
                     self(id).pipe(Effect.withSpan(title)),
                     scope
                   ))
+                    .pipe(Effect.map((fiber): RunningOperation<A, E> => ({ fiber, id })))
                 )
             )
       ))
@@ -189,7 +196,11 @@ export function forkOperationWithEffect<R, R2, E, E2, A, A2>(
   self: (id: OperationId) => Effect<A, E, R>,
   fnc: (id: OperationId) => Effect<A2, E2, R2>,
   title: NonEmptyString2k
-): Effect<StringId, never, Operations | RequestFiberSet | Exclude<R, Scope.Scope> | Exclude<R2, Scope.Scope>> {
+): Effect<
+  RunningOperation<A, E>,
+  never,
+  Operations | RequestFiberSet | Exclude<R, Scope.Scope> | Exclude<R2, Scope.Scope>
+> {
   return Effect.flatMap(Operations, (Operations) =>
     Effect.flatMap(
       Scope.make(),
@@ -198,14 +209,15 @@ export function forkOperationWithEffect<R, R2, E, E2, A, A2>(
           .register(title)
           .pipe(
             Scope.extend(scope),
-            Effect.tap((opId) =>
+            Effect.flatMap((id) =>
               forkDaemonReportRequestUnexpected(Scope.use(
-                self(opId).pipe(Effect.withSpan(title)),
+                self(id).pipe(Effect.withSpan(title)),
                 scope
               ))
+                .pipe(Effect.map((fiber): RunningOperation<A, E> => ({ fiber, id })))
             ),
-            Effect.tap((opId) =>
-              Effect.interruptible(fnc(opId)).pipe(
+            Effect.tap(({ id }) =>
+              Effect.interruptible(fnc(id)).pipe(
                 Effect.forkScoped,
                 Scope.extend(scope)
               )
