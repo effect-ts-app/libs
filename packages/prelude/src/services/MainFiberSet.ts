@@ -5,7 +5,8 @@ import type {} from "effect/Scope"
 import type {} from "effect/Context"
 
 const make = Effect.gen(function*($) {
-  const set = yield* $(FiberSet.make<never, never>())
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const set = yield* $(FiberSet.make<never, any>())
   const add = (...fibers: Fiber.RuntimeFiber<never, never>[]) =>
     Effect.sync(() => fibers.forEach((_) => FiberSet.unsafeAdd(set, _)))
   const addAll = (fibers: readonly Fiber.RuntimeFiber<never, never>[]) =>
@@ -32,5 +33,5 @@ const make = Effect.gen(function*($) {
 export class MainFiberSet extends Context.TagMakeId("MainFiberSet", make)<MainFiberSet>() {
   static readonly Live = this.toLayerScoped()
   static readonly JoinLive = this.pipe(Effect.andThen((_) => _.join), Layer.effectDiscard, Layer.provide(this.Live))
-  static readonly run = <R>(self: Effect<never, never, R>) => this.use((_) => _.run(self))
+  static readonly run = <E, R>(self: Effect<never, E, R>) => this.use((_) => _.run(self))
 }
