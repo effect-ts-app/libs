@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 1.4.0
+
+### Minor Changes
+
+- 8202af7: Operations also return the Fiber.
+
+### Patch Changes
+
+- c7988e3: update interruptibility
+
 ## 1.3.7
 
 ### Patch Changes
