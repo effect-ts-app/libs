@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.3.6
+
+### Patch Changes
+
+- Updated dependencies
+  - effect-app@1.2.5
+  - @effect-app/vue@1.3.6
+
 ## 1.3.5
 
 ### Patch Changes
