@@ -28,7 +28,7 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, I, R, C, Inhe
   readonly fields: Simplify<Fields>
 
   readonly extend: <Extended = never>(identifier?: string | undefined) => <newFields extends Struct.Fields>(
-    fields: newFields,
+    newFieldsOr: newFields | HasFields<newFields>,
     annotations?: S.Annotations.Schema<Extended>
   ) => [Extended] extends [never] ? MissingSelfGeneric<"Base.extend">
     : EnhancedClass<
@@ -105,28 +105,51 @@ type MissingSelfGeneric<Usage extends string, Params extends string = ""> =
   `Missing \`Self\` generic - use \`class Self extends ${Usage}<Self>()(${Params}{ ... })\``
 
 export interface PropsExtensions<Fields> {
-  include: <NewProps extends S.Struct.Fields>(
-    fnc: (fields: Fields) => NewProps
-  ) => NewProps
+  // include: <NewProps extends S.Struct.Fields>(
+  //   fnc: (fields: Fields) => NewProps
+  // ) => NewProps
   pick: <P extends keyof Fields>(...keys: readonly P[]) => Pick<Fields, P>
   omit: <P extends keyof Fields>(...keys: readonly P[]) => Omit<Fields, P>
 }
 
-export function include<Fields extends S.Struct.Fields>(fields: Fields) {
-  return <NewProps extends S.Struct.Fields>(
-    fnc: (fields: Fields) => NewProps
-  ) => include_(fields, fnc)
+type HasFields<Fields extends Struct.Fields> = {
+  readonly fields: Fields
+} | {
+  readonly from: HasFields<Fields>
 }
 
-export function include_<
-  Fields extends S.Struct.Fields,
-  NewProps extends S.Struct.Fields
->(fields: Fields, fnc: (fields: Fields) => NewProps) {
-  return fnc(fields)
-}
+// const isPropertySignature = (u: unknown): u is PropertySignature.All =>
+//   Predicate.hasProperty(u, PropertySignatureTypeId)
+
+// const isField = (u: unknown) => S.isSchema(u) || S.isPropertySignature(u)
+
+// const isFields = <Fields extends Struct.Fields>(fields: object): fields is Fields =>
+//   ownKeys(fields).every((key) => isField((fields as any)[key]))
+
+// const getFields = <Fields extends Struct.Fields>(hasFields: HasFields<Fields>): Fields =>
+//   "fields" in hasFields ? hasFields.fields : getFields(hasFields.from)
+
+// const getSchemaFromFieldsOr = <Fields extends Struct.Fields>(fieldsOr: Fields | HasFields<Fields>): Schema.Any =>
+//   isFields(fieldsOr) ? Struct(fieldsOr) : S.isSchema(fieldsOr) ? fieldsOr : Struct(getFields(fieldsOr))
+
+// const getFieldsFromFieldsOr = <Fields extends Struct.Fields>(fieldsOr: Fields | HasFields<Fields>): Fields =>
+//   isFields(fieldsOr) ? fieldsOr : getFields(fieldsOr)
+
+// export function include<Fields extends S.Struct.Fields>(fields: Fields | HasFields<Fields>) {
+//   return <NewProps extends S.Struct.Fields>(
+//     fnc: (fields: Fields) => NewProps
+//   ) => include_(fields, fnc)
+// }
+
+// export function include_<
+//   Fields extends S.Struct.Fields,
+//   NewProps extends S.Struct.Fields
+// >(fields: Fields | HasFields<Fields>, fnc: (fields: Fields) => NewProps) {
+//   return fnc("fields" in fields ? fields.fields : fields)
+// }
 
 export const Class: <Self = never>(identifier?: string) => <Fields extends S.Struct.Fields>(
-  fields: Fields,
+  fieldsOr: Fields | HasFields<Fields>,
   annotations?: S.Annotations.Schema<Self>
 ) => [Self] extends [never] ? MissingSelfGeneric<"Class">
   : EnhancedClass<
@@ -143,7 +166,7 @@ export const Class: <Self = never>(identifier?: string) => <Fields extends S.Str
       constructor(a, b = true) {
         super(a, b)
       }
-      static readonly include = include(fields)
+      // static readonly include = include(fields)
       static readonly pick = (...selection: any[]) => pipe(fields, Struct2.pick(...selection))
       static readonly omit = (...selection: any[]) => pipe(fields, Struct2.omit(...selection))
     } as any
@@ -151,7 +174,7 @@ export const Class: <Self = never>(identifier?: string) => <Fields extends S.Str
 
 export const TaggedClass: <Self = never>(identifier?: string) => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
-  fields: Fields,
+  fieldsOr: Fields | HasFields<Fields>,
   annotations?: S.Annotations.Schema<Self>
 ) => [Self] extends [never] ? MissingSelfGeneric<"Class">
   : EnhancedClass<
@@ -168,14 +191,14 @@ export const TaggedClass: <Self = never>(identifier?: string) => <Tag extends st
       constructor(a, b = true) {
         super(a, b)
       }
-      static readonly include = include(fields)
+      // static readonly include = include(fields)
       static readonly pick = (...selection: any[]) => pipe(fields, Struct2.pick(...selection))
       static readonly omit = (...selection: any[]) => pipe(fields, Struct2.omit(...selection))
     } as any
   }
 
 export const ExtendedClass: <Self, SelfFrom>(identifier?: string) => <Fields extends S.Struct.Fields>(
-  fields: Fields,
+  fieldsOr: Fields | HasFields<Fields>,
   annotations?: S.Annotations.Schema<Self>
 ) => EnhancedClass<
   Self,
@@ -191,7 +214,7 @@ export const ExtendedTaggedClass: <Self, SelfFrom>(
   identifier?: string
 ) => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
-  fields: Fields,
+  fieldsOr: Fields | HasFields<Fields>,
   annotations?: S.Annotations.Schema<Self>
 ) => EnhancedClass<
   Self,
