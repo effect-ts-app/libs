@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.2.1
+
+### Patch Changes
+
+- 92f303f: add the class struct input support
+
 ## 1.2.0
 
 ### Minor Changes
