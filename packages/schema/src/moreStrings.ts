@@ -8,7 +8,7 @@ import { customRandom, nanoid, urlAlphabet } from "nanoid"
 import validator from "validator"
 import { fromBrand, nominal } from "./brand.js"
 import type { WithDefaults } from "./ext.js"
-import { withDefaults } from "./ext.js"
+import { withDefaultConstructor, withDefaultMake } from "./ext.js"
 import { type B } from "./schema.js"
 import { NonEmptyString } from "./strings.js"
 import type { NonEmptyString255Brand, NonEmptyString2k, NonEmptyStringBrand } from "./strings.js"
@@ -29,7 +29,7 @@ export type NonEmptyString50 = string & NonEmptyString50Brand
 export const NonEmptyString50 = NonEmptyString.pipe(
   S.maxLength(50),
   fromBrand(nominal<NonEmptyString2k>(), { identifier: "NonEmptyString50", title: "NonEmptyString50", jsonSchema: {} }),
-  withDefaults
+  withDefaultMake
 )
 
 /**
@@ -50,7 +50,7 @@ export const Min3String255 = pipe(
   S.minLength(3),
   S.maxLength(255),
   fromBrand(nominal<NonEmptyString2k>(), { identifier: "Min3String255", title: "Min3String255", jsonSchema: {} }),
-  withDefaults
+  withDefaultMake
 )
 
 /**
@@ -90,10 +90,10 @@ export const StringId = extendM(
   ),
   (s) => ({
     make: makeStringId,
-    withDefault: s.pipe(S.withDefaultConstructor(makeStringId))
+    withDefault: s.pipe(withDefaultConstructor(makeStringId))
   })
 )
-  .pipe(withDefaults)
+  .pipe(withDefaultMake)
 
 // const prefixedStringIdUnsafe = (prefix: string) => StringId(prefix + StringId.make())
 
@@ -120,7 +120,7 @@ export function prefixedStringId<Brand extends StringId>() {
           title: name
         })
       )
-    const schema = s.pipe(withDefaults)
+    const schema = s.pipe(withDefaultMake)
     const make = () => (pref + StringId.make().substring(0, 50 - pref.length)) as Brand
 
     return extendM(
@@ -136,7 +136,7 @@ export function prefixedStringId<Brand extends StringId>() {
          */
         prefixSafe: <REST extends string>(str: `${Prefix}${Separator}${REST}`) => ex(str),
         prefix,
-        withDefault: schema.pipe(S.withDefaultConstructor(make))
+        withDefault: schema.pipe(withDefaultConstructor(make))
       })
     )
   }
@@ -145,7 +145,7 @@ export function prefixedStringId<Brand extends StringId>() {
 export const brandedStringId = <
   Brand extends StringIdBrand
 >() =>
-  withDefaults(
+  withDefaultMake(
     Object.assign(Object.create(StringId), StringId) as S.Schema<string & Brand, string> & {
       make: () => string & Brand
       withDefault: S.PropertySignature<":", string & Brand, never, ":", string, true, never>
@@ -181,5 +181,5 @@ export const Url = S
       title: "Url",
       jsonSchema: { format: "uri" }
     }),
-    withDefaults
+    withDefaultMake
   )

@@ -1,5 +1,5 @@
 import type { B } from "@effect-app/schema/schema"
-import { brandedStringId, NonEmptyString255, StringId, withDefaults } from "effect-app/schema"
+import { brandedStringId, NonEmptyString255, StringId, withDefaultMake } from "effect-app/schema"
 import type { Schema, StringIdBrand } from "effect-app/schema"
 import type { Simplify } from "effect/Types"
 import { S } from "./index.js"
@@ -26,7 +26,7 @@ export const RequestId = extendM(
     })
   }
 )
-  .pipe(withDefaults)
+  .pipe(withDefaultMake)
 
 export interface UserProfileIdBrand extends Simplify<B.Brand<"UserProfileId"> & StringIdBrand> {}
 /**

@@ -9,15 +9,15 @@
     "path-parser": "^6.1.0",
     "query-string": "^9.0.0",
     "uuid": "^9.0.1",
-    "validator": "^13.11.0"
+    "validator": "^13.12.0"
   },
   "peerDependencies": {
-    "effect": "^3.1.2",
-    "@effect/platform": "^0.52.3"
+    "effect": "^3.1.4",
+    "@effect/platform": "^0.53.4"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8",
-    "@types/validator": "^13.11.9",
+    "@types/validator": "^13.11.10",
     "@babel/cli": "^7.24.5",
     "ts-toolbelt": "^9.6.0",
     "typescript": "^5.4.5",

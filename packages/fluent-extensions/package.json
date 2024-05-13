@@ -11,18 +11,18 @@
     "query-string": "^9.0.0",
     "ts-pattern": "^5.1.1",
     "uuid": "^9.0.1",
-    "validator": "^13.11.0"
+    "validator": "^13.12.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.52.3",
-    "effect": "^3.1.2"
+    "@effect/platform": "^0.53.4",
+    "effect": "^3.1.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.5",
     "@faker-js/faker": "^8.4.1",
-    "@types/node": "~20.12.8",
+    "@types/node": "~20.12.11",
     "@types/uuid": "^9.0.8",
-    "@types/validator": "^13.11.9",
+    "@types/validator": "^13.11.10",
     "fast-check": "~3.18.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",

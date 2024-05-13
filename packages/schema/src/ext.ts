@@ -7,13 +7,18 @@ import type { Schema } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
 import type { AST, ParseResult } from "./index.js"
 
+export const withDefaultConstructor: <A, I, R>(
+  makeDefault: () => NoInfer<A>
+) => (self: Schema<A, I, R>) => S.PropertySignature<":", A, never, ":", I, true, R> = (makeDefault) => (self) =>
+  S.propertySignature(self).pipe(S.withConstructorDefault(makeDefault))
+
 export const Date = Object.assign(S.Date, {
-  withDefault: S.Date.pipe(S.withDefaultConstructor(() => new global.Date()))
+  withDefault: S.Date.pipe(withDefaultConstructor(() => new global.Date()))
 })
 export const Boolean = Object.assign(S.Boolean, {
-  withDefault: S.Boolean.pipe(S.withDefaultConstructor(() => false))
+  withDefault: S.Boolean.pipe(withDefaultConstructor(() => false))
 })
-export const Number = Object.assign(S.Number, { withDefault: S.Number.pipe(S.withDefaultConstructor(() => 0)) })
+export const Number = Object.assign(S.Number, { withDefault: S.Number.pipe(withDefaultConstructor(() => 0)) })
 
 /**
  * Like the default Schema `Struct` but with batching enabled by default
@@ -66,7 +71,7 @@ export function Array<Value extends Schema.Any>(value: Value) {
   return pipe(
     S.Array(value),
     S.batching(true),
-    (s) => Object.assign(s, { withDefault: s.pipe(S.withDefaultConstructor(() => [])) })
+    (s) => Object.assign(s, { withDefault: s.pipe(withDefaultConstructor(() => [])) })
   )
 }
 
@@ -77,7 +82,7 @@ export const ReadonlySet = <Value extends Schema.Any>(value: Value) =>
   pipe(
     S.ReadonlySet(value),
     S.batching(true),
-    (s) => Object.assign(s, { withDefault: s.pipe(S.withDefaultConstructor(() => new Set<S.Schema.Type<Value>>())) })
+    (s) => Object.assign(s, { withDefault: s.pipe(withDefaultConstructor(() => new Set<S.Schema.Type<Value>>())) })
   )
 
 /**
@@ -90,7 +95,7 @@ export const ReadonlyMap = <K extends Schema.Any, V extends Schema.Any>(pair: {
   pipe(
     S.ReadonlyMap(pair),
     S.batching(true),
-    (s) => Object.assign(s, { withDefault: s.pipe(S.withDefaultConstructor(() => new Map())) })
+    (s) => Object.assign(s, { withDefault: s.pipe(withDefaultConstructor(() => new Map())) })
   )
 
 /**
@@ -99,29 +104,29 @@ export const ReadonlyMap = <K extends Schema.Any, V extends Schema.Any>(pair: {
 export const NullOr = <S extends Schema.Any>(self: S) =>
   pipe(
     S.NullOr(self),
-    (s) => Object.assign(s, { withDefault: s.pipe(S.withDefaultConstructor(() => null)) })
+    (s) => Object.assign(s, { withDefault: s.pipe(withDefaultConstructor(() => null)) })
   )
 
-export const defaultDate = <I, R>(s: Schema<Date, I, R>) => s.pipe(S.withDefaultConstructor(() => new global.Date()))
+export const defaultDate = <I, R>(s: Schema<Date, I, R>) => s.pipe(withDefaultConstructor(() => new global.Date()))
 
-export const defaultBool = <I, R>(s: Schema<boolean, I, R>) => s.pipe(S.withDefaultConstructor(() => false))
+export const defaultBool = <I, R>(s: Schema<boolean, I, R>) => s.pipe(withDefaultConstructor(() => false))
 
 export const defaultNullable = <A, I, R>(
   s: Schema<A | null, I, R>
-) => s.pipe(S.withDefaultConstructor(() => null))
+) => s.pipe(withDefaultConstructor(() => null))
 
-export const defaultArray = <A, I, R>(s: Schema<ReadonlyArray<A>, I, R>) => s.pipe(S.withDefaultConstructor(() => []))
+export const defaultArray = <A, I, R>(s: Schema<ReadonlyArray<A>, I, R>) => s.pipe(withDefaultConstructor(() => []))
 
 export const defaultMap = <A, A2, I, R>(s: Schema<ReadonlyMap<A, A2>, I, R>) =>
-  s.pipe(S.withDefaultConstructor(() => new Map()))
+  s.pipe(withDefaultConstructor(() => new Map()))
 
 export const defaultSet = <A, I, R>(s: Schema<ReadonlySet<A>, I, R>) =>
-  s.pipe(S.withDefaultConstructor(() => new Set<A>()))
+  s.pipe(withDefaultConstructor(() => new Set<A>()))
 
 /**
- * @tsplus getter effect/schema/Schema withDefaults
+ * @tsplus getter effect/schema/Schema withDefaultMake
  */
-export const withDefaults = <Self extends S.Schema<any, any, never>>(s: Self) => {
+export const withDefaultMake = <Self extends S.Schema<any, any, never>>(s: Self) => {
   const a = Object.assign(S.decodeSync(s) as WithDefaults<Self>, s)
   Object.setPrototypeOf(a, s)
   return a
@@ -150,7 +155,7 @@ export type WithDefaults<Self extends S.Schema<any, any, never>> = (
 
 export const inputDate = extendM(
   S.Union(S.ValidDateFromSelf, S.Date),
-  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => new globalThis.Date())) })
+  (s) => ({ withDefault: s.pipe(withDefaultConstructor(() => new globalThis.Date())) })
 )
 
 export interface UnionBrand {}

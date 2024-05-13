@@ -2,7 +2,7 @@ import { extendM } from "@effect-app/core/utils"
 import * as S from "@effect/schema/Schema"
 import type { Simplify } from "effect/Types"
 import { fromBrand, nominal } from "./brand.js"
-import { withDefaults } from "./ext.js"
+import { withDefaultConstructor, withDefaultMake } from "./ext.js"
 import { type B } from "./schema.js"
 
 export interface PositiveIntBrand
@@ -12,9 +12,9 @@ export const PositiveInt = extendM(
   S.Int.pipe(
     S.positive(),
     fromBrand(nominal<PositiveIntBrand>(), { identifier: "PositiveInt", title: "PositiveInt", jsonSchema: {} }),
-    withDefaults
+    withDefaultMake
   ),
-  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => s(1))) })
+  (s) => ({ withDefault: s.pipe(withDefaultConstructor(() => s(1))) })
 )
 export type PositiveInt = S.Schema.Type<typeof PositiveInt>
 
@@ -27,16 +27,16 @@ export const NonNegativeInt = extendM(
       title: "NonNegativeInt",
       jsonSchema: {}
     }),
-    withDefaults
+    withDefaultMake
   ),
-  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => s(0))) })
+  (s) => ({ withDefault: s.pipe(withDefaultConstructor(() => s(0))) })
 )
 export type NonNegativeInt = S.Schema.Type<typeof NonNegativeInt>
 
 export interface IntBrand extends Simplify<B.Brand<"Int">> {}
 export const Int = extendM(
-  S.Int.pipe(fromBrand(nominal<IntBrand>(), { identifier: "Int", title: "Int", jsonSchema: {} }), withDefaults),
-  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => s(0))) })
+  S.Int.pipe(fromBrand(nominal<IntBrand>(), { identifier: "Int", title: "Int", jsonSchema: {} }), withDefaultMake),
+  (s) => ({ withDefault: s.pipe(withDefaultConstructor(() => s(0))) })
 )
 export type Int = S.Schema.Type<typeof Int>
 
@@ -49,9 +49,9 @@ export const PositiveNumber = extendM(
       title: "PositiveNumber",
       jsonSchema: {}
     }),
-    withDefaults
+    withDefaultMake
   ),
-  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => s(1))) })
+  (s) => ({ withDefault: s.pipe(withDefaultConstructor(() => s(1))) })
 )
 export type PositiveNumber = S.Schema.Type<typeof PositiveNumber>
 
@@ -66,9 +66,9 @@ export const NonNegativeNumber = extendM(
         title: "NonNegativeNumber",
         jsonSchema: {}
       }),
-      withDefaults
+      withDefaultMake
     ),
-  (s) => ({ withDefault: s.pipe(S.withDefaultConstructor(() => s(0))) })
+  (s) => ({ withDefault: s.pipe(withDefaultConstructor(() => s(0))) })
 )
 export type NonNegativeNumber = S.Schema.Type<typeof NonNegativeNumber>
 

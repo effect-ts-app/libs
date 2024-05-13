@@ -2,7 +2,7 @@ import * as S from "@effect/schema/Schema"
 import type * as B from "effect/Brand"
 import type { Simplify } from "effect/Types"
 import { fromBrand, nominal } from "./brand.js"
-import { withDefaults } from "./ext.js"
+import { withDefaultMake } from "./ext.js"
 
 const nonEmptyString = S.String.pipe(S.nonEmpty())
 
@@ -11,7 +11,7 @@ export type NonEmptyString = string & NonEmptyStringBrand
 export const NonEmptyString = nonEmptyString
   .pipe(
     fromBrand(nominal<NonEmptyString>(), { identifier: "NonEmptyString", title: "NonEmptyString", jsonSchema: {} }),
-    withDefaults
+    withDefaultMake
   )
 
 export interface NonEmptyString64kBrand extends Simplify<B.Brand<"NonEmptyString64k"> & NonEmptyStringBrand> {}
@@ -24,7 +24,7 @@ export const NonEmptyString64k = nonEmptyString
       title: "NonEmptyString64k",
       jsonSchema: {}
     }),
-    withDefaults
+    withDefaultMake
   )
 
 export interface NonEmptyString2kBrand extends Simplify<B.Brand<"NonEmptyString2k"> & NonEmptyString64kBrand> {}
@@ -37,7 +37,7 @@ export const NonEmptyString2k = nonEmptyString
       title: "NonEmptyString2k",
       jsonSchema: {}
     }),
-    withDefaults
+    withDefaultMake
   )
 
 export interface NonEmptyString255Brand extends Simplify<B.Brand<"NonEmptyString255"> & NonEmptyString2kBrand> {}
@@ -50,5 +50,5 @@ export const NonEmptyString255 = nonEmptyString
       title: "NonEmptyString255",
       jsonSchema: {}
     }),
-    withDefaults
+    withDefaultMake
   )

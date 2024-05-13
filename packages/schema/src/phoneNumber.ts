@@ -2,7 +2,7 @@ import type { Refinement } from "@effect-app/core/Function"
 import { isValidPhone } from "@effect-app/core/validation"
 import * as S from "@effect/schema/Schema"
 import type { Simplify } from "effect/Types"
-import { withDefaults } from "./ext.js"
+import { withDefaultMake } from "./ext.js"
 import { Numbers } from "./FastCheck.js"
 import type { B } from "./schema.js"
 import type { NonEmptyStringBrand } from "./strings.js"
@@ -20,5 +20,5 @@ export const PhoneNumber = S
       arbitrary: () => (fc) => Numbers(7, 10)(fc).map((_) => _ as PhoneNumber),
       jsonSchema: { format: "phone" }
     }),
-    withDefaults
+    withDefaultMake
   )

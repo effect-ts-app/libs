@@ -13,7 +13,7 @@ export const Email = S
       // eslint-disable-next-line @typescript-eslint/unbound-method
       arbitrary: (): A.LazyArbitrary<Email> => (fc) => fakerArb((faker) => faker.internet.exampleEmail)(fc).map(Email)
     }),
-    S.withDefaults
+    S.withDefaultMake
   )
 
 export type Email = EmailT
@@ -26,7 +26,7 @@ export const PhoneNumber = S
         // eslint-disable-next-line @typescript-eslint/unbound-method
         fakerArb((faker) => faker.phone.number)(fc).map(PhoneNumber)
     }),
-    S.withDefaults
+    S.withDefaultMake
   )
 
 export const makeIs = <A extends { _tag: string }, I, R>(

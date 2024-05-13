@@ -106,17 +106,17 @@ export const SupportedErrors = S.Union(
   ...GeneralErrors
 )
 // .pipe(named("SupportedErrors"))
-// .pipe(withDefaults)
+// .pipe(withDefaultMake)
 export type SupportedErrors = S.Schema.Type<typeof SupportedErrors>
 
 // ideal?
 // export const QueryErrors = union({ ...GeneralErrors })
 //   .pipe(named("QueryErrors"))
-//   .pipe(withDefaults)
+//   .pipe(withDefaultMake)
 // export type QueryErrors = Schema.Type<typeof QueryErrors>
 // export const MutationErrors = union({ ...GeneralErrors, ...GeneralErrors })
 //   .pipe(named("MutationErrors"))
-//   .pipe(withDefaults)
+//   .pipe(withDefaultMake)
 
 // export type MutationErrors = Schema.Type<typeof MutationErrors>
 
