@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 1.5.0
+
+### Minor Changes
+
+- 9ac9416: update packages
+
+### Patch Changes
+
+- Updated dependencies [9ac9416]
+  - @effect-app/infra-adapters@1.2.0
+  - effect-app@1.3.0
+  - @effect-app/schema@1.2.0
+  - @effect-app/core@1.2.0
+
 ## 1.4.2
 
 ### Patch Changes

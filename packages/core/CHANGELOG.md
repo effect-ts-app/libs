@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.2.0
+
+### Minor Changes
+
+- 9ac9416: update packages
+
 ## 1.1.3
 
 ### Patch Changes
