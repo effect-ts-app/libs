@@ -33,6 +33,68 @@ export const NonEmptyString50 = NonEmptyString.pipe(
 )
 
 /**
+ * A string that is at least 1 character long and a maximum of 64.
+ */
+export interface NonEmptyString64Brand extends Simplify<B.Brand<"NonEmptyString64"> & NonEmptyString255Brand> {}
+
+/**
+ * A string that is at least 1 character long and a maximum of 64.
+ */
+export type NonEmptyString64 = string & NonEmptyString64Brand
+
+/**
+ * A string that is at least 1 character long and a maximum of 64.
+ */
+export const NonEmptyString64 = NonEmptyString.pipe(
+  S.maxLength(64),
+  fromBrand(nominal<NonEmptyString2k>(), { identifier: "NonEmptyString64", title: "NonEmptyString64", jsonSchema: {} }),
+  withDefaultMake
+)
+
+/**
+ * A string that is at least 1 character long and a maximum of 80.
+ */
+export interface NonEmptyString80Brand extends Simplify<B.Brand<"NonEmptyString80"> & NonEmptyString255Brand> {}
+
+/**
+ * A string that is at least 1 character long and a maximum of 80.
+ */
+export type NonEmptyString80 = string & NonEmptyString80Brand
+
+/**
+ * A string that is at least 1 character long and a maximum of 80.
+ */
+
+export const NonEmptyString80 = NonEmptyString.pipe(
+  S.maxLength(80),
+  fromBrand(nominal<NonEmptyString2k>(), { identifier: "NonEmptyString80", title: "NonEmptyString80", jsonSchema: {} }),
+  withDefaultMake
+)
+
+/**
+ * A string that is at least 1 character long and a maximum of 100.
+ */
+export interface NonEmptyString100Brand extends Simplify<B.Brand<"NonEmptyString100"> & NonEmptyString255Brand> {}
+
+/**
+ * A string that is at least 1 character long and a maximum of 100.
+ */
+export type NonEmptyString100 = string & NonEmptyString100Brand
+
+/**
+ * A string that is at least 1 character long and a maximum of 100.
+ */
+export const NonEmptyString100 = NonEmptyString.pipe(
+  S.maxLength(100),
+  fromBrand(nominal<NonEmptyString2k>(), {
+    identifier: "NonEmptyString100",
+    title: "NonEmptyString100",
+    jsonSchema: {}
+  }),
+  withDefaultMake
+)
+
+/**
  * A string that is at least 3 character long and a maximum of 255.
  */
 export interface Min3String255Brand extends Simplify<B.Brand<"Min3String255"> & NonEmptyString255Brand> {}
