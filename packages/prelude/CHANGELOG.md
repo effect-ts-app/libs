@@ -1,5 +1,18 @@
 # @effect-app/prelude
 
+## 1.4.0
+
+### Minor Changes
+
+- c10818c: improve forking
+
+### Patch Changes
+
+- 2c661c1: update packages
+- Updated dependencies [2c661c1]
+  - @effect-app/schema@1.2.2
+  - @effect-app/core@1.2.1
+
 ## 1.3.1
 
 ### Patch Changes

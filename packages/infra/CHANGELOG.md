@@ -1,5 +1,21 @@
 # @effect-app/infra
 
+## 1.6.0
+
+### Minor Changes
+
+- c10818c: improve forking
+
+### Patch Changes
+
+- 2c661c1: update packages
+- Updated dependencies [2c661c1]
+- Updated dependencies [c10818c]
+  - @effect-app/infra-adapters@1.2.2
+  - effect-app@1.4.0
+  - @effect-app/schema@1.2.2
+  - @effect-app/core@1.2.1
+
 ## 1.5.1
 
 ### Patch Changes
