@@ -10,8 +10,9 @@ import { fromBrand, nominal } from "./brand.js"
 import type { WithDefaults } from "./ext.js"
 import { withDefaultConstructor, withDefaultMake } from "./ext.js"
 import { type B } from "./schema.js"
-import { NonEmptyString } from "./strings.js"
 import type { NonEmptyString255Brand, NonEmptyStringBrand } from "./strings.js"
+
+const nonEmptyString = S.String.pipe(S.nonEmpty())
 
 /**
  * A string that is at least 1 character long and a maximum of 50.
@@ -26,7 +27,7 @@ export type NonEmptyString50 = string & NonEmptyString50Brand
 /**
  * A string that is at least 1 character long and a maximum of 50.
  */
-export const NonEmptyString50 = NonEmptyString.pipe(
+export const NonEmptyString50 = nonEmptyString.pipe(
   S.maxLength(50),
   fromBrand(nominal<NonEmptyString50>(), {
     identifier: "NonEmptyString50",
@@ -49,7 +50,7 @@ export type NonEmptyString64 = string & NonEmptyString64Brand
 /**
  * A string that is at least 1 character long and a maximum of 64.
  */
-export const NonEmptyString64 = NonEmptyString.pipe(
+export const NonEmptyString64 = nonEmptyString.pipe(
   S.maxLength(64),
   fromBrand(nominal<NonEmptyString64>(), {
     identifier: "NonEmptyString64",
@@ -73,7 +74,7 @@ export type NonEmptyString80 = string & NonEmptyString80Brand
  * A string that is at least 1 character long and a maximum of 80.
  */
 
-export const NonEmptyString80 = NonEmptyString.pipe(
+export const NonEmptyString80 = nonEmptyString.pipe(
   S.maxLength(80),
   fromBrand(nominal<NonEmptyString80>(), {
     identifier: "NonEmptyString80",
@@ -96,7 +97,7 @@ export type NonEmptyString100 = string & NonEmptyString100Brand
 /**
  * A string that is at least 1 character long and a maximum of 100.
  */
-export const NonEmptyString100 = NonEmptyString.pipe(
+export const NonEmptyString100 = nonEmptyString.pipe(
   S.maxLength(100),
   fromBrand(nominal<NonEmptyString100>(), {
     identifier: "NonEmptyString100",
