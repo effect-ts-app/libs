@@ -34,14 +34,15 @@ export const reportFatalQueueError = reportError(
 
 export function reportNonInterruptedFailure(context?: Record<string, unknown>) {
   const report = reportNonInterruptedFailureCause(context)
-  return <A, E, R>(inp: Effect<A, E, R>): Effect<A, E, R> =>
+  return <A, E, R>(inp: Effect<A, E, R>): Effect<Exit<A, E>, never, R> =>
     inp.pipe(
       Effect.onExit(
         Exit.match({
           onFailure: report,
           onSuccess: () => Effect.void
         })
-      )
+      ),
+      Effect.exit
     )
 }
 

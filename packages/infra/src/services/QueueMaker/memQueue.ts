@@ -61,7 +61,7 @@ export function makeMemQueue<
           ),
       drain: <DrainE, DrainR>(
         handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>,
-        sessionId?: string
+        sessionId?: string | undefined
       ) =>
         Effect.gen(function*($) {
           const silenceAndReportError = reportNonInterruptedFailure({ name: "MemQueue.drain." + queueDrainName })
