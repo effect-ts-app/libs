@@ -22,8 +22,8 @@
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.53.4",
-    "@effect/schema": "^0.67.1",
+    "@effect/platform": "^0.53.5",
+    "@effect/schema": "^0.67.2",
     "effect": "^3.1.4"
   },
   "scripts": {
