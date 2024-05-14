@@ -16,7 +16,7 @@ import type { NonEmptyString255Brand, NonEmptyString2k, NonEmptyStringBrand } fr
 /**
  * A string that is at least 1 character long and a maximum of 50.
  */
-export interface NonEmptyString50Brand extends Simplify<B.Brand<"NonEmptyString50"> & NonEmptyString255Brand> {}
+export interface NonEmptyString50Brand extends Simplify<B.Brand<"NonEmptyString50"> & NonEmptyString64Brand> {}
 
 /**
  * A string that is at least 1 character long and a maximum of 50.
@@ -28,14 +28,14 @@ export type NonEmptyString50 = string & NonEmptyString50Brand
  */
 export const NonEmptyString50 = NonEmptyString.pipe(
   S.maxLength(50),
-  fromBrand(nominal<NonEmptyString2k>(), { identifier: "NonEmptyString50", title: "NonEmptyString50", jsonSchema: {} }),
+  fromBrand(nominal<NonEmptyString50>(), { identifier: "NonEmptyString50", title: "NonEmptyString50", jsonSchema: {} }),
   withDefaultMake
 )
 
 /**
  * A string that is at least 1 character long and a maximum of 64.
  */
-export interface NonEmptyString64Brand extends Simplify<B.Brand<"NonEmptyString64"> & NonEmptyString255Brand> {}
+export interface NonEmptyString64Brand extends Simplify<B.Brand<"NonEmptyString64"> & NonEmptyString80Brand> {}
 
 /**
  * A string that is at least 1 character long and a maximum of 64.
@@ -47,14 +47,14 @@ export type NonEmptyString64 = string & NonEmptyString64Brand
  */
 export const NonEmptyString64 = NonEmptyString.pipe(
   S.maxLength(64),
-  fromBrand(nominal<NonEmptyString2k>(), { identifier: "NonEmptyString64", title: "NonEmptyString64", jsonSchema: {} }),
+  fromBrand(nominal<NonEmptyString64>(), { identifier: "NonEmptyString64", title: "NonEmptyString64", jsonSchema: {} }),
   withDefaultMake
 )
 
 /**
  * A string that is at least 1 character long and a maximum of 80.
  */
-export interface NonEmptyString80Brand extends Simplify<B.Brand<"NonEmptyString80"> & NonEmptyString255Brand> {}
+export interface NonEmptyString80Brand extends Simplify<B.Brand<"NonEmptyString80"> & NonEmptyString100Brand> {}
 
 /**
  * A string that is at least 1 character long and a maximum of 80.
@@ -67,7 +67,7 @@ export type NonEmptyString80 = string & NonEmptyString80Brand
 
 export const NonEmptyString80 = NonEmptyString.pipe(
   S.maxLength(80),
-  fromBrand(nominal<NonEmptyString2k>(), { identifier: "NonEmptyString80", title: "NonEmptyString80", jsonSchema: {} }),
+  fromBrand(nominal<NonEmptyString80>(), { identifier: "NonEmptyString80", title: "NonEmptyString80", jsonSchema: {} }),
   withDefaultMake
 )
 
@@ -86,7 +86,7 @@ export type NonEmptyString100 = string & NonEmptyString100Brand
  */
 export const NonEmptyString100 = NonEmptyString.pipe(
   S.maxLength(100),
-  fromBrand(nominal<NonEmptyString2k>(), {
+  fromBrand(nominal<NonEmptyString100>(), {
     identifier: "NonEmptyString100",
     title: "NonEmptyString100",
     jsonSchema: {}
