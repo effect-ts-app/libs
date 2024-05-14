@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.4.3
+
+### Patch Changes
+
+- 9db9cb5: downgrade vue sentry
+- Updated dependencies [9db9cb5]
+  - @effect-app/vue@1.4.3
+
 ## 1.4.2
 
 ### Patch Changes
