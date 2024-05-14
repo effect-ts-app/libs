@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.2.6
+
+### Patch Changes
+
+- fix
+
 ## 1.2.5
 
 ### Patch Changes
