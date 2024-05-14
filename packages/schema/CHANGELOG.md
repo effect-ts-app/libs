@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.2.5
+
+### Patch Changes
+
+- 24c3fe9: align brands
+
 ## 1.2.4
 
 ### Patch Changes

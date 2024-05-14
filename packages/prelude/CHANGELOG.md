@@ -1,5 +1,13 @@
 # @effect-app/prelude
 
+## 1.4.3
+
+### Patch Changes
+
+- 24c3fe9: align brands
+- Updated dependencies [24c3fe9]
+  - @effect-app/schema@1.2.5
+
 ## 1.4.2
 
 ### Patch Changes
