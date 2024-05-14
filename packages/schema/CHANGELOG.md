@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.2.3
+
+### Patch Changes
+
+- add more strings
+
 ## 1.2.2
 
 ### Patch Changes
