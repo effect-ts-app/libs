@@ -10,7 +10,11 @@ export type NonEmptyStringBrand = B.Brand<"NonEmptyString">
 export type NonEmptyString = string & NonEmptyStringBrand
 export const NonEmptyString = nonEmptyString
   .pipe(
-    fromBrand(nominal<NonEmptyString>(), { identifier: "NonEmptyString", title: "NonEmptyString", jsonSchema: {} }),
+    fromBrand(nominal<NonEmptyString>(), {
+      identifier: "NonEmptyString",
+      title: "NonEmptyString",
+      jsonSchema: {}
+    }),
     withDefaultMake
   )
 

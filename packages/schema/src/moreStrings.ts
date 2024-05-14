@@ -11,7 +11,7 @@ import type { WithDefaults } from "./ext.js"
 import { withDefaultConstructor, withDefaultMake } from "./ext.js"
 import { type B } from "./schema.js"
 import { NonEmptyString } from "./strings.js"
-import type { NonEmptyString255Brand, NonEmptyString2k, NonEmptyStringBrand } from "./strings.js"
+import type { NonEmptyString255Brand, NonEmptyStringBrand } from "./strings.js"
 
 /**
  * A string that is at least 1 character long and a maximum of 50.
@@ -28,7 +28,11 @@ export type NonEmptyString50 = string & NonEmptyString50Brand
  */
 export const NonEmptyString50 = NonEmptyString.pipe(
   S.maxLength(50),
-  fromBrand(nominal<NonEmptyString50>(), { identifier: "NonEmptyString50", title: "NonEmptyString50", jsonSchema: {} }),
+  fromBrand(nominal<NonEmptyString50>(), {
+    identifier: "NonEmptyString50",
+    title: "NonEmptyString50",
+    jsonSchema: {}
+  }),
   withDefaultMake
 )
 
@@ -47,7 +51,11 @@ export type NonEmptyString64 = string & NonEmptyString64Brand
  */
 export const NonEmptyString64 = NonEmptyString.pipe(
   S.maxLength(64),
-  fromBrand(nominal<NonEmptyString64>(), { identifier: "NonEmptyString64", title: "NonEmptyString64", jsonSchema: {} }),
+  fromBrand(nominal<NonEmptyString64>(), {
+    identifier: "NonEmptyString64",
+    title: "NonEmptyString64",
+    jsonSchema: {}
+  }),
   withDefaultMake
 )
 
@@ -67,7 +75,11 @@ export type NonEmptyString80 = string & NonEmptyString80Brand
 
 export const NonEmptyString80 = NonEmptyString.pipe(
   S.maxLength(80),
-  fromBrand(nominal<NonEmptyString80>(), { identifier: "NonEmptyString80", title: "NonEmptyString80", jsonSchema: {} }),
+  fromBrand(nominal<NonEmptyString80>(), {
+    identifier: "NonEmptyString80",
+    title: "NonEmptyString80",
+    jsonSchema: {}
+  }),
   withDefaultMake
 )
 
@@ -111,7 +123,7 @@ export const Min3String255 = pipe(
   S.String,
   S.minLength(3),
   S.maxLength(255),
-  fromBrand(nominal<NonEmptyString2k>(), { identifier: "Min3String255", title: "Min3String255", jsonSchema: {} }),
+  fromBrand(nominal<Min3String255>(), { identifier: "Min3String255", title: "Min3String255", jsonSchema: {} }),
   withDefaultMake
 )
 
@@ -143,7 +155,7 @@ export const StringId = extendM(
     S.String,
     S.minLength(minLength),
     S.maxLength(maxLength),
-    fromBrand(nominal<StringIdBrand>(), {
+    fromBrand(nominal<StringId>(), {
       identifier: "StringId",
       title: "StringId",
       arbitrary: StringIdArb,

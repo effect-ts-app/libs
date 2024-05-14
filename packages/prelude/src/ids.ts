@@ -33,4 +33,4 @@ export interface UserProfileIdBrand extends Simplify<B.Brand<"UserProfileId"> & 
  * @tsplus type UserProfileId
  */
 export type UserProfileId = StringId & UserProfileIdBrand
-export const UserProfileId = brandedStringId<UserProfileIdBrand>()
+export const UserProfileId = brandedStringId<UserProfileId>()
