@@ -6,9 +6,9 @@
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "typescript@5.4.5": "patches/typescript@5.4.5.patch",
-      "effect@3.1.4": "patches/effect@3.1.4.patch",
-      "@effect/schema@0.67.2": "patches/@effect__schema@0.67.2.patch",
-      "@effect/platform@0.53.5": "patches/@effect__platform@0.53.5.patch"
+      "effect@3.1.5": "patches/effect@3.1.5.patch",
+      "@effect/schema@0.67.3": "patches/@effect__schema@0.67.3.patch",
+      "@effect/platform@0.53.6": "patches/@effect__platform@0.53.6.patch"
     }
   },
   "engines": {
@@ -64,11 +64,11 @@
     "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.90.5",
-    "effect": "^3.1.4",
-    "@effect/platform": "^0.53.5",
-    "@effect/platform-node": "^0.49.5",
-    "@effect/schema": "^0.67.2",
-    "@effect-app/cli": "^0.74.0",
+    "effect": "^3.1.5",
+    "@effect/platform": "^0.53.6",
+    "@effect/platform-node": "^0.49.6",
+    "@effect/schema": "^0.67.3",
+    "@effect-app/cli": "^0.74.1",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
     "@effect-app/infra": "workspace:*",
