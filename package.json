@@ -7,8 +7,8 @@
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "typescript@5.4.5": "patches/typescript@5.4.5.patch",
       "effect@3.1.5": "patches/effect@3.1.5.patch",
-      "@effect/schema@0.67.3": "patches/@effect__schema@0.67.3.patch",
-      "@effect/platform@0.53.6": "patches/@effect__platform@0.53.6.patch"
+      "@effect/schema@0.67.5": "patches/@effect__schema@0.67.5.patch",
+      "@effect/platform@0.53.8": "patches/@effect__platform@0.53.8.patch"
     }
   },
   "engines": {
@@ -65,9 +65,9 @@
     "@changesets/cli": "^2.27.1",
     "@dprint/typescript": "^0.90.5",
     "effect": "^3.1.5",
-    "@effect/platform": "^0.53.6",
-    "@effect/platform-node": "^0.49.6",
-    "@effect/schema": "^0.67.3",
+    "@effect/platform": "^0.53.8",
+    "@effect/platform-node": "^0.49.8",
+    "@effect/schema": "^0.67.5",
     "@effect-app/cli": "^0.74.1",
     "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
@@ -107,7 +107,7 @@
     "ts-transform-paths": "^3.0.0",
     "tsc-watch": "^6.2.0",
     "tsconfig-paths": "^4.2.0",
-    "tsx": "^4.10.2",
+    "tsx": "^4.10.3",
     "typescript": "^5.4.5",
     "typescript-transform-paths": "^3.4.7",
     "unplugin-auto-import": "^0.17.6",

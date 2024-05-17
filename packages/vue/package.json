@@ -9,17 +9,17 @@
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@formatjs/intl": "^2.10.2",
-    "@tanstack/vue-query": "^5.36.0",
+    "@tanstack/vue-query": "^5.36.1",
     "effect-app": "workspace:*",
     "query-string": "^9.0.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.53.6",
-    "@effect/platform-browser": "^0.33.21",
+    "@effect/platform": "^0.53.8",
+    "@effect/platform-browser": "^0.33.23",
     "@effect-rx/rx": "^0.31.3",
     "@effect-rx/rx-vue": "^0.8.10",
-    "@effect/schema": "^0.67.3",
-    "@sentry/browser": "^7.114.0",
+    "@effect/schema": "^0.67.5",
+    "@sentry/browser": "^8.1.0",
     "effect": "^3.1.5",
     "vue": "^3.4.27"
   },
