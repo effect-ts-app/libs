@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Effect, HashMap, Option } from "@effect-app/core"
-import { constant } from "@effect-app/core/Function"
+import { constant, flow } from "@effect-app/core/Function"
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { Record } from "effect"
 import type { REST, Schema } from "effect-app/schema"
@@ -147,10 +147,7 @@ export function fetchApi(
       : HttpClientRequest
         .make(method)(path)
         .pipe(HttpClientRequest.jsonBody(body), Effect.flatMap(client)))
-      .pipe(
-        Effect.scoped,
-        Effect.withSpan("http.request", { attributes: { "http.method": method, "http.url": path } })
-      ))
+      .pipe(Effect.scoped))
 }
 
 export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, ResponseFrom, ResponseTo>(
@@ -160,6 +157,15 @@ export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, Response
   const encodeRequest = S.encode(request)
   const decRes = S.decodeUnknown(response)
   const decodeRes = (u: unknown) => Effect.mapError(decRes(u), (err) => new ResError(err))
+  const parse = flow(
+    mapResponseM(decodeRes),
+    Effect.map((i) => ({
+      ...i,
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      body: i.body as ResponseTo
+    })),
+    Effect.withSpan("client.decode")
+  )
   return (method: Method, path: Path) => (req: RequestTo) => {
     return Effect.andThen(encodeRequest(req), (encoded) =>
       fetchApi(
@@ -170,14 +176,7 @@ export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, Response
           : makePathWithBody(path, encoded as any),
         encoded
       )
-        .pipe(
-          Effect.flatMap(mapResponseM(decodeRes)),
-          Effect.map((i) => ({
-            ...i,
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-            body: i.body as ResponseTo
-          }))
-        ))
+        .pipe(Effect.flatMap(parse)))
   }
 }
 
