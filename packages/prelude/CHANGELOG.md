@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.4.5
+
+### Patch Changes
+
+- a67d115: improve client trace
+
 ## 1.4.4
 
 ### Patch Changes
