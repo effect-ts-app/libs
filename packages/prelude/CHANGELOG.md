@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.4.7
+
+### Patch Changes
+
+- 744cf0f: add client.response span
+
 ## 1.4.6
 
 ### Patch Changes
