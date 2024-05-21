@@ -53,19 +53,25 @@ export interface MutationError<E> {
 
 export type MutationResult<A, E> = MutationInitial | MutationLoading | MutationSuccess<A> | MutationError<E>
 
+type HandlerWithInput<I, A, E> = {
+  handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.Client.Default>
+  name: string
+}
+type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.Client.Default>; name: string }
+
 /**
  * Pass a function that returns an Effect, e.g from a client action, or an Effect
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
 export const useSafeMutation: {
-  <I, E, A>(self: { handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.Client.Default>; name: string }): readonly [
+  <I, E, A>(self: HandlerWithInput<I, A, E>, options?: { disableQueryInvalidation?: boolean }): readonly [
     Readonly<Ref<MutationResult<A, E>>>,
     (
       i: I,
       signal?: AbortSignal
     ) => Promise<Either.Either<A, E>>
   ]
-  <E, A>(self: { handler: Effect<A, E, ApiConfig | HttpClient.Client.Default>; name: string }): readonly [
+  <E, A>(self: Handler<A, E>, options?: { disableQueryInvalidation?: boolean }): readonly [
     Readonly<Ref<MutationResult<A, E>>>,
     (
       signal?: AbortSignal
@@ -74,10 +80,11 @@ export const useSafeMutation: {
 } = <I, E, A>(
   self: {
     handler:
-      | ((i: I) => Effect<A, E, ApiConfig | HttpClient.Client.Default>)
-      | Effect<A, E, ApiConfig | HttpClient.Client.Default>
+      | HandlerWithInput<I, A, E>["handler"]
+      | Handler<A, E>["handler"]
     name: string
-  }
+  },
+  options?: { disableQueryInvalidation?: boolean }
 ) => {
   const queryClient = useQueryClient()
   const state: Ref<MutationResult<A, E>> = ref<MutationResult<A, E>>({ _tag: "Initial" }) as any
@@ -125,7 +132,7 @@ export const useSafeMutation: {
         })
         .pipe(
           Effect.andThen(effect),
-          Effect.tap(() =>
+          options?.disableQueryInvalidation ? (_) => _ : Effect.tap(() =>
             Effect.suspend(() => {
               const key = makeQueryKey(self.name)
               const ns = key.filter((_) => _.startsWith("$"))

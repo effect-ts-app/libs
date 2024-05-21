@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.4.11
+
+### Patch Changes
+
+- feat: add disableQueryInvalidation
+- Updated dependencies
+  - @effect-app/vue@1.4.11
+
 ## 1.4.10
 
 ### Patch Changes
