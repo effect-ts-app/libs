@@ -36,14 +36,12 @@ const getClient = Effect.flatMap(
     Effect.map(ApiConfig.Tag, ({ apiUrl, headers }) =>
       defaultClient
         .pipe(
-          HttpClient
-            .filterStatusOk,
+          HttpClient.filterStatusOk,
           HttpClient
             .mapRequest((_) =>
               _.pipe(
                 HttpClientRequest.acceptJson,
-                HttpClientRequest
-                  .prependUrl(apiUrl),
+                HttpClientRequest.prependUrl(apiUrl),
                 HttpClientRequest
                   .setHeaders({
                     "request-id": Option.getOrUndefined(Option.flatMap(headers, (_) => HashMap.get(_, "request-id")))
@@ -66,9 +64,10 @@ const getClient = Effect.flatMap(
             ),
           HttpClient
             .mapEffect((_) =>
-              _.status === 204
+              (_.status === 204
                 ? Effect.sync(() => ({ status: _.status, body: void 0, headers: _.headers }))
-                : Effect.map(_.json, (body) => ({ status: _.status, body, headers: _.headers }))
+                : Effect.map(_.json, (body) => ({ status: _.status, body, headers: _.headers })))
+                .pipe(Effect.withSpan("client.response"))
             ),
           HttpClient
             .catchTag(
