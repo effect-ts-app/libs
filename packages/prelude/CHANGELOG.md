@@ -1,5 +1,15 @@
 # @effect-app/prelude
 
+## 1.4.8
+
+### Patch Changes
+
+- fe2754a: improve: decode span
+- 349c421: Update packages
+- Updated dependencies [349c421]
+  - @effect-app/schema@1.2.8
+  - @effect-app/core@1.2.3
+
 ## 1.4.7
 
 ### Patch Changes
