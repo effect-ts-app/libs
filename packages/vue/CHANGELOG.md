@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.4.13
+
+### Patch Changes
+
+- improve query/mutation spans and handling
+- Updated dependencies
+  - @effect-app/vue@1.4.13
+
 ## 1.4.12
 
 ### Patch Changes
