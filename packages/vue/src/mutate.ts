@@ -71,7 +71,7 @@ export interface MutationOptions<A, I = void> {
 export const getQueryKey = (name: string) => {
   const key = makeQueryKey(name)
   const ns = key.filter((_) => _.startsWith("$"))
-  return ns[0] ? [ns[0]] : undefined
+  return ns.length ? ns : undefined
 }
 // TODO: more efficient invalidation, including args etc
 // return Effect.promise(() => queryClient.invalidateQueries({
