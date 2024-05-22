@@ -165,7 +165,7 @@ export class CauseException<E> extends Error {
 export const annotateSpanWithError = (cause: Cause<unknown>, name?: string) =>
   Effect.annotateCurrentSpan({
     "exception.escaped": true,
-    "exception.message": "Reported error for " + name ?? cause._tag,
+    "exception.message": "Reported error for " + (name ?? cause._tag),
     "exception.stacktrace": Cause.pretty(cause),
     "exception.type": Cause.squashWith(
       cause,
