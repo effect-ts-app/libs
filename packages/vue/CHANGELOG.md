@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.4.14
+
+### Patch Changes
+
+- c10097e: clear namespace not root
+- Updated dependencies [c10097e]
+  - @effect-app/vue@1.4.14
+
 ## 1.4.13
 
 ### Patch Changes
