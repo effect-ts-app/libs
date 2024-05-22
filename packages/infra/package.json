@@ -42,9 +42,9 @@
   },
   "peerDependencies": {
     "express": "^4.19.2",
-    "@effect/platform": "^0.53.12",
-    "@effect/schema": "^0.67.9",
-    "effect": "^3.2.1"
+    "@effect/platform": "^0.53.14",
+    "@effect/schema": "^0.67.11",
+    "effect": "^3.2.3"
   },
   "typesVersions": {
     "*": {

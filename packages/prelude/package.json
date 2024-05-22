@@ -27,9 +27,9 @@
     "vitest": "^1.6.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.53.12",
-    "effect": "^3.2.1",
-    "@effect/schema": "^0.67.9"
+    "@effect/platform": "^0.53.14",
+    "effect": "^3.2.3",
+    "@effect/schema": "^0.67.11"
   },
   "typesVersions": {
     "*": {

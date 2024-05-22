@@ -16,7 +16,7 @@
   "dependencies": {
     "@babel/generator": "7.24.5",
     "@babel/parser": "7.24.5",
-    "@typescript-eslint/utils": "7.9.0",
+    "@typescript-eslint/utils": "7.10.0",
     "eslint-plugin-codegen": "0.17.0",
     "glob": "8.1.0",
     "io-ts": "2.2.21",
@@ -25,15 +25,15 @@
     "lodash": "4.17.21"
   },
   "peerDependencies": {
-    "effect": "^3.2.1"
+    "effect": "^3.2.3"
   },
   "devDependencies": {
     "@babel/types": "7.24.5",
     "@types/babel__generator": "7.6.8",
-    "@types/babel__traverse": "7.20.5",
+    "@types/babel__traverse": "7.20.6",
     "@types/glob": "8.1.0",
     "@types/lodash": "4.17.4",
-    "effect": "^3.2.1",
+    "effect": "^3.2.3",
     "madge": "7.0.0",
     "ts-node": "10.9.2",
     "typescript": "^5.4.5"

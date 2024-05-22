@@ -22,9 +22,9 @@
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.53.12",
-    "@effect/schema": "^0.67.9",
-    "effect": "^3.2.1"
+    "@effect/platform": "^0.53.14",
+    "@effect/schema": "^0.67.11",
+    "effect": "^3.2.3"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

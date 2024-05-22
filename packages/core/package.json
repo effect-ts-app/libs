@@ -12,8 +12,8 @@
     "validator": "^13.12.0"
   },
   "peerDependencies": {
-    "effect": "^3.2.1",
-    "@effect/platform": "^0.53.12"
+    "effect": "^3.2.3",
+    "@effect/platform": "^0.53.14"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8",
