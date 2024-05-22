@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Effect, HashMap, Option } from "@effect-app/core"
-import { constant, flow } from "@effect-app/core/Function"
+import { constant } from "@effect-app/core/Function"
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
 import { Record } from "effect"
 import type { REST, Schema } from "effect-app/schema"
@@ -156,15 +156,7 @@ export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, Response
   const encodeRequest = S.encode(request)
   const decRes = S.decodeUnknown(response)
   const decodeRes = (u: unknown) => Effect.mapError(decRes(u), (err) => new ResError(err))
-  const parse = flow(
-    mapResponseM(decodeRes),
-    Effect.map((i) => ({
-      ...i,
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-      body: i.body as ResponseTo
-    })),
-    Effect.withSpan("client.decode")
-  )
+  const parse = mapResponseM(decodeRes)
   return (method: Method, path: Path) => (req: RequestTo) => {
     return Effect.andThen(encodeRequest(req), (encoded) =>
       fetchApi(
@@ -207,8 +199,8 @@ export function fetchApi3SE<RequestA, RequestE, ResponseE = unknown, ResponseA =
     Request.method,
     new Path(Request.path)
   )
-  const encode = S.encode(Response)
-  return (req: RequestA) => Effect.flatMap(a(req), mapResponseM((_) => encode(_)))
+  const parse = mapResponseM(S.encode(Response))
+  return (req: RequestA) => Effect.flatMap(a(req), parse)
 }
 
 export function makePathWithQuery(
@@ -258,11 +250,13 @@ export function mapResponse<T, A>(map: (t: T) => A) {
 
 export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<A, E, R>) {
   return (r: FetchResponse<T>): Effect<FetchResponse<A>, E, R> => {
-    return Effect.all({
-      body: map(r.body),
-      headers: Effect.sync(() => r.headers),
-      status: Effect.sync(() => r.status)
-    })
+    return Effect
+      .all({
+        body: map(r.body),
+        headers: Effect.sync(() => r.headers),
+        status: Effect.sync(() => r.status)
+      })
+      .pipe(Effect.withSpan("client.decode"))
   }
 }
 export type FetchResponse<T> = { body: T; headers: Headers; status: number }

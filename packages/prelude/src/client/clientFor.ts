@@ -102,6 +102,8 @@ function clientFor_<M extends Requests>(models: M) {
       )
 
       const path = new Path(Request.path)
+      const parse = mapResponseM(parseResponse)
+      const parseE = mapResponseM(parseResponseE)
 
       // TODO: look into ast, look for propertySignatures, etc.
       // TODO: and fix type wise
@@ -116,7 +118,7 @@ function clientFor_<M extends Requests>(models: M) {
           ? {
             handler: fetchApi(Request.method, Request.path)
               .pipe(
-                Effect.flatMap(mapResponseM(parseResponse)),
+                Effect.flatMap(parse),
                 Effect
                   .withSpan("client.request " + requestName, {
                     attributes: { "request.name": requestName }
@@ -128,7 +130,7 @@ function clientFor_<M extends Requests>(models: M) {
             handler: (req: any) =>
               fetchApi(Request.method, makePathWithQuery(path, S.encodeSync(Request)(req)))
                 .pipe(
-                  Effect.flatMap(mapResponseM(parseResponse)),
+                  Effect.flatMap(parse),
                   Effect
                     .withSpan("client.request " + requestName, {
                       attributes: { "request.name": requestName }
@@ -167,7 +169,7 @@ function clientFor_<M extends Requests>(models: M) {
           ? {
             handler: fetchApi(Request.method, Request.path)
               .pipe(
-                Effect.flatMap(mapResponseM(parseResponseE)),
+                Effect.flatMap(parseE),
                 Effect
                   .withSpan("client.request " + requestName, {
                     attributes: { "request.name": requestName }
@@ -179,7 +181,7 @@ function clientFor_<M extends Requests>(models: M) {
             handler: (req: any) =>
               fetchApi(Request.method, makePathWithQuery(path, S.encodeSync(Request)(req)))
                 .pipe(
-                  Effect.flatMap(mapResponseM(parseResponseE)),
+                  Effect.flatMap(parseE),
                   Effect
                     .withSpan("client.request " + requestName, {
                       attributes: { "request.name": requestName }
