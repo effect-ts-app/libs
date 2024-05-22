@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { tuple } from "@effect-app/core/Function"
+import * as Result from "@effect-rx/rx/Result"
 import type * as HttpClient from "@effect/platform/Http/Client"
+import type { InvalidateOptions, InvalidateQueryFilters } from "@tanstack/vue-query"
 import { useQueryClient } from "@tanstack/vue-query"
 import { Cause, Effect, Exit, Option } from "effect-app"
 import type { ApiConfig, FetchResponse } from "effect-app/client"
 import { dropUndefinedT } from "effect-app/utils"
 import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
+import type { MaybeRefDeep } from "node_modules/@tanstack/vue-query/build/modern/types.js"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
 import { makeQueryKey, reportRuntimeError, run } from "./internal.js"
-
-import * as Result from "@effect-rx/rx/Result"
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
 export function make<A, E, R>(self: Effect<FetchResponse<A>, E, R>) {
@@ -59,19 +60,43 @@ type HandlerWithInput<I, A, E> = {
 }
 type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.Client.Default>; name: string }
 
+export interface MutationOptions<A, I = void> {
+  queryInvalidation?: (defaultKey: string[] | undefined, name: string) => {
+    filters?: MaybeRefDeep<InvalidateQueryFilters> | undefined
+    options?: MaybeRefDeep<InvalidateOptions> | undefined
+  }[]
+  onSuccess?: (a: A, i: I) => Promise<unknown>
+}
+
+export const getQueryKey = (name: string) => {
+  const key = makeQueryKey(name)
+  const ns = key.filter((_) => _.startsWith("$"))
+  return ns[0] ? [ns[0]] : undefined
+}
+// TODO: more efficient invalidation, including args etc
+// return Effect.promise(() => queryClient.invalidateQueries({
+//   predicate: (_) => nses.includes(_.queryKey.filter((_) => _.startsWith("$")).join("/"))
+// }))
+/*
+            // const nses: string[] = []
+                // for (let i = 0; i < ns.length; i++) {
+                //   nses.push(ns.slice(0, i + 1).join("/"))
+                // }
+                */
+
 /**
  * Pass a function that returns an Effect, e.g from a client action, or an Effect
  * Returns a tuple with state ref and execution function which reports errors as Toast.
  */
 export const useSafeMutation: {
-  <I, E, A>(self: HandlerWithInput<I, A, E>, options?: { disableQueryInvalidation?: boolean }): readonly [
+  <I, E, A>(self: HandlerWithInput<I, A, E>, options?: MutationOptions<A, I>): readonly [
     Readonly<Ref<MutationResult<A, E>>>,
     (
       i: I,
       signal?: AbortSignal
     ) => Promise<Either.Either<A, E>>
   ]
-  <E, A>(self: Handler<A, E>, options?: { disableQueryInvalidation?: boolean }): readonly [
+  <E, A>(self: Handler<A, E>, options?: MutationOptions<A>): readonly [
     Readonly<Ref<MutationResult<A, E>>>,
     (
       signal?: AbortSignal
@@ -84,10 +109,16 @@ export const useSafeMutation: {
       | Handler<A, E>["handler"]
     name: string
   },
-  options?: { disableQueryInvalidation?: boolean }
+  options?: MutationOptions<A>
 ) => {
   const queryClient = useQueryClient()
   const state: Ref<MutationResult<A, E>> = ref<MutationResult<A, E>>({ _tag: "Initial" }) as any
+  const onSuccess = options?.onSuccess
+
+  const invalidateQueries = (
+    filters?: MaybeRefDeep<InvalidateQueryFilters> | undefined,
+    options?: MaybeRefDeep<InvalidateOptions> | undefined
+  ) => Effect.promise(() => queryClient.invalidateQueries(filters, options))
 
   function handleExit(exit: Exit.Exit<A, E>): Effect<Either.Either<A, E>, never, never> {
     return Effect.sync(() => {
@@ -132,24 +163,39 @@ export const useSafeMutation: {
         })
         .pipe(
           Effect.andThen(effect),
-          options?.disableQueryInvalidation ? (_) => _ : Effect.tap(() =>
-            Effect.suspend(() => {
-              const key = makeQueryKey(self.name)
-              const ns = key.filter((_) => _.startsWith("$"))
-              const nses: string[] = []
-              for (let i = 0; i < ns.length; i++) {
-                nses.push(ns.slice(0, i + 1).join("/"))
-              }
-              return Effect.promise(() => queryClient.invalidateQueries({ queryKey: [ns[0]] }))
-              // TODO: more efficient invalidation, including args etc
-              // return Effect.promise(() => queryClient.invalidateQueries({
-              //   predicate: (_) => nses.includes(_.queryKey.filter((_) => _.startsWith("$")).join("/"))
-              // }))
-            })
+          Effect.tap(() =>
+            Effect
+              .suspend(() => {
+                const queryKey = getQueryKey(self.name)
+
+                if (options?.queryInvalidation) {
+                  const opts = options.queryInvalidation(queryKey, self.name)
+                  if (!opts.length) {
+                    return Effect.void
+                  }
+                  return Effect
+                    .andThen(
+                      Effect.annotateCurrentSpan({ queryKey, opts }),
+                      Effect.forEach(opts, (_) => invalidateQueries(_.filters, _.options), { concurrency: "inherit" })
+                    )
+                    .pipe(Effect.withSpan("client.query.invalidation"))
+                }
+
+                if (!queryKey) return Effect.void
+
+                return Effect
+                  .andThen(
+                    Effect.annotateCurrentSpan({ queryKey }),
+                    invalidateQueries({ queryKey })
+                  )
+                  .pipe(Effect.withSpan("client.query.invalidation"))
+              })
           ),
           Effect.tapDefect(reportRuntimeError),
+          Effect.tap((i) => onSuccess ? Effect.promise(() => onSuccess(i)) : Effect.void),
           Effect.exit,
-          Effect.flatMap(handleExit)
+          Effect.flatMap(handleExit),
+          Effect.withSpan(`mutation ${self.name}`)
         ),
       dropUndefinedT({ signal })
     )

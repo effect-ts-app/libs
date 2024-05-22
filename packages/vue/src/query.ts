@@ -144,7 +144,7 @@ export const useSafeQuery_ = <I, A, E>(
           run.value(
             Effect
               .map(handler, (_) => _.body)
-              .pipe(Effect.tapDefect(reportRuntimeError)),
+              .pipe(Effect.tapDefect(reportRuntimeError), Effect.withSpan(`query ${q.name}`)),
             { signal }
           )
       }
@@ -156,7 +156,7 @@ export const useSafeQuery_ = <I, A, E>(
             .value(
               Effect
                 .map(handler(req.value), (_) => _.body)
-                .pipe(Effect.tapDefect(reportRuntimeError)),
+                .pipe(Effect.tapDefect(reportRuntimeError), Effect.withSpan(`query ${q.name}`)),
               { signal }
             )
       }
