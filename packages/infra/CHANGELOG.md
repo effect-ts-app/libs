@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.6.9
+
+### Patch Changes
+
+- ed065df: improve: failec error reporting handling
+
 ## 1.6.8
 
 ### Patch Changes
