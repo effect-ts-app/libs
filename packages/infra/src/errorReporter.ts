@@ -4,6 +4,22 @@ import { Cause, Effect, Option } from "effect-app"
 import { annotateSpanWithError, CauseException, ErrorReported } from "./errors.js"
 import { RequestContextContainer } from "./services/RequestContextContainer.js"
 
+const tryToJson = <T>(error: CauseException<T>) => {
+  try {
+    return error.toJSON()
+  } catch {
+    try {
+      return error.toString()
+    } catch (err) {
+      try {
+        return `Failed to convert error: ${err}`
+      } catch {
+        return `Failed to convert error: unknown failure`
+      }
+    }
+  }
+}
+
 export function reportError(
   name: string
 ) {
@@ -20,11 +36,14 @@ export function reportError(
       yield* $(
         Effect
           .logError("Reporting error", cause)
-          .pipe(Effect.annotateLogs(dropUndefined({
-            extras,
-            __cause__: error.toJSON(),
-            __error_name__: name
-          })))
+          .pipe(
+            Effect.annotateLogs(dropUndefined({
+              extras,
+              __cause__: tryToJson(error),
+              __error_name__: name
+            })),
+            Effect.catchAll(() => Effect.logError("Failed to log error"))
+          )
       )
       error[ErrorReported] = true
       return error
@@ -40,7 +59,7 @@ function reportSentry(
     const scope = new Sentry.Scope()
     if (context) scope.setContext("context", context as unknown as Record<string, unknown>)
     if (extras) scope.setContext("extras", extras)
-    scope.setContext("error", error.toJSON() as any)
+    scope.setContext("error", tryToJson(error) as any)
     Sentry.captureException(error, scope)
   }))
 }
@@ -58,11 +77,14 @@ export function logError<E>(
       yield* $(
         Effect
           .logWarning("Logging error", cause)
-          .pipe(Effect.annotateLogs(dropUndefined({
-            extras,
-            __cause__: error.toJSON(),
-            __error_name__: name
-          })))
+          .pipe(
+            Effect.annotateLogs(dropUndefined({
+              extras,
+              __cause__: tryToJson(error),
+              __error_name__: name
+            })),
+            Effect.catchAll(() => Effect.logError("Failed to log error"))
+          )
       )
     })
 }
