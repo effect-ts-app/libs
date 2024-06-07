@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 1.7.0
+
+### Minor Changes
+
+- 9cc6f86: update packages
+
+### Patch Changes
+
+- Updated dependencies [9cc6f86]
+  - @effect-app/infra-adapters@1.3.0
+  - effect-app@1.5.0
+  - @effect-app/schema@1.3.0
+  - @effect-app/core@1.3.0
+
 ## 1.6.9
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.75.0
+
+### Minor Changes
+
+- 9cc6f86: update packages
+
 ## 0.74.1
 
 ### Patch Changes
