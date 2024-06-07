@@ -14,14 +14,14 @@
   "devDependencies": {
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.10",
-    "fast-check": "~3.18.0",
+    "fast-check": "~3.19.0",
     "ts-toolbelt": "^9.6.0",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"
   },
   "peerDependencies": {
-    "@effect/schema": "^0.67.11",
-    "effect": "^3.2.3"
+    "@effect/schema": "^0.67.21",
+    "effect": "^3.3.0"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

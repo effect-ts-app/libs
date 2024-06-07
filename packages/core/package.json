@@ -12,13 +12,13 @@
     "validator": "^13.12.0"
   },
   "peerDependencies": {
-    "effect": "^3.2.3",
-    "@effect/platform": "^0.53.14"
+    "effect": "^3.3.0",
+    "@effect/platform": "^0.56.0"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.10",
-    "@babel/cli": "^7.24.5",
+    "@babel/cli": "^7.24.7",
     "ts-toolbelt": "^9.6.0",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"

@@ -9,21 +9,21 @@
     "nanoid": "^5.0.7",
     "path-parser": "^6.1.0",
     "query-string": "^9.0.0",
-    "ts-pattern": "^5.1.1",
+    "ts-pattern": "^5.1.2",
     "uuid": "^9.0.1",
     "validator": "^13.12.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.53.14",
-    "effect": "^3.2.3"
+    "@effect/platform": "^0.56.0",
+    "effect": "^3.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.24.5",
+    "@babel/cli": "^7.24.7",
     "@faker-js/faker": "^8.4.1",
-    "@types/node": "~20.12.12",
+    "@types/node": "~20.14.2",
     "@types/uuid": "^9.0.8",
     "@types/validator": "^13.11.10",
-    "fast-check": "~3.18.0",
+    "fast-check": "~3.19.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"
