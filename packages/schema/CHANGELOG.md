@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.3.1
+
+### Patch Changes
+
+- b48c630: fix
+
 ## 1.3.0
 
 ### Minor Changes
