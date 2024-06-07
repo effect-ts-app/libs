@@ -1,0 +1,26 @@
+diff --git a/lib/tsc.js b/lib/tsc.js
+index 0314c27f7850c77246a46a5a46570ae72faab5ba..68d7cce35797900f2c4452a0593673182f6d46bf 100644
+--- a/lib/tsc.js
++++ b/lib/tsc.js
+@@ -12431,7 +12431,7 @@ function isInternalDeclaration(node, sourceFile) {
+ // src/compiler/utilities.ts
+ var resolvingEmptyArray = [];
+ var externalHelpersModuleNameText = "tslib";
+-var defaultMaximumTruncationLength = 160;
++var defaultMaximumTruncationLength = 3200;
+ var noTruncationMaximumTruncationLength = 1e6;
+ function getDeclarationOfKind(symbol, kind) {
+   const declarations = symbol.declarations;
+diff --git a/lib/typescript.js b/lib/typescript.js
+index 86aeb338c4a3c4f0459230da616038e84e5aba18..f928f222fc1090aab4c4726654223c0d9da8c28d 100644
+--- a/lib/typescript.js
++++ b/lib/typescript.js
+@@ -16204,7 +16204,7 @@ function isInternalDeclaration(node, sourceFile) {
+ // src/compiler/utilities.ts
+ var resolvingEmptyArray = [];
+ var externalHelpersModuleNameText = "tslib";
+-var defaultMaximumTruncationLength = 160;
++var defaultMaximumTruncationLength = 3200;
+ var noTruncationMaximumTruncationLength = 1e6;
+ function getDeclarationOfKind(symbol, kind) {
+   const declarations = symbol.declarations;

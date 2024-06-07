@@ -5,7 +5,7 @@
     "patchedDependencies": {
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
-      "typescript@5.4.5": "patches/typescript@5.4.5.patch"
+      "typescript@5.5.1-rc": "patches/typescript@5.5.1-rc.patch"
     }
   },
   "engines": {
