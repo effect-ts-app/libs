@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.5.1
+
+### Patch Changes
+
+- 8438eed: fix ConfigSecretURL
+
 ## 1.5.0
 
 ### Minor Changes
