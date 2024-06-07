@@ -1,7 +1,7 @@
 /**
  * @since 1.0.0
  */
-import type { Equal } from "@effect-app/core"
+import type { Equal, Redacted } from "@effect-app/core"
 import { Config } from "@effect-app/core"
 import type * as Chunk from "effect/Chunk"
 import * as Either from "effect/Either"
@@ -25,7 +25,7 @@ import * as internal from "./internal/configSecretURL.js"
  * @since 1.0.0
  * @category models
  */
-export interface SecretURL extends SecretURL.Proto, Equal.Equal {
+export interface SecretURL extends Redacted.Redacted, SecretURL.Proto, Equal.Equal {
   /** @internal */
   readonly raw: Array<number>
 }
@@ -44,6 +44,7 @@ export declare namespace SecretURL {
   /**
    * @since 1.0.0
    * @category models
+   * @deprecated
    */
   export interface Proto {
     readonly [SecretTypeId]: SecretTypeId
@@ -54,6 +55,7 @@ export declare namespace SecretURL {
  * @tsplus static SecretURL.Ops isSecretURL
  * @since 1.0.0
  * @category refinements
+ * @deprecated
  */
 export const isSecretURL: (u: unknown) => u is SecretURL = internal.isSecretURL
 

@@ -1,25 +1,8 @@
-import { Equal, Hash } from "@effect-app/core"
+import { Redacted } from "@effect-app/core"
 import * as Chunk from "effect/Chunk"
-import { pipe } from "effect/Function"
 import { SecretTypeId } from "effect/Secret"
 import type * as SecretURL from "../SecretURL.js"
 
-/** @internal */
-const SecretURLSymbolKey = "effect/Secret" // "effect-app/COnfigSecretURL"
-
-/** @internal */
-export const proto = {
-  [SecretTypeId]: SecretTypeId,
-  [Hash.symbol](this: SecretURL.SecretURL): number {
-    return pipe(
-      Hash.hash(SecretURLSymbolKey),
-      Hash.combine(Hash.hash(this.raw))
-    )
-  },
-  [Equal.symbol](this: SecretURL.SecretURL, that: unknown): boolean {
-    return isSecretURL(that) && Equal.equals(this.raw, that.raw)
-  }
-}
 
 /** @internal */
 export const isSecretURL = (u: unknown): u is SecretURL.SecretURL => {
@@ -28,7 +11,7 @@ export const isSecretURL = (u: unknown): u is SecretURL.SecretURL => {
 
 /** @internal */
 export const make = (bytes: Array<number>): SecretURL.SecretURL => {
-  const secret = Object.create(proto)
+  const secret = Object.assign(Redacted.make(bytes.map((byte) => String.fromCharCode(byte)).join("")), {[SecretTypeId]: SecretTypeId, raw: undefined as any} as const)
   let protocol = "unknown"
   try {
     const url = new URL(bytes.map((byte) => String.fromCharCode(byte)).join(""))
