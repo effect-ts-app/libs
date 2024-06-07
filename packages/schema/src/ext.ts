@@ -164,7 +164,7 @@ const makeOpt = (self: S.PropertySignature.Any, exact?: boolean) => {
   const ast = self.ast
   switch (ast._tag) {
     case "PropertySignatureDeclaration": {
-      return new (S as any).PropertySignatureImpl(
+      return S.makePropertySignature(
         new S.PropertySignatureDeclaration(
           exact ? ast.type : S.UndefinedOr(S.make(ast.type)).ast,
           true,
@@ -175,7 +175,7 @@ const makeOpt = (self: S.PropertySignature.Any, exact?: boolean) => {
       )
     }
     case "PropertySignatureTransformation": {
-      return new (S as any).PropertySignatureImpl(
+      return S.makePropertySignature(
         new S.PropertySignatureTransformation(
           new S.FromPropertySignature(
             exact ? ast.from.type : S.UndefinedOr(S.make(ast.from.type)).ast,
