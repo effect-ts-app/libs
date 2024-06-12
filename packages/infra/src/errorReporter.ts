@@ -42,7 +42,8 @@ export function reportError(
               __cause__: tryToJson(error),
               __error_name__: name
             })),
-            Effect.catchAll(() => Effect.logError("Failed to log error"))
+            Effect.catchAllCause((cause) => Effect.logError("Failed to log error", cause)),
+            Effect.catchAllCause(() => Effect.logError("Failed to log error cause"))
           )
       )
       error[ErrorReported] = true
@@ -83,7 +84,8 @@ export function logError<E>(
               __cause__: tryToJson(error),
               __error_name__: name
             })),
-            Effect.catchAll(() => Effect.logError("Failed to log error"))
+            Effect.catchAllCause((cause) => Effect.logError("Failed to log error", cause)),
+            Effect.catchAllCause(() => Effect.logError("Failed to log error cause"))
           )
       )
     })
