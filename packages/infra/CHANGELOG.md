@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.7.3
+
+### Patch Changes
+
+- 5a840c6: fix failing error report
+
 ## 1.7.2
 
 ### Patch Changes
