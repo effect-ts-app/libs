@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.5.3
+
+### Patch Changes
+
+- 0e93dfc: fix namespace cache invalidate
+- Updated dependencies [0e93dfc]
+  - @effect-app/vue@1.5.3
+
 ## 1.5.2
 
 ### Patch Changes
