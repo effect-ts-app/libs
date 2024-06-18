@@ -71,7 +71,9 @@ export interface MutationOptions<A, I = void> {
 export const getQueryKey = (name: string) => {
   const key = makeQueryKey(name)
   const ns = key.filter((_) => _.startsWith("$"))
-  return ns.length ? ns : undefined
+  // we invalidate the parent namespace e.g $project/$configuration.get, we invalidate $project
+  // for $project/$configuration/$something.get, we invalidate $project/$configuration
+  return ns.length ? ns.length > 1 ? ns.slice(0, ns.length - 1) : ns : undefined
 }
 // TODO: more efficient invalidation, including args etc
 // return Effect.promise(() => queryClient.invalidateQueries({
