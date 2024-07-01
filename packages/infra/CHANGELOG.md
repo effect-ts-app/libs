@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.9.1
+
+### Patch Changes
+
+- m
+
 ## 1.9.0
 
 ### Minor Changes
