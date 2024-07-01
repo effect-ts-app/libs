@@ -35,12 +35,12 @@ const cache = new Map<any, Client<any>>()
 
 export type Client<M extends Requests> =
   & RequestHandlers<
-    ApiConfig | HttpClient.Client.Default,
+    ApiConfig | HttpClient.HttpClient.Default,
     SupportedErrors | FetchError | ResError,
     M
   >
   & RequestHandlersE<
-    ApiConfig | HttpClient.Client.Default,
+    ApiConfig | HttpClient.HttpClient.Default,
     SupportedErrors | FetchError | ResError,
     M
   >

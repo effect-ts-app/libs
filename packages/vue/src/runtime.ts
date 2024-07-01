@@ -1,4 +1,4 @@
-import * as HttpClient from "@effect/platform/Http/Client"
+import * as HttpClient from "@effect/platform/HttpClient"
 import { Config, Exit, Runtime } from "effect"
 import { Effect, Layer, Logger } from "effect-app"
 import { ApiConfig } from "effect-app/client"
@@ -46,7 +46,7 @@ export function makeAppRuntime<R, E, A>(layer: Layer<A, E, R>) {
   })
 }
 
-export function initializeSync<E, A>(layer: Layer<A | ApiConfig | HttpClient.Client.Default, E, never>) {
+export function initializeSync<E, A>(layer: Layer<A | ApiConfig | HttpClient.HttpClient.Default, E, never>) {
   const { clean, runtime } = Effect.runSync(makeAppRuntime(layer))
   initRuntime(runtime)
   return {
@@ -55,7 +55,7 @@ export function initializeSync<E, A>(layer: Layer<A | ApiConfig | HttpClient.Cli
   }
 }
 
-export function initializeAsync<E, A>(layer: Layer<A | ApiConfig | HttpClient.Client.Default, E, never>) {
+export function initializeAsync<E, A>(layer: Layer<A | ApiConfig | HttpClient.HttpClient.Default, E, never>) {
   return Effect
     .runPromise(makeAppRuntime(layer))
     .then(({ clean, runtime }) => {

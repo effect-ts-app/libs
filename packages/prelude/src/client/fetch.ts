@@ -19,7 +19,7 @@ import {
   ValidationError
 } from "./errors.js"
 
-import type { ResponseError } from "@effect/platform/Http/ClientError"
+import type { ResponseError } from "@effect/platform/HttpClientError"
 import { HttpClient, HttpClientRequest } from "../http.js"
 import { S } from "../lib.js"
 
@@ -31,7 +31,7 @@ export class ResError {
 }
 
 const getClient = Effect.flatMap(
-  HttpClient.Client,
+  HttpClient.HttpClient,
   (defaultClient) =>
     Effect.map(ApiConfig.Tag, ({ apiUrl, headers }) =>
       defaultClient

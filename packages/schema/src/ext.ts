@@ -32,7 +32,7 @@ export function Struct<Fields extends S.Struct.Fields, const Records extends S.I
   fields: Fields,
   ...records: Records
 ): S.TypeLiteral<Fields, Records> {
-  return S.Struct(fields, ...records as any).pipe(S.batching(true))
+  return S.Struct(fields, ...records as any).pipe(S.annotations({ batching: true }))
 }
 
 export declare namespace Struct {
@@ -51,7 +51,7 @@ export function Tuple<
 >(elements: Elements, ...rest: Rest): S.TupleType<Elements, Rest>
 export function Tuple<Elements extends S.TupleType.Elements>(...elements: Elements): S.Tuple<Elements>
 export function Tuple(...args: ReadonlyArray<any>): any {
-  return S.Tuple(...args).pipe(S.batching(true))
+  return S.Tuple(...args).pipe(S.annotations({ batching: true }))
 }
 
 /**
@@ -60,7 +60,7 @@ export function Tuple(...args: ReadonlyArray<any>): any {
 export function NonEmptyArray<Value extends Schema.Any>(value: Value): S.NonEmptyArray<Value> {
   return pipe(
     S.NonEmptyArray(value),
-    S.batching(true)
+    S.annotations({ batching: true })
   )
 }
 
@@ -70,7 +70,7 @@ export function NonEmptyArray<Value extends Schema.Any>(value: Value): S.NonEmpt
 export function Array<Value extends Schema.Any>(value: Value) {
   return pipe(
     S.Array(value),
-    S.batching(true),
+    S.annotations({ batching: true }),
     (s) => Object.assign(s, { withDefault: s.pipe(withDefaultConstructor(() => [])) })
   )
 }
@@ -81,7 +81,7 @@ export function Array<Value extends Schema.Any>(value: Value) {
 export const ReadonlySet = <Value extends Schema.Any>(value: Value) =>
   pipe(
     S.ReadonlySet(value),
-    S.batching(true),
+    S.annotations({ batching: true }),
     (s) => Object.assign(s, { withDefault: s.pipe(withDefaultConstructor(() => new Set<S.Schema.Type<Value>>())) })
   )
 
@@ -94,7 +94,7 @@ export const ReadonlyMap = <K extends Schema.Any, V extends Schema.Any>(pair: {
 }) =>
   pipe(
     S.ReadonlyMap(pair),
-    S.batching(true),
+    S.annotations({ batching: true }),
     (s) => Object.assign(s, { withDefault: s.pipe(withDefaultConstructor(() => new Map())) })
   )
 

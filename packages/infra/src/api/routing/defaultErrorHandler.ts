@@ -1,6 +1,6 @@
 import { logError } from "@effect-app/infra/errorReporter"
 import type { Schema } from "@effect-app/schema"
-import { setBody, setStatus } from "@effect/platform/Http/ServerResponse"
+import { setBody, setStatus } from "@effect/platform/HttpServerResponse"
 import { Cause, Data, Effect, S, Schedule } from "effect-app"
 import type { SupportedErrors } from "effect-app/client/errors"
 import {
@@ -31,9 +31,9 @@ export class JWTError extends Data.TaggedClass("JWTError")<{
 const logRequestError = logError("Request")
 
 export function defaultBasicErrorHandler<R>(
-  _req: HttpServerRequest.ServerRequest,
-  res: HttpServerResponse.ServerResponse,
-  r2: Effect<HttpServerResponse.ServerResponse, ValidationError, R>
+  _req: HttpServerRequest.HttpServerRequest,
+  res: HttpServerResponse.HttpServerResponse,
+  r2: Effect<HttpServerResponse.HttpServerResponse, ValidationError, R>
 ) {
   const sendError = (code: number) => (body: unknown) =>
     Effect.sync(() => setBody(res, HttpBody.unsafeJson(body)).pipe(setStatus(code)))
@@ -59,9 +59,9 @@ const optimisticConcurrencySchedule = Schedule.once
   && Schedule.recurWhile<SupportedErrors | JWTError>((a) => a._tag === "OptimisticConcurrencyException")
 
 export function defaultErrorHandler<R>(
-  req: HttpServerRequest.ServerRequest,
-  res: HttpServerResponse.ServerResponse,
-  r2: Effect<HttpServerResponse.ServerResponse, SupportedErrors | JWTError, R>
+  req: HttpServerRequest.HttpServerRequest,
+  res: HttpServerResponse.HttpServerResponse,
+  r2: Effect<HttpServerResponse.HttpServerResponse, SupportedErrors | JWTError, R>
 ) {
   const r3 = req.method === "PATCH"
     ? Effect.retry(r2, optimisticConcurrencySchedule)

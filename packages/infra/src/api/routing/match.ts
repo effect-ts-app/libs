@@ -51,13 +51,13 @@ export function match<
     Config
   >,
   errorHandler: <R>(
-    req: HttpServerRequest.ServerRequest,
-    res: HttpServerResponse.ServerResponse,
-    r2: Effect<HttpServerResponse.ServerResponse, ValidationError | MiddlewareE | ResE, R>
+    req: HttpServerRequest.HttpServerRequest,
+    res: HttpServerResponse.HttpServerResponse,
+    r2: Effect<HttpServerResponse.HttpServerResponse, ValidationError | MiddlewareE | ResE, R>
   ) => Effect<
-    HttpServerResponse.ServerResponse,
+    HttpServerResponse.HttpServerResponse,
     never,
-    Exclude<RErr | R, HttpServerRequest.ServerRequest | HttpRouter.RouteContext | Scope>
+    Exclude<RErr | R, HttpServerRequest.HttpServerRequest | HttpRouter.RouteContext | Scope>
   >,
   middleware?: Middleware<
     R,
@@ -115,8 +115,7 @@ export function match<
       requestHandler.Request.method,
       requestHandler.Request.path,
       handler,
-      undefined,
-      requestHandler.Request.method !== "GET" // we don't want commands to be interruptible
+      { uninterruptible: requestHandler.Request.method !== "GET" } // we don't want commands to be interruptible
     )
     // TODO
     // rdesc.push(makeRouteDescriptor(

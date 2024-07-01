@@ -111,17 +111,17 @@ export function makeRequestHandler<
     Config
   >,
   errorHandler: <R>(
-    req: HttpServerRequest.ServerRequest,
-    res: HttpServerResponse.ServerResponse,
-    r2: Effect<HttpServerResponse.ServerResponse, ValidationError | ResE | MiddlewareE, R>
-  ) => Effect<HttpServerResponse.ServerResponse, never, RErr | R>,
+    req: HttpServerRequest.HttpServerRequest,
+    res: HttpServerResponse.HttpServerResponse,
+    r2: Effect<HttpServerResponse.HttpServerResponse, ValidationError | ResE | MiddlewareE, R>
+  ) => Effect<HttpServerResponse.HttpServerResponse, never, RErr | R>,
   middlewareLayer?: Layer<PR, MiddlewareE, R2>
 ): Effect<
-  HttpServerResponse.ServerResponse,
+  HttpServerResponse.HttpServerResponse,
   HttpServerError.RequestError,
   | HttpRouter.RouteContext
   | HttpServerRequest.ParsedSearchParams
-  | HttpServerRequest.ServerRequest
+  | HttpServerRequest.HttpServerRequest
   | RequestContextContainer
   | ContextMapContainer
   | RequestFiberSet
@@ -154,7 +154,7 @@ export function makeRequestHandler<
         rcx: HttpRouter.RouteContext,
         searchParms: HttpServerRequest.ParsedSearchParams,
         req: Effect.flatMap(
-          HttpServerRequest.ServerRequest,
+          HttpServerRequest.HttpServerRequest,
           (req) => req.json.pipe(Effect.map((body) => ({ body, headers: req.headers })))
         )
       }),
@@ -171,7 +171,7 @@ export function makeRequestHandler<
 
   return Effect
     .gen(function*($) {
-      const req = yield* $(HttpServerRequest.ServerRequest)
+      const req = yield* $(HttpServerRequest.HttpServerRequest)
       const res = HttpServerResponse
         .empty()
         .pipe((_) => req.method === "GET" ? HttpServerResponse.setHeader(_, "Cache-Control", "no-store") : _)
@@ -247,7 +247,7 @@ export function makeRequestHandler<
                           )
                       )
                     ) as Effect<
-                      HttpServerResponse.ServerResponse,
+                      HttpServerResponse.HttpServerResponse,
                       ValidationError | ResE,
                       Exclude<R, EnforceNonEmptyRecord<M>>
                     >
@@ -256,7 +256,7 @@ export function makeRequestHandler<
                     ? Effect.provide(handleRequest, middlewareLayer)
                     // PR is not relevant here
                     : (handleRequest as Effect<
-                      HttpServerResponse.ServerResponse,
+                      HttpServerResponse.HttpServerResponse,
                       ResE | MiddlewareE | ValidationError,
                       Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>
                     >)

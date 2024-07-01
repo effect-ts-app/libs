@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { tuple } from "@effect-app/core/Function"
 import * as Result from "@effect-rx/rx/Result"
-import type * as HttpClient from "@effect/platform/Http/Client"
+import type * as HttpClient from "@effect/platform/HttpClient"
 import type { InvalidateOptions, InvalidateQueryFilters } from "@tanstack/vue-query"
 import { useQueryClient } from "@tanstack/vue-query"
 import { Cause, Effect, Exit, Option } from "effect-app"
@@ -55,10 +55,10 @@ export interface MutationError<E> {
 export type MutationResult<A, E> = MutationInitial | MutationLoading | MutationSuccess<A> | MutationError<E>
 
 type HandlerWithInput<I, A, E> = {
-  handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.Client.Default>
+  handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient.Default>
   name: string
 }
-type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.Client.Default>; name: string }
+type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.HttpClient.Default>; name: string }
 
 export interface MutationOptions<A, I = void> {
   queryInvalidation?: (defaultKey: string[] | undefined, name: string) => {
@@ -148,7 +148,7 @@ export const useSafeMutation: {
   }
 
   const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
-    let effect: Effect<A, E, ApiConfig | HttpClient.Client.Default>
+    let effect: Effect<A, E, ApiConfig | HttpClient.HttpClient.Default>
     let signal: AbortSignal | undefined
     if (Effect.isEffect(self.handler)) {
       effect = self.handler as any

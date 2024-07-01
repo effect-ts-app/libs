@@ -1,10 +1,10 @@
 import type { Schema } from "@effect-app/schema"
-import type { ClientResponse } from "@effect/platform/Http/ClientResponse"
-import type { Headers } from "@effect/platform/Http/Headers"
+import type { Headers } from "@effect/platform/Headers"
+import type { HttpClientResponse } from "@effect/platform/HttpClientResponse"
 import { HttpClient, HttpClientError, HttpClientRequest, HttpHeaders } from "./http.js"
 import { Effect, Option, S } from "./lib.js"
 
-export interface ResponseWithBody<A> extends Pick<ClientResponse, "headers" | "status" | "remoteAddress"> {
+export interface ResponseWithBody<A> extends Pick<HttpClientResponse, "headers" | "status" | "remoteAddress"> {
   readonly body: A
 }
 
@@ -15,7 +15,7 @@ export interface ResponseWithBody<A> extends Pick<ClientResponse, "headers" | "s
  * @tsplus getter effect/platform/Http/ClientResponse responseWithJsonBody
  */
 export const responseWithJsonBody = (
-  response: ClientResponse
+  response: HttpClientResponse
 ) =>
   Effect.map(response.json, (body): ResponseWithBody<unknown> => ({
     body,
@@ -28,7 +28,7 @@ export const responseWithJsonBody = (
  * @tsplus fluent effect/platform/Http/Client schemaJsonBody
  */
 export const schemaJsonBody = <RS, To, From, E, R>(
-  client: HttpClient.Client<ClientResponse, E, R>,
+  client: HttpClient.HttpClient<HttpClientResponse, E, R>,
   schema: Schema<To, From, RS>
 ) => {
   return HttpClient.mapEffect(client, (_) => Effect.flatMap(_.json, S.decodeUnknown(schema)))
@@ -38,7 +38,7 @@ export const schemaJsonBody = <RS, To, From, E, R>(
  * @tsplus fluent effect/platform/Http/Client schemaJsonBodyUnsafe
  */
 export const schemaJsonBodyUnsafe = <To, From, E, R>(
-  client: HttpClient.Client<ClientResponse, E, R>,
+  client: HttpClient.HttpClient<HttpClientResponse, E, R>,
   schema: Schema<To, From>
 ) => {
   return HttpClient.mapEffect(client, (_) => Effect.map(_.json, S.decodeUnknownSync(schema)))
@@ -58,7 +58,7 @@ export const responseWithSchemaBody = <
   E,
   R
 >(
-  client: HttpClient.Client<ClientResponse, E, R>,
+  client: HttpClient.HttpClient<HttpClientResponse, E, R>,
   schema: Schema<To, From, RS>
 ) => {
   return HttpClient.mapEffect(
@@ -72,7 +72,7 @@ export const responseWithSchemaBody = <
 }
 
 /** @tsplus getter effect/platform/Http/Client demandJson */
-export const demandJson = <E, R>(client: HttpClient.Client<ClientResponse, E, R>) =>
+export const demandJson = <E, R>(client: HttpClient.HttpClient<HttpClientResponse, E, R>) =>
   HttpClient
     .mapRequest(client, (_) => HttpClientRequest.acceptJson(_))
     .pipe(HttpClient.transform((r, request) =>
