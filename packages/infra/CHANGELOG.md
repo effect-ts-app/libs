@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.9.0
+
+### Minor Changes
+
+- d7a4881: Add persistent Operations
+
 ## 1.8.0
 
 ### Minor Changes
