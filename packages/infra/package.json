@@ -384,6 +384,16 @@
         "default": "./_cjs/services/Operations.cjs"
       }
     },
+    "./services/OperationsRepo": {
+      "import": {
+        "types": "./dist/services/OperationsRepo.d.ts",
+        "default": "./dist/services/OperationsRepo.js"
+      },
+      "require": {
+        "types": "./dist/services/OperationsRepo.d.ts",
+        "default": "./_cjs/services/OperationsRepo.cjs"
+      }
+    },
     "./services/QueueMaker/errors": {
       "import": {
         "types": "./dist/services/QueueMaker/errors.d.ts",
