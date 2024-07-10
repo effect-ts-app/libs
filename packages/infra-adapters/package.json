@@ -19,12 +19,12 @@
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
     "strip-ansi": "^7.1.0",
-    "typescript": "^5.5.2"
+    "typescript": "^5.5.3"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.58.17",
-    "@effect/schema": "^0.68.15",
-    "effect": "^3.4.6"
+    "@effect/platform": "^0.58.21",
+    "@effect/schema": "^0.68.18",
+    "effect": "^3.4.8"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

@@ -13,11 +13,11 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.24.7",
-    "@types/node": "~20.14.9",
+    "@types/node": "~20.14.10",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.2",
-    "vitest": "^1.6.0"
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.1"
   },
   "typesVersions": {
     "*": {
