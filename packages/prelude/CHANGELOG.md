@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.8.0
+
+### Minor Changes
+
+- d12fc1a: improve: expose interrupt, not waitUntilEmpty on FiberSets
+
 ## 1.7.0
 
 ### Minor Changes

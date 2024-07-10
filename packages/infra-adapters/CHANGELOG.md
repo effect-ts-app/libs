@@ -1,5 +1,16 @@
 # @effect-app/infra-adapters
 
+## 1.6.0
+
+### Minor Changes
+
+- d12fc1a: improve: expose interrupt, not waitUntilEmpty on FiberSets
+
+### Patch Changes
+
+- Updated dependencies [d12fc1a]
+  - effect-app@1.8.0
+
 ## 1.5.1
 
 ### Patch Changes
