@@ -12,25 +12,25 @@ const make = Effect.gen(function*($) {
     Effect.andThen((count) => Effect.logInfo(`Joining ${count} current fibers on the RequestFiberSet`)),
     Effect.andThen(FiberSet.join(set))
   )
-  const waitUntilEmpty = Effect.gen(function*($) {
-    const currentSize = yield* $(FiberSet.size(set))
-    if (currentSize === 0) {
-      return
-    }
-    yield* $(Effect.logInfo("Waiting RequestFiberSet to be empty: " + currentSize))
-    while ((yield* $(FiberSet.size(set))) > 0) yield* $(Effect.sleep("250 millis"))
-    yield* $(Effect.logDebug("RequestFiberSet is empty"))
-  })
   const run = FiberSet.run(set)
-
   const register = <A, E, R>(self: Effect<A, E, R>) =>
     self.pipe(Effect.fork, Effect.tap(add), Effect.andThen(Fiber.join))
 
-  yield* Effect.addFinalizer(() => Effect.uninterruptible(waitUntilEmpty))
+  // const waitUntilEmpty = Effect.gen(function*($) {
+  //   const currentSize = yield* $(FiberSet.size(set))
+  //   if (currentSize === 0) {
+  //     return
+  //   }
+  //   yield* $(Effect.logInfo("Waiting RequestFiberSet to be empty: " + currentSize))
+  //   while ((yield* $(FiberSet.size(set))) > 0) yield* $(Effect.sleep("250 millis"))
+  //   yield* $(Effect.logDebug("RequestFiberSet is empty"))
+  // })
+  // TODO: loop and interrupt all fibers in the set continuously?
+  const interrupt = Fiber.interruptAll(set)
 
   return {
+    interrupt,
     join,
-    waitUntilEmpty,
     run,
     add,
     addAll,

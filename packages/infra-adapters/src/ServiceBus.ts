@@ -29,8 +29,7 @@ function makeSender(queueName: string) {
     return yield* $(
       Effect.acquireRelease(
         Effect.sync(() => serviceBusClient.createSender(queueName)),
-        (subscription) =>
-          RequestFiberSet.waitUntilEmpty.pipe(Effect.andThen(Effect.promise(() => subscription.close())))
+        (subscription) => Effect.promise(() => subscription.close())
       )
     )
   })
