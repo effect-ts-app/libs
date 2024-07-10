@@ -9,7 +9,7 @@ const make = Effect.gen(function*($) {
   const addAll = (fibers: readonly Fiber.RuntimeFiber<any, any>[]) =>
     Effect.sync(() => fibers.forEach((_) => FiberSet.unsafeAdd(set, _)))
   const join = FiberSet.size(set).pipe(
-    Effect.andThen((count) => Effect.logDebug(`Joining ${count} current fibers on the RequestFiberSet`)),
+    Effect.andThen((count) => Effect.logInfo(`Joining ${count} current fibers on the RequestFiberSet`)),
     Effect.andThen(FiberSet.join(set))
   )
   const waitUntilEmpty = Effect.gen(function*($) {
@@ -17,7 +17,7 @@ const make = Effect.gen(function*($) {
     if (currentSize === 0) {
       return
     }
-    yield* $(Effect.logDebug("Waiting RequestFiberSet to be empty: " + currentSize))
+    yield* $(Effect.logInfo("Waiting RequestFiberSet to be empty: " + currentSize))
     while ((yield* $(FiberSet.size(set))) > 0) yield* $(Effect.sleep("250 millis"))
     yield* $(Effect.logDebug("RequestFiberSet is empty"))
   })

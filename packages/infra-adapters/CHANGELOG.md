@@ -1,5 +1,12 @@
 # @effect-app/infra-adapters
 
+## 1.5.1
+
+### Patch Changes
+
+- improve: forkDaemonReport\* should run it's content uninterruptible
+  improve: one should wait for the RequestFiberSet to become empty.
+
 ## 1.5.0
 
 ### Minor Changes
