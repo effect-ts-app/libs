@@ -42,6 +42,7 @@ export function forkDaemonReportRequest<R, E, A>(self: Effect<A, E, R>) {
   return self.pipe(
     reportRequestError,
     setRootParentSpan,
+    Effect.uninterruptible,
     RequestFiberSet.run
   )
 }
@@ -60,6 +61,7 @@ export function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<A, E, R>
     .pipe(
       reportUnknownRequestError,
       setRootParentSpan,
+      Effect.uninterruptible,
       RequestFiberSet.run
     )
 }

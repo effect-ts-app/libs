@@ -24,6 +24,7 @@ export function forkDaemonReportQueue<A, E, R>(self: Effect<A, E, R>) {
     Effect.asVoid,
     Effect.catchAllCause(reportNonInterruptedFailureCause({})),
     setRootParentSpan,
+    Effect.uninterruptible,
     MainFiberSet.run
   )
 }
