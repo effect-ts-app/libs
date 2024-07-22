@@ -28,10 +28,10 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "~20.14.10",
+    "@types/node": "~20.14.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3",
-    "vitest": "^2.0.1"
+    "vitest": "^2.0.4"
   },
   "typesVersions": {
     "*": {

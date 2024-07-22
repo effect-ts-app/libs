@@ -12,12 +12,12 @@
     "node-watch": "^0.7.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.24.7",
-    "@types/node": "~20.14.10",
+    "@babel/cli": "^7.24.8",
+    "@types/node": "~20.14.11",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3",
-    "vitest": "^2.0.1"
+    "vitest": "^2.0.4"
   },
   "typesVersions": {
     "*": {

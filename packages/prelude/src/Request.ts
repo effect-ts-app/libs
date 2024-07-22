@@ -87,7 +87,8 @@ export const demandJson = <E, R>(client: HttpClient.HttpClient<HttpClientRespons
               request,
               response,
               reason: "Decode",
-              error: "not json response: " + Option.getOrUndefined(HttpHeaders.get(response.headers, "Content-Type"))
+              description: "not json response: "
+                + Option.getOrUndefined(HttpHeaders.get(response.headers, "Content-Type"))
             })
           ))
     ))

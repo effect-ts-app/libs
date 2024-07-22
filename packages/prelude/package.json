@@ -16,20 +16,20 @@
     "validator": "^13.12.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.24.7",
+    "@babel/cli": "^7.24.8",
     "@faker-js/faker": "^8.4.1",
-    "@types/node": "~20.14.10",
+    "@types/node": "~20.14.11",
     "@types/uuid": "^10.0.0",
     "@types/validator": "^13.12.0",
-    "fast-check": "~3.19.0",
+    "fast-check": "~3.20.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3",
-    "vitest": "^2.0.1"
+    "vitest": "^2.0.4"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.58.21",
-    "effect": "^3.4.8",
-    "@effect/schema": "^0.68.18"
+    "@effect/platform": "^0.59.2",
+    "effect": "^3.5.6",
+    "@effect/schema": "^0.68.26"
   },
   "typesVersions": {
     "*": {

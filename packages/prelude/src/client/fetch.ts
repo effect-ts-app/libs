@@ -128,7 +128,7 @@ const getClient = Effect.flatMap(
                       }
                     } as HttpResponseError<unknown>)
                   )),
-            "RequestError": (err) => Effect.fail({ _tag: "HttpErrorRequest", error: err.error } as HttpRequestError)
+            "RequestError": (err) => Effect.fail({ _tag: "HttpErrorRequest", error: err.cause } as HttpRequestError)
           })
         ))
 )
