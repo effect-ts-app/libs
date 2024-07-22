@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 1.7.2
+
+### Patch Changes
+
+- f569681: update packages
+- Updated dependencies [f569681]
+  - effect-app@1.8.1
+  - @effect-app/schema@1.5.1
+  - @effect-app/core@1.5.1
+  - @effect-app/vue@1.7.2
+
 ## 1.7.1
 
 ### Patch Changes
