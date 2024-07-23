@@ -7,7 +7,7 @@
     "@effect-app/core": "workspace:*",
     "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "query-string": "^9.0.0"
+    "query-string": "^9.1.0"
   },
   "devDependencies": {
     "@azure/cosmos": "^4.0.0",
@@ -19,12 +19,12 @@
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
     "strip-ansi": "^7.1.0",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.59.2",
-    "@effect/schema": "^0.68.26",
-    "effect": "^3.5.6"
+    "@effect/platform": "^0.59.3",
+    "@effect/schema": "^0.68.27",
+    "effect": "^3.5.7"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

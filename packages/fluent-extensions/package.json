@@ -8,14 +8,14 @@
     "date-fns": "^3.6.0",
     "nanoid": "^5.0.7",
     "path-parser": "^6.1.0",
-    "query-string": "^9.0.0",
+    "query-string": "^9.1.0",
     "ts-pattern": "^5.2.0",
     "uuid": "^10.0.0",
     "validator": "^13.12.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.59.2",
-    "effect": "^3.5.6"
+    "@effect/platform": "^0.59.3",
+    "effect": "^3.5.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",
@@ -25,7 +25,7 @@
     "@types/validator": "^13.12.0",
     "fast-check": "~3.20.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.3",
+    "typescript": "^5.5.4",
     "vitest": "^2.0.4"
   },
   "typesVersions": {

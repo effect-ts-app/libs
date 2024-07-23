@@ -16,12 +16,12 @@
     "@types/validator": "^13.12.0",
     "fast-check": "~3.20.0",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "^5.5.3",
+    "typescript": "^5.5.4",
     "vitest": "^2.0.4"
   },
   "peerDependencies": {
-    "@effect/schema": "^0.68.26",
-    "effect": "^3.5.6"
+    "@effect/schema": "^0.68.27",
+    "effect": "^3.5.7"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",
