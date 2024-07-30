@@ -12,7 +12,7 @@ import { withDefaultConstructor, withDefaultMake } from "./ext.js"
 import { type B } from "./schema.js"
 import type { NonEmptyString255Brand, NonEmptyStringBrand } from "./strings.js"
 
-const nonEmptyString = S.String.pipe(S.nonEmpty())
+const nonEmptyString = S.String.pipe(S.nonEmptyString())
 
 /**
  * A string that is at least 1 character long and a maximum of 50.

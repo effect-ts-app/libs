@@ -4,11 +4,10 @@ import type { Simplify } from "effect/Types"
 import { fromBrand, nominal } from "./brand.js"
 import { withDefaultMake } from "./ext.js"
 
-const nonEmptyString = S.String.pipe(S.nonEmpty())
-
 export type NonEmptyStringBrand = B.Brand<"NonEmptyString">
 export type NonEmptyString = string & NonEmptyStringBrand
-export const NonEmptyString = nonEmptyString
+export const NonEmptyString = S
+  .NonEmptyString
   .pipe(
     fromBrand(nominal<NonEmptyString>(), {
       identifier: "NonEmptyString",
@@ -20,7 +19,8 @@ export const NonEmptyString = nonEmptyString
 
 export interface NonEmptyString64kBrand extends Simplify<B.Brand<"NonEmptyString64k"> & NonEmptyStringBrand> {}
 export type NonEmptyString64k = string & NonEmptyString64kBrand
-export const NonEmptyString64k = nonEmptyString
+export const NonEmptyString64k = S
+  .NonEmptyString
   .pipe(
     S.maxLength(64 * 1024),
     fromBrand(nominal<NonEmptyString64k>(), {
@@ -33,7 +33,8 @@ export const NonEmptyString64k = nonEmptyString
 
 export interface NonEmptyString2kBrand extends Simplify<B.Brand<"NonEmptyString2k"> & NonEmptyString64kBrand> {}
 export type NonEmptyString2k = string & NonEmptyString2kBrand
-export const NonEmptyString2k = nonEmptyString
+export const NonEmptyString2k = S
+  .NonEmptyString
   .pipe(
     S.maxLength(2 * 1024),
     fromBrand(nominal<NonEmptyString2k>(), {
@@ -46,7 +47,8 @@ export const NonEmptyString2k = nonEmptyString
 
 export interface NonEmptyString255Brand extends Simplify<B.Brand<"NonEmptyString255"> & NonEmptyString2kBrand> {}
 export type NonEmptyString255 = string & NonEmptyString255Brand
-export const NonEmptyString255 = nonEmptyString
+export const NonEmptyString255 = S
+  .NonEmptyString
   .pipe(
     S.maxLength(255),
     fromBrand(nominal<NonEmptyString255>(), {

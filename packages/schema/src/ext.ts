@@ -236,7 +236,7 @@ export function makeExactOptional<NER extends S.Struct.Fields>(
 } {
   return typedKeysOf(t).reduce((prev, cur) => {
     if (S.isSchema(t[cur])) {
-      prev[cur] = S.optional(t[cur] as any, { exact: true })
+      prev[cur] = S.optionalWith(t[cur] as any, { exact: true })
     } else {
       prev[cur] = makeOpt(t[cur] as any)
     }
@@ -251,7 +251,8 @@ export const transformTo = <To extends Schema.Any, From extends Schema.Any>(
   decode: (
     fromA: Schema.Type<From>,
     options: AST.ParseOptions,
-    ast: AST.Transformation
+    ast: AST.Transformation,
+    fromI: Schema.Encoded<From>
   ) => Schema.Encoded<To>
 ) =>
   S.transformOrFail<To, From, never, never>(

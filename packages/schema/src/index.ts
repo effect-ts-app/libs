@@ -1,3 +1,5 @@
+export * from "@effect/schema/Schema"
+
 export * from "./Class.js"
 export { Class, TaggedClass } from "./Class.js"
 export * as REST from "./REST.js"
@@ -14,8 +16,8 @@ export * from "./numbers.js"
 export * from "./phoneNumber.js"
 export * from "./schema.js"
 export * from "./strings.js"
+export { NonEmptyString } from "./strings.js"
 
 export * as ParseResult from "@effect/schema/ParseResult"
 
 export { Void as Void_ } from "@effect/schema/Schema"
-export * from "@effect/schema/Schema"
