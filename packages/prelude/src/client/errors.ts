@@ -33,7 +33,7 @@ export class ValidationError extends TaggedError<ValidationError>()("ValidationE
   errors: S.Array(S.Unknown)
 }) {
   override get message() {
-    return `Validation failed: ${this.errors.map((e) => JSON.stringify(e)).join(", ")}`
+    return `Validation failed: ${this.errors.map((e) => JSON.stringify(e, undefined, 2)).join(",\n")}`
   }
 }
 
