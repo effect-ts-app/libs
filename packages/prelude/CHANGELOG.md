@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.9.1
+
+### Patch Changes
+
+- 26551ce: improve rendering
+
 ## 1.9.0
 
 ### Minor Changes
