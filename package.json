@@ -49,9 +49,9 @@
   "dependencies": {
     "date-fns": "^3.6.0",
     "cross-env": "^7.0.3",
-    "fast-check": "^3.20.0",
+    "fast-check": "^3.21.0",
     "ts-node": "^10.9.2",
-    "vue": "^3.4.35"
+    "vue": "^3.4.36"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",
@@ -62,8 +62,8 @@
     "@changesets/cli": "^2.27.7",
     "@dprint/typescript": "^0.91.6",
     "effect": "^3.6.1",
-    "@effect/platform": "^0.61.4",
-    "@effect/platform-node": "^0.56.4",
+    "@effect/platform": "^0.61.5",
+    "@effect/platform-node": "^0.56.6",
     "@effect/schema": "^0.70.2",
     "@effect-app/cli": "^0.78.0",
     "@effect-app/core": "workspace:*",
@@ -78,9 +78,9 @@
     "@tsconfig/strictest": "^2.0.5",
     "@types/lodash": "^4.17.7",
     "@types/node": "~22.1.0",
-    "@typescript-eslint/eslint-plugin": "8.0.0",
-    "@typescript-eslint/parser": "8.0.0",
-    "@typescript-eslint/scope-manager": "8.0.0",
+    "@typescript-eslint/eslint-plugin": "8.0.1",
+    "@typescript-eslint/parser": "8.0.1",
+    "@typescript-eslint/scope-manager": "8.0.1",
     "babel-plugin-replace-import-extension": "^1.1.4",
     "concurrently": "^8.2.2",
     "dprint": "^0.47.2",
@@ -100,15 +100,15 @@
     "madge": "^8.0.0",
     "module-alias": "^2.2.3",
     "nodemon": "^3.1.4",
-    "npm-check-updates": "^17.0.3",
+    "npm-check-updates": "^17.0.5",
     "ts-transform-paths": "^3.0.0",
     "tsc-watch": "^6.2.0",
     "tsconfig-paths": "^4.2.0",
-    "tsx": "^4.16.5",
+    "tsx": "^4.17.0",
     "typescript": "^5.5.4",
-    "typescript-transform-paths": "^3.4.7",
+    "typescript-transform-paths": "^3.4.10",
     "unplugin-auto-import": "^0.18.2",
-    "vite": "^5.3.5",
+    "vite": "^5.4.0",
     "vitest": "^2.0.5"
   }
 }
