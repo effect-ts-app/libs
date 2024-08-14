@@ -908,7 +908,7 @@ const makeRepoFunctions = (tag: any, itemType: any) => {
     saveManyWithPure
   } = Effect.serviceFunctions(tag) as any
 
-  const mapped = (s: any) => tag.map((_: any) => _.mapped(s))
+  const mapped = (s: any) => Effect.map(tag, (_: any) => _.mapped(s))
 
   return {
     itemType,
