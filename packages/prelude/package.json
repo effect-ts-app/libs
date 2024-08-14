@@ -11,14 +11,14 @@
     "nanoid": "^5.0.7",
     "path-parser": "^6.1.0",
     "query-string": "^9.1.0",
-    "ts-pattern": "^5.2.0",
+    "ts-pattern": "^5.3.1",
     "uuid": "^10.0.0",
     "validator": "^13.12.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",
     "@faker-js/faker": "^8.4.1",
-    "@types/node": "~22.1.0",
+    "@types/node": "~22.3.0",
     "@types/uuid": "^10.0.0",
     "@types/validator": "^13.12.0",
     "fast-check": "~3.21.0",
@@ -27,9 +27,9 @@
     "vitest": "^2.0.5"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.61.5",
-    "effect": "^3.6.1",
-    "@effect/schema": "^0.70.2"
+    "@effect/platform": "^0.61.8",
+    "effect": "^3.6.3",
+    "@effect/schema": "^0.70.4"
   },
   "typesVersions": {
     "*": {

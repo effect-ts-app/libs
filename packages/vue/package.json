@@ -14,19 +14,19 @@
     "query-string": "^9.1.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.61.5",
-    "@effect/platform-browser": "^0.40.5",
-    "@effect-rx/rx": "^0.33.9",
-    "@effect-rx/rx-vue": "^0.10.9",
-    "@effect/schema": "^0.70.2",
-    "@sentry/browser": "^8.24.0",
-    "effect": "^3.6.1",
-    "vue": "^3.4.36"
+    "@effect/platform": "^0.61.8",
+    "@effect/platform-browser": "^0.40.8",
+    "@effect-rx/rx": "^0.33.10",
+    "@effect-rx/rx-vue": "^0.10.10",
+    "@effect/schema": "^0.70.4",
+    "@sentry/browser": "^8.26.0",
+    "effect": "^3.6.3",
+    "vue": "^3.4.37"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",
     "@rollup/pluginutils": "^5.1.0",
-    "@types/node": "~22.1.0",
+    "@types/node": "~22.3.0",
     "intl-messageformat": "^10.5.14",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",

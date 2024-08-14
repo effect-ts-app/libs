@@ -1,4 +1,4 @@
-import type { IsFlatObject, Noop } from "./utils.js"
+import type { IsFlatObject } from "./utils.js"
 import type { RegisterOptions } from "./validator.js"
 
 export type InternalFieldName = string
@@ -7,16 +7,16 @@ export type FieldName<TFieldValues extends FieldValues> = IsFlatObject<TFieldVal
   ? Extract<keyof TFieldValues, string>
   : string
 
-export type CustomElement<TFieldValues extends FieldValues> = {
-  name: FieldName<TFieldValues>
-  type?: string
-  value?: any
-  disabled?: boolean
-  checked?: boolean
-  options?: HTMLOptionsCollection
-  files?: FileList | null
-  focus?: Noop
-}
+// export type CustomElement<TFieldValues extends FieldValues> = {
+//   name: FieldName<TFieldValues>
+//   type?: string
+//   value?: any
+//   disabled?: boolean
+//   checked?: boolean
+//   options?: HTMLOptionsCollection
+//   files?: FileList | null
+//   focus?: Noop
+// }
 
 export type FieldValue<TFieldValues extends FieldValues> = TFieldValues[InternalFieldName]
 
@@ -30,19 +30,19 @@ export type NativeFieldValue =
   | undefined
   | unknown[]
 
-export type FieldElement<TFieldValues extends FieldValues = FieldValues> =
-  | HTMLInputElement
-  | HTMLSelectElement
-  | HTMLTextAreaElement
-  | CustomElement<TFieldValues>
+// export type FieldElement<TFieldValues extends FieldValues = FieldValues> =
+//   | HTMLInputElement
+//   | HTMLSelectElement
+//   | HTMLTextAreaElement
+//   | CustomElement<TFieldValues>
 
-export type Ref = FieldElement
+// export type Ref = FieldElement
 
 export type Field = {
   _f: {
-    ref: Ref
+    // ref: Ref
     name: InternalFieldName
-    refs?: HTMLInputElement[]
+    // refs?: HTMLInputElement[]
     mount?: boolean
   } & RegisterOptions
 }

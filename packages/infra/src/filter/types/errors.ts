@@ -1,4 +1,4 @@
-import type { FieldValues, InternalFieldName, Ref } from "./fields.js"
+import type { FieldValues, InternalFieldName } from "./fields.js"
 import type { BrowserNativeObject, IsAny, LiteralUnion, Merge } from "./utils.js"
 import type { RegisterOptions, ValidateResult } from "./validator.js"
 
@@ -15,7 +15,7 @@ export type MultipleFieldErrors =
 export type FieldError = {
   type: LiteralUnion<keyof RegisterOptions, string>
   root?: FieldError
-  ref?: Ref
+  // ref?: Ref
   types?: MultipleFieldErrors
   message?: Message
 }
