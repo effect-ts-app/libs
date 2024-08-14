@@ -102,6 +102,7 @@ const codeFilter3__ = <E>(state: readonly FilterResult[], sut: E, statements: an
 }
 
 export const codeFilter3_ = <E>(state: readonly FilterResult[], sut: E): boolean => {
-  const s = codeFilter3__(state, sut, [])
+  const statements: any[] = [] // must be defined here to be used by eval.
+  const s = codeFilter3__(state, sut, statements)
   return eval(s)
 }
