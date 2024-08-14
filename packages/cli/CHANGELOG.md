@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.78.1
+
+### Patch Changes
+
+- f6066ac: update packages
+
 ## 0.78.0
 
 ### Minor Changes

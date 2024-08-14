@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 1.11.2
+
+### Patch Changes
+
+- 87d8393: fix mapped
+- e120966: update packages
+- f6066ac: update packages
+- Updated dependencies [e120966]
+- Updated dependencies [f6066ac]
+  - @effect-app/infra-adapters@1.7.2
+  - effect-app@1.9.2
+  - @effect-app/schema@1.6.1
+  - @effect-app/core@1.6.1
+
 ## 1.11.1
 
 ### Patch Changes

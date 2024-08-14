@@ -1,5 +1,15 @@
 # @effect-app/schema
 
+## 1.6.1
+
+### Patch Changes
+
+- e120966: update packages
+- f6066ac: update packages
+- Updated dependencies [e120966]
+- Updated dependencies [f6066ac]
+  - @effect-app/core@1.6.1
+
 ## 1.6.0
 
 ### Minor Changes

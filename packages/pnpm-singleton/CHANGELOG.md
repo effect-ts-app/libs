@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.74.1
+
+### Patch Changes
+
+- f6066ac: update packages
+
 ## 0.74.0
 
 ### Minor Changes

@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 1.9.2
+
+### Patch Changes
+
+- e120966: update packages
+- f6066ac: update packages
+- Updated dependencies [e120966]
+- Updated dependencies [f6066ac]
+  - @effect-app/schema@1.6.1
+  - @effect-app/core@1.6.1
+
 ## 1.9.1
 
 ### Patch Changes
