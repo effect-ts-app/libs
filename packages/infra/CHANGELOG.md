@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.11.4
+
+### Patch Changes
+
+- 963a9e9: fix eval
+
 ## 1.11.3
 
 ### Patch Changes
