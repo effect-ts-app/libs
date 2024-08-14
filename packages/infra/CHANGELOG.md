@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.11.3
+
+### Patch Changes
+
+- 143e3d6: fix: code filter should also delay scope evaluation.
+
 ## 1.11.2
 
 ### Patch Changes
