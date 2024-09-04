@@ -13,6 +13,9 @@ export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<
   }
 }
 
+const messageFallback = (messageOrObject?: string | { message: string }) =>
+  typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject ?? "" }
+
 export class InvalidStateError extends TaggedError<InvalidStateError>()("InvalidStateError", {
   message: S.String
 }) {
@@ -38,10 +41,10 @@ export class ValidationError extends TaggedError<ValidationError>()("ValidationE
 }
 
 export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLoggedInError", {
-  message: S.optional(S.String)
+  message: S.String
 }) {
-  constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
-    super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
+  constructor(messageOrObject?: string | { message: string }, disableValidation?: boolean) {
+    super(messageFallback(messageOrObject), disableValidation)
   }
 }
 
@@ -49,18 +52,18 @@ export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLogged
  * The user carries a valid Userprofile, but there is a problem with the login none the less.
  */
 export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
-  message: S.optional(S.String)
+  message: S.String
 }) {
-  constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
-    super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
+  constructor(messageOrObject?: string | { message: string }, disableValidation?: boolean) {
+    super(messageFallback(messageOrObject), disableValidation)
   }
 }
 
 export class UnauthorizedError extends TaggedError<UnauthorizedError>()("UnauthorizedError", {
-  message: S.optional(S.String)
+  message: S.String
 }) {
-  constructor(messageOrObject?: string | { message?: string }, disableValidation?: boolean) {
-    super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
+  constructor(messageOrObject?: string | { message: string }, disableValidation?: boolean) {
+    super(messageFallback(messageOrObject), disableValidation)
   }
 }
 
