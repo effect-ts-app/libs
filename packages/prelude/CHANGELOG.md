@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.10.1
+
+### Patch Changes
+
+- 9fbf129: fix: messagefallback
+
 ## 1.10.0
 
 ### Minor Changes
