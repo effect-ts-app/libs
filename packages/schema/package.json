@@ -13,15 +13,15 @@
   },
   "devDependencies": {
     "@types/uuid": "^10.0.0",
-    "@types/validator": "^13.12.0",
-    "fast-check": "~3.21.0",
+    "@types/validator": "^13.12.1",
+    "fast-check": "~3.22.0",
     "ts-toolbelt": "^9.6.0",
     "typescript": "^5.5.4",
     "vitest": "^2.0.5"
   },
   "peerDependencies": {
-    "@effect/schema": "^0.70.4",
-    "effect": "^3.6.3"
+    "@effect/schema": "^0.72.1",
+    "effect": "^3.7.1"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

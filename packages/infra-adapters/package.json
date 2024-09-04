@@ -10,7 +10,7 @@
     "query-string": "^9.1.0"
   },
   "devDependencies": {
-    "@azure/cosmos": "^4.1.0",
+    "@azure/cosmos": "^4.1.1",
     "@azure/service-bus": "^7.9.5",
     "@types/express": "^4.17.21",
     "@types/redis": "^2.8.32",
@@ -22,9 +22,9 @@
     "typescript": "^5.5.4"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.61.8",
-    "@effect/schema": "^0.70.4",
-    "effect": "^3.6.3"
+    "@effect/platform": "^0.63.1",
+    "@effect/schema": "^0.72.1",
+    "effect": "^3.7.1"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",
