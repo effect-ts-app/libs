@@ -14,13 +14,13 @@
     "query-string": "^9.1.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.63.1",
-    "@effect/platform-browser": "^0.42.1",
+    "@effect/platform": "^0.63.2",
+    "@effect/platform-browser": "^0.42.2",
     "@effect-rx/rx": "^0.33.10",
     "@effect-rx/rx-vue": "^0.10.10",
-    "@effect/schema": "^0.72.1",
+    "@effect/schema": "^0.72.2",
     "@sentry/browser": "^8.28.0",
-    "effect": "^3.7.1",
+    "effect": "^3.7.2",
     "vue": "^3.5.0"
   },
   "devDependencies": {
