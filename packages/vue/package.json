@@ -9,24 +9,24 @@
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@formatjs/intl": "^2.10.4",
-    "@tanstack/vue-query": "^5.54.1",
+    "@tanstack/vue-query": "^5.54.2",
     "effect-app": "workspace:*",
     "query-string": "^9.1.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.63.2",
-    "@effect/platform-browser": "^0.42.2",
+    "@effect/platform": "^0.63.3",
+    "@effect/platform-browser": "^0.42.3",
     "@effect-rx/rx": "^0.33.10",
     "@effect-rx/rx-vue": "^0.10.10",
     "@effect/schema": "^0.72.2",
     "@sentry/browser": "^8.28.0",
     "effect": "^3.7.2",
-    "vue": "^3.5.0"
+    "vue": "^3.5.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.6",
     "@rollup/pluginutils": "^5.1.0",
-    "@types/node": "~22.5.3",
+    "@types/node": "~22.5.4",
     "intl-messageformat": "^10.5.14",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",

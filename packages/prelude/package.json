@@ -18,7 +18,7 @@
   "devDependencies": {
     "@babel/cli": "^7.25.6",
     "@faker-js/faker": "^8.4.1",
-    "@types/node": "~22.5.3",
+    "@types/node": "~22.5.4",
     "@types/uuid": "^10.0.0",
     "@types/validator": "^13.12.1",
     "fast-check": "~3.22.0",
@@ -27,7 +27,7 @@
     "vitest": "^2.0.5"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.63.2",
+    "@effect/platform": "^0.63.3",
     "effect": "^3.7.2",
     "@effect/schema": "^0.72.2"
   },
