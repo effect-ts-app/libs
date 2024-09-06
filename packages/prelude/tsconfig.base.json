@@ -19,7 +19,6 @@
     // This is not desirable, as it's useful in generators.
     "noImplicitReturns": false,
     "noImplicitThis": true,
-    "outDir": ".build/dist",
     "resolveJsonModule": true,
     "moduleResolution": "Node16",
     "downlevelIteration": true,
