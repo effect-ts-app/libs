@@ -1,5 +1,17 @@
 # @effect-app/vue
 
+## 1.9.2
+
+### Patch Changes
+
+- 0b399ce: update packages
+- Updated dependencies [1ac74ec]
+- Updated dependencies [0b399ce]
+  - effect-app@1.10.2
+  - @effect-app/schema@1.7.1
+  - @effect-app/core@1.7.1
+  - @effect-app/vue@1.9.2
+
 ## 1.9.1
 
 ### Patch Changes

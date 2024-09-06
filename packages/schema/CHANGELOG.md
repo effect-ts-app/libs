@@ -1,5 +1,13 @@
 # @effect-app/schema
 
+## 1.7.1
+
+### Patch Changes
+
+- 0b399ce: update packages
+- Updated dependencies [0b399ce]
+  - @effect-app/core@1.7.1
+
 ## 1.7.0
 
 ### Minor Changes

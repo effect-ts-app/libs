@@ -1,5 +1,15 @@
 # @effect-app/prelude
 
+## 1.10.2
+
+### Patch Changes
+
+- 1ac74ec: cleanup tsconfig base
+- 0b399ce: update packages
+- Updated dependencies [0b399ce]
+  - @effect-app/schema@1.7.1
+  - @effect-app/core@1.7.1
+
 ## 1.10.1
 
 ### Patch Changes
