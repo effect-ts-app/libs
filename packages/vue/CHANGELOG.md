@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.9.3
+
+### Patch Changes
+
+- a359cee: fix browser logger
+- Updated dependencies [a359cee]
+  - @effect-app/vue@1.9.3
+
 ## 1.9.2
 
 ### Patch Changes
