@@ -56,12 +56,13 @@ export function defaultBasicErrorHandler<R>(
 }
 
 const optimisticConcurrencySchedule = Schedule.once
-  && Schedule.recurWhile<SupportedErrors | JWTError>((a) => a._tag === "OptimisticConcurrencyException")
+  && Schedule.recurWhile<{ _tag: string }>((a) => a._tag === "OptimisticConcurrencyException")
 
-export function defaultErrorHandler<R>(
+export function defaultErrorHandler<R, A extends { _tag: string } = never>(
   req: HttpServerRequest.HttpServerRequest,
   res: HttpServerResponse.HttpServerResponse,
-  r2: Effect<HttpServerResponse.HttpServerResponse, SupportedErrors | JWTError, R>
+  r2: Effect<HttpServerResponse.HttpServerResponse, SupportedErrors | JWTError, R>,
+  customErrorSchema?: Schema<A, unknown>
 ) {
   const r3 = req.method === "PATCH"
     ? Effect.retry(r2, optimisticConcurrencySchedule)
@@ -114,6 +115,14 @@ export function defaultErrorHandler<R>(
           // 412 or 409.. https://stackoverflow.com/questions/19122088/which-http-status-code-to-use-to-reject-a-put-due-to-optimistic-locking-failure
           "OptimisticConcurrencyException": sendError(412, OptimisticConcurrencyException)
         }),
+      customErrorSchema
+        ? Effect.catchAll((x) =>
+          S.is(customErrorSchema)(x)
+            // TODO: customize error code
+            ? sendError(422, customErrorSchema)(x)
+            : Effect.fail(x)
+        )
+        : (x) => x,
       Effect
         // final catch all; expecting never so that unhandled known errors will show up
         .catchAll((err: never) =>

@@ -2,11 +2,14 @@
 import { Effect, HashMap, Option } from "@effect-app/core"
 import { constant } from "@effect-app/core/Function"
 import type { Headers, HttpError, HttpRequestError, HttpResponseError, Method } from "@effect-app/core/http/http-client"
+import type { ResponseError } from "@effect/platform/HttpClientError"
 import { Record } from "effect"
 import type { REST, Schema } from "effect-app/schema"
 import { StringId } from "effect-app/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
+import { HttpClient, HttpClientRequest } from "../http.js"
+import { S } from "../lib.js"
 import { ApiConfig } from "./config.js"
 import type { SupportedErrors } from "./errors.js"
 import {
@@ -18,10 +21,6 @@ import {
   UnauthorizedError,
   ValidationError
 } from "./errors.js"
-
-import type { ResponseError } from "@effect/platform/HttpClientError"
-import { HttpClient, HttpClientRequest } from "../http.js"
-import { S } from "../lib.js"
 
 export type FetchError = HttpError<string>
 
@@ -68,75 +67,15 @@ const getClient = Effect.flatMap(
                 ? Effect.sync(() => ({ status: _.status, body: void 0, headers: _.headers }))
                 : Effect.map(_.json, (body) => ({ status: _.status, body, headers: _.headers })))
                 .pipe(Effect.withSpan("client.response"))
-            ),
-          HttpClient
-            .catchTag(
-              "ResponseError",
-              (err): Effect<FetchResponse<unknown>, ResponseError | SupportedErrors> => {
-                const toError = <R, From, To>(s: Schema<To, From, R>) =>
-                  Effect
-                    .flatMap(
-                      err
-                        .response
-                        .json,
-                      (_) => S.decodeUnknown(s)(_).pipe(Effect.catchAll(() => Effect.fail(err)))
-                    )
-                    .pipe(Effect.flatMap(Effect.fail))
-
-                // opposite of api's `defaultErrorHandler`
-                if (err.response.status === 404) {
-                  return toError(NotFoundError)
-                }
-                if (err.response.status === 400) {
-                  return toError(ValidationError)
-                }
-                if (err.response.status === 401) {
-                  return toError(NotLoggedInError)
-                }
-                if (err.response.status === 422) {
-                  return toError(InvalidStateError)
-                }
-                if (err.response.status === 503) {
-                  return toError(ServiceUnavailableError)
-                }
-                if (err.response.status === 403) {
-                  return toError(UnauthorizedError)
-                }
-                if (err.response.status === 412) {
-                  return toError(OptimisticConcurrencyException)
-                }
-                return Effect.fail(err)
-              }
-            ),
-          HttpClient.catchTags({
-            "ResponseError": (err) =>
-              Effect
-                .orDie(
-                  err
-                    .response
-                    .text
-                  // TODO
-                )
-                .pipe(Effect
-                  .flatMap((_) =>
-                    Effect.fail({
-                      _tag: "HttpErrorResponse" as const,
-                      response: {
-                        body: Option.fromNullable(_),
-                        status: err.response.status,
-                        headers: err.response.headers
-                      }
-                    } as HttpResponseError<unknown>)
-                  )),
-            "RequestError": (err) => Effect.fail({ _tag: "HttpErrorRequest", error: err.cause } as HttpRequestError)
-          })
+            )
         ))
 )
 
 export function fetchApi(
   method: Method,
   path: string,
-  body?: unknown
+  body?: unknown,
+  responseError?: S.Schema.AnyNoContext
 ) {
   return Effect.flatMap(getClient, (client) =>
     (method === "GET"
@@ -146,12 +85,88 @@ export function fetchApi(
       : HttpClientRequest
         .make(method)(path)
         .pipe(HttpClientRequest.jsonBody(body), Effect.flatMap(client)))
-      .pipe(Effect.scoped))
+      .pipe(
+        Effect
+          .catchTag(
+            "ResponseError",
+            (err): Effect<FetchResponse<unknown>, ResponseError | SupportedErrors> => {
+              const toError = <R, From, To>(s: Schema<To, From, R>) =>
+                Effect
+                  .flatMap(
+                    err
+                      .response
+                      .json,
+                    (_) => S.decodeUnknown(s)(_).pipe(Effect.catchAll(() => Effect.fail(err)))
+                  )
+                  .pipe(Effect.flatMap(Effect.fail))
+
+              // opposite of api's `defaultErrorHandler`
+              if (err.response.status === 404) {
+                return toError(NotFoundError)
+              }
+              if (err.response.status === 400) {
+                return toError(ValidationError)
+              }
+              if (err.response.status === 401) {
+                return toError(NotLoggedInError)
+              }
+              // TODO: DomainError
+              if (err.response.status === 422) {
+                return responseError
+                  ? toError(S.Union(responseError, InvalidStateError) as any)
+                  : toError(InvalidStateError)
+              }
+              if (err.response.status === 503) {
+                return toError(ServiceUnavailableError)
+              }
+              if (err.response.status === 403) {
+                return toError(UnauthorizedError)
+              }
+              if (err.response.status === 412) {
+                return toError(OptimisticConcurrencyException)
+              }
+              return Effect.fail(err)
+            }
+          ),
+        Effect.catchTags({
+          "ResponseError": (err) =>
+            Effect
+              .orDie(
+                err
+                  .response
+                  .text
+                // TODO
+              )
+              .pipe(Effect
+                .flatMap((_) =>
+                  Effect.fail({
+                    _tag: "HttpErrorResponse" as const,
+                    response: {
+                      body: Option.fromNullable(_),
+                      status: err.response.status,
+                      headers: err.response.headers
+                    }
+                  } as HttpResponseError<unknown>)
+                )),
+          "RequestError": (err) => Effect.fail({ _tag: "HttpErrorRequest", error: err.cause } as HttpRequestError)
+        }),
+        Effect.scoped
+      ))
 }
 
-export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, ResponseFrom, ResponseTo>(
+export function fetchApi2S<
+  RequestR,
+  RequestFrom,
+  RequestTo,
+  ResponseR,
+  ResponseFrom,
+  ResponseTo,
+  ResponseErrorFrom = never,
+  ResponseErrorTo extends { _tag: string } = never
+>(
   request: Schema<RequestTo, RequestFrom, RequestR>,
-  response: Schema<ResponseTo, ResponseFrom, ResponseR>
+  response: Schema<ResponseTo, ResponseFrom, ResponseR>,
+  responseError?: Schema<ResponseErrorTo, ResponseErrorFrom, never>
 ) {
   const encodeRequest = S.encode(request)
   const decRes = S.decodeUnknown(response)
@@ -165,7 +180,8 @@ export function fetchApi2S<RequestR, RequestFrom, RequestTo, ResponseR, Response
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           ? makePathWithQuery(path, encoded as any)
           : makePathWithBody(path, encoded as any),
-        encoded
+        encoded,
+        responseError
       )
         .pipe(Effect.flatMap(parse)))
   }
@@ -180,7 +196,7 @@ export function fetchApi3S<RequestA, RequestE, ResponseE = unknown, ResponseA = 
   // eslint-disable-next-line @typescript-eslint/ban-types
   Response: REST.ReqRes<ResponseA, ResponseE, any>
 }) {
-  return fetchApi2S(Request, Response)(
+  return fetchApi2S(Request, Response, Request.errors)(
     Request.method,
     new Path(Request.path)
   )

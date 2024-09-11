@@ -116,7 +116,7 @@ function clientFor_<M extends Requests>(models: M) {
       prev[cur] = Request.method === "GET"
         ? fields.length === 0
           ? {
-            handler: fetchApi(Request.method, Request.path)
+            handler: fetchApi(Request.method, Request.path, undefined, Request.errors)
               .pipe(
                 Effect.flatMap(parse),
                 Effect
@@ -128,7 +128,7 @@ function clientFor_<M extends Requests>(models: M) {
           }
           : {
             handler: (req: any) =>
-              fetchApi(Request.method, makePathWithQuery(path, S.encodeSync(Request)(req)))
+              fetchApi(Request.method, makePathWithQuery(path, S.encodeSync(Request)(req)), undefined, Request.errors)
                 .pipe(
                   Effect.flatMap(parse),
                   Effect

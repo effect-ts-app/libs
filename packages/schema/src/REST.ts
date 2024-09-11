@@ -770,6 +770,7 @@ export type ReqRes<To, From, R> = S.Schema<To, From, R>
 export type RequestSchemed<A, E> = ReqRes<A, E, any> & { // ReqResSchemed<E, A> & {
   method: Methods.Rest
   path: string
+  errors?: S.Schema.AnyNoContext
 }
 
 /** @deprecated No-Op */

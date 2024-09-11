@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { isHttpRequestError, isHttpResponseError } from "@effect-app/core/http/http-client"
 import * as Result from "@effect-rx/rx/Result"
 import type {
   QueryKey,
@@ -12,7 +13,7 @@ import type {
 } from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
 import { Cause, Effect, Option, Runtime, S } from "effect-app"
-import { type ApiConfig, type FetchResponse, NotFoundError, UnauthorizedError } from "effect-app/client"
+import { type ApiConfig, type FetchResponse, ServiceUnavailableError } from "effect-app/client"
 import type { HttpClient } from "effect-app/http"
 import { computed, ref } from "vue"
 import type { ComputedRef, WatchSource } from "vue"
@@ -142,12 +143,12 @@ export const useSafeQuery_ = <I, A, E>(
           if (Runtime.isFiberFailure(error)) {
             const cause = error[Runtime.FiberFailureCauseId]
             const sq = Cause.squash(cause)
-            if (S.is(UnauthorizedError)(sq) || S.is(NotFoundError)(sq)) {
+            if (!isHttpRequestError(sq) && !isHttpResponseError(sq) && !S.is(ServiceUnavailableError)(sq)) {
               return false
             }
           }
 
-          return retryCount < 6
+          return retryCount < 5
         },
         queryKey,
         queryFn: ({ signal }) =>
@@ -164,12 +165,12 @@ export const useSafeQuery_ = <I, A, E>(
           if (Runtime.isFiberFailure(error)) {
             const cause = error[Runtime.FiberFailureCauseId]
             const sq = Cause.squash(cause)
-            if (S.is(UnauthorizedError)(sq) || S.is(NotFoundError)(sq)) {
+            if (!isHttpRequestError(sq) && !isHttpResponseError(sq) && !S.is(ServiceUnavailableError)(sq)) {
               return false
             }
           }
 
-          return retryCount < 6
+          return retryCount < 5
         },
         queryKey: [...queryKey, req],
         queryFn: ({ signal }) =>
