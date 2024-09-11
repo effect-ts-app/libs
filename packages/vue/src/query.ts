@@ -11,9 +11,8 @@ import type {
   UseQueryReturnType
 } from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
-import type { Cause } from "effect-app"
-import { Effect, Option, Runtime } from "effect-app"
-import type { ApiConfig, FetchResponse } from "effect-app/client"
+import { Cause, Effect, Option, Runtime, S } from "effect-app"
+import { type ApiConfig, type FetchResponse, NotFoundError, UnauthorizedError } from "effect-app/client"
 import type { HttpClient } from "effect-app/http"
 import { computed, ref } from "vue"
 import type { ComputedRef, WatchSource } from "vue"
@@ -139,6 +138,17 @@ export const useSafeQuery_ = <I, A, E>(
     Effect.isEffect(handler)
       ? {
         ...options,
+        retry: (_, error) => {
+          if (Runtime.isFiberFailure(error)) {
+            const cause = error[Runtime.FiberFailureCauseId]
+            const sq = Cause.squash(cause)
+            if (S.is(UnauthorizedError)(sq) || S.is(NotFoundError)(sq)) {
+              return false
+            }
+          }
+
+          return true
+        },
         queryKey,
         queryFn: ({ signal }) =>
           run.value(
@@ -150,6 +160,17 @@ export const useSafeQuery_ = <I, A, E>(
       }
       : {
         ...options,
+        retry: (_, error) => {
+          if (Runtime.isFiberFailure(error)) {
+            const cause = error[Runtime.FiberFailureCauseId]
+            const sq = Cause.squash(cause)
+            if (S.is(UnauthorizedError)(sq) || S.is(NotFoundError)(sq)) {
+              return false
+            }
+          }
+
+          return true
+        },
         queryKey: [...queryKey, req],
         queryFn: ({ signal }) =>
           run
