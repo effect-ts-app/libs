@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 1.11.0
+
+### Minor Changes
+
+- 24f0c0f: feat: allow custom errors per endpoint.
+
+### Patch Changes
+
+- Updated dependencies [24f0c0f]
+  - @effect-app/schema@1.8.0
+
 ## 1.10.2
 
 ### Patch Changes

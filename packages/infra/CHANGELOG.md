@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 1.13.0
+
+### Minor Changes
+
+- 24f0c0f: feat: allow custom errors per endpoint.
+
+### Patch Changes
+
+- Updated dependencies [24f0c0f]
+  - effect-app@1.11.0
+  - @effect-app/schema@1.8.0
+  - @effect-app/infra-adapters@1.8.3
+
 ## 1.12.2
 
 ### Patch Changes

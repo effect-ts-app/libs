@@ -1,5 +1,18 @@
 # @effect-app/vue
 
+## 1.10.0
+
+### Minor Changes
+
+- 24f0c0f: feat: allow custom errors per endpoint.
+
+### Patch Changes
+
+- Updated dependencies [24f0c0f]
+  - effect-app@1.11.0
+  - @effect-app/schema@1.8.0
+  - @effect-app/vue@1.10.0
+
 ## 1.9.5
 
 ### Patch Changes

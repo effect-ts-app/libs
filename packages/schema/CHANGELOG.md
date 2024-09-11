@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.8.0
+
+### Minor Changes
+
+- 24f0c0f: feat: allow custom errors per endpoint.
+
 ## 1.7.1
 
 ### Patch Changes
