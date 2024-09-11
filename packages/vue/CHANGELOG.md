@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.9.5
+
+### Patch Changes
+
+- eca5b49: fix retrycount
+- Updated dependencies [eca5b49]
+  - @effect-app/vue@1.9.5
+
 ## 1.9.4
 
 ### Patch Changes
