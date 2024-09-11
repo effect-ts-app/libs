@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.9.4
+
+### Patch Changes
+
+- d907a23: improve: do not retry dead ends
+- Updated dependencies [d907a23]
+  - @effect-app/vue@1.9.4
+
 ## 1.9.3
 
 ### Patch Changes
