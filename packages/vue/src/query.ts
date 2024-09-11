@@ -138,7 +138,7 @@ export const useSafeQuery_ = <I, A, E>(
     Effect.isEffect(handler)
       ? {
         ...options,
-        retry: (_, error) => {
+        retry: (retryCount, error) => {
           if (Runtime.isFiberFailure(error)) {
             const cause = error[Runtime.FiberFailureCauseId]
             const sq = Cause.squash(cause)
@@ -147,7 +147,7 @@ export const useSafeQuery_ = <I, A, E>(
             }
           }
 
-          return true
+          return retryCount < 6
         },
         queryKey,
         queryFn: ({ signal }) =>
@@ -160,7 +160,7 @@ export const useSafeQuery_ = <I, A, E>(
       }
       : {
         ...options,
-        retry: (_, error) => {
+        retry: (retryCount, error) => {
           if (Runtime.isFiberFailure(error)) {
             const cause = error[Runtime.FiberFailureCauseId]
             const sq = Cause.squash(cause)
@@ -169,7 +169,7 @@ export const useSafeQuery_ = <I, A, E>(
             }
           }
 
-          return true
+          return retryCount < 6
         },
         queryKey: [...queryKey, req],
         queryFn: ({ signal }) =>
