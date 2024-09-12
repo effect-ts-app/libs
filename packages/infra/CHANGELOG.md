@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.13.1
+
+### Patch Changes
+
+- 594fba1: improve: include full body in trace
+
 ## 1.13.0
 
 ### Minor Changes
