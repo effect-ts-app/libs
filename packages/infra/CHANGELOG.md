@@ -4,7 +4,13 @@
 
 ### Patch Changes
 
+<<<<<<< HEAD
 - 594fba1: improve: include full body in trace
+=======
+- Updated dependencies [c229a73]
+  - effect-app@1.11.1
+  - @effect-app/infra-adapters@1.8.4
+>>>>>>> ba95588c (chore: Update versions)
 
 ## 1.13.0
 

@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.11.1
+
+### Patch Changes
+
+- c229a73: add tagMap to TaggedUnion
+
 ## 1.11.0
 
 ### Minor Changes
