@@ -65,12 +65,12 @@ declare global {
    * @tsplus type Generator
    * @tsplus type Iterator
    */
-  interface Generator<T = unknown, TReturn = any, TNext = unknown> {}
+  interface Generator<T = unknown, TReturn = any, TNext = any> extends IteratorObject<T, TReturn, TNext> {}
 
   /**
    * @tsplus type Iterator
    */
-  interface Iterator<T, TReturn = any, TNext = undefined> {}
+  interface Iterator<T, TReturn = any, TNext = any> {}
 
   /**
    * @tsplus type function

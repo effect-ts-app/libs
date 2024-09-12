@@ -144,7 +144,7 @@ export function some<A>(predicate: Predicate<A>): (set: Set<A>) => boolean {
     const values = set.values()
     let e: Next<A>
     let found = false
-    while (!found && !(e = values.next()).done) {
+    while (!found && !(e = values.next() as any).done) {
       found = predicate(e.value)
     }
     return found
@@ -268,7 +268,7 @@ export function filter_<A>(set: Set<A>, predicate: Predicate<A>): Set<A> {
   const values = set.values()
   let e: Next<A>
   const r = new Set<A>()
-  while (!(e = values.next()).done) {
+  while (!(e = values.next() as any).done) {
     const value = e.value
     if (predicate(value)) {
       r.add(value)
@@ -311,7 +311,7 @@ export function partition_<A>(
   let e: Next<A>
   const right = new Set<A>()
   const left = new Set<A>()
-  while (!(e = values.next()).done) {
+  while (!(e = values.next() as any).done) {
     const value = e.value
     if (predicate(value)) {
       right.add(value)
@@ -330,7 +330,7 @@ export function elem_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => boolean {
     const values = set.values()
     let e: Next<A>
     let found = false
-    while (!found && !(e = values.next()).done) {
+    while (!found && !(e = values.next() as any).done) {
       found = E(a, e.value)
     }
     return found
@@ -370,7 +370,7 @@ export function partitionMap_<B, C>(
     const right = new Set<C>()
     const hasB = elem_(EB)
     const hasC = elem_(EC)
-    while (!(e = values.next()).done) {
+    while (!(e = values.next() as any).done) {
       const v = f(e.value)
       switch (v._tag) {
         case "Left":

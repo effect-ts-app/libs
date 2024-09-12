@@ -16,7 +16,7 @@
   "dependencies": {
     "@babel/generator": "7.25.6",
     "@babel/parser": "7.25.6",
-    "@typescript-eslint/utils": "8.4.0",
+    "@typescript-eslint/utils": "8.5.0",
     "eslint-plugin-codegen": "0.17.0",
     "glob": "8.1.0",
     "io-ts": "2.2.21",
@@ -36,7 +36,7 @@
     "effect": "^3.7.2",
     "madge": "8.0.0",
     "ts-node": "10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.6.2"
   },
   "main": "index.js",
   "author": "Wessel van der Veen & Scott vanBommel",

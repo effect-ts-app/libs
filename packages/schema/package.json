@@ -16,11 +16,11 @@
     "@types/validator": "^13.12.1",
     "fast-check": "~3.22.0",
     "ts-toolbelt": "^9.6.0",
-    "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.0"
   },
   "peerDependencies": {
-    "@effect/schema": "^0.72.2",
+    "@effect/schema": "^0.72.3",
     "effect": "^3.7.2"
   },
   "scripts": {
