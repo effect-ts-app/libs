@@ -19,7 +19,7 @@ export class Failure extends S.ExtendedTaggedClass<Failure, Failure.From>()("Fai
   message: S.NullOr(S.NonEmptyString2k).withDefault
 }) {}
 
-export const OperationResult = S.ExtendTaggedUnion(S.Union(Success, Failure))
+export const OperationResult = S.TaggedUnion(Success, Failure)
 export type OperationResult = S.Schema.Type<typeof OperationResult>
 
 export class Operation extends S.ExtendedClass<Operation, Operation.From>()({

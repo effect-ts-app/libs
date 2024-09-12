@@ -71,10 +71,6 @@ export const makeIsAnyOf = <A extends { _tag: string }, I, R>(
   throw new Error("Unsupported")
 }
 
-export const ExtendTaggedUnion = <A extends { _tag: string }, I, R>(
-  schema: S.Schema<A, I, R>
-) => extendM(schema, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_) }))
-
 export type ExtractUnion<A extends { _tag: string }, Tags extends A["_tag"]> = Extract<A, Record<"_tag", Tags>>
 export type Is<A extends { _tag: string }> = { [K in A as K["_tag"]]: (a: A) => a is K }
 export type ElemType<A> = A extends Array<infer E> ? E : never
@@ -82,7 +78,28 @@ export interface IsAny<A extends { _tag: string }> {
   <Keys extends A["_tag"][]>(...keys: Keys): (a: A) => a is ExtractUnion<A, ElemType<Keys>>
 }
 
-export const TaggedUnion = <Members extends readonly S.Schema<{ _tag: string }, any, any>[]>(...a: Members) =>
-  pipe(S.Union(...a), (_) => extendM(_, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_) })))
+export const taggedUnionMap = <
+  Members
+    extends readonly (S.Schema<{ _tag: string }, any, any> & { fields: { _tag: { literals: readonly [string] } } })[]
+>(
+  self: Members
+) =>
+  self.reduce((acc, key) => {
+    const tag = key.fields._tag.literals[0]
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+    acc[tag as any] = key as any
+    return acc
+  }, {} as { [Key in Members[number] as Key["fields"]["_tag"]["literals"][0]]: Key })
+
+export const ExtendTaggedUnion = <A extends { _tag: string }, I, R>(
+  schema: S.Schema<A, I, R>
+) => extendM(schema, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_) /*, map: taggedUnionMap(a) */ }))
+
+export const TaggedUnion = <
+  Members extends ReadonlyArray<
+    S.Schema.Any & { fields: { _tag: { literals: readonly [string] } } }
+  >
+>(...a: Members) =>
+  pipe(S.Union(...a), (_) => extendM(_, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_), tagMap: taggedUnionMap(a) })))
 
 export type PhoneNumber = PhoneNumberT
