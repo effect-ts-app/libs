@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.79.1
+
+### Patch Changes
+
+- fix
+
 ## 0.79.0
 
 ### Minor Changes
