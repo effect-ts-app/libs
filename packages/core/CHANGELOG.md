@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.7.3
+
+### Patch Changes
+
+- ff
+
 ## 1.7.2
 
 ### Patch Changes
