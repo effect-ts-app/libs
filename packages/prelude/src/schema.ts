@@ -85,9 +85,11 @@ export const taggedUnionMap = <
   self: Members
 ) =>
   self.reduce((acc, key) => {
-    const tag = key.fields._tag.literals[0]
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-    acc[tag as any] = key as any
+    // TODO: check upstream what's going on with literals of _tag
+    const tg = key.fields._tag as any
+    const tag = ("ast" in tg && tg.ast._tag === "PropertySignatureDeclaration" ? tg.ast.type.literal : tg
+      .literals[0]) as string // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+    ;(acc as any)[tag] = key as any
     return acc
   }, {} as { [Key in Members[number] as Key["fields"]["_tag"]["literals"][0]]: Key })
 
