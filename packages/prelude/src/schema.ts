@@ -79,19 +79,17 @@ export interface IsAny<A extends { _tag: string }> {
 }
 
 export const taggedUnionMap = <
-  Members
-    extends readonly (S.Schema<{ _tag: string }, any, any> & { fields: { _tag: { literals: readonly [string] } } })[]
+  Members extends readonly (S.Schema<{ _tag: string }, any, any> & { fields: { _tag: S.tag<string> } })[]
 >(
   self: Members
 ) =>
   self.reduce((acc, key) => {
     // TODO: check upstream what's going on with literals of _tag
-    const tg = key.fields._tag as any
-    const tag = ("ast" in tg && tg.ast._tag === "PropertySignatureDeclaration" ? tg.ast.type.literal : tg
-      .literals[0]) as string // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+    const ast = key.fields._tag.ast as S.PropertySignatureDeclaration
+    const tag = (ast.type as S.AST.Literal).literal as string // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
     ;(acc as any)[tag] = key as any
     return acc
-  }, {} as { [Key in Members[number] as Key["fields"]["_tag"]["literals"][0]]: Key })
+  }, {} as { [Key in Members[number] as ReturnType<Key["fields"]["_tag"][S.TypeId]["_A"]>]: Key })
 
 export const ExtendTaggedUnion = <A extends { _tag: string }, I, R>(
   schema: S.Schema<A, I, R>
@@ -99,7 +97,7 @@ export const ExtendTaggedUnion = <A extends { _tag: string }, I, R>(
 
 export const TaggedUnion = <
   Members extends ReadonlyArray<
-    S.Schema.Any & { fields: { _tag: { literals: readonly [string] } } }
+    S.Schema.Any & { fields: { _tag: S.tag<any> } }
   >
 >(...a: Members) =>
   pipe(S.Union(...a), (_) => extendM(_, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_), tagMap: taggedUnionMap(a) })))

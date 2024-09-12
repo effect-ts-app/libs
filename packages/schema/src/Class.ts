@@ -179,7 +179,7 @@ export const TaggedClass: <Self = never>(identifier?: string) => <Tag extends st
 ) => [Self] extends [never] ? MissingSelfGeneric<"Class">
   : EnhancedClass<
     Self,
-    { readonly "_tag": S.Literal<[Tag]> } & Fields,
+    { readonly _tag: S.tag<Tag> } & Fields,
     Simplify<{ readonly _tag: Tag } & Struct.Encoded<Fields>>,
     Schema.Context<Fields[keyof Fields]>,
     Simplify<S.Struct.Constructor<Fields>>,
@@ -218,7 +218,7 @@ export const ExtendedTaggedClass: <Self, SelfFrom>(
   annotations?: S.Annotations.Schema<Self>
 ) => EnhancedClass<
   Self,
-  { readonly "_tag": S.Literal<[Tag]> } & Fields,
+  { readonly _tag: S.tag<Tag> } & Fields,
   SelfFrom,
   Schema.Context<Fields[keyof Fields]>,
   Simplify<S.Struct.Constructor<Fields>>,
