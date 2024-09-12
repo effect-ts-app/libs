@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 1.12.0
+
+### Minor Changes
+
+- 056f293: fix type
+
+### Patch Changes
+
+- Updated dependencies [056f293]
+  - @effect-app/schema@1.9.0
+
 ## 1.11.3
 
 ### Patch Changes

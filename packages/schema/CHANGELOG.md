@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.9.0
+
+### Minor Changes
+
+- 056f293: fix type
+
 ## 1.8.1
 
 ### Patch Changes
