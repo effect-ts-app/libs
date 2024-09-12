@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.11.2
+
+### Patch Changes
+
+- 65135b2: fix issue
+
 ## 1.11.1
 
 ### Patch Changes
