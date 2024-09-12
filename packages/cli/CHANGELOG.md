@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.79.3
+
+### Patch Changes
+
+- e6eecd2: update packages
+
 ## 0.79.2
 
 ### Patch Changes
