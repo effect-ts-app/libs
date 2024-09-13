@@ -1,4 +1,4 @@
-import type { Preset } from 'eslint-plugin-codegen';
+import type { Preset } from "eslint-plugin-codegen";
 /**
  * Bundle several modules into a single convenient one.
  *
@@ -26,14 +26,15 @@ import type { Preset } from 'eslint-plugin-codegen';
 export declare const barrel: Preset<{
     include?: string;
     exclude?: string | string[];
-    import?: 'default' | 'star';
+    import?: "default" | "star";
     export?: string | {
         name: string;
-        keys: 'path' | 'camelCase';
+        keys: "path" | "camelCase";
     } | {
-        as: 'PascalCase';
+        as: "PascalCase";
         postfix?: string;
     };
     nodir?: boolean;
+    modulegen?: boolean;
 }>;
 //# sourceMappingURL=barrel.d.ts.map
