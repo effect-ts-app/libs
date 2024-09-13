@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 1.8.3
+
+### Patch Changes
+
+- d61e00a: fix rule
+
 ## 1.8.2
 
 ### Patch Changes
