@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 1.8.2
+
+### Patch Changes
+
+- f45f63d: fix typo
+
 ## 1.8.1
 
 ### Patch Changes
