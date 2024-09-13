@@ -255,16 +255,6 @@
         "default": "./_cjs/builtin.cjs"
       }
     },
-    "./global": {
-      "import": {
-        "types": "./dist/global.d.ts",
-        "default": "./dist/global.js"
-      },
-      "require": {
-        "types": "./dist/global.d.ts",
-        "default": "./_cjs/global.cjs"
-      }
-    },
     "./http/http-client": {
       "import": {
         "types": "./dist/http/http-client.d.ts",
