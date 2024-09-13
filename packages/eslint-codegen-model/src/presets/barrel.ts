@@ -43,7 +43,7 @@ export const barrel: Preset<{
 }> = ({ meta, options: opts }) => {
   const cwd = path.dirname(meta.filename)
   const nodir = opts.nodir ?? true
-  const modulegen = opts.modulegen ?? true
+  const modulegen = opts.modulegen ?? false
 
   const ext = meta.filename.split(".").slice(-1)[0]
   const pattern = opts.include || `*.${ext}`
