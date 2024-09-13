@@ -138,7 +138,11 @@ export const ${up}: ${up} = ${i.identifier}`
         .join("\n")
 
       const exportss = modulegen ? "" : `\n${exportPrefix} {\n ${exports}\n}`
-      return `${imports}\n${exportss}\n${modulegen && moduleGen ? "type Id<T> = T\n\n" + moduleGen : ""}`
+      return `${imports}\n${exportss}\n${
+        modulegen && moduleGen
+          ? "type Id<T> = T\n/* eslint-disable @typescript-eslint/no-empty-object-type */\n\n" + moduleGen
+          : ""
+      }`
     })
     .get()
 
