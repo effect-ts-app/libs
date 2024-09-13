@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 1.8.0
+
+### Minor Changes
+
+- 08361d8: modulegen hack
+
 ## 1.7.4
 
 ### Patch Changes
