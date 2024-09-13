@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/core",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "license": "MIT",
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/core",
@@ -12,8 +12,8 @@
     "validator": "^13.12.0"
   },
   "peerDependencies": {
-    "effect": "^3.7.2",
-    "@effect/platform": "^0.64.0"
+    "effect": "^3.7.3",
+    "@effect/platform": "^0.64.1"
   },
   "devDependencies": {
     "@types/uuid": "^10.0.0",

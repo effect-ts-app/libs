@@ -1,6 +1,6 @@
 {
   "name": "effect-app",
-  "version": "1.12.2",
+  "version": "1.12.3",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -27,9 +27,9 @@
     "vitest": "^2.1.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.64.0",
-    "effect": "^3.7.2",
-    "@effect/schema": "^0.72.3"
+    "@effect/platform": "^0.64.1",
+    "effect": "^3.7.3",
+    "@effect/schema": "^0.72.4"
   },
   "typesVersions": {
     "*": {

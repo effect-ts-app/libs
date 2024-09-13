@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra-adapters",
-  "version": "1.8.9",
+  "version": "1.8.10",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -15,16 +15,16 @@
     "@types/express": "^4.17.21",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.7",
-    "mongodb": "6.8.1",
+    "mongodb": "6.9.0",
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
     "strip-ansi": "^7.1.0",
     "typescript": "^5.6.2"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.64.0",
-    "@effect/schema": "^0.72.3",
-    "effect": "^3.7.2"
+    "@effect/platform": "^0.64.1",
+    "@effect/schema": "^0.72.4",
+    "effect": "^3.7.3"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/fluent-extensions",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -14,8 +14,8 @@
     "validator": "^13.12.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.64.0",
-    "effect": "^3.7.2"
+    "@effect/platform": "^0.64.1",
+    "effect": "^3.7.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.6",

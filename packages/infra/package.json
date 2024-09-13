@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra",
-  "version": "1.13.7",
+  "version": "1.13.8",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -34,7 +34,7 @@
     "express": "^4.21.0",
     "jwks-rsa": "2.1.4",
     "jwt-decode": "^4.0.0",
-    "mongodb": "6.8.1",
+    "mongodb": "6.9.0",
     "redis": "^3.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
@@ -42,9 +42,9 @@
   },
   "peerDependencies": {
     "express": "^4.21.0",
-    "@effect/platform": "^0.64.0",
-    "@effect/schema": "^0.72.3",
-    "effect": "^3.7.2"
+    "@effect/platform": "^0.64.1",
+    "@effect/schema": "^0.72.4",
+    "effect": "^3.7.3"
   },
   "typesVersions": {
     "*": {

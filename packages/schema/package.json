@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/schema",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -20,8 +20,8 @@
     "vitest": "^2.1.0"
   },
   "peerDependencies": {
-    "@effect/schema": "^0.72.3",
-    "effect": "^3.7.2"
+    "@effect/schema": "^0.72.4",
+    "effect": "^3.7.3"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",
