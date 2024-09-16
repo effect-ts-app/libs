@@ -135,7 +135,7 @@ export type GetResponse<U extends Record<ResponseString, any>> = FilterResponse<
 export function extractRequest<TModule extends Record<string, any>>(
   h: TModule
 ): GetRequest<TModule> {
-  const reqKey = Object.keys(h).find((x) => x.endsWith("Request"))
+  const reqKey = "Request" in h ? "Request" : Object.keys(h).find((x) => x.endsWith("Request"))
     || Object.keys(h).find((x) => x === "default")
   if (!reqKey) {
     throw new Error("Module appears to have no Request: " + Object.keys(h).join(", "))
@@ -147,7 +147,7 @@ export function extractRequest<TModule extends Record<string, any>>(
 export function extractResponse<TModule extends Record<string, any>>(
   h: TModule
 ): GetResponse<TModule> | typeof S.Void {
-  const resKey = Object.keys(h).find((x) => x.endsWith("Response"))
+  const resKey = "Response" in h ? "Response" : Object.keys(h).find((x) => x.endsWith("Response"))
   if (!resKey) {
     return S.Void
   }
