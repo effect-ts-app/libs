@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.9.5
+
+### Patch Changes
+
+- 5cb4b35: export type
+
 ## 1.9.4
 
 ### Patch Changes
