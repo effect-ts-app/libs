@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 1.11.1
+
+### Patch Changes
+
+- e5fc429: fix types
+- Updated dependencies [e5fc429]
+  - effect-app@1.13.1
+  - @effect-app/vue@1.11.1
+
 ## 1.11.0
 
 ### Minor Changes
