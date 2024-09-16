@@ -642,11 +642,12 @@ export function parsePathParams<Path extends `/${string}`>(path: Path) {
   return params
 }
 
-type BuildRequest<
+export type BuildRequest<
   Fields extends Struct.Fields,
   Path extends `/${string}`,
   Method extends SupportedMethods,
   M,
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   Config extends object = {}
 > = IfPathPropsProvided<
   Path,
