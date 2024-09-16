@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.9.4
+
+### Patch Changes
+
+- 0151436: improve Request/Response detection
+
 ## 1.9.3
 
 ### Patch Changes
