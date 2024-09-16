@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.8.0
+
+### Minor Changes
+
+- c5f5223: update packages
+
 ## 1.7.5
 
 ### Patch Changes
