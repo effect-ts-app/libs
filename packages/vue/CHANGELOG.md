@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.11.2
+
+### Patch Changes
+
+- Updated dependencies [a64695e]
+  - effect-app@1.13.2
+  - @effect-app/vue@1.11.2
+
 ## 1.11.1
 
 ### Patch Changes

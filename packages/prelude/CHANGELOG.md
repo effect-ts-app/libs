@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.13.2
+
+### Patch Changes
+
+- a64695e: fix runtime error
+
 ## 1.13.1
 
 ### Patch Changes
