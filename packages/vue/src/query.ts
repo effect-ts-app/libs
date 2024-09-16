@@ -32,29 +32,29 @@ export interface QueryObserverOptionsCustom<
 
 export function useSafeQuery<E, A>(
   self: {
-    handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient>
+    handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Service>
     mapPath: string
     name: string
   },
-  options?: QueryObserverOptionsCustom | undefined // TODO
+  options?: QueryObserverOptionsCustom // TODO
 ): readonly [
   ComputedRef<Result.Result<A, E>>,
   ComputedRef<A | undefined>,
-  (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>,
+  (options?: RefetchOptions) => Promise<QueryObserverResult<any, any>>,
   UseQueryReturnType<any, any>
 ]
 export function useSafeQuery<Arg, E, A>(
   self: {
-    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient>
+    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Service>
     mapPath: (arg: Arg) => string
     name: string
   },
   arg: Arg | WatchSource<Arg>,
-  options?: QueryObserverOptionsCustom | undefined // TODO
+  options?: QueryObserverOptionsCustom // TODO
 ): readonly [
   ComputedRef<Result.Result<A, E>>,
   ComputedRef<A | undefined>,
-  (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<any, any>>,
+  (options?: RefetchOptions) => Promise<QueryObserverResult<any, any>>,
   UseQueryReturnType<any, any>
 ]
 export function useSafeQuery(
@@ -67,7 +67,7 @@ export function useSafeQuery(
       ) => Effect<
         FetchResponse<A>,
         E,
-        ApiConfig | HttpClient.HttpClient
+        ApiConfig | HttpClient.HttpClient.Service
       >
       mapPath: (req: I) => string
       name: string
@@ -76,7 +76,7 @@ export function useSafeQuery(
       handler: Effect<
         FetchResponse<A>,
         E,
-        ApiConfig | HttpClient.HttpClient
+        ApiConfig | HttpClient.HttpClient.Service
       >
       mapPath: string
       name: string
@@ -106,7 +106,7 @@ export const useSafeQuery_ = <I, A, E>(
       ) => Effect<
         FetchResponse<A>,
         E,
-        ApiConfig | HttpClient.HttpClient
+        ApiConfig | HttpClient.HttpClient.Service
       >
       mapPath: (req: I) => string
       name: string
@@ -115,7 +115,7 @@ export const useSafeQuery_ = <I, A, E>(
       readonly handler: Effect<
         FetchResponse<A>,
         E,
-        ApiConfig | HttpClient.HttpClient
+        ApiConfig | HttpClient.HttpClient.Service
       >
       mapPath: string
       name: string

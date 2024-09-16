@@ -55,10 +55,10 @@ export interface MutationError<E> {
 export type MutationResult<A, E> = MutationInitial | MutationLoading | MutationSuccess<A> | MutationError<E>
 
 type HandlerWithInput<I, A, E> = {
-  handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient>
+  handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>
   name: string
 }
-type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.HttpClient>; name: string }
+type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>; name: string }
 
 export interface MutationOptions<A, I = void> {
   queryInvalidation?: (defaultKey: string[] | undefined, name: string) => {
@@ -118,8 +118,8 @@ export const useSafeMutation: {
   const onSuccess = options?.onSuccess
 
   const invalidateQueries = (
-    filters?: MaybeRefDeep<InvalidateQueryFilters> | undefined,
-    options?: MaybeRefDeep<InvalidateOptions> | undefined
+    filters?: MaybeRefDeep<InvalidateQueryFilters>,
+    options?: MaybeRefDeep<InvalidateOptions>
   ) => Effect.promise(() => queryClient.invalidateQueries(filters, options))
 
   function handleExit(exit: Exit.Exit<A, E>): Effect<Either.Either<A, E>, never, never> {
@@ -148,7 +148,7 @@ export const useSafeMutation: {
   }
 
   const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
-    let effect: Effect<A, E, ApiConfig | HttpClient.HttpClient>
+    let effect: Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>
     let signal: AbortSignal | undefined
     if (Effect.isEffect(self.handler)) {
       effect = self.handler as any

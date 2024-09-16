@@ -6,18 +6,18 @@ import { reportError } from "./errorReporter.js"
 
 export const run = {
   value<E, A>(
-    _: Effect<A, E, ApiConfig | HttpClient.HttpClient>,
-    _options?: { readonly signal?: AbortSignal } | undefined
+    _: Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>,
+    _options?: { readonly signal?: AbortSignal }
   ): Promise<A> {
     throw new Error("Runtime not initialized, please run `initRuntime` first")
   }
 }
 export const reportRuntimeError = reportError("Runtime")
-export function initRuntime<A>(rt: Runtime.Runtime<A | ApiConfig | HttpClient.HttpClient>) {
+export function initRuntime<A>(rt: Runtime.Runtime<A | ApiConfig | HttpClient.HttpClient.Service>) {
   const runPromise = Runtime.runPromise(rt)
   run.value = function<E, A>(
-    self: Effect<A, E, ApiConfig | HttpClient.HttpClient>,
-    options?: { readonly signal?: AbortSignal } | undefined
+    self: Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>,
+    options?: { readonly signal?: AbortSignal }
   ): Promise<A> {
     return runPromise(
       self,
