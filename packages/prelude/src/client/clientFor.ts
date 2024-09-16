@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Effect, flow } from "@effect-app/core"
+import { Effect, flow, Predicate } from "@effect-app/core"
 import type { Schema } from "effect-app/schema"
 import { REST } from "effect-app/schema"
 import { Path } from "path-parser"
@@ -58,11 +58,25 @@ export function clientFor<M extends Requests>(
 }
 
 function clientFor_<M extends Requests>(models: M) {
-  return (typedKeysOf(models)
+  type Filtered = {
+    [K in keyof Requests as Requests[K] extends { Response: any } ? K : never]: Requests[K] extends { Response: any }
+      ? Requests[K]
+      : never
+  }
+  const filtered = typedKeysOf(models).reduce((acc, cur) => {
+    if (
+      Predicate.isObject(models[cur])
+      && (models[cur].Request || Object.keys(models[cur]).some((_) => _.endsWith("Request")) /* bwc */)
+    ) {
+      acc[cur as keyof Filtered] = models[cur]
+    }
+    return acc
+  }, {} as Filtered)
+  return (typedKeysOf(filtered)
     // ignore module interop with automatic default exports..
     .filter((x) => x !== "default" && x !== "meta")
     .reduce((prev, cur) => {
-      const h = models[cur]
+      const h = filtered[cur]
 
       const Request_ = REST.extractRequest(h) as AnyRequest
       const Response = REST.extractResponse(h)
@@ -229,6 +243,7 @@ export type ExtractEResponse<T> = T extends Schema<any, any, any> ? Schema.Encod
 type HasEmptyTo<T extends Schema<any, any, any>> = keyof Schema.Type<T> extends never ? true
   : false
 
+// TODO: refactor to new Request pattern, then filter out non-requests similar to the runtime changes in clientFor, and matchFor (boilerplate)
 type RequestHandlers<R, E, M extends Requests> = {
   [K in keyof M]: HasEmptyTo<REST.GetRequest<M[K]>> extends true ? {
       handler: Effect<FetchResponse<ExtractResponse<REST.GetResponse<M[K]>>>, E, R>
