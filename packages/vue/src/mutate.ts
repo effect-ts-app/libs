@@ -55,10 +55,10 @@ export interface MutationError<E> {
 export type MutationResult<A, E> = MutationInitial | MutationLoading | MutationSuccess<A> | MutationError<E>
 
 type HandlerWithInput<I, A, E> = {
-  handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient.Default>
+  handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient>
   name: string
 }
-type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.HttpClient.Default>; name: string }
+type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.HttpClient>; name: string }
 
 export interface MutationOptions<A, I = void> {
   queryInvalidation?: (defaultKey: string[] | undefined, name: string) => {
@@ -148,7 +148,7 @@ export const useSafeMutation: {
   }
 
   const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
-    let effect: Effect<A, E, ApiConfig | HttpClient.HttpClient.Default>
+    let effect: Effect<A, E, ApiConfig | HttpClient.HttpClient>
     let signal: AbortSignal | undefined
     if (Effect.isEffect(self.handler)) {
       effect = self.handler as any

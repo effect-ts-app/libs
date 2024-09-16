@@ -79,12 +79,12 @@ export function fetchApi(
 ) {
   return Effect.flatMap(getClient, (client) =>
     (method === "GET"
-      ? client(HttpClientRequest.make(method)(path))
+      ? client.execute(HttpClientRequest.make(method)(path))
       : body === undefined
-      ? client(HttpClientRequest.make(method)(path))
+      ? client.execute(HttpClientRequest.make(method)(path))
       : HttpClientRequest
         .make(method)(path)
-        .pipe(HttpClientRequest.jsonBody(body), Effect.flatMap(client)))
+        .pipe(HttpClientRequest.bodyJson(body), Effect.flatMap(client.execute)))
       .pipe(
         Effect
           .catchTag(

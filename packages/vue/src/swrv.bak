@@ -59,14 +59,14 @@ function swrToQuery<E, A>(
 
 export function useSafeQuery<E, A>(
   self: {
-    handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Default>
+    handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient>
     mapPath: string
   },
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
 ): readonly [ComputedRef<QueryResult<E, A>>, ComputedRef<A | undefined>, () => Promise<void>, IResponse<A, E>]
 export function useSafeQuery<Arg, E, A>(
   self: {
-    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Default>
+    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient>
     mapPath: (arg: Arg) => string
   },
   arg: Arg | WatchSource<Arg>,
@@ -74,10 +74,10 @@ export function useSafeQuery<Arg, E, A>(
 ): readonly [ComputedRef<QueryResult<E, A>>, ComputedRef<A | undefined>, () => Promise<void>, IResponse<A, E>]
 export function useSafeQuery(
   self: any, // {
-  //   handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Default>
+  //   handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient>
   //   mapPath: (arg: Arg) => string
   // } | {
-  //   handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Default>
+  //   handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient>
   //   mapPath: string
   // },
   arg?: any, // Arg | WatchSource<Arg> | swrv.IConfig<A, fetcherFn<A>> | undefined,
@@ -89,7 +89,7 @@ export function useSafeQuery(
 }
 
 export function useSafeQueryWithArg_<Arg, E, A>(
-  self: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Default>,
+  self: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient>,
   mapPath: (arg: Arg) => string,
   arg: Arg | WatchSource<Arg>,
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
@@ -107,7 +107,7 @@ export function useSafeQueryWithArg_<Arg, E, A>(
 
 export function useSafeQuery_<E, A>(
   key: string | WatchSource<string>,
-  self: () => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Default>,
+  self: () => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient>,
   config?: swrv.IConfig<A, fetcherFn<A>> | undefined
 ) {
   // const [result, latestSuccess, execute] = make(self)
@@ -169,7 +169,7 @@ export function useSafeQuery_<E, A>(
 
 
 export function useMutate<E, A>(
-  self: { handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Default>; mapPath: string }
+  self: { handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient>; mapPath: string }
 ) {
   const fn = () =>
     run.value(self.handler).then((_) => _.body).catch((_) => {
@@ -182,7 +182,7 @@ export function useMutate<E, A>(
 
 export function useMutateWithArg<Arg, E, A>(
   self: {
-    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Default>
+    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient>
     mapPath: (arg: Arg) => string
   }
 ) {
