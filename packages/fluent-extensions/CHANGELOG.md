@@ -1,5 +1,13 @@
 # @effect-app/fluent-extensions
 
+## 1.8.1
+
+### Patch Changes
+
+- d08286c: update packages
+- Updated dependencies [d08286c]
+  - @effect-app/core@1.8.1
+
 ## 1.8.0
 
 ### Minor Changes

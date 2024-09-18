@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 1.13.4
+
+### Patch Changes
+
+- d08286c: update packages
+- Updated dependencies [d08286c]
+  - @effect-app/schema@1.10.1
+  - @effect-app/core@1.8.1
+
 ## 1.13.3
 
 ### Patch Changes
