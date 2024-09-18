@@ -92,6 +92,7 @@ export function makeServiceBusQueue<
                             .withSpan(
                               `queue.drain: ${queueDrainName}${sessionId ? `#${sessionId}` : ""}.${body._tag}`,
                               {
+                                captureStackTrace: false,
                                 kind: "consumer",
                                 attributes: {
                                   "queue.name": queueDrainName,
@@ -154,6 +155,7 @@ export function makeServiceBusQueue<
             )
           })
           .pipe(Effect.withSpan("queue.publish: " + queueName, {
+            captureStackTrace: false,
             kind: "producer",
             attributes: { "message_tags": messages.map((_) => _._tag) }
           }))

@@ -180,7 +180,7 @@ export const useSafeMutation: {
                       Effect.annotateCurrentSpan({ queryKey, opts }),
                       Effect.forEach(opts, (_) => invalidateQueries(_.filters, _.options), { concurrency: "inherit" })
                     )
-                    .pipe(Effect.withSpan("client.query.invalidation"))
+                    .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
                 }
 
                 if (!queryKey) return Effect.void
@@ -190,14 +190,14 @@ export const useSafeMutation: {
                     Effect.annotateCurrentSpan({ queryKey }),
                     invalidateQueries({ queryKey })
                   )
-                  .pipe(Effect.withSpan("client.query.invalidation"))
+                  .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
               })
           ),
           Effect.tapDefect(reportRuntimeError),
           Effect.tap((i) => onSuccess ? Effect.promise(() => onSuccess(i)) : Effect.void),
           Effect.exit,
           Effect.flatMap(handleExit),
-          Effect.withSpan(`mutation ${self.name}`)
+          Effect.withSpan(`mutation ${self.name}`, { captureStackTrace: false })
         ),
       dropUndefinedT({ signal })
     )

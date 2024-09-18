@@ -29,18 +29,26 @@ function makeDiskStoreInt<Id extends string, Encoded extends { id: Id }, R, E>(
       get: fu
         .readTextFile(file)
         .pipe(
-          Effect.withSpan("Disk.read.readFile [effect-app/infra/Store]"),
+          Effect.withSpan("Disk.read.readFile [effect-app/infra/Store]", { captureStackTrace: false }),
           Effect.flatMap((x) =>
-            Effect.sync(() => JSON.parse(x) as PM[]).pipe(Effect.withSpan("Disk.read.parse [effect-app/infra/Store]"))
+            Effect.sync(() => JSON.parse(x) as PM[]).pipe(
+              Effect.withSpan("Disk.read.parse [effect-app/infra/Store]", { captureStackTrace: false })
+            )
           ),
           Effect.orDie,
-          Effect.withSpan("Disk.read [effect-app/infra/Store]", { attributes: { "disk.file": file } })
+          Effect.withSpan("Disk.read [effect-app/infra/Store]", {
+            captureStackTrace: false,
+            attributes: { "disk.file": file }
+          })
         ),
       setRaw: (v: Iterable<PM>) =>
         Effect
           .sync(() => JSON.stringify([...v], undefined, 2))
           .pipe(
-            Effect.withSpan("Disk.stringify [effect-app/infra/Store]", { attributes: { "disk.file": file } }),
+            Effect.withSpan("Disk.stringify [effect-app/infra/Store]", {
+              captureStackTrace: false,
+              attributes: { "disk.file": file }
+            }),
             Effect
               .flatMap(
                 (json) =>
@@ -48,11 +56,13 @@ function makeDiskStoreInt<Id extends string, Encoded extends { id: Id }, R, E>(
                     .writeTextFile(file, json)
                     .pipe(Effect
                       .withSpan("Disk.write.writeFile [effect-app/infra/Store]", {
+                        captureStackTrace: false,
                         attributes: { "disk.file_size": json.length }
                       }))
               ),
             Effect
               .withSpan("Disk.write [effect-app/infra/Store]", {
+                captureStackTrace: false,
                 attributes: { "disk.file": file }
               })
           )

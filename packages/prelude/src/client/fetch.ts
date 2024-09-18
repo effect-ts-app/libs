@@ -66,7 +66,7 @@ const getClient = Effect.flatMap(
               (_.status === 204
                 ? Effect.sync(() => ({ status: _.status, body: void 0, headers: _.headers }))
                 : Effect.map(_.json, (body) => ({ status: _.status, body, headers: _.headers })))
-                .pipe(Effect.withSpan("client.response"))
+                .pipe(Effect.withSpan("client.response", { captureStackTrace: false }))
             )
         ))
 )
@@ -272,7 +272,7 @@ export function mapResponseM<T, R, E, A>(map: (t: T) => Effect<A, E, R>) {
         headers: Effect.sync(() => r.headers),
         status: Effect.sync(() => r.status)
       })
-      .pipe(Effect.withSpan("client.decode"))
+      .pipe(Effect.withSpan("client.decode", { captureStackTrace: false }))
   }
 }
 export type FetchResponse<T> = { body: T; headers: Headers; status: number }

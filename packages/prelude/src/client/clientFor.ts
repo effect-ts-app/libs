@@ -135,6 +135,7 @@ function clientFor_<M extends Requests>(models: M) {
                 Effect.flatMap(parse),
                 Effect
                   .withSpan("client.request " + requestName, {
+                    captureStackTrace: false,
                     attributes: { "request.name": requestName }
                   })
               ),
@@ -147,6 +148,7 @@ function clientFor_<M extends Requests>(models: M) {
                   Effect.flatMap(parse),
                   Effect
                     .withSpan("client.request " + requestName, {
+                      captureStackTrace: false,
                       attributes: { "request.name": requestName }
                     })
                 ),
@@ -156,6 +158,7 @@ function clientFor_<M extends Requests>(models: M) {
         : fields.length === 0
         ? {
           handler: fetchApi3S(b)({}).pipe(Effect.withSpan("client.request " + requestName, {
+            captureStackTrace: false,
             attributes: { "request.name": requestName }
           })),
           ...meta
@@ -163,6 +166,7 @@ function clientFor_<M extends Requests>(models: M) {
         : {
           handler: (req: any) =>
             fetchApi3S(b)(req).pipe(Effect.withSpan("client.request " + requestName, {
+              captureStackTrace: false,
               attributes: { "request.name": requestName }
             })),
 
@@ -186,6 +190,7 @@ function clientFor_<M extends Requests>(models: M) {
                 Effect.flatMap(parseE),
                 Effect
                   .withSpan("client.request " + requestName, {
+                    captureStackTrace: false,
                     attributes: { "request.name": requestName }
                   })
               ),
@@ -198,6 +203,7 @@ function clientFor_<M extends Requests>(models: M) {
                   Effect.flatMap(parseE),
                   Effect
                     .withSpan("client.request " + requestName, {
+                      captureStackTrace: false,
                       attributes: { "request.name": requestName }
                     })
                 ),
@@ -208,6 +214,7 @@ function clientFor_<M extends Requests>(models: M) {
         : fields.length === 0
         ? {
           handler: fetchApi3SE(b)({}).pipe(Effect.withSpan("client.request " + requestName, {
+            captureStackTrace: false,
             attributes: { "request.name": requestName }
           })),
           ...meta
@@ -215,6 +222,7 @@ function clientFor_<M extends Requests>(models: M) {
         : {
           handler: (req: any) =>
             fetchApi3SE(b)(req).pipe(Effect.withSpan("client.request " + requestName, {
+              captureStackTrace: false,
               attributes: { "request.name": requestName }
             })),
 

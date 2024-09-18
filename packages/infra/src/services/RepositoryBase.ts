@@ -367,12 +367,16 @@ export function makeRepo<
       return Effect
         .gen(function*($) {
           const rctx = yield* $(Effect.context<R>())
-          const encodeMany = flow(S.encode(S.Array(schema)), Effect.provide(rctx), Effect.withSpan("encodeMany"))
+          const encodeMany = flow(
+            S.encode(S.Array(schema)),
+            Effect.provide(rctx),
+            Effect.withSpan("encodeMany", { captureStackTrace: false })
+          )
           const decode = flow(S.decode(schema), Effect.provide(rctx))
           const decodeMany = flow(
             S.decode(S.Array(schema)),
             Effect.provide(rctx),
-            Effect.withSpan("decodeMany")
+            Effect.withSpan("decodeMany", { captureStackTrace: false })
           )
 
           const store = yield* $(mkStore(args.makeInitial, args.config))
@@ -481,7 +485,7 @@ export function makeRepo<
                     Effect.asVoid
                   )
               })
-              .pipe(Effect.withSpan("saveAndPublish"))
+              .pipe(Effect.withSpan("saveAndPublish", { captureStackTrace: false }))
           }
 
           function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
@@ -509,7 +513,7 @@ export function makeRepo<
             Effect
               .flatMap(cms, (cm) =>
                 decodeMany(items.map((_) => mapReverse(_, cm.set)))
-                  .pipe(Effect.orDie, Effect.withSpan("parseMany")))
+                  .pipe(Effect.orDie, Effect.withSpan("parseMany", { captureStackTrace: false })))
           const parseMany2 = <A, R>(
             items: readonly PM[],
             schema: S.Schema<A, Encoded, R>
@@ -520,7 +524,7 @@ export function makeRepo<
                   .decode(S.Array(schema))(
                     items.map((_) => mapReverse(_, cm.set))
                   )
-                  .pipe(Effect.orDie, Effect.withSpan("parseMany2")))
+                  .pipe(Effect.orDie, Effect.withSpan("parseMany2", { captureStackTrace: false })))
           const filter = <U extends keyof Encoded = keyof Encoded>(args: FilterArgs<Encoded, U>) =>
             store
               .filter(args)
@@ -577,6 +581,7 @@ export function makeRepo<
                   .pipe(Effect.catchTag("ParseError", (e) => Effect.die(e)))
                 : eff,
               Effect.withSpan("Repository.query [effect-app/infra]", {
+                captureStackTrace: false,
                 attributes: {
                   "repository.model_name": name,
                   query: { ...a, schema: a.schema ? "__SCHEMA__" : a.schema, filter: a.filter }
@@ -615,6 +620,7 @@ export function makeRepo<
                 //       Effect.flatMap(decMany),
                 //       Effect.map((_) => _ as any[]),
                 //       Effect.withSpan("Repository.mapped.query [effect-app/infra]", {
+                //  captureStackTrace: false,
                 //         attributes: {
                 //           "repository.model_name": name,
                 //           query: { ...a, schema: a.schema ? "__SCHEMA__" : a.schema, filter: a.filter.build() }
@@ -623,7 +629,9 @@ export function makeRepo<
                 //     )
                 // },
                 save: (...xes: any[]) =>
-                  Effect.flatMap(encMany(xes), (_) => saveAllE(_)).pipe(Effect.withSpan("mapped.save"))
+                  Effect.flatMap(encMany(xes), (_) => saveAllE(_)).pipe(
+                    Effect.withSpan("mapped.save", { captureStackTrace: false })
+                  )
               }
             }
           }

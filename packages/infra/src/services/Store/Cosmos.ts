@@ -125,6 +125,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 return batchResult.flat() as unknown as NonEmptyReadonlyArray<Encoded>
               })
               .pipe(Effect.withSpan("Cosmos.bulkSet [effect-app/infra/Store]", {
+                captureStackTrace: false,
                 attributes: { "repository.container_id": containerId, "repository.model_name": name }
               }))
 
@@ -190,6 +191,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               })
               .pipe(Effect
                 .withSpan("Cosmos.batchSet [effect-app/infra/Store]", {
+                  captureStackTrace: false,
                   attributes: { "repository.container_id": containerId, "repository.model_name": name }
                 }))
           }
@@ -213,6 +215,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 ),
                 Effect
                   .withSpan("Cosmos.all [effect-app/infra/Store]", {
+                    captureStackTrace: false,
                     attributes: { "repository.container_id": containerId, "repository.model_name": name }
                   })
               ),
@@ -261,6 +264,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     )
                 )
                 .pipe(Effect.withSpan("Cosmos.filter [effect-app/infra/Store]", {
+                  captureStackTrace: false,
                   attributes: { "repository.container_id": containerId, "repository.model_name": name }
                 }))
             },
@@ -276,6 +280,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 )
                 .pipe(Effect
                   .withSpan("Cosmos.find [effect-app/infra/Store]", {
+                    captureStackTrace: false,
                     attributes: { "repository.container_id": containerId, "repository.model_name": name }
                   })),
             set: (e) =>
@@ -325,6 +330,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     }),
                   Effect
                     .withSpan("Cosmos.set [effect-app/infra/Store]", {
+                      captureStackTrace: false,
                       attributes: { "repository.container_id": containerId, "repository.model_name": name }
                     })
                 ),
@@ -335,6 +341,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 .promise(() => container.item(e.id, config?.partitionValue(e)).delete())
                 .pipe(Effect
                   .withSpan("Cosmos.remove [effect-app/infra/Store]", {
+                    captureStackTrace: false,
                     attributes: { "repository.container_id": containerId, "repository.model_name": name }
                   }))
           }

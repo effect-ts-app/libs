@@ -55,13 +55,14 @@ export function makeMemQueue<
           })
           .pipe(
             Effect.withSpan("queue.publish: " + queueName, {
+              captureStackTrace: false,
               kind: "producer",
               attributes: { "message_tags": messages.map((_) => _._tag) }
             })
           ),
       drain: <DrainE, DrainR>(
         handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>,
-        sessionId?: string | undefined
+        sessionId?: string
       ) =>
         Effect.gen(function*($) {
           const silenceAndReportError = reportNonInterruptedFailure({ name: "MemQueue.drain." + queueDrainName })
@@ -91,6 +92,7 @@ export function makeMemQueue<
                           ),
                         Effect
                           .withSpan(`queue.drain: ${queueDrainName}.${body._tag}`, {
+                            captureStackTrace: false,
                             kind: "consumer",
                             attributes: {
                               "queue.name": queueDrainName,

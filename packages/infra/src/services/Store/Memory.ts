@@ -123,6 +123,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
         )
     const s: Store<Encoded, Id> = {
       all: all.pipe(Effect.withSpan("Memory.all [effect-app/infra/Store]", {
+        captureStackTrace: false,
         attributes: {
           modelName,
           namespace
@@ -135,6 +136,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
             Effect.map((_) => Option.fromNullable(_.get(id))),
             Effect
               .withSpan("Memory.find [effect-app/infra/Store]", {
+                captureStackTrace: false,
                 attributes: {
                   modelName,
                   namespace
@@ -147,6 +149,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
             Effect.tap(() => logQuery(f, defaultValues)),
             Effect.map(memFilter(f)),
             Effect.withSpan("Memory.filter [effect-app/infra/Store]", {
+              captureStackTrace: false,
               attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
             })
           ),
@@ -165,6 +168,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
             withPermit,
             Effect
               .withSpan("Memory.set [effect-app/infra/Store]", {
+                captureStackTrace: false,
                 attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
               })
           ),
@@ -175,10 +179,10 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
             // align with CosmosDB
             .pipe(
               Effect.filterOrDieMessage((_) => _.length <= 100, "BatchSet: a batch may not exceed 100 items"),
-              Effect
-                .andThen(batchSet),
+              Effect.andThen(batchSet),
               Effect
                 .withSpan("Memory.batchSet [effect-app/infra/Store]", {
+                  captureStackTrace: false,
                   attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
                 })
             )
@@ -187,6 +191,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
         batchSet,
         (_) =>
           _.pipe(Effect.withSpan("Memory.bulkSet [effect-app/infra/Store]", {
+            captureStackTrace: false,
             attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
           }))
       ),
@@ -198,6 +203,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
             Effect.flatMap((_) => Ref.set(store, _)),
             withPermit,
             Effect.withSpan("Memory.remove [effect-app/infra/Store]", {
+              captureStackTrace: false,
               attributes: { "repository.model_name": modelName, "repository.namespace": namespace }
             })
           )

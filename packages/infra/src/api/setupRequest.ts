@@ -23,7 +23,7 @@ const withRequestSpan = <R, E, A>(f: Effect<A, E, R>) =>
       .get,
     (ctx) =>
       f.pipe(
-        Effect.withSpan("request " + ctx.name, { attributes: spanAttributes(ctx) }),
+        Effect.withSpan("request " + ctx.name, { attributes: spanAttributes(ctx), captureStackTrace: false }),
         // request context info is picked up directly in the logger for annotations.
         Effect.withLogSpan("request")
       )
