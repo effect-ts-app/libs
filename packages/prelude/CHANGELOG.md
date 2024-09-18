@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.13.3
+
+### Patch Changes
+
+- 6c81e3c: improve: remove framework stacktrace location
+
 ## 1.13.2
 
 ### Patch Changes

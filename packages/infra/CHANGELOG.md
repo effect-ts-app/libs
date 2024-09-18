@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 1.14.3
+
+### Patch Changes
+
+- 6c81e3c: improve: remove framework stacktrace location
+- Updated dependencies [6c81e3c]
+  - effect-app@1.13.3
+  - @effect-app/infra-adapters@1.9.3
+
 ## 1.14.2
 
 ### Patch Changes

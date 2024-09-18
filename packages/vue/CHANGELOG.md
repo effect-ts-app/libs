@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 1.11.3
+
+### Patch Changes
+
+- 6c81e3c: improve: remove framework stacktrace location
+- Updated dependencies [6c81e3c]
+  - effect-app@1.13.3
+  - @effect-app/vue@1.11.3
+
 ## 1.11.2
 
 ### Patch Changes
