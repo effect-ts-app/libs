@@ -1,5 +1,16 @@
 # @effect-app/fluent-extensions
 
+## 1.9.0
+
+### Minor Changes
+
+- b3d9a3e: update packages
+
+### Patch Changes
+
+- Updated dependencies [b3d9a3e]
+  - @effect-app/core@1.9.0
+
 ## 1.8.1
 
 ### Patch Changes
