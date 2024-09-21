@@ -1,41 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable @typescript-eslint/ban-types */
-import type { EnforceNonEmptyRecord } from "@effect-app/core/utils"
 import { ValidationError } from "@effect-app/infra/errors"
 import type { Struct } from "@effect/schema/Schema"
 import * as S from "@effect/schema/Schema"
 import type { Context } from "effect-app"
 import { Cause, Effect, Exit, Option } from "effect-app"
-import type { HttpRouter, HttpServerError } from "effect-app/http"
 import type { REST } from "effect-app/schema"
 import type { Simplify } from "effect/Types"
-
-export type RouteMatch<
-  R,
-  M,
-  PR = never
-> // RErr = never,
- = // PathA,
-  // CookieA,
-  // QueryA,
-  // BodyA,
-  // HeaderA,
-  // ReqA extends PathA & QueryA & BodyA,
-  // ResA,
-  // PR = never
-  Effect<
-    // RouteDescriptor<R, PathA, CookieA, QueryA, BodyA, HeaderA, ReqA, ResA, SupportedErrors, Methods>
-    HttpRouter.Route<Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>, HttpServerError.RequestError>
-  >
 
 export interface ReqHandler<
   Req,
   R,
   E,
   Res,
-  ReqSchema extends S.Schema<any, any, any>,
-  ResSchema extends S.Schema<any, any, any>,
+  ReqSchema extends S.Schema.Any,
+  ResSchema extends S.Schema.Any,
   CTX = any,
   Context = any
 > {

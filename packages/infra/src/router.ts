@@ -11,10 +11,8 @@ import type {
   Extr,
   JWTError,
   Middleware,
-  ReqFromSchema,
   ReqHandler,
-  RequestHandler,
-  ResFromSchema
+  RequestHandler
 } from "@effect-app/infra/api/routing"
 import { defaultErrorHandler, makeRequestHandler } from "@effect-app/infra/api/routing"
 import type { Layer, Scope } from "effect-app"
@@ -39,7 +37,39 @@ export interface Hint<Err extends string> {
   Err: Err
 }
 
-type AnyRequestModule = { Request: any; Context: any; Response: any; failure: any }
+type HandleVoid<Expected, Actual, Result> = [Expected] extends [void]
+  ? [Actual] extends [void] ? Result : Hint<"You're returning non void for a void Response, please fix">
+  : Result
+
+type AnyRequestModule = S.Schema.Any & { success?: S.Schema.Any; failure?: S.Schema.Any }
+
+type GetSuccess<T extends { success?: S.Schema.Any }> = T["success"] extends never ? typeof S.Void : T["success"]
+
+type GetSuccessShape<Action extends { success?: S.Schema.Any }, RT extends "d" | "raw"> = RT extends "raw"
+  ? S.Schema.Encoded<GetSuccess<Action>>
+  : S.Schema.Type<GetSuccess<Action>>
+type GetFailure<T extends { failure?: S.Schema.Any }> = T["failure"] extends never ? typeof S.Never : T["failure"]
+
+export interface Handler<Action extends AnyRequestModule, RT extends "raw" | "d", E, R, Context> {
+  new(): {}
+  _tag: RT
+  handler: (
+    req: S.Schema.Type<Action>,
+    ctx: Context
+  ) => Effect<
+    GetSuccessShape<Action, RT>,
+    E,
+    R
+  >
+}
+
+type AHandler<Action extends AnyRequestModule> = Handler<
+  Action,
+  "raw" | "d",
+  SupportedErrors | S.ParseResult.ParseError | S.Schema.Type<GetFailure<Action>>,
+  any,
+  any
+>
 
 // TODO: support FLIP
 export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, boolean]>>(
@@ -223,19 +253,6 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
     >)
   }
 
-  type RouteMatch<
-    R,
-    M,
-    // TODO: specific failure
-    // Err extends SupportedErrors | S.ParseResult.ParseError,
-    PR = never
-  > // RErr = never,
-   = HttpRouter.Route<never, Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>>
-
-  type HandleVoid<Expected, Actual, Result> = Expected extends void
-    ? Actual extends void ? Result : Hint<"You're returning non void for a void Response, please fix">
-    : Result
-
   function matchFor<Rsc extends Record<string, any>>(
     rsc: Rsc
   ) {
@@ -251,7 +268,6 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
     }, {} as Filtered)
 
     const matchWithServices = <Key extends keyof Filtered>(action: Key) => {
-      type Req = ReqFromSchema<REST.GetRequest<Rsc[Key]>>
       return <
         SVC extends Record<
           string,
@@ -263,9 +279,9 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
       >(
         services: SVC,
         f: (
-          req: Req,
+          req: S.Schema.Type<Rsc[Key]>,
           ctx: Compute<
-            LowerServices<EffectDeps<SVC>> & GetCTX<Req>,
+            LowerServices<EffectDeps<SVC>> & GetCTX<Rsc[Key]>,
             "flat"
           >
         ) => Effect<A, E, R2>
@@ -278,31 +294,31 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
       <R2, E, A>(
         f: Effect<A, E, R2>
       ): HandleVoid<
-        S.Schema.Type<REST.GetResponse<Rsc[Key]>>,
+        GetSuccessShape<Rsc[Key], RT>,
         A,
         Handler<
           Rsc[Key],
           RT,
-          A,
           E,
-          R2
+          R2,
+          GetCTX<Rsc[Key]>
         >
       >
 
       <R2, E, A>(
         f: (
-          req: ReqFromSchema<REST.GetRequest<Rsc[Key]>>,
-          ctx: GetCTX<REST.GetRequest<Rsc[Key]>> & Pick<Rsc[Key], "Response">
+          req: S.Schema.Type<Rsc[Key]>,
+          ctx: GetCTX<Rsc[Key]> & Pick<Rsc[Key], "Response">
         ) => Effect<A, E, R2>
       ): HandleVoid<
-        S.Schema.Type<REST.GetResponse<Rsc[Key]>>,
+        GetSuccessShape<Rsc[Key], RT>,
         A,
         Handler<
           Rsc[Key],
           RT,
-          A,
           E,
-          R2
+          R2,
+          GetCTX<Rsc[Key]>
         >
       >
 
@@ -317,54 +333,26 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
       >(
         services: SVC,
         f: (
-          req: ReqFromSchema<REST.GetRequest<Rsc[Key]>>,
+          req: S.Schema.Type<Rsc[Key]>,
           ctx: Compute<
-            LowerServices<EffectDeps<SVC>> & GetCTX<REST.GetRequest<Rsc[Key]>> & Pick<Rsc[Key], "Response">,
+            LowerServices<EffectDeps<SVC>> & GetCTX<Rsc[Key]> & Pick<Rsc[Key], "Response">,
             "flat"
           >
         ) => Effect<A, E, R2>
       ): HandleVoid<
-        S.Schema.Type<REST.GetResponse<Rsc[Key]>>,
+        GetSuccessShape<Rsc[Key], RT>,
         A,
         Handler<
           Rsc[Key],
           RT,
-          A,
           E,
-          R2
+          R2,
+          GetCTX<Rsc[Key]>
         >
       >
     }
 
     type Keys = keyof Filtered
-    type Handler<Action extends AnyRequestModule, RT extends "raw" | "d", A, E, R> = {
-      new(): {}
-      _tag: RT
-      handler: (
-        req: Action["Request"],
-        ctx: Action["Context"]
-      ) => Effect<
-        A,
-        E,
-        R
-      >
-    }
-
-    type AHandler<Action extends AnyRequestModule> =
-      | Handler<
-        Action,
-        "raw",
-        ResRawFromSchema<REST.GetResponse<Action>>,
-        SupportedErrors | S.ParseResult.ParseError | S.Schema.Type<Action["failure"]>,
-        any
-      >
-      | Handler<
-        Action,
-        "d",
-        ResFromSchema<REST.GetResponse<Action>>,
-        SupportedErrors | S.ParseResult.ParseError | S.Schema.Type<Action["failure"]>,
-        any
-      >
 
     const controllers = <
       THandlers extends {
@@ -387,14 +375,14 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         },
         {} as {
           [K in Keys]: ReqHandler<
-            ReqFromSchema<REST.GetRequest<Rsc[K]>>,
+            S.Schema.Type<Rsc[K]>,
             _R<ReturnType<THandlers[K]["handler"]>>,
             _E<ReturnType<THandlers[K]["handler"]>>,
-            ResFromSchema<REST.GetResponse<Rsc[K]>>,
-            REST.GetRequest<Rsc[K]>,
-            REST.GetResponse<Rsc[K]>,
-            GetCTX<REST.GetRequest<Rsc[K]>>,
-            GetContext<REST.GetRequest<Rsc[K]>>
+            S.Schema.Type<GetSuccess<Rsc[K]>>, // TODO: GetSuccessShape
+            Rsc[K],
+            GetSuccess<Rsc[K]>,
+            GetCTX<Rsc[K]>,
+            GetContext<Rsc[K]>
           >
         }
       )
@@ -424,9 +412,9 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
       }, {} as any) as {
         [K in Keys]: RouteMatch<
           _R<ReturnType<THandlers[K]["handler"]>>,
-          ReqFromSchema<REST.GetRequest<Rsc[K]>>,
+          Rsc[K],
           //        _E<ReturnType<THandlers[K]["handler"]>>,
-          GetContext<REST.GetRequest<Rsc[K]>>
+          GetContext<Rsc[K]>
         >
       }
 
@@ -445,8 +433,6 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         _RRoute<typeof mapped[keyof typeof mapped]>
       >
     }
-
-    type ResRawFromSchema<ResSchema> = S.Schema.Encoded<Extr<ResSchema>>
 
     const r = {
       controllers,

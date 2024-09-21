@@ -18,13 +18,7 @@ export const makeClientRouter = <RequestConfig extends object>() => {
         }
       >
       & {
-        Request: BuildRequest<
-          Fields,
-          "/",
-          "AUTO",
-          M,
-          C
-        >
+        Request: M
       }
     <Fields extends S.Struct.Fields, C extends RequestConfig>(
       fields: Fields,
@@ -40,13 +34,7 @@ export const makeClientRouter = <RequestConfig extends object>() => {
         }
       >
       & {
-        Request: BuildRequest<
-          Fields,
-          "/",
-          "AUTO",
-          M,
-          C
-        >
+        Request: M
       }
     <Fields extends S.Struct.Fields>(
       fields: Fields
@@ -61,15 +49,7 @@ export const makeClientRouter = <RequestConfig extends object>() => {
         }
       >
       & {
-        Request: BuildRequest<
-          Fields,
-          "/",
-          "AUTO",
-          M,
-          {
-            Response: typeof S.Void
-          }
-        >
+        Request: M
       }
   } {
     return <Fields extends S.Struct.Fields, C extends RequestConfig & { success: S.Schema.Any }>(
