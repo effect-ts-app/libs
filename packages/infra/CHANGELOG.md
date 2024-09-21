@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.16.2
+
+### Patch Changes
+
+- ad7f47c: fix type
+
 ## 1.16.1
 
 ### Patch Changes
