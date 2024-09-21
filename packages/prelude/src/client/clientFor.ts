@@ -262,7 +262,7 @@ type RequestHandlers<R, E, M extends Requests> = {
     }
     : {
       handler: (
-        req: InstanceType<REST.GetRequest<M[K]>>
+        req: S.Schema.Type<REST.GetRequest<M[K]>>
       ) => Effect<
         FetchResponse<ExtractResponse<REST.GetResponse<M[K]>>>,
         E,
@@ -270,7 +270,7 @@ type RequestHandlers<R, E, M extends Requests> = {
       >
       Request: REST.GetRequest<M[K]>
       Reponse: ExtractResponse<REST.GetResponse<M[K]>>
-      mapPath: (req: InstanceType<REST.GetRequest<M[K]>>) => string
+      mapPath: (req: S.Schema.Type<REST.GetRequest<M[K]>>) => string
       name: string
     }
 }
@@ -289,7 +289,7 @@ type RequestHandlersE<R, E, M extends Requests> = {
     }
     : {
       handler: (
-        req: InstanceType<REST.GetRequest<M[K]>>
+        req: S.Schema.Type<REST.GetRequest<M[K]>>
       ) => Effect<
         FetchResponse<ExtractEResponse<REST.GetResponse<M[K]>>>,
         E,
@@ -297,7 +297,7 @@ type RequestHandlersE<R, E, M extends Requests> = {
       >
       Request: REST.GetRequest<M[K]>
       Reponse: ExtractResponse<REST.GetResponse<M[K]>>
-      mapPath: (req: InstanceType<REST.GetRequest<M[K]>>) => string
+      mapPath: (req: S.Schema.Type<REST.GetRequest<M[K]>>) => string
       name: string
     }
 }
