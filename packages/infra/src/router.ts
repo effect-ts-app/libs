@@ -17,7 +17,7 @@ import type {
   ResFromSchema
 } from "@effect-app/infra/api/routing"
 import { defaultErrorHandler, makeRequestHandler } from "@effect-app/infra/api/routing"
-import type { Layer, Scope, Types } from "effect-app"
+import type { Layer, Scope } from "effect-app"
 import { Effect, Predicate, S } from "effect-app"
 import type { SupportedErrors, ValidationError } from "effect-app/client/errors"
 import { HttpRouter } from "effect-app/http"
@@ -38,6 +38,8 @@ export type RouteMatch<
 export interface Hint<Err extends string> {
   Err: Err
 }
+
+type AnyRequestModule = { Request: any; Context: any; Response: any; failure: any }
 
 // TODO: support FLIP
 export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, boolean]>>(
@@ -62,6 +64,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         CTXMap[key][1]
     }
   >
+
   function match<
     R,
     M,
@@ -161,7 +164,9 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
     const route = HttpRouter.makeRoute(
       requestHandler.Request.method,
       requestHandler.Request.path,
-      handler
+      handler.pipe(
+        Effect.withSpan("Request." + requestHandler.name, { captureStackTrace: () => (requestHandler as any).stack })
+      )
     )
     // TODO
     // rdesc.push(makeRouteDescriptor(
@@ -194,9 +199,10 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
     type Res = S.Schema.Type<Extr<ResSchema>>
 
     return <R, E>(
-      h: { _tag: "raw" | "d"; handler: (r: Req) => Effect<Res, E, R> }
+      h: { _tag: "raw" | "d"; handler: (r: Req) => Effect<Res, E, R>; stack?: string }
     ) => ({
       adaptResponse,
+      stack: h.stack,
       h: h.handler,
       name,
       Request,
@@ -216,6 +222,15 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
       GetContext<Req>
     >)
   }
+
+  type RouteMatch<
+    R,
+    M,
+    // TODO: specific failure
+    // Err extends SupportedErrors | S.ParseResult.ParseError,
+    PR = never
+  > // RErr = never,
+   = HttpRouter.Route<never, Exclude<Exclude<R, EnforceNonEmptyRecord<M>>, PR>>
 
   type HandleVoid<Expected, Actual, Result> = Expected extends void
     ? Actual extends void ? Result : Hint<"You're returning non void for a void Response, please fix">
@@ -256,7 +271,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         ) => Effect<A, E, R2>
       ) =>
       (req: any, ctx: any) =>
-        Effect.andThen(allLower(services), (svc2) => f(req, { ...ctx, ...svc2 as any, Response: rsc[action].Response }))
+        Effect.andThen(allLower(services), (svc2) => f(req, { ...ctx, ...svc2, Response: rsc[action].Response }))
     }
 
     type MatchWithServicesNew<RT extends "raw" | "d", Key extends keyof Rsc> = {
@@ -266,14 +281,14 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         S.Schema.Type<REST.GetResponse<Rsc[Key]>>,
         A,
         Handler<
-          ReqFromSchema<REST.GetRequest<Rsc[Key]>>,
-          Types.Simplify<GetCTX<REST.GetRequest<Rsc[Key]>>>,
+          Rsc[Key],
           RT,
           A,
           E,
           R2
         >
       >
+
       <R2, E, A>(
         f: (
           req: ReqFromSchema<REST.GetRequest<Rsc[Key]>>,
@@ -283,8 +298,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         S.Schema.Type<REST.GetResponse<Rsc[Key]>>,
         A,
         Handler<
-          ReqFromSchema<REST.GetRequest<Rsc[Key]>>,
-          Types.Simplify<GetCTX<REST.GetRequest<Rsc[Key]>>>,
+          Rsc[Key],
           RT,
           A,
           E,
@@ -313,8 +327,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         S.Schema.Type<REST.GetResponse<Rsc[Key]>>,
         A,
         Handler<
-          ReqFromSchema<REST.GetRequest<Rsc[Key]>>,
-          Types.Simplify<GetCTX<REST.GetRequest<Rsc[Key]>>>,
+          Rsc[Key],
           RT,
           A,
           E,
@@ -324,12 +337,11 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
     }
 
     type Keys = keyof Filtered
-    type Handler<Req, Context, RT extends "raw" | "d", A, E, R> = {
-      new(): {}
+    type Handler<Action extends AnyRequestModule, RT extends "raw" | "d", A, E, R> = {
       _tag: RT
       handler: (
-        req: Req,
-        ctx: Context
+        req: Action["Request"],
+        ctx: Action["Context"]
       ) => Effect<
         A,
         E,
@@ -337,21 +349,19 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
       >
     }
 
-    type AHandler<Action extends Record<string, any>> =
+    type AHandler<Action extends AnyRequestModule> =
       | Handler<
-        ReqFromSchema<REST.GetRequest<Action>>,
-        GetCTX<REST.GetRequest<Action>>,
+        Action,
         "raw",
         ResRawFromSchema<REST.GetResponse<Action>>,
-        SupportedErrors | S.ParseResult.ParseError | S.Schema.Type<REST.GetRequest<Action>["failure"]>,
+        SupportedErrors | S.ParseResult.ParseError | S.Schema.Type<Action["failure"]>,
         any
       >
       | Handler<
-        ReqFromSchema<REST.GetRequest<Action>>,
-        GetCTX<REST.GetRequest<Action>>,
+        Action,
         "d",
         ResFromSchema<REST.GetResponse<Action>>,
-        SupportedErrors | S.ParseResult.ParseError | S.Schema.Type<REST.GetRequest<Action>["failure"]>,
+        SupportedErrors | S.ParseResult.ParseError | S.Schema.Type<Action["failure"]>,
         any
       >
 
@@ -441,36 +451,46 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
       controllers,
       ...typedKeysOf(filtered).reduce(
         (prev, cur) => {
-          ;(prev as any)[cur] = (svcOrFnOrEffect: any, fnOrNone: any) =>
-            Effect.isEffect(svcOrFnOrEffect)
+          ;(prev as any)[cur] = (svcOrFnOrEffect: any, fnOrNone: any) => {
+            const stack = new Error().stack?.split("\n").slice(2).join("\n")
+            return Effect.isEffect(svcOrFnOrEffect)
               ? class {
+                static stack = stack
                 static _tag = "d"
                 static handler = () => svcOrFnOrEffect
               }
               : typeof svcOrFnOrEffect === "function"
               ? class {
+                static stack = stack
                 static _tag = "d"
                 static handler = (req: any, ctx: any) => svcOrFnOrEffect(req, { ...ctx, Response: rsc[cur].Response })
               }
               : class {
+                static stack = stack
                 static _tag = "d"
                 static handler = matchWithServices(cur)(svcOrFnOrEffect, fnOrNone)
               }
-          ;(prev as any)[(cur as any) + "Raw"] = (svcOrFnOrEffect: any, fnOrNone: any) =>
-            Effect.isEffect(svcOrFnOrEffect)
+          }
+          ;(prev as any)[(cur as any) + "Raw"] = (svcOrFnOrEffect: any, fnOrNone: any) => {
+            const stack = new Error().stack?.split("\n").slice(2).join("\n")
+            return Effect.isEffect(svcOrFnOrEffect)
               ? class {
+                static stack = stack
                 static _tag = "raw"
                 static handler = () => svcOrFnOrEffect
               }
               : typeof svcOrFnOrEffect === "function"
               ? class {
+                static stack = stack
                 static _tag = "raw"
                 static handler = (req: any, ctx: any) => svcOrFnOrEffect(req, { ...ctx, Response: rsc[cur].Response })
               }
               : class {
+                static stack = stack
                 static _tag = "raw"
                 static handler = matchWithServices(cur)(svcOrFnOrEffect, fnOrNone)
               }
+          }
           return prev
         },
         {} as
@@ -516,8 +536,8 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
       : never
 
     return r as HttpRouter.HttpRouter<
-      _RRouter<typeof handlers[keyof typeof handlers]>,
-      _ERouter<typeof handlers[keyof typeof handlers]>
+      _ERouter<typeof handlers[keyof typeof handlers]>,
+      _RRouter<typeof handlers[keyof typeof handlers]>
     >
   }
 
