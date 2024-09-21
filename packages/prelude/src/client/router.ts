@@ -56,6 +56,7 @@ export const makeClientRouter = <RequestConfig extends object>() => {
       fields: Fields,
       config?: C
     ) => {
+      // TODO: get rid of Response, just use success (only all legacy migrated)
       const req = config?.success
         ? Req_<C>({ ...config, Response: config.success })<M>()<Fields>(fields)
         : Req_({ ...config, success: S.Void, Response: S.Void })<M>()<Fields>(fields)

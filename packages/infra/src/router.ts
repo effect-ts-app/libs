@@ -8,7 +8,6 @@ import type {
   _E,
   _R,
   EffectDeps,
-  Extr,
   JWTError,
   Middleware,
   ReqHandler,
@@ -43,7 +42,7 @@ type HandleVoid<Expected, Actual, Result> = [Expected] extends [void]
 
 type AnyRequestModule = S.Schema.Any & { success?: S.Schema.Any; failure?: S.Schema.Any }
 
-type GetSuccess<T extends { success?: S.Schema.Any }> = T["success"] extends never ? typeof S.Void : T["success"]
+type GetSuccess<T> = T extends { success: S.Schema.Any } ? T["success"] : typeof S.Void
 
 type GetSuccessShape<Action extends { success?: S.Schema.Any }, RT extends "d" | "raw"> = RT extends "raw"
   ? S.Schema.Encoded<GetSuccess<Action>>
@@ -82,7 +81,7 @@ type AHandler<Action extends AnyRequestModule> =
     any
   >
 
-// TODO: support FLIP
+// TODO: support FLIP (true means dependency available, false not. vs true means not available, false means available)
 export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, boolean]>>(
   handleRequestEnv: any /* Middleware */
 ) => {
@@ -219,25 +218,17 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
   }
 
   function handle<
-    TModule extends Record<
-      string,
-      any
-    >
+    ReqSchema extends AnyRequestModule
   >(
-    _: TModule & { ResponseOpenApi?: any },
+    _: ReqSchema & { ResponseOpenApi?: any },
     name: string,
     adaptResponse?: any
   ) {
     const Request = S.REST.extractRequest(_)
     const Response = S.REST.extractResponse(_)
-
-    type ReqSchema = S.REST.GetRequest<TModule>
-    type ResSchema = S.REST.GetResponse<TModule>
-    type Req = InstanceType<
-      ReqSchema extends { new(...args: any[]): any } ? ReqSchema
-        : never
-    >
-    type Res = S.Schema.Type<Extr<ResSchema>>
+    type ResSchema = GetSuccess<ReqSchema>
+    type Req = S.Schema.Type<ReqSchema>
+    type Res = S.Schema.Type<ResSchema> // TODO: depends on raw
 
     return <R, E>(
       h: { _tag: "raw" | "d"; handler: (r: Req) => Effect<Res, E, R>; stack?: string }
@@ -392,7 +383,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
             S.Schema.Type<Rsc[K]>,
             _R<ReturnType<THandlers[K]["handler"]>>,
             _E<ReturnType<THandlers[K]["handler"]>>,
-            S.Schema.Type<GetSuccess<Rsc[K]>>, // TODO: GetSuccessShape
+            S.Schema.Type<GetSuccess<Rsc[K]>>, // TODO: GetSuccessShape, but requires RT
             Rsc[K],
             GetSuccess<Rsc[K]>,
             GetCTX<Rsc[K]>,
