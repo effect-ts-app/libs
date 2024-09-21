@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.15.2
+
+### Patch Changes
+
+- fb62f02: bwc
+
 ## 1.15.1
 
 ### Patch Changes
