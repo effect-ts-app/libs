@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.80.1
+
+### Patch Changes
+
+- 11982eb: fix cli
+
 ## 0.80.0
 
 ### Minor Changes
