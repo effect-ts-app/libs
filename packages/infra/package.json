@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -332,6 +332,16 @@
       "require": {
         "types": "./dist/rateLimit.d.ts",
         "default": "./_cjs/rateLimit.cjs"
+      }
+    },
+    "./router": {
+      "import": {
+        "types": "./dist/router.d.ts",
+        "default": "./dist/router.js"
+      },
+      "require": {
+        "types": "./dist/router.d.ts",
+        "default": "./_cjs/router.cjs"
       }
     },
     "./services/Emailer": {

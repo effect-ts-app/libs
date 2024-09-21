@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 1.16.0
+
+### Minor Changes
+
+- feat: add new router support
+
+### Patch Changes
+
+- Updated dependencies
+  - effect-app@1.15.0
+  - @effect-app/infra-adapters@1.10.1
+
 ## 1.15.0
 
 ### Minor Changes

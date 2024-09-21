@@ -1,6 +1,6 @@
 {
   "name": "effect-app",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -177,6 +177,16 @@
       "require": {
         "types": "./dist/client/fetch.d.ts",
         "default": "./_cjs/client/fetch.cjs"
+      }
+    },
+    "./client/router": {
+      "import": {
+        "types": "./dist/client/router.d.ts",
+        "default": "./dist/client/router.js"
+      },
+      "require": {
+        "types": "./dist/client/router.d.ts",
+        "default": "./_cjs/client/router.cjs"
       }
     },
     "./faker": {

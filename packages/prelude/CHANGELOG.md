@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.15.0
+
+### Minor Changes
+
+- feat: add new router support
+
 ## 1.14.0
 
 ### Minor Changes
