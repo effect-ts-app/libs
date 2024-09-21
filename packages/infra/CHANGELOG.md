@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 1.16.3
+
+### Patch Changes
+
+- 88f56d4: verify
+- 2b56d7e: cleanup routing
+- 73d5e0a: cleanup routing
+- Updated dependencies [2b56d7e]
+- Updated dependencies [73d5e0a]
+  - effect-app@1.15.1
+  - @effect-app/infra-adapters@1.10.2
+
 ## 1.16.2
 
 ### Patch Changes

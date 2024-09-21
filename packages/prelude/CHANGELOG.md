@@ -1,5 +1,12 @@
 # @effect-app/prelude
 
+## 1.15.1
+
+### Patch Changes
+
+- 2b56d7e: cleanup routing
+- 73d5e0a: cleanup routing
+
 ## 1.15.0
 
 ### Minor Changes
