@@ -2,7 +2,7 @@ import cp from "child_process"
 import fs from "fs"
 import { EFFECT_APP_LIBS, packages } from "./shared.js"
 
-const pj = (await import(process.cwd() + "/package.json", { assert: { type: "json" } })).default
+const pj = (await import(process.cwd() + "/package.json", { with: { type: "json" } })).default
 
 pj.resolutions = {
   ...pj.resolutions,
