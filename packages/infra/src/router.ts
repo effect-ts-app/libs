@@ -338,6 +338,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
 
     type Keys = keyof Filtered
     type Handler<Action extends AnyRequestModule, RT extends "raw" | "d", A, E, R> = {
+      new(): {}
       _tag: RT
       handler: (
         req: Action["Request"],
