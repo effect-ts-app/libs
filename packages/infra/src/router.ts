@@ -50,26 +50,37 @@ type GetSuccessShape<Action extends { success?: S.Schema.Any }, RT extends "d" |
   : S.Schema.Type<GetSuccess<Action>>
 type GetFailure<T extends { failure?: S.Schema.Any }> = T["failure"] extends never ? typeof S.Never : T["failure"]
 
-export interface Handler<Action extends AnyRequestModule, RT extends "raw" | "d", E, R, Context> {
+export interface Handler<Action extends AnyRequestModule, RT extends "raw" | "d", A, E, R, Context> {
   new(): {}
   _tag: RT
   handler: (
     req: S.Schema.Type<Action>,
     ctx: Context
   ) => Effect<
-    GetSuccessShape<Action, RT>,
+    A,
     E,
     R
   >
 }
 
-type AHandler<Action extends AnyRequestModule> = Handler<
-  Action,
-  "raw" | "d",
-  SupportedErrors | S.ParseResult.ParseError | S.Schema.Type<GetFailure<Action>>,
-  any,
-  any
->
+// Separate "raw" vs "d" to verify A
+type AHandler<Action extends AnyRequestModule> =
+  | Handler<
+    Action,
+    "raw",
+    S.Schema.Encoded<GetSuccess<Action>>,
+    SupportedErrors | S.ParseResult.ParseError | S.Schema.Type<GetFailure<Action>>,
+    any,
+    any
+  >
+  | Handler<
+    Action,
+    "d",
+    S.Schema.Type<GetSuccess<Action>>,
+    SupportedErrors | S.ParseResult.ParseError | S.Schema.Type<GetFailure<Action>>,
+    any,
+    any
+  >
 
 // TODO: support FLIP
 export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, boolean]>>(
@@ -299,6 +310,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         Handler<
           Rsc[Key],
           RT,
+          A,
           E,
           R2,
           GetCTX<Rsc[Key]>
@@ -316,6 +328,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         Handler<
           Rsc[Key],
           RT,
+          A,
           E,
           R2,
           GetCTX<Rsc[Key]>
@@ -345,6 +358,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         Handler<
           Rsc[Key],
           RT,
+          A,
           E,
           R2,
           GetCTX<Rsc[Key]>
