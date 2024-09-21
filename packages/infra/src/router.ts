@@ -81,26 +81,67 @@ type AHandler<Action extends AnyRequestModule> =
     any
   >
 
-// TODO: support FLIP (true means dependency available, false not. vs true means not available, false means available)
+// For CTXMap, handled by `handleRequestEnv` middleware:
+// ["configurationKey", ["contextKey", ServiceShape, defaultOffBoolean]]
+// defaultOffBoolean:
+// false means: if not configured, or set to false, the item is considered active.
+// true means: if configured as true, the item is considered active.
+// not active means the service is not in the context, and in route context is marked as optional.
 export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, boolean]>>(
   handleRequestEnv: any /* Middleware */
 ) => {
-  type GetCTX<T> =
+  type GetRouteContext<T> =
     & CTX
+    // inverted
     & {
-      [key in keyof CTXMap as key extends keyof T ? T[key] extends true ? CTXMap[key][0] : never : never]?:
-        CTXMap[key][1]
+      [
+        key in keyof CTXMap as CTXMap[key][2] extends true ? never
+          : key extends keyof T ? T[key] extends true ? CTXMap[key][0] : never
+          : never
+      ]?: CTXMap[key][1]
     }
     & {
-      [key in keyof CTXMap as key extends keyof T ? T[key] extends false ? CTXMap[key][0] : never : CTXMap[key][0]]:
-        CTXMap[key][1]
+      [
+        key in keyof CTXMap as CTXMap[key][2] extends true ? never
+          : key extends keyof T ? T[key] extends false ? CTXMap[key][0] : never
+          : CTXMap[key][0]
+      ]: CTXMap[key][1]
+    }
+    // normal
+    & {
+      [
+        key in keyof CTXMap as CTXMap[key][2] extends false ? never
+          : key extends keyof T ? T[key] extends true ? CTXMap[key][0] : never
+          : never
+      ]: CTXMap[key][1]
+    }
+    & {
+      [
+        key in keyof CTXMap as CTXMap[key][2] extends false ? never
+          : key extends keyof T ? T[key] extends false ? CTXMap[key][0] : never
+          : CTXMap[key][0]
+      ]?: CTXMap[key][1]
     }
 
   type Values<T extends Record<any, any>> = T[keyof T]
 
-  type GetContext<T> = Values<
-    {
-      [key in keyof CTXMap as key extends keyof T ? T[key] extends true ? never : CTXMap[key][0] : CTXMap[key][0]]: // TODO: or as an Optional available?
+  type GetEffectContext<T> = Values<
+    // inverted
+    & {
+      [
+        key in keyof CTXMap as CTXMap[key][2] extends true ? never
+          : key extends keyof T ? T[key] extends true ? never : CTXMap[key][0]
+          : CTXMap[key][0]
+      ]: // TODO: or as an Optional available?
+        CTXMap[key][1]
+    }
+    // normal
+    & {
+      [
+        key in keyof CTXMap as CTXMap[key][2] extends false ? never
+          : key extends keyof T ? T[key] extends true ? CTXMap[key][0] : never
+          : never
+      ]: // TODO: or as an Optional available?
         CTXMap[key][1]
     }
   >
@@ -250,8 +291,8 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
       Res,
       ReqSchema,
       ResSchema,
-      GetCTX<Req>,
-      GetContext<Req>
+      GetRouteContext<Req>,
+      GetEffectContext<Req>
     >)
   }
 
@@ -283,7 +324,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         f: (
           req: S.Schema.Type<Rsc[Key]>,
           ctx: Compute<
-            LowerServices<EffectDeps<SVC>> & GetCTX<Rsc[Key]>,
+            LowerServices<EffectDeps<SVC>> & GetRouteContext<Rsc[Key]>,
             "flat"
           >
         ) => Effect<A, E, R2>
@@ -304,14 +345,14 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
           A,
           E,
           R2,
-          GetCTX<Rsc[Key]>
+          GetRouteContext<Rsc[Key]>
         >
       >
 
       <R2, E, A>(
         f: (
           req: S.Schema.Type<Rsc[Key]>,
-          ctx: GetCTX<Rsc[Key]> & Pick<Rsc[Key], "Response">
+          ctx: GetRouteContext<Rsc[Key]> & Pick<Rsc[Key], "Response">
         ) => Effect<A, E, R2>
       ): HandleVoid<
         GetSuccessShape<Rsc[Key], RT>,
@@ -322,7 +363,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
           A,
           E,
           R2,
-          GetCTX<Rsc[Key]>
+          GetRouteContext<Rsc[Key]>
         >
       >
 
@@ -339,7 +380,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         f: (
           req: S.Schema.Type<Rsc[Key]>,
           ctx: Compute<
-            LowerServices<EffectDeps<SVC>> & GetCTX<Rsc[Key]> & Pick<Rsc[Key], "Response">,
+            LowerServices<EffectDeps<SVC>> & GetRouteContext<Rsc[Key]> & Pick<Rsc[Key], "Response">,
             "flat"
           >
         ) => Effect<A, E, R2>
@@ -352,7 +393,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
           A,
           E,
           R2,
-          GetCTX<Rsc[Key]>
+          GetRouteContext<Rsc[Key]>
         >
       >
     }
@@ -386,8 +427,8 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
             S.Schema.Type<GetSuccess<Rsc[K]>>, // TODO: GetSuccessShape, but requires RT
             Rsc[K],
             GetSuccess<Rsc[K]>,
-            GetCTX<Rsc[K]>,
-            GetContext<Rsc[K]>
+            GetRouteContext<Rsc[K]>,
+            GetEffectContext<Rsc[K]>
           >
         }
       )
@@ -419,7 +460,7 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
           _R<ReturnType<THandlers[K]["handler"]>>,
           Rsc[K],
           //        _E<ReturnType<THandlers[K]["handler"]>>,
-          GetContext<Rsc[K]>
+          GetEffectContext<Rsc[K]>
         >
       }
 
