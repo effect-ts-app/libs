@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.15.3
+
+### Patch Changes
+
+- 97a0bf8: fix client type
+
 ## 1.15.2
 
 ### Patch Changes
