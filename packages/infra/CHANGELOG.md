@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.16.6
+
+### Patch Changes
+
+- 76bee11: support inverted
+
 ## 1.16.5
 
 ### Patch Changes
