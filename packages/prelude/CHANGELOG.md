@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.15.5
+
+### Patch Changes
+
+- d9fd446: fix type
+
 ## 1.15.4
 
 ### Patch Changes
