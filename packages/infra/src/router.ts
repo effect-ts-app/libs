@@ -81,6 +81,15 @@ type AHandler<Action extends AnyRequestModule> =
     any
   >
 
+/**
+ * Middleware is inactivate by default, the Key is optional in route context, and the service is optionally provided as Effect Context
+ */
+export type ContextMap<Key, Service> = [Key, Service, true]
+/**
+ * Middleware is active by default, and provides the Service at Key in route context, and the Service is provided as Effect Context
+ */
+export type ContextMapInverted<Key, Service> = [Key, Service, false]
+
 // For CTXMap, handled by `handleRequestEnv` middleware:
 // ["configurationKey", ["contextKey", ServiceShape, defaultOffBoolean]]
 // defaultOffBoolean:
