@@ -62,7 +62,7 @@ export interface Handler<Action extends AnyRequestModule, RT extends "raw" | "d"
   >
 }
 
-// Separate "raw" vs "d" to verify A
+// Separate "raw" vs "d" to verify A (Encoded for "raw" vs Type for "d")
 type AHandler<Action extends AnyRequestModule> =
   | Handler<
     Action,
@@ -82,11 +82,14 @@ type AHandler<Action extends AnyRequestModule> =
   >
 
 /**
- * Middleware is inactivate by default, the Key is optional in route context, and the service is optionally provided as Effect Context
+ * Middleware is inactivate by default, the Key is optional in route context, and the service is optionally provided as Effect Context.
+ * Unless configured as `true`
  */
 export type ContextMap<Key, Service> = [Key, Service, true]
+
 /**
- * Middleware is active by default, and provides the Service at Key in route context, and the Service is provided as Effect Context
+ * Middleware is active by default, and provides the Service at Key in route context, and the Service is provided as Effect Context.
+ * Unless configured as `false`
  */
 export type ContextMapInverted<Key, Service> = [Key, Service, false]
 
@@ -538,10 +541,16 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
         {} as
           & {
             // use Rsc as Key over using Keys, so that the Go To on X.Action remain in tact in Controllers files
+            /**
+             * Requires the Type shape
+             */
             [Key in keyof Filtered]: MatchWithServicesNew<"d", Key>
           }
           & {
             // use Rsc as Key over using Keys, so that the Go To on X.Action remain in tact in Controllers files
+            /**
+             * Requires the Encoded shape (e.g directly undecoded from DB, so that we don't do multiple Decode/Encode)
+             */
             [Key in keyof Filtered as Key extends string ? `${Key}Raw` : never]: MatchWithServicesNew<"raw", Key>
           }
       )
