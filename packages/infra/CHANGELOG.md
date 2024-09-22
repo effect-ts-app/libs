@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.16.8
+
+### Patch Changes
+
+- d252cfd: improve doc
+
 ## 1.16.7
 
 ### Patch Changes
