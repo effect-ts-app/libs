@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.15.4
+
+### Patch Changes
+
+- 70c6222: improve doc
+
 ## 1.15.3
 
 ### Patch Changes
