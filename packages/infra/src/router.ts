@@ -577,12 +577,12 @@ export const makeRouter = <CTX, CTXMap extends Record<string, [string, any, bool
     }, HttpRouter.empty)
 
     type _RRouter<T extends HttpRouter.HttpRouter<any, any>> = [T] extends [
-      HttpRouter.HttpRouter<infer R, any>
+      HttpRouter.HttpRouter<any, infer R>
     ] ? R
       : never
 
     type _ERouter<T extends HttpRouter.HttpRouter<any, any>> = [T] extends [
-      HttpRouter.HttpRouter<any, infer E>
+      HttpRouter.HttpRouter<infer E, any>
     ] ? E
       : never
 
