@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.16.10
+
+### Patch Changes
+
+- 780b0cc: fix type error in router
+
 ## 1.16.9
 
 ### Patch Changes
