@@ -89,7 +89,7 @@ export type ContextMap<Key, Service> = [Key, Service, true]
 
 /**
  * Middleware is active by default, and provides the Service at Key in route context, and the Service is provided as Effect Context.
- * Unless configured as `false`
+ * Unless omitted
  */
 export type ContextMapInverted<Key, Service> = [Key, Service, false]
 

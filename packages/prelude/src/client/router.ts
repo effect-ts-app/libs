@@ -1,23 +1,22 @@
 import type { BuildRequest } from "@effect-app/schema/REST"
 import { Req as Req_ } from "@effect-app/schema/REST"
-import type { C } from "vitest/dist/chunks/environment.C5eAp3K6.js"
 import { S } from "../lib.js"
 
-// TODO: get rid of Request in Request
+// TODO: get rid of Request in Request and Response in C
 export const makeClientRouter = <RequestConfig extends object>() => {
+  // Long way around Context/C extends etc to support actual jsdoc from passed in RequestConfig etc...
+  type Context = { success: S.Schema.Any }
   function Req<M>(): {
-    <Fields extends S.Struct.Fields, C extends RequestConfig & { success: S.Schema.Any }>(
+    <Fields extends S.Struct.Fields, C extends Context>(
       fields: Fields,
-      config: C
+      config: RequestConfig & C
     ):
       & BuildRequest<
         Fields,
         "/",
         "AUTO",
         M,
-        C & {
-          Response: C["success"]
-        }
+        C & { Response: C["success"] }
       >
       & {
         Request: BuildRequest<
@@ -25,21 +24,19 @@ export const makeClientRouter = <RequestConfig extends object>() => {
           "/",
           "AUTO",
           M,
-          C
+          C & { Response: C["success"] }
         >
       }
-    <Fields extends S.Struct.Fields, C extends RequestConfig>(
+    <Fields extends S.Struct.Fields>(
       fields: Fields,
-      config: C
+      config: RequestConfig
     ):
       & BuildRequest<
         Fields,
         "/",
         "AUTO",
         M,
-        C & {
-          Response: typeof S.Void
-        }
+        { success: typeof S.Void; Response: typeof S.Void }
       >
       & {
         Request: BuildRequest<
@@ -47,7 +44,7 @@ export const makeClientRouter = <RequestConfig extends object>() => {
           "/",
           "AUTO",
           M,
-          C
+          { success: typeof S.Void; Response: typeof S.Void }
         >
       }
     <Fields extends S.Struct.Fields>(
@@ -59,6 +56,7 @@ export const makeClientRouter = <RequestConfig extends object>() => {
         "AUTO",
         M,
         {
+          success: typeof S.Void
           Response: typeof S.Void
         }
       >
@@ -68,11 +66,11 @@ export const makeClientRouter = <RequestConfig extends object>() => {
           "/",
           "AUTO",
           M,
-          C
+          { success: typeof S.Void; Response: typeof S.Void }
         >
       }
   } {
-    return <Fields extends S.Struct.Fields, C extends RequestConfig & { success: S.Schema.Any }>(
+    return (<Fields extends S.Struct.Fields, C extends Context>(
       fields: Fields,
       config?: C
     ) => {
@@ -82,7 +80,7 @@ export const makeClientRouter = <RequestConfig extends object>() => {
         : Req_({ ...config, success: S.Void, Response: S.Void })<M>()<Fields>(fields)
       const req2 = Object.assign(req, { Request: req }) // bwc
       return req2
-    }
+    }) as any
   }
 
   return Req
