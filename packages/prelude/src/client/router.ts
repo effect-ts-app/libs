@@ -27,16 +27,16 @@ export const makeClientRouter = <RequestConfig extends object>() => {
           C & { Response: C["success"] }
         >
       }
-    <Fields extends S.Struct.Fields>(
+    <Fields extends S.Struct.Fields, C extends Record<string, any>>(
       fields: Fields,
-      config: RequestConfig
+      config: C & RequestConfig
     ):
       & BuildRequest<
         Fields,
         "/",
         "AUTO",
         M,
-        { success: typeof S.Void; Response: typeof S.Void }
+        C & { success: typeof S.Void; Response: typeof S.Void }
       >
       & {
         Request: BuildRequest<
@@ -44,7 +44,7 @@ export const makeClientRouter = <RequestConfig extends object>() => {
           "/",
           "AUTO",
           M,
-          { success: typeof S.Void; Response: typeof S.Void }
+          C & { success: typeof S.Void; Response: typeof S.Void }
         >
       }
     <Fields extends S.Struct.Fields>(
