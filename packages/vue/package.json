@@ -8,30 +8,30 @@
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
-    "@formatjs/intl": "^2.10.4",
+    "@formatjs/intl": "^2.10.5",
     "@tanstack/vue-query": "^5.56.2",
     "effect-app": "workspace:*",
     "query-string": "^9.1.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.65.5",
-    "@effect/platform-browser": "^0.44.5",
+    "@effect/platform": "^0.66.0",
+    "@effect/platform-browser": "^0.45.0",
     "@effect-rx/rx": "^0.34.0",
     "@effect-rx/rx-vue": "^0.11.0",
-    "@effect/schema": "^0.73.4",
+    "@effect/schema": "^0.74.0",
     "@sentry/browser": "^8.30.0",
     "effect": "^3.8.3",
-    "vue": "^3.5.6"
+    "vue": "^3.5.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.6",
-    "@rollup/pluginutils": "^5.1.0",
+    "@rollup/pluginutils": "^5.1.1",
     "@types/node": "~22.5.5",
     "intl-messageformat": "^10.5.14",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
-    "vite": "^5.4.6",
+    "vite": "^5.4.7",
     "vitest": "^2.1.1"
   },
   "typesVersions": {

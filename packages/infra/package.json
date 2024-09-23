@@ -42,8 +42,8 @@
   },
   "peerDependencies": {
     "express": "^4.21.0",
-    "@effect/platform": "^0.65.5",
-    "@effect/schema": "^0.73.4",
+    "@effect/platform": "^0.66.0",
+    "@effect/schema": "^0.74.0",
     "effect": "^3.8.3"
   },
   "typesVersions": {
