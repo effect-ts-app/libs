@@ -231,7 +231,7 @@ abstract class PhantomTypeParameter<
 
 const defaultIntl = createIntl({ locale: "en" })
 
-export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage.bind(defaultIntl))
+export const translate = ref<IntlFormatters["formatMessage"]>(defaultIntl.formatMessage)
 export const customSchemaErrors = ref<Map<S.AST.AST | string, (message: string, e: unknown, v: unknown) => string>>(
   new Map()
 )
