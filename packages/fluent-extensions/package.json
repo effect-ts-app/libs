@@ -9,7 +9,7 @@
     "nanoid": "^5.0.7",
     "path-parser": "^6.1.0",
     "query-string": "^9.1.0",
-    "ts-pattern": "^5.3.1",
+    "ts-pattern": "^5.4.0",
     "uuid": "^10.0.0",
     "validator": "^13.12.0"
   },
@@ -20,7 +20,7 @@
   "devDependencies": {
     "@babel/cli": "^7.25.6",
     "@faker-js/faker": "^8.4.1",
-    "@types/node": "~22.7.0",
+    "@types/node": "~22.7.3",
     "@types/uuid": "^10.0.0",
     "@types/validator": "^13.12.2",
     "fast-check": "~3.22.0",
