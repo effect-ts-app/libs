@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 1.16.1
+
+### Patch Changes
+
+- c710953: update packagesy
+- Updated dependencies [3de8bfb]
+  - @effect-app/core@1.10.1
+  - @effect-app/schema@1.12.1
+
 ## 1.16.0
 
 ### Minor Changes

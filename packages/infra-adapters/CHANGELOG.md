@@ -1,5 +1,16 @@
 # @effect-app/infra-adapters
 
+## 1.11.1
+
+### Patch Changes
+
+- c710953: update packagesy
+- Updated dependencies [3de8bfb]
+- Updated dependencies [c710953]
+  - @effect-app/core@1.10.1
+  - effect-app@1.16.1
+  - @effect-app/schema@1.12.1
+
 ## 1.11.0
 
 ### Minor Changes

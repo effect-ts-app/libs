@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.77.1
+
+### Patch Changes
+
+- c710953: update packagesy
+
 ## 0.77.0
 
 ### Minor Changes

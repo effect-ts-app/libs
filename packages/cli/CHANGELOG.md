@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.81.1
+
+### Patch Changes
+
+- c710953: update packagesy
+
 ## 0.81.0
 
 ### Minor Changes

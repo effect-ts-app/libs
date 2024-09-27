@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.10.1
+
+### Patch Changes
+
+- 3de8bfb: free up Effect.Service symbol
+
 ## 1.10.0
 
 ### Minor Changes

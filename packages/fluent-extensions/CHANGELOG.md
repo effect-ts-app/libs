@@ -1,5 +1,13 @@
 # @effect-app/fluent-extensions
 
+## 1.10.1
+
+### Patch Changes
+
+- c710953: update packagesy
+- Updated dependencies [3de8bfb]
+  - @effect-app/core@1.10.1
+
 ## 1.10.0
 
 ### Minor Changes
