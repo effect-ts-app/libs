@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.20.0
+
+### Minor Changes
+
+- 71cef1a: add SSE middleware
+
 ## 1.19.0
 
 ### Minor Changes
