@@ -645,14 +645,24 @@
         "default": "./_cjs/services/query/new-kid-interpreter.cjs"
       }
     },
-    "./test.arbs": {
+    "./test": {
       "import": {
-        "types": "./dist/test.arbs.d.ts",
-        "default": "./dist/test.arbs.js"
+        "types": "./dist/test.d.ts",
+        "default": "./dist/test.js"
       },
       "require": {
-        "types": "./dist/test.arbs.d.ts",
-        "default": "./_cjs/test.arbs.cjs"
+        "types": "./dist/test.d.ts",
+        "default": "./_cjs/test.cjs"
+      }
+    },
+    "./vitest": {
+      "import": {
+        "types": "./dist/vitest.d.ts",
+        "default": "./dist/vitest.js"
+      },
+      "require": {
+        "types": "./dist/vitest.d.ts",
+        "default": "./_cjs/vitest.cjs"
       }
     }
   },
