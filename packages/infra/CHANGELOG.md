@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.18.1
+
+### Patch Changes
+
+- 183705b: fix export
+
 ## 1.18.0
 
 ### Minor Changes
