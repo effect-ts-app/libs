@@ -1,8 +1,8 @@
-import { generate } from "@effect-app/infra/test.arbs"
 import { Arbitrary } from "@effect/schema"
 import type { PropertySignature } from "@effect/schema/Schema"
 import { Predicate, S } from "effect-app"
 import { copy } from "effect-app/utils"
+import { generate } from "./test.arbs.js"
 
 const isPropertySignature = (u: unknown): u is PropertySignature.All =>
   Predicate.hasProperty(u, S.PropertySignatureTypeId)

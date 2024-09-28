@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.18.2
+
+### Patch Changes
+
+- fix import
+
 ## 1.18.1
 
 ### Patch Changes
