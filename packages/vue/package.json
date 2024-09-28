@@ -21,12 +21,12 @@
     "@effect/schema": "^0.74.1",
     "@sentry/browser": "^8.32.0",
     "effect": "^3.8.4",
-    "vue": "^3.5.9"
+    "vue": "^3.5.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.6",
     "@rollup/pluginutils": "^5.1.2",
-    "@types/node": "~22.7.3",
+    "@types/node": "~22.7.4",
     "intl-messageformat": "^10.5.14",
     "json5": "^2.2.3",
     "ts-node": "^10.9.2",

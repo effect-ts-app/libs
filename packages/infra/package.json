@@ -27,7 +27,7 @@
     "@babel/cli": "^7.25.6",
     "@sentry/node": "^8.32.0",
     "@types/express": "^5.0.0",
-    "@types/node": "~22.7.3",
+    "@types/node": "~22.7.4",
     "@types/proper-lockfile": "^4.1.4",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.7",
@@ -44,6 +44,7 @@
     "express": "^4.21.0",
     "@effect/platform": "^0.66.2",
     "@effect/schema": "^0.74.1",
+    "@effect/vitest": "^0.10.5",
     "effect": "^3.8.4"
   },
   "typesVersions": {
