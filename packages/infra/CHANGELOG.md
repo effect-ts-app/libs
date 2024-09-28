@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.20.1
+
+### Patch Changes
+
+- 4ea1323: support schema R
+
 ## 1.20.0
 
 ### Minor Changes
