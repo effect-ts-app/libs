@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.21.0
+
+### Minor Changes
+
+- f15d26f: port more middleware
+
 ## 1.20.1
 
 ### Patch Changes
