@@ -95,6 +95,16 @@
         "default": "./_cjs/api/codec.cjs"
       }
     },
+    "./api/middlewares": {
+      "import": {
+        "types": "./dist/api/middlewares.d.ts",
+        "default": "./dist/api/middlewares.js"
+      },
+      "require": {
+        "types": "./dist/api/middlewares.d.ts",
+        "default": "./_cjs/api/middlewares.cjs"
+      }
+    },
     "./api/reportError": {
       "import": {
         "types": "./dist/api/reportError.d.ts",
