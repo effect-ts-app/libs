@@ -9,6 +9,8 @@ import type { NotLoggedInError } from "../errors.js"
 import * as internal from "./internal/middlewares.js"
 
 export * from "./internal/events.js"
+export * from "./internal/health.js"
+export * from "./internal/RequestContextMiddleware.js"
 
 /**
  * Add access logs for handled requests. The log runs before each request.

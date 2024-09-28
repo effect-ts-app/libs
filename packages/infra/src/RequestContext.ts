@@ -2,6 +2,10 @@ import { ExtendedTaggedClass, NonEmptyString255 } from "@effect-app/schema"
 import { S } from "effect-app"
 import { RequestId, UserProfileId } from "effect-app/ids"
 
+export const Locale = S.Literal("en", "de")
+export type Locale = typeof Locale.Type
+
+// TPDP: kind of obsolete now that we use actual spans
 export class RequestContextParent extends ExtendedTaggedClass<
   RequestContextParent,
   RequestContextParent.From
@@ -9,7 +13,7 @@ export class RequestContextParent extends ExtendedTaggedClass<
   id: RequestId,
   name: NonEmptyString255,
   userProfile: S.optional(S.Struct({ sub: UserProfileId })),
-  locale: S.Literal("en", "de"),
+  locale: Locale,
   createdAt: S.Date.withDefault
 }) {}
 

@@ -2,16 +2,11 @@ import { Effect } from "effect-app"
 import { HttpMiddleware, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { RequestId } from "effect-app/ids"
 import { NonEmptyString255 } from "effect-app/schema"
-import { RequestContext } from "../../RequestContext.js"
+import { Locale, RequestContext } from "../../RequestContext.js"
 import { RequestContextContainer } from "../../services/RequestContextContainer.js"
 import { setupExistingRequestContext } from "../setupRequest.js"
 
-export const RequestContextMiddleware = <Locale extends string = "en">(
-  config: {
-    supportedLocales: readonly Locale[]
-    defaultLocale: Locale
-  } = { supportedLocales: ["en" as Locale], defaultLocale: "en" as Locale }
-) =>
+export const RequestContextMiddleware = (defaultLocale: Locale = "en") =>
   HttpMiddleware.make((app) =>
     Effect.gen(function*() {
       const req = yield* HttpServerRequest.HttpServerRequest
@@ -19,11 +14,12 @@ export const RequestContextMiddleware = <Locale extends string = "en">(
       const currentSpan = yield* Effect.currentSpan
       const parent = currentSpan?.parent ? currentSpan.parent.value : undefined
       const start = new Date()
+      const supported = Locale.literals
       const desiredLocale = req.headers["x-locale"]
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const locale = desiredLocale && config.supportedLocales.includes(desiredLocale as any)
-        ? (desiredLocale as typeof config.supportedLocales[number])
-        : config.defaultLocale
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
+      const locale = desiredLocale && supported.includes(desiredLocale as any)
+        ? (desiredLocale as typeof supported[number])
+        : defaultLocale
 
       const requestId = req.headers["request-id"]
       const rootId = parent?.spanId
