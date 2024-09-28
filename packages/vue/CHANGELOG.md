@@ -1,5 +1,17 @@
 # @effect-app/vue
 
+## 1.14.0
+
+### Minor Changes
+
+- 190b139: update packages
+
+### Patch Changes
+
+- Updated dependencies [190b139]
+  - effect-app@1.17.0
+  - @effect-app/vue@1.14.0
+
 ## 1.13.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.17.0
+
+### Minor Changes
+
+- 190b139: update packages
+
 ## 1.16.1
 
 ### Patch Changes

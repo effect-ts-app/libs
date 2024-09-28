@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 1.18.0
+
+### Minor Changes
+
+- 8b3b2be: dx: add test/vitest
+- 190b139: update packages
+
+### Patch Changes
+
+- Updated dependencies [190b139]
+  - effect-app@1.17.0
+  - @effect-app/infra-adapters@1.11.2
+
 ## 1.17.1
 
 ### Patch Changes
