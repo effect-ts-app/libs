@@ -655,6 +655,16 @@
         "default": "./_cjs/test.cjs"
       }
     },
+    "./test/arbs": {
+      "import": {
+        "types": "./dist/test/arbs.d.ts",
+        "default": "./dist/test/arbs.js"
+      },
+      "require": {
+        "types": "./dist/test/arbs.d.ts",
+        "default": "./_cjs/test/arbs.cjs"
+      }
+    },
     "./vitest": {
       "import": {
         "types": "./dist/vitest.d.ts",

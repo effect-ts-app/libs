@@ -1,4 +1,4 @@
-// import { generateFromArbitrary } from "@effect-app/infra/test.arbs"
+// import { generateFromArbitrary } from "@effect-app/infra/test"
 import { JSONSchema } from "@effect/schema"
 import { Array, S } from "effect-app"
 import { test } from "vitest"
