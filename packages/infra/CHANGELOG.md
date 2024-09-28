@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.22.0
+
+### Minor Changes
+
+- be4ff0e: port auth
+
 ## 1.21.0
 
 ### Minor Changes
