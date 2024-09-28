@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.19.0
+
+### Minor Changes
+
+- a40d2bf: port middlewares
+
 ## 1.18.3
 
 ### Patch Changes
