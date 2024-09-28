@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 1.18.3
+
+### Patch Changes
+
+- 38c0e65: cleanup
+- Updated dependencies [38c0e65]
+  - effect-app@1.17.1
+  - @effect-app/infra-adapters@1.11.3
+
 ## 1.18.2
 
 ### Patch Changes
