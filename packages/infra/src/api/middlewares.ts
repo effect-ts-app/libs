@@ -8,6 +8,8 @@ import type { Effect } from "effect-app"
 import type { NotLoggedInError } from "../errors.js"
 import * as internal from "./internal/middlewares.js"
 
+export * from "./internal/events.js"
+
 /**
  * Add access logs for handled requests. The log runs before each request.
  * Optionally configure log level using the first argument. The default log level
