@@ -44,6 +44,7 @@
     "express": "^4.21.0",
     "@effect/platform": "^0.66.2",
     "@effect/schema": "^0.74.1",
+    "@effect/sql": "^0.14.0",
     "@effect/vitest": "^0.10.5",
     "effect": "^3.8.4"
   },
@@ -413,6 +414,16 @@
       "require": {
         "types": "./dist/services/OperationsRepo.d.ts",
         "default": "./_cjs/services/OperationsRepo.cjs"
+      }
+    },
+    "./services/QueueMaker/SQLQueue": {
+      "import": {
+        "types": "./dist/services/QueueMaker/SQLQueue.d.ts",
+        "default": "./dist/services/QueueMaker/SQLQueue.js"
+      },
+      "require": {
+        "types": "./dist/services/QueueMaker/SQLQueue.d.ts",
+        "default": "./_cjs/services/QueueMaker/SQLQueue.cjs"
       }
     },
     "./services/QueueMaker/errors": {
