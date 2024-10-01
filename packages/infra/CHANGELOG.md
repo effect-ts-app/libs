@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.23.0
+
+### Minor Changes
+
+- feat: add SQLQueue
+
 ## 1.22.0
 
 ### Minor Changes
