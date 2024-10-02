@@ -365,8 +365,8 @@ export function makeRepo<
         }
     ) {
       return Effect
-        .gen(function*($) {
-          const rctx = yield* $(Effect.context<R>())
+        .gen(function*() {
+          const rctx = yield* Effect.context<R>()
           const encodeMany = flow(
             S.encode(S.Array(schema)),
             Effect.provide(rctx),
@@ -379,18 +379,18 @@ export function makeRepo<
             Effect.withSpan("decodeMany", { captureStackTrace: false })
           )
 
-          const store = yield* $(mkStore(args.makeInitial, args.config))
-          const { get } = yield* $(ContextMapContainer)
+          const store = yield* mkStore(args.makeInitial, args.config)
+          const { get } = yield* ContextMapContainer
           const cms = Effect.andThen(get, (_) => ({
             get: (id: string) => _.get(`${name}.${id}`),
             set: (id: string, etag: string | undefined) => _.set(`${name}.${id}`, etag)
           }))
 
-          const pubCfg = yield* $(Effect.context<R2>())
+          const pubCfg = yield* Effect.context<R2>()
           const pub = "publishEvents" in args
             ? flow(args.publishEvents, Effect.provide(pubCfg))
             : () => Effect.void
-          const changeFeed = yield* $(PubSub.unbounded<[T[], "save" | "remove"]>())
+          const changeFeed = yield* PubSub.unbounded<[T[], "save" | "remove"]>()
 
           const allE = cms
             .pipe(Effect.flatMap((cm) => Effect.map(store.all, (_) => _.map((_) => mapReverse(_, cm.set)))))
@@ -431,8 +431,8 @@ export function makeRepo<
             return Effect.flatMap(
               store.find(id),
               (item) =>
-                Effect.gen(function*($) {
-                  const { set } = yield* $(cms)
+                Effect.gen(function*() {
+                  const { set } = yield* cms
                   return item.pipe(Option.map((_) => mapReverse(_, set)))
                 })
             )
@@ -456,10 +456,10 @@ export function makeRepo<
                 Effect
                   .sync(() => toNonEmptyArray([...a])),
                 (a) =>
-                  Effect.gen(function*($) {
-                    const { get, set } = yield* $(cms)
+                  Effect.gen(function*() {
+                    const { get, set } = yield* cms
                     const items = a.map((_) => mapToPersistenceModel(_, get))
-                    const ret = yield* $(store.batchSet(items))
+                    const ret = yield* store.batchSet(items)
                     ret.forEach((_) => set(_.id, _._etag))
                   })
               )
@@ -489,23 +489,21 @@ export function makeRepo<
           }
 
           function removeAndPublish(a: Iterable<T>, events: Iterable<Evt> = []) {
-            return Effect.gen(function*($) {
-              const { get, set } = yield* $(cms)
+            return Effect.gen(function*() {
+              const { get, set } = yield* cms
               const it = [...a]
-              const items = yield* $(encodeMany(it).pipe(Effect.orDie))
+              const items = yield* encodeMany(it).pipe(Effect.orDie)
               // TODO: we should have a batchRemove on store so the adapter can actually batch...
               for (const e of items) {
-                yield* $(store.remove(mapToPersistenceModel(e, get)))
+                yield* store.remove(mapToPersistenceModel(e, get))
                 set(e.id, undefined)
               }
-              yield* $(
-                Effect
-                  .sync(() => toNonEmptyArray([...events]))
-                  // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
-                  .pipe((_) => Effect.flatMapOption(_, pub))
-              )
+              yield* Effect
+                .sync(() => toNonEmptyArray([...events]))
+                // TODO: for full consistency the events should be stored within the same database transaction, and then picked up.
+                .pipe((_) => Effect.flatMapOption(_, pub))
 
-              yield* $(changeFeed.publish([it, "remove"]))
+              yield* changeFeed.publish([it, "remove"])
             })
           }
 
@@ -691,28 +689,27 @@ export function makeStore<
         partitionValue?: (a: Encoded) => string
       }
     ) {
-      return Effect.gen(function*($) {
-        const { make } = yield* $(StoreMaker)
+      return Effect.gen(function*() {
+        const { make } = yield* StoreMaker
 
-        const store = yield* $(
-          make<Encoded, string, R | RInitial, EInitial>(
-            pluralize(name),
-            makeInitial
-              ? makeInitial
-                .pipe(
-                  Effect.flatMap(Effect.forEach(encodeToEncoded())),
-                  Effect.withSpan("Repository.makeInitial [effect-app/infra]", {
-                    attributes: { "repository.model_name": name }
-                  })
-                )
-              : undefined,
-            {
-              ...config,
-              partitionValue: config?.partitionValue
-                ?? ((_) => "primary") /*(isIntegrationEvent(r) ? r.companyId : r.id*/
-            }
-          )
+        const store = yield* make<Encoded, string, R | RInitial, EInitial>(
+          pluralize(name),
+          makeInitial
+            ? makeInitial
+              .pipe(
+                Effect.flatMap(Effect.forEach(encodeToEncoded())),
+                Effect.withSpan("Repository.makeInitial [effect-app/infra]", {
+                  attributes: { "repository.model_name": name }
+                })
+              )
+            : undefined,
+          {
+            ...config,
+            partitionValue: config?.partitionValue
+              ?? ((_) => "primary") /*(isIntegrationEvent(r) ? r.companyId : r.id*/
+          }
         )
+
         return store
       })
     }

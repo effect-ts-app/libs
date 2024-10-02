@@ -85,9 +85,9 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
   _defaultValues?: Partial<Encoded>
 ) {
   type PM = PersistenceModelType<Encoded>
-  return Effect.gen(function*($) {
+  return Effect.gen(function*() {
     const updateETag = makeUpdateETag(modelName)
-    const items_ = yield* $(seed ?? Effect.sync(() => []))
+    const items_ = yield* seed ?? Effect.sync(() => [])
     const defaultValues = _defaultValues ?? {}
 
     const items = new Map([...items_].map((_) => [_.id, { _etag: undefined, ...defaultValues, ..._ }] as const))
@@ -218,10 +218,10 @@ export const makeMemoryStore = () => ({
     seed?: Effect<Iterable<Encoded>, E, R>,
     config?: StoreConfig<Encoded>
   ) =>
-    Effect.gen(function*($) {
+    Effect.gen(function*() {
       const storesSem = Effect.unsafeMakeSemaphore(1)
-      const primary = yield* $(makeMemoryStoreInt<Id, Encoded, R, E>(modelName, "primary", seed, config?.defaultValues))
-      const ctx = yield* $(Effect.context<R>())
+      const primary = yield* makeMemoryStoreInt<Id, Encoded, R, E>(modelName, "primary", seed, config?.defaultValues)
+      const ctx = yield* Effect.context<R>()
       const stores = new Map([["primary", primary]])
       const getStore = !config?.allowNamespace
         ? Effect.succeed(primary)

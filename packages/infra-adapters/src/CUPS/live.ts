@@ -90,7 +90,7 @@ export const prepareTempDir = Effect.sync(() => {
 
 const makeTempFile = tempFile("effect-ts-app")
 export const makePrintJobTempFile = makeTempFile("print-job")
-export const makePrintJobTempFileArrayBuffer = (buffer: ArrayBuffer, options?: FileOptions | undefined) =>
+export const makePrintJobTempFileArrayBuffer = (buffer: ArrayBuffer, options?: FileOptions) =>
   makePrintJobTempFile(Buffer.from(buffer), options)
 
 function printBuffer(printer: PrinterConfig, options: string[]) {
@@ -103,8 +103,8 @@ function printBuffer(printer: PrinterConfig, options: string[]) {
 }
 
 function getAvailablePrinters(host?: string) {
-  return Effect.gen(function*($) {
-    const { stdout } = yield* $(exec(["lpstat", ...buildListArgs({ host }), "-s"].join(" ")))
+  return Effect.gen(function*() {
+    const { stdout } = yield* exec(["lpstat", ...buildListArgs({ host }), "-s"].join(" "))
     return [...stdout.matchAll(/device for (\w+):/g)]
       .map((_) => _[1])
       .filter(Predicate.isNotNullable)

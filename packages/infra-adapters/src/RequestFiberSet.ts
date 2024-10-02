@@ -2,8 +2,8 @@
 import type { Tracer } from "@effect-app/core"
 import { Context, Effect, Fiber, FiberSet, Option } from "@effect-app/core"
 
-const make = Effect.gen(function*($) {
-  const set = yield* $(FiberSet.make<any, any>())
+const make = Effect.gen(function*() {
+  const set = yield* FiberSet.make<any, any>()
   const add = (...fibers: Fiber.RuntimeFiber<any, any>[]) =>
     Effect.sync(() => fibers.forEach((_) => FiberSet.unsafeAdd(set, _)))
   const addAll = (fibers: readonly Fiber.RuntimeFiber<any, any>[]) =>
@@ -16,14 +16,14 @@ const make = Effect.gen(function*($) {
   const register = <A, E, R>(self: Effect<A, E, R>) =>
     self.pipe(Effect.fork, Effect.tap(add), Effect.andThen(Fiber.join))
 
-  // const waitUntilEmpty = Effect.gen(function*($) {
-  //   const currentSize = yield* $(FiberSet.size(set))
+  // const waitUntilEmpty = Effect.gen(function*() {
+  //   const currentSize = yield* FiberSet.size(set)
   //   if (currentSize === 0) {
   //     return
   //   }
-  //   yield* $(Effect.logInfo("Waiting RequestFiberSet to be empty: " + currentSize))
-  //   while ((yield* $(FiberSet.size(set))) > 0) yield* $(Effect.sleep("250 millis"))
-  //   yield* $(Effect.logDebug("RequestFiberSet is empty"))
+  //   yield* Effect.logInfo("Waiting RequestFiberSet to be empty: " + currentSize)
+  //   while ((yield* FiberSet.size(set)) > 0) yield* Effect.sleep("250 millis")
+  //   yield* Effect.logDebug("RequestFiberSet is empty")
   // })
   // TODO: loop and interrupt all fibers in the set continuously?
   const interrupt = Fiber.interruptAll(set)
@@ -38,8 +38,8 @@ const make = Effect.gen(function*($) {
   }
 })
 
-const getRootParentSpan = Effect.gen(function*($) {
-  let span: Tracer.AnySpan = yield* $(Effect.currentSpan.pipe(Effect.orDie))
+const getRootParentSpan = Effect.gen(function*() {
+  let span: Tracer.AnySpan = yield* Effect.currentSpan.pipe(Effect.orDie)
   while (span._tag === "Span" && Option.isSome(span.parent)) {
     span = span.parent.value
   }

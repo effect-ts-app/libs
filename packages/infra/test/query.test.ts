@@ -96,30 +96,29 @@ class SomethingRepo extends RepositoryDefaultImpl<SomethingRepo>()(
 
 it("works with repo", () =>
   Effect
-    .gen(function*($) {
-      yield* $(SomethingRepo.saveAndPublish(items))
+    .gen(function*() {
+      yield* SomethingRepo.saveAndPublish(items)
 
-      const q1 = yield* $(SomethingRepo.query(() => q))
+      const q1 = yield* SomethingRepo.query(() => q)
       // same as above, but with the `flow` helper
-      const q2 = yield* $(
-        SomethingRepo
-          .query(flow(
-            where("displayName", "Verona"),
-            or(
-              where("displayName", "Riley"),
-              and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
-            ),
-            order("displayName"),
-            page({ take: 10 }),
-            project(
-              S.transformToOrFail(
-                S.Struct({ displayName: S.String }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                S.Struct(Struct.pick(Something.fields, "displayName")),
-                (_) => Effect.andThen(SomeService, _)
-              )
+      const q2 = yield* SomethingRepo
+        .query(flow(
+          where("displayName", "Verona"),
+          or(
+            where("displayName", "Riley"),
+            and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
+          ),
+          order("displayName"),
+          page({ take: 10 }),
+          project(
+            S.transformToOrFail(
+              S.Struct({ displayName: S.String }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+              S.Struct(Struct.pick(Something.fields, "displayName")),
+              (_) => Effect.andThen(SomeService, _)
             )
-          ))
-      )
+          )
+        ))
+
       expect(q1).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("id", "displayName")))
       expect(q2).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("displayName")))
     })
@@ -127,52 +126,48 @@ it("works with repo", () =>
 
 it("collect", () =>
   Effect
-    .gen(function*($) {
-      yield* $(SomethingRepo.saveAndPublish(items))
+    .gen(function*() {
+      yield* SomethingRepo.saveAndPublish(items)
 
       expect(
-        yield* $(
-          SomethingRepo
-            .query(flow(
-              where("displayName", "Riley"), // TODO: work with To type translation, so Date?
-              // one,
-              project(
-                S.transformTo(
-                  // TODO: sample case with narrowing down a union?
-                  S.encodedSchema(S.Struct(Struct.pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                  S.typeSchema(S.Option(S.String)),
-                  (_) =>
-                    _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
-                      ? Option.some(`${_.displayName}-${_.n}`)
-                      : Option.none()
-                ),
-                "collect"
-              )
-            ))
-        )
+        yield* SomethingRepo
+          .query(flow(
+            where("displayName", "Riley"), // TODO: work with To type translation, so Date?
+            // one,
+            project(
+              S.transformTo(
+                // TODO: sample case with narrowing down a union?
+                S.encodedSchema(S.Struct(Struct.pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                S.typeSchema(S.Option(S.String)),
+                (_) =>
+                  _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
+                    ? Option.some(`${_.displayName}-${_.n}`)
+                    : Option.none()
+              ),
+              "collect"
+            )
+          ))
       )
         .toEqual(["Riley-2020-01-01T00:00:00.000Z"])
 
       expect(
-        yield* $(
-          SomethingRepo
-            .query(flow(
-              where("union._tag", "string"),
-              one,
-              project(
-                S.transformTo(
-                  // TODO: sample case with narrowing down a union?
-                  S.encodedSchema(S.Struct(Struct.pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                  S.typeSchema(S.Option(S.String)),
-                  (_) =>
-                    _.union._tag === "string"
-                      ? Option.some(_.union.value)
-                      : Option.none()
-                ),
-                "collect"
-              )
-            ))
-        )
+        yield* SomethingRepo
+          .query(flow(
+            where("union._tag", "string"),
+            one,
+            project(
+              S.transformTo(
+                // TODO: sample case with narrowing down a union?
+                S.encodedSchema(S.Struct(Struct.pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                S.typeSchema(S.Option(S.String)),
+                (_) =>
+                  _.union._tag === "string"
+                    ? Option.some(_.union.value)
+                    : Option.none()
+              ),
+              "collect"
+            )
+          ))
       )
         .toEqual("hi")
     })

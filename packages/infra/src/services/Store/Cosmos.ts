@@ -15,27 +15,26 @@ class CosmosDbOperationError {
 } // TODO: Retry operation when running into RU limit.
 
 function makeCosmosStore({ prefix }: StorageConfig) {
-  return Effect.gen(function*($) {
-    const { db } = yield* $(CosmosClient)
+  return Effect.gen(function*() {
+    const { db } = yield* CosmosClient
     return {
       make: <Id extends string, Encoded extends Record<string, any> & { id: Id }, R = never, E = never>(
         name: string,
         seed?: Effect<Iterable<Encoded>, E, R>,
         config?: StoreConfig<Encoded>
       ) =>
-        Effect.gen(function*($) {
+        Effect.gen(function*() {
           type PM = PersistenceModelType<Encoded>
           const containerId = `${prefix}${name}`
-          yield* $(
-            Effect.promise(() =>
-              db.containers.createIfNotExists(dropUndefinedT({
-                id: containerId,
-                uniqueKeyPolicy: config?.uniqueKeys
-                  ? { uniqueKeys: config.uniqueKeys }
-                  : undefined
-              }))
-            )
+          yield* Effect.promise(() =>
+            db.containers.createIfNotExists(dropUndefinedT({
+              id: containerId,
+              uniqueKeyPolicy: config?.uniqueKeys
+                ? { uniqueKeys: config.uniqueKeys }
+                : undefined
+            }))
           )
+
           const defaultValues = config?.defaultValues ?? {}
           const container = db.container(containerId)
           const bulk = container.items.bulk.bind(container.items)
@@ -44,7 +43,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
 
           const bulkSet = (items: NonEmptyReadonlyArray<PM>) =>
             Effect
-              .gen(function*($) {
+              .gen(function*() {
                 // TODO: disable batching if need atomicity
                 // we delay and batch to keep low amount of RUs
                 const b = [...items].map(
@@ -77,51 +76,46 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 )
                 const batches = Chunk.toReadonlyArray(Array.chunk_(b, config?.maxBulkSize ?? 10))
 
-                const batchResult = yield* $(
-                  Effect.forEach(
-                    batches
-                      .map((x, i) => [i, x] as const),
-                    ([i, batch]) =>
-                      Effect
-                        .promise(() => bulk(batch.map(([, op]) => op)))
-                        .pipe(
-                          Effect
-                            .delay(Duration.millis(i === 0 ? 0 : 1100)),
-                          Effect
-                            .flatMap((responses) =>
-                              Effect.gen(function*($) {
-                                const r = responses.find((x) => x.statusCode === 412 || x.statusCode === 404)
-                                if (r) {
-                                  return yield* $(
-                                    Effect.fail(
-                                      new OptimisticConcurrencyException(
-                                        { type: name, id: JSON.stringify(r.resourceBody?.["id"]) }
-                                      )
-                                    )
+                const batchResult = yield* Effect.forEach(
+                  batches
+                    .map((x, i) => [i, x] as const),
+                  ([i, batch]) =>
+                    Effect
+                      .promise(() => bulk(batch.map(([, op]) => op)))
+                      .pipe(
+                        Effect
+                          .delay(Duration.millis(i === 0 ? 0 : 1100)),
+                        Effect
+                          .flatMap((responses) =>
+                            Effect.gen(function*() {
+                              const r = responses.find((x) => x.statusCode === 412 || x.statusCode === 404)
+                              if (r) {
+                                return yield* Effect.fail(
+                                  new OptimisticConcurrencyException(
+                                    { type: name, id: JSON.stringify(r.resourceBody?.["id"]) }
                                   )
-                                }
-                                const r2 = responses.find(
-                                  (x) => x.statusCode > 299 || x.statusCode < 200
                                 )
-                                if (r2) {
-                                  return yield* $(
-                                    Effect.die(
-                                      new CosmosDbOperationError(
-                                        "not able to update record: " + r2.statusCode
-                                      )
-                                    )
+                              }
+                              const r2 = responses.find(
+                                (x) => x.statusCode > 299 || x.statusCode < 200
+                              )
+                              if (r2) {
+                                return yield* Effect.die(
+                                  new CosmosDbOperationError(
+                                    "not able to update record: " + r2.statusCode
                                   )
-                                }
-                                return batch.map(([e], i) => ({
-                                  ...e,
-                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                                  _etag: responses[i]!.eTag
-                                }))
-                              })
-                            )
-                        )
-                  )
+                                )
+                              }
+                              return batch.map(([e], i) => ({
+                                ...e,
+                                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                _etag: responses[i]!.eTag
+                              }))
+                            })
+                          )
+                      )
                 )
+
                 return batchResult.flat() as unknown as NonEmptyReadonlyArray<Encoded>
               })
               .pipe(Effect.withSpan("Cosmos.bulkSet [effect-app/infra/Store]", {
@@ -162,7 +156,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 return Effect
                   .promise(() => execBatch(ex, ex[0]?.resourceBody._partitionKey))
                   .pipe(Effect.flatMap((x) =>
-                    Effect.gen(function*($) {
+                    Effect.gen(function*() {
                       const result = x.result ?? []
                       const firstFailed = result.find(
                         (x: any) => x.statusCode > 299 || x.statusCode < 200
@@ -170,15 +164,11 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       if (firstFailed) {
                         const code = firstFailed.statusCode ?? 0
                         if (code === 412 || code === 404) {
-                          return yield* $(
-                            new OptimisticConcurrencyException({ type: name, id: "batch" })
-                          )
+                          return yield* new OptimisticConcurrencyException({ type: name, id: "batch" })
                         }
 
-                        return yield* $(
-                          Effect.die(
-                            new CosmosDbOperationError("not able to update record: " + code)
-                          )
+                        return yield* Effect.die(
+                          new CosmosDbOperationError("not able to update record: " + code)
                         )
                       }
 
@@ -347,41 +337,35 @@ function makeCosmosStore({ prefix }: StorageConfig) {
           }
 
           // handle mock data
-          const marker = yield* $(
-            Effect.promise(() =>
-              container
-                .item(importedMarkerId, importedMarkerId)
-                .read<{ id: string }>()
-                .then(({ resource }) => Option.fromNullable(resource))
-            )
+          const marker = yield* Effect.promise(() =>
+            container
+              .item(importedMarkerId, importedMarkerId)
+              .read<{ id: string }>()
+              .then(({ resource }) => Option.fromNullable(resource))
           )
 
           if (!Option.isSome(marker)) {
             console.log("Creating mock data for " + name)
             if (seed) {
-              const m = yield* $(seed)
-              yield* $(
-                Effect.flatMapOption(
-                  Effect.succeed(toNonEmptyArray([...m])),
-                  (a) =>
-                    s.bulkSet(a).pipe(
-                      Effect.orDie,
-                      Effect
-                        // we delay extra here, so that initial creation between Companies/POs also have an interval between them.
-                        .delay(Duration.millis(1100))
-                    )
-                )
+              const m = yield* seed
+              yield* Effect.flatMapOption(
+                Effect.succeed(toNonEmptyArray([...m])),
+                (a) =>
+                  s.bulkSet(a).pipe(
+                    Effect.orDie,
+                    Effect
+                      // we delay extra here, so that initial creation between Companies/POs also have an interval between them.
+                      .delay(Duration.millis(1100))
+                  )
               )
             }
             // Mark as imported
-            yield* $(
-              Effect.promise(() =>
-                container.items.create({
-                  _partitionKey: importedMarkerId,
-                  id: importedMarkerId,
-                  ttl: -1
-                })
-              )
+            yield* Effect.promise(() =>
+              container.items.create({
+                _partitionKey: importedMarkerId,
+                id: importedMarkerId,
+                ttl: -1
+              })
             )
           }
           return s

@@ -25,13 +25,13 @@ export function makeApiLayers(config: ApiConfig) {
 }
 
 export function makeAppRuntime<R, E, A>(layer: Layer<A, E, R>) {
-  return Effect.gen(function*($) {
+  return Effect.gen(function*() {
     layer = layer.pipe(
       Layer.provide(Logger.replace(Logger.defaultLogger, Logger.withSpanAnnotations(Logger.prettyLogger())))
     )
-    const scope = yield* $(Scope.make())
-    const env = yield* $(layer.pipe(Layer.buildWithScope(scope)))
-    const runtime = yield* $(Effect.runtime<A>().pipe(Effect.scoped, Effect.provide(env)))
+    const scope = yield* Scope.make()
+    const env = yield* layer.pipe(Layer.buildWithScope(scope))
+    const runtime = yield* Effect.runtime<A>().pipe(Effect.scoped, Effect.provide(env))
 
     return {
       runtime: Object.assign(runtime, {

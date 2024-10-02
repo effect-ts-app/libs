@@ -17,7 +17,7 @@ function makeDiskStoreInt<Id extends string, Encoded extends { id: Id }, R, E>(
   defaultValues?: Partial<Encoded>
 ) {
   type PM = PersistenceModelType<Encoded>
-  return Effect.gen(function*($) {
+  return Effect.gen(function*() {
     if (namespace !== "primary") {
       dir = dir + "/" + namespace
       if (!fs.existsSync(dir)) {
@@ -68,18 +68,16 @@ function makeDiskStoreInt<Id extends string, Encoded extends { id: Id }, R, E>(
           )
     }
 
-    const store = yield* $(
-      makeMemoryStoreInt<Id, Encoded, R, E>(
-        name,
-        namespace,
-        !fs.existsSync(file)
-          ? seed
-          : fsStore.get,
-        defaultValues
-      )
+    const store = yield* makeMemoryStoreInt<Id, Encoded, R, E>(
+      name,
+      namespace,
+      !fs.existsSync(file)
+        ? seed
+        : fsStore.get,
+      defaultValues
     )
 
-    yield* $(store.all.pipe(Effect.flatMap(fsStore.setRaw)))
+    yield* store.all.pipe(Effect.flatMap(fsStore.setRaw))
 
     const sem = Effect.unsafeMakeSemaphore(1)
     const withPermit = sem.withPermits(1)
@@ -128,11 +126,11 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
         seed?: Effect<Iterable<Encoded>, E, R>,
         config?: StoreConfig<Encoded>
       ) =>
-        Effect.gen(function*($) {
+        Effect.gen(function*() {
           const storesSem = Effect.unsafeMakeSemaphore(1)
-          const primary = yield* $(makeDiskStoreInt(prefix, "primary", dir, name, seed, config?.defaultValues))
+          const primary = yield* makeDiskStoreInt(prefix, "primary", dir, name, seed, config?.defaultValues)
           const stores = new Map<string, Store<Encoded, Id>>([["primary", primary]])
-          const ctx = yield* $(Effect.context<R>())
+          const ctx = yield* Effect.context<R>()
           const getStore = !config?.allowNamespace
             ? Effect.succeed(primary)
             : FiberRef.get(storeId).pipe(Effect.flatMap((namespace) => {

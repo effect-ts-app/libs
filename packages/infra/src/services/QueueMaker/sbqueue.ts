@@ -39,16 +39,16 @@ export function makeServiceBusQueue<
   const drainW = S.Struct({ body: drainSchema, meta: QueueMeta })
   const parseDrain = flow(S.decodeUnknown(drainW), Effect.orDie)
 
-  return Effect.gen(function*($) {
-    const s = yield* $(Sender)
-    const receiver = yield* $(ServiceBusReceiverFactory)
+  return Effect.gen(function*() {
+    const s = yield* Sender
+    const receiver = yield* ServiceBusReceiverFactory
     const silenceAndReportError = reportNonInterruptedFailure({ name: "ServiceBusQueue.drain." + queueDrainName })
     const reportError = reportNonInterruptedFailureCause({ name: "ServiceBusQueue.drain." + queueDrainName })
-    const rcc = yield* $(RequestContextContainer)
+    const rcc = yield* RequestContextContainer
 
     // TODO: or do async?
     // This will make sure that the host receives the error (MainFiberSet.join), who will then interrupt everything and commence a shutdown and restart of app
-    // const deferred = yield* $(Deferred.make<never, ServiceBusError | Error>())
+    // const deferred = yield* Deferred.make<never, ServiceBusError | Error>()
 
     return {
       drain: <DrainE, DrainR>(
@@ -56,7 +56,7 @@ export function makeServiceBusQueue<
         sessionId?: string
       ) =>
         Effect
-          .gen(function*($) {
+          .gen(function*() {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             function processMessage(messageBody: any) {
               return Effect
@@ -113,46 +113,42 @@ export function makeServiceBusQueue<
                 )
             }
 
-            return yield* $(
-              subscribe({
-                processMessage: (x) => processMessage(x.body).pipe(Effect.uninterruptible),
-                processError: (err) => reportQueueError(Cause.fail(err.error))
-                // Deferred.completeWith(
-                //   deferred,
-                //   reportFatalQueueError(Cause.fail(err.error))
-                //     .pipe(Effect.andThen(Effect.fail(err.error)))
-                // )
-              }, sessionId)
-                .pipe(Effect.provideService(ServiceBusReceiverFactory, receiver))
-            )
+            return yield* subscribe({
+              processMessage: (x) => processMessage(x.body).pipe(Effect.uninterruptible),
+              processError: (err) => reportQueueError(Cause.fail(err.error))
+              // Deferred.completeWith(
+              //   deferred,
+              //   reportFatalQueueError(Cause.fail(err.error))
+              //     .pipe(Effect.andThen(Effect.fail(err.error)))
+              // )
+            }, sessionId)
+              .pipe(Effect.provideService(ServiceBusReceiverFactory, receiver))
           })
           // .pipe(Effect.andThen(Deferred.await(deferred).pipe(Effect.orDie))),
           .pipe(Effect.andThen(Effect.never)),
 
       publish: (...messages) =>
         Effect
-          .gen(function*($) {
-            const requestContext = yield* $(rcc.requestContext)
-            const span = yield* $(Effect.serviceOption(Tracer.ParentSpan))
-            return yield* $(
-              Effect
-                .promise((abortSignal) =>
-                  s.sendMessages(
-                    messages.map((m) => ({
-                      body: JSON.stringify(
-                        S.encodeSync(wireSchema)({
-                          body: m,
-                          meta: { requestContext, span: Option.getOrUndefined(span) }
-                        })
-                      ),
-                      messageId: m.id, /* correllationid: requestId */
-                      contentType: "application/json",
-                      sessionId: "sessionId" in m ? m.sessionId : undefined
-                    })),
-                    { abortSignal }
-                  )
+          .gen(function*() {
+            const requestContext = yield* rcc.requestContext
+            const span = yield* Effect.serviceOption(Tracer.ParentSpan)
+            return yield* Effect
+              .promise((abortSignal) =>
+                s.sendMessages(
+                  messages.map((m) => ({
+                    body: JSON.stringify(
+                      S.encodeSync(wireSchema)({
+                        body: m,
+                        meta: { requestContext, span: Option.getOrUndefined(span) }
+                      })
+                    ),
+                    messageId: m.id, /* correllationid: requestId */
+                    contentType: "application/json",
+                    sessionId: "sessionId" in m ? m.sessionId : undefined
+                  })),
+                  { abortSignal }
                 )
-            )
+              )
           })
           .pipe(Effect.withSpan("queue.publish: " + queueName, {
             captureStackTrace: false,

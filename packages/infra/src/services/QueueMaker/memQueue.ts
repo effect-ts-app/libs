@@ -24,11 +24,11 @@ export function makeMemQueue<
   schema: S.Schema<Evt, EvtE>,
   drainSchema: S.Schema<DrainEvt, DrainEvtE>
 ) {
-  return Effect.gen(function*($) {
-    const mem = yield* $(MemQueue)
-    const q = yield* $(mem.getOrCreateQueue(queueName))
-    const qDrain = yield* $(mem.getOrCreateQueue(queueDrainName))
-    const rcc = yield* $(RequestContextContainer)
+  return Effect.gen(function*() {
+    const mem = yield* MemQueue
+    const q = yield* mem.getOrCreateQueue(queueName)
+    const qDrain = yield* mem.getOrCreateQueue(queueDrainName)
+    const rcc = yield* RequestContextContainer
 
     const wireSchema = S.Struct({ body: schema, meta: QueueMeta })
     const drainW = S.Struct({ body: drainSchema, meta: QueueMeta })
@@ -37,21 +37,19 @@ export function makeMemQueue<
     return {
       publish: (...messages) =>
         Effect
-          .gen(function*($) {
-            const requestContext = yield* $(rcc.requestContext)
-            const span = yield* $(Effect.serviceOption(Tracer.ParentSpan))
-            return yield* $(
-              Effect
-                .forEach(messages, (m) =>
-                  // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-                  S.encode(wireSchema)({ body: m, meta: { requestContext, span: Option.getOrUndefined(span) } }).pipe(
-                    Effect.orDie,
-                    Effect
-                      .andThen(JSON.stringify),
-                    // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))
-                    Effect.flatMap((_) => q.offer(_))
-                  ), { discard: true })
-            )
+          .gen(function*() {
+            const requestContext = yield* rcc.requestContext
+            const span = yield* Effect.serviceOption(Tracer.ParentSpan)
+            return yield* Effect
+              .forEach(messages, (m) =>
+                // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
+                S.encode(wireSchema)({ body: m, meta: { requestContext, span: Option.getOrUndefined(span) } }).pipe(
+                  Effect.orDie,
+                  Effect
+                    .andThen(JSON.stringify),
+                  // .tap((msg) => info("Publishing Mem Message: " + utils.inspect(msg)))
+                  Effect.flatMap((_) => q.offer(_))
+                ), { discard: true })
           })
           .pipe(
             Effect.withSpan("queue.publish: " + queueName, {
@@ -64,7 +62,7 @@ export function makeMemQueue<
         handleEvent: (ks: DrainEvt) => Effect<void, DrainE, DrainR>,
         sessionId?: string
       ) =>
-        Effect.gen(function*($) {
+        Effect.gen(function*() {
           const silenceAndReportError = reportNonInterruptedFailure({ name: "MemQueue.drain." + queueDrainName })
           const processMessage = (msg: string) =>
             // we JSON parse, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
@@ -107,19 +105,17 @@ export function makeMemQueue<
                     return effect
                   })
               )
-          return yield* $(
-            qDrain
-              .take
-              .pipe(
-                Effect.flatMap((x) =>
-                  processMessage(x).pipe(Effect.uninterruptible, Effect.fork, Effect.flatMap(Fiber.join))
-                ),
-                // TODO: normally a failed item would be returned to the queue and retried up to X times.
-                // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.
-                silenceAndReportError,
-                Effect.forever
-              )
-          )
+          return yield* qDrain
+            .take
+            .pipe(
+              Effect.flatMap((x) =>
+                processMessage(x).pipe(Effect.uninterruptible, Effect.fork, Effect.flatMap(Fiber.join))
+              ),
+              // TODO: normally a failed item would be returned to the queue and retried up to X times.
+              // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.
+              silenceAndReportError,
+              Effect.forever
+            )
         })
     } satisfies QueueBase<Evt, DrainEvt>
   })
