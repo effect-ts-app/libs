@@ -16,7 +16,7 @@ patchedDependencies:
     hash: 5r3oafqkulzxdb6awceadivssy
     path: patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch
   eslint-plugin-codegen@0.17.0:
-    hash: 3ogk7peuefdu45q3hbzcgdiuna
+    hash: lbafaxqz7cfo7kkr24anyngo7i
     path: patches/eslint-plugin-codegen@0.17.0.patch
   typescript:
     hash: ecctaqko3b5tuqrrkmwqdwbtqa
@@ -146,7 +146,7 @@ importers:
         version: 0.13.9(eslint-plugin-import@2.30.0)(webpack@5.77.0)
       eslint-plugin-codegen:
         specifier: 0.17.0
-        version: 0.17.0(patch_hash=3ogk7peuefdu45q3hbzcgdiuna)
+        version: 0.17.0(patch_hash=lbafaxqz7cfo7kkr24anyngo7i)
       eslint-plugin-import:
         specifier: ^2.30.0
         version: 2.30.0(@typescript-eslint/parser@8.8.0(eslint@8.57.0)(typescript@5.6.2(patch_hash=ecctaqko3b5tuqrrkmwqdwbtqa)))(eslint-import-resolver-typescript@3.6.3)(eslint-import-resolver-webpack@0.13.9)(eslint@8.57.0)
@@ -292,7 +292,7 @@ importers:
         version: 8.8.0(eslint@8.57.0)(typescript@5.6.2(patch_hash=ecctaqko3b5tuqrrkmwqdwbtqa))
       eslint-plugin-codegen:
         specifier: 0.17.0
-        version: 0.17.0(patch_hash=3ogk7peuefdu45q3hbzcgdiuna)
+        version: 0.17.0(patch_hash=lbafaxqz7cfo7kkr24anyngo7i)
       glob:
         specifier: 8.1.0
         version: 8.1.0
@@ -735,8 +735,8 @@ importers:
         specifier: ^8.32.0
         version: 8.32.0
       '@tanstack/vue-query':
-        specifier: ^5.56.2
-        version: 5.56.2(vue@3.5.10(typescript@5.6.2(patch_hash=ecctaqko3b5tuqrrkmwqdwbtqa)))
+        specifier: ^5.59.0
+        version: 5.59.0(vue@3.5.10(typescript@5.6.2(patch_hash=ecctaqko3b5tuqrrkmwqdwbtqa)))
       effect:
         specifier: ^3.8.4
         version: 3.8.4
@@ -2032,11 +2032,11 @@ packages:
     resolution: {integrity: sha512-PnVV3d2poenUM31ZbZi/yXkBu3J7kd5k2u51CGwwNojag451AjTH9N6n41yjXz2fpLeewleyLBmNS6+HcGDlXw==}
     engines: {node: '>=12'}
 
-  '@tanstack/query-core@5.56.2':
-    resolution: {integrity: sha512-gor0RI3/R5rVV3gXfddh1MM+hgl0Z4G7tj6Xxpq6p2I03NGPaJ8dITY9Gz05zYYb/EJq9vPas/T4wn9EaDPd4Q==}
+  '@tanstack/query-core@5.59.0':
+    resolution: {integrity: sha512-WGD8uIhX6/deH/tkZqPNcRyAhDUqs729bWKoByYHSogcshXfFbppOdTER5+qY7mFvu8KEFJwT0nxr8RfPTVh0Q==}
 
-  '@tanstack/vue-query@5.56.2':
-    resolution: {integrity: sha512-VW7qS8JXwC3SZpawJHxQ+mWwWa5WVIQUUOh/OD6WI85eLcbJPg83ezjGupPXGKF9h31gl7CIRrnJDi4g5pK3Jg==}
+  '@tanstack/vue-query@5.59.0':
+    resolution: {integrity: sha512-r6T9Hnxz25n+aWnbs+nrI6uBmuKxo4FL9qvlhhw8Pb1iVA/mWCVF10XpcMos9EOXetHEkhZ4neCbxwcibKEZqQ==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^3.5.10
@@ -6649,12 +6649,12 @@ snapshots:
     dependencies:
       remove-accents: 0.5.0
 
-  '@tanstack/query-core@5.56.2': {}
+  '@tanstack/query-core@5.59.0': {}
 
-  '@tanstack/vue-query@5.56.2(vue@3.5.10(typescript@5.6.2(patch_hash=ecctaqko3b5tuqrrkmwqdwbtqa)))':
+  '@tanstack/vue-query@5.59.0(vue@3.5.10(typescript@5.6.2(patch_hash=ecctaqko3b5tuqrrkmwqdwbtqa)))':
     dependencies:
       '@tanstack/match-sorter-utils': 8.15.1
-      '@tanstack/query-core': 5.56.2
+      '@tanstack/query-core': 5.59.0
       '@vue/devtools-api': 6.6.3
       vue: 3.5.10(typescript@5.6.2(patch_hash=ecctaqko3b5tuqrrkmwqdwbtqa))
       vue-demi: 0.14.10(vue@3.5.10(typescript@5.6.2(patch_hash=ecctaqko3b5tuqrrkmwqdwbtqa)))
@@ -7919,7 +7919,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-codegen@0.17.0(patch_hash=3ogk7peuefdu45q3hbzcgdiuna):
+  eslint-plugin-codegen@0.17.0(patch_hash=lbafaxqz7cfo7kkr24anyngo7i):
     dependencies:
       '@babel/core': 7.25.2
       '@babel/generator': 7.12.0

@@ -1,7 +1,25 @@
 diff --git a/dist/index.js b/dist/index.js
-index 69126edc70f6abdf3ba0306db22059fc812bfa89..be4d1241650b464ba067de85fb796a7920fd847f 100644
+index 69126edc70f6abdf3ba0306db22059fc812bfa89..6ea6404fedc663e7b74357503e38c02d141c8ee7 100644
 --- a/dist/index.js
 +++ b/dist/index.js
+@@ -55,7 +55,7 @@ exports.processors = {
+ };
+ const codegen = {
+     // @ts-expect-error types are wrong?
+-    meta: { fixable: true },
++    meta: { fixable: true, schema: false },
+     create(context) {
+         const validate = () => {
+             const sourceCode = context
+@@ -115,7 +115,7 @@ const codegen = {
+                     return;
+                 }
+                 const opts = maybeOptions.right || {};
+-                const presets = Object.assign(Object.assign({}, presetsModule), (_a = context.options[0]) === null || _a === void 0 ? void 0 : _a.presets);
++                const presets = Object.assign(Object.assign({}, presetsModule), (_a = context.options[0]) === null || _a === void 0 ? void 0 : typeof _a.presets === "string" ? require(_a.presets) : _a.presets);
+                 const preset = typeof (opts === null || opts === void 0 ? void 0 : opts.preset) === 'string' && presets[opts.preset];
+                 if (typeof preset !== 'function') {
+                     context.report({
 @@ -129,7 +129,7 @@ const codegen = {
                  const normalise = (val) => val.trim().replace(/\r?\n/g, os.EOL);
                  const result = (0, Either_1.tryCatch)(() => {

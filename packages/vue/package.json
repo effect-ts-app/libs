@@ -9,7 +9,7 @@
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@formatjs/intl": "^2.10.5",
-    "@tanstack/vue-query": "^5.56.2",
+    "@tanstack/vue-query": "^5.59.0",
     "effect-app": "workspace:*",
     "query-string": "^9.1.0"
   },
