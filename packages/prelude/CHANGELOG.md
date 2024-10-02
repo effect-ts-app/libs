@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.17.2
+
+### Patch Changes
+
+- 13b7aa1: fix: TaggedUnion should inherit the rest of Union
+
 ## 1.17.1
 
 ### Patch Changes

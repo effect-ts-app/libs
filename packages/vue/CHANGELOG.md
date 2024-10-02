@@ -1,5 +1,15 @@
 # @effect-app/vue
 
+## 1.14.2
+
+### Patch Changes
+
+- fa5ffe3: update packages
+- Updated dependencies [fa5ffe3]
+- Updated dependencies [13b7aa1]
+  - @effect-app/vue@1.14.2
+  - effect-app@1.17.2
+
 ## 1.14.1
 
 ### Patch Changes
