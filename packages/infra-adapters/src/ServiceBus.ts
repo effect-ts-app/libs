@@ -23,14 +23,12 @@ const Client = Context.GenericTag<ServiceBusClient>("@services/Client")
 export const LiveServiceBusClient = (url: string) => Layer.scoped(Client)(makeClient(url))
 
 function makeSender(queueName: string) {
-  return Effect.gen(function*($) {
-    const serviceBusClient = yield* $(Client)
+  return Effect.gen(function*() {
+    const serviceBusClient = yield* Client
 
-    return yield* $(
-      Effect.acquireRelease(
-        Effect.sync(() => serviceBusClient.createSender(queueName)),
-        (subscription) => Effect.promise(() => subscription.close())
-      )
+    return yield* Effect.acquireRelease(
+      Effect.sync(() => serviceBusClient.createSender(queueName)),
+      (subscription) => Effect.promise(() => subscription.close())
     )
   })
 }
@@ -43,16 +41,14 @@ export function LiveSender(queueName: string) {
 }
 
 function makeReceiver(queueName: string, waitTillEmpty: Effect<void>, sessionId?: string) {
-  return Effect.gen(function*($) {
-    const serviceBusClient = yield* $(Client)
+  return Effect.gen(function*() {
+    const serviceBusClient = yield* Client
 
-    return yield* $(
-      Effect.acquireRelease(
-        sessionId
-          ? Effect.promise(() => serviceBusClient.acceptSession(queueName, sessionId))
-          : Effect.sync(() => serviceBusClient.createReceiver(queueName)),
-        (r) => waitTillEmpty.pipe(Effect.andThen(Effect.promise(() => r.close())))
-      )
+    return yield* Effect.acquireRelease(
+      sessionId
+        ? Effect.promise(() => serviceBusClient.acceptSession(queueName, sessionId))
+        : Effect.sync(() => serviceBusClient.createReceiver(queueName)),
+      (r) => waitTillEmpty.pipe(Effect.andThen(Effect.promise(() => r.close())))
     )
   })
 }
@@ -75,31 +71,30 @@ export function sendMessages(
   messages: ServiceBusMessage | ServiceBusMessage[] | ServiceBusMessageBatch,
   options?: OperationOptionsBase
 ) {
-  return Effect.gen(function*($) {
-    const s = yield* $(Sender)
-    return yield* $(Effect.promise(() => s.sendMessages(messages, options)))
+  return Effect.gen(function*() {
+    const s = yield* Sender
+    return yield* Effect.promise(() => s.sendMessages(messages, options))
   })
 }
 
 export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>, sessionId?: string) {
-  return Effect.gen(function*($) {
-    const rf = yield* $(ServiceBusReceiverFactory)
-    const fs = yield* $(FiberSet.make())
-    const fr = yield* $(FiberSet.runtime(fs)<RMsg | RErr>())
-    const wait = Effect.gen(function*($) {
-      if ((yield* $(FiberSet.size(fs))) > 0) {
-        yield* $(Effect.logDebug("Waiting ServiceBusFiberSet to be empty: " + (yield* $(FiberSet.size(fs)))))
+  return Effect.gen(function*() {
+    const rf = yield* ServiceBusReceiverFactory
+    const fs = yield* FiberSet.make()
+    const fr = yield* FiberSet.runtime(fs)<RMsg | RErr>()
+    const wait = Effect.gen(function*() {
+      if ((yield* FiberSet.size(fs)) > 0) {
+        yield* Effect.logDebug("Waiting ServiceBusFiberSet to be empty: " + (yield* FiberSet.size(fs)))
       }
-      while ((yield* $(FiberSet.size(fs))) > 0) yield* $(Effect.sleep("250 millis"))
+      while ((yield* FiberSet.size(fs)) > 0) yield* Effect.sleep("250 millis")
     })
-    const r = yield* $(
-      sessionId
-        ? rf.makeSession(
-          sessionId,
-          wait
-        )
-        : rf.make(wait)
-    )
+    const r = yield* sessionId
+      ? rf.makeSession(
+        sessionId,
+        wait
+      )
+      : rf.make(wait)
+
     const runEffect = <E>(effect: Effect<void, E, RMsg | RErr>) =>
       new Promise<void>((resolve, reject) =>
         fr(effect)
@@ -111,22 +106,20 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>, sessio
             }
           })
       )
-    yield* $(
-      Effect.acquireRelease(
-        Effect.sync(() =>
-          r.subscribe({
-            processError: (err) =>
-              runEffect(
-                hndlr
-                  .processError(err)
-                  .pipe(Effect.catchAllCause((cause) => Effect.logError("ServiceBus Error", cause)))
-              ),
-            processMessage: (msg) => runEffect(hndlr.processMessage(msg))
-            // DO NOT CATCH ERRORS here as they should return to the queue!
-          })
-        ),
-        (subscription) => Effect.promise(() => subscription.close())
-      )
+    yield* Effect.acquireRelease(
+      Effect.sync(() =>
+        r.subscribe({
+          processError: (err) =>
+            runEffect(
+              hndlr
+                .processError(err)
+                .pipe(Effect.catchAllCause((cause) => Effect.logError("ServiceBus Error", cause)))
+            ),
+          processMessage: (msg) => runEffect(hndlr.processMessage(msg))
+          // DO NOT CATCH ERRORS here as they should return to the queue!
+        })
+      ),
+      (subscription) => Effect.promise(() => subscription.close())
     )
   })
 }

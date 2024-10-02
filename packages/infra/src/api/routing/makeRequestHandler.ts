@@ -170,15 +170,15 @@ export function makeRequestHandler<
   )
 
   return Effect
-    .gen(function*($) {
-      const req = yield* $(HttpServerRequest.HttpServerRequest)
+    .gen(function*() {
+      const req = yield* HttpServerRequest.HttpServerRequest
       const res = HttpServerResponse
         .empty()
         .pipe((_) => req.method === "GET" ? HttpServerResponse.setHeader(_, "Cache-Control", "no-store") : _)
 
-      const pars = yield* $(getParams)
+      const pars = yield* getParams
 
-      const settings = yield* $(FiberRef.get(RequestSettings))
+      const settings = yield* FiberRef.get(RequestSettings)
 
       const eff =
         // TODO: we don;t have access to user id here cause context is not yet created
@@ -327,7 +327,7 @@ export function makeRequestHandler<
               )
           )
 
-      return yield* $(eff)
+      return yield* eff
     })
     .pipe((_) =>
       updateRequestContext(

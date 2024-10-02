@@ -42,8 +42,8 @@ class SomethingRepo extends RepositoryDefaultImpl<SomethingRepo>()(
     )
 }
 
-const program = Effect.gen(function*($) {
-  const r = yield* $(SomethingRepo.query(flow(
+const program = Effect.gen(function*() {
+  const r = yield* SomethingRepo.query(flow(
     where("displayName", "Verona"),
     or(
       where("displayName", "Riley"),
@@ -52,7 +52,7 @@ const program = Effect.gen(function*($) {
     order("displayName"),
     page({ take: 1 }),
     project(S.Struct(Something.pick("id", "displayName")))
-  )))
+  ))
   console.log("$$ result", r)
 })
 

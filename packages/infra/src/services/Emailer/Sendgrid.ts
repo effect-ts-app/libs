@@ -12,7 +12,7 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
 
     return Emailer.of({
       sendMail(msg_: EmailMsgOptionalFrom) {
-        return Effect.gen(function*($) {
+        return Effect.gen(function*() {
           const msg: EmailMsg = dropUndefinedT({
             ...msg_,
             from: msg_.from ?? defaultFrom,
@@ -22,16 +22,17 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
 
           const renderedMsg_ = render(msg)
           const renderedMsg = { ...renderedMsg_, subject: `${subjectPrefix}${renderedMsg_.subject}` }
-          yield* $(Effect.logDebug("Sending email").pipe(Effect.annotateLogs("msg", inspect(renderedMsg, false, 5))))
+          yield* Effect.logDebug("Sending email").pipe(Effect.annotateLogs("msg", inspect(renderedMsg, false, 5)))
 
-          const ret = yield* $(
-            Effect.async<[sgMail.ClientResponse, Record<string, unknown>], Error | sgMail.ResponseError>(
-              (cb) =>
-                void sgMail.send(renderedMsg, false, (err, result) =>
-                  err
-                    ? cb(Effect.fail(err))
-                    : cb(Effect.sync(() => result)))
-            )
+          const ret = yield* Effect.async<
+            [sgMail.ClientResponse, Record<string, unknown>],
+            Error | sgMail.ResponseError
+          >(
+            (cb) =>
+              void sgMail.send(renderedMsg, false, (err, result) =>
+                err
+                  ? cb(Effect.fail(err))
+                  : cb(Effect.sync(() => result)))
           )
 
           // const event = {
@@ -40,8 +41,8 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
           //     templateId: msg.templateId
           //   }
           // }
-          // yield* $(Effect.logDebug("Tracking email event").annotateLogs("event", event.$$.pretty))
-          // const { trackEvent } = yield* $(AiContextService)
+          // yield* Effect.logDebug("Tracking email event").annotateLogs("event", event.$$.pretty)
+          // const { trackEvent } = yield* AiContextService
           // trackEvent(event)
           return ret
         })

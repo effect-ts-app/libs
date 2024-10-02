@@ -113,23 +113,21 @@ export function makeSQLQueue<
     return {
       publish: (...messages) =>
         Effect
-          .gen(function*($) {
-            const requestContext = yield* $(rcc.requestContext)
-            const span = yield* $(Effect.serviceOption(Tracer.ParentSpan))
-            return yield* $(
-              Effect
-                .forEach(
-                  messages,
-                  (m) =>
-                    q.offer(m, {
-                      requestContext: new RequestContext(requestContext), // workaround Schema expecting exact class
-                      span: Option.getOrUndefined(span)
-                    }),
-                  {
-                    discard: true
-                  }
-                )
-            )
+          .gen(function*() {
+            const requestContext = yield* rcc.requestContext
+            const span = yield* Effect.serviceOption(Tracer.ParentSpan)
+            return yield* Effect
+              .forEach(
+                messages,
+                (m) =>
+                  q.offer(m, {
+                    requestContext: new RequestContext(requestContext), // workaround Schema expecting exact class
+                    span: Option.getOrUndefined(span)
+                  }),
+                {
+                  discard: true
+                }
+              )
           })
           .pipe(
             Effect.withSpan("queue.publish: " + queueName, {

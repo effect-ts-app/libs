@@ -9,24 +9,23 @@ export function reportError(
   name: string
 ) {
   return (cause: Cause<unknown>, extras?: Record<string, unknown>) =>
-    Effect.gen(function*($) {
-      yield* $(annotateSpanWithError(cause, name))
+    Effect.gen(function*() {
+      yield* annotateSpanWithError(cause, name)
       if (Cause.isInterrupted(cause)) {
-        yield* $(Effect.logDebug("Interrupted").pipe(Effect.annotateLogs("extras", JSON.stringify(extras ?? {}))))
+        yield* Effect.logDebug("Interrupted").pipe(Effect.annotateLogs("extras", JSON.stringify(extras ?? {})))
         return Cause.squash(cause)
       }
 
       const error = new CauseException(cause, name)
-      yield* $(reportSentry(error, extras))
-      yield* $(
-        Effect
-          .logError("Reporting error", cause)
-          .pipe(Effect.annotateLogs(dropUndefined({
-            extras,
-            __cause__: error.toJSON(),
-            __error_name__: name
-          })))
-      )
+      yield* reportSentry(error, extras)
+      yield* Effect
+        .logError("Reporting error", cause)
+        .pipe(Effect.annotateLogs(dropUndefined({
+          extras,
+          __cause__: error.toJSON(),
+          __error_name__: name
+        })))
+
       error[ErrorReported] = true
       return error
     })
@@ -48,21 +47,19 @@ export function logError<E>(
   name: string
 ) {
   return (cause: Cause<E>, extras?: Record<string, unknown>) =>
-    Effect.gen(function*($) {
+    Effect.gen(function*() {
       if (Cause.isInterrupted(cause)) {
-        yield* $(Effect.logDebug("Interrupted").pipe(Effect.annotateLogs(dropUndefined({ extras }))))
+        yield* Effect.logDebug("Interrupted").pipe(Effect.annotateLogs(dropUndefined({ extras })))
         return
       }
       const error = new CauseException(cause, name)
-      yield* $(
-        Effect
-          .logWarning("Logging error", cause)
-          .pipe(Effect.annotateLogs(dropUndefined({
-            extras,
-            __cause__: error.toJSON(),
-            __error_name__: name
-          })))
-      )
+      yield* Effect
+        .logWarning("Logging error", cause)
+        .pipe(Effect.annotateLogs(dropUndefined({
+          extras,
+          __cause__: error.toJSON(),
+          __error_name__: name
+        })))
     })
 }
 
@@ -71,7 +68,7 @@ export function captureException(error: unknown) {
   console.error(error)
 }
 
-export function reportMessage(message: string, extras?: Record<string, unknown> | undefined) {
+export function reportMessage(message: string, extras?: Record<string, unknown>) {
   return Effect.sync(() => {
     const scope = new Sentry.Scope()
     if (extras) scope.setContext("extras", extras)
