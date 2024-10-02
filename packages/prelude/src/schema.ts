@@ -79,6 +79,7 @@ export interface IsAny<A extends { _tag: string }> {
 }
 
 export const taggedUnionMap = <
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Members extends readonly (S.Schema<{ _tag: string }, any, any> & { fields: { _tag: S.tag<string> } })[]
 >(
   self: Members
@@ -96,9 +97,8 @@ export const ExtendTaggedUnion = <A extends { _tag: string }, I, R>(
 ) => extendM(schema, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_) /*, map: taggedUnionMap(a) */ }))
 
 export const TaggedUnion = <
-  Members extends ReadonlyArray<
-    S.Schema.Any & { fields: { _tag: S.tag<any> } }
-  >
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Members extends S.AST.Members<S.Schema.Any & { fields: { _tag: S.tag<any> } }>
 >(...a: Members) =>
   pipe(S.Union(...a), (_) => extendM(_, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_), tagMap: taggedUnionMap(a) })))
 
