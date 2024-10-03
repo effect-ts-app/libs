@@ -1,3 +1,4 @@
+import type { NonEmptyReadonlyArray } from "@effect-app/core"
 import { Array, Option, pipe } from "@effect-app/core"
 import { type A, type Email as EmailT, type PhoneNumber as PhoneNumberT } from "@effect-app/schema"
 import * as S from "@effect-app/schema"
@@ -92,6 +93,22 @@ export const taggedUnionMap = <
     return acc
   }, {} as { [Key in Members[number] as ReturnType<Key["fields"]["_tag"][S.TypeId]["_A"]>]: Key })
 
+export const tags = <
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Members extends NonEmptyReadonlyArray<(S.Schema<{ _tag: string }, any, any> & { fields: { _tag: S.tag<string> } })>
+>(
+  self: Members
+) =>
+  S.Literal(...self.map((key) => {
+    const ast = key.fields._tag.ast as S.PropertySignatureDeclaration
+    const tag = (ast.type as S.AST.Literal).literal
+    return tag
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  })) as any as S.Literal<
+    {
+      [Index in keyof Members]: S.Schema.Type<Members[Index]["fields"]["_tag"]>
+    }
+  >
 export const ExtendTaggedUnion = <A extends { _tag: string }, I, R>(
   schema: S.Schema<A, I, R>
 ) => extendM(schema, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_) /*, map: taggedUnionMap(a) */ }))
@@ -100,6 +117,9 @@ export const TaggedUnion = <
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Members extends S.AST.Members<S.Schema.Any & { fields: { _tag: S.tag<any> } }>
 >(...a: Members) =>
-  pipe(S.Union(...a), (_) => extendM(_, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_), tagMap: taggedUnionMap(a) })))
+  pipe(
+    S.Union(...a),
+    (_) => extendM(_, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_), tagMap: taggedUnionMap(a), tags: tags(a) }))
+  )
 
 export type PhoneNumber = PhoneNumberT
