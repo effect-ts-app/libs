@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.17.3
+
+### Patch Changes
+
+- 6a3e66a: feat: expose tags on TaggedUnion
+
 ## 1.17.2
 
 ### Patch Changes
