@@ -5,7 +5,6 @@
         "lib": [
             "ES2023"
         ],
-        "baseUrl": "./",
         "target": "es2022",
         // inline source maps stay better in sync with the source, which should aid with watchers.
         //"sourceMap": true,

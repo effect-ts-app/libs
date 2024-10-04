@@ -1,7 +1,7 @@
 import { Array, Effect, Equivalence, pipe } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { assertUnreachable } from "effect-app/utils"
-import { InfraLogger } from "src/logger.js"
+import { InfraLogger } from "../../../logger.js"
 import type { FilterR, FilterResult } from "../filterApi/query.js"
 import type { SupportedValues } from "../service.js"
 

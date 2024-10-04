@@ -2,7 +2,7 @@ import { Context, Effect, Fiber, FiberSet, Layer } from "@effect-app/core"
 
 import type {} from "effect/Scope"
 import type {} from "effect/Context"
-import { PreludeLogger } from "src/logger.js"
+import { PreludeLogger } from "../logger.js"
 
 const make = Effect.gen(function*() {
   const set = yield* FiberSet.make<unknown, never>()

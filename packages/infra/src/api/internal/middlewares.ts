@@ -17,7 +17,7 @@ import * as FiberRef from "effect/FiberRef"
 import { pipe } from "effect/Function"
 import * as HashMap from "effect/HashMap"
 import * as Metric from "effect/Metric"
-import { InfraLogger } from "src/logger.js"
+import { InfraLogger } from "../../logger.js"
 import type * as Middlewares from "../middlewares.js"
 
 export const accessLog = (level: "Info" | "Warning" | "Debug" = "Info") =>

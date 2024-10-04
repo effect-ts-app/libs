@@ -3,7 +3,7 @@
 import { Array, Effect, FiberRef, flow, Option, Order, pipe, Ref, Struct } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { get } from "effect-app/utils"
-import { InfraLogger } from "src/logger.js"
+import { InfraLogger } from "../../logger.js"
 import type { RequestContext } from "../../RequestContext.js"
 import type { FilterArgs, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"

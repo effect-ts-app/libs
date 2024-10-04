@@ -1,6 +1,6 @@
 import { Effect } from "effect-app"
 import { pretty } from "effect-app/utils"
-import { InfraLogger } from "src/logger.js"
+import { InfraLogger } from "../../logger.js"
 import { Emailer } from "./service.js"
 
 const makeFake = InfraLogger

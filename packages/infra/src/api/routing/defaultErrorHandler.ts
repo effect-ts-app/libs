@@ -19,7 +19,7 @@ import type {
   InvalidTokenError,
   UnauthorizedError as JWTUnauthorizedError
 } from "express-oauth2-jwt-bearer"
-import { InfraLogger } from "src/logger.js"
+import { InfraLogger } from "../../logger.js"
 
 export class JWTError extends Data.TaggedClass("JWTError")<{
   error:
