@@ -6,7 +6,6 @@
         ],
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
         "esModuleInterop": true,
-        "baseUrl": "./",
         "rootDir": "./src",
         // keep in here, cause madge can't detect it from extended tsconfig
         "moduleResolution": "Node16",
