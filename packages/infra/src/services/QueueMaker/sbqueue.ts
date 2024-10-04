@@ -13,6 +13,7 @@ import { RequestId } from "effect-app/ids"
 import type { StringId } from "effect-app/schema"
 import { NonEmptyString255 } from "effect-app/schema"
 import { pretty } from "effect-app/utils"
+import { InfraLogger } from "src/logger.js"
 import { setupRequestContext } from "../../api/setupRequest.js"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure, reportNonInterruptedFailureCause, reportQueueError } from "./errors.js"
@@ -66,8 +67,8 @@ export function makeServiceBusQueue<
                   Effect.orDie,
                   Effect
                     .flatMap(({ body, meta }) => {
-                      let effect = Effect
-                        .logDebug(`[${queueDrainName}] Processing incoming message`)
+                      let effect = InfraLogger
+                        .logInfo(`[${queueDrainName}] Processing incoming message`)
                         .pipe(
                           Effect.annotateLogs({
                             body: pretty(body),

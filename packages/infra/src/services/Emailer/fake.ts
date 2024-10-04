@@ -1,13 +1,14 @@
 import { Effect } from "effect-app"
 import { pretty } from "effect-app/utils"
+import { InfraLogger } from "src/logger.js"
 import { Emailer } from "./service.js"
 
-const makeFake = Effect
-  .logDebug("FAKE Emailer Service enabled")
+const makeFake = InfraLogger
+  .logInfo("FAKE Emailer Service enabled")
   .pipe(Effect.map(() =>
     Emailer.of({
       sendMail(msg) {
-        return Effect
+        return InfraLogger
           .logDebug(`Fake send mail`)
           .pipe(Effect.annotateLogs("msg", pretty(msg)))
       }

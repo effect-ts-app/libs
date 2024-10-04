@@ -2,6 +2,7 @@ import { dropUndefinedT } from "@effect-app/core/utils"
 import type { EmailData } from "@sendgrid/helpers/classes/email-address.js"
 import sgMail from "@sendgrid/mail"
 import { Array, Effect, Equivalence, Secret } from "effect-app"
+import { InfraLogger } from "src/logger.js"
 import { inspect } from "util"
 import { Emailer } from "./service.js"
 import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.js"
@@ -22,7 +23,7 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
 
           const renderedMsg_ = render(msg)
           const renderedMsg = { ...renderedMsg_, subject: `${subjectPrefix}${renderedMsg_.subject}` }
-          yield* Effect.logDebug("Sending email").pipe(Effect.annotateLogs("msg", inspect(renderedMsg, false, 5)))
+          yield* InfraLogger.logDebug("Sending email").pipe(Effect.annotateLogs("msg", inspect(renderedMsg, false, 5)))
 
           const ret = yield* Effect.async<
             [sgMail.ClientResponse, Record<string, unknown>],
@@ -41,7 +42,7 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
           //     templateId: msg.templateId
           //   }
           // }
-          // yield* Effect.logDebug("Tracking email event").annotateLogs("event", event.$$.pretty)
+          // yield* InfraLogger.logDebug("Tracking email event").annotateLogs("event", event.$$.pretty)
           // const { trackEvent } = yield* AiContextService
           // trackEvent(event)
           return ret

@@ -8,6 +8,7 @@ import type { REST, Schema } from "effect-app/schema"
 import { StringId } from "effect-app/schema"
 import { Path } from "path-parser"
 import qs from "query-string"
+import { PreludeLogger } from "src/logger.js"
 import { HttpClient, HttpClientRequest } from "../http.js"
 import { S } from "../lib.js"
 import { ApiConfig } from "./config.js"
@@ -51,7 +52,7 @@ const getClient = Effect.flatMap(
             ),
           HttpClient
             .tapRequest((r) =>
-              Effect
+              PreludeLogger
                 .logDebug(`[HTTP] ${r.method}`)
                 .pipe(Effect.annotateLogs({
                   "url": r.url,

@@ -10,6 +10,7 @@ import type {
 import { ServiceBusClient } from "@azure/service-bus"
 import type { Scope } from "effect-app"
 import { Cause, Context, Effect, Exit, FiberSet, Layer } from "effect-app"
+import { InfraLogger } from "./logger.js"
 import { RequestFiberSet } from "./RequestFiberSet.js"
 
 function makeClient(url: string) {
@@ -84,7 +85,7 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>, sessio
     const fr = yield* FiberSet.runtime(fs)<RMsg | RErr>()
     const wait = Effect.gen(function*() {
       if ((yield* FiberSet.size(fs)) > 0) {
-        yield* Effect.logDebug("Waiting ServiceBusFiberSet to be empty: " + (yield* FiberSet.size(fs)))
+        yield* InfraLogger.logDebug("Waiting ServiceBusFiberSet to be empty: " + (yield* FiberSet.size(fs)))
       }
       while ((yield* FiberSet.size(fs)) > 0) yield* Effect.sleep("250 millis")
     })

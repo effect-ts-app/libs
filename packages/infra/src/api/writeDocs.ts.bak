@@ -27,5 +27,5 @@ export function writeOpenapiDocsI(rdescs: readonly RouteDescriptorAny[]) {
       ]
     }))
     .flatMap((_) => writeTextFile("./openapi.json", JSON.stringify(_, undefined, 2)).orDie)
-    .flatMap(() => Effect.logDebug("OpenAPI spec written to './openapi.json'"))
+    .flatMap(() => InfraLogger.logDebug("OpenAPI spec written to './openapi.json'"))
 }

@@ -17,6 +17,7 @@ import * as FiberRef from "effect/FiberRef"
 import { pipe } from "effect/Function"
 import * as HashMap from "effect/HashMap"
 import * as Metric from "effect/Metric"
+import { InfraLogger } from "src/logger.js"
 import type * as Middlewares from "../middlewares.js"
 
 export const accessLog = (level: "Info" | "Warning" | "Debug" = "Info") =>
@@ -67,13 +68,13 @@ export const errorLog = Middleware.make((app) =>
 
     if (response.status >= 400 && response.status < 500) {
       yield* _(
-        Effect.logWarning(
+        InfraLogger.logWarning(
           `${request.method.toUpperCase()} ${request.url} client error ${response.status}`
         )
       )
     } else if (response.status >= 500) {
       yield* _(
-        Effect.logError(
+        InfraLogger.logError(
           `${request.method.toUpperCase()} ${request.url} server error ${response.status}`
         )
       )

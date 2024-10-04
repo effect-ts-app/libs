@@ -2,6 +2,7 @@ import { Context, Effect, Fiber, FiberSet, Layer } from "@effect-app/core"
 
 import type {} from "effect/Scope"
 import type {} from "effect/Context"
+import { PreludeLogger } from "src/logger.js"
 
 const make = Effect.gen(function*() {
   const set = yield* FiberSet.make<unknown, never>()
@@ -10,7 +11,7 @@ const make = Effect.gen(function*() {
   const addAll = (fibers: readonly Fiber.RuntimeFiber<never, never>[]) =>
     Effect.sync(() => fibers.forEach((_) => FiberSet.unsafeAdd(set, _)))
   const join = FiberSet.size(set).pipe(
-    Effect.andThen((count) => Effect.logDebug(`Joining ${count} current fibers on the MainFiberSet`)),
+    Effect.andThen((count) => PreludeLogger.logDebug(`Joining ${count} current fibers on the MainFiberSet`)),
     Effect.andThen(FiberSet.join(set))
   )
   const run = FiberSet.run(set)
@@ -20,9 +21,9 @@ const make = Effect.gen(function*() {
   //   if (currentSize === 0) {
   //     return
   //   }
-  //   yield* Effect.logInfo("Waiting MainFiberSet to be empty: " + currentSize)
+  //   yield* PreludeLogger.logInfo("Waiting MainFiberSet to be empty: " + currentSize)
   //   while ((yield* FiberSet.size(set)) > 0) yield* Effect.sleep("250 millis")
-  //   yield* Effect.logDebug("MainFiberSet is empty")
+  //   yield* PreludeLogger.logDebug("MainFiberSet is empty")
   // })
 
   // TODO: loop and interrupt all fibers in the set continuously?

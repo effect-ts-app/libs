@@ -8,6 +8,7 @@ import path from "path"
 import util from "util"
 import type { FileOptions } from "../fileUtil.js"
 import { tempFile } from "../fileUtil.js"
+import { InfraLogger } from "../logger.js"
 import { CUPS } from "./service.js"
 import type { PrinterId } from "./service.js"
 
@@ -42,12 +43,11 @@ export function makeCUPS(cupsServer?: URL) {
 const exec_ = util.promisify(cp.exec)
 const exec = (command: string) =>
   Effect.andThen(
-    Effect
-      .logDebug(`Executing: ${command}`),
+    InfraLogger.logDebug(`Executing: ${command}`),
     Effect.tap(
       Effect
         .tryPromise(() => exec_(command)),
-      (r) => (Effect.logDebug(`Executed`).pipe(Effect.annotateLogs("result", pretty(r))))
+      (r) => (InfraLogger.logDebug(`Executed`).pipe(Effect.annotateLogs("result", pretty(r))))
     )
   )
 type PrinterConfig = { url?: URL | undefined; id: string }

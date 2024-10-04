@@ -5,6 +5,7 @@ import { CosmosClient, CosmosClientLayer } from "@effect-app/infra-adapters/cosm
 import { Array, Chunk, Duration, Effect, Layer, Option, pipe, Secret, Struct } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { dropUndefinedT } from "effect-app/utils"
+import { InfraLogger } from "src/logger.js"
 import { OptimisticConcurrencyException } from "../../errors.js"
 import { buildWhereCosmosQuery3, logQuery } from "./Cosmos/query.js"
 import { StoreMaker } from "./service.js"
@@ -345,7 +346,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
           )
 
           if (!Option.isSome(marker)) {
-            console.log("Creating mock data for " + name)
+            yield* InfraLogger.logInfo("Creating mock data for " + name)
             if (seed) {
               const m = yield* seed
               yield* Effect.flatMapOption(

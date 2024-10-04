@@ -305,6 +305,16 @@
         "default": "./_cjs/utils/extend.cjs"
       }
     },
+    "./utils/logger": {
+      "import": {
+        "types": "./dist/utils/logger.d.ts",
+        "default": "./dist/utils/logger.js"
+      },
+      "require": {
+        "types": "./dist/utils/logger.d.ts",
+        "default": "./_cjs/utils/logger.cjs"
+      }
+    },
     "./validation": {
       "import": {
         "types": "./dist/validation.d.ts",

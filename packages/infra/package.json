@@ -306,6 +306,16 @@
         "default": "./_cjs/filter/types/validator.cjs"
       }
     },
+    "./logger": {
+      "import": {
+        "types": "./dist/logger.d.ts",
+        "default": "./dist/logger.js"
+      },
+      "require": {
+        "types": "./dist/logger.d.ts",
+        "default": "./_cjs/logger.cjs"
+      }
+    },
     "./logger/jsonLogger": {
       "import": {
         "types": "./dist/logger/jsonLogger.d.ts",

@@ -5,6 +5,7 @@ import { Tracer } from "effect"
 import { Effect, Fiber, flow, Option, S } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import { pretty } from "effect-app/utils"
+import { InfraLogger } from "src/logger.js"
 import { setupRequestContext } from "../../api/setupRequest.js"
 import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure } from "./errors.js"
@@ -73,8 +74,8 @@ export function makeMemQueue<
                 Effect.orDie,
                 Effect
                   .flatMap(({ body, meta }) => {
-                    let effect = Effect
-                      .logDebug(`[${queueDrainName}] Processing incoming message`)
+                    let effect = InfraLogger
+                      .logInfo(`[${queueDrainName}] Processing incoming message`)
                       .pipe(
                         Effect.annotateLogs({ body: pretty(body), meta: pretty(meta) }),
                         Effect.zipRight(handleEvent(body)),

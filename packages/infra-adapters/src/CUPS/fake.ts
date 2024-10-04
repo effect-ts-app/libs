@@ -1,5 +1,6 @@
 import { pretty } from "@effect-app/core/utils"
 import { Effect } from "effect-app"
+import { InfraLogger } from "../logger.js"
 import { CUPS } from "./service.js"
 
 /**
@@ -8,7 +9,7 @@ import { CUPS } from "./service.js"
 export const FAKECups = CUPS.toLayer(Effect.sync(() => {
   return {
     print: (buffer, printerId, ...options) =>
-      Effect
+      InfraLogger
         .logInfo("Printing to fake printer")
         .pipe(
           Effect.zipRight(Effect.sync(() => ({ stdout: "fake", stderr: "" }))),
@@ -20,7 +21,7 @@ export const FAKECups = CUPS.toLayer(Effect.sync(() => {
             })
         ),
     printFile: (filePath, printerId, ...options) =>
-      Effect
+      InfraLogger
         .logInfo("Printing to fake printer")
         .pipe(
           Effect.zipRight(Effect.sync(() => ({ stdout: "fake", stderr: "" }))),

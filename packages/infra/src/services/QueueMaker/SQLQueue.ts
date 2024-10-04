@@ -10,6 +10,7 @@ import { Effect, Fiber, Option, S, Tracer } from "effect-app"
 import { RequestId } from "effect-app/ids"
 import { NonEmptyString255 } from "effect-app/schema"
 import { pretty } from "effect-app/utils"
+import { InfraLogger } from "src/logger.js"
 
 export const QueueId = S.Number.pipe(S.brand("QueueId"))
 export type QueueId = typeof QueueId.Type
@@ -147,8 +148,8 @@ export function makeSQLQueue<
               .succeed(msg)
               .pipe(Effect
                 .flatMap(({ body, meta }) => {
-                  let effect = Effect
-                    .logDebug(`[${queueDrainName}] Processing incoming message`)
+                  let effect = InfraLogger
+                    .logInfo(`[${queueDrainName}] Processing incoming message`)
                     .pipe(
                       Effect.annotateLogs({ body: pretty(body), meta: pretty(meta) }),
                       Effect.zipRight(handleEvent(body)),

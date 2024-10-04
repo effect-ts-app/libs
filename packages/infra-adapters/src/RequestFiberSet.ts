@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Tracer } from "@effect-app/core"
 import { Context, Effect, Fiber, FiberSet, Option } from "@effect-app/core"
+import { InfraLogger } from "./logger.js"
 
 const make = Effect.gen(function*() {
   const set = yield* FiberSet.make<any, any>()
@@ -9,7 +10,7 @@ const make = Effect.gen(function*() {
   const addAll = (fibers: readonly Fiber.RuntimeFiber<any, any>[]) =>
     Effect.sync(() => fibers.forEach((_) => FiberSet.unsafeAdd(set, _)))
   const join = FiberSet.size(set).pipe(
-    Effect.andThen((count) => Effect.logInfo(`Joining ${count} current fibers on the RequestFiberSet`)),
+    Effect.andThen((count) => InfraLogger.logInfo(`Joining ${count} current fibers on the RequestFiberSet`)),
     Effect.andThen(FiberSet.join(set))
   )
   const run = FiberSet.run(set)

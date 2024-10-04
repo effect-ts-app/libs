@@ -1,6 +1,7 @@
 import { Array, Effect, Equivalence, pipe } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { assertUnreachable } from "effect-app/utils"
+import { InfraLogger } from "src/logger.js"
 import type { FilterR, FilterResult } from "../filterApi/query.js"
 import type { SupportedValues } from "../service.js"
 
@@ -11,7 +12,7 @@ export function logQuery(q: {
     value: SupportedValues | readonly SupportedValues[]
   }[]
 }) {
-  return Effect
+  return InfraLogger
     .logDebug("cosmos query")
     .pipe(Effect.annotateLogs({
       query: q.query,
@@ -114,15 +115,15 @@ export function buildWhereCosmosQuery3(
           s += ` AND ${statement(e, i++)}`
           break
         case "or-scope": {
-          ;++l
+          ++l
           s += ` OR (\n${printN(l + 1)}${print(e.result)}\n${printN(l)})`
-          ;--l
+          --l
           break
         }
         case "and-scope": {
-          ;++l
+          ++l
           s += ` AND (\n${printN(l + 1)}${print(e.result)}\n${printN(l)})`
-          ;--l
+          --l
           break
         }
         case "where-scope": {

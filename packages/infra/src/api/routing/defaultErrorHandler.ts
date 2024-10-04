@@ -19,6 +19,7 @@ import type {
   InvalidTokenError,
   UnauthorizedError as JWTUnauthorizedError
 } from "express-oauth2-jwt-bearer"
+import { InfraLogger } from "src/logger.js"
 
 export class JWTError extends Data.TaggedClass("JWTError")<{
   error:
@@ -43,7 +44,7 @@ export function defaultBasicErrorHandler<R>(
     Effect
       // final catch all; expecting never so that unhandled known errors will show up
       .catchAll((err: never) =>
-        Effect
+        InfraLogger
           .logError(
             "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect" + err
           )
@@ -126,7 +127,7 @@ export function defaultErrorHandler<R, A extends { _tag: string } = never>(
       Effect
         // final catch all; expecting never so that unhandled known errors will show up
         .catchAll((err: never) =>
-          Effect
+          InfraLogger
             .logError(
               "Program error, compiler probably silenced, got an unsupported Error in Error Channel of Effect" + err
             )

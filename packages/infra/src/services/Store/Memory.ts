@@ -3,6 +3,7 @@
 import { Array, Effect, FiberRef, flow, Option, Order, pipe, Ref, Struct } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { get } from "effect-app/utils"
+import { InfraLogger } from "src/logger.js"
 import type { RequestContext } from "../../RequestContext.js"
 import type { FilterArgs, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
@@ -62,7 +63,7 @@ export const storeId = FiberRef.unsafeMake("primary")
 export const restoreFromRequestContext = (ctx: RequestContext) => FiberRef.set(storeId, ctx.namespace ?? "primary")
 
 function logQuery(f: FilterArgs<any, any>, defaultValues?: any) {
-  return Effect
+  return InfraLogger
     .logDebug("mem query")
     .pipe(Effect.annotateLogs({
       filter: JSON.stringify(

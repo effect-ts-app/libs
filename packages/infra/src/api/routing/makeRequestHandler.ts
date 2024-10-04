@@ -15,6 +15,7 @@ import type { HttpServerError } from "effect-app/http"
 import { HttpBody, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { NonEmptyString255 } from "effect-app/schema"
 import type { REST } from "effect-app/schema"
+import { InfraLogger } from "src/logger.js"
 import { updateRequestContext } from "../setupRequest.js"
 import { makeRequestParsers, parseRequestParams } from "./base.js"
 import type { RequestHandler, RequestHandlerBase } from "./base.js"
@@ -182,7 +183,7 @@ export function makeRequestHandler<
 
       const eff =
         // TODO: we don;t have access to user id here cause context is not yet created
-        Effect
+        InfraLogger
           .logInfo("Incoming request")
           .pipe(
             Effect.annotateLogs({
@@ -281,7 +282,7 @@ export function makeRequestHandler<
                           }),
                           Effect.suspend(() => {
                             const headers = res.headers
-                            return Effect
+                            return InfraLogger
                               .logError("Finished request", cause)
                               .pipe(Effect.annotateLogs({
                                 method: req.method,
@@ -312,7 +313,7 @@ export function makeRequestHandler<
               ),
             Effect
               .tap((res) =>
-                Effect
+                InfraLogger
                   .logInfo("Finished request")
                   .pipe(Effect.annotateLogs({
                     method: req.method,
