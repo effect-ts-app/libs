@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.10.2
+
+### Patch Changes
+
+- 550ba43: control log levels
+
 ## 1.10.1
 
 ### Patch Changes

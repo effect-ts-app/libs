@@ -1,5 +1,15 @@
 # @effect-app/infra-adapters
 
+## 1.11.6
+
+### Patch Changes
+
+- 550ba43: control log levels
+- Updated dependencies [550ba43]
+  - effect-app@1.17.4
+  - @effect-app/core@1.10.2
+  - @effect-app/schema@1.12.2
+
 ## 1.11.5
 
 ### Patch Changes
