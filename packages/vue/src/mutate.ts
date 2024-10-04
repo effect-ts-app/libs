@@ -9,7 +9,6 @@ import type { ApiConfig, FetchResponse } from "effect-app/client"
 import { dropUndefinedT } from "effect-app/utils"
 import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
-import type { MaybeRefDeep } from "node_modules/@tanstack/vue-query/build/modern/types.js"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
 import { makeQueryKey, reportRuntimeError, run } from "./internal.js"
@@ -59,6 +58,16 @@ type HandlerWithInput<I, A, E> = {
   name: string
 }
 type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>; name: string }
+
+export type MaybeRef<T> = Ref<T> | ComputedRef<T> | T
+type MaybeRefDeep<T> = MaybeRef<
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  T extends Function ? T
+    : T extends object ? {
+        [Property in keyof T]: MaybeRefDeep<T[Property]>
+      }
+    : T
+>
 
 export interface MutationOptions<A, I = void> {
   queryInvalidation?: (defaultKey: string[] | undefined, name: string) => {
