@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.17.5
+
+### Patch Changes
+
+- 447cba4: fix paths
+
 ## 1.17.4
 
 ### Patch Changes

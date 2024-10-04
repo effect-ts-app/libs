@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 1.23.4
+
+### Patch Changes
+
+- 447cba4: fix paths
+- Updated dependencies [447cba4]
+  - effect-app@1.17.5
+  - @effect-app/infra-adapters@1.11.7
+
 ## 1.23.3
 
 ### Patch Changes
