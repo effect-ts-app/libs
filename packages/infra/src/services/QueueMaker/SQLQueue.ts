@@ -97,10 +97,9 @@ export function makeSQLQueue<
           if (first) {
             const dec = yield* decodeDrain(first)
             const { createdAt, updatedAt, ...rest } = dec
-            yield* drainRepo.updateVoid(
+            return yield* drainRepo.update(
               Drain.update.make({ ...rest, processingAt: Option.some(new Date()) }) // auto in lib , etag: randomUUID()
             )
-            return dec
           }
           if (first) return first
           yield* Effect.sleep(250)
