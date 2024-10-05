@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.23.5
+
+### Patch Changes
+
+- 6ffe991: add optimistic concurrency
+
 ## 1.23.4
 
 ### Patch Changes
