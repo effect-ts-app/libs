@@ -1,5 +1,13 @@
 # @effect-app/infra
 
+## 1.24.1
+
+### Patch Changes
+
+- bd2da9c: fix
+- Updated dependencies [bd2da9c]
+  - @effect-app/infra-adapters@1.12.1
+
 ## 1.24.0
 
 ### Minor Changes

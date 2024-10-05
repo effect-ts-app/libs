@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 1.12.1
+
+### Patch Changes
+
+- bd2da9c: fix
+
 ## 1.12.0
 
 ### Minor Changes
