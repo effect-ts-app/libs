@@ -4,6 +4,7 @@
   "pnpm": {
     "patchedDependencies": {
       "eslint-plugin-codegen@0.17.0": "patches/eslint-plugin-codegen@0.17.0.patch",
+      "@effect/sql": "patches/@effect__sql.patch",
       "@phaphoso/eslint-plugin-dprint@0.5.2": "patches/@phaphoso__eslint-plugin-dprint@0.5.2.patch",
       "typescript": "patches/typescript.patch"
     }
