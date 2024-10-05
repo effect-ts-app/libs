@@ -16,9 +16,7 @@ import { InfraLogger } from "../../logger.js"
 export const QueueId = S.Number.pipe(S.brand("QueueId"))
 export type QueueId = typeof QueueId.Type
 
-/**
- * Currently limited to one process draining at a time, due to in-process Semaphore instead of row-level locking.
- */
+// TODO: let the model track and Auto Generate versionColumn on every update instead
 export function makeSQLQueue<
   Evt extends { id: S.StringId; _tag: string },
   DrainEvt extends { id: S.StringId; _tag: string },
@@ -57,13 +55,15 @@ export function makeSQLQueue<
     const queueRepo = yield* Model.makeRepository(Queue, {
       tableName: "queue",
       spanPrefix: "QueueRepo",
-      idColumn: "id"
+      idColumn: "id",
+      versionColumn: "etag"
     })
 
     const drainRepo = yield* Model.makeRepository(Drain, {
       tableName: "queue",
       spanPrefix: "DrainRepo",
-      idColumn: "id"
+      idColumn: "id",
+      versionColumn: "etag"
     })
 
     const decodeDrain = S.decode(Drain)
@@ -75,9 +75,6 @@ export function makeSQLQueue<
     WHERE name = ${queueDrainName} AND finishedAt IS NULL AND (processingAt IS NULL OR processingAt < ${limit.getTime()})
     LIMIT 1`
     }
-
-    // temporary workaround until we have a SQLite rowversion..
-    const lock = yield* Effect.makeSemaphore(1)
 
     const q = {
       offer: (body: Evt, meta: typeof QueueMeta.Type) =>
@@ -95,25 +92,20 @@ export function makeSQLQueue<
         }),
       take: Effect.gen(function*() {
         while (true) {
-          const first = yield* lock.withPermits(1)(Effect.gen(function*() {
-            const [first] = yield* drain()
-            if (first) {
-              const dec = yield* decodeDrain(first)
-              const { createdAt, updatedAt, ...rest } = dec
-              // TODO: the update must check if the current etag is the same as the one we read
-              yield* drainRepo.update(
-                Drain.update.make({ ...rest, processingAt: Option.some(new Date()), etag: randomUUID() })
-              )
-              return dec
-            }
-            return null
-          }))
+          const [first] = yield* drain()
+          if (first) {
+            const dec = yield* decodeDrain(first)
+            const { createdAt, updatedAt, ...rest } = dec
+            yield* drainRepo.update(
+              Drain.update.make({ ...rest, processingAt: Option.some(new Date()), etag: randomUUID() })
+            )
+            return dec
+          }
           if (first) return first
           yield* Effect.sleep(250)
         }
       }),
       finish: ({ createdAt, updatedAt, ...q }: Drain) =>
-        // TODO: the update must check if the current etag is the same as the one we read
         drainRepo.update(Drain.update.make({ ...q, finishedAt: Option.some(new Date()), etag: randomUUID() }))
     }
     const rcc = yield* RequestContextContainer
