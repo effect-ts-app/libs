@@ -97,7 +97,7 @@ export function makeSQLQueue<
             const dec = yield* decodeDrain(first)
             const { createdAt, updatedAt, ...rest } = dec
             yield* drainRepo.update(
-              Drain.update.make({ ...rest, processingAt: Option.some(new Date()), etag: randomUUID() })
+              Drain.update.make({ ...rest, processingAt: Option.some(new Date()) }) // auto in lib , etag: randomUUID()
             )
             return dec
           }
@@ -106,7 +106,7 @@ export function makeSQLQueue<
         }
       }),
       finish: ({ createdAt, updatedAt, ...q }: Drain) =>
-        drainRepo.update(Drain.update.make({ ...q, finishedAt: Option.some(new Date()), etag: randomUUID() }))
+        drainRepo.update(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) })) // auto in lib , etag: randomUUID()
     }
     const rcc = yield* RequestContextContainer
 
