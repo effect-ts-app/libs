@@ -719,9 +719,11 @@ select * from ${sql(options.tableName)} where ${sql(idColumn)} = ${request[idCol
                   Effect.map(([, results]) => results as any)
                 ),
             orElse: () =>
-              sql`update ${sql(options.tableName)} set ${sql.update(request, [idColumn])} where ${sql(idColumn)} = ${
-                request[idColumn]
-              } and ${sql(versionColumn)} = ${request[versionColumn]} returning *`
+              sql`update ${sql(options.tableName)} set ${
+                sql.update({ ...request, [versionColumn]: randomUUID() }, [idColumn])
+              } where ${sql(idColumn)} = ${request[idColumn]} and ${sql(versionColumn)} = ${
+                request[versionColumn]
+              } returning *`
           })
         : (request) =>
           sql.onDialectOrElse({

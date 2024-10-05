@@ -80,7 +80,7 @@ export function makeSQLQueue<
     const q = {
       offer: (body: Evt, meta: typeof QueueMeta.Type) =>
         Effect.gen(function*() {
-          yield* queueRepo.insert(
+          yield* queueRepo.insertVoid(
             Queue.insert.make({
               body,
               meta,
@@ -97,7 +97,7 @@ export function makeSQLQueue<
           if (first) {
             const dec = yield* decodeDrain(first)
             const { createdAt, updatedAt, ...rest } = dec
-            yield* drainRepo.update(
+            yield* drainRepo.updateVoid(
               Drain.update.make({ ...rest, processingAt: Option.some(new Date()) }) // auto in lib , etag: randomUUID()
             )
             return dec
@@ -107,7 +107,7 @@ export function makeSQLQueue<
         }
       }),
       finish: ({ createdAt, updatedAt, ...q }: Drain) =>
-        drainRepo.update(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) })) // auto in lib , etag: randomUUID()
+        drainRepo.updateVoid(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) })) // auto in lib , etag: randomUUID()
     }
     const rcc = yield* RequestContextContainer
 
