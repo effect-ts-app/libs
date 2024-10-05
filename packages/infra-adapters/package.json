@@ -5,8 +5,10 @@
   "type": "module",
   "dependencies": {
     "@effect-app/core": "workspace:*",
-    "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",
+    "@effect/experimental": "^0.27.3",
+    "@effect/sql": "^0.14.0",
+    "effect-app": "workspace:*",
     "query-string": "^9.1.0"
   },
   "devDependencies": {
@@ -165,6 +167,26 @@
       "require": {
         "types": "./dist/RequestFiberSet.d.ts",
         "default": "./_cjs/RequestFiberSet.cjs"
+      }
+    },
+    "./SQL": {
+      "import": {
+        "types": "./dist/SQL.d.ts",
+        "default": "./dist/SQL.js"
+      },
+      "require": {
+        "types": "./dist/SQL.d.ts",
+        "default": "./_cjs/SQL.cjs"
+      }
+    },
+    "./SQL/Model": {
+      "import": {
+        "types": "./dist/SQL/Model.d.ts",
+        "default": "./dist/SQL/Model.js"
+      },
+      "require": {
+        "types": "./dist/SQL/Model.d.ts",
+        "default": "./_cjs/SQL/Model.cjs"
       }
     },
     "./ServiceBus": {
