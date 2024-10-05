@@ -15,9 +15,6 @@ import { InfraLogger } from "../../logger.js"
 export const QueueId = S.Number.pipe(S.brand("QueueId"))
 export type QueueId = typeof QueueId.Type
 
-/**
- * Currently limited to one process draining at a time, due to in-process Semaphore instead of row-level locking.
- */
 export function makeSQLQueue<
   Evt extends { id: S.StringId; _tag: string },
   DrainEvt extends { id: S.StringId; _tag: string },
@@ -74,9 +71,6 @@ export function makeSQLQueue<
     LIMIT 1`
     }
 
-    // temporary workaround until we have a SQLite rowversion..
-    const lock = yield* Effect.makeSemaphore(1)
-
     const q = {
       offer: (body: Evt, meta: typeof QueueMeta.Type) =>
         Effect.gen(function*() {
@@ -92,22 +86,23 @@ export function makeSQLQueue<
         }),
       take: Effect.gen(function*() {
         while (true) {
-          const first = yield* lock.withPermits(1)(Effect.gen(function*() {
-            const [first] = yield* drain()
-            if (first) {
-              const dec = yield* decodeDrain(first)
-              const { createdAt, updatedAt, ...rest } = dec
-              yield* drainRepo.update(Drain.update.make({ ...rest, processingAt: Option.some(new Date()) }))
-              return dec
-            }
-            return null
-          }))
+          const [first] = yield* drain()
+          if (first) {
+            const dec = yield* decodeDrain(first)
+            const { createdAt, updatedAt, ...rest } = dec
+            yield* sql.withTransaction(
+              drainRepo.update(Drain.update.make({ ...rest, processingAt: Option.some(new Date()) }))
+            )
+            return dec
+          }
           if (first) return first
           yield* Effect.sleep(250)
         }
       }),
       finish: ({ createdAt, updatedAt, ...q }: Drain) =>
-        drainRepo.update(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) }))
+        sql.withTransaction(
+          drainRepo.update(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) }))
+        )
     }
     const rcc = yield* RequestContextContainer
 
