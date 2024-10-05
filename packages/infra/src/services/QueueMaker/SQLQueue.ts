@@ -5,6 +5,7 @@ import type { QueueBase } from "@effect-app/infra/services/QueueMaker/service"
 import { QueueMeta } from "@effect-app/infra/services/QueueMaker/service"
 import { RequestContextContainer } from "@effect-app/infra/services/RequestContextContainer"
 import { Model, SqlClient } from "@effect/sql"
+import { randomUUID } from "crypto"
 import { subMinutes } from "date-fns"
 import { Effect, Fiber, Option, S, Tracer } from "effect-app"
 import { RequestId } from "effect-app/ids"
@@ -38,7 +39,8 @@ export function makeSQLQueue<
       updatedAt: Model.DateTimeUpdate,
       // TODO: at+owner
       processingAt: Model.FieldOption(S.Date),
-      finishedAt: Model.FieldOption(S.Date)
+      finishedAt: Model.FieldOption(S.Date),
+      etag: S.String // TODO: use a Model thing that auto updates it?
       // TODO: record locking.. / optimistic locking
       // rowVersion: Model.DateTimeFromNumberWithNow
     }
@@ -86,7 +88,8 @@ export function makeSQLQueue<
               meta,
               name: queueName,
               processingAt: Option.none(),
-              finishedAt: Option.none()
+              finishedAt: Option.none(),
+              etag: randomUUID()
             })
           )
         }),
@@ -97,7 +100,10 @@ export function makeSQLQueue<
             if (first) {
               const dec = yield* decodeDrain(first)
               const { createdAt, updatedAt, ...rest } = dec
-              yield* drainRepo.update(Drain.update.make({ ...rest, processingAt: Option.some(new Date()) }))
+              // TODO: the update must check if the current etag is the same as the one we read
+              yield* drainRepo.update(
+                Drain.update.make({ ...rest, processingAt: Option.some(new Date()), etag: randomUUID() })
+              )
               return dec
             }
             return null
@@ -107,7 +113,8 @@ export function makeSQLQueue<
         }
       }),
       finish: ({ createdAt, updatedAt, ...q }: Drain) =>
-        drainRepo.update(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) }))
+        // TODO: the update must check if the current etag is the same as the one we read
+        drainRepo.update(Drain.update.make({ ...q, finishedAt: Option.some(new Date()), etag: randomUUID() }))
     }
     const rcc = yield* RequestContextContainer
 
