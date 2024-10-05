@@ -1,10 +1,12 @@
+import { Model } from "@effect-app/infra-adapters/SQL"
 import { setupRequestContext } from "@effect-app/infra/api/setupRequest"
 import { RequestContext } from "@effect-app/infra/RequestContext"
 import { reportNonInterruptedFailure } from "@effect-app/infra/services/QueueMaker/errors"
 import type { QueueBase } from "@effect-app/infra/services/QueueMaker/service"
 import { QueueMeta } from "@effect-app/infra/services/QueueMaker/service"
 import { RequestContextContainer } from "@effect-app/infra/services/RequestContextContainer"
-import { Model, SqlClient } from "@effect/sql"
+import { SqlClient } from "@effect/sql"
+import { randomUUID } from "crypto"
 import { subMinutes } from "date-fns"
 import { Effect, Fiber, Option, S, Tracer } from "effect-app"
 import { RequestId } from "effect-app/ids"
@@ -15,9 +17,7 @@ import { InfraLogger } from "../../logger.js"
 export const QueueId = S.Number.pipe(S.brand("QueueId"))
 export type QueueId = typeof QueueId.Type
 
-/**
- * Currently limited to one process draining at a time, due to in-process Semaphore instead of row-level locking.
- */
+// TODO: let the model track and Auto Generate versionColumn on every update instead
 export function makeSQLQueue<
   Evt extends { id: S.StringId; _tag: string },
   DrainEvt extends { id: S.StringId; _tag: string },
@@ -38,7 +38,8 @@ export function makeSQLQueue<
       updatedAt: Model.DateTimeUpdate,
       // TODO: at+owner
       processingAt: Model.FieldOption(S.Date),
-      finishedAt: Model.FieldOption(S.Date)
+      finishedAt: Model.FieldOption(S.Date),
+      etag: S.String // TODO: use a Model thing that auto updates it?
       // TODO: record locking.. / optimistic locking
       // rowVersion: Model.DateTimeFromNumberWithNow
     }
@@ -55,13 +56,15 @@ export function makeSQLQueue<
     const queueRepo = yield* Model.makeRepository(Queue, {
       tableName: "queue",
       spanPrefix: "QueueRepo",
-      idColumn: "id"
+      idColumn: "id",
+      versionColumn: "etag"
     })
 
     const drainRepo = yield* Model.makeRepository(Drain, {
       tableName: "queue",
       spanPrefix: "DrainRepo",
-      idColumn: "id"
+      idColumn: "id",
+      versionColumn: "etag"
     })
 
     const decodeDrain = S.decode(Drain)
@@ -74,9 +77,6 @@ export function makeSQLQueue<
     LIMIT 1`
     }
 
-    // temporary workaround until we have a SQLite rowversion..
-    const lock = yield* Effect.makeSemaphore(1)
-
     const q = {
       offer: (body: Evt, meta: typeof QueueMeta.Type) =>
         Effect.gen(function*() {
@@ -86,28 +86,28 @@ export function makeSQLQueue<
               meta,
               name: queueName,
               processingAt: Option.none(),
-              finishedAt: Option.none()
+              finishedAt: Option.none(),
+              etag: randomUUID()
             })
           )
         }),
       take: Effect.gen(function*() {
         while (true) {
-          const first = yield* lock.withPermits(1)(Effect.gen(function*() {
-            const [first] = yield* drain()
-            if (first) {
-              const dec = yield* decodeDrain(first)
-              const { createdAt, updatedAt, ...rest } = dec
-              yield* drainRepo.update(Drain.update.make({ ...rest, processingAt: Option.some(new Date()) }))
-              return dec
-            }
-            return null
-          }))
+          const [first] = yield* drain()
+          if (first) {
+            const dec = yield* decodeDrain(first)
+            const { createdAt, updatedAt, ...rest } = dec
+            yield* drainRepo.update(
+              Drain.update.make({ ...rest, processingAt: Option.some(new Date()) }) // auto in lib , etag: randomUUID()
+            )
+            return dec
+          }
           if (first) return first
           yield* Effect.sleep(250)
         }
       }),
       finish: ({ createdAt, updatedAt, ...q }: Drain) =>
-        drainRepo.update(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) }))
+        drainRepo.update(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) })) // auto in lib , etag: randomUUID()
     }
     const rcc = yield* RequestContextContainer
 
