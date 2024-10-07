@@ -83,7 +83,7 @@ export const getQueryKey = (name: string) => {
   // we invalidate the parent namespace e.g $project/$configuration.get, we invalidate $project
   // for $project/$configuration/$something.get, we invalidate $project/$configuration
   const k = ns.length ? ns.length > 1 ? ns.slice(0, ns.length - 1) : ns : undefined
-  if (!k) new Error("empty query key for: " + name)
+  if (!k) throw new Error("empty query key for: " + name)
   return k
 }
 // TODO: more efficient invalidation, including args etc
