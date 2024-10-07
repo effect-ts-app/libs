@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+/*
+TODO: Effect.retry(r2, optimisticConcurrencySchedule) / was for PATCH only
+TODO: uninteruptible commands! was for All except GET.
+*/
 import { allLower, type EffectUnunified, type LowerServices } from "@effect-app/core/Effect"
 import { typedKeysOf } from "@effect-app/core/utils"
 import type { Compute } from "@effect-app/core/utils"
@@ -283,7 +286,12 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, ContextMap.An
       >
 
       return HttpRouter.empty.pipe(
-        HttpRouter.all(("/rpc/" + rsc.meta.moduleName) as any, HttpRpcRouter.toHttpApp(router))
+        HttpRouter.all(
+          ("/rpc/" + rsc.meta.moduleName) as any,
+          HttpRpcRouter.toHttpApp(router),
+          // TODO: not queries.
+          { uninterruptible: true }
+        )
       )
     }
 
