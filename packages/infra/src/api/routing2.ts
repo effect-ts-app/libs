@@ -12,8 +12,41 @@ import { HttpRpcRouter } from "@effect/rpc-http"
 import type { S } from "effect-app"
 import { Effect, Predicate } from "effect-app"
 import { HttpRouter } from "effect-app/http"
-import type { GetEffectContext, Middleware } from "./routing2/DynamicMiddleware.js"
+import type { ContextMap, GetEffectContext, Middleware } from "./routing2/DynamicMiddleware.js"
 import { makeRpc } from "./routing2/DynamicMiddleware.js"
+
+type GetRouteContext<CTXMap extends Record<string, ContextMap.Any>, T> =
+  // & CTX
+  // inverted
+  & {
+    [
+      key in keyof CTXMap as CTXMap[key][3] extends true ? never
+        : key extends keyof T ? T[key] extends true ? CTXMap[key][0] : never
+        : never
+    ]?: CTXMap[key][1]
+  }
+  & {
+    [
+      key in keyof CTXMap as CTXMap[key][3] extends true ? never
+        : key extends keyof T ? T[key] extends false ? CTXMap[key][0] : never
+        : CTXMap[key][0]
+    ]: CTXMap[key][1]
+  }
+  // normal
+  & {
+    [
+      key in keyof CTXMap as CTXMap[key][3] extends false ? never
+        : key extends keyof T ? T[key] extends true ? CTXMap[key][0] : never
+        : never
+    ]: CTXMap[key][1]
+  }
+  & {
+    [
+      key in keyof CTXMap as CTXMap[key][3] extends false ? never
+        : key extends keyof T ? T[key] extends false ? CTXMap[key][0] : never
+        : CTXMap[key][0]
+    ]?: CTXMap[key][1]
+  }
 
 export interface Hint<Err extends string> {
   Err: Err
@@ -68,8 +101,15 @@ type Filter<T> = {
   [K in keyof T as T[K] extends S.Schema.All & { success: S.Schema.Any; failure: S.Schema.Any } ? K : never]: T[K]
 }
 
-export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any, S.Schema.All, any]>>(
-  middleware: Middleware<Context, CTXMap>
+interface ExtendedMiddleware<Context, CTXMap extends Record<string, ContextMap.Any>>
+  extends Middleware<Context, CTXMap>
+{
+  // TODO
+  makeContext: Effect<{ [K in keyof CTXMap as CTXMap[K][0]]: CTXMap[K][1] }, never, never>
+}
+
+export const makeRouter2 = <Context, CTXMap extends Record<string, ContextMap.Any>>(
+  middleware: ExtendedMiddleware<Context, CTXMap>
 ) => {
   const rpc = makeRpc(middleware)
   function matchFor<Rsc extends Record<string, any> & { meta: { moduleName: string } }>(
@@ -100,13 +140,16 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
         f: (
           req: S.Schema.Type<Rsc[Key]>,
           ctx: Compute<
-            LowerServices<EffectDeps<SVC>> & /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] },
+            LowerServices<EffectDeps<SVC>> & GetRouteContext<CTXMap, Rsc[Key]> & { Response: Rsc[Key]["success"] },
             "flat"
           >
         ) => Effect<A, E, R2>
       ) =>
       (req: any) =>
-        Effect.andThen(allLower(services), (svc) => f(req, { ...svc as any, Response: rsc[action].success }))
+        Effect.andThen(
+          Effect.all({ svc: allLower(services), ctx: middleware.makeContext }),
+          ({ ctx, svc }) => f(req, { ...svc, ...ctx, Response: rsc[action].success } as any)
+        )
     }
 
     type MatchWithServicesNew<RT extends "raw" | "d", Key extends keyof Rsc> = {
@@ -121,14 +164,14 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
           A,
           E,
           Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>,
-          /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] } //
+          { Response: Rsc[Key]["success"] } //
         >
       >
 
       <R2, E, A>(
         f: (
           req: S.Schema.Type<Rsc[Key]>,
-          ctx: /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] }
+          ctx: GetRouteContext<CTXMap, Rsc[Key]> & { Response: Rsc[Key]["success"] }
         ) => Effect<A, E, R2>
       ): HandleVoid<
         GetSuccessShape<Rsc[Key], RT>,
@@ -139,7 +182,7 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
           A,
           E,
           Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>,
-          /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] } //
+          { Response: Rsc[Key]["success"] } //
         >
       >
 
@@ -156,7 +199,7 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
         f: (
           req: S.Schema.Type<Rsc[Key]>,
           ctx: Compute<
-            LowerServices<EffectDeps<SVC>> & /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] },
+            LowerServices<EffectDeps<SVC>> & GetRouteContext<CTXMap, Rsc[Key]> & { Response: Rsc[Key]["success"] },
             "flat"
           >
         ) => Effect<A, E, R2>
@@ -169,7 +212,7 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
           A,
           E,
           Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>,
-          LowerServices<EffectDeps<SVC>> & /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] } //
+          { Response: Rsc[Key]["success"] } //
         >
       >
     }
@@ -256,7 +299,11 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
               ? class {
                 static stack = stack
                 static _tag = "d"
-                static handler = (req: any, ctx: any) => svcOrFnOrEffect(req, { ...ctx, Response: rsc[cur].success })
+                static handler = (req: any) =>
+                  Effect.andThen(
+                    Effect.all({ ctx: middleware.makeContext }),
+                    ({ ctx }) => svcOrFnOrEffect(req, { ...ctx, Response: rsc[cur].success })
+                  )
               }
               : class {
                 static stack = stack
