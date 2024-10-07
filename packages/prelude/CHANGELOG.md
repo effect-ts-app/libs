@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.18.0
+
+### Minor Changes
+
+- b670052: feat: followup rpc client side
+
 ## 1.17.5
 
 ### Patch Changes
