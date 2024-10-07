@@ -70,7 +70,7 @@ type MaybeRefDeep<T> = MaybeRef<
 >
 
 export interface MutationOptions<A, I = void> {
-  queryInvalidation?: (defaultKey: string[] | undefined, name: string) => {
+  queryInvalidation?: (defaultKey: string[], name: string) => {
     filters?: MaybeRefDeep<InvalidateQueryFilters> | undefined
     options?: MaybeRefDeep<InvalidateOptions> | undefined
   }[]
@@ -82,7 +82,9 @@ export const getQueryKey = (name: string) => {
   const ns = key.filter((_) => _.startsWith("$"))
   // we invalidate the parent namespace e.g $project/$configuration.get, we invalidate $project
   // for $project/$configuration/$something.get, we invalidate $project/$configuration
-  return ns.length ? ns.length > 1 ? ns.slice(0, ns.length - 1) : ns : undefined
+  const k = ns.length ? ns.length > 1 ? ns.slice(0, ns.length - 1) : ns : undefined
+  if (!k) new Error("empty query key for: " + name)
+  return k
 }
 // TODO: more efficient invalidation, including args etc
 // return Effect.promise(() => queryClient.invalidateQueries({

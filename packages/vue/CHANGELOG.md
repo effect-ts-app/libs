@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.15.2
+
+### Patch Changes
+
+- query-key bs
+- Updated dependencies
+  - @effect-app/vue@1.15.2
+
 ## 1.15.1
 
 ### Patch Changes
