@@ -9,22 +9,22 @@
     "@effect-app/schema": "workspace:*",
     "@effect-app/vue": "workspace:*",
     "@formatjs/intl": "^2.10.5",
-    "@tanstack/vue-query": "^5.59.0",
+    "@tanstack/vue-query": "^5.59.1",
     "effect-app": "workspace:*",
     "query-string": "^9.1.0"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.66.2",
-    "@effect/platform-browser": "^0.45.2",
+    "@effect/platform": "^0.67.0",
+    "@effect/platform-browser": "^0.46.0",
     "@effect-rx/rx": "^0.34.0",
     "@effect-rx/rx-vue": "^0.11.0",
-    "@effect/schema": "^0.74.1",
-    "@sentry/browser": "^8.32.0",
-    "effect": "^3.8.4",
-    "vue": "^3.5.10"
+    "@effect/schema": "^0.75.0",
+    "@sentry/browser": "^8.33.1",
+    "effect": "^3.9.0",
+    "vue": "^3.5.11"
   },
   "devDependencies": {
-    "@babel/cli": "^7.25.6",
+    "@babel/cli": "^7.25.7",
     "@rollup/pluginutils": "^5.1.2",
     "@types/node": "~22.7.4",
     "intl-messageformat": "^10.5.14",
@@ -32,7 +32,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
     "vite": "^5.4.8",
-    "vitest": "^2.1.1"
+    "vitest": "^2.1.2"
   },
   "typesVersions": {
     "*": {

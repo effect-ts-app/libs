@@ -173,7 +173,7 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
           )
         ))
     .pipe(Effect.catchAll((err) => Effect.map(tagg, (env) => tuple(env.env.log, Either.left(err)))))
-  return Effect.provide(a, Layer.succeed(tagg, { env: makePureEnv<W3, S3, S4>(s) as any }) as any)
+  return Effect.provide(a, Layer.succeed(tagg, { env: makePureEnv<W3, S3, S4>(s) as any }) as any) as any
 }
 
 /**

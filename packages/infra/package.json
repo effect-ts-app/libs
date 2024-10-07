@@ -8,8 +8,8 @@
     "@azure/service-bus": "^7.9.5",
     "@effect-app/core": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
-    "@effect/rpc": "^0.40.2",
-    "@effect/rpc-http": "^0.38.3",
+    "@effect/rpc": "^0.41.0",
+    "@effect/rpc-http": "^0.39.0",
     "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "express-oauth2-jwt-bearer": "^1.6.0",
@@ -26,8 +26,8 @@
     "redlock": "^4.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.25.6",
-    "@sentry/node": "^8.32.0",
+    "@babel/cli": "^7.25.7",
+    "@sentry/node": "^8.33.1",
     "@types/express": "^5.0.0",
     "@types/node": "~22.7.4",
     "@types/proper-lockfile": "^4.1.4",
@@ -40,15 +40,15 @@
     "redis": "^3.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
-    "vitest": "^2.1.1"
+    "vitest": "^2.1.2"
   },
   "peerDependencies": {
     "express": "^4.21.0",
-    "@effect/platform": "^0.66.2",
-    "@effect/schema": "^0.74.1",
-    "@effect/sql": "^0.14.0",
-    "@effect/vitest": "^0.10.5",
-    "effect": "^3.8.4"
+    "@effect/platform": "^0.67.0",
+    "@effect/schema": "^0.75.0",
+    "@effect/sql": "^0.15.0",
+    "@effect/vitest": "^0.11.0",
+    "effect": "^3.9.0"
   },
   "typesVersions": {
     "*": {
