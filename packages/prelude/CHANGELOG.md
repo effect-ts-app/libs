@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 1.19.0
+
+### Minor Changes
+
+- 4d2b804: housekeeping: update packages
+
+### Patch Changes
+
+- Updated dependencies [4d2b804]
+  - @effect-app/schema@1.13.0
+  - @effect-app/core@1.11.0
+
 ## 1.18.0
 
 ### Minor Changes

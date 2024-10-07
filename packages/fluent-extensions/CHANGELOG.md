@@ -1,5 +1,16 @@
 # @effect-app/fluent-extensions
 
+## 1.12.0
+
+### Minor Changes
+
+- 4d2b804: housekeeping: update packages
+
+### Patch Changes
+
+- Updated dependencies [4d2b804]
+  - @effect-app/core@1.11.0
+
 ## 1.11.1
 
 ### Patch Changes

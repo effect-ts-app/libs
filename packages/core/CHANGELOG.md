@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.11.0
+
+### Minor Changes
+
+- 4d2b804: housekeeping: update packages
+
 ## 1.10.2
 
 ### Patch Changes

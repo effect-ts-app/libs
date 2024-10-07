@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.83.0
+
+### Minor Changes
+
+- 4d2b804: housekeeping: update packages
+
 ## 0.82.0
 
 ### Minor Changes

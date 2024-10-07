@@ -1,5 +1,19 @@
 # @effect-app/vue
 
+## 1.15.0
+
+### Minor Changes
+
+- 4d2b804: housekeeping: update packages
+
+### Patch Changes
+
+- Updated dependencies [4d2b804]
+  - effect-app@1.19.0
+  - @effect-app/schema@1.13.0
+  - @effect-app/core@1.11.0
+  - @effect-app/vue@1.15.0
+
 ## 1.14.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.79.0
+
+### Minor Changes
+
+- 4d2b804: housekeeping: update packages
+
 ## 0.78.0
 
 ### Minor Changes
