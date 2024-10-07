@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.27.0
+
+### Minor Changes
+
+- f2f034e: more lenient for error handling
+
 ## 1.26.3
 
 ### Patch Changes
