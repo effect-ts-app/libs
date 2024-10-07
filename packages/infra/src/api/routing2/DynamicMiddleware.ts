@@ -78,7 +78,7 @@ const merge = (a: any, b: Array<any>) =>
 export const makeRpcClient = <
   RequestConfig extends object,
   CTXMap extends Record<string, ContextMap.Any>,
-  GeneralErrors extends S.Schema.Any
+  GeneralErrors extends S.Schema.All
 >(
   errors: { [K in keyof CTXMap]: CTXMap[K][2] },
   generalErrors?: GeneralErrors
