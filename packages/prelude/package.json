@@ -6,6 +6,8 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
+    "@effect/rpc": "^0.40.2",
+    "@effect/rpc-http": "^0.38.3",
     "@tsconfig/strictest": "^2.0.5",
     "date-fns": "^4.1.0",
     "nanoid": "^5.0.7",
@@ -147,6 +149,16 @@
       "require": {
         "types": "./dist/client/clientFor.d.ts",
         "default": "./_cjs/client/clientFor.cjs"
+      }
+    },
+    "./client/clientFor2": {
+      "import": {
+        "types": "./dist/client/clientFor2.d.ts",
+        "default": "./dist/client/clientFor2.js"
+      },
+      "require": {
+        "types": "./dist/client/clientFor2.d.ts",
+        "default": "./_cjs/client/clientFor2.cjs"
       }
     },
     "./client/config": {
