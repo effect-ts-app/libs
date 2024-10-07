@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.25.0
+
+### Minor Changes
+
+- 0fa59b0: feat: add routing2 based on @effect/rpc
+
 ## 1.24.2
 
 ### Patch Changes
