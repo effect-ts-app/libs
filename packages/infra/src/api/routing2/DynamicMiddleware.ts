@@ -77,9 +77,11 @@ const merge = (a: any, b: Array<any>) =>
 
 export const makeRpcClient = <
   RequestConfig extends object,
-  CTXMap extends Record<string, ContextMap.Any>
+  CTXMap extends Record<string, ContextMap.Any>,
+  GeneralErrors extends S.Schema.Any
 >(
-  errors: { [K in keyof CTXMap]: CTXMap[K][2] }
+  errors: { [K in keyof CTXMap]: CTXMap[K][2] },
+  generalErrors?: GeneralErrors
 ) => {
   // Long way around Context/C extends etc to support actual jsdoc from passed in RequestConfig etc...
   type Context = { success: S.Schema.Any; failure: S.Schema.Any }
@@ -94,8 +96,9 @@ export const makeRpcClient = <
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
         typeof config["success"],
-        GetEffectError<CTXMap, C> extends never ? typeof config["failure"]
-          : GetFailure<typeof config["failure"], GetEffectError<CTXMap, C>>
+        | (GetEffectError<CTXMap, C> extends never ? typeof config["failure"]
+          : GetFailure<typeof config["failure"], GetEffectError<CTXMap, C>>)
+        | GeneralErrors
       > // typeof config["failure"]
       & { config: Omit<C, "success" | "failure"> }
     <Tag extends string, Payload extends S.Struct.Fields, C extends { success: S.Schema.Any }>(
@@ -108,7 +111,8 @@ export const makeRpcClient = <
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
         typeof config["success"],
-        GetFailure1<GetEffectError<CTXMap, C>>
+        | GetFailure1<GetEffectError<CTXMap, C>>
+        | GeneralErrors
       >
       & { config: Omit<C, "success" | "failure"> }
     <Tag extends string, Payload extends S.Struct.Fields, C extends { failure: S.Schema.Any }>(
@@ -121,7 +125,8 @@ export const makeRpcClient = <
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
         typeof S.Void,
-        GetFailure1<GetEffectError<CTXMap, C>>
+        | GetFailure1<GetEffectError<CTXMap, C>>
+        | GeneralErrors
       >
       & { config: Omit<C, "success" | "failure"> }
     <Tag extends string, Payload extends S.Struct.Fields, C extends Record<string, any>>(
@@ -134,7 +139,8 @@ export const makeRpcClient = <
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
         typeof S.Void,
-        GetFailure1<GetEffectError<CTXMap, C>>
+        | GetFailure1<GetEffectError<CTXMap, C>>
+        | GeneralErrors
       >
       & { config: Omit<C, "success" | "failure"> }
     <Tag extends string, Payload extends S.Struct.Fields>(
@@ -145,7 +151,7 @@ export const makeRpcClient = <
       Tag,
       { readonly _tag: S.tag<Tag> } & Payload,
       typeof S.Void,
-      typeof S.Never
+      GeneralErrors
     >
   } {
     // TODO: filter errors based on config + take care of inversion
@@ -157,7 +163,7 @@ export const makeRpcClient = <
     ) => {
       const req = S.TaggedRequest<Self>()(tag, {
         payload: fields,
-        failure: merge(config?.failure, errorSchemas),
+        failure: merge(config?.failure, [...errorSchemas, generalErrors]),
         success: config?.success ?? S.Void
       })
       return Object.assign(req, { config })

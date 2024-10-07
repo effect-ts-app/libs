@@ -84,7 +84,7 @@ type AHandler<Action extends AnyRequestModule> =
     Action,
     "raw",
     S.Schema.Encoded<GetSuccess<Action>>,
-    S.Schema.Type<GetFailure<Action>>,
+    S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
     any,
     { Response: any }
   >
@@ -92,7 +92,7 @@ type AHandler<Action extends AnyRequestModule> =
     Action,
     "d",
     S.Schema.Type<GetSuccess<Action>>,
-    S.Schema.Type<GetFailure<Action>>,
+    S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
     any,
     { Response: any }
   >
@@ -105,7 +105,11 @@ interface ExtendedMiddleware<Context, CTXMap extends Record<string, ContextMap.A
   extends Middleware<Context, CTXMap>
 {
   // TODO
-  makeContext: Effect<{ [K in keyof CTXMap as CTXMap[K][0]]: CTXMap[K][1] }, never, never>
+  makeContext: Effect<
+    { [K in keyof CTXMap as CTXMap[K][1] extends never ? never : CTXMap[K][0]]: CTXMap[K][1] },
+    never,
+    never
+  >
 }
 
 export const makeRouter2 = <Context, CTXMap extends Record<string, ContextMap.Any>>(
