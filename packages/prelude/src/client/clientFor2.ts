@@ -17,8 +17,6 @@ import { Path } from "path-parser"
 
 type Requests = Record<string, any>
 
-const cache = new Map<any, Client<any>>()
-
 const apiClient = Effect.gen(function*() {
   const client = yield* HttpClient.HttpClient
   const config = yield* ApiConfig.Tag
@@ -42,16 +40,20 @@ export type Client<M extends Requests> =
     M
   >
 
-export function clientFor2<M extends Requests>(
-  models: M
-): Client<Omit<M, "meta">> {
-  const found = cache.get(models)
-  if (found) {
-    return found
+export function clientFor2(layers: Layer.Layer<never, never, never>) {
+  const cache = new Map<any, Client<any>>()
+
+  return <M extends Requests>(
+    models: M
+  ): Client<Omit<M, "meta">> => {
+    const found = cache.get(models)
+    if (found) {
+      return found
+    }
+    const m = clientFor_(models, layers)
+    cache.set(models, m)
+    return m
   }
-  const m = clientFor_(models)
-  cache.set(models, m)
-  return m
 }
 
 type Req = S.Schema.All & {

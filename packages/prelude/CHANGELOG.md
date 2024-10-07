@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.19.1
+
+### Patch Changes
+
+- supply layer
+
 ## 1.19.0
 
 ### Minor Changes
