@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.26.3
+
+### Patch Changes
+
+- 0f47696: reintroduce routecontext
+
 ## 1.26.2
 
 ### Patch Changes
