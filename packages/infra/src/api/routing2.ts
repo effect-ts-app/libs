@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { EffectUnunified } from "@effect-app/core/Effect"
+import { allLower, type EffectUnunified, type LowerServices } from "@effect-app/core/Effect"
 import { typedKeysOf } from "@effect-app/core/utils"
 import type { Compute } from "@effect-app/core/utils"
-import type { _E, _R } from "@effect-app/infra/api/routing"
+import type { _E, _R, EffectDeps } from "@effect-app/infra/api/routing"
 import type { Rpc } from "@effect/rpc"
 import { RpcRouter } from "@effect/rpc"
 import { HttpRpcRouter } from "@effect/rpc-http"
@@ -95,20 +96,17 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
         E,
         A
       >(
-        _services: SVC,
+        services: SVC,
         f: (
           req: S.Schema.Type<Rsc[Key]>,
-          ctx: any
-          // ctx: Compute<
-          //   LowerServices<EffectDeps<SVC>> & never // ,
-          //   "flat"
-          // >
+          ctx: Compute<
+            LowerServices<EffectDeps<SVC>> & /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] },
+            "flat"
+          >
         ) => Effect<A, E, R2>
       ) =>
       (req: any) =>
-        // Effect.andThen(allLower(services), (svc2) =>
-        // ...ctx, ...svc2,
-        f(req, { Response: rsc[action].success })
+        Effect.andThen(allLower(services), (svc) => f(req, { ...svc as any, Response: rsc[action].success }))
     }
 
     type MatchWithServicesNew<RT extends "raw" | "d", Key extends keyof Rsc> = {
@@ -123,14 +121,14 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
           A,
           E,
           Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>,
-          { Response: Rsc[Key]["success"] } //
+          /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] } //
         >
       >
 
       <R2, E, A>(
         f: (
           req: S.Schema.Type<Rsc[Key]>,
-          ctx: { Response: Rsc[Key]["success"] }
+          ctx: /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] }
         ) => Effect<A, E, R2>
       ): HandleVoid<
         GetSuccessShape<Rsc[Key], RT>,
@@ -141,7 +139,7 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
           A,
           E,
           Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>,
-          { Response: Rsc[Key]["success"] } //
+          /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] } //
         >
       >
 
@@ -158,8 +156,7 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
         f: (
           req: S.Schema.Type<Rsc[Key]>,
           ctx: Compute<
-            // LowerServices<EffectDeps<SVC>> & Pick<Rsc[Key], "success">,
-            { Response: Rsc[Key] },
+            LowerServices<EffectDeps<SVC>> & /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] },
             "flat"
           >
         ) => Effect<A, E, R2>
@@ -172,7 +169,7 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
           A,
           E,
           Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>,
-          { Response: Rsc[Key]["success"] } //
+          LowerServices<EffectDeps<SVC>> & /*GetRouteContext<Rsc[Key]> & */ { Response: Rsc[Key]["success"] } //
         >
       >
     }
@@ -189,7 +186,6 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, [string, any,
     ) => {
       const handlers = typedKeysOf(filtered).reduce(
         (acc, cur) => {
-          if (cur === "meta") return acc
           ;(acc as any)[cur] = {
             h: controllers[cur as keyof typeof controllers].handler,
             Request: rsc[cur]

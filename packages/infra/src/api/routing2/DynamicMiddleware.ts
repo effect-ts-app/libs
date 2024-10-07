@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rpc } from "@effect/rpc"
 import type { Effect, Request } from "effect-app"
@@ -10,17 +12,21 @@ import type * as EffectRequest from "effect/Request"
  */
 export type ContextMap<Key, Service, E> = [Key, Service, E, true]
 
-export type ContextMapCustom<Key, Service, E, Custom> = [Key, Service, E, Custom]
+export declare namespace ContextMap {
+  export type Custom<Key, Service, E, Custom> = [Key, Service, E, Custom]
 
-/**
- * Middleware is active by default, and provides the Service at Key in route context, and the Service is provided as Effect Context.
- * Unless omitted
- */
-export type ContextMapInverted<Key, Service, E> = [Key, Service, E, false]
+  /**
+   * Middleware is active by default, and provides the Service at Key in route context, and the Service is provided as Effect Context.
+   * Unless omitted
+   */
+  export type Inverted<Key, Service, E> = [Key, Service, E, false]
+
+  export type Any = [string, any, S.Schema.All, any]
+}
 
 type Values<T extends Record<any, any>> = T[keyof T]
 
-export type GetEffectContext<CTXMap extends Record<string, [string, any, S.Schema.All, any]>, T> = Values<
+export type GetEffectContext<CTXMap extends Record<string, ContextMap.Any>, T> = Values<
   // inverted
   & {
     [
@@ -41,7 +47,7 @@ export type GetEffectContext<CTXMap extends Record<string, [string, any, S.Schem
   }
 >
 export type ValuesOrNeverSchema<T extends Record<any, any>> = Values<T> extends never ? typeof S.Never : Values<T>
-export type GetEffectError<CTXMap extends Record<string, [string, any, S.Schema.All, any]>, T> = Values<
+export type GetEffectError<CTXMap extends Record<string, ContextMap.Any>, T> = Values<
   // inverted
   & {
     [
@@ -66,11 +72,12 @@ type GetFailure1<F1> = F1 extends S.Schema.Any ? F1 : typeof S.Never
 type GetFailure<F1, F2> = F1 extends S.Schema.Any ? F2 extends S.Schema.Any ? S.Union<[F1, F2]> : F1 : F2
 
 const merge = (a: any, b: Array<any>) =>
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   a !== undefined && b.length ? S.Union(a, ...b) : a !== undefined ? a : b.length ? S.Union(...b) : S.Never
 
 export const makeRpcClient = <
   RequestConfig extends object,
-  CTXMap extends Record<string, [string, any, S.Schema.All, any]>
+  CTXMap extends Record<string, ContextMap.Any>
 >(
   errors: { [K in keyof CTXMap]: CTXMap[K][2] }
 ) => {
@@ -153,8 +160,7 @@ export const makeRpcClient = <
         failure: merge(config?.failure, errorSchemas),
         success: config?.success ?? S.Void
       })
-      const req2 = Object.assign(req, { config })
-      return req2
+      return Object.assign(req, { config })
     }) as any
   }
 
@@ -163,7 +169,7 @@ export const makeRpcClient = <
   }
 }
 
-export interface Middleware<Context, CTXMap extends Record<string, [string, any, S.Schema.All, any]>> {
+export interface Middleware<Context, CTXMap extends Record<string, ContextMap.Any>> {
   contextMap: CTXMap
   context: Context
   execute: <
@@ -187,7 +193,7 @@ export interface Middleware<Context, CTXMap extends Record<string, [string, any,
   >
 }
 
-export const makeRpc = <Context, CTXMap extends Record<string, [string, any, S.Schema.All, any]>>(
+export const makeRpc = <Context, CTXMap extends Record<string, ContextMap.Any>>(
   middleware: Middleware<Context, CTXMap>
 ) => {
   return {
