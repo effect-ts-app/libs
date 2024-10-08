@@ -147,7 +147,9 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, ContextMap.An
         f: (
           req: S.Schema.Type<Rsc[Key]>,
           ctx: Compute<
-            LowerServices<EffectDeps<SVC>> & GetRouteContext<CTXMap, Rsc[Key]> & { Response: Rsc[Key]["success"] },
+            LowerServices<EffectDeps<SVC>> & GetRouteContext<CTXMap, Rsc[Key]["config"]> & {
+              Response: Rsc[Key]["success"]
+            },
             "flat"
           >
         ) => Effect<A, E, R2>
@@ -178,7 +180,7 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, ContextMap.An
       <R2, E, A>(
         f: (
           req: S.Schema.Type<Rsc[Key]>,
-          ctx: GetRouteContext<CTXMap, Rsc[Key]> & { Response: Rsc[Key]["success"] }
+          ctx: GetRouteContext<CTXMap, Rsc[Key]["config"]> & { Response: Rsc[Key]["success"] }
         ) => Effect<A, E, R2>
       ): HandleVoid<
         GetSuccessShape<Rsc[Key], RT>,
@@ -206,7 +208,9 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, ContextMap.An
         f: (
           req: S.Schema.Type<Rsc[Key]>,
           ctx: Compute<
-            LowerServices<EffectDeps<SVC>> & GetRouteContext<CTXMap, Rsc[Key]> & { Response: Rsc[Key]["success"] },
+            LowerServices<EffectDeps<SVC>> & GetRouteContext<CTXMap, Rsc[Key]["config"]> & {
+              Response: Rsc[Key]["success"]
+            },
             "flat"
           >
         ) => Effect<A, E, R2>
