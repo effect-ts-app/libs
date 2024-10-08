@@ -9,14 +9,42 @@ import { allLower, type EffectUnunified, type LowerServices } from "@effect-app/
 import { typedKeysOf } from "@effect-app/core/utils"
 import type { Compute } from "@effect-app/core/utils"
 import type { _E, _R, EffectDeps } from "@effect-app/infra/api/routing"
+import type * as HttpApp from "@effect/platform/HttpApp"
 import type { Rpc } from "@effect/rpc"
 import { RpcRouter } from "@effect/rpc"
-import { HttpRpcRouter } from "@effect/rpc-http"
 import type { S } from "effect-app"
-import { Effect, Predicate } from "effect-app"
-import { HttpRouter } from "effect-app/http"
+import { Chunk, Context, Effect, FiberRef, Predicate, Stream } from "effect-app"
+import type { HttpServerError } from "effect-app/http"
+import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import type { ContextMap, GetEffectContext, Middleware } from "./routing2/DynamicMiddleware.js"
 import { makeRpc } from "./routing2/DynamicMiddleware.js"
+
+/**
+ *   Plain jane JSON version
+ */
+export const toHttpApp = <R extends RpcRouter.RpcRouter<any, any>>(self: R, options?: {
+  readonly spanPrefix?: string
+}): HttpApp.Default<
+  HttpServerError.RequestError,
+  RpcRouter.RpcRouter.Context<R>
+> => {
+  const handler = RpcRouter.toHandler(self, options)
+  return Effect.withFiberRuntime((fiber) => {
+    const context = fiber.getFiberRef(FiberRef.currentContext)
+    const request = Context.unsafeGet(context, HttpServerRequest.HttpServerRequest)
+    return Effect.flatMap(
+      request.json,
+      (_) =>
+        handler(_).pipe(
+          Stream.provideContext(context),
+          Stream.runCollect,
+          Effect.map((_) => JSON.stringify(Chunk.toReadonlyArray(_))),
+          Effect.andThen((_) => HttpServerResponse.json(_)),
+          Effect.orDie
+        )
+    )
+  })
+}
 
 type GetRouteContext<CTXMap extends Record<string, ContextMap.Any>, T> =
   // & CTX
@@ -292,7 +320,7 @@ export const makeRouter2 = <Context, CTXMap extends Record<string, ContextMap.An
       return HttpRouter.empty.pipe(
         HttpRouter.all(
           ("/rpc/" + rsc.meta.moduleName) as any,
-          HttpRpcRouter.toHttpApp(router),
+          toHttpApp(router),
           // TODO: not queries.
           { uninterruptible: true }
         )
