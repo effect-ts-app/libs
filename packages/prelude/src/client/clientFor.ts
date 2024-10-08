@@ -168,7 +168,6 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
             handler: client
               .pipe(
                 Effect.andThen((cl) => cl(new Request())),
-                Effect.map((_) => ({ body: _, status: 200, headers: {} })), // TODO
                 Effect
                   .withSpan("client.request " + requestName, {
                     captureStackTrace: false,
@@ -183,7 +182,6 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
               client
                 .pipe(
                   Effect.andThen((cl) => cl(new Request(req))),
-                  Effect.map((_) => ({ body: _, status: 200, headers: {} })), // TODO
                   Effect
                     .withSpan("client.request " + requestName, {
                       captureStackTrace: false,
@@ -199,7 +197,6 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
           handler: client
             .pipe(
               Effect.andThen((cl) => cl(new Request())),
-              Effect.map((_) => ({ body: _, status: 200, headers: {} })), // TODO
               Effect.withSpan("client.request " + requestName, {
                 captureStackTrace: false,
                 attributes: { "request.name": requestName }
@@ -213,7 +210,6 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
             client
               .pipe(
                 Effect.andThen((cl) => cl(new Request(req))),
-                Effect.map((_) => ({ body: _, status: 200, headers: {} })), // TODO
                 Effect.withSpan("client.request " + requestName, {
                   captureStackTrace: false,
                   attributes: { "request.name": requestName }
@@ -239,8 +235,7 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
             handler: client
               .pipe(
                 Effect.andThen((cl) => cl(new Request())),
-                Effect.flatMap((res) => S.encode(Response)(res)), // TODO
-                Effect.map((_) => ({ body: _, status: 200, headers: {} })), // TODO,
+                Effect.flatMap((res) => S.encode(Response)(res)), // TODO,
                 Effect
                   .withSpan("client.request " + requestName, {
                     captureStackTrace: false,
@@ -256,7 +251,6 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
                 .pipe(
                   Effect.andThen((cl) => cl(new Request(req))),
                   Effect.flatMap((res) => S.encode(Response)(res)), // TODO
-                  Effect.map((_) => ({ body: _, status: 200, headers: {} })), // TODO,
                   Effect
                     .withSpan("client.request " + requestName, {
                       captureStackTrace: false,
@@ -273,8 +267,7 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
           handler: client
             .pipe(
               Effect.andThen((cl) => cl(new Request())),
-              Effect.flatMap((res) => S.encode(Response)(res)), // TODO
-              Effect.map((_) => ({ body: _, status: 200, headers: {} })), // TODO,
+              Effect.flatMap((res) => S.encode(Response)(res)), // TODO,
               Effect.withSpan("client.request " + requestName, {
                 captureStackTrace: false,
                 attributes: { "request.name": requestName }
@@ -288,8 +281,7 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
             client
               .pipe(
                 Effect.andThen((cl) => cl(new Request(req))),
-                Effect.flatMap((res) => S.encode(Response)(res)), // TODO
-                Effect.map((_) => ({ body: _, status: 200, headers: {} })), // TODO,
+                Effect.flatMap((res) => S.encode(Response)(res)), // TODO,
                 Effect.withSpan("client.request " + requestName, {
                   captureStackTrace: false,
                   attributes: { "request.name": requestName }
