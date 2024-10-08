@@ -366,7 +366,9 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
                 static _tag = "d"
                 static handler = matchWithServices(cur)(svcOrFnOrEffect, fnOrNone)
               }
-          }
+          } // "Raw" variations are for when you don't want to decode just to encode it again on the response
+           // e.g for direct projection from DB
+          // but more importantly, to skip Effectful decoders, like to resolve relationships from the database or remote client.
           ;(prev as any)[(cur as any) + "Raw"] = (svcOrFnOrEffect: any, fnOrNone: any) => {
             const stack = new Error().stack?.split("\n").slice(2).join("\n")
             return Effect.isEffect(svcOrFnOrEffect)
