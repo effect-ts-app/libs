@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable unused-imports/no-unused-vars */
-import { Effect } from "effect-app"
+import { Data, Effect } from "effect-app"
 import { HttpHeaders, HttpMiddleware, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import {
   auth,
@@ -67,3 +67,11 @@ export const checkJwt = (config: Config) => {
     })
   )
 }
+
+export class JWTError extends Data.TaggedClass("JWTError")<{
+  error:
+    | InsufficientScopeError
+    | InvalidRequestError
+    | InvalidTokenError
+    | UnauthorizedError
+}> {}
