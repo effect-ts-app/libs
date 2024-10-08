@@ -1,5 +1,17 @@
 # @effect-app/vue
 
+## 1.18.0
+
+### Minor Changes
+
+- c2487d4: remove legacy FetchResponse
+
+### Patch Changes
+
+- Updated dependencies [c2487d4]
+  - effect-app@1.22.0
+  - @effect-app/vue@1.18.0
+
 ## 1.17.1
 
 ### Patch Changes

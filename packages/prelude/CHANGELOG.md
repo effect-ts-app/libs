@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.22.0
+
+### Minor Changes
+
+- c2487d4: remove legacy FetchResponse
+
 ## 1.21.1
 
 ### Patch Changes
