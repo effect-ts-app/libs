@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.28.1
+
+### Patch Changes
+
+- c9a4ad4: fix version
+
 ## 1.28.0
 
 ### Minor Changes
