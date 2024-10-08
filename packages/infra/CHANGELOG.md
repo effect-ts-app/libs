@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.29.6
+
+### Patch Changes
+
+- 14ab56e: fix custom error types
+
 ## 1.29.5
 
 ### Patch Changes
