@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.28.2
+
+### Patch Changes
+
+- eb68f79: plain jane json
+
 ## 1.28.1
 
 ### Patch Changes
