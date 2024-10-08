@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 1.30.1
+
+### Patch Changes
+
+- 16bc3b2: fix typo
+- Updated dependencies [16bc3b2]
+  - effect-app@1.23.1
+  - @effect-app/infra-adapters@1.15.5
+
 ## 1.30.0
 
 ### Minor Changes
