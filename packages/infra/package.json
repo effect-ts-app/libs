@@ -128,44 +128,14 @@
         "default": "./_cjs/api/routing.cjs"
       }
     },
-    "./api/routing/base": {
+    "./api/routing/DynamicMiddleware": {
       "import": {
-        "types": "./dist/api/routing/base.d.ts",
-        "default": "./dist/api/routing/base.js"
+        "types": "./dist/api/routing/DynamicMiddleware.d.ts",
+        "default": "./dist/api/routing/DynamicMiddleware.js"
       },
       "require": {
-        "types": "./dist/api/routing/base.d.ts",
-        "default": "./_cjs/api/routing/base.cjs"
-      }
-    },
-    "./api/routing/defaultErrorHandler": {
-      "import": {
-        "types": "./dist/api/routing/defaultErrorHandler.d.ts",
-        "default": "./dist/api/routing/defaultErrorHandler.js"
-      },
-      "require": {
-        "types": "./dist/api/routing/defaultErrorHandler.d.ts",
-        "default": "./_cjs/api/routing/defaultErrorHandler.cjs"
-      }
-    },
-    "./api/routing/makeRequestHandler": {
-      "import": {
-        "types": "./dist/api/routing/makeRequestHandler.d.ts",
-        "default": "./dist/api/routing/makeRequestHandler.js"
-      },
-      "require": {
-        "types": "./dist/api/routing/makeRequestHandler.d.ts",
-        "default": "./_cjs/api/routing/makeRequestHandler.cjs"
-      }
-    },
-    "./api/routing/match": {
-      "import": {
-        "types": "./dist/api/routing/match.d.ts",
-        "default": "./dist/api/routing/match.js"
-      },
-      "require": {
-        "types": "./dist/api/routing/match.d.ts",
-        "default": "./_cjs/api/routing/match.cjs"
+        "types": "./dist/api/routing/DynamicMiddleware.d.ts",
+        "default": "./_cjs/api/routing/DynamicMiddleware.cjs"
       }
     },
     "./api/routing/schema/jwt": {
@@ -176,36 +146,6 @@
       "require": {
         "types": "./dist/api/routing/schema/jwt.d.ts",
         "default": "./_cjs/api/routing/schema/jwt.cjs"
-      }
-    },
-    "./api/routing/schema/routing": {
-      "import": {
-        "types": "./dist/api/routing/schema/routing.d.ts",
-        "default": "./dist/api/routing/schema/routing.js"
-      },
-      "require": {
-        "types": "./dist/api/routing/schema/routing.d.ts",
-        "default": "./_cjs/api/routing/schema/routing.cjs"
-      }
-    },
-    "./api/routing2": {
-      "import": {
-        "types": "./dist/api/routing2.d.ts",
-        "default": "./dist/api/routing2.js"
-      },
-      "require": {
-        "types": "./dist/api/routing2.d.ts",
-        "default": "./_cjs/api/routing2.cjs"
-      }
-    },
-    "./api/routing2/DynamicMiddleware": {
-      "import": {
-        "types": "./dist/api/routing2/DynamicMiddleware.d.ts",
-        "default": "./dist/api/routing2/DynamicMiddleware.js"
-      },
-      "require": {
-        "types": "./dist/api/routing2/DynamicMiddleware.d.ts",
-        "default": "./_cjs/api/routing2/DynamicMiddleware.cjs"
       }
     },
     "./api/setupRequest": {
@@ -376,16 +316,6 @@
       "require": {
         "types": "./dist/rateLimit.d.ts",
         "default": "./_cjs/rateLimit.cjs"
-      }
-    },
-    "./router": {
-      "import": {
-        "types": "./dist/router.d.ts",
-        "default": "./dist/router.js"
-      },
-      "require": {
-        "types": "./dist/router.d.ts",
-        "default": "./_cjs/router.cjs"
       }
     },
     "./services/Emailer": {
