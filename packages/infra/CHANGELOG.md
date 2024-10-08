@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.29.1
+
+### Patch Changes
+
+- dd23d45: add missing JWTError
+
 ## 1.29.0
 
 ### Minor Changes
