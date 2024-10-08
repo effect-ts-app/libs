@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.28.4
+
+### Patch Changes
+
+- ec6f91e: fix failure merge
+
 ## 1.28.3
 
 ### Patch Changes
