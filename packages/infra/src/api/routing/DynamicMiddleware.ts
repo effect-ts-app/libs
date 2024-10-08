@@ -2,179 +2,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rpc } from "@effect/rpc"
-import type { Effect, Request } from "effect-app"
-import { S } from "effect-app"
+import type { Effect, Request, S } from "effect-app"
+import type { GetEffectContext, RPCContetMap } from "effect-app/client/req"
 import type * as EffectRequest from "effect/Request"
 
-/**
- * Middleware is inactivate by default, the Key is optional in route context, and the service is optionally provided as Effect Context.
- * Unless configured as `true`
- */
-export type ContextMap<Key, Service, E> = [Key, Service, E, true]
-
-export declare namespace ContextMap {
-  export type Custom<Key, Service, E, Custom> = [Key, Service, E, Custom]
-
-  /**
-   * Middleware is active by default, and provides the Service at Key in route context, and the Service is provided as Effect Context.
-   * Unless omitted
-   */
-  export type Inverted<Key, Service, E> = [Key, Service, E, false]
-
-  export type Any = [string, any, S.Schema.All, any]
-}
-
-type Values<T extends Record<any, any>> = T[keyof T]
-
-export type GetEffectContext<CTXMap extends Record<string, ContextMap.Any>, T> = Values<
-  // inverted
-  & {
-    [
-      key in keyof CTXMap as CTXMap[key][3] extends true ? never
-        : key extends keyof T ? T[key] extends true ? never : CTXMap[key][0]
-        : CTXMap[key][0]
-    ]: // TODO: or as an Optional available?
-      CTXMap[key][1]
-  }
-  // normal
-  & {
-    [
-      key in keyof CTXMap as CTXMap[key][3] extends false ? never
-        : key extends keyof T ? T[key] extends true ? CTXMap[key][0] : never
-        : never
-    ]: // TODO: or as an Optional available?
-      CTXMap[key][1]
-  }
->
-export type ValuesOrNeverSchema<T extends Record<any, any>> = Values<T> extends never ? typeof S.Never : Values<T>
-export type GetEffectError<CTXMap extends Record<string, ContextMap.Any>, T> = Values<
-  // inverted
-  & {
-    [
-      key in keyof CTXMap as CTXMap[key][3] extends true ? never
-        : key extends keyof T ? T[key] extends true ? never : CTXMap[key][0]
-        : CTXMap[key][0]
-    ]: // TODO: or as an Optional available?
-      CTXMap[key][2]
-  }
-  // normal
-  & {
-    [
-      key in keyof CTXMap as CTXMap[key][3] extends false ? never
-        : key extends keyof T ? T[key] extends true ? CTXMap[key][0] : never
-        : never
-    ]: // TODO: or as an Optional available?
-      CTXMap[key][2]
-  }
->
-
-const merge = (a: any, b: Array<any>) =>
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  a !== undefined && b.length ? S.Union(a, ...b) : a !== undefined ? a : b.length ? S.Union(...b) : S.Never
-
-// TODO: Fix error types...
-type JoinSchema<T> = T extends ReadonlyArray<S.Schema.All> ? S.Union<T> : typeof S.Never
-type ExcludeFromTuple<T extends readonly any[], E> = T extends [infer F, ...infer R]
-  ? [F] extends [E] ? ExcludeFromTuple<R, E>
-  : [F, ...ExcludeFromTuple<R, E>]
-  : []
-
-export const makeRpcClient = <
-  RequestConfig extends object,
-  CTXMap extends Record<string, ContextMap.Any>,
-  GeneralErrors extends S.Schema.All = never
->(
-  errors: { [K in keyof CTXMap]: CTXMap[K][2] },
-  generalErrors?: GeneralErrors
-) => {
-  // Long way around Context/C extends etc to support actual jsdoc from passed in RequestConfig etc...
-  type Context = { success: S.Schema.Any; failure: S.Schema.Any }
-  function TaggedRequest<Self>(): {
-    <Tag extends string, Payload extends S.Struct.Fields, C extends Context>(
-      tag: Tag,
-      fields: Payload,
-      config: RequestConfig & C
-    ):
-      & S.TaggedRequestClass<
-        Self,
-        Tag,
-        { readonly _tag: S.tag<Tag> } & Payload,
-        typeof config["success"],
-        JoinSchema<ExcludeFromTuple<[typeof config["failure"] | GetEffectError<CTXMap, C> | GeneralErrors], never>>
-      >
-      & { config: Omit<C, "success" | "failure"> }
-    <Tag extends string, Payload extends S.Struct.Fields, C extends { success: S.Schema.Any }>(
-      tag: Tag,
-      fields: Payload,
-      config: RequestConfig & C
-    ):
-      & S.TaggedRequestClass<
-        Self,
-        Tag,
-        { readonly _tag: S.tag<Tag> } & Payload,
-        typeof config["success"],
-        JoinSchema<ExcludeFromTuple<[GetEffectError<CTXMap, C> | GeneralErrors], never>>
-      >
-      & { config: Omit<C, "success" | "failure"> }
-    <Tag extends string, Payload extends S.Struct.Fields, C extends { failure: S.Schema.Any }>(
-      tag: Tag,
-      fields: Payload,
-      config: RequestConfig & C
-    ):
-      & S.TaggedRequestClass<
-        Self,
-        Tag,
-        { readonly _tag: S.tag<Tag> } & Payload,
-        typeof S.Void,
-        JoinSchema<ExcludeFromTuple<[typeof config["failure"] | GetEffectError<CTXMap, C> | GeneralErrors], never>>
-      >
-      & { config: Omit<C, "success" | "failure"> }
-    <Tag extends string, Payload extends S.Struct.Fields, C extends Record<string, any>>(
-      tag: Tag,
-      fields: Payload,
-      config: C & RequestConfig
-    ):
-      & S.TaggedRequestClass<
-        Self,
-        Tag,
-        { readonly _tag: S.tag<Tag> } & Payload,
-        typeof S.Void,
-        JoinSchema<ExcludeFromTuple<[GetEffectError<CTXMap, C> | GeneralErrors], never>>
-      >
-      & { config: Omit<C, "success" | "failure"> }
-    <Tag extends string, Payload extends S.Struct.Fields>(
-      tag: Tag,
-      fields: Payload
-    ): S.TaggedRequestClass<
-      Self,
-      Tag,
-      { readonly _tag: S.tag<Tag> } & Payload,
-      typeof S.Void,
-      GeneralErrors extends never ? typeof S.Never : GeneralErrors
-    >
-  } {
-    // TODO: filter errors based on config + take care of inversion
-    const errorSchemas = Object.values(errors)
-    return (<Tag extends string, Fields extends S.Struct.Fields, C extends Context>(
-      tag: Tag,
-      fields: Fields,
-      config?: C
-    ) => {
-      const req = S.TaggedRequest<Self>()(tag, {
-        payload: fields,
-        failure: merge(config?.failure, [...errorSchemas, generalErrors].filter(Boolean)),
-        success: config?.success ?? S.Void
-      })
-      return Object.assign(req, { config })
-    }) as any
-  }
-
-  return {
-    TaggedRequest
-  }
-}
-
-export interface Middleware<Context, CTXMap extends Record<string, ContextMap.Any>> {
+export interface Middleware<Context, CTXMap extends Record<string, RPCContetMap.Any>> {
   contextMap: CTXMap
   context: Context
   execute: <
@@ -198,7 +30,7 @@ export interface Middleware<Context, CTXMap extends Record<string, ContextMap.An
   >
 }
 
-export const makeRpc = <Context, CTXMap extends Record<string, ContextMap.Any>>(
+export const makeRpc = <Context, CTXMap extends Record<string, RPCContetMap.Any>>(
   middleware: Middleware<Context, CTXMap>
 ) => {
   return {

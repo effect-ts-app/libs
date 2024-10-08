@@ -171,6 +171,16 @@
         "default": "./_cjs/client/errors.cjs"
       }
     },
+    "./client/req": {
+      "import": {
+        "types": "./dist/client/req.d.ts",
+        "default": "./dist/client/req.js"
+      },
+      "require": {
+        "types": "./dist/client/req.d.ts",
+        "default": "./_cjs/client/req.cjs"
+      }
+    },
     "./faker": {
       "import": {
         "types": "./dist/faker.d.ts",
