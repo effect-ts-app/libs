@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.12.0
+
+### Minor Changes
+
+- 65dcc73: update packages
+
 ## 1.11.0
 
 ### Minor Changes

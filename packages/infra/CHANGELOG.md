@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 1.28.0
+
+### Minor Changes
+
+- 65dcc73: update packages
+
+### Patch Changes
+
+- Updated dependencies [65dcc73]
+  - @effect-app/infra-adapters@1.14.0
+  - effect-app@1.20.0
+  - @effect-app/schema@1.14.0
+  - @effect-app/core@1.12.0
+
 ## 1.27.3
 
 ### Patch Changes
