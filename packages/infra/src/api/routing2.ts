@@ -38,7 +38,7 @@ export const toHttpApp = <R extends RpcRouter.RpcRouter<any, any>>(self: R, opti
         handler(_).pipe(
           Stream.provideContext(context),
           Stream.runCollect,
-          Effect.map((_) => JSON.stringify(Chunk.toReadonlyArray(_))),
+          Effect.map((_) => Chunk.toReadonlyArray(_)),
           Effect.andThen((_) => HttpServerResponse.json(_)),
           Effect.orDie
         )
