@@ -94,16 +94,6 @@
         "default": "./_cjs/Methods.cjs"
       }
     },
-    "./REST": {
-      "import": {
-        "types": "./dist/REST.d.ts",
-        "default": "./dist/REST.js"
-      },
-      "require": {
-        "types": "./dist/REST.d.ts",
-        "default": "./_cjs/REST.cjs"
-      }
-    },
     "./brand": {
       "import": {
         "types": "./dist/brand.d.ts",
