@@ -68,12 +68,16 @@ export type GetEffectError<CTXMap extends Record<string, ContextMap.Any>, T> = V
   }
 >
 
-type GetFailure1<F1> = F1 extends S.Schema.Any ? F1 : typeof S.Never
-type GetFailure<F1, F2> = F1 extends S.Schema.Any ? F2 extends S.Schema.Any ? S.Union<[F1, F2]> : F1 : F2
-
 const merge = (a: any, b: Array<any>) =>
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   a !== undefined && b.length ? S.Union(a, ...b) : a !== undefined ? a : b.length ? S.Union(...b) : S.Never
+
+// TODO: Fix error types...
+type JoinSchema<T> = T extends ReadonlyArray<S.Schema.All> ? S.Union<T> : typeof S.Never
+type ExcludeFromTuple<T extends readonly any[], E> = T extends [infer F, ...infer R]
+  ? [F] extends [E] ? ExcludeFromTuple<R, E>
+  : [F, ...ExcludeFromTuple<R, E>]
+  : []
 
 export const makeRpcClient = <
   RequestConfig extends object,
@@ -96,10 +100,8 @@ export const makeRpcClient = <
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
         typeof config["success"],
-        | (GetEffectError<CTXMap, C> extends never ? typeof config["failure"]
-          : GetFailure<typeof config["failure"], GetEffectError<CTXMap, C>>)
-        | GeneralErrors
-      > // typeof config["failure"]
+        JoinSchema<ExcludeFromTuple<[typeof config["failure"] | GetEffectError<CTXMap, C> | GeneralErrors], never>>
+      >
       & { config: Omit<C, "success" | "failure"> }
     <Tag extends string, Payload extends S.Struct.Fields, C extends { success: S.Schema.Any }>(
       tag: Tag,
@@ -111,8 +113,7 @@ export const makeRpcClient = <
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
         typeof config["success"],
-        | GetFailure1<GetEffectError<CTXMap, C>>
-        | GeneralErrors
+        JoinSchema<ExcludeFromTuple<[GetEffectError<CTXMap, C> | GeneralErrors], never>>
       >
       & { config: Omit<C, "success" | "failure"> }
     <Tag extends string, Payload extends S.Struct.Fields, C extends { failure: S.Schema.Any }>(
@@ -125,8 +126,7 @@ export const makeRpcClient = <
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
         typeof S.Void,
-        | GetFailure1<GetEffectError<CTXMap, C>>
-        | GeneralErrors
+        JoinSchema<ExcludeFromTuple<[typeof config["failure"] | GetEffectError<CTXMap, C> | GeneralErrors], never>>
       >
       & { config: Omit<C, "success" | "failure"> }
     <Tag extends string, Payload extends S.Struct.Fields, C extends Record<string, any>>(
@@ -139,8 +139,7 @@ export const makeRpcClient = <
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
         typeof S.Void,
-        | GetFailure1<GetEffectError<CTXMap, C>>
-        | GeneralErrors
+        JoinSchema<ExcludeFromTuple<[GetEffectError<CTXMap, C> | GeneralErrors], never>>
       >
       & { config: Omit<C, "success" | "failure"> }
     <Tag extends string, Payload extends S.Struct.Fields>(
@@ -151,7 +150,7 @@ export const makeRpcClient = <
       Tag,
       { readonly _tag: S.tag<Tag> } & Payload,
       typeof S.Void,
-      GeneralErrors
+      GeneralErrors extends never ? typeof S.Never : GeneralErrors
     >
   } {
     // TODO: filter errors based on config + take care of inversion
