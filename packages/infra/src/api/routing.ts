@@ -12,7 +12,7 @@ import type * as HttpApp from "@effect/platform/HttpApp"
 import type { Rpc } from "@effect/rpc"
 import { RpcRouter } from "@effect/rpc"
 import type { S } from "effect-app"
-import { Chunk, Context, Effect, FiberRef, Predicate, Stream } from "effect-app"
+import { Effect, Predicate } from "effect-app"
 import type { HttpServerError } from "effect-app/http"
 import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import type { ContextMap, GetEffectContext, Middleware } from "./routing/DynamicMiddleware.js"
@@ -33,29 +33,20 @@ export type EffectDeps<A> = {
 }
 /**
  *   Plain jane JSON version
+ * @deprecated use HttpRpcRouterNoStream.toHttpApp once support options
  */
 export const toHttpApp = <R extends RpcRouter.RpcRouter<any, any>>(self: R, options?: {
   readonly spanPrefix?: string
 }): HttpApp.Default<
-  HttpServerError.RequestError,
+  HttpServerError.RequestError | S.ParseResult.ParseError,
   RpcRouter.RpcRouter.Context<R>
 > => {
-  const handler = RpcRouter.toHandler(self, options)
-  return Effect.withFiberRuntime((fiber) => {
-    const context = fiber.getFiberRef(FiberRef.currentContext)
-    const request = Context.unsafeGet(context, HttpServerRequest.HttpServerRequest)
-    return Effect.flatMap(
-      request.json,
-      (_) =>
-        handler(_).pipe(
-          Stream.provideContext(context),
-          Stream.runCollect,
-          Effect.map((_) => Chunk.toReadonlyArray(_)),
-          Effect.andThen((_) => HttpServerResponse.json(_)),
-          Effect.orDie
-        )
-    )
-  })
+  const handler = RpcRouter.toHandlerNoStream(self, options)
+  return HttpServerRequest.HttpServerRequest.pipe(
+    Effect.flatMap((_) => _.json),
+    Effect.flatMap(handler),
+    Effect.map(HttpServerResponse.unsafeJson)
+  )
 }
 
 type GetRouteContext<CTXMap extends Record<string, ContextMap.Any>, T> =
