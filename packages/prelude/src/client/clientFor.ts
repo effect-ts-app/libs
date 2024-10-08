@@ -87,7 +87,7 @@ export type Client<M extends Requests> =
     M
   >
 
-export function clientFor2(layers: Layer.Layer<never, never, never>) {
+export function makeClientFor(layers: Layer.Layer<never, never, never>) {
   const cache = new Map<any, Client<any>>()
 
   return <M extends Requests>(

@@ -155,7 +155,7 @@ interface ExtendedMiddleware<Context, CTXMap extends Record<string, ContextMap.A
   >
 }
 
-export const makeRouter2 = <Context, CTXMap extends Record<string, ContextMap.Any>>(
+export const makeRouter = <Context, CTXMap extends Record<string, ContextMap.Any>>(
   middleware: ExtendedMiddleware<Context, CTXMap>
 ) => {
   const rpc = makeRpc(middleware)
