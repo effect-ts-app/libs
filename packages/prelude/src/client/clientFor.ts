@@ -58,7 +58,7 @@ export function makePathWithBody(
 /** @deprecated will be removed in favour of directly using A/E */
 export interface FetchResponse<T> {
   body: T
-  headers: Headers
+  headers: Record<string, string>
   status: number
 }
 
