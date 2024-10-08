@@ -3,10 +3,8 @@ import type { ParseError } from "@effect/schema/ParseResult"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
 import type {} from "intl-messageformat"
 import type { Unbranded } from "@effect-app/schema/brand"
-import { Either, Option, pipe, S } from "effect-app"
+import { Either, Option, pipe, S, Struct } from "effect-app"
 import type { Schema } from "effect-app/schema"
-
-import type { Struct } from "@effect/schema/Schema"
 import type { IsUnion } from "effect-app/utils"
 import type { Ref } from "vue"
 import { capitalize, ref, watch } from "vue"
@@ -190,7 +188,7 @@ export function buildFieldInfoFromFields<
   From extends Record<PropertyKey, any>,
   To extends Record<PropertyKey, any>
 >(
-  schema: Schema<To, From, never> & { fields?: Struct.Fields }
+  schema: Schema<To, From, never> & { fields?: S.Struct.Fields }
 ) {
   return buildFieldInfoFromFieldsRoot(schema).fields
 }
@@ -199,7 +197,7 @@ export function buildFieldInfoFromFieldsRoot<
   From extends Record<PropertyKey, any>,
   To extends Record<PropertyKey, any>
 >(
-  schema: Schema<To, From, never> & { fields?: Struct.Fields }
+  schema: Schema<To, From, never> & { fields?: S.Struct.Fields }
 ): NestedFieldInfo<To> {
   const ast = getTypeLiteralAST(schema.ast)
 
@@ -371,25 +369,28 @@ function buildFieldInfo(
 export const buildFormFromSchema = <
   From extends Record<PropertyKey, any>,
   To extends Record<PropertyKey, any>,
+  C extends Record<PropertyKey, any>,
   OnSubmitA
 >(
-  s: Schema<
-    To,
-    From,
-    never
-  >,
-  state: Ref<From>,
+  s:
+    & Schema<
+      To,
+      From,
+      never
+    >
+    & { new(c: C): any; fields: S.Struct.Fields },
+  state: Ref<Omit<From, "_tag">>,
   onSubmit: (a: To) => Promise<OnSubmitA>
 ) => {
   const fields = buildFieldInfoFromFieldsRoot(s).fields
-  const parse = S.decodeSync(s)
+  const parse = S.decodeUnknownSync<any, any>(S.Struct(Struct.omit(s.fields, "_tag")) as any)
   const isDirty = ref(false)
   const isValid = ref(true)
 
   const submit1 = <A>(onSubmit: (a: To) => Promise<A>) => async <T extends Promise<{ valid: boolean }>>(e: T) => {
     const r = await e
     if (!r.valid) return
-    return onSubmit(parse(state.value))
+    return onSubmit(new s(parse(state.value)))
   }
   const submit = submit1(onSubmit)
 
