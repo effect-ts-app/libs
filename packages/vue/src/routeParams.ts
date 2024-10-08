@@ -1,6 +1,6 @@
 import { flow } from "effect"
 import { Option, S } from "effect-app"
-import type { REST, Schema } from "effect-app/schema"
+import type { Schema } from "effect-app/schema"
 import { typedKeysOf } from "effect-app/utils"
 import type { ParsedQuery } from "query-string"
 
@@ -14,7 +14,7 @@ export function getQueryParam(search: ParsedQuery, param: string) {
 
 export const getQueryParamO = flow(getQueryParam, Option.fromNullable)
 
-export const parseOpt = <E, A>(t: REST.ReqRes<A, E, never>) => {
+export const parseOpt = <E, A>(t: S.Schema<A, E, never>) => {
   const dec = flow(S.decodeUnknownEither(t), (x) =>
     x._tag === "Right"
       ? Option.some(x.right)
@@ -22,7 +22,7 @@ export const parseOpt = <E, A>(t: REST.ReqRes<A, E, never>) => {
   return dec
 }
 
-export const parseOptUnknown = <E, A>(t: REST.ReqRes<A, E, never>) => {
+export const parseOptUnknown = <E, A>(t: S.Schema<A, E, never>) => {
   const dec = flow(S.decodeUnknownEither(t), (x) =>
     x._tag === "Right"
       ? Option.some(x.right)

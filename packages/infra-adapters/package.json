@@ -109,56 +109,6 @@
         "default": "./_cjs/CUPS/service.cjs"
       }
     },
-    "./Openapi/atlas-plutus/JsonSchema/index": {
-      "import": {
-        "types": "./dist/Openapi/atlas-plutus/JsonSchema/index.d.ts",
-        "default": "./dist/Openapi/atlas-plutus/JsonSchema/index.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/atlas-plutus/JsonSchema/index.d.ts",
-        "default": "./_cjs/Openapi/atlas-plutus/JsonSchema/index.cjs"
-      }
-    },
-    "./Openapi/atlas-plutus/Schema/base/index": {
-      "import": {
-        "types": "./dist/Openapi/atlas-plutus/Schema/base/index.d.ts",
-        "default": "./dist/Openapi/atlas-plutus/Schema/base/index.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/atlas-plutus/Schema/base/index.d.ts",
-        "default": "./_cjs/Openapi/atlas-plutus/Schema/base/index.cjs"
-      }
-    },
-    "./Openapi/atlas-plutus/Schema/index": {
-      "import": {
-        "types": "./dist/Openapi/atlas-plutus/Schema/index.d.ts",
-        "default": "./dist/Openapi/atlas-plutus/Schema/index.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/atlas-plutus/Schema/index.d.ts",
-        "default": "./_cjs/Openapi/atlas-plutus/Schema/index.cjs"
-      }
-    },
-    "./Openapi/atlas-plutus/Spec/code": {
-      "import": {
-        "types": "./dist/Openapi/atlas-plutus/Spec/code.d.ts",
-        "default": "./dist/Openapi/atlas-plutus/Spec/code.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/atlas-plutus/Spec/code.d.ts",
-        "default": "./_cjs/Openapi/atlas-plutus/Spec/code.cjs"
-      }
-    },
-    "./Openapi/atlas-plutus/Spec/index": {
-      "import": {
-        "types": "./dist/Openapi/atlas-plutus/Spec/index.d.ts",
-        "default": "./dist/Openapi/atlas-plutus/Spec/index.js"
-      },
-      "require": {
-        "types": "./dist/Openapi/atlas-plutus/Spec/index.d.ts",
-        "default": "./_cjs/Openapi/atlas-plutus/Spec/index.cjs"
-      }
-    },
     "./RequestFiberSet": {
       "import": {
         "types": "./dist/RequestFiberSet.d.ts",
