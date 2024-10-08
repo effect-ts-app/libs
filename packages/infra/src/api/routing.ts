@@ -11,8 +11,8 @@ import type { Compute } from "@effect-app/core/utils"
 import type * as HttpApp from "@effect/platform/HttpApp"
 import type { Rpc } from "@effect/rpc"
 import { RpcRouter } from "@effect/rpc"
-import type { S } from "effect-app"
-import { Chunk, Context, Effect, FiberRef, Predicate, Stream } from "effect-app"
+import { Serializable } from "@effect/schema"
+import { Chunk, Context, Effect, FiberRef, Predicate, S, Stream } from "effect-app"
 import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
 import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
@@ -113,6 +113,7 @@ type GetFailure<T extends { failure?: S.Schema.Any }> = T["failure"] extends nev
 export interface Handler<Action extends AnyRequestModule, RT extends "raw" | "d", A, E, R, Context> {
   new(): {}
   _tag: RT
+  stack: string
   handler: (
     req: S.Schema.Type<Action>,
     ctx: Context
@@ -280,34 +281,31 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
     >(
       controllers: THandlers
     ) => {
-      const handlers = typedKeysOf(filtered).reduce(
-        (acc, cur) => {
-          ;(acc as any)[cur] = {
-            h: controllers[cur as keyof typeof controllers].handler,
-            Request: rsc[cur]
-          }
+      const mapped = typedKeysOf(filtered).reduce((acc, cur) => {
+        const handler = controllers[cur as keyof typeof controllers]
+        const req = rsc[cur]
 
-          return acc
-        },
-        {} as {
-          [K in Keys]: {
-            h: (
-              r: S.Schema.Type<Rsc[K]>
-            ) => Effect<
-              S.Schema.Type<GetSuccess<Rsc[K]>>,
-              _E<ReturnType<THandlers[K]["handler"]>>,
-              _R<ReturnType<THandlers[K]["handler"]>>
-            >
-            Request: Rsc[K]
-          }
-        }
-      )
-
-      const mapped = typedKeysOf(handlers).reduce((acc, cur) => {
-        const handler = handlers[cur]
-        const req = handler.Request
-
-        acc[cur] = rpc.effect(req, handler.h as any, meta.moduleName) // TODO
+        acc[cur] = rpc.effect(
+          handler._tag === "raw"
+            ? class extends (req as any) {
+              static success = S.encodedSchema(req.success)
+              get [Serializable.symbol]() {
+                return this.constructor
+              }
+              get [Serializable.symbolResult]() {
+                return {
+                  failure: req.failure,
+                  success: S.encodedSchema(req.success)
+                }
+              }
+            } as any
+            : req,
+          (req) =>
+            Effect.withSpan("Request." + meta.moduleName + "." + req._tag, { captureStackTrace: () => handler.stack })(
+              (handler.handler as any)(req)
+            ),
+          meta.moduleName
+        ) // TODO
         return acc
       }, {} as any) as {
         [K in Keys]: Rpc.Rpc<
