@@ -13,12 +13,13 @@ import type {
 } from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
 import { Cause, Effect, Option, Runtime, S } from "effect-app"
-import { type ApiConfig, type FetchResponse, ServiceUnavailableError } from "effect-app/client"
+import { type ApiConfig, ServiceUnavailableError } from "effect-app/client"
 import type { HttpClient } from "effect-app/http"
 import { computed, ref } from "vue"
 import type { ComputedRef, WatchSource } from "vue"
 import { makeQueryKey, reportRuntimeError, run } from "./internal.js"
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface QueryObserverOptionsCustom<
   TQueryFnData = unknown,
   TError = Error,
@@ -32,7 +33,7 @@ export interface QueryObserverOptionsCustom<
 
 export function useSafeQuery<E, A>(
   self: {
-    handler: Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Service>
+    handler: Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>
     mapPath: string
     name: string
   },
@@ -45,7 +46,7 @@ export function useSafeQuery<E, A>(
 ]
 export function useSafeQuery<Arg, E, A>(
   self: {
-    handler: (arg: Arg) => Effect<FetchResponse<A>, E, ApiConfig | HttpClient.HttpClient.Service>
+    handler: (arg: Arg) => Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>
     mapPath: (arg: Arg) => string
     name: string
   },
@@ -65,7 +66,7 @@ export function useSafeQuery(
       handler: (
         req: I
       ) => Effect<
-        FetchResponse<A>,
+        A,
         E,
         ApiConfig | HttpClient.HttpClient.Service
       >
@@ -74,7 +75,7 @@ export function useSafeQuery(
     }
     | {
       handler: Effect<
-        FetchResponse<A>,
+        A,
         E,
         ApiConfig | HttpClient.HttpClient.Service
       >
@@ -104,7 +105,7 @@ export const useSafeQuery_ = <I, A, E>(
       readonly handler: (
         req: I
       ) => Effect<
-        FetchResponse<A>,
+        A,
         E,
         ApiConfig | HttpClient.HttpClient.Service
       >
@@ -113,7 +114,7 @@ export const useSafeQuery_ = <I, A, E>(
     }
     | {
       readonly handler: Effect<
-        FetchResponse<A>,
+        A,
         E,
         ApiConfig | HttpClient.HttpClient.Service
       >
@@ -153,8 +154,7 @@ export const useSafeQuery_ = <I, A, E>(
         queryKey,
         queryFn: ({ signal }) =>
           run.value(
-            Effect
-              .map(handler, (_) => _.body)
+            handler
               .pipe(
                 Effect.tapDefect(reportRuntimeError),
                 Effect.withSpan(`query ${q.name}`, { captureStackTrace: false })
@@ -179,8 +179,7 @@ export const useSafeQuery_ = <I, A, E>(
         queryFn: ({ signal }) =>
           run
             .value(
-              Effect
-                .map(handler(req.value), (_) => _.body)
+              handler(req.value)
                 .pipe(
                   Effect.tapDefect(reportRuntimeError),
                   Effect.withSpan(`query ${q.name}`, { captureStackTrace: false })

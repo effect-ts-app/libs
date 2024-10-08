@@ -5,7 +5,7 @@ import type * as HttpClient from "@effect/platform/HttpClient"
 import type { InvalidateOptions, InvalidateQueryFilters } from "@tanstack/vue-query"
 import { useQueryClient } from "@tanstack/vue-query"
 import { Cause, Effect, Exit, Option } from "effect-app"
-import type { ApiConfig, FetchResponse } from "effect-app/client"
+import type { ApiConfig } from "effect-app/client"
 import { dropUndefinedT } from "effect-app/utils"
 import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
@@ -14,7 +14,7 @@ import { computed, ref, shallowRef } from "vue"
 import { makeQueryKey, reportRuntimeError, run } from "./internal.js"
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
-export function make<A, E, R>(self: Effect<FetchResponse<A>, E, R>) {
+export function make<A, E, R>(self: Effect<A, E, R>) {
   const result = shallowRef(Result.initial() as Result.Result<A, E>)
 
   const execute = Effect
@@ -22,7 +22,7 @@ export function make<A, E, R>(self: Effect<FetchResponse<A>, E, R>) {
       result.value = Result.waiting(result.value)
     })
     .pipe(
-      Effect.andThen(Effect.map(self, (_) => _.body)),
+      Effect.andThen(self),
       Effect.exit,
       Effect.andThen(Result.fromExit),
       Effect.flatMap((r) => Effect.sync(() => result.value = r))

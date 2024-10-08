@@ -55,13 +55,6 @@ export function makePathWithBody(
   return path.build(pars, { ignoreSearch: true, ignoreConstraints: true })
 }
 
-/** @deprecated will be removed in favour of directly using A/E */
-export interface FetchResponse<T> {
-  body: T
-  headers: Record<string, string>
-  status: number
-}
-
 type Requests = Record<string, any>
 
 const apiClient = Effect.gen(function*() {
@@ -334,7 +327,7 @@ type Cruft = "_tag" | Request.RequestTypeId | typeof Serializable.symbol | typeo
 // TODO: refactor to new Request pattern, then filter out non-requests similar to the runtime changes in clientFor, and matchFor (boilerplate)
 type RequestHandlers<R, E, M extends Requests> = {
   [K in keyof M]: IsEmpty<Omit<S.Schema.Type<M[K]>, Cruft>> extends true ? {
-      handler: Effect<FetchResponse<Schema.Type<M[K]["success"]>>, Schema.Type<M[K]["failure"]> | E, R>
+      handler: Effect<Schema.Type<M[K]["success"]>, Schema.Type<M[K]["failure"]> | E, R>
       Request: M[K]
       Reponse: Schema.Type<M[K]["success"]>
       mapPath: string
@@ -344,7 +337,7 @@ type RequestHandlers<R, E, M extends Requests> = {
       handler: (
         req: Omit<S.Schema.Type<M[K]>, Cruft>
       ) => Effect<
-        FetchResponse<Schema.Type<M[K]["success"]>>,
+        Schema.Type<M[K]["success"]>,
         Schema.Type<M[K]["failure"]> | E,
         R
       >
@@ -358,7 +351,7 @@ type RequestHandlers<R, E, M extends Requests> = {
 type RequestHandlersE<R, E, M extends Requests> = {
   [K in keyof M & string as `${K}E`]: IsEmpty<Omit<S.Schema.Type<M[K]>, Cruft>> extends true ? {
       handler: Effect<
-        FetchResponse<Schema.Encoded<M[K]["success"]>>,
+        Schema.Encoded<M[K]["success"]>,
         Schema.Type<M[K]["failure"]> | E,
         R
       >
@@ -374,7 +367,7 @@ type RequestHandlersE<R, E, M extends Requests> = {
           Cruft
         >
       ) => Effect<
-        FetchResponse<Schema.Encoded<M[K]["success"]>>,
+        Schema.Encoded<M[K]["success"]>,
         Schema.Type<M[K]["failure"]> | E,
         R
       >
