@@ -1,5 +1,11 @@
 # @effect-app/schema
 
+## 1.15.0
+
+### Minor Changes
+
+- cleanup all legacy router cruft
+
 ## 1.14.0
 
 ### Minor Changes

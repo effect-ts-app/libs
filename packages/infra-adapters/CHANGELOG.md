@@ -1,5 +1,17 @@
 # @effect-app/infra-adapters
 
+## 1.15.0
+
+### Minor Changes
+
+- cleanup all legacy router cruft
+
+### Patch Changes
+
+- Updated dependencies
+  - effect-app@1.21.0
+  - @effect-app/schema@1.15.0
+
 ## 1.14.0
 
 ### Minor Changes

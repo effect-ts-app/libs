@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 1.21.0
+
+### Minor Changes
+
+- cleanup all legacy router cruft
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/schema@1.15.0
+
 ## 1.20.0
 
 ### Minor Changes
