@@ -8,9 +8,9 @@ import { S } from "../lib.js"
  * Middleware is inactivate by default, the Key is optional in route context, and the service is optionally provided as Effect Context.
  * Unless configured as `true`
  */
-export type RPCContetMap<Key, Service, E> = [Key, Service, E, true]
+export type RPCContextMap<Key, Service, E> = [Key, Service, E, true]
 
-export declare namespace RPCContetMap {
+export declare namespace RPCContextMap {
   export type Custom<Key, Service, E, Custom> = [Key, Service, E, Custom]
 
   /**
@@ -24,7 +24,7 @@ export declare namespace RPCContetMap {
 
 type Values<T extends Record<any, any>> = T[keyof T]
 
-export type GetEffectContext<CTXMap extends Record<string, RPCContetMap.Any>, T> = Values<
+export type GetEffectContext<CTXMap extends Record<string, RPCContextMap.Any>, T> = Values<
   // inverted
   & {
     [
@@ -45,7 +45,7 @@ export type GetEffectContext<CTXMap extends Record<string, RPCContetMap.Any>, T>
   }
 >
 export type ValuesOrNeverSchema<T extends Record<any, any>> = Values<T> extends never ? typeof S.Never : Values<T>
-export type GetEffectError<CTXMap extends Record<string, RPCContetMap.Any>, T> = Values<
+export type GetEffectError<CTXMap extends Record<string, RPCContextMap.Any>, T> = Values<
   // inverted
   & {
     [
@@ -79,7 +79,7 @@ const merge = (a: any, b: Array<any>) =>
 
 export const makeRpcClient = <
   RequestConfig extends object,
-  CTXMap extends Record<string, RPCContetMap.Any>,
+  CTXMap extends Record<string, RPCContextMap.Any>,
   GeneralErrors extends S.Schema.All = never
 >(
   errors: { [K in keyof CTXMap]: CTXMap[K][2] },

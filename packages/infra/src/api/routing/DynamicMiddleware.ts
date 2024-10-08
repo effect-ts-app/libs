@@ -3,10 +3,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rpc } from "@effect/rpc"
 import type { Effect, Request, S } from "effect-app"
-import type { GetEffectContext, RPCContetMap } from "effect-app/client/req"
+import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type * as EffectRequest from "effect/Request"
 
-export interface Middleware<Context, CTXMap extends Record<string, RPCContetMap.Any>> {
+export interface Middleware<Context, CTXMap extends Record<string, RPCContextMap.Any>> {
   contextMap: CTXMap
   context: Context
   execute: <
@@ -30,7 +30,7 @@ export interface Middleware<Context, CTXMap extends Record<string, RPCContetMap.
   >
 }
 
-export const makeRpc = <Context, CTXMap extends Record<string, RPCContetMap.Any>>(
+export const makeRpc = <Context, CTXMap extends Record<string, RPCContextMap.Any>>(
   middleware: Middleware<Context, CTXMap>
 ) => {
   return {

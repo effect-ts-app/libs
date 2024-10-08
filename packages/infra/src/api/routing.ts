@@ -13,7 +13,7 @@ import type { Rpc } from "@effect/rpc"
 import { RpcRouter } from "@effect/rpc"
 import type { S } from "effect-app"
 import { Chunk, Context, Effect, FiberRef, Predicate, Stream } from "effect-app"
-import type { GetEffectContext, RPCContetMap } from "effect-app/client/req"
+import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
 import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import type { Middleware } from "./routing/DynamicMiddleware.js"
@@ -60,7 +60,7 @@ export const toHttpApp = <R extends RpcRouter.RpcRouter<any, any>>(self: R, opti
   })
 }
 
-type GetRouteContext<CTXMap extends Record<string, RPCContetMap.Any>, T> =
+type GetRouteContext<CTXMap extends Record<string, RPCContextMap.Any>, T> =
   // & CTX
   // inverted
   & {
@@ -146,7 +146,7 @@ type Filter<T> = {
   [K in keyof T as T[K] extends S.Schema.All & { success: S.Schema.Any; failure: S.Schema.Any } ? K : never]: T[K]
 }
 
-interface ExtendedMiddleware<Context, CTXMap extends Record<string, RPCContetMap.Any>>
+interface ExtendedMiddleware<Context, CTXMap extends Record<string, RPCContextMap.Any>>
   extends Middleware<Context, CTXMap>
 {
   // TODO
@@ -157,7 +157,7 @@ interface ExtendedMiddleware<Context, CTXMap extends Record<string, RPCContetMap
   >
 }
 
-export const makeRouter = <Context, CTXMap extends Record<string, RPCContetMap.Any>>(
+export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.Any>>(
   middleware: ExtendedMiddleware<Context, CTXMap>
 ) => {
   const rpc = makeRpc(middleware)
