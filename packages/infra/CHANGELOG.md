@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 1.30.0
+
+### Minor Changes
+
+- 67a202a: fix location
+
+### Patch Changes
+
+- Updated dependencies [67a202a]
+  - effect-app@1.23.0
+  - @effect-app/infra-adapters@1.15.4
+
 ## 1.29.7
 
 ### Patch Changes

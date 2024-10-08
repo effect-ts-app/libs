@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.23.0
+
+### Minor Changes
+
+- 67a202a: fix location
+
 ## 1.22.1
 
 ### Patch Changes
