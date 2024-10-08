@@ -332,7 +332,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, ContextMap.Any
       return HttpRouter.empty.pipe(
         HttpRouter.all(
           ("/rpc/" + rsc.meta.moduleName) as any,
-          toHttpApp(router),
+          toHttpApp(router, { spanPrefix: rsc.meta.moduleName + "." }),
           // TODO: not queries.
           { uninterruptible: true }
         )

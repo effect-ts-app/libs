@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.29.5
+
+### Patch Changes
+
+- set prefix
+
 ## 1.29.4
 
 ### Patch Changes
