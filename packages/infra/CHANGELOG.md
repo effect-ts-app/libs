@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.30.2
+
+### Patch Changes
+
+- 3d0aca0: fix
+
 ## 1.30.1
 
 ### Patch Changes
