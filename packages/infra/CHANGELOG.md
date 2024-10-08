@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.29.7
+
+### Patch Changes
+
+- 9a02e95: revert toHttp change
+
 ## 1.29.6
 
 ### Patch Changes
