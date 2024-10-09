@@ -33,7 +33,7 @@ export interface QueryObserverOptionsCustom<
 
 export function useSafeQuery<E, A>(
   self: {
-    handler: Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>
+    handler: Effect<A, E, ApiConfig | HttpClient.HttpClient>
     mapPath: string
     name: string
   },
@@ -46,7 +46,7 @@ export function useSafeQuery<E, A>(
 ]
 export function useSafeQuery<Arg, E, A>(
   self: {
-    handler: (arg: Arg) => Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>
+    handler: (arg: Arg) => Effect<A, E, ApiConfig | HttpClient.HttpClient>
     mapPath: (arg: Arg) => string
     name: string
   },
@@ -68,7 +68,7 @@ export function useSafeQuery(
       ) => Effect<
         A,
         E,
-        ApiConfig | HttpClient.HttpClient.Service
+        ApiConfig | HttpClient.HttpClient
       >
       mapPath: (req: I) => string
       name: string
@@ -77,7 +77,7 @@ export function useSafeQuery(
       handler: Effect<
         A,
         E,
-        ApiConfig | HttpClient.HttpClient.Service
+        ApiConfig | HttpClient.HttpClient
       >
       mapPath: string
       name: string
@@ -107,7 +107,7 @@ export const useSafeQuery_ = <I, A, E>(
       ) => Effect<
         A,
         E,
-        ApiConfig | HttpClient.HttpClient.Service
+        ApiConfig | HttpClient.HttpClient
       >
       mapPath: (req: I) => string
       name: string
@@ -116,7 +116,7 @@ export const useSafeQuery_ = <I, A, E>(
       readonly handler: Effect<
         A,
         E,
-        ApiConfig | HttpClient.HttpClient.Service
+        ApiConfig | HttpClient.HttpClient
       >
       mapPath: string
       name: string

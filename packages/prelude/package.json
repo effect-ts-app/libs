@@ -6,13 +6,13 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/rpc": "^0.41.1",
-    "@effect/rpc-http": "^0.39.1",
+    "@effect/rpc": "^0.43.0",
+    "@effect/rpc-http": "^0.41.0",
     "@tsconfig/strictest": "^2.0.5",
     "date-fns": "^4.1.0",
     "nanoid": "^5.0.7",
     "path-parser": "^6.1.0",
-    "query-string": "^9.1.0",
+    "query-string": "^9.1.1",
     "ts-pattern": "^5.4.0",
     "uuid": "^10.0.0",
     "validator": "^13.12.0"
@@ -24,14 +24,13 @@
     "@types/uuid": "^10.0.0",
     "@types/validator": "^13.12.2",
     "fast-check": "~3.22.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.6.2",
+    "typescript": "^5.6.3",
     "vitest": "^2.1.2"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.67.1",
+    "@effect/platform": "^0.68.1",
     "effect": "^3.9.1",
-    "@effect/schema": "^0.75.1"
+    "@effect/schema": "^0.75.2"
   },
   "typesVersions": {
     "*": {
@@ -89,16 +88,6 @@
       "require": {
         "types": "./dist/Pure.d.ts",
         "default": "./_cjs/Pure.cjs"
-      }
-    },
-    "./Request": {
-      "import": {
-        "types": "./dist/Request.d.ts",
-        "default": "./dist/Request.js"
-      },
-      "require": {
-        "types": "./dist/Request.d.ts",
-        "default": "./_cjs/Request.cjs"
       }
     },
     "./Widen.type": {
@@ -199,6 +188,16 @@
       "require": {
         "types": "./dist/http.d.ts",
         "default": "./_cjs/http.cjs"
+      }
+    },
+    "./http/Request": {
+      "import": {
+        "types": "./dist/http/Request.d.ts",
+        "default": "./dist/http/Request.js"
+      },
+      "require": {
+        "types": "./dist/http/Request.d.ts",
+        "default": "./_cjs/http/Request.cjs"
       }
     },
     "./ids": {

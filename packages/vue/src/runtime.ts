@@ -46,7 +46,7 @@ export function makeAppRuntime<R, E, A>(layer: Layer<A, E, R>) {
   })
 }
 
-export function initializeSync<E, A>(layer: Layer<A | ApiConfig | HttpClient.HttpClient.Service, E, never>) {
+export function initializeSync<E, A>(layer: Layer<A | ApiConfig | HttpClient.HttpClient, E, never>) {
   const { clean, runtime } = Effect.runSync(makeAppRuntime(layer))
   initRuntime(runtime)
   return {
@@ -55,7 +55,7 @@ export function initializeSync<E, A>(layer: Layer<A | ApiConfig | HttpClient.Htt
   }
 }
 
-export function initializeAsync<E, A>(layer: Layer<A | ApiConfig | HttpClient.HttpClient.Service, E, never>) {
+export function initializeAsync<E, A>(layer: Layer<A | ApiConfig | HttpClient.HttpClient, E, never>) {
   return Effect
     .runPromise(makeAppRuntime(layer))
     .then(({ clean, runtime }) => {

@@ -70,12 +70,12 @@ const apiClient = Effect.gen(function*() {
 
 export type Client<M extends Requests> =
   & RequestHandlers<
-    ApiConfig | HttpClient.HttpClient.Service,
+    ApiConfig | HttpClient.HttpClient,
     never, // SupportedErrors | FetchError | ResError,
     M
   >
   & RequestHandlersE<
-    ApiConfig | HttpClient.HttpClient.Service,
+    ApiConfig | HttpClient.HttpClient,
     never, // SupportedErrors | FetchError | ResError,
     M
   >

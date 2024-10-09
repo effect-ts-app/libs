@@ -30,14 +30,6 @@
         "**/.*",
         "**/*.tmp"
     ],
-    "ts-node": {
-        "require": [
-            "tsconfig-paths/register"
-        ],
-        "compilerOptions": {
-            "module": "CommonJS"
-        }
-    },
     "references": [
         {
             "path": "../prelude"

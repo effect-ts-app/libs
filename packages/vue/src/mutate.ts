@@ -54,10 +54,10 @@ export interface MutationError<E> {
 export type MutationResult<A, E> = MutationInitial | MutationLoading | MutationSuccess<A> | MutationError<E>
 
 type HandlerWithInput<I, A, E> = {
-  handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>
+  handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient>
   name: string
 }
-type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>; name: string }
+type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.HttpClient>; name: string }
 
 export type MaybeRef<T> = Ref<T> | ComputedRef<T> | T
 type MaybeRefDeep<T> = MaybeRef<
@@ -159,7 +159,7 @@ export const useSafeMutation: {
   }
 
   const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
-    let effect: Effect<A, E, ApiConfig | HttpClient.HttpClient.Service>
+    let effect: Effect<A, E, ApiConfig | HttpClient.HttpClient>
     let signal: AbortSignal | undefined
     if (Effect.isEffect(self.handler)) {
       effect = self.handler as any
