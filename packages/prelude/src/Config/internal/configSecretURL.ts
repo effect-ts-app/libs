@@ -3,7 +3,6 @@ import * as Chunk from "effect/Chunk"
 import { SecretTypeId } from "effect/Secret"
 import type * as SecretURL from "../SecretURL.js"
 
-
 /** @internal */
 export const isSecretURL = (u: unknown): u is SecretURL.SecretURL => {
   return typeof u === "object" && u != null && SecretTypeId in u
@@ -11,7 +10,10 @@ export const isSecretURL = (u: unknown): u is SecretURL.SecretURL => {
 
 /** @internal */
 export const make = (bytes: Array<number>): SecretURL.SecretURL => {
-  const secret = Object.assign(Redacted.make(bytes.map((byte) => String.fromCharCode(byte)).join("")), {[SecretTypeId]: SecretTypeId, raw: undefined as any} as const)
+  const secret = Object.assign(
+    Redacted.make(bytes.map((byte) => String.fromCharCode(byte)).join("")),
+    { [SecretTypeId]: SecretTypeId, raw: undefined as any } as const
+  )
   let protocol = "unknown"
   try {
     const url = new URL(bytes.map((byte) => String.fromCharCode(byte)).join(""))

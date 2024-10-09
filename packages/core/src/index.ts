@@ -1,5 +1,5 @@
-import { Effect } from "./Prelude.js"
 import type { YieldWrap } from "effect/Utils"
+import { Effect } from "./Prelude.js"
 
 export * as Record from "@effect-app/core/Object"
 export * as Fnc from "./Function.js"
@@ -36,53 +36,48 @@ export * as Struct from "./Struct.js"
 
 // Simply Effect! https://github.com/kasperpeulen/simply-effect
 type InferE<Eff extends YieldWrap<Effect<any, any, any>>> = [
-  Eff,
-] extends [never]
-  ? never
-  : [Eff] extends [YieldWrap<Effect<infer _A, infer E, infer _R>>]
-    ? E
-    : never;
+  Eff
+] extends [never] ? never
+  : [Eff] extends [YieldWrap<Effect<infer _A, infer E, infer _R>>] ? E
+  : never
 type InferR<Eff extends YieldWrap<Effect<any, any, any>>> = [
-  Eff,
-] extends [never]
-  ? never
-  : [Eff] extends [YieldWrap<Effect<infer _A, infer _E, infer R>>]
-    ? R
-    : never;
+  Eff
+] extends [never] ? never
+  : [Eff] extends [YieldWrap<Effect<infer _A, infer _E, infer R>>] ? R
+  : never
 
 export function effect<
   Eff extends YieldWrap<Effect<any, any, any>>,
-  AEff,
+  AEff
 >(
-  f: () => Generator<Eff, AEff, never>,
-): Effect<AEff, InferE<Eff>, InferR<Eff>>;
+  f: () => Generator<Eff, AEff, never>
+): Effect<AEff, InferE<Eff>, InferR<Eff>>
+export function effect<
+  Eff extends YieldWrap<Effect<any, any, any>>,
+  AEff,
+  Args extends any[]
+>(
+  f: (...args: Args) => Generator<Eff, AEff, never>
+): (...args: Args) => Effect<AEff, InferE<Eff>, InferR<Eff>>
+export function effect<
+  Self,
+  Eff extends YieldWrap<Effect<any, any, any>>,
+  AEff
+>(
+  self: Self,
+  f: (this: Self) => Generator<Eff, AEff, never>
+): Effect<AEff, InferE<Eff>, InferR<Eff>>
 export function effect<
   Eff extends YieldWrap<Effect<any, any, any>>,
   AEff,
   Args extends any[],
->(
-  f: (...args: Args) => Generator<Eff, AEff, never>,
-): (...args: Args) => Effect<AEff, InferE<Eff>, InferR<Eff>>;
-export function effect<
-  Self,
-  Eff extends YieldWrap<Effect<any, any, any>>,
-  AEff,
+  Self
 >(
   self: Self,
-  f: (this: Self) => Generator<Eff, AEff, never>,
-): Effect<AEff, InferE<Eff>, InferR<Eff>>;
-export function effect<
-  Eff extends YieldWrap<Effect<any, any, any>>,
-  AEff,
-  Args extends any[],
-  Self,
->(
-  self: Self,
-  f: (this: Self, ...args: Args) => Generator<Eff, AEff, never>,
-): (...args: Args) => Effect<AEff, InferE<Eff>, InferR<Eff>>;
+  f: (this: Self, ...args: Args) => Generator<Eff, AEff, never>
+): (...args: Args) => Effect<AEff, InferE<Eff>, InferR<Eff>>
 export function effect() {
-  const f =
-    arguments.length === 1 ? arguments[0] : arguments[1].bind(arguments[0]);
-  if (f.length === 0) return Effect.gen(f);
-  return (...args: any) => Effect.gen(() => f(...args));
+  const f = arguments.length === 1 ? arguments[0] : arguments[1].bind(arguments[0])
+  if (f.length === 0) return Effect.gen(f)
+  return (...args: any) => Effect.gen(() => f(...args))
 }

@@ -22,12 +22,12 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, I, R, C, Inhe
     props: Types.Equals<C, {}> extends true ? void | {}
       : Types.Equals<FilterOptionalKeys<C>, {}> extends true ? void | C
       : C,
-    disableValidation?: boolean | undefined
+    disableValidation?: boolean
   ): Struct.Type<Fields> & Omit<Inherited, keyof Fields> & Proto
 
   readonly fields: Simplify<Fields>
 
-  readonly extend: <Extended = never>(identifier?: string | undefined) => <newFields extends Struct.Fields>(
+  readonly extend: <Extended = never>(identifier?: string) => <newFields extends Struct.Fields>(
     newFieldsOr: newFields | HasFields<newFields>,
     annotations?: S.Annotations.Schema<Extended>
   ) => [Extended] extends [never] ? MissingSelfGeneric<"Base.extend">
@@ -41,7 +41,7 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, I, R, C, Inhe
       Proto
     >
 
-  readonly transformOrFail: <Transformed = never>(identifier?: string | undefined) => <
+  readonly transformOrFail: <Transformed = never>(identifier?: string) => <
     newFields extends Struct.Fields,
     R2,
     R3
@@ -71,7 +71,7 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, I, R, C, Inhe
       Proto
     >
 
-  readonly transformOrFailFrom: <Transformed = never>(identifier?: string | undefined) => <
+  readonly transformOrFailFrom: <Transformed = never>(identifier?: string) => <
     newFields extends Struct.Fields,
     R2,
     R3

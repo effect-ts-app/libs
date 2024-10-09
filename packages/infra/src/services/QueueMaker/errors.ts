@@ -5,7 +5,7 @@ import { MainFiberSet } from "effect-app/services/MainFiberSet"
 
 const reportQueueError_ = reportError("Queue")
 
-export const reportQueueError = <E>(cause: Cause<E>, extras?: Record<string, unknown> | undefined) =>
+export const reportQueueError = <E>(cause: Cause<E>, extras?: Record<string, unknown>) =>
   reportQueueError_(cause, extras)
 
 /**

@@ -123,6 +123,7 @@ function get(obj, path, defaultValue = undefined) {
 // codegen:start {preset: barrel, include: ./utils/*.ts }
 export * from "./utils/effectify.js"
 export * from "./utils/extend.js"
+export * from "./utils/logger.js"
 // codegen:end
 
 export const unsafeRight = <E, A>(ei: Either.Either<A, E>) => {
@@ -664,8 +665,8 @@ export interface AnyOps<T> {
 }
 
 export const clone = dual<
-  <A extends Object>(f: NoInfer<A>) => (self: A) => A,
-  <A extends Object>(self: A, f: A) => A
+  <A extends object>(f: NoInfer<A>) => (self: A) => A,
+  <A extends object>(self: A, f: A) => A
 >(2, (self, f) => {
   if (cloneTrait in (self as any)) {
     const selfWithClone = self as typeof self & Clone
@@ -676,12 +677,12 @@ export const clone = dual<
 
 export const copy = dual<
   {
-    <A extends Object>(f: (a: A) => Partial<NoInfer<A>>): (self: A) => A
-    <A extends Object>(f: Partial<NoInfer<A>>): (self: A) => A
+    <A extends object>(f: (a: A) => Partial<NoInfer<A>>): (self: A) => A
+    <A extends object>(f: Partial<NoInfer<A>>): (self: A) => A
   },
   {
-    <A extends Object>(self: A, f: (a: A) => Partial<A>): A
-    <A extends Object>(self: A, f: Partial<A>): A
+    <A extends object>(self: A, f: (a: A) => Partial<A>): A
+    <A extends object>(self: A, f: Partial<A>): A
   }
 >(2, <A>(self: A, f: Partial<A> | ((a: A) => Partial<A>)) => clone(self, { ...self, ...(isFunction(f) ? f(self) : f) }))
 

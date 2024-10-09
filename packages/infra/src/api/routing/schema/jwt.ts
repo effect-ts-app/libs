@@ -6,7 +6,7 @@ import { jwtDecode, type JwtDecodeOptions } from "jwt-decode"
 
 export const parseJwt = <R, I, A>(
   schema: S.Schema<A, I, R>,
-  options?: JwtDecodeOptions | undefined
+  options?: JwtDecodeOptions
 ): S.Schema<A, string, R> =>
   S
     .transformToOrFail(

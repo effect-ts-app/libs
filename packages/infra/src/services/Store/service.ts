@@ -159,7 +159,7 @@ const makeMap = Effect.sync(() => makeContextMap())
 export class ContextMap extends Context.TagMakeId("effect-app/ContextMap", makeMap)<ContextMap>() {
 }
 
-export type PersistenceModelType<Encoded extends Object> = Encoded & {
+export type PersistenceModelType<Encoded extends object> = Encoded & {
   _etag?: string | undefined
 }
 
