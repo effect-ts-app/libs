@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Effect, flow, HashMap, Layer, Option, Predicate, Struct } from "@effect-app/core"
+import type { RequestResolver } from "@effect-app/core"
+import { Chunk, Effect, flow, HashMap, Layer, Option, Predicate, Stream, Struct } from "@effect-app/core"
+import type { Rpc } from "@effect/rpc"
 import { RpcResolver } from "@effect/rpc"
 import { HttpRpcResolver } from "@effect/rpc-http"
 import type { RpcRouter } from "@effect/rpc/RpcRouter"
@@ -71,12 +73,12 @@ const apiClient = Effect.gen(function*() {
 export type Client<M extends Requests> =
   & RequestHandlers<
     ApiConfig | HttpClient.HttpClient.Service,
-    never, // SupportedErrors | FetchError | ResError,
+    never,
     M
   >
   & RequestHandlersE<
     ApiConfig | HttpClient.HttpClient.Service,
-    never, // SupportedErrors | FetchError | ResError,
+    never,
     M
   >
 
@@ -103,6 +105,40 @@ type Req = S.Schema.All & {
   success: S.Schema.Any
   failure: S.Schema.Any
   config?: Record<string, any>
+}
+
+const get = ["Get", "Index", "List", "All", "Find", "Search"]
+const del = ["Delete", "Remove", "Destroy"]
+const patch = ["Patch", "Update", "Edit"]
+
+const astAssignableToString = (ast: S.AST.AST): boolean => {
+  if (ast._tag === "StringKeyword") return true
+  if (ast._tag === "Union" && ast.types.every(astAssignableToString)) {
+    return true
+  }
+  if (ast._tag === "Refinement" || ast._tag === "Transformation") {
+    return astAssignableToString(ast.from)
+  }
+
+  return false
+}
+
+const onlyStringsAst = (ast: S.AST.AST): boolean => {
+  if (ast._tag === "Union") return ast.types.every(onlyStringsAst)
+  if (ast._tag !== "TypeLiteral") return false
+  return ast.propertySignatures.every((_) => astAssignableToString(_.type))
+}
+
+const onlyStrings = (schema: S.Schema<any, any, any> & { fields?: S.Struct.Fields }): boolean => {
+  if ("fields" in schema && schema.fields) return onlyStringsAst(S.Struct(schema.fields).ast) // only one level..
+  return onlyStringsAst(schema.ast)
+}
+
+export const determineMethod = (actionName: string, schema: Schema.All) => {
+  if (get.some((_) => actionName.startsWith(_))) return onlyStrings(schema) ? "GET" as const : "POST" as const
+  if (del.some((_) => actionName.startsWith(_))) return onlyStrings(schema) ? "DELETE" as const : "POST" as const
+  if (patch.some((_) => actionName.startsWith(_))) return "PATCH" as const
+  return "POST" as const
 }
 
 function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
@@ -146,17 +182,49 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
         .replaceAll(".js", "")
 
       const requestMeta = {
-        method: "POST", // TODO
+        method: determineMethod(Request._tag, Request),
         Request,
         Response,
         mapPath: requestName,
         name: requestName
       }
 
-      const client = baseClient.pipe(
-        Effect.andThen(HttpClient.mapRequest(HttpClientRequest.appendUrlParam("action", cur as string))),
-        Effect.andThen(resolver)
-      )
+      // TODO: make this determine method
+      const make = <R extends RpcRouter<any, any>>(
+        client: HttpClient.HttpClient.Service
+      ): RequestResolver.RequestResolver<
+        Rpc.Request<RpcRouter.Request<R>>,
+        Serializable.SerializableWithResult.Context<RpcRouter.Request<R>>
+      > =>
+        RpcResolver.make((requests) =>
+          client
+            .post("", {
+              body: Body.unsafeJson(requests)
+            })
+            .pipe(
+              Effect.map((_) =>
+                _.stream.pipe(
+                  Stream.decodeText(),
+                  Stream.splitLines,
+                  Stream.map((_) => Chunk.unsafeFromArray(JSON.parse(_))),
+                  Stream.flattenChunks
+                )
+              ),
+              Stream.unwrapScoped
+            )
+        )<R>()
+
+      // TODO: swap method based on request
+      const client = <A extends Req>(req: A) =>
+        baseClient.pipe(
+          Effect.andThen(
+            flow(
+              HttpClient.mapRequest(HttpClientRequest.appendUrlParam("action", cur as string)),
+              HttpClient.mapRequest(HttpClientRequest.setMethod(determineMethod(req._tag, req)))
+            )
+          ),
+          Effect.andThen(resolver)
+        )
 
       const fields = Struct.omit(Request.fields, "_tag")
       const p = requestName
