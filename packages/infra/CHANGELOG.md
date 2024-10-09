@@ -1,5 +1,19 @@
 # @effect-app/infra
 
+## 1.31.0
+
+### Minor Changes
+
+- b9b64b8: housekeeping: update packages
+
+### Patch Changes
+
+- Updated dependencies [b9b64b8]
+  - @effect-app/infra-adapters@1.16.0
+  - effect-app@1.24.0
+  - @effect-app/schema@1.16.0
+  - @effect-app/core@1.13.0
+
 ## 1.30.2
 
 ### Patch Changes
