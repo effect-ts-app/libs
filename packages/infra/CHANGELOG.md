@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 1.32.0
+
+### Minor Changes
+
+- 9c75cf1: Improve RPC Request status, error logging and reporting.
+
+### Patch Changes
+
+- 23132b5: improve Queue drain span
+
 ## 1.31.0
 
 ### Minor Changes
