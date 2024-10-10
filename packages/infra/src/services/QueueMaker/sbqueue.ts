@@ -127,14 +127,7 @@ export function makeServiceBusQueue<
           })
           // .pipe(Effect.andThen(Deferred.await(deferred).pipe(Effect.orDie))),
           .pipe(
-            Effect.andThen(Effect.never),
-            Effect.withSpan(`queue.drain: ${queueDrainName}`, {
-              attributes: {
-                "queue.type": "servicebus",
-                "queue.name": queueDrainName,
-                "queue.sessionId": sessionId
-              }
-            })
+            Effect.andThen(Effect.never)
           ),
 
       publish: (...messages) =>

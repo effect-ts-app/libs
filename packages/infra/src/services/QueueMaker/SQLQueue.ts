@@ -195,14 +195,14 @@ export function makeSQLQueue<
                 )
               ),
               silenceAndReportError,
-              Effect.forever,
               Effect.withSpan(`queue.drain: ${queueDrainName}`, {
                 attributes: {
                   "queue.type": "sql",
                   "queue.name": queueDrainName,
                   "queue.sessionId": sessionId
                 }
-              })
+              }),
+              Effect.forever
             )
         })
     } satisfies QueueBase<Evt, DrainEvt>

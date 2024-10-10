@@ -115,14 +115,14 @@ export function makeMemQueue<
               // TODO: normally a failed item would be returned to the queue and retried up to X times.
               // .flatMap(_ => _._tag === "Failure" && !isInterrupted ? qDrain.offer(x) : Effect.unit) // TODO: retry count tracking and max retries.
               silenceAndReportError,
-              Effect.forever,
               Effect.withSpan(`queue.drain: ${queueDrainName}`, {
                 attributes: {
                   "queue.type": "mem",
                   "queue.name": queueDrainName,
                   "queue.sessionId": sessionId
                 }
-              })
+              }),
+              Effect.forever
             )
         })
     } satisfies QueueBase<Evt, DrainEvt>
