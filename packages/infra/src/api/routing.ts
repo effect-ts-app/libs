@@ -6,18 +6,22 @@ TODO: Effect.retry(r2, optimisticConcurrencySchedule) / was for PATCH only
 TODO: uninteruptible commands! was for All except GET.
 */
 import { allLower, type EffectUnunified, type LowerServices } from "@effect-app/core/Effect"
-import { typedKeysOf } from "@effect-app/core/utils"
+import { pretty, typedKeysOf } from "@effect-app/core/utils"
 import type { Compute } from "@effect-app/core/utils"
 import type * as HttpApp from "@effect/platform/HttpApp"
-import type { Rpc } from "@effect/rpc"
-import { RpcRouter } from "@effect/rpc"
+import { Rpc, RpcRouter } from "@effect/rpc"
 import { Serializable } from "@effect/schema"
-import { Chunk, Context, Effect, FiberRef, Predicate, S, Stream } from "effect-app"
+import { Cause, Chunk, Context, Effect, FiberRef, Predicate, S, Stream } from "effect-app"
 import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
 import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
+import { logError, reportError } from "../errorReporter.js"
+import { InfraLogger } from "../logger.js"
 import type { Middleware } from "./routing/DynamicMiddleware.js"
 import { makeRpc } from "./routing/DynamicMiddleware.js"
+
+const logRequestError = logError("Request")
+const reportRequestError = reportError("Request")
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<any, any, infer R>
@@ -53,8 +57,24 @@ export const toHttpApp = <R extends RpcRouter.RpcRouter<any, any>>(self: R, opti
           Stream.provideContext(context),
           Stream.runCollect,
           Effect.map((_) => Chunk.toReadonlyArray(_)),
-          Effect.andThen((_) => HttpServerResponse.json(_)),
-          Effect.orDie
+          Effect.andThen((_) => {
+            let status = 200
+            for (const r of _.flat()) {
+              if (typeof r === "number") continue
+              const results = Array.isArray(r) ? r : [r]
+              if (results.some((_: S.ExitEncoded<any, any, any>) => _._tag === "Failure" && _.cause._tag === "Die")) {
+                status = 500
+                break
+              }
+              if (results.some((_: S.ExitEncoded<any, any, any>) => _._tag === "Failure" && _.cause._tag === "Fail")) {
+                status = 422 // 418
+                break
+              }
+            }
+            return HttpServerResponse.json(_, { status })
+          }),
+          Effect.orDie,
+          Effect.tapDefect(reportError("RPCHttpApp"))
         )
     )
   })
@@ -110,13 +130,12 @@ type GetSuccessShape<Action extends { success?: S.Schema.Any }, RT extends "d" |
   : S.Schema.Type<GetSuccess<Action>>
 type GetFailure<T extends { failure?: S.Schema.Any }> = T["failure"] extends never ? typeof S.Never : T["failure"]
 
-export interface Handler<Action extends AnyRequestModule, RT extends "raw" | "d", A, E, R, Context> {
+export interface Handler<Action extends AnyRequestModule, RT extends "raw" | "d", A, E, R> {
   new(): {}
   _tag: RT
   stack: string
   handler: (
-    req: S.Schema.Type<Action>,
-    ctx: Context
+    req: S.Schema.Type<Action>
   ) => Effect<
     A,
     E,
@@ -131,16 +150,14 @@ type AHandler<Action extends AnyRequestModule> =
     "raw",
     S.Schema.Encoded<GetSuccess<Action>>,
     S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
-    any,
-    { Response: any }
+    any
   >
   | Handler<
     Action,
     "d",
     S.Schema.Type<GetSuccess<Action>>,
     S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
-    any,
-    { Response: any }
+    any
   >
 
 type Filter<T> = {
@@ -159,7 +176,8 @@ interface ExtendedMiddleware<Context, CTXMap extends Record<string, RPCContextMa
 }
 
 export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.Any>>(
-  middleware: ExtendedMiddleware<Context, CTXMap>
+  middleware: ExtendedMiddleware<Context, CTXMap>,
+  devMode: boolean
 ) => {
   const rpc = makeRpc(middleware)
   function matchFor<Rsc extends Record<string, any> & { meta: { moduleName: string } }>(
@@ -215,8 +233,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
           RT,
           A,
           E,
-          Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>,
-          { Response: Rsc[Key]["success"] } //
+          Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
         >
       >
 
@@ -233,8 +250,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
           RT,
           A,
           E,
-          Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>,
-          { Response: Rsc[Key]["success"] } //
+          Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
         >
       >
 
@@ -265,8 +281,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
           RT,
           A,
           E,
-          Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>,
-          { Response: Rsc[Key]["success"] } //
+          Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
         >
       >
     }
@@ -301,9 +316,60 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
             } as any
             : req,
           (req) =>
-            Effect.withSpan("Request." + meta.moduleName + "." + req._tag, { captureStackTrace: () => handler.stack })(
-              (handler.handler as any)(req)
-            ),
+            Effect
+              .annotateCurrentSpan(
+                "requestInput",
+                Object.entries(req).reduce((prev, [key, value]: [string, unknown]) => {
+                  prev[key] = key === "password"
+                    ? "<redacted>"
+                    : typeof value === "string" || typeof value === "number" || typeof value === "boolean"
+                    ? typeof value === "string" && value.length > 256
+                      ? (value.substring(0, 253) + "...")
+                      : value
+                    : Array.isArray(value)
+                    ? `Array[${value.length}]`
+                    : value === null || value === undefined
+                    ? `${value}`
+                    : typeof value === "object" && value
+                    ? `Object[${Object.keys(value).length}]`
+                    : typeof value
+                  return prev
+                }, {} as Record<string, string | number | boolean>)
+              )
+              .pipe(
+                // can't use andThen due to some being a function and effect
+                Effect.zipRight(handler.handler(req as any) as any),
+                Effect.tapErrorCause((cause) => Cause.isFailure(cause) ? logRequestError(cause) : Effect.void),
+                Effect.tapDefect((cause) =>
+                  Effect
+                    .all([
+                      reportRequestError(cause, {
+                        action: `${meta.moduleName}.${req._tag}`
+                      }),
+                      Rpc.currentHeaders.pipe(Effect.andThen((headers) => {
+                        return InfraLogger
+                          .logError("Finished request", cause)
+                          .pipe(Effect.annotateLogs({
+                            action: `${meta.moduleName}.${req._tag}`,
+                            req: pretty(req),
+                            headers: pretty(headers)
+                            // resHeaders: pretty(
+                            //   Object
+                            //     .entries(headers)
+                            //     .reduce((prev, [key, value]) => {
+                            //       prev[key] = value && typeof value === "string" ? snipString(value) : value
+                            //       return prev
+                            //     }, {} as Record<string, any>)
+                            // )
+                          }))
+                      }))
+                    ])
+                ),
+                devMode ? (_) => _ : Effect.catchAllDefect(() => Effect.die("Internal Server Error")),
+                Effect.withSpan("Request." + meta.moduleName + "." + req._tag, {
+                  captureStackTrace: () => handler.stack
+                })
+              ),
           meta.moduleName
         ) // TODO
         return acc
