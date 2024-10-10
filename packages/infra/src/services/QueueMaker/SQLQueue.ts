@@ -69,13 +69,17 @@ export function makeSQLQueue<
 
     const decodeDrain = S.decode(Drain)
 
-    const drain = () => {
-      const limit = subMinutes(new Date(), 15)
-      return sql<typeof Drain.Encoded>`SELECT *
+    const drain = Effect
+      .sync(() => subMinutes(new Date(), 15))
+      .pipe(
+        Effect
+          .andThen((limit) =>
+            sql<typeof Drain.Encoded>`SELECT *
     FROM queue
     WHERE name = ${queueDrainName} AND finishedAt IS NULL AND (processingAt IS NULL OR processingAt < ${limit.getTime()})
     LIMIT 1`
-    }
+          )
+      )
 
     const q = {
       offer: (body: Evt, meta: typeof QueueMeta.Type) =>
@@ -93,7 +97,7 @@ export function makeSQLQueue<
         }),
       take: Effect.gen(function*() {
         while (true) {
-          const [first] = yield* drain()
+          const [first] = yield* drain.pipe(Effect.withTracerEnabled(false)) // disable sql tracer otherwise we spam it..
           if (first) {
             const dec = yield* decodeDrain(first)
             const { createdAt, updatedAt, ...rest } = dec
