@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Effect, FiberRef } from "../index.js"
+
+import { Effect, FiberRef } from "effect"
 
 type Levels = "info" | "debug" | "warn" | "error"
 export const LogLevels = FiberRef.unsafeMake(new Map<string, Levels>())
