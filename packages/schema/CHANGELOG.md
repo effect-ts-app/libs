@@ -1,5 +1,12 @@
 # @effect-app/schema
 
+## 1.16.1
+
+### Patch Changes
+
+- Updated dependencies [61eb517]
+  - @effect-app/core@1.13.1
+
 ## 1.16.0
 
 ### Minor Changes
