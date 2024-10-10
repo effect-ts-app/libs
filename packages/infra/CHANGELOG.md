@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.32.3
+
+### Patch Changes
+
+- 5e10712: revert root queue span
+
 ## 1.32.2
 
 ### Patch Changes
