@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.32.2
+
+### Patch Changes
+
+- bf7d8df: improve: silence sql tracing for drain
+
 ## 1.32.1
 
 ### Patch Changes
