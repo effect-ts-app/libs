@@ -25,6 +25,7 @@ declare global {
 Object.defineProperty(Object.prototype, "pipe", {
   enumerable: false,
   configurable: true,
+  writable: true,
   value(...args: any[]) {
     return pipeArguments(this, ...args as [any])
   }
