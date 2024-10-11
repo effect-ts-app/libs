@@ -9,8 +9,6 @@ import type { Option, Pipeable, S } from "effect-app"
 import { Data, flow } from "effect-app"
 import type { Covariant } from "effect/Types"
 
-import { pipeArguments } from "effect/Pipeable"
-
 export type QAll<TFieldValues extends FieldValues, A = TFieldValues, R = never, TType extends "one" | "many" = "many"> =
   | Query<TFieldValues>
   | QueryWhere<TFieldValues>
@@ -77,10 +75,10 @@ export class Initial<TFieldValues extends FieldValues> extends Data.TaggedClass(
   constructor() {
     super({ value: "initial" as const })
   }
-  pipe() {
-    // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
-  }
+  // pipe() {
+  //   // eslint-disable-next-line prefer-rest-params
+  //   return pipeArguments(this, arguments)
+  // }
 }
 
 export class Where<TFieldValues extends FieldValues> extends Data.TaggedClass("where")<{
@@ -89,10 +87,10 @@ export class Where<TFieldValues extends FieldValues> extends Data.TaggedClass("w
 }> implements QueryWhere<TFieldValues> {
   readonly [QId]!: any
 
-  pipe() {
-    // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
-  }
+  // pipe() {
+  //   // eslint-disable-next-line prefer-rest-params
+  //   return pipeArguments(this, arguments)
+  // }
 }
 
 export class And<TFieldValues extends FieldValues> extends Data.TaggedClass("and")<{
@@ -100,10 +98,10 @@ export class And<TFieldValues extends FieldValues> extends Data.TaggedClass("and
   operation: [string, Ops, any] | [string, any] | ((q: Query<TFieldValues>) => QueryWhere<TFieldValues>)
 }> implements QueryWhere<TFieldValues> {
   readonly [QId]!: any
-  pipe() {
-    // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
-  }
+  // pipe() {
+  //   // eslint-disable-next-line prefer-rest-params
+  //   return pipeArguments(this, arguments)
+  // }
 }
 
 export class Or<TFieldValues extends FieldValues> extends Data.TaggedClass("or")<{
@@ -111,10 +109,10 @@ export class Or<TFieldValues extends FieldValues> extends Data.TaggedClass("or")
   operation: [string, Ops, any] | [string, any] | ((q: Query<TFieldValues>) => QueryWhere<TFieldValues>)
 }> implements QueryWhere<TFieldValues> {
   readonly [QId]!: any
-  pipe() {
-    // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
-  }
+  // pipe() {
+  //   // eslint-disable-next-line prefer-rest-params
+  //   return pipeArguments(this, arguments)
+  // }
 }
 
 export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("page")<{
@@ -123,30 +121,30 @@ export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("pa
   skip?: number | undefined
 }> implements QueryEnd<TFieldValues> {
   readonly [QId]!: any
-  pipe() {
-    // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
-  }
+  // pipe() {
+  //   // eslint-disable-next-line prefer-rest-params
+  //   return pipeArguments(this, arguments)
+  // }
 }
 
 export class One<TFieldValues extends FieldValues> extends Data.TaggedClass("one")<{
   current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
 }> implements QueryEnd<TFieldValues, "one"> {
   readonly [QId]!: any
-  pipe() {
-    // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
-  }
+  // pipe() {
+  //   // eslint-disable-next-line prefer-rest-params
+  //   return pipeArguments(this, arguments)
+  // }
 }
 
 export class Count<TFieldValues extends FieldValues> extends Data.TaggedClass("count")<{
   current: Query<TFieldValues> | QueryWhere<TFieldValues> | QueryEnd<TFieldValues>
 }> implements QueryEnd<TFieldValues, "count"> {
   readonly [QId]!: any
-  pipe() {
-    // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
-  }
+  // pipe() {
+  //   // eslint-disable-next-line prefer-rest-params
+  //   return pipeArguments(this, arguments)
+  // }
 }
 
 export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPath<TFieldValues>>
@@ -158,10 +156,10 @@ export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPat
   implements QueryEnd<TFieldValues>
 {
   readonly [QId]!: any
-  pipe() {
-    // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
-  }
+  // pipe() {
+  //   // eslint-disable-next-line prefer-rest-params
+  //   return pipeArguments(this, arguments)
+  // }
 }
 
 export class Project<A, TFieldValues extends FieldValues, R, TType extends "one" | "many" = "many">
@@ -173,10 +171,10 @@ export class Project<A, TFieldValues extends FieldValues, R, TType extends "one"
   implements QueryProjection<TFieldValues, A, R>
 {
   readonly [QId]!: any
-  pipe() {
-    // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
-  }
+  // pipe() {
+  //   // eslint-disable-next-line prefer-rest-params
+  //   return pipeArguments(this, arguments)
+  // }
 }
 
 export const make: <TFieldValues extends FieldValues>() => Query<TFieldValues> = () => new Initial()

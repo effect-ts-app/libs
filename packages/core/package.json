@@ -235,16 +235,6 @@
         "default": "./_cjs/_ext/pipe.cjs"
       }
     },
-    "./_ext/pipe.ext": {
-      "import": {
-        "types": "./dist/_ext/pipe.ext.d.ts",
-        "default": "./dist/_ext/pipe.ext.js"
-      },
-      "require": {
-        "types": "./dist/_ext/pipe.ext.d.ts",
-        "default": "./_cjs/_ext/pipe.ext.cjs"
-      }
-    },
     "./builtin": {
       "import": {
         "types": "./dist/builtin.d.ts",
