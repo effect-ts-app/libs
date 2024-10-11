@@ -9,7 +9,6 @@ pj.resolutions = {
   "@effect-app/core": "file:" + EFFECT_APP_LIBS + "/packages/core",
   "@effect-app/eslint-codegen-model": "file:" + EFFECT_APP_LIBS + "/packages/eslint-codegen-model",
   "effect-app": "file:" + EFFECT_APP_LIBS + "/packages/prelude",
-  "@effect-app/fluent-extensions": "file:" + EFFECT_APP_LIBS + "/packages/fluent-extensions",
   "@effect-app/infra": "file:" + EFFECT_APP_LIBS + "/packages/infra",
   "@effect-app/infra-adapters": "file:" + EFFECT_APP_LIBS + "/packages/infra-adapters",
   "@effect-app/schema": "file:" + EFFECT_APP_LIBS + "/packages/schema",
