@@ -17,16 +17,30 @@ declare global {
   interface Set<T> extends Pipeable {}
   interface ReadonlySet<T> extends Pipeable {}
   interface Date extends Pipeable {}
-  interface Iterable<T, TReturn = any, TNext = any> extends Pipeable {}
-  interface Iterator<T, TReturn = any, TNext = any> extends Pipeable {}
+  // interface Iterable<T, TReturn = any, TNext = any> extends Pipeable {}
+  // interface Iterator<T, TReturn = any, TNext = any> extends Pipeable {}
   interface Function extends Pipeable {}
 }
 
-Object.defineProperty(Object.prototype, "pipe", {
-  enumerable: false,
-  configurable: true,
-  writable: true,
-  value(...args: any[]) {
-    return pipeArguments(this, args as any)
-  }
-})
+const prototypes = [
+  Number.prototype,
+  Boolean.prototype,
+  String.prototype,
+  Array.prototype,
+  Map.prototype,
+  Set.prototype,
+  Date.prototype,
+  Function.prototype
+]
+
+// Object makes problems with builtins like Stream pipe etc
+prototypes.forEach((proto) =>
+  Object.defineProperty(proto, "pipe", {
+    enumerable: false,
+    configurable: true,
+    writable: true,
+    value(...args: any[]) {
+      return pipeArguments(this, args as any)
+    }
+  })
+)

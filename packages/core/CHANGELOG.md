@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.15.7
+
+### Patch Changes
+
+- ngl
+
 ## 1.15.6
 
 ### Patch Changes

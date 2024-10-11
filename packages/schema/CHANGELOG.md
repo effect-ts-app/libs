@@ -1,5 +1,12 @@
 # @effect-app/schema
 
+## 1.17.7
+
+### Patch Changes
+
+- Updated dependencies
+  - @effect-app/core@1.15.7
+
 ## 1.17.6
 
 ### Patch Changes
