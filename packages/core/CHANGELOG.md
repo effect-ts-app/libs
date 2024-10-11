@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.15.5
+
+### Patch Changes
+
+- fix typo
+
 ## 1.15.4
 
 ### Patch Changes

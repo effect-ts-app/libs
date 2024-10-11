@@ -27,6 +27,6 @@ Object.defineProperty(Object.prototype, "pipe", {
   configurable: true,
   writable: true,
   value(...args: any[]) {
-    return pipeArguments(this, ...args as [any])
+    return pipeArguments(this, args as any)
   }
 })
