@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.15.3
+
+### Patch Changes
+
+- extend Function
+
 ## 1.15.2
 
 ### Patch Changes
