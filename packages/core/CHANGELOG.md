@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.14.0
+
+### Minor Changes
+
+- a2ac359: add pipe extensions experiment
+
 ## 1.13.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.86.0
+
+### Minor Changes
+
+- c56949e: drop fluent extensions
+
 ## 0.85.0
 
 ### Minor Changes

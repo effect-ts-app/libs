@@ -1,5 +1,14 @@
 # @effect-app/infra-adapters
 
+## 1.16.2
+
+### Patch Changes
+
+- Updated dependencies [a2ac359]
+  - effect-app@1.25.0
+  - @effect-app/core@1.14.0
+  - @effect-app/schema@1.16.2
+
 ## 1.16.1
 
 ### Patch Changes
