@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.15.2
+
+### Patch Changes
+
+- 56b764d: fup
+
 ## 1.15.1
 
 ### Patch Changes
