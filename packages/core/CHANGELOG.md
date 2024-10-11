@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.15.6
+
+### Patch Changes
+
+- c57fd1b: fix sideeffects
+
 ## 1.15.5
 
 ### Patch Changes
