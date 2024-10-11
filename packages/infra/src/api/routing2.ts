@@ -12,7 +12,7 @@ import type * as HttpApp from "@effect/platform/HttpApp"
 import { Rpc, RpcRouter } from "@effect/rpc"
 import { Serializable } from "@effect/schema"
 import type { NonEmptyArray } from "effect-app"
-import { Cause, Chunk, Context, Effect, FiberRef, Layer, Predicate, S, Scope, Stream, Tracer } from "effect-app"
+import { Cause, Chunk, Context, Effect, FiberRef, flow, Layer, Predicate, S, Scope, Stream, Tracer } from "effect-app"
 import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
 import { HttpMiddleware, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
@@ -408,7 +408,12 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
         Router,
         string,
         never,
-        never
+        Exclude<
+          RPCRouteR<
+            { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+          >,
+          { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
+        >
       > = (class Router extends HttpRouter.Tag(meta.moduleName + "Router")<Router>() {}) as any
 
       const layer = r.use((router) =>
@@ -439,13 +444,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
       ) as Layer.Layer<
         Router,
         { [k in keyof TLayers]: Layer.Layer.Error<TLayers[k]> }[number],
-        | { [k in keyof TLayers]: Layer.Layer.Context<TLayers[k]> }[number]
-        | Exclude<
-          RPCRouteR<
-            { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
-          >,
-          { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
-        >
+        { [k in keyof TLayers]: Layer.Layer.Context<TLayers[k]> }[number]
       >
 
       // Effect.Effect<HttpRouter.HttpRouter<unknown, HttpRouter.HttpRouter.DefaultServices>, never, UserRouter>
@@ -529,6 +528,9 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
     return r
   }
 
+  type HR<T> = T extends HttpRouter.HttpRouter<any, infer R> ? R : never
+  type HE<T> = T extends HttpRouter.HttpRouter<infer E, any> ? E : never
+
   type RequestHandlersTest = {
     [key: string]: {
       Router: { router: Effect<HttpRouter.HttpRouter<any, any>, any, any> }
@@ -536,25 +538,47 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
       moduleName: string
     }
   }
-  function matchAll<T extends RequestHandlersTest>(handlers: T) {
+  function matchAll<T extends RequestHandlersTest, A, E, R>(
+    handlers: T,
+    requestLayer: Layer.Layer<A, E, R>
+  ) {
     const routers = typedValuesOf(handlers)
 
-    const r = HttpRouter
-      .Default
+    const rootRouter = class extends HttpRouter.Tag("RootRouter")<
+      "RootRouter",
+      HR<Effect.Success<typeof handlers[keyof typeof handlers]["Router"]["router"]>>,
+      HE<Effect.Success<typeof handlers[keyof typeof handlers]["Router"]["router"]>>
+    >() {}
+
+    const r = rootRouter
       .use((router) =>
         Effect.gen(function*() {
           for (const route of routers) {
-            yield* router.mount(("/rpc/" + route.moduleName) as any, yield* route.Router.router)
+            yield* router.mount(
+              ("/rpc/" + route.moduleName) as any,
+              yield* route
+                .Router
+                .router
+                .pipe(Effect.map(HttpRouter.use(flow(Effect.provide(requestLayer))))) as any
+            )
           }
         })
       )
       .pipe(Layer.provide(routers.map((r) => r.routes).flat() as unknown as NonEmptyArray<Layer.Layer.Any>))
 
-    return r as Layer.Layer<
-      never,
-      Layer.Layer.Error<typeof handlers[keyof typeof handlers]["routes"]>,
-      Layer.Layer.Context<typeof handlers[keyof typeof handlers]["routes"]>
-    >
+    return {
+      layer: r as Layer.Layer<
+        never,
+        Layer.Layer.Error<typeof handlers[keyof typeof handlers]["routes"]>,
+        Layer.Layer.Context<typeof handlers[keyof typeof handlers]["routes"]>
+      >,
+      Router: rootRouter as any as HttpRouter.HttpRouter.TagClass<
+        "RootRouter",
+        "RootRouter",
+        HE<Effect.Success<typeof handlers[keyof typeof handlers]["Router"]["router"]>>,
+        R | Exclude<HR<Effect.Success<typeof handlers[keyof typeof handlers]["Router"]["router"]>>, A>
+      >
+    }
   }
 
   return { matchAll, matchFor }
