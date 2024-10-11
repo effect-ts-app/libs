@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.35.0
+
+### Minor Changes
+
+- 0fb8b93: improve: constructor vs request dependencies
+
 ## 1.34.0
 
 ### Minor Changes
