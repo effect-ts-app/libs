@@ -1,5 +1,14 @@
 # @effect-app/prelude
 
+## 1.26.8
+
+### Patch Changes
+
+- 0ea3023: drop pipe ext, should've known
+- Updated dependencies [0ea3023]
+  - @effect-app/core@1.15.8
+  - @effect-app/schema@1.17.8
+
 ## 1.26.7
 
 ### Patch Changes

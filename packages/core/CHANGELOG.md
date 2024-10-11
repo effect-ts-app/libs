@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.15.8
+
+### Patch Changes
+
+- 0ea3023: drop pipe ext, should've known
+
 ## 1.15.7
 
 ### Patch Changes
