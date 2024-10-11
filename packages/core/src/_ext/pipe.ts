@@ -18,6 +18,7 @@ declare global {
   interface ReadonlySet<T> extends Pipeable {}
   interface Date extends Pipeable {}
   interface Iterable<T, TReturn = any, TNext = any> extends Pipeable {}
+  interface Iterator<T, TReturn = any, TNext = any> extends Pipeable {}
 }
 
 Object.defineProperty(Object.prototype, "pipe", {
