@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.15.1
+
+### Patch Changes
+
+- 56df0f3: adapt pipe extensions
+
 ## 1.15.0
 
 ### Minor Changes
