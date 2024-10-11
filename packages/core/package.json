@@ -13,7 +13,7 @@
   },
   "peerDependencies": {
     "effect": "^3.9.1",
-    "@effect/platform": "^0.68.1"
+    "@effect/platform": "^0.68.2"
   },
   "devDependencies": {
     "@types/uuid": "^10.0.0",
