@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.34.0
+
+### Minor Changes
+
+- c63f8d4: Play with Layer based http routes
+
 ## 1.33.8
 
 ### Patch Changes
