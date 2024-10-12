@@ -10,6 +10,7 @@
     "@effect-app/vue": "workspace:*",
     "@formatjs/intl": "^2.10.7",
     "@tanstack/vue-query": "^5.59.9",
+    "@vueuse/core": "^11.1.0",
     "effect-app": "workspace:*",
     "query-string": "^9.1.1"
   },
@@ -89,6 +90,36 @@
       "require": {
         "types": "./dist/internal.d.ts",
         "default": "./_cjs/internal.cjs"
+      }
+    },
+    "./makeClient": {
+      "import": {
+        "types": "./dist/makeClient.d.ts",
+        "default": "./dist/makeClient.js"
+      },
+      "require": {
+        "types": "./dist/makeClient.d.ts",
+        "default": "./_cjs/makeClient.cjs"
+      }
+    },
+    "./makeContext": {
+      "import": {
+        "types": "./dist/makeContext.d.ts",
+        "default": "./dist/makeContext.js"
+      },
+      "require": {
+        "types": "./dist/makeContext.d.ts",
+        "default": "./_cjs/makeContext.cjs"
+      }
+    },
+    "./makeIntl": {
+      "import": {
+        "types": "./dist/makeIntl.d.ts",
+        "default": "./dist/makeIntl.js"
+      },
+      "require": {
+        "types": "./dist/makeIntl.d.ts",
+        "default": "./_cjs/makeIntl.cjs"
       }
     },
     "./mutate": {

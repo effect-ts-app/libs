@@ -200,7 +200,7 @@ importers:
         version: 3.5.1(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q))
       unplugin-auto-import:
         specifier: ^0.18.3
-        version: 0.18.3(rollup@4.24.0)(webpack-sources@3.2.3)
+        version: 0.18.3(@vueuse/core@11.1.0(vue@3.5.11(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q))))(rollup@4.24.0)(webpack-sources@3.2.3)
       vite:
         specifier: ^5.4.8
         version: 5.4.8(@types/node@22.7.5)(terser@5.34.1)
@@ -676,6 +676,9 @@ importers:
       '@tanstack/vue-query':
         specifier: ^5.59.9
         version: 5.59.9(vue@3.5.11(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q)))
+      '@vueuse/core':
+        specifier: ^11.1.0
+        version: 11.1.0(vue@3.5.11(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q)))
       effect:
         specifier: ^3.9.1
         version: 3.9.1
@@ -2143,6 +2146,9 @@ packages:
   '@types/validator@13.12.2':
     resolution: {integrity: sha512-6SlHBzUW8Jhf3liqrGGXyTJSIFe4nqlJ5A5KaMZ2l/vbM3Wh3KSybots/wfWVzNLK4D1NZluDlSQIbIEPx6oyA==}
 
+  '@types/web-bluetooth@0.0.20':
+    resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
+
   '@types/webidl-conversions@7.0.0':
     resolution: {integrity: sha512-xTE1E+YF4aWPJJeUzaZI5DRntlkY3+BCVJi0axFptnjGmAoWxkyREIh/XMrfxVLejwQxMCfDXdICo0VLxThrog==}
 
@@ -2293,6 +2299,15 @@ packages:
 
   '@vue/shared@3.5.11':
     resolution: {integrity: sha512-W8GgysJVnFo81FthhzurdRAWP/byq3q2qIw70e0JWblzVhjgOMiC2GyovXrZTFQJnFVryYaKGP3Tc9vYzYm6PQ==}
+
+  '@vueuse/core@11.1.0':
+    resolution: {integrity: sha512-P6dk79QYA6sKQnghrUz/1tHi0n9mrb/iO1WTMk/ElLmTyNqgDeSZ3wcDf6fRBGzRJbeG1dxzEOvLENMjr+E3fg==}
+
+  '@vueuse/metadata@11.1.0':
+    resolution: {integrity: sha512-l9Q502TBTaPYGanl1G+hPgd3QX5s4CGnpXriVBR5fEZ/goI6fvDaVmIl3Td8oKFurOxTmbXvBPSsgrd6eu6HYg==}
+
+  '@vueuse/shared@11.1.0':
+    resolution: {integrity: sha512-YUtIpY122q7osj+zsNMFAfMTubGz0sn5QzE5gPzAIiCmtt2ha3uQUY1+JPyL4gRCTsLPX82Y9brNbo/aqlA91w==}
 
   '@webassemblyjs/ast@1.11.1':
     resolution: {integrity: sha512-ukBh14qFLjxTQNTXocdyksN5QdM28S1CxHt2rdskFyL+xFV7VremuBLVbmCePj+URalXBENx/9Lm7lnhihtCSw==}
@@ -6723,6 +6738,8 @@ snapshots:
 
   '@types/validator@13.12.2': {}
 
+  '@types/web-bluetooth@0.0.20': {}
+
   '@types/webidl-conversions@7.0.0': {}
 
   '@types/whatwg-url@11.0.3':
@@ -6935,6 +6952,25 @@ snapshots:
       vue: 3.5.11(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q))
 
   '@vue/shared@3.5.11': {}
+
+  '@vueuse/core@11.1.0(vue@3.5.11(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q)))':
+    dependencies:
+      '@types/web-bluetooth': 0.0.20
+      '@vueuse/metadata': 11.1.0
+      '@vueuse/shared': 11.1.0(vue@3.5.11(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q)))
+      vue-demi: 0.14.10(vue@3.5.11(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q)))
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+
+  '@vueuse/metadata@11.1.0': {}
+
+  '@vueuse/shared@11.1.0(vue@3.5.11(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q)))':
+    dependencies:
+      vue-demi: 0.14.10(vue@3.5.11(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q)))
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
 
   '@webassemblyjs/ast@1.11.1':
     dependencies:
@@ -9805,7 +9841,7 @@ snapshots:
 
   unpipe@1.0.0: {}
 
-  unplugin-auto-import@0.18.3(rollup@4.24.0)(webpack-sources@3.2.3):
+  unplugin-auto-import@0.18.3(@vueuse/core@11.1.0(vue@3.5.11(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q))))(rollup@4.24.0)(webpack-sources@3.2.3):
     dependencies:
       '@antfu/utils': 0.7.10
       '@rollup/pluginutils': 5.1.2(rollup@4.24.0)
@@ -9815,6 +9851,8 @@ snapshots:
       minimatch: 9.0.5
       unimport: 3.13.1(rollup@4.24.0)(webpack-sources@3.2.3)
       unplugin: 1.14.1(webpack-sources@3.2.3)
+    optionalDependencies:
+      '@vueuse/core': 11.1.0(vue@3.5.11(typescript@5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q)))
     transitivePeerDependencies:
       - rollup
       - webpack-sources
