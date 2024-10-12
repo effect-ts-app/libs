@@ -183,15 +183,16 @@ function mutationResultToVue<A, E>(
 const messages: Record<string, string | undefined> = {}
 
 export const makeClient = <Locale extends string>(
-  intl: MakeIntlReturn<Locale>,
+  makeUseIntl: MakeIntlReturn<Locale>,
   useToast: () => {
     error: (message: string) => void
     warning: (message: string) => void
     success: (message: string) => void
   }
 ) => {
-  const { useIntl } = intl
+  const { useIntl } = makeUseIntl
   const toast = useToast()
+  const { intl } = useIntl()
   /**
    * Pass a function that returns a Promise.
    * Returns an execution function which reports errors as Toast.
@@ -205,7 +206,6 @@ export const makeClient = <Locale extends string>(
     action: string,
     options: Opts<A> = { suppressErrorToast: false }
   ) {
-    const { intl } = useIntl()
     const message = messages[action] ?? action
     const warnMessage = intl.value.formatMessage(
       { id: "handle.with_warnings" },
@@ -287,7 +287,6 @@ export const makeClient = <Locale extends string>(
   }
 
   function renderError(e: ResErrors): string {
-    const { intl } = useIntl()
     return Match.value(e).pipe(
       Match.tags({
         // HttpErrorRequest: e =>
