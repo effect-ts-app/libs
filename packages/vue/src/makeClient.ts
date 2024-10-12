@@ -184,8 +184,8 @@ export const makeClient = <Locale extends string, R>(
     warning: (message: string) => void
     success: (message: string) => void
   },
-  messages: Record<string, string | undefined> = {},
-  useSafeMutation: MakeMutation<R>
+  useSafeMutation: MakeMutation<R>,
+  messages: Record<string, string | undefined> = {}
 ) => {
   const useHandleRequestWithToast = () => {
     const toast = useToast()
