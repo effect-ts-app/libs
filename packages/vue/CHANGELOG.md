@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.22.5
+
+### Patch Changes
+
+- d9e027a: update packages
+- Updated dependencies [d9e027a]
+  - @effect-app/vue@1.22.5
+
 ## 1.22.4
 
 ### Patch Changes
