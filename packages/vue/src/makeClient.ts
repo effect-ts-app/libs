@@ -180,15 +180,14 @@ function mutationResultToVue<A, E>(
   }
 }
 
-const messages: Record<string, string | undefined> = {}
-
 export const makeClient = <Locale extends string>(
   useIntl: MakeIntlReturn<Locale>["useIntl"],
   useToast: () => {
     error: (message: string) => void
     warning: (message: string) => void
     success: (message: string) => void
-  }
+  },
+  messages: Record<string, string | undefined> = {}
 ) => {
   const useHandleRequestWithToast = () => {
     const toast = useToast()
