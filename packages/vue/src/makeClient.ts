@@ -191,152 +191,157 @@ export const makeClient = <Locale extends string>(
   }
 ) => {
   const { useIntl } = makeUseIntl
-  const toast = useToast()
-  const { intl } = useIntl()
-  /**
-   * Pass a function that returns a Promise.
-   * Returns an execution function which reports errors as Toast.
-   */
-  function handleRequestWithToast<
-    E extends ResErrors,
-    A,
-    Args extends unknown[]
-  >(
-    f: (...args: Args) => Promise<Either<A, E>>,
-    action: string,
-    options: Opts<A> = { suppressErrorToast: false }
-  ) {
-    const message = messages[action] ?? action
-    const warnMessage = intl.value.formatMessage(
-      { id: "handle.with_warnings" },
-      { action: message }
-    )
-    const successMessage = intl.value.formatMessage(
-      { id: "handle.success" },
-      { action: message }
-    )
-    const errorMessage = intl.value.formatMessage(
-      { id: "handle.with_errors" },
-      { action: message }
-    )
-    return Object.assign(
-      flow(f, (p) =>
-        p.then(
-          (r) =>
-            r._tag === "Right"
-              ? S.is(Failure)(r.right)
-                ? Promise
-                  .resolve(
-                    toast.warning(
-                      warnMessage + r.right.message
-                        ? "\n" + r.right.message
-                        : ""
+
+  const useHandleRequestWithToast = () => {
+    const toast = useToast()
+    const { intl } = useIntl()
+
+    return handleRequestWithToast
+    /**
+     * Pass a function that returns a Promise.
+     * Returns an execution function which reports errors as Toast.
+     */
+    function handleRequestWithToast<
+      E extends ResErrors,
+      A,
+      Args extends unknown[]
+    >(
+      f: (...args: Args) => Promise<Either<A, E>>,
+      action: string,
+      options: Opts<A> = { suppressErrorToast: false }
+    ) {
+      const message = messages[action] ?? action
+      const warnMessage = intl.value.formatMessage(
+        { id: "handle.with_warnings" },
+        { action: message }
+      )
+      const successMessage = intl.value.formatMessage(
+        { id: "handle.success" },
+        { action: message }
+      )
+      const errorMessage = intl.value.formatMessage(
+        { id: "handle.with_errors" },
+        { action: message }
+      )
+      return Object.assign(
+        flow(f, (p) =>
+          p.then(
+            (r) =>
+              r._tag === "Right"
+                ? S.is(Failure)(r.right)
+                  ? Promise
+                    .resolve(
+                      toast.warning(
+                        warnMessage + r.right.message
+                          ? "\n" + r.right.message
+                          : ""
+                      )
                     )
-                  )
-                  .then((_) => {})
+                    .then((_) => {})
+                  : Promise
+                    .resolve(
+                      toast.success(
+                        successMessage
+                          + (S.is(Success)(r.right) && r.right.message
+                            ? "\n" + r.right.message
+                            : "")
+                      )
+                    )
+                    .then((_) => {})
+                : r.left._tag === "SuppressErrors"
+                ? Promise.resolve(void 0)
                 : Promise
                   .resolve(
-                    toast.success(
-                      successMessage
-                        + (S.is(Success)(r.right) && r.right.message
-                          ? "\n" + r.right.message
-                          : "")
-                    )
+                    !options.suppressErrorToast
+                      && toast.error(`${errorMessage}:\n` + renderError(r.left))
                   )
-                  .then((_) => {})
-              : r.left._tag === "SuppressErrors"
-              ? Promise.resolve(void 0)
-              : Promise
-                .resolve(
-                  !options.suppressErrorToast
-                    && toast.error(`${errorMessage}:\n` + renderError(r.left))
+                  .then((_) => {
+                    console.warn(r.left, r.left.toString())
+                  }),
+            (err) => {
+              if (
+                Cause.isInterruptedException(err)
+                || (Runtime.isFiberFailure(err)
+                  && Cause.isInterruptedOnly(err[Runtime.FiberFailureCauseId]))
+              ) {
+                return
+              }
+              const extra = {
+                action,
+                message: `Unexpected Error trying to ${action}`
+              }
+              Sentry.captureException(err, {
+                extra
+              })
+              console.error(err, extra)
+
+              return toast.error(
+                intl.value.formatMessage(
+                  { id: "handle.unexpected_error" },
+                  {
+                    action: message,
+                    error: JSON.stringify(err, undefined, 2)
+                  }
                 )
-                .then((_) => {
-                  console.warn(r.left, r.left.toString())
-                }),
-          (err) => {
-            if (
-              Cause.isInterruptedException(err)
-              || (Runtime.isFiberFailure(err)
-                && Cause.isInterruptedOnly(err[Runtime.FiberFailureCauseId]))
-            ) {
-              return
-            }
-            const extra = {
-              action,
-              message: `Unexpected Error trying to ${action}`
-            }
-            Sentry.captureException(err, {
-              extra
-            })
-            console.error(err, extra)
-
-            return toast.error(
-              intl.value.formatMessage(
-                { id: "handle.unexpected_error" },
-                {
-                  action: message,
-                  error: JSON.stringify(err, undefined, 2)
-                }
               )
-            )
-          }
-        )),
-      { action }
-    )
-  }
+            }
+          )),
+        { action }
+      )
+    }
 
-  function renderError(e: ResErrors): string {
-    return Match.value(e).pipe(
-      Match.tags({
-        // HttpErrorRequest: e =>
-        //   intl.value.formatMessage(
-        //     { id: "handle.request_error" },
-        //     { error: `${e.error}` },
-        //   ),
-        // HttpErrorResponse: e =>
-        //   e.response.status >= 500 ||
-        //   e.response.body._tag !== "Some" ||
-        //   !e.response.body.value
-        //     ? intl.value.formatMessage(
-        //         { id: "handle.error_response" },
-        //         {
-        //           error: `${
-        //             e.response.body._tag === "Some" && e.response.body.value
-        //               ? parseError(e.response.body.value)
-        //               : "Unknown"
-        //           } (${e.response.status})`,
-        //         },
-        //       )
-        //     : intl.value.formatMessage(
-        //         { id: "handle.unexpected_error" },
-        //         {
-        //           error:
-        //             JSON.stringify(e.response.body, undefined, 2) +
-        //             "( " +
-        //             e.response.status +
-        //             ")",
-        //         },
-        //       ),
-        // ResponseError: e =>
-        //   intl.value.formatMessage(
-        //     { id: "handle.response_error" },
-        //     { error: `${e.error}` },
-        //   ),
-        ParseError: (e) => {
-          console.warn(e.toString())
-          return intl.value.formatMessage({ id: "validation.failed" })
-        }
-      }),
-      Match.orElse((e) =>
-        intl.value.formatMessage(
-          { id: "handle.unexpected_error" },
-          {
-            error: `${e.message ?? e._tag ?? e}`
+    function renderError(e: ResErrors): string {
+      return Match.value(e).pipe(
+        Match.tags({
+          // HttpErrorRequest: e =>
+          //   intl.value.formatMessage(
+          //     { id: "handle.request_error" },
+          //     { error: `${e.error}` },
+          //   ),
+          // HttpErrorResponse: e =>
+          //   e.response.status >= 500 ||
+          //   e.response.body._tag !== "Some" ||
+          //   !e.response.body.value
+          //     ? intl.value.formatMessage(
+          //         { id: "handle.error_response" },
+          //         {
+          //           error: `${
+          //             e.response.body._tag === "Some" && e.response.body.value
+          //               ? parseError(e.response.body.value)
+          //               : "Unknown"
+          //           } (${e.response.status})`,
+          //         },
+          //       )
+          //     : intl.value.formatMessage(
+          //         { id: "handle.unexpected_error" },
+          //         {
+          //           error:
+          //             JSON.stringify(e.response.body, undefined, 2) +
+          //             "( " +
+          //             e.response.status +
+          //             ")",
+          //         },
+          //       ),
+          // ResponseError: e =>
+          //   intl.value.formatMessage(
+          //     { id: "handle.response_error" },
+          //     { error: `${e.error}` },
+          //   ),
+          ParseError: (e) => {
+            console.warn(e.toString())
+            return intl.value.formatMessage({ id: "validation.failed" })
           }
+        }),
+        Match.orElse((e) =>
+          intl.value.formatMessage(
+            { id: "handle.unexpected_error" },
+            {
+              error: `${e.message ?? e._tag ?? e}`
+            }
+          )
         )
       )
-    )
+    }
   }
 
   /**
@@ -361,6 +366,7 @@ export const makeClient = <Locale extends string>(
       options?: Opts<A>
     ): ActResp<E, A>
   } = (self: any, action: any, options: any) => {
+    const handleRequestWithToast = useHandleRequestWithToast()
     const [a, b] = useSafeMutation({
       handler: Effect.isEffect(self.handler)
         ? (pipe(
@@ -416,7 +422,7 @@ export const makeClient = <Locale extends string>(
   return {
     useAndHandleMutation,
     makeUseAndHandleMutation,
-    handleRequestWithToast
+    useHandleRequestWithToast
   }
 }
 
