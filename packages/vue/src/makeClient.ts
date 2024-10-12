@@ -96,9 +96,13 @@ export const withSuccess: {
             i: any
           ) => Effect<any, any, ApiConfig | HttpClient.HttpClient>
         )(i),
-        Effect.flatMap((_) => Effect.promise(() => onSuccess(_, i)))
+        Effect.flatMap((_) =>
+          Effect.promise(() => onSuccess(_, i)).pipe(
+            Effect.withSpan("onSuccess")
+          )
+        )
       )
-    : Effect.flatMap(self.handler, (_) => Effect.promise(() => onSuccess(_)))
+    : Effect.flatMap(self.handler, (_) => Effect.promise(() => onSuccess(_)).pipe(Effect.withSpan("onSuccess")))
 })
 
 export const withSuccessE: {
@@ -393,17 +397,24 @@ export const makeClient = <Locale extends string>(
     )
   }
 
-  function makeUseAndHandleMutation(onSuccess: () => Promise<void>) {
+  function makeUseAndHandleMutation(
+    onSuccess?: () => Promise<void>,
+    defaultOptions?: Opts<any>
+  ) {
     return ((self: any, action: any, options: any) => {
       return useAndHandleMutation(
         {
-          handler: (typeof self.handler === "function"
-            ? (i: any) => Effect.tap(self.handler(i), () => Effect.promise(onSuccess))
-            : Effect.tap(self.handler, () => Effect.promise(onSuccess))) as any,
+          handler: typeof self.handler === "function"
+            ? onSuccess
+              ? (i: any) => Effect.tap(self.handler(i), () => Effect.promise(onSuccess))
+              : self.handler
+            : onSuccess
+            ? (Effect.tap(self.handler, () => Effect.promise(onSuccess)) as any)
+            : self.handler,
           name: self.name
         },
         action,
-        options
+        { ...defaultOptions, ...options }
       )
     }) as {
       <I, E extends ResponseErrors, A>(
@@ -412,8 +423,8 @@ export const makeClient = <Locale extends string>(
           name: string
         },
         action: string,
-        options?: Opts<A>
-      ): Resp<I, E, A>
+        options?: Opts<A, I>
+      ): Resp<I, A, E>
       <E extends ResponseErrors, A>(
         self: {
           handler: Effect<A, E, ApiConfig | HttpClient.HttpClient>
