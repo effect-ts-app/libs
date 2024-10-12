@@ -4,9 +4,6 @@ import { Config, Exit, Runtime } from "effect"
 import { Effect, Layer, Logger } from "effect-app"
 import { ApiConfig } from "effect-app/client"
 import * as Scope from "effect/Scope"
-import { initRuntime } from "./internal.js"
-
-export { initRuntime } from "./internal.js"
 
 export const DefaultApiConfig = Config.all({
   apiUrl: Config.string("apiUrl").pipe(Config.withDefault("/api")),
@@ -48,7 +45,6 @@ export function makeAppRuntime<R, E, A>(layer: Layer<A, E, R>) {
 
 export function initializeSync<E, A>(layer: Layer<A | ApiConfig | HttpClient.HttpClient, E, never>) {
   const { clean, runtime } = Effect.runSync(makeAppRuntime(layer))
-  initRuntime(runtime)
   return {
     runtime,
     clean: () => Effect.runSync(clean)
@@ -59,7 +55,6 @@ export function initializeAsync<E, A>(layer: Layer<A | ApiConfig | HttpClient.Ht
   return Effect
     .runPromise(makeAppRuntime(layer))
     .then(({ clean, runtime }) => {
-      initRuntime(runtime)
       return {
         runtime,
         clean: () => Effect.runPromise(clean)

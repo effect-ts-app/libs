@@ -1,17 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { tuple } from "@effect-app/core/Function"
 import * as Result from "@effect-rx/rx/Result"
-import type * as HttpClient from "@effect/platform/HttpClient"
 import type { InvalidateOptions, InvalidateQueryFilters } from "@tanstack/vue-query"
 import { useQueryClient } from "@tanstack/vue-query"
-import { Cause, Effect, Exit, Option } from "effect-app"
-import type { ApiConfig } from "effect-app/client"
+import { Cause, Effect, Exit, Option, Runtime } from "effect-app"
 import { dropUndefinedT } from "effect-app/utils"
 import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
-import { makeQueryKey, reportRuntimeError, run } from "./internal.js"
+import { makeQueryKey, reportRuntimeError } from "./internal.js"
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
 export function make<A, E, R>(self: Effect<A, E, R>) {
@@ -53,12 +51,6 @@ export interface MutationError<E> {
 
 export type MutationResult<A, E> = MutationInitial | MutationLoading | MutationSuccess<A> | MutationError<E>
 
-type HandlerWithInput<I, A, E> = {
-  handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient>
-  name: string
-}
-type Handler<A, E> = { handler: Effect<A, E, ApiConfig | HttpClient.HttpClient>; name: string }
-
 export type MaybeRef<T> = Ref<T> | ComputedRef<T> | T
 type MaybeRefDeep<T> = MaybeRef<
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -97,125 +89,138 @@ export const getQueryKey = (name: string) => {
                 // }
                 */
 
-/**
- * Pass a function that returns an Effect, e.g from a client action, or an Effect
- * Returns a tuple with state ref and execution function which reports errors as Toast.
- */
-export const useSafeMutation: {
-  <I, E, A>(self: HandlerWithInput<I, A, E>, options?: MutationOptions<A, I>): readonly [
-    Readonly<Ref<MutationResult<A, E>>>,
-    (
-      i: I,
-      signal?: AbortSignal
-    ) => Promise<Either.Either<A, E>>
-  ]
-  <E, A>(self: Handler<A, E>, options?: MutationOptions<A>): readonly [
-    Readonly<Ref<MutationResult<A, E>>>,
-    (
-      signal?: AbortSignal
-    ) => Promise<Either.Either<A, E>>
-  ]
-} = <I, E, A>(
-  self: {
-    handler:
-      | HandlerWithInput<I, A, E>["handler"]
-      | Handler<A, E>["handler"]
+export const makeMutation = <R>(runtime: Runtime.Runtime<R>) => {
+  type HandlerWithInput<I, A, E> = {
+    handler: (i: I) => Effect<A, E, R>
     name: string
-  },
-  options?: MutationOptions<A>
-) => {
-  const queryClient = useQueryClient()
-  const state: Ref<MutationResult<A, E>> = ref<MutationResult<A, E>>({ _tag: "Initial" }) as any
-  const onSuccess = options?.onSuccess
-
-  const invalidateQueries = (
-    filters?: MaybeRefDeep<InvalidateQueryFilters>,
-    options?: MaybeRefDeep<InvalidateOptions>
-  ) => Effect.promise(() => queryClient.invalidateQueries(filters, options))
-
-  function handleExit(exit: Exit.Exit<A, E>): Effect<Either.Either<A, E>, never, never> {
-    return Effect.sync(() => {
-      if (Exit.isSuccess(exit)) {
-        state.value = { _tag: "Success", data: exit.value }
-        return Either.right(exit.value)
-      }
-
-      const err = Cause.failureOption(exit.cause)
-      if (Option.isSome(err)) {
-        state.value = { _tag: "Error", error: err.value }
-        return Either.left(err.value)
-      }
-
-      const died = Cause.dieOption(exit.cause)
-      if (Option.isSome(died)) {
-        throw died.value
-      }
-      const interrupted = Cause.interruptOption(exit.cause)
-      if (Option.isSome(interrupted)) {
-        throw new InterruptedException()
-      }
-      throw new Error("Invalid state")
-    })
   }
+  type Handler<A, E> = { handler: Effect<A, E, R>; name: string }
 
-  const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
-    let effect: Effect<A, E, ApiConfig | HttpClient.HttpClient>
-    let signal: AbortSignal | undefined
-    if (Effect.isEffect(self.handler)) {
-      effect = self.handler as any
-      signal = fst as AbortSignal | undefined
-    } else {
-      effect = self.handler(fst as I)
-      signal = snd
+  const runPromise = Runtime.runPromise(runtime)
+  /**
+   * Pass a function that returns an Effect, e.g from a client action, or an Effect
+   * Returns a tuple with state ref and execution function which reports errors as Toast.
+   */
+  const useSafeMutation: {
+    <I, E, A>(self: HandlerWithInput<I, A, E>, options?: MutationOptions<A, I>): readonly [
+      Readonly<Ref<MutationResult<A, E>>>,
+      (
+        i: I,
+        signal?: AbortSignal
+      ) => Promise<Either.Either<A, E>>
+    ]
+    <E, A>(self: Handler<A, E>, options?: MutationOptions<A>): readonly [
+      Readonly<Ref<MutationResult<A, E>>>,
+      (
+        signal?: AbortSignal
+      ) => Promise<Either.Either<A, E>>
+    ]
+  } = <I, E, A>(
+    self: {
+      handler:
+        | HandlerWithInput<I, A, E>["handler"]
+        | Handler<A, E>["handler"]
+      name: string
+    },
+    options?: MutationOptions<A>
+  ) => {
+    const queryClient = useQueryClient()
+    const state: Ref<MutationResult<A, E>> = ref<MutationResult<A, E>>({ _tag: "Initial" }) as any
+    const onSuccess = options?.onSuccess
+
+    const invalidateQueries = (
+      filters?: MaybeRefDeep<InvalidateQueryFilters>,
+      options?: MaybeRefDeep<InvalidateOptions>
+    ) => Effect.promise(() => queryClient.invalidateQueries(filters, options))
+
+    function handleExit(exit: Exit.Exit<A, E>): Effect<Either.Either<A, E>, never, never> {
+      return Effect.sync(() => {
+        if (Exit.isSuccess(exit)) {
+          state.value = { _tag: "Success", data: exit.value }
+          return Either.right(exit.value)
+        }
+
+        const err = Cause.failureOption(exit.cause)
+        if (Option.isSome(err)) {
+          state.value = { _tag: "Error", error: err.value }
+          return Either.left(err.value)
+        }
+
+        const died = Cause.dieOption(exit.cause)
+        if (Option.isSome(died)) {
+          throw died.value
+        }
+        const interrupted = Cause.interruptOption(exit.cause)
+        if (Option.isSome(interrupted)) {
+          throw new InterruptedException()
+        }
+        throw new Error("Invalid state")
+      })
     }
 
-    return run.value(
-      Effect
-        .sync(() => {
-          state.value = { _tag: "Loading" }
-        })
-        .pipe(
-          Effect.andThen(effect),
-          Effect.tap(() =>
-            Effect
-              .suspend(() => {
-                const queryKey = getQueryKey(self.name)
+    const exec = (fst?: I | AbortSignal, snd?: AbortSignal) => {
+      let effect: Effect<A, E, R>
+      let signal: AbortSignal | undefined
+      if (Effect.isEffect(self.handler)) {
+        effect = self.handler as any
+        signal = fst as AbortSignal | undefined
+      } else {
+        effect = self.handler(fst as I)
+        signal = snd
+      }
 
-                if (options?.queryInvalidation) {
-                  const opts = options.queryInvalidation(queryKey, self.name)
-                  if (!opts.length) {
-                    return Effect.void
+      return runPromise(
+        Effect
+          .sync(() => {
+            state.value = { _tag: "Loading" }
+          })
+          .pipe(
+            Effect.andThen(effect),
+            Effect.tap(() =>
+              Effect
+                .suspend(() => {
+                  const queryKey = getQueryKey(self.name)
+
+                  if (options?.queryInvalidation) {
+                    const opts = options.queryInvalidation(queryKey, self.name)
+                    if (!opts.length) {
+                      return Effect.void
+                    }
+                    return Effect
+                      .andThen(
+                        Effect.annotateCurrentSpan({ queryKey, opts }),
+                        Effect.forEach(opts, (_) => invalidateQueries(_.filters, _.options), { concurrency: "inherit" })
+                      )
+                      .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
                   }
+
+                  if (!queryKey) return Effect.void
+
                   return Effect
                     .andThen(
-                      Effect.annotateCurrentSpan({ queryKey, opts }),
-                      Effect.forEach(opts, (_) => invalidateQueries(_.filters, _.options), { concurrency: "inherit" })
+                      Effect.annotateCurrentSpan({ queryKey }),
+                      invalidateQueries({ queryKey })
                     )
                     .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
-                }
-
-                if (!queryKey) return Effect.void
-
-                return Effect
-                  .andThen(
-                    Effect.annotateCurrentSpan({ queryKey }),
-                    invalidateQueries({ queryKey })
-                  )
-                  .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
-              })
+                })
+            ),
+            Effect.tapDefect(reportRuntimeError),
+            Effect.tap((i) => onSuccess ? Effect.promise(() => onSuccess(i)) : Effect.void),
+            Effect.exit,
+            Effect.flatMap(handleExit),
+            Effect.withSpan(`mutation ${self.name}`, { captureStackTrace: false })
           ),
-          Effect.tapDefect(reportRuntimeError),
-          Effect.tap((i) => onSuccess ? Effect.promise(() => onSuccess(i)) : Effect.void),
-          Effect.exit,
-          Effect.flatMap(handleExit),
-          Effect.withSpan(`mutation ${self.name}`, { captureStackTrace: false })
-        ),
-      dropUndefinedT({ signal })
+        dropUndefinedT({ signal })
+      )
+    }
+
+    return tuple(
+      state,
+      exec
     )
   }
-
-  return tuple(
-    state,
-    exec
-  )
+  return useSafeMutation
 }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface MakeMutation<R> extends ReturnType<typeof makeMutation<R>> {}

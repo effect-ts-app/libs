@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { flow, pipe, tuple } from "@effect-app/core/Function"
-import { type MutationResult, Result, useSafeMutation } from "@effect-app/vue"
+import type { MutationResult } from "@effect-app/vue"
+import { Result } from "@effect-app/vue"
 import * as Sentry from "@sentry/browser"
 import { type MaybeRefOrGetter, type Pausable, useIntervalFn, type UseIntervalFnOptions } from "@vueuse/core"
 import type { Either } from "effect-app"
 import { Array, Cause, Effect, Match, Option, Runtime, S } from "effect-app"
-import { type ApiConfig, type SupportedErrors } from "effect-app/client"
-import type { HttpClient } from "effect-app/http"
+import { type SupportedErrors } from "effect-app/client"
 import { Failure, Success } from "effect-app/Operations"
 import { dropUndefinedT } from "effect-app/utils"
+import type { R } from "vitest/dist/chunks/config.Crbj2GAb.js"
 import { computed, type ComputedRef } from "vue"
 import type { MakeIntlReturn } from "./makeIntl.js"
-import type { MutationOptions } from "./mutate.js"
+import type { MakeMutation, MutationOptions } from "./mutate.js"
 
 /**
  * Use this after handling an error yourself, still continueing on the Error track, but the error will not be reported.
@@ -53,37 +54,25 @@ export interface Opts<A, I = void> extends MutationOptions<A, I> {
   successToast?: (a: A) => any
 }
 
-export const useSafeMutationWithState = <I, E, A>(self: {
-  handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient>
-  name: string
-}) => {
-  const [a, b] = useSafeMutation(self)
-
-  return tuple(
-    computed(() => mutationResultToVue(a.value)),
-    b
-  )
-}
-
 export const withSuccess: {
-  <I, E extends ResponseErrors, A, X>(
+  <I, E extends ResponseErrors, A, X, R>(
     self: {
-      handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient>
+      handler: (i: I) => Effect<A, E, R>
       name: string
     },
     onSuccess: (a: A, i: I) => Promise<X>
   ): {
-    handler: (i: I) => Effect<X, E, ApiConfig | HttpClient.HttpClient>
+    handler: (i: I) => Effect<X, E, R>
     name: string
   }
-  <E extends ResponseErrors, A, X>(
+  <E extends ResponseErrors, A, X, R>(
     self: {
-      handler: Effect<A, E, ApiConfig | HttpClient.HttpClient>
+      handler: Effect<A, E, R>
       name: string
     },
     onSuccess: (_: A) => Promise<X>
   ): {
-    handler: Effect<X, E, ApiConfig | HttpClient.HttpClient>
+    handler: Effect<X, E, R>
     name: string
   }
 } = (self: any, onSuccess: any): any => ({
@@ -94,7 +83,7 @@ export const withSuccess: {
         (
           self.handler as (
             i: any
-          ) => Effect<any, any, ApiConfig | HttpClient.HttpClient>
+          ) => Effect<any, any, R>
         )(i),
         Effect.flatMap((_) =>
           Effect.promise(() => onSuccess(_, i)).pipe(
@@ -106,24 +95,24 @@ export const withSuccess: {
 })
 
 export const withSuccessE: {
-  <I, E extends ResponseErrors, A, E2, X>(
+  <I, E extends ResponseErrors, A, E2, X, R>(
     self: {
-      handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient>
+      handler: (i: I) => Effect<A, E, R>
       name: string
     },
     onSuccessE: (_: A, i: I) => Effect<X, E2>
   ): {
-    handler: (i: I) => Effect<X, E | E2, ApiConfig | HttpClient.HttpClient>
+    handler: (i: I) => Effect<X, E | E2, R>
     name: string
   }
-  <E extends ResponseErrors, A, E2, X>(
+  <E extends ResponseErrors, A, E2, X, R>(
     self: {
-      handler: Effect<A, E, ApiConfig | HttpClient.HttpClient>
+      handler: Effect<A, E, R>
       name: string
     },
     onSuccessE: (_: A) => Effect<X, E2>
   ): {
-    handler: Effect<X, E | E2, ApiConfig | HttpClient.HttpClient>
+    handler: Effect<X, E | E2, R>
     name: string
   }
 } = (self: any, onSuccessE: any): any => {
@@ -188,14 +177,15 @@ export function mutationResultToVue<A, E>(
   }
 }
 
-export const makeClient = <Locale extends string>(
+export const makeClient = <Locale extends string, R>(
   useIntl: MakeIntlReturn<Locale>["useIntl"],
   useToast: () => {
     error: (message: string) => void
     warning: (message: string) => void
     success: (message: string) => void
   },
-  messages: Record<string, string | undefined> = {}
+  messages: Record<string, string | undefined> = {},
+  useSafeMutation: MakeMutation<R>
 ) => {
   const useHandleRequestWithToast = () => {
     const toast = useToast()
@@ -356,7 +346,7 @@ export const makeClient = <Locale extends string>(
   const useAndHandleMutation: {
     <I, E extends ResponseErrors, A>(
       self: {
-        handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient>
+        handler: (i: I) => Effect<A, E, R>
         name: string
       },
       action: string,
@@ -364,7 +354,7 @@ export const makeClient = <Locale extends string>(
     ): Resp<I, A, E>
     <E extends ResponseErrors, A>(
       self: {
-        handler: Effect<A, E, ApiConfig | HttpClient.HttpClient>
+        handler: Effect<A, E, R>
         name: string
       },
       action: string,
@@ -420,7 +410,7 @@ export const makeClient = <Locale extends string>(
     }) as {
       <I, E extends ResponseErrors, A>(
         self: {
-          handler: (i: I) => Effect<A, E, ApiConfig | HttpClient.HttpClient>
+          handler: (i: I) => Effect<A, E, R>
           name: string
         },
         action: string,
@@ -428,7 +418,7 @@ export const makeClient = <Locale extends string>(
       ): Resp<I, A, E>
       <E extends ResponseErrors, A>(
         self: {
-          handler: Effect<A, E, ApiConfig | HttpClient.HttpClient>
+          handler: Effect<A, E, R>
           name: string
         },
         action: string,
@@ -437,7 +427,20 @@ export const makeClient = <Locale extends string>(
     }
   }
 
+  const useSafeMutationWithState = <I, E, A>(self: {
+    handler: (i: I) => Effect<A, E, R>
+    name: string
+  }) => {
+    const [a, b] = useSafeMutation(self)
+
+    return tuple(
+      computed(() => mutationResultToVue(a.value)),
+      b
+    )
+  }
+
   return {
+    useSafeMutationWithState,
     useAndHandleMutation,
     makeUseAndHandleMutation,
     useHandleRequestWithToast

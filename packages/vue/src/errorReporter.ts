@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/browser"
-import { Cause, Effect } from "effect-app"
+import { Cause, Effect } from "effect"
 import { annotateSpanWithError, CauseException, ErrorReported } from "effect-app/client/errors"
 
 export function reportError(
   name: string
 ) {
-  return (cause: Cause<unknown>, extras?: Record<string, unknown>) =>
+  return (cause: Cause.Cause<unknown>, extras?: Record<string, unknown>) =>
     Effect.gen(function*() {
       yield* annotateSpanWithError(cause, name)
       if (Cause.isInterrupted(cause)) {
@@ -46,7 +46,7 @@ function reportSentry(
 export function logError<E>(
   name: string
 ) {
-  return (cause: Cause<E>, extras?: Record<string, unknown>) =>
+  return (cause: Cause.Cause<E>, extras?: Record<string, unknown>) =>
     Effect.gen(function*() {
       if (Cause.isInterrupted(cause)) {
         yield* Effect.logDebug("Interrupted").pipe(Effect.annotateLogs(dropUndefined({ extras })))

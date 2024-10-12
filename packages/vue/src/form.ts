@@ -60,12 +60,12 @@ export interface DiscriminatedUnionFieldInfo<T> {
   _tag: "DiscriminatedUnionFieldInfo"
 }
 
-type NestedFieldInfoKey<Key> = [Key] extends [Record<PropertyKey, any>]
+export type NestedFieldInfoKey<Key> = [Key] extends [Record<PropertyKey, any>]
   ? Unbranded<Key> extends Record<PropertyKey, any> ? NestedFieldInfo<Key>
   : FieldInfo<Key>
   : FieldInfo<Key>
 
-type DistributiveNestedFieldInfoKey<Key> = Key extends any ? NestedFieldInfoKey<Key> : never
+export type DistributiveNestedFieldInfoKey<Key> = Key extends any ? NestedFieldInfoKey<Key> : never
 
 export type NestedFieldInfo<To extends Record<PropertyKey, any>> = // exploit eventual _tag field to propagate the unique tag
   {
