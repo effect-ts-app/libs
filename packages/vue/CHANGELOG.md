@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 1.23.0
+
+### Minor Changes
+
+- 826d1df: refactor: remove global runtime
+
+### Patch Changes
+
+- Updated dependencies [826d1df]
+  - @effect-app/vue@1.23.0
+
 ## 1.22.5
 
 ### Patch Changes
