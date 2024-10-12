@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 1.21.0
+
+### Minor Changes
+
+- f8e0f0f: extract client from boilerplate into libs.
+
+### Patch Changes
+
+- Updated dependencies [f8e0f0f]
+  - @effect-app/vue@1.21.0
+
 ## 1.20.8
 
 ### Patch Changes
