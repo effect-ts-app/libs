@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.22.4
+
+### Patch Changes
+
+- export
+- Updated dependencies
+  - @effect-app/vue@1.22.4
+
 ## 1.22.3
 
 ### Patch Changes

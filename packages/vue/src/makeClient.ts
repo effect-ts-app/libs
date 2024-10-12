@@ -160,7 +160,8 @@ type ActResp<E, A> = readonly [
   ComputedRef<Res<A, E>>,
   WithAction<() => Promise<void>>
 ]
-function mutationResultToVue<A, E>(
+
+export function mutationResultToVue<A, E>(
   mutationResult: MutationResult<A, E>
 ): Res<A, E> {
   switch (mutationResult._tag) {
