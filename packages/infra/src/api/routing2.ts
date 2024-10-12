@@ -287,7 +287,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
           RT,
           A,
           E,
-          Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
+          Exclude<R2 | Effect.Context<SVC[keyof SVC]>, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
         >
       >
     }
