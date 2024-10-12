@@ -89,14 +89,13 @@ export const getQueryKey = (name: string) => {
                 // }
                 */
 
-export const makeMutation = <R>(runtime: Runtime.Runtime<R>) => {
+export const makeMutation = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
   type HandlerWithInput<I, A, E> = {
     handler: (i: I) => Effect<A, E, R>
     name: string
   }
   type Handler<A, E> = { handler: Effect<A, E, R>; name: string }
 
-  const runPromise = Runtime.runPromise(runtime)
   /**
    * Pass a function that returns an Effect, e.g from a client action, or an Effect
    * Returns a tuple with state ref and execution function which reports errors as Toast.
@@ -124,6 +123,8 @@ export const makeMutation = <R>(runtime: Runtime.Runtime<R>) => {
     },
     options?: MutationOptions<A>
   ) => {
+    const runPromise = Runtime.runPromise(runtime.value)
+
     const queryClient = useQueryClient()
     const state: Ref<MutationResult<A, E>> = ref<MutationResult<A, E>>({ _tag: "Initial" }) as any
     const onSuccess = options?.onSuccess

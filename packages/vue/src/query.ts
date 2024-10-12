@@ -15,7 +15,7 @@ import { useQuery } from "@tanstack/vue-query"
 import { Cause, Effect, Option, Runtime, S } from "effect-app"
 import { ServiceUnavailableError } from "effect-app/client"
 import { computed, ref } from "vue"
-import type { ComputedRef, WatchSource } from "vue"
+import type { ComputedRef, Ref, WatchSource } from "vue"
 import { makeQueryKey, reportRuntimeError } from "./internal.js"
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -34,8 +34,7 @@ export interface KnownFiberFailure<E> extends Runtime.FiberFailure {
   readonly [Runtime.FiberFailureCauseId]: Cause.Cause<E>
 }
 
-export const makeQuery = <R>(runtime: Runtime.Runtime<R>) => {
-  const runPromise = Runtime.runPromise(runtime)
+export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
   // TODO: options
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
@@ -65,6 +64,7 @@ export const makeQuery = <R>(runtime: Runtime.Runtime<R>) => {
     arg?: I | WatchSource<I>,
     options: QueryObserverOptionsCustom<unknown, KnownFiberFailure<E>, A> = {} // TODO
   ) => {
+    const runPromise = Runtime.runPromise(runtime.value)
     const arr = arg
     const req: { value: I } = !arg
       ? undefined
