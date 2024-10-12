@@ -45,7 +45,7 @@ export function useIntervalPauseWhileProcessing(
   }
 }
 
-interface Opts<A> {
+export interface Opts<A> {
   suppressErrorToast?: boolean
   suppressSuccessToast?: boolean
   successToast?: (a: A) => any
@@ -132,7 +132,7 @@ export const withSuccessE: {
   }
 }
 
-interface Res<A, E> {
+export interface Res<A, E> {
   readonly loading: boolean
   readonly data: A | undefined
   readonly error: E | undefined
@@ -183,15 +183,13 @@ function mutationResultToVue<A, E>(
 const messages: Record<string, string | undefined> = {}
 
 export const makeClient = <Locale extends string>(
-  makeUseIntl: MakeIntlReturn<Locale>,
+  useIntl: MakeIntlReturn<Locale>["useIntl"],
   useToast: () => {
     error: (message: string) => void
     warning: (message: string) => void
     success: (message: string) => void
   }
 ) => {
-  const { useIntl } = makeUseIntl
-
   const useHandleRequestWithToast = () => {
     const toast = useToast()
     const { intl } = useIntl()
