@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.22.2
+
+### Patch Changes
+
+- port enhancements
+- Updated dependencies
+  - @effect-app/vue@1.22.2
+
 ## 1.22.1
 
 ### Patch Changes
