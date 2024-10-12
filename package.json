@@ -50,7 +50,7 @@
     "cross-env": "^7.0.3",
     "date-fns": "^4.1.0",
     "fast-check": "^3.22.0",
-    "vue": "^3.5.11"
+    "vue": "^3.5.12"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.7",
@@ -67,7 +67,7 @@
     "@effect-app/infra-adapters": "workspace:*",
     "@effect-app/pnpm-singleton": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/language-service": "0.1.0",
+    "@effect/language-service": "0.2.0",
     "@effect/platform": "^0.68.2",
     "@effect/platform-node": "^0.63.2",
     "@effect/schema": "^0.75.3",
