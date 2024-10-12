@@ -1,5 +1,13 @@
 # @effect-app/infra
 
+## 1.35.1
+
+### Patch Changes
+
+- 1c6f9dc: fix context of services
+- Updated dependencies [6a8ca2f]
+  - @effect-app/infra-adapters@1.17.9
+
 ## 1.35.0
 
 ### Minor Changes

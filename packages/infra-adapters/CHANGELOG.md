@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 1.17.9
+
+### Patch Changes
+
+- 6a8ca2f: fix: we should only set a parent span if there is one
+
 ## 1.17.8
 
 ### Patch Changes
