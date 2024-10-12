@@ -40,7 +40,10 @@ const make = Effect.gen(function*() {
 })
 
 const getRootParentSpan = Effect.gen(function*() {
-  let span: Tracer.AnySpan = yield* Effect.currentSpan.pipe(Effect.orDie)
+  let span: Tracer.AnySpan | null = yield* Effect.currentSpan.pipe(
+    Effect.catchTag("NoSuchElementException", () => Effect.succeed(null))
+  )
+  if (!span) return span
   while (span._tag === "Span" && Option.isSome(span.parent)) {
     span = span.parent.value
   }
@@ -48,7 +51,7 @@ const getRootParentSpan = Effect.gen(function*() {
 })
 
 export const setRootParentSpan = <A, E, R>(self: Effect<A, E, R>) =>
-  getRootParentSpan.pipe(Effect.andThen((span) => Effect.withParentSpan(self, span)))
+  getRootParentSpan.pipe(Effect.andThen((span) => span ? Effect.withParentSpan(self, span) : self))
 
 /**
  * Whenever you fork a fiber for a Request, and you want to prevent dependent services to close prematurely on interruption,
