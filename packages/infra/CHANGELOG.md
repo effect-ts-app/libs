@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.36.1
+
+### Patch Changes
+
+- b8fcde2: fix in memory etag tracking when projecting
+
 ## 1.36.0
 
 ### Minor Changes
