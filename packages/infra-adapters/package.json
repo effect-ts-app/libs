@@ -6,8 +6,8 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/experimental": "^0.29.2",
-    "@effect/sql": "^0.16.2",
+    "@effect/experimental": "^0.29.4",
+    "@effect/sql": "^0.16.4",
     "effect-app": "workspace:*",
     "query-string": "^9.1.1"
   },
@@ -24,9 +24,9 @@
     "typescript": "^5.6.3"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.68.2",
-    "@effect/schema": "^0.75.3",
-    "effect": "^3.9.1"
+    "@effect/platform": "^0.68.4",
+    "@effect/schema": "^0.75.4",
+    "effect": "^3.9.2"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

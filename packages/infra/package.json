@@ -8,8 +8,8 @@
     "@azure/service-bus": "^7.9.5",
     "@effect-app/core": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
-    "@effect/rpc": "^0.43.1",
-    "@effect/rpc-http": "^0.41.1",
+    "@effect/rpc": "^0.43.3",
+    "@effect/rpc-http": "^0.41.3",
     "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "express-oauth2-jwt-bearer": "^1.6.0",
@@ -43,11 +43,11 @@
   },
   "peerDependencies": {
     "express": "^4.21.1",
-    "@effect/platform": "^0.68.2",
-    "@effect/schema": "^0.75.3",
-    "@effect/sql": "^0.16.2",
-    "@effect/vitest": "^0.12.0",
-    "effect": "^3.9.1"
+    "@effect/platform": "^0.68.4",
+    "@effect/schema": "^0.75.4",
+    "@effect/sql": "^0.16.4",
+    "@effect/vitest": "^0.12.1",
+    "effect": "^3.9.2"
   },
   "typesVersions": {
     "*": {
