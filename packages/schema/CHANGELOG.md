@@ -1,5 +1,16 @@
 # @effect-app/schema
 
+## 1.18.0
+
+### Minor Changes
+
+- 9ddb31b: update packages
+
+### Patch Changes
+
+- Updated dependencies [9ddb31b]
+  - @effect-app/core@1.16.0
+
 ## 1.17.8
 
 ### Patch Changes
