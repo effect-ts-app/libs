@@ -164,7 +164,7 @@ type Filter<T> = {
   [K in keyof T as T[K] extends S.Schema.All & { success: S.Schema.Any; failure: S.Schema.Any } ? K : never]: T[K]
 }
 
-interface ExtendedMiddleware<Context, CTXMap extends Record<string, RPCContextMap.Any>>
+export interface ExtendedMiddleware<Context, CTXMap extends Record<string, RPCContextMap.Any>>
   extends Middleware<Context, CTXMap>
 {
   // TODO
