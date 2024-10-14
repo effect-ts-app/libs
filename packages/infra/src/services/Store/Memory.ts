@@ -240,10 +240,8 @@ export const makeMemoryStore = () => ({
             return makeMemoryStoreInt(modelName, namespace, seed, config?.defaultValues)
               .pipe(
                 Effect.orDie,
-                Effect
-                  .provide(ctx),
-                Effect
-                  .tap((store) => Effect.sync(() => stores.set(namespace, store)))
+                Effect.provide(ctx),
+                Effect.tap((store) => Effect.sync(() => stores.set(namespace, store)))
               )
           }))
         }))
