@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.35.2
+
+### Patch Changes
+
+- 5b19b4c: add exports
+
 ## 1.35.1
 
 ### Patch Changes
