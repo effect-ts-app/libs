@@ -525,11 +525,12 @@ export function makeRepo<
                   .pipe(Effect.orDie, Effect.withSpan("parseMany2", { captureStackTrace: false })))
           const filter = <U extends keyof Encoded = keyof Encoded>(args: FilterArgs<Encoded, U>) =>
             store
-              .filter(args)
+              .filter(
+                // always enforce id and _etag because they are system fields, required for etag tracking etc
+                { ...args, select: args.select ? [...args.select, "id", "_etag" as any] : undefined } as typeof args
+              )
               .pipe(Effect.tap((items) =>
-                args.select
-                  ? Effect.void
-                  : Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as Encoded).id, (_ as PM)._etag)))
+                Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as Encoded).id, (_ as PM)._etag)))
               ))
 
           // TODO: For raw we should use S.from, and drop the R...
@@ -543,7 +544,9 @@ export function makeRepo<
             const eff = a.mode === "project"
               ? filter(a)
                 // TODO: mapFrom but need to support per field and dependencies
-                .pipe(Effect.andThen(flow(S.decode(S.Array(a.schema ?? schema)), Effect.provide(rctx))))
+                .pipe(
+                  Effect.andThen(flow(S.decode(S.Array(a.schema ?? schema)), Effect.provide(rctx)))
+                )
               : a.mode === "collect"
               ? filter(a)
                 // TODO: mapFrom but need to support per field and dependencies
