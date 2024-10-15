@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra",
-  "version": "1.37.0",
+  "version": "1.38.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -8,8 +8,8 @@
     "@azure/service-bus": "^7.9.5",
     "@effect-app/core": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
-    "@effect/rpc": "^0.43.3",
-    "@effect/rpc-http": "^0.41.3",
+    "@effect/rpc": "^0.43.4",
+    "@effect/rpc-http": "^0.41.4",
     "effect-app": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "express-oauth2-jwt-bearer": "^1.6.0",
@@ -39,13 +39,13 @@
     "mongodb": "6.9.0",
     "redis": "^3.1.2",
     "typescript": "^5.6.3",
-    "vitest": "^2.1.2"
+    "vitest": "^2.1.3"
   },
   "peerDependencies": {
     "express": "^4.21.1",
-    "@effect/platform": "^0.68.4",
+    "@effect/platform": "^0.68.5",
     "@effect/schema": "^0.75.4",
-    "@effect/sql": "^0.16.4",
+    "@effect/sql": "^0.16.5",
     "@effect/vitest": "^0.12.1",
     "effect": "^3.9.2"
   },
