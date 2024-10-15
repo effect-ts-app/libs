@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.37.0
+
+### Minor Changes
+
+- 2998f25: feat: add query dsl for includes/notIncludes, and any/all variations
+
 ## 1.36.1
 
 ### Patch Changes
