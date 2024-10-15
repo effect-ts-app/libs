@@ -11,6 +11,10 @@ export type OtherOps =
   | "notContains"
   | "includes"
   | "notIncludes"
+  | "includes-any"
+  | "notIncludes-any"
+  | "includes-all"
+  | "notIncludes-all"
   | "eq"
   | "neq"
   | "gt"
@@ -18,7 +22,6 @@ export type OtherOps =
   | "lt"
   | "lte"
 
-// TODO: includes | notIncludes
 export type Ops = OtherOps | InOps
 
 export type FilterScopes = {

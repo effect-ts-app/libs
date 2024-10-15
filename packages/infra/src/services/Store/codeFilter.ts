@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Array } from "effect-app"
 import { assertUnreachable, get } from "effect-app/utils"
 import type { FilterR, FilterResult } from "./filterApi/query.js"
 import { compare, greaterThan, greaterThanExclusive, lowerThan, lowerThanExclusive } from "./utils.js"
+
+const vAsArr = (v: string) => v as unknown as any[]
 
 export const codeFilterStatement = <E>(p: FilterR, x: E) => {
   const k = get(x, p.path)
@@ -22,6 +26,14 @@ export const codeFilterStatement = <E>(p: FilterR, x: E) => {
       return (k as Array<string>).includes(p.value)
     case "notIncludes":
       return !(k as Array<string>).includes(p.value)
+    case "includes-any":
+      return (vAsArr(p.value)).some((_) => (k as Array<string>)?.includes(_))
+    case "notIncludes-any":
+      return !(vAsArr(p.value)).some((_) => (k as Array<string>)?.includes(_))
+    case "includes-all":
+      return (vAsArr(p.value)).every((_) => (k as Array<string>)?.includes(_))
+    case "notIncludes-all":
+      return !(vAsArr(p.value)).every((_) => (k as Array<string>)?.includes(_))
     case "contains":
       return (k as string).toLowerCase().includes(p.value.toLowerCase())
     case "endsWith":

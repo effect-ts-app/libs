@@ -316,8 +316,38 @@ export type FilterWheres = {
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(
     path: TFieldName,
-    op: "in" | "notIn",
+    op:
+      | "in"
+      | "notIn",
     value: readonly V[]
+  ): (
+    current: Query<TFieldValues>
+  ) => QueryWhere<TFieldValues>
+  <
+    TFieldValues extends FieldValues,
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op:
+      | "includes"
+      | "notIncludes",
+    value: GetArV<V>
+  ): (
+    current: Query<TFieldValues>
+  ) => QueryWhere<TFieldValues>
+  <
+    TFieldValues extends FieldValues,
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op:
+      | "includes-any"
+      | "notIncludes-any"
+      | "includes-all"
+      | "notIncludes-all",
+    value: readonly GetArV<V>[]
   ): (
     current: Query<TFieldValues>
   ) => QueryWhere<TFieldValues>
@@ -504,8 +534,38 @@ export type FilterWhere =
       V extends FieldPathValue<TFieldValues, TFieldName>
     >(
       path: TFieldName,
-      op: "in" | "notIn",
+      op:
+        | "in"
+        | "notIn",
       value: readonly V[]
+    ): (
+      current: Query<TFieldValues>
+    ) => QueryWhere<TFieldValues>
+    <
+      TFieldValues extends FieldValues,
+      TFieldName extends FieldPath<TFieldValues>,
+      V extends FieldPathValue<TFieldValues, TFieldName>
+    >(
+      path: TFieldName,
+      op:
+        | "includes"
+        | "notIncludes",
+      value: GetArV<V>
+    ): (
+      current: Query<TFieldValues>
+    ) => QueryWhere<TFieldValues>
+    <
+      TFieldValues extends FieldValues,
+      TFieldName extends FieldPath<TFieldValues>,
+      V extends FieldPathValue<TFieldValues, TFieldName>
+    >(
+      path: TFieldName,
+      op:
+        | "includes-any"
+        | "notIncludes-any"
+        | "includes-all"
+        | "notIncludes-all",
+      value: readonly GetArV<V>[]
     ): (
       current: Query<TFieldValues>
     ) => QueryWhere<TFieldValues>
@@ -562,12 +622,44 @@ export type FilterContinuations = {
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(
     path: TFieldName,
-    op: "in" | "notIn",
+    op:
+      | "in"
+      | "notIn",
     value: readonly V[]
   ): (
     current: QueryWhere<TFieldValues>
   ) => QueryWhere<TFieldValues>
+  <
+    TFieldValues extends FieldValues,
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op:
+      | "includes"
+      | "notIncludes",
+    value: GetArV<V>
+  ): (
+    current: QueryWhere<TFieldValues>
+  ) => QueryWhere<TFieldValues>
+  <
+    TFieldValues extends FieldValues,
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op:
+      | "includes-any"
+      | "notIncludes-any"
+      | "includes-all"
+      | "notIncludes-all",
+    value: readonly GetArV<V>[]
+  ): (
+    current: QueryWhere<TFieldValues>
+  ) => QueryWhere<TFieldValues>
 }
+
+type GetArV<T> = T extends readonly (infer R)[] ? R : never
 
 export type FilterContinuationClosure = {
   <TFieldValues extends FieldValues>(

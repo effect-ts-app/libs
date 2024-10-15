@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { Array, Effect, Equivalence, pipe } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { assertUnreachable } from "effect-app/utils"
@@ -27,6 +28,9 @@ export function logQuery(q: {
     }))
 }
 
+const arrayContains = (v: any[]) => v.map((_) => JSON.stringify(_)).join(", ")
+const vAsArr = (v: string) => v as unknown as any[]
+
 export function buildWhereCosmosQuery3(
   filter: readonly FilterResult[],
   name: string,
@@ -53,9 +57,20 @@ export function buildWhereCosmosQuery3(
         return `(NOT ARRAY_CONTAINS(${v}, ${k}))`
 
       case "includes":
-        return `ARRAY_CONTAINS(${k}, ${v})`
+        return `ARRAY_CONTAINS(${k}, ${arrayContains(vAsArr(v))})`
       case "notIncludes":
-        return `(NOT ARRAY_CONTAINS(${k}, ${v}))`
+        return `(NOT ARRAY_CONTAINS(${k}, ${arrayContains(vAsArr(v))}))`
+
+      case "includes-any":
+        return `ARRAY_CONTAINS_ANY(${k}, ${arrayContains(vAsArr(v))})`
+      case "notIncludes-any":
+        return `(NOT ARRAY_CONTAINS_ANY(${k}, ${arrayContains(vAsArr(v))}))`
+
+      case "includes-all":
+        return `ARRAY_CONTAINS_ALL(${k}, ${arrayContains(vAsArr(v))})`
+      case "notIncludes-all":
+        return `(NOT ARRAY_CONTAINS_ALL(${k}, ${arrayContains(vAsArr(v))}))`
+
       case "contains":
         return `CONTAINS(${k}, ${v}, true)`
 
