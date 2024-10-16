@@ -53,7 +53,7 @@ const make = Effect.gen(function*() {
    * The parent span is set to the root span of the current fiber.
    * Reports errors.
    */
-  function forkDaemonReportRequest<R, E, A>(self: Effect<A, E, R>) {
+  function forkDaemonReport<R, E, A>(self: Effect<A, E, R>) {
     return self.pipe(
       reportRequestError,
       setRootParentSpan,
@@ -71,7 +71,7 @@ const make = Effect.gen(function*() {
    * The parent span is set to the root span of the current fiber.
    * Reports unexpected errors.
    */
-  function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<A, E, R>) {
+  function forkDaemonReportUnexpected<R, E, A>(self: Effect<A, E, R>) {
     return self
       .pipe(
         reportUnknownRequestError,
@@ -88,8 +88,8 @@ const make = Effect.gen(function*() {
     add,
     addAll,
     register,
-    forkDaemonReportRequest,
-    forkDaemonReportRequestUnexpected
+    forkDaemonReport,
+    forkDaemonReportUnexpected
   }
 })
 
@@ -101,4 +101,7 @@ export class RequestFiberSet extends Context.TagMakeId("RequestFiberSet", make)<
   static readonly Live = this.toLayerScoped()
   static readonly register = <A, E, R>(self: Effect<A, E, R>) => this.use((_) => _.register(self))
   static readonly run = <A, E, R>(self: Effect<A, E, R>) => this.use((_) => _.run(self))
+  static readonly forkDaemonReport = <R, E, A>(self: Effect<A, E, R>) => this.use((_) => _.forkDaemonReport(self))
+  static readonly forkDaemonReportUnexpected = <R, E, A>(self: Effect<A, E, R>) =>
+    this.use((_) => _.forkDaemonReportUnexpected(self))
 }
