@@ -180,11 +180,13 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
   devMode: boolean
 ) => {
   const rpc = makeRpc(middleware)
-  function matchFor<Rsc extends Record<string, any> & { meta: { moduleName: string } }>(
-    rsc: Rsc
+  function matchFor<
+    const ModuleName extends string,
+    const Rsc extends Record<string, any>
+  >(
+    rsc: Rsc & { meta: { moduleName: ModuleName } }
   ) {
-    const meta = (rsc as any).meta as { moduleName: string }
-    if (!meta) throw new Error("Resource has no meta specified") // TODO: do something with moduleName+cur etc.
+    const meta = rsc.meta
 
     type Filtered = Filter<Rsc>
     const filtered = typedKeysOf(rsc).reduce((acc, cur) => {

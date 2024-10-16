@@ -177,7 +177,7 @@ export interface ExtendedMiddleware<Context, CTXMap extends Record<string, RPCCo
 }
 
 export const RouterSymbol = Symbol()
-export interface RouterS<Rsc> {
+export interface RouterShape<Rsc> {
   [RouterSymbol]: Rsc
 }
 
@@ -196,12 +196,13 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
   devMode: boolean
 ) => {
   const rpc = makeRpc(middleware)
-  function matchFor<Rsc extends Record<string, any> & { meta: { moduleName: string } }>(
-    rsc: Rsc
+  function matchFor<
+    const ModuleName extends string,
+    const Rsc extends Record<string, any>
+  >(
+    rsc: Rsc & { meta: { moduleName: ModuleName } }
   ) {
-    const meta = (rsc as any).meta as { moduleName: string }
-    if (!meta) throw new Error("Resource has no meta specified") // TODO: do something with moduleName+cur etc.
-
+    const meta = rsc.meta
     type Filtered = Filter<Rsc>
     const filtered = typedKeysOf(rsc).reduce((acc, cur) => {
       if (Predicate.isObject(rsc[cur]) && rsc[cur]["success"]) {
@@ -403,10 +404,10 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
         RPCRouteR<typeof mapped[keyof typeof mapped]>
       >
 
-      type Router = RouterS<Rsc>
+      type Router = RouterShape<Rsc>
       const r: HttpRouter.HttpRouter.TagClass<
         Router,
-        string,
+        `${typeof meta.moduleName}Router`,
         never,
         Exclude<
           RPCRouteR<
@@ -414,7 +415,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
           >,
           { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
         >
-      > = (class Router extends HttpRouter.Tag(meta.moduleName + "Router")<Router>() {}) as any
+      > = (class Router extends HttpRouter.Tag(`${meta.moduleName}Router`)<Router>() {}) as any
 
       const layer = r.use((router) =>
         Effect.gen(function*() {
@@ -468,10 +469,10 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
       layers: TLayers,
       make: Effect<THandlers, E, R>
     ) => {
-      type Router = RouterS<Rsc>
+      type Router = RouterShape<Rsc>
       const r: HttpRouter.HttpRouter.TagClass<
         Router,
-        string,
+        `${typeof meta.moduleName}Router`,
         never,
         Exclude<
           RPCRouteR<
@@ -479,7 +480,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
           >,
           { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
         >
-      > = (class Router extends HttpRouter.Tag(meta.moduleName + "Router")<Router>() {}) as any
+      > = (class Router extends HttpRouter.Tag(`${meta.moduleName}Router`)<Router>() {}) as any
 
       const layer = r.use((router) =>
         Effect.gen(function*() {

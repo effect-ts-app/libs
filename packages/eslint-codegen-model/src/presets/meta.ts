@@ -14,7 +14,7 @@ export const meta: Preset<{ sourcePrefix?: string }> = ({ meta, options }) => {
     Array.dedupeAdjacent
   )
     .join("/")
-  const expectedContent = `export const meta = { moduleName: "${moduleName}" }`
+  const expectedContent = `export const meta = { moduleName: "${moduleName}" } as const`
 
   try {
     if (expectedContent === meta.existingContent) {
