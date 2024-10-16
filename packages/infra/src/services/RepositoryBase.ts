@@ -28,6 +28,7 @@ import {
   Chunk,
   Context,
   Effect,
+  Equivalence,
   Exit,
   flow,
   Option,
@@ -314,6 +315,8 @@ export class RepositoryBaseC3<
   }
 }
 
+const dedupe = Array.dedupeWith(Equivalence.string)
+
 /**
  * A base implementation to create a repository.
  */
@@ -527,11 +530,18 @@ export function makeRepo<
             store
               .filter(
                 // always enforce id and _etag because they are system fields, required for etag tracking etc
-                { ...args, select: args.select ? [...args.select, "id", "_etag" as any] : undefined } as typeof args
+                {
+                  ...args,
+                  select: args.select
+                    ? dedupe([...args.select, "id", "_etag" as any])
+                    : undefined
+                } as typeof args
               )
-              .pipe(Effect.tap((items) =>
-                Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as Encoded).id, (_ as PM)._etag)))
-              ))
+              .pipe(
+                Effect.tap((items) =>
+                  Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as Encoded).id, (_ as PM)._etag)))
+                )
+              )
 
           // TODO: For raw we should use S.from, and drop the R...
           const query: {
