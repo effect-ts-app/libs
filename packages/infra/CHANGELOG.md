@@ -1,5 +1,12 @@
 # @effect-app/infra
 
+## 1.39.0
+
+### Minor Changes
+
+- 3d37a85: improve: moduleName as const
+- 2629d43: add routing2's effectful route construction
+
 ## 1.38.0
 
 ### Minor Changes

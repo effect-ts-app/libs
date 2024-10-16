@@ -1,5 +1,15 @@
 # @effect-app/eslint-codegen-model
 
+## 1.18.0
+
+### Minor Changes
+
+- 3d37a85: improve: moduleName as const
+
+### Patch Changes
+
+- 3d37a85: use as const
+
 ## 1.17.0
 
 ### Minor Changes
