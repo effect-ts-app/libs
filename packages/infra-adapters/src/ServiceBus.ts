@@ -11,7 +11,6 @@ import { ServiceBusClient } from "@azure/service-bus"
 import type { Scope } from "effect-app"
 import { Cause, Context, Effect, Exit, FiberSet, Layer } from "effect-app"
 import { InfraLogger } from "./logger.js"
-import { RequestFiberSet } from "./RequestFiberSet.js"
 
 function makeClient(url: string) {
   return Effect.acquireRelease(
@@ -38,7 +37,6 @@ export const Sender = Context.GenericTag<ServiceBusSender>("@services/Sender")
 export function LiveSender(queueName: string) {
   return Layer
     .scoped(Sender, makeSender(queueName))
-    .pipe(Layer.provide(RequestFiberSet.Live))
 }
 
 function makeReceiver(queueName: string, waitTillEmpty: Effect<void>, sessionId?: string) {

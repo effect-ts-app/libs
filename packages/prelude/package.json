@@ -240,16 +240,6 @@
         "default": "./_cjs/schema.cjs"
       }
     },
-    "./services/MainFiberSet": {
-      "import": {
-        "types": "./dist/services/MainFiberSet.d.ts",
-        "default": "./dist/services/MainFiberSet.js"
-      },
-      "require": {
-        "types": "./dist/services/MainFiberSet.d.ts",
-        "default": "./_cjs/services/MainFiberSet.cjs"
-      }
-    },
     "./utils": {
       "import": {
         "types": "./dist/utils.d.ts",

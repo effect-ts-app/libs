@@ -109,16 +109,6 @@
         "default": "./_cjs/CUPS/service.cjs"
       }
     },
-    "./RequestFiberSet": {
-      "import": {
-        "types": "./dist/RequestFiberSet.d.ts",
-        "default": "./dist/RequestFiberSet.js"
-      },
-      "require": {
-        "types": "./dist/RequestFiberSet.d.ts",
-        "default": "./_cjs/RequestFiberSet.cjs"
-      }
-    },
     "./SQL": {
       "import": {
         "types": "./dist/SQL.d.ts",

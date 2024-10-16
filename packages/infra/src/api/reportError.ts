@@ -1,4 +1,3 @@
-import { RequestFiberSet, setRootParentSpan } from "@effect-app/infra-adapters/RequestFiberSet"
 import { Cause, Effect } from "effect-app"
 import { logError, reportError } from "../errorReporter.js"
 
@@ -26,42 +25,5 @@ const tapErrorCause = (name: string, unknownOnly?: boolean) => {
           : report(cause)
         : report(cause))
 }
-const reportRequestError = tapErrorCause("request")
-const reportUnknownRequestError = tapErrorCause("request", true)
-
-/**
- * Forks the effect into a new fiber attached to the RequestFiberSet scope. Because the
- * new fiber isn't attached to the parent, when the fiber executing the
- * returned effect terminates, the forked fiber will continue running.
- * The fiber will be interrupted when the RequestFiberSet scope is closed.
- *
- * The parent span is set to the root span of the current fiber.
- * Reports errors.
- */
-export function forkDaemonReportRequest<R, E, A>(self: Effect<A, E, R>) {
-  return self.pipe(
-    reportRequestError,
-    setRootParentSpan,
-    Effect.uninterruptible,
-    RequestFiberSet.run
-  )
-}
-
-/**
- * Forks the effect into a new fiber attached to the RequestFiberSet scope. Because the
- * new fiber isn't attached to the parent, when the fiber executing the
- * returned effect terminates, the forked fiber will continue running.
- * The fiber will be interrupted when the RequestFiberSet scope is closed.
- *
- * The parent span is set to the root span of the current fiber.
- * Reports unexpected errors.
- */
-export function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<A, E, R>) {
-  return self
-    .pipe(
-      reportUnknownRequestError,
-      setRootParentSpan,
-      Effect.uninterruptible,
-      RequestFiberSet.run
-    )
-}
+export const reportRequestError = tapErrorCause("request")
+export const reportUnknownRequestError = tapErrorCause("request", true)

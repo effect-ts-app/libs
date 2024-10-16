@@ -1,7 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Tracer } from "@effect-app/core"
 import { Context, Effect, Fiber, FiberSet, Option } from "@effect-app/core"
-import { InfraLogger } from "./logger.js"
+import { reportRequestError, reportUnknownRequestError } from "../api/reportError.js"
+import { InfraLogger } from "../logger.js"
+
+const getRootParentSpan = Effect.gen(function*() {
+  let span: Tracer.AnySpan | null = yield* Effect.currentSpan.pipe(
+    Effect.catchTag("NoSuchElementException", () => Effect.succeed(null))
+  )
+  if (!span) return span
+  while (span._tag === "Span" && Option.isSome(span.parent)) {
+    span = span.parent.value
+  }
+  return span
+})
+
+export const setRootParentSpan = <A, E, R>(self: Effect<A, E, R>) =>
+  getRootParentSpan.pipe(Effect.andThen((span) => span ? Effect.withParentSpan(self, span) : self))
 
 const make = Effect.gen(function*() {
   const set = yield* FiberSet.make<any, any>()
@@ -29,29 +44,54 @@ const make = Effect.gen(function*() {
   // TODO: loop and interrupt all fibers in the set continuously?
   const interrupt = Fiber.interruptAll(set)
 
+  /**
+   * Forks the effect into a new fiber attached to the RequestFiberSet scope. Because the
+   * new fiber isn't attached to the parent, when the fiber executing the
+   * returned effect terminates, the forked fiber will continue running.
+   * The fiber will be interrupted when the RequestFiberSet scope is closed.
+   *
+   * The parent span is set to the root span of the current fiber.
+   * Reports errors.
+   */
+  function forkDaemonReportRequest<R, E, A>(self: Effect<A, E, R>) {
+    return self.pipe(
+      reportRequestError,
+      setRootParentSpan,
+      Effect.uninterruptible,
+      run
+    )
+  }
+
+  /**
+   * Forks the effect into a new fiber attached to the RequestFiberSet scope. Because the
+   * new fiber isn't attached to the parent, when the fiber executing the
+   * returned effect terminates, the forked fiber will continue running.
+   * The fiber will be interrupted when the RequestFiberSet scope is closed.
+   *
+   * The parent span is set to the root span of the current fiber.
+   * Reports unexpected errors.
+   */
+  function forkDaemonReportRequestUnexpected<R, E, A>(self: Effect<A, E, R>) {
+    return self
+      .pipe(
+        reportUnknownRequestError,
+        setRootParentSpan,
+        Effect.uninterruptible,
+        run
+      )
+  }
+
   return {
     interrupt,
     join,
     run,
     add,
     addAll,
-    register
+    register,
+    forkDaemonReportRequest,
+    forkDaemonReportRequestUnexpected
   }
 })
-
-const getRootParentSpan = Effect.gen(function*() {
-  let span: Tracer.AnySpan | null = yield* Effect.currentSpan.pipe(
-    Effect.catchTag("NoSuchElementException", () => Effect.succeed(null))
-  )
-  if (!span) return span
-  while (span._tag === "Span" && Option.isSome(span.parent)) {
-    span = span.parent.value
-  }
-  return span
-})
-
-export const setRootParentSpan = <A, E, R>(self: Effect<A, E, R>) =>
-  getRootParentSpan.pipe(Effect.andThen((span) => span ? Effect.withParentSpan(self, span) : self))
 
 /**
  * Whenever you fork a fiber for a Request, and you want to prevent dependent services to close prematurely on interruption,

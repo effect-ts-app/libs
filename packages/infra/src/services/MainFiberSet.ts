@@ -1,8 +1,9 @@
 import { Context, Effect, Fiber, FiberSet, Layer } from "@effect-app/core"
-
 import type {} from "effect/Scope"
 import type {} from "effect/Context"
-import { PreludeLogger } from "../logger.js"
+import { InfraLogger } from "../logger.js"
+import { reportNonInterruptedFailureCause } from "./QueueMaker/errors.js"
+import { setRootParentSpan } from "./RequestFiberSet.js"
 
 const make = Effect.gen(function*() {
   const set = yield* FiberSet.make<unknown, never>()
@@ -11,7 +12,7 @@ const make = Effect.gen(function*() {
   const addAll = (fibers: readonly Fiber.RuntimeFiber<never, never>[]) =>
     Effect.sync(() => fibers.forEach((_) => FiberSet.unsafeAdd(set, _)))
   const join = FiberSet.size(set).pipe(
-    Effect.andThen((count) => PreludeLogger.logDebug(`Joining ${count} current fibers on the MainFiberSet`)),
+    Effect.andThen((count) => InfraLogger.logDebug(`Joining ${count} current fibers on the MainFiberSet`)),
     Effect.andThen(FiberSet.join(set))
   )
   const run = FiberSet.run(set)
@@ -21,17 +22,36 @@ const make = Effect.gen(function*() {
   //   if (currentSize === 0) {
   //     return
   //   }
-  //   yield* PreludeLogger.logInfo("Waiting MainFiberSet to be empty: " + currentSize)
+  //   yield* InfraLogger.logInfo("Waiting MainFiberSet to be empty: " + currentSize)
   //   while ((yield* FiberSet.size(set)) > 0) yield* Effect.sleep("250 millis")
-  //   yield* PreludeLogger.logDebug("MainFiberSet is empty")
+  //   yield* InfraLogger.logDebug("MainFiberSet is empty")
   // })
 
   // TODO: loop and interrupt all fibers in the set continuously?
   const interrupt = Fiber.interruptAll(set)
 
+  /**
+   * Forks the effect into a new fiber attached to the MainFiberSet scope. Because the
+   * new fiber isn't attached to the parent, when the fiber executing the
+   * returned effect terminates, the forked fiber will continue running.
+   * The fiber will be interrupted when the MainFiberSet scope is closed.
+   *
+   * The parent span is set to the root span of the current fiber.
+   * Reports and then swallows errors.
+   */
+  function fork<A, E, R>(self: Effect<A, E, R>) {
+    return self.pipe(
+      Effect.asVoid,
+      Effect.catchAllCause(reportNonInterruptedFailureCause({})),
+      setRootParentSpan,
+      Effect.uninterruptible,
+      run
+    )
+  }
   return {
     interrupt,
     join,
+    fork,
     run,
     add,
     addAll
