@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.30.0
+
+### Minor Changes
+
+- c069b8e: add WithOptionalSpan
+
 ## 1.29.0
 
 ### Minor Changes
