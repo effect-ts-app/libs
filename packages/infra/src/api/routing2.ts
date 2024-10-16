@@ -181,6 +181,16 @@ export interface RouterS<Rsc> {
   [RouterSymbol]: Rsc
 }
 
+type RPCRouteR<T extends Rpc.Rpc<any, any>> = [T] extends [
+  Rpc.Rpc<any, infer R>
+] ? R
+  : never
+
+type RPCRouteReq<T extends Rpc.Rpc<any, any>> = [T] extends [
+  Rpc.Rpc<infer Req, any>
+] ? Req
+  : never
+
 export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.Any>>(
   middleware: ExtendedMiddleware<Context, CTXMap>,
   devMode: boolean
@@ -388,16 +398,6 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
         >
       }
 
-      type RPCRouteR<T extends Rpc.Rpc<any, any>> = [T] extends [
-        Rpc.Rpc<any, infer R>
-      ] ? R
-        : never
-
-      type RPCRouteReq<T extends Rpc.Rpc<any, any>> = [T] extends [
-        Rpc.Rpc<infer Req, any>
-      ] ? Req
-        : never
-
       const rpcRouter = RpcRouter.make(...Object.values(mapped) as any) as RpcRouter.RpcRouter<
         RPCRouteReq<typeof mapped[keyof typeof mapped]>,
         RPCRouteR<typeof mapped[keyof typeof mapped]>
@@ -456,7 +456,165 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
       }
     }
 
+    const effect = <
+      E,
+      R,
+      THandlers extends {
+        // import to keep them separate via | for type checking!!
+        [K in Keys]: AHandler<Rsc[K]>
+      },
+      TLayers extends NonEmptyArray<Layer.Layer.Any>
+    >(
+      layers: TLayers,
+      make: Effect<THandlers, E, R>
+    ) => {
+      type Router = RouterS<Rsc>
+      const r: HttpRouter.HttpRouter.TagClass<
+        Router,
+        string,
+        never,
+        Exclude<
+          RPCRouteR<
+            { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+          >,
+          { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
+        >
+      > = (class Router extends HttpRouter.Tag(meta.moduleName + "Router")<Router>() {}) as any
+
+      const layer = r.use((router) =>
+        Effect.gen(function*() {
+          const controllers = yield* make
+          // return make.pipe(Effect.map((c) => controllers(c, layers)))
+          const mapped = typedKeysOf(filtered).reduce((acc, cur) => {
+            const handler = controllers[cur as keyof typeof controllers]
+            const req = rsc[cur]
+
+            acc[cur] = rpc.effect(
+              handler._tag === "raw"
+                ? class extends (req as any) {
+                  static success = S.encodedSchema(req.success)
+                  get [Serializable.symbol]() {
+                    return this.constructor
+                  }
+                  get [Serializable.symbolResult]() {
+                    return {
+                      failure: req.failure,
+                      success: S.encodedSchema(req.success)
+                    }
+                  }
+                } as any
+                : req,
+              (req) =>
+                Effect
+                  .annotateCurrentSpan(
+                    "requestInput",
+                    Object.entries(req).reduce((prev, [key, value]: [string, unknown]) => {
+                      prev[key] = key === "password"
+                        ? "<redacted>"
+                        : typeof value === "string" || typeof value === "number" || typeof value === "boolean"
+                        ? typeof value === "string" && value.length > 256
+                          ? (value.substring(0, 253) + "...")
+                          : value
+                        : Array.isArray(value)
+                        ? `Array[${value.length}]`
+                        : value === null || value === undefined
+                        ? `${value}`
+                        : typeof value === "object" && value
+                        ? `Object[${Object.keys(value).length}]`
+                        : typeof value
+                      return prev
+                    }, {} as Record<string, string | number | boolean>)
+                  )
+                  .pipe(
+                    // can't use andThen due to some being a function and effect
+                    Effect.zipRight(handler.handler(req as any) as any),
+                    Effect.tapErrorCause((cause) => Cause.isFailure(cause) ? logRequestError(cause) : Effect.void),
+                    Effect.tapDefect((cause) =>
+                      Effect
+                        .all([
+                          reportRequestError(cause, {
+                            action: `${meta.moduleName}.${req._tag}`
+                          }),
+                          Rpc.currentHeaders.pipe(Effect.andThen((headers) => {
+                            return InfraLogger
+                              .logError("Finished request", cause)
+                              .pipe(Effect.annotateLogs({
+                                action: `${meta.moduleName}.${req._tag}`,
+                                req: pretty(req),
+                                headers: pretty(headers)
+                                // resHeaders: pretty(
+                                //   Object
+                                //     .entries(headers)
+                                //     .reduce((prev, [key, value]) => {
+                                //       prev[key] = value && typeof value === "string" ? snipString(value) : value
+                                //       return prev
+                                //     }, {} as Record<string, any>)
+                                // )
+                              }))
+                          }))
+                        ])
+                    ),
+                    devMode ? (_) => _ : Effect.catchAllDefect(() => Effect.die("Internal Server Error")),
+                    Effect.withSpan("Request." + meta.moduleName + "." + req._tag, {
+                      captureStackTrace: () => handler.stack
+                    })
+                  ),
+              meta.moduleName
+            ) // TODO
+            return acc
+          }, {} as any) as {
+            [K in Keys]: Rpc.Rpc<
+              Rsc[K],
+              _R<ReturnType<THandlers[K]["handler"]>>
+            >
+          }
+
+          const rpcRouter = RpcRouter.make(...Object.values(mapped) as any) as RpcRouter.RpcRouter<
+            RPCRouteReq<typeof mapped[keyof typeof mapped]>,
+            RPCRouteR<typeof mapped[keyof typeof mapped]>
+          >
+          const httpApp = toHttpApp(rpcRouter, {
+            spanPrefix: rsc
+              .meta
+              .moduleName + "."
+          })
+          const services = (yield* Effect.context<never>()).pipe(
+            Context.omit(Scope.Scope as never),
+            Context.omit(Tracer.ParentSpan as never)
+          )
+          yield* router
+            .all(
+              "/",
+              (httpApp
+                .pipe(HttpMiddleware.make(Effect.provide(services)))) as any,
+              // TODO: not queries.
+              { uninterruptible: true }
+            )
+        })
+      )
+
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+      const routes = layer.pipe(
+        Layer.provideMerge(r.Live),
+        layers ? Layer.provide(layers) as any : (_) => _
+      ) as Layer.Layer<
+        Router,
+        { [k in keyof TLayers]: Layer.Layer.Error<TLayers[k]> }[number] | E,
+        | { [k in keyof TLayers]: Layer.Layer.Context<TLayers[k]> }[number]
+        | Exclude<R, { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]>
+      >
+
+      // Effect.Effect<HttpRouter.HttpRouter<unknown, HttpRouter.HttpRouter.DefaultServices>, never, UserRouter>
+
+      return {
+        moduleName: meta.moduleName,
+        Router: r,
+        routes
+      }
+    }
+
     const r = {
+      effect,
       controllers,
       ...typedKeysOf(filtered).reduce(
         (prev, cur) => {
