@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.29.0
+
+### Minor Changes
+
+- 3d4e45a: cleanup FiberSets
+
 ## 1.28.0
 
 ### Minor Changes

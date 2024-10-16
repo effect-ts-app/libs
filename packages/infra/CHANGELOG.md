@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 1.41.0
+
+### Minor Changes
+
+- 3d4e45a: cleanup FiberSets
+
+### Patch Changes
+
+- Updated dependencies [3d4e45a]
+  - @effect-app/infra-adapters@1.20.0
+  - effect-app@1.29.0
+
 ## 1.40.0
 
 ### Minor Changes
