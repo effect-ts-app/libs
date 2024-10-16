@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.41.5
+
+### Patch Changes
+
+- eae233b: fix select
+
 ## 1.41.4
 
 ### Patch Changes
