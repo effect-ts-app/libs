@@ -212,6 +212,9 @@ export class Operations extends Context.TagMakeId("effect-app/Operations", make)
     .pipe(Layer.effectDiscard, Layer.provide(MainFiberSet.Live))
 
   static readonly Live = this.CleanupLive.pipe(Layer.provideMerge(this.toLayer()), Layer.provide(RequestFiberSet.Live))
+
+  static readonly forkOperation = <R, E, A>(self: Effect<A, E, R>, title: NonEmptyString2k) =>
+    this.use((_) => _.forkOperation(self, title))
   static readonly forkOperationFunction =
     <R, E, A, Inp>(fnc: (inp: Inp) => Effect<A, E, R>, title: NonEmptyString2k) => (inp: Inp) =>
       this.use((_) => _.forkOperationFunction(fnc, title)(inp))
