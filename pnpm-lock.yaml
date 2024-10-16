@@ -61,8 +61,8 @@ importers:
         specifier: ^0.93.0
         version: 0.93.0
       '@effect-app/cli':
-        specifier: ^0.86.0
-        version: 0.86.0
+        specifier: ^0.87.0
+        version: 0.87.0
       '@effect-app/core':
         specifier: workspace:*
         version: link:packages/core
@@ -993,8 +993,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@effect-app/cli@0.86.0':
-    resolution: {integrity: sha512-SlKm2A2xyiKTR4H/zUd1fPMw1zAZMMVpblO75E4cYhvPHql3YnPlQ75NoNji83Hi18k9oYjhX6eQovTn+4dR1Q==}
+  '@effect-app/cli@0.87.0':
+    resolution: {integrity: sha512-INNHWYDZjMRYYPu0X/l1qy3e/z9rRd0c/b9BOqnN2FARRZ3ZfU+d/HDiQphrcnto8nrQA71mMpxrERoVybFHKw==}
     hasBin: true
 
   '@effect-rx/rx-vue@0.11.1':
@@ -5618,7 +5618,7 @@ snapshots:
   '@dprint/win32-x64@0.47.2':
     optional: true
 
-  '@effect-app/cli@0.86.0':
+  '@effect-app/cli@0.87.0':
     dependencies:
       node-watch: 0.7.4
 
