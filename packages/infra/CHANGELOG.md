@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.40.0
+
+### Minor Changes
+
+- 6cf87c8: move ops requiring Operations to the service
+
 ## 1.39.0
 
 ### Minor Changes
