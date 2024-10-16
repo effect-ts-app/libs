@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.41.2
+
+### Patch Changes
+
+- b2e5391: fixup accessors
+
 ## 1.41.1
 
 ### Patch Changes
