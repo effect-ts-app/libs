@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.42.1
+
+### Patch Changes
+
+- remove legacy from r3
+
 ## 1.42.0
 
 ### Minor Changes
