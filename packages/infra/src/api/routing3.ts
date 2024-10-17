@@ -176,10 +176,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
       return acc
     }, {} as Filtered)
 
-    type MatchWithServicesNew2<RT extends "raw" | "d", Key extends keyof Rsc> = {
-      success: RT extends "raw" ? S.SchemaClass<S.Schema.Encoded<Rsc[Key]["success"]>> : Rsc[Key]["success"]
-      failure: Rsc[Key]["failure"]
-
+    type Match<RT extends "raw" | "d", Key extends keyof Rsc> = {
       // TODO: deal with HandleVoid and ability to extends from GetSuccessShape...
       // aka we want to make sure that the return type is void if the success is void,
       // and make sure A is the actual expected type
@@ -227,44 +224,43 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
             }
         }, {
           success: rsc[cur].success,
-          failure: rsc[cur].failure
-        }) // "Raw" variations are for when you don't want to decode just to encode it again on the response
-         // e.g for direct projection from DB
-        // but more importantly, to skip Effectful decoders, like to resolve relationships from the database or remote client.
-        ;(prev as any)[(cur as any) + "Raw"] = Object.assign((fnOrEffect: any) => {
-          const stack = new Error().stack?.split("\n").slice(2).join("\n")
-          return Effect.isEffect(fnOrEffect)
-            ? class {
-              static stack = stack
-              static _tag = "raw"
-              static handler = () => fnOrEffect
+          successRaw: S.encodedSchema(rsc[cur].success),
+          failure: rsc[cur].failure,
+          raw: // "Raw" variations are for when you don't want to decode just to encode it again on the response
+            // e.g for direct projection from DB
+            // but more importantly, to skip Effectful decoders, like to resolve relationships from the database or remote client.
+            (fnOrEffect: any) => {
+              const stack = new Error().stack?.split("\n").slice(2).join("\n")
+              return Effect.isEffect(fnOrEffect)
+                ? class {
+                  static stack = stack
+                  static _tag = "raw"
+                  static handler = () => fnOrEffect
+                }
+                : class {
+                  static stack = stack
+                  static _tag = "raw"
+                  static handler = (req: any, ctx: any) => fnOrEffect(req, { ...ctx, Response: rsc[cur].success })
+                }
             }
-            : class {
-              static stack = stack
-              static _tag = "raw"
-              static handler = (req: any, ctx: any) => fnOrEffect(req, { ...ctx, Response: rsc[cur].success })
-            }
-        }, {
-          success: S.encodedSchema(rsc[cur].success),
-          failure: rsc[cur].failure
         })
         return prev
       },
-      {} as
-        & {
-          // use Rsc as Key over using Keys, so that the Go To on X.Action remain in tact in Controllers files
-          /**
-           * Requires the Type shape
-           */
-          [Key in keyof Filtered]: MatchWithServicesNew2<"d", Key>
-        }
-        & {
-          // use Rsc as Key over using Keys, so that the Go To on X.Action remain in tact in Controllers files
+      {} as {
+        // use Rsc as Key over using Keys, so that the Go To on X.Action remain in tact in Controllers files
+        /**
+         * Requires the Type shape
+         */
+        [Key in keyof Filtered]: Match<"d", Key> & {
+          success: Rsc[Key]["success"]
+          successRaw: S.SchemaClass<S.Schema.Encoded<Rsc[Key]["success"]>>
+          failure: Rsc[Key]["failure"]
           /**
            * Requires the Encoded shape (e.g directly undecoded from DB, so that we don't do multiple Decode/Encode)
            */
-          [Key in keyof Filtered as Key extends string ? `${Key}Raw` : never]: MatchWithServicesNew2<"raw", Key>
+          raw: Match<"raw", Key>
         }
+      }
     )
 
     type Keys = keyof Filtered
