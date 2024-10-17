@@ -141,6 +141,8 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
       result,
       latestSuccess,
       // one thing to keep in mind is that span will be disconnected as Context does not pass from outside.
+      // TODO: consider how we should handle the Result here which is `QueryObserverResult<A, KnownFiberFailure<E>>`
+      // and always ends up in the success channel, even when error..
       (options?: RefetchOptions) => Effect.promise(() => r.refetch(options)),
       r
     ] as const
