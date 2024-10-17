@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.43.0
+
+### Minor Changes
+
+- b8723a2: improve Raw api
+
 ## 1.42.1
 
 ### Patch Changes
