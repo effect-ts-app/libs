@@ -102,6 +102,16 @@
         "default": "./_cjs/makeClient.cjs"
       }
     },
+    "./makeClient2": {
+      "import": {
+        "types": "./dist/makeClient2.d.ts",
+        "default": "./dist/makeClient2.js"
+      },
+      "require": {
+        "types": "./dist/makeClient2.d.ts",
+        "default": "./_cjs/makeClient2.cjs"
+      }
+    },
     "./makeContext": {
       "import": {
         "types": "./dist/makeContext.d.ts",
@@ -132,6 +142,16 @@
         "default": "./_cjs/mutate.cjs"
       }
     },
+    "./mutate2": {
+      "import": {
+        "types": "./dist/mutate2.d.ts",
+        "default": "./dist/mutate2.js"
+      },
+      "require": {
+        "types": "./dist/mutate2.d.ts",
+        "default": "./_cjs/mutate2.cjs"
+      }
+    },
     "./query": {
       "import": {
         "types": "./dist/query.d.ts",
@@ -140,6 +160,16 @@
       "require": {
         "types": "./dist/query.d.ts",
         "default": "./_cjs/query.cjs"
+      }
+    },
+    "./query2": {
+      "import": {
+        "types": "./dist/query2.d.ts",
+        "default": "./dist/query2.js"
+      },
+      "require": {
+        "types": "./dist/query2.d.ts",
+        "default": "./_cjs/query2.cjs"
       }
     },
     "./routeParams": {
