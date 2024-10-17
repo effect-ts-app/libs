@@ -96,7 +96,7 @@ type GetSuccessShape<Action extends { success?: S.Schema.Any }, RT extends "d" |
   : S.Schema.Type<GetSuccess<Action>>
 type GetFailure<T extends { failure?: S.Schema.Any }> = T["failure"] extends never ? typeof S.Never : T["failure"]
 
-export interface Handler<Action extends AnyRequestModule, RT extends "raw" | "d", A, E, R> {
+type HandlerFull<Action extends AnyRequestModule, RT extends "raw" | "d", A, E, R> = {
   new(): {}
   _tag: RT
   stack: string
@@ -109,22 +109,22 @@ export interface Handler<Action extends AnyRequestModule, RT extends "raw" | "d"
   >
 }
 
-// Separate "raw" vs "d" to verify A (Encoded for "raw" vs Type for "d")
-type AHandler<Action extends AnyRequestModule> =
-  | Handler<
+export interface Handler<Action extends AnyRequestModule, RT extends "raw" | "d", R> extends
+  HandlerFull<
     Action,
-    "raw",
-    S.Schema.Encoded<GetSuccess<Action>>,
+    RT,
+    GetSuccessShape<Action, RT>,
     S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
-    any
+    R
   >
-  | Handler<
-    Action,
-    "d",
-    S.Schema.Type<GetSuccess<Action>>,
-    S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
-    any
-  >
+{
+}
+
+type AHandler<Action extends AnyRequestModule> = Handler<
+  Action,
+  any,
+  any
+>
 
 type Filter<T> = {
   [K in keyof T as T[K] extends S.Schema.All & { success: S.Schema.Any; failure: S.Schema.Any } ? K : never]: T[K]
@@ -193,8 +193,6 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
         Handler<
           Rsc[Key],
           RT,
-          A,
-          E,
           Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
         >
       >
@@ -207,8 +205,6 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
         Handler<
           Rsc[Key],
           RT,
-          A,
-          E,
           Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
         >
       >
