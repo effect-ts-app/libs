@@ -156,6 +156,66 @@ type RPCRouteReq<T extends Rpc.Rpc<any, any>> = [T] extends [
 ] ? Req
   : never
 
+type Match<
+  Rsc extends Record<string, any>,
+  CTXMap extends Record<string, any>,
+  RT extends "raw" | "d",
+  Key extends keyof Rsc
+> = {
+  // TODO: deal with HandleVoid and ability to extends from GetSuccessShape...
+  // aka we want to make sure that the return type is void if the success is void,
+  // and make sure A is the actual expected type
+
+  // note: the defaults of = never prevent the whole router to error
+  <A extends GetSuccessShape<Rsc[Key], RT>, R2 = never, E = never>(
+    f: Effect<A, E, R2>
+  ): HandleVoid<
+    GetSuccessShape<Rsc[Key], RT>,
+    A,
+    Handler<
+      Rsc[Key],
+      RT,
+      Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
+    >
+  >
+
+  <A extends GetSuccessShape<Rsc[Key], RT>, R2 = never, E = never>(
+    f: (req: S.Schema.Type<Rsc[Key]>) => Effect<A, E, R2>
+  ): HandleVoid<
+    GetSuccessShape<Rsc[Key], RT>,
+    A,
+    Handler<
+      Rsc[Key],
+      RT,
+      Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
+    >
+  >
+}
+
+export type RouteMatcher<
+  CTXMap extends Record<string, any>,
+  Rsc extends Record<string, any>
+> = {
+  // use Rsc as Key over using Keys, so that the Go To on X.Action remain in tact in Controllers files
+  /**
+   * Requires the Type shape
+   */
+  [Key in keyof Filter<Rsc>]: Match<Rsc, CTXMap, "d", Key> & {
+    success: Rsc[Key]["success"]
+    successRaw: S.SchemaClass<S.Schema.Encoded<Rsc[Key]["success"]>>
+    failure: Rsc[Key]["failure"]
+    /**
+     * Requires the Encoded shape (e.g directly undecoded from DB, so that we don't do multiple Decode/Encode)
+     */
+    raw: Match<Rsc, CTXMap, "raw", Key>
+  }
+}
+// export interface RouteMatcher<
+//   Filtered extends Record<string, any>,
+//   CTXMap extends Record<string, any>,
+//   Rsc extends Filtered
+// > extends RouteMatcherInt<Filtered, CTXMap, Rsc> {}
+
 export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.Any>>(
   middleware: ExtendedMiddleware<Context, CTXMap>,
   devMode: boolean
@@ -175,37 +235,6 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
       }
       return acc
     }, {} as Filtered)
-
-    type Match<RT extends "raw" | "d", Key extends keyof Rsc> = {
-      // TODO: deal with HandleVoid and ability to extends from GetSuccessShape...
-      // aka we want to make sure that the return type is void if the success is void,
-      // and make sure A is the actual expected type
-
-      // note: the defaults of = never prevent the whole router to error
-      <A extends GetSuccessShape<Rsc[Key], RT>, R2 = never, E = never>(
-        f: Effect<A, E, R2>
-      ): HandleVoid<
-        GetSuccessShape<Rsc[Key], RT>,
-        A,
-        Handler<
-          Rsc[Key],
-          RT,
-          Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
-        >
-      >
-
-      <A extends GetSuccessShape<Rsc[Key], RT>, R2 = never, E = never>(
-        f: (req: S.Schema.Type<Rsc[Key]>) => Effect<A, E, R2>
-      ): HandleVoid<
-        GetSuccessShape<Rsc[Key], RT>,
-        A,
-        Handler<
-          Rsc[Key],
-          RT,
-          Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
-        >
-      >
-    }
 
     const items = typedKeysOf(filtered).reduce(
       (prev, cur) => {
@@ -246,21 +275,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
         })
         return prev
       },
-      {} as {
-        // use Rsc as Key over using Keys, so that the Go To on X.Action remain in tact in Controllers files
-        /**
-         * Requires the Type shape
-         */
-        [Key in keyof Filtered]: Match<"d", Key> & {
-          success: Rsc[Key]["success"]
-          successRaw: S.SchemaClass<S.Schema.Encoded<Rsc[Key]["success"]>>
-          failure: Rsc[Key]["failure"]
-          /**
-           * Requires the Encoded shape (e.g directly undecoded from DB, so that we don't do multiple Decode/Encode)
-           */
-          raw: Match<"raw", Key>
-        }
-      }
+      {} as RouteMatcher<CTXMap, Rsc>
     )
 
     type Keys = keyof Filtered

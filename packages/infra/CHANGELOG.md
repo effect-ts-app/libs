@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.43.1
+
+### Patch Changes
+
+- improve types
+
 ## 1.43.0
 
 ### Minor Changes
