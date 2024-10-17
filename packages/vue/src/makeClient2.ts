@@ -4,8 +4,7 @@ import type { MutationResult } from "@effect-app/vue"
 import { Result } from "@effect-app/vue"
 import * as Sentry from "@sentry/browser"
 import { type MaybeRefOrGetter, type Pausable, useIntervalFn, type UseIntervalFnOptions } from "@vueuse/core"
-import type { Either } from "effect-app"
-import { Array, Cause, Effect, Match, Option, Runtime, S } from "effect-app"
+import { Array, Cause, Effect, Exit, Match, Option, S } from "effect-app"
 import { type SupportedErrors } from "effect-app/client"
 import { Failure, Success } from "effect-app/Operations"
 import { dropUndefinedT } from "effect-app/utils"
@@ -53,80 +52,6 @@ export interface Opts<A> extends MutationOptions {
   successToast?: (a: A) => any
 }
 
-export const withSuccess: {
-  <I, E extends ResponseErrors, A, X, R>(
-    self: {
-      handler: (i: I) => Effect<A, E, R>
-      name: string
-    },
-    onSuccess: (a: A, i: I) => Promise<X>
-  ): {
-    handler: (i: I) => Effect<X, E, R>
-    name: string
-  }
-  <E extends ResponseErrors, A, X, R>(
-    self: {
-      handler: Effect<A, E, R>
-      name: string
-    },
-    onSuccess: (_: A) => Promise<X>
-  ): {
-    handler: Effect<X, E, R>
-    name: string
-  }
-} = (self: any, onSuccess: any): any => ({
-  ...self,
-  handler: typeof self.handler === "function"
-    ? (i: any) =>
-      pipe(
-        (
-          self.handler as (
-            i: any
-          ) => Effect<any, any, any>
-        )(i),
-        Effect.flatMap((_) =>
-          Effect.promise(() => onSuccess(_, i)).pipe(
-            Effect.withSpan("onSuccess")
-          )
-        )
-      )
-    : Effect.flatMap(self.handler, (_) => Effect.promise(() => onSuccess(_)).pipe(Effect.withSpan("onSuccess")))
-})
-
-export const withSuccessE: {
-  <I, E extends ResponseErrors, A, E2, X, R>(
-    self: {
-      handler: (i: I) => Effect<A, E, R>
-      name: string
-    },
-    onSuccessE: (_: A, i: I) => Effect<X, E2>
-  ): {
-    handler: (i: I) => Effect<X, E | E2, R>
-    name: string
-  }
-  <E extends ResponseErrors, A, E2, X, R>(
-    self: {
-      handler: Effect<A, E, R>
-      name: string
-    },
-    onSuccessE: (_: A) => Effect<X, E2>
-  ): {
-    handler: Effect<X, E | E2, R>
-    name: string
-  }
-} = (self: any, onSuccessE: any): any => {
-  return {
-    ...self,
-    handler: typeof self.handler === "function"
-      ? (i: any) =>
-        pipe(
-          self.handler(i),
-          Effect.flatMap((_) => onSuccessE(_, i))
-        )
-      : Effect.flatMap(self.handler, (_) => onSuccessE(_))
-  }
-}
-
 export interface Res<A, E> {
   readonly loading: boolean
   readonly data: A | undefined
@@ -139,14 +64,14 @@ type WithAction<A> = A & {
 
 // computed() takes a getter function and returns a readonly reactive ref
 // object for the returned value from the getter.
-type Resp<I, E, A> = readonly [
+type Resp<I, E, A, R> = readonly [
   ComputedRef<Res<A, E>>,
-  WithAction<(I: I) => Promise<void>>
+  WithAction<(I: I) => Effect<A, E, R>>
 ]
 
-type ActResp<E, A> = readonly [
+type ActResp<E, A, R> = readonly [
   ComputedRef<Res<A, E>>,
-  WithAction<() => Promise<void>>
+  WithAction<() => Effect<A, E, R>>
 ]
 
 export function mutationResultToVue<A, E>(
@@ -198,9 +123,10 @@ export const makeClient2 = <Locale extends string, R>(
     function handleRequestWithToast<
       E extends ResponseErrors,
       A,
+      R,
       Args extends unknown[]
     >(
-      f: (...args: Args) => Promise<Either<A, E>>,
+      f: (...args: Args) => Effect<A, E, R>,
       action: string,
       options: Opts<A> = { suppressErrorToast: false }
     ) {
@@ -218,68 +144,70 @@ export const makeClient2 = <Locale extends string, R>(
         { action: message }
       )
       return Object.assign(
-        flow(f, (p) =>
-          p.then(
-            (r) =>
-              r._tag === "Right"
-                ? S.is(Failure)(r.right)
-                  ? Promise
-                    .resolve(
-                      toast.warning(
-                        warnMessage + r.right.message
-                          ? "\n" + r.right.message
-                          : ""
-                      )
+        flow(
+          f,
+          Effect.onExit(
+            Exit.matchEffect({
+              onSuccess: (r) =>
+                Effect.gen(function*() {
+                  if (S.is(Failure)(r)) {
+                    toast.warning(
+                      warnMessage + r.message
+                        ? "\n" + r.message
+                        : ""
                     )
-                    .then((_) => {})
-                  : Promise
-                    .resolve(
-                      toast.success(
-                        successMessage
-                          + (S.is(Success)(r.right) && r.right.message
-                            ? "\n" + r.right.message
-                            : "")
-                      )
-                    )
-                    .then((_) => {})
-                : r.left._tag === "SuppressErrors"
-                ? Promise.resolve(void 0)
-                : Promise
-                  .resolve(
-                    !options.suppressErrorToast
-                      && toast.error(`${errorMessage}:\n` + renderError(r.left))
-                  )
-                  .then((_) => {
-                    console.warn(r.left, r.left.toString())
-                  }),
-            (err) => {
-              if (
-                Cause.isInterruptedException(err)
-                || (Runtime.isFiberFailure(err)
-                  && Cause.isInterruptedOnly(err[Runtime.FiberFailureCauseId]))
-              ) {
-                return
-              }
-              const extra = {
-                action,
-                message: `Unexpected Error trying to ${action}`
-              }
-              Sentry.captureException(err, {
-                extra
-              })
-              console.error(err, extra)
-
-              return toast.error(
-                intl.value.formatMessage(
-                  { id: "handle.unexpected_error" },
-                  {
-                    action: message,
-                    error: JSON.stringify(err, undefined, 2)
+                    return
                   }
-                )
-              )
-            }
-          )),
+
+                  toast.success(
+                    successMessage
+                      + (S.is(Success)(r) && r.message
+                        ? "\n" + r.message
+                        : "")
+                  )
+                }),
+              onFailure: (err) =>
+                Effect.gen(function*() {
+                  if (Cause.isInterruptedOnly(err)) {
+                    return
+                  }
+
+                  const fail = Cause.failureOption(err)
+                  if (Option.isSome(fail)) {
+                    if ((fail as any)._tag === "SuppressErrors") {
+                      return Effect.succeed(void 0)
+                    }
+
+                    if (!options.suppressErrorToast) {
+                      toast.error(`${errorMessage}:\n` + renderError(fail.value))
+                    }
+
+                    console.warn(fail, fail.toString())
+                    return
+                  }
+
+                  const extra = {
+                    action,
+                    message: `Unexpected Error trying to ${action}`
+                  }
+                  Sentry.captureException(err, {
+                    extra
+                  })
+                  console.error(err, extra)
+
+                  toast.error(
+                    intl.value.formatMessage(
+                      { id: "handle.unexpected_error" },
+                      {
+                        action: message,
+                        error: JSON.stringify(err, undefined, 2)
+                      }
+                    )
+                  )
+                })
+            })
+          )
+        ),
         { action }
       )
     }
@@ -343,22 +271,22 @@ export const makeClient2 = <Locale extends string, R>(
    * Returns a tuple with state ref and execution function which reports errors as Toast.
    */
   const useAndHandleMutation: {
-    <I, E extends ResponseErrors, A>(
+    <I, E extends ResponseErrors, A, R>(
       self: {
         handler: (i: I) => Effect<A, E, R>
         name: string
       },
       action: string,
       options?: Opts<A>
-    ): Resp<I, A, E>
-    <E extends ResponseErrors, A>(
+    ): Resp<I, A, E, R>
+    <E extends ResponseErrors, A, R>(
       self: {
         handler: Effect<A, E, R>
         name: string
       },
       action: string,
       options?: Opts<A>
-    ): ActResp<E, A>
+    ): ActResp<E, A, R>
   } = (self: any, action: any, options?: Opts<any>) => {
     const handleRequestWithToast = useHandleRequestWithToast()
     const [a, b] = useSafeMutation(
@@ -387,33 +315,26 @@ export const makeClient2 = <Locale extends string, R>(
   }
 
   function makeUseAndHandleMutation(
-    onSuccess?: () => Promise<void>,
     defaultOptions?: Opts<any>
   ) {
     return ((self: any, action: any, options: any) => {
       return useAndHandleMutation(
         {
-          handler: typeof self.handler === "function"
-            ? onSuccess
-              ? (i: any) => Effect.tap(self.handler(i), () => Effect.promise(onSuccess))
-              : self.handler
-            : onSuccess
-            ? (Effect.tap(self.handler, () => Effect.promise(onSuccess)) as any)
-            : self.handler,
+          handler: self.handler,
           name: self.name
         },
         action,
         { ...defaultOptions, ...options }
       )
     }) as {
-      <I, E extends ResponseErrors, A>(
+      <I, E extends ResponseErrors, A, R>(
         self: {
           handler: (i: I) => Effect<A, E, R>
           name: string
         },
         action: string,
         options?: Opts<A>
-      ): Resp<I, A, E>
+      ): Resp<I, A, E, R>
       <E extends ResponseErrors, A>(
         self: {
           handler: Effect<A, E, R>
@@ -421,7 +342,7 @@ export const makeClient2 = <Locale extends string, R>(
         },
         action: string,
         options?: Opts<A>
-      ): ActResp<E, A>
+      ): ActResp<E, A, R>
     }
   }
 
