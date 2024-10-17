@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 1.26.0
+
+### Minor Changes
+
+- a4c0f16: play with effect helpers
+
+### Patch Changes
+
+- Updated dependencies [a4c0f16]
+  - @effect-app/vue@1.26.0
+
 ## 1.25.2
 
 ### Patch Changes
