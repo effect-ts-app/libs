@@ -3,13 +3,11 @@ import { tuple } from "@effect-app/core/Function"
 import * as Result from "@effect-rx/rx/Result"
 import type { InvalidateOptions, InvalidateQueryFilters } from "@tanstack/vue-query"
 import { useQueryClient } from "@tanstack/vue-query"
-import type { Runtime } from "effect-app"
 import { Cause, Effect, Exit, Option } from "effect-app"
-import { InterruptedException } from "effect/Cause"
-import * as Either from "effect/Either"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
-import { makeQueryKey, reportRuntimeError } from "./internal.js"
+import { reportRuntimeError } from "./internal.js"
+import { getQueryKey } from "./mutate.js"
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
 export function make<A, E, R>(self: Effect<A, E, R>) {
@@ -61,23 +59,13 @@ type MaybeRefDeep<T> = MaybeRef<
     : T
 >
 
-export interface MutationOptions<A, I = void> {
+export interface MutationOptions {
   queryInvalidation?: (defaultKey: string[], name: string) => {
     filters?: MaybeRefDeep<InvalidateQueryFilters> | undefined
     options?: MaybeRefDeep<InvalidateOptions> | undefined
   }[]
-  onSuccess?: (a: A, i: I) => Promise<unknown>
 }
 
-export const getQueryKey = (name: string) => {
-  const key = makeQueryKey(name)
-  const ns = key.filter((_) => _.startsWith("$"))
-  // we invalidate the parent namespace e.g $project/$configuration.get, we invalidate $project
-  // for $project/$configuration/$something.get, we invalidate $project/$configuration
-  const k = ns.length ? ns.length > 1 ? ns.slice(0, ns.length - 1) : ns : undefined
-  if (!k) throw new Error("empty query key for: " + name)
-  return k
-}
 // TODO: more efficient invalidation, including args etc
 // return Effect.promise(() => queryClient.invalidateQueries({
 //   predicate: (_) => nses.includes(_.queryKey.filter((_) => _.startsWith("$")).join("/"))
@@ -89,68 +77,86 @@ export const getQueryKey = (name: string) => {
                 // }
                 */
 
-export const makeMutation = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
-  type HandlerWithInput<I, A, E> = {
+export const makeMutation2 = () => {
+  type HandlerWithInput<I, A, E, R> = {
     handler: (i: I) => Effect<A, E, R>
     name: string
   }
-  type Handler<A, E> = { handler: Effect<A, E, R>; name: string }
+  type Handler<A, E, R> = { handler: Effect<A, E, R>; name: string }
 
   /**
    * Pass a function that returns an Effect, e.g from a client action, or an Effect
    * Returns a tuple with state ref and execution function which reports errors as Toast.
    */
   const useSafeMutation: {
-    <I, E, A, R>(self: HandlerWithInput<I, A, E>, options?: MutationOptions<A, I>): readonly [
+    <I, E, A, R>(
+      self: HandlerWithInput<I, A, E, R>,
+      options?: MutationOptions
+    ): readonly [
       Readonly<Ref<MutationResult<A, E>>>,
       (i: I) => Effect<A, E, R>
     ]
-    <E, A>(self: Handler<A, E>, options?: MutationOptions<A>): readonly [
+    <E, A, R>(self: Handler<A, E, R>, options?: MutationOptions): readonly [
       Readonly<Ref<MutationResult<A, E>>>,
-      () => Effect<A, E, R>
+      () => Effect<A, E, R> // TODO: remove () =>
     ]
-  } = <I, E, A>(
+  } = <I, E, A, R>(
     self: {
       handler:
-        | HandlerWithInput<I, A, E>["handler"]
-        | Handler<A, E>["handler"]
+        | HandlerWithInput<I, A, E, R>["handler"]
+        | Handler<A, E, R>["handler"]
       name: string
     },
-    options?: MutationOptions<A>
+    options?: MutationOptions
   ) => {
     const queryClient = useQueryClient()
     const state: Ref<MutationResult<A, E>> = ref<MutationResult<A, E>>({ _tag: "Initial" }) as any
-    const onSuccess = options?.onSuccess
 
     const invalidateQueries = (
       filters?: MaybeRefDeep<InvalidateQueryFilters>,
       options?: MaybeRefDeep<InvalidateOptions>
     ) => Effect.promise(() => queryClient.invalidateQueries(filters, options))
 
-    function handleExit(exit: Exit.Exit<A, E>): Effect<Either.Either<A, E>, never, never> {
+    function handleExit(exit: Exit.Exit<A, E>) {
       return Effect.sync(() => {
         if (Exit.isSuccess(exit)) {
           state.value = { _tag: "Success", data: exit.value }
-          return Either.right(exit.value)
+          return
         }
 
         const err = Cause.failureOption(exit.cause)
         if (Option.isSome(err)) {
           state.value = { _tag: "Error", error: err.value }
-          return Either.left(err.value)
+          return
         }
-
-        const died = Cause.dieOption(exit.cause)
-        if (Option.isSome(died)) {
-          throw died.value
-        }
-        const interrupted = Cause.interruptOption(exit.cause)
-        if (Option.isSome(interrupted)) {
-          throw new InterruptedException()
-        }
-        throw new Error("Invalid state")
       })
     }
+
+    const invalidateCache = Effect.suspend(() => {
+      const queryKey = getQueryKey(self.name)
+
+      if (options?.queryInvalidation) {
+        const opts = options.queryInvalidation(queryKey, self.name)
+        if (!opts.length) {
+          return Effect.void
+        }
+        return Effect
+          .andThen(
+            Effect.annotateCurrentSpan({ queryKey, opts }),
+            Effect.forEach(opts, (_) => invalidateQueries(_.filters, _.options), { concurrency: "inherit" })
+          )
+          .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
+      }
+
+      if (!queryKey) return Effect.void
+
+      return Effect
+        .andThen(
+          Effect.annotateCurrentSpan({ queryKey }),
+          invalidateQueries({ queryKey })
+        )
+        .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
+    })
 
     const exec = (fst?: I) => {
       let effect: Effect<A, E, R>
@@ -165,39 +171,10 @@ export const makeMutation = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
           state.value = { _tag: "Loading" }
         })
         .pipe(
-          Effect.andThen(effect),
-          Effect.tap(() =>
-            Effect
-              .suspend(() => {
-                const queryKey = getQueryKey(self.name)
-
-                if (options?.queryInvalidation) {
-                  const opts = options.queryInvalidation(queryKey, self.name)
-                  if (!opts.length) {
-                    return Effect.void
-                  }
-                  return Effect
-                    .andThen(
-                      Effect.annotateCurrentSpan({ queryKey, opts }),
-                      Effect.forEach(opts, (_) => invalidateQueries(_.filters, _.options), { concurrency: "inherit" })
-                    )
-                    .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
-                }
-
-                if (!queryKey) return Effect.void
-
-                return Effect
-                  .andThen(
-                    Effect.annotateCurrentSpan({ queryKey }),
-                    invalidateQueries({ queryKey })
-                  )
-                  .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
-              })
-          ),
+          Effect.zipRight(effect),
+          Effect.tap(invalidateCache),
           Effect.tapDefect(reportRuntimeError),
-          Effect.tap((i) => onSuccess ? Effect.promise(() => onSuccess(i)) : Effect.void),
-          Effect.exit,
-          Effect.flatMap(handleExit),
+          Effect.onExit(handleExit),
           Effect.withSpan(`mutation ${self.name}`, { captureStackTrace: false })
         )
     }
@@ -211,4 +188,4 @@ export const makeMutation = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface MakeMutation<R> extends ReturnType<typeof makeMutation<R>> {}
+export interface MakeMutation2 extends ReturnType<typeof makeMutation2> {}

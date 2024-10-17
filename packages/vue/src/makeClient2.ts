@@ -11,7 +11,7 @@ import { Failure, Success } from "effect-app/Operations"
 import { dropUndefinedT } from "effect-app/utils"
 import { computed, type ComputedRef } from "vue"
 import type { MakeIntlReturn } from "./makeIntl.js"
-import type { MakeMutation, MutationOptions } from "./mutate2.js"
+import type { MakeMutation2, MutationOptions } from "./mutate2.js"
 
 /**
  * Use this after handling an error yourself, still continueing on the Error track, but the error will not be reported.
@@ -47,7 +47,7 @@ export function useIntervalPauseWhileProcessing(
   }
 }
 
-export interface Opts<A, I = void> extends MutationOptions<A, I> {
+export interface Opts<A> extends MutationOptions {
   suppressErrorToast?: boolean
   suppressSuccessToast?: boolean
   successToast?: (a: A) => any
@@ -183,7 +183,7 @@ export const makeClient2 = <Locale extends string, R>(
     warning: (message: string) => void
     success: (message: string) => void
   },
-  useSafeMutation: MakeMutation<R>,
+  useSafeMutation: MakeMutation2,
   messages: Record<string, string | undefined> = {}
 ) => {
   const useHandleRequestWithToast = () => {
@@ -349,7 +349,7 @@ export const makeClient2 = <Locale extends string, R>(
         name: string
       },
       action: string,
-      options?: Opts<A, I>
+      options?: Opts<A>
     ): Resp<I, A, E>
     <E extends ResponseErrors, A>(
       self: {
@@ -376,8 +376,7 @@ export const makeClient2 = <Locale extends string, R>(
         name: self.name
       },
       dropUndefinedT({
-        queryInvalidation: options?.queryInvalidation,
-        onSuccess: options?.onSuccess
+        queryInvalidation: options?.queryInvalidation
       })
     )
 
@@ -413,7 +412,7 @@ export const makeClient2 = <Locale extends string, R>(
           name: string
         },
         action: string,
-        options?: Opts<A, I>
+        options?: Opts<A>
       ): Resp<I, A, E>
       <E extends ResponseErrors, A>(
         self: {

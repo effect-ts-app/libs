@@ -34,7 +34,7 @@ export interface KnownFiberFailure<E> extends Runtime.FiberFailure {
   readonly [Runtime.FiberFailureCauseId]: Cause.Cause<E>
 }
 
-export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
+export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
   // TODO: options
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
@@ -137,7 +137,13 @@ export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
       })
     )
     const latestSuccess = computed(() => Option.getOrUndefined(Result.value(result.value)))
-    return [result, latestSuccess, (options?: RefetchOptions) => Effect.promise(() => r.refetch(options)), r] as const
+    return [
+      result,
+      latestSuccess,
+      // one thing to keep in mind is that span will be disconnected as Context does not pass from outside.
+      (options?: RefetchOptions) => Effect.promise(() => r.refetch(options)),
+      r
+    ] as const
   }
 
   function swrToQuery<E, A>(r: {
@@ -222,4 +228,4 @@ export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface MakeQuery<R> extends ReturnType<typeof makeQuery<R>> {}
+export interface MakeQuery2<R> extends ReturnType<typeof makeQuery2<R>> {}
