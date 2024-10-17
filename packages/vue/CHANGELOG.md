@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.26.1
+
+### Patch Changes
+
+- fix mutation api
+- Updated dependencies
+  - @effect-app/vue@1.26.1
+
 ## 1.26.0
 
 ### Minor Changes
