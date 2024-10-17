@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.42.0
+
+### Minor Changes
+
+- ae059ac: add routing3
+
 ## 1.41.6
 
 ### Patch Changes
