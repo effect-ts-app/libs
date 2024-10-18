@@ -7,7 +7,7 @@ import { Cause, Effect, Exit, Option, Runtime } from "effect-app"
 import { dropUndefinedT } from "effect-app/utils"
 import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
-import type { ComputedRef, Ref } from "vue"
+import type { ComputedRef, Ref, ShallowRef } from "vue"
 import { computed, ref, shallowRef } from "vue"
 import { makeQueryKey, reportRuntimeError } from "./internal.js"
 import { getRuntime } from "./lib.js"
@@ -90,7 +90,7 @@ export const getQueryKey = (h: { name: string }) => {
                 // }
                 */
 
-export const makeMutation = <R>(runtime: Ref<Runtime.Runtime<R> | undefined>) => {
+export const makeMutation = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>) => {
   type HandlerWithInput<I, A, E> = {
     handler: (i: I) => Effect<A, E, R>
     name: string

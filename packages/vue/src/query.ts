@@ -15,7 +15,7 @@ import { useQuery } from "@tanstack/vue-query"
 import { Array, Cause, Effect, Option, Runtime, S } from "effect-app"
 import { ServiceUnavailableError } from "effect-app/client"
 import { computed, ref } from "vue"
-import type { ComputedRef, Ref, WatchSource } from "vue"
+import type { ComputedRef, ShallowRef, WatchSource } from "vue"
 import { makeQueryKey, reportRuntimeError } from "./internal.js"
 import { getRuntime } from "./lib.js"
 
@@ -35,7 +35,7 @@ export interface KnownFiberFailure<E> extends Runtime.FiberFailure {
   readonly [Runtime.FiberFailureCauseId]: Cause.Cause<E>
 }
 
-export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R> | undefined>) => {
+export const makeQuery = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>) => {
   // TODO: options
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
