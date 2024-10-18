@@ -2,10 +2,10 @@
 import { flow, pipe, tuple } from "@effect-app/core/Function"
 import * as Sentry from "@sentry/browser"
 import { Cause, Effect, Exit, Match, Option, S } from "effect-app"
+import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
 import { OperationSuccess } from "effect-app/Operations"
 import { dropUndefinedT } from "effect-app/utils"
 import { computed, type ComputedRef } from "vue"
-import type { TaggedRequestClassAny } from "./lib.js"
 import type { Opts, ResponseErrors } from "./makeClient.js"
 import type { MakeIntlReturn } from "./makeIntl.js"
 import { mutationResultToVue } from "./mutate.js"
@@ -274,16 +274,4 @@ export const makeClient2 = <Locale extends string, R>(
     makeUseAndHandleMutation,
     useHandleRequestWithToast
   }
-}
-
-export interface RequestHandler<A, E, R, Request extends TaggedRequestClassAny> {
-  handler: Effect<A, E, R>
-  name: string
-  Request: Request
-}
-
-export interface RequestHandlerWithInput<I, A, E, R, Request extends TaggedRequestClassAny> {
-  handler: (i: I) => Effect<A, E, R>
-  name: string
-  Request: Request
 }

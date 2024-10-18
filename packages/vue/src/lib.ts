@@ -1,17 +1,9 @@
 import { type Pausable, useIntervalFn, type UseIntervalFnOptions } from "@vueuse/core"
-import type { Effect, Runtime, S } from "effect-app"
+import type { Effect, Runtime } from "effect-app"
+import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
 import type { MaybeRefOrGetter, ShallowRef } from "vue"
-import type { RequestHandler, RequestHandlerWithInput } from "./makeClient2.js"
 
 export * as Result from "@effect-rx/rx/Result"
-
-export type TaggedRequestClassAny = S.Schema.Any & {
-  readonly _tag: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  readonly success: any
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  readonly failure: any
-}
 
 export function pauseWhileProcessing(
   iv: Pausable,

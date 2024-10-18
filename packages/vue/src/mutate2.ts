@@ -4,11 +4,10 @@ import * as Result from "@effect-rx/rx/Result"
 import type { InvalidateOptions, InvalidateQueryFilters } from "@tanstack/vue-query"
 import { useQueryClient } from "@tanstack/vue-query"
 import { Cause, Effect, Exit, Option } from "effect-app"
+import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
 import { reportRuntimeError } from "./internal.js"
-import type { TaggedRequestClassAny } from "./lib.js"
-import type { RequestHandler, RequestHandlerWithInput } from "./makeClient2.js"
 import { getQueryKey } from "./mutate.js"
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)

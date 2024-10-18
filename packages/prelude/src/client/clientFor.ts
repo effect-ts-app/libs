@@ -220,37 +220,46 @@ type IsEmpty<T> = keyof T extends never ? true
 
 type Cruft = "_tag" | Request.RequestTypeId | typeof Serializable.symbol | typeof Serializable.symbolResult
 
-// TODO: refactor to new Request pattern, then filter out non-requests similar to the runtime changes in clientFor, and matchFor (boilerplate)
+export type TaggedRequestClassAny = S.Schema.Any & {
+  readonly _tag: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly success: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly failure: any
+}
+
+export interface RequestHandler<A, E, R, Request extends TaggedRequestClassAny> {
+  handler: Effect<A, E, R>
+  name: string
+  Request: Request
+}
+
+export interface RequestHandlerWithInput<I, A, E, R, Request extends TaggedRequestClassAny> {
+  handler: (i: I) => Effect<A, E, R>
+  name: string
+  Request: Request
+}
+
 type RequestHandlers<R, E, M extends Requests> = {
-  [K in keyof M]: IsEmpty<Omit<S.Schema.Type<M[K]>, Cruft>> extends true ? {
-      handler: Effect<Schema.Type<M[K]["success"]>, Schema.Type<M[K]["failure"]> | E, R>
-      Request: M[K]
-      name: string
+  [K in keyof M]: IsEmpty<Omit<S.Schema.Type<M[K]>, Cruft>> extends true
+    ? RequestHandler<Schema.Type<M[K]["success"]>, Schema.Type<M[K]["failure"]> | E, R, M[K]> & {
+      raw: RequestHandler<Schema.Type<M[K]["success"]>, Schema.Type<M[K]["failure"]> | E, R, M[K]>
     }
-    : {
-      handler: (
-        req: Omit<S.Schema.Type<M[K]>, Cruft>
-      ) => Effect<
+    :
+      & RequestHandlerWithInput<
+        Omit<S.Schema.Type<M[K]>, Cruft>,
         Schema.Type<M[K]["success"]>,
         Schema.Type<M[K]["failure"]> | E,
-        R
+        R,
+        M[K]
       >
-      Request: M[K]
-      name: string
-
-      raw: {
-        handler: (
-          req: Omit<
-            S.Schema.Type<M[K]>,
-            Cruft
-          >
-        ) => Effect<
+      & {
+        raw: RequestHandlerWithInput<
+          Omit<S.Schema.Type<M[K]>, Cruft>,
           Schema.Encoded<M[K]["success"]>,
           Schema.Type<M[K]["failure"]> | E,
-          R
+          R,
+          M[K]
         >
-        Request: M[K]
-        name: string
       }
-    }
 }

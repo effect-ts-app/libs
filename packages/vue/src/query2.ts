@@ -14,12 +14,11 @@ import type {
 import { useQuery } from "@tanstack/vue-query"
 import { Cause, Effect, Option, Runtime, S } from "effect-app"
 import { ServiceUnavailableError } from "effect-app/client"
+import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
 import { computed, ref } from "vue"
 import type { ComputedRef, ShallowRef, WatchSource } from "vue"
 import { makeQueryKey, reportRuntimeError } from "./internal.js"
-import type { TaggedRequestClassAny } from "./lib.js"
 import { getRuntime } from "./lib.js"
-import type { RequestHandler, RequestHandlerWithInput } from "./makeClient2.js"
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface QueryObserverOptionsCustom<
