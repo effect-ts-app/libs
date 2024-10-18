@@ -111,7 +111,6 @@ const make = Effect.gen(function*() {
               )
             )
       )
-      .pipe(Effect.provideService(RequestFiberSet, reqFiberSet))
   }
 
   const fork2: {
