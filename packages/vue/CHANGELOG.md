@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 1.26.16
+
+### Patch Changes
+
+- e836dcc: cleanup
+- Updated dependencies [e836dcc]
+  - effect-app@1.30.5
+  - @effect-app/vue@1.26.16
+
 ## 1.26.15
 
 ### Patch Changes

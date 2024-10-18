@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.30.5
+
+### Patch Changes
+
+- e836dcc: cleanup
+
 ## 1.30.4
 
 ### Patch Changes
