@@ -18,14 +18,14 @@ type WithAction<A> = A & {
 
 // computed() takes a getter function and returns a readonly reactive ref
 // object for the returned value from the getter.
-type Resp<I, E, A, R> = readonly [
+type Resp<I, A, E, R> = readonly [
   ComputedRef<Res<A, E>>,
-  WithAction<(I: I) => Effect<A, E, R>>
+  WithAction<(I: I) => Effect<Exit<A, E>, never, R>>
 ]
 
-type ActResp<E, A, R> = readonly [
+type ActResp<A, E, R> = readonly [
   ComputedRef<Res<A, E>>,
-  WithAction<() => Effect<A, E, R>>
+  WithAction<() => Effect<Exit<A, E>, never, R>>
 ]
 
 export const makeClient2 = <Locale extends string, R>(
@@ -73,7 +73,8 @@ export const makeClient2 = <Locale extends string, R>(
       return Object.assign(
         flow(
           f,
-          Effect.onExit(
+          Effect.exit,
+          Effect.tap(
             Exit.matchEffect({
               onSuccess: (r) =>
                 Effect.gen(function*() {
@@ -117,9 +118,7 @@ export const makeClient2 = <Locale extends string, R>(
                     action,
                     message: `Unexpected Error trying to ${action}`
                   }
-                  Sentry.captureException(err, {
-                    extra
-                  })
+                  Sentry.captureException(err, { extra })
                   console.error(err, extra)
 
                   toast.error(
@@ -202,13 +201,13 @@ export const makeClient2 = <Locale extends string, R>(
       self: RequestHandlerWithInput<I, A, E, R, Request>,
       action: string,
       options?: Opts<A>
-    ): Resp<I, A, E, R>
+    ): Resp<I, void, never, R>
     <E extends ResponseErrors, A, R, Request extends TaggedRequestClassAny>(
       self: RequestHandler<A, E, R, Request>,
       action: string,
       options?: Opts<A>
-    ): ActResp<E, A, R>
-  } = (self: any, action: any, options?: Opts<any>) => {
+    ): ActResp<void, never, R>
+  } = (self: any, action: any, options?: Opts<any>): any => {
     const handleRequestWithToast = useHandleRequestWithToast()
     const [a, b] = useSafeMutation(
       {
@@ -244,7 +243,7 @@ export const makeClient2 = <Locale extends string, R>(
         action,
         { ...defaultOptions, ...options }
       )
-    }) as {
+    }) as unknown as {
       <I, E extends ResponseErrors, A, R, Request extends TaggedRequestClassAny>(
         self: RequestHandlerWithInput<I, A, E, R, Request>,
         action: string,
@@ -254,7 +253,7 @@ export const makeClient2 = <Locale extends string, R>(
         self: RequestHandler<A, E, R, Request>,
         action: string,
         options?: Opts<A>
-      ): ActResp<E, A, R>
+      ): ActResp<A, E, R>
     }
   }
 

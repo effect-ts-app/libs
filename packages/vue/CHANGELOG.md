@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.26.12
+
+### Patch Changes
+
+- proper handle exit
+- Updated dependencies
+  - @effect-app/vue@1.26.12
+
 ## 1.26.11
 
 ### Patch Changes
