@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.26.7
+
+### Patch Changes
+
+- 4e91ed0: use ShallowRef
+- Updated dependencies [4e91ed0]
+  - @effect-app/vue@1.26.7
+
 ## 1.26.6
 
 ### Patch Changes
