@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 1.26.13
+
+### Patch Changes
+
+- 0eac9da: improve: Operation error handling
+- Updated dependencies [0eac9da]
+  - effect-app@1.30.4
+  - @effect-app/vue@1.26.13
+
 ## 1.26.12
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.30.4
+
+### Patch Changes
+
+- 0eac9da: improve: Operation error handling
+
 ## 1.30.3
 
 ### Patch Changes

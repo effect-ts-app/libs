@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 1.43.5
+
+### Patch Changes
+
+- 0eac9da: improve: Operation error handling
+- Updated dependencies [0eac9da]
+  - effect-app@1.30.4
+  - @effect-app/infra-adapters@1.20.5
+
 ## 1.43.4
 
 ### Patch Changes
