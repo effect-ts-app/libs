@@ -47,7 +47,6 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
     arg?: I | WatchSource<I>,
     options: QueryObserverOptionsCustom<unknown, KnownFiberFailure<E>, A> = {} // TODO
   ) => {
-    const runPromise = Runtime.runPromise(runtime.value)
     const arr = arg
     const req: { value: I } = !arg
       ? undefined
@@ -77,7 +76,7 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
           },
           queryKey,
           queryFn: ({ signal }) =>
-            runPromise(
+            Runtime.runPromise(runtime.value)(
               handler
                 .pipe(
                   Effect.tapDefect(reportRuntimeError),
@@ -101,7 +100,7 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
           },
           queryKey: [...queryKey, req],
           queryFn: ({ signal }) =>
-            runPromise(
+            Runtime.runPromise(runtime.value)(
               handler(req.value)
                 .pipe(
                   Effect.tapDefect(reportRuntimeError),
