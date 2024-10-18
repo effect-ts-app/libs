@@ -2,15 +2,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/browser"
-import { Cause, Effect } from "effect"
-import { annotateSpanWithError, CauseException, ErrorReported } from "effect-app/client/errors"
+import { Cause, Effect } from "effect-app"
+import { CauseException, ErrorReported, tryToJson } from "effect-app/client/errors"
 
 export function reportError(
   name: string
 ) {
   return (cause: Cause.Cause<unknown>, extras?: Record<string, unknown>) =>
     Effect.gen(function*() {
-      yield* annotateSpanWithError(cause, name)
       if (Cause.isInterrupted(cause)) {
         yield* Effect.logDebug("Interrupted").pipe(Effect.annotateLogs("extras", JSON.stringify(extras ?? {})))
         return Cause.squash(cause)
@@ -22,7 +21,7 @@ export function reportError(
         .logError("Reporting error", cause)
         .pipe(Effect.annotateLogs(dropUndefined({
           extras,
-          __cause__: error.toJSON(),
+          cause: tryToJson(cause),
           __error_name__: name
         })))
 
@@ -38,7 +37,8 @@ function reportSentry(
   return Effect.sync(() => {
     const scope = new Sentry.Scope()
     if (extras) scope.setContext("extras", extras)
-    scope.setContext("error", error.toJSON() as any)
+    scope.setContext("error", tryToJson(error) as any)
+    scope.setContext("cause", tryToJson(error.originalCause) as any)
     Sentry.captureException(error, scope)
   })
 }
@@ -52,14 +52,15 @@ export function logError<E>(
         yield* Effect.logDebug("Interrupted").pipe(Effect.annotateLogs(dropUndefined({ extras })))
         return
       }
-      const error = new CauseException(cause, name)
       yield* Effect
         .logWarning("Logging error", cause)
-        .pipe(Effect.annotateLogs(dropUndefined({
-          extras,
-          __cause__: error.toJSON(),
-          __error_name__: name
-        })))
+        .pipe(
+          Effect.annotateLogs(dropUndefined({
+            extras,
+            cause: tryToJson(cause),
+            __error_name__: name
+          }))
+        )
     })
 }
 

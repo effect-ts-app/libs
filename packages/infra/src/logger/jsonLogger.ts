@@ -14,7 +14,7 @@ export const jsonLogger = Logger.make<unknown, void>(
       fiber: FiberId.threadName(fiberId),
       message,
       request: Option.getOrUndefined(c),
-      cause: cause != null && cause != Cause.empty ? Cause.pretty(cause) : undefined,
+      cause: cause !== null && cause !== Cause.empty ? Cause.pretty(cause, { renderErrorCause: true }) : undefined,
       spans: List.map(spans, (_) => ({ label: _.label, timing: nowMillis - _.startTime })).pipe(List.toArray),
       annotations: HashMap.size(annotations) > 0
         ? [...annotations].reduce((prev, [k, v]) => {

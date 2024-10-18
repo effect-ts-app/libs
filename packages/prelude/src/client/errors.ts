@@ -1,6 +1,22 @@
 import { TaggedError } from "effect-app/schema"
 import { makeFiberFailure } from "effect/Runtime"
-import { Cause, Effect, Predicate, S } from "../lib.js"
+import { Cause, S } from "../lib.js"
+
+export const tryToJson = (error: { toJSON(): unknown; toString(): string }) => {
+  try {
+    return error.toJSON()
+  } catch {
+    try {
+      return error.toString()
+    } catch (err) {
+      try {
+        return `Failed to convert error: ${err}`
+      } catch {
+        return `Failed to convert error: unknown failure`
+      }
+    }
+  }
+}
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 // @ts-expect-error type not used
@@ -149,9 +165,7 @@ export class CauseException<E> extends Error {
     return {
       _tag: this._tag,
       name: this.name,
-      message: this.message,
-      pretty: this.toString(),
-      cause: this.originalCause.toJSON()
+      message: this.message
     }
   }
 
@@ -159,20 +173,8 @@ export class CauseException<E> extends Error {
     return this.toJSON()
   }
   override toString() {
-    return `[${this._tag}] ` + Cause.pretty(this.originalCause)
+    return `[${this._tag}] ` + Cause.pretty(this.originalCause, { renderErrorCause: true })
   }
 
   [ErrorReported] = false
 }
-
-export const annotateSpanWithError = (cause: Cause<unknown>, name?: string) =>
-  Effect.annotateCurrentSpan({
-    "exception.escaped": true,
-    "exception.message": "Reported error for " + (name ?? cause._tag),
-    "exception.stacktrace": Cause.pretty(cause),
-    "exception.type": Cause.squashWith(
-      cause,
-      (_) => Predicate.hasProperty(_, "_tag") ? _._tag : Predicate.hasProperty(_, "name") ? _.name : `${_}`
-    ),
-    "error.type": cause._tag
-  })

@@ -101,7 +101,7 @@ export function subscribe<RMsg, RErr>(hndlr: MessageHandlers<RMsg, RErr>, sessio
             if (Exit.isSuccess(exit)) {
               resolve(exit.value)
             } else {
-              reject(Cause.pretty(exit.cause))
+              reject(Cause.pretty(exit.cause, { renderErrorCause: true }))
             }
           })
       )
