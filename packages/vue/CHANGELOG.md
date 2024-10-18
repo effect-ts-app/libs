@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.26.6
+
+### Patch Changes
+
+- 021c4ea: fix Runtime issue - no tracing, etc
+- Updated dependencies [021c4ea]
+  - @effect-app/vue@1.26.6
+
 ## 1.26.5
 
 ### Patch Changes
