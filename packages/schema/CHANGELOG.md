@@ -1,5 +1,13 @@
 # @effect-app/schema
 
+## 1.19.1
+
+### Patch Changes
+
+- cda1477: update packages
+- Updated dependencies [cda1477]
+  - @effect-app/core@1.17.1
+
 ## 1.19.0
 
 ### Minor Changes

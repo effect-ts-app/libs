@@ -1,5 +1,11 @@
 # @effect-app/pnpm-singleton
 
+## 0.82.1
+
+### Patch Changes
+
+- cda1477: update packages
+
 ## 0.82.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.87.1
+
+### Patch Changes
+
+- cda1477: update packages
+
 ## 0.87.0
 
 ### Minor Changes

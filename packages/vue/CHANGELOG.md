@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 1.26.8
+
+### Patch Changes
+
+- cda1477: update packages
+- Updated dependencies [cda1477]
+  - effect-app@1.30.2
+  - @effect-app/schema@1.19.1
+  - @effect-app/core@1.17.1
+  - @effect-app/vue@1.26.8
+
 ## 1.26.7
 
 ### Patch Changes

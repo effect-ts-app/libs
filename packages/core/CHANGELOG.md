@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.17.1
+
+### Patch Changes
+
+- cda1477: update packages
+
 ## 1.17.0
 
 ### Minor Changes

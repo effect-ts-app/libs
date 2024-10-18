@@ -1,5 +1,15 @@
 # @effect-app/infra-adapters
 
+## 1.20.3
+
+### Patch Changes
+
+- cda1477: update packages
+- Updated dependencies [cda1477]
+  - effect-app@1.30.2
+  - @effect-app/schema@1.19.1
+  - @effect-app/core@1.17.1
+
 ## 1.20.2
 
 ### Patch Changes
