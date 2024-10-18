@@ -1,5 +1,6 @@
 import { type Pausable, useIntervalFn, type UseIntervalFnOptions } from "@vueuse/core"
-import type { MaybeRefOrGetter } from "vue"
+import type { Runtime } from "effect-app"
+import { type MaybeRefOrGetter, type Ref, toRaw } from "vue"
 
 export * as Result from "@effect-rx/rx/Result"
 
@@ -26,4 +27,9 @@ export function useIntervalPauseWhileProcessing(
   return {
     isActive: iv.isActive
   }
+}
+
+export const getRuntime = <R>(runtime: Ref<Runtime.Runtime<R> | undefined>) => {
+  if (!runtime.value) throw new Error("Effect runtime not set")
+  return toRaw(runtime.value)
 }

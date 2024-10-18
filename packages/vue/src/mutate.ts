@@ -10,6 +10,7 @@ import * as Either from "effect/Either"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
 import { makeQueryKey, reportRuntimeError } from "./internal.js"
+import { getRuntime } from "./lib.js"
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
 export function make<A, E, R>(self: Effect<A, E, R>) {
@@ -89,7 +90,7 @@ export const getQueryKey = (h: { name: string }) => {
                 // }
                 */
 
-export const makeMutation = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
+export const makeMutation = <R>(runtime: Ref<Runtime.Runtime<R> | undefined>) => {
   type HandlerWithInput<I, A, E> = {
     handler: (i: I) => Effect<A, E, R>
     name: string
@@ -123,7 +124,7 @@ export const makeMutation = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
     },
     options?: MutationOptions<A>
   ) => {
-    const runPromise = Runtime.runPromise(runtime.value)
+    const runPromise = Runtime.runPromise(getRuntime(runtime))
 
     const queryClient = useQueryClient()
     const state: Ref<MutationResult<A, E>> = ref<MutationResult<A, E>>({ _tag: "Initial" }) as any

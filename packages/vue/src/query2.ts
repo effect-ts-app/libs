@@ -17,6 +17,7 @@ import { ServiceUnavailableError } from "effect-app/client"
 import { computed, ref } from "vue"
 import type { ComputedRef, Ref, WatchSource } from "vue"
 import { makeQueryKey, reportRuntimeError } from "./internal.js"
+import { getRuntime } from "./lib.js"
 import type { RequestHandler, RequestHandlerWithInput } from "./makeClient2.js"
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -35,7 +36,7 @@ export interface KnownFiberFailure<E> extends Runtime.FiberFailure {
   readonly [Runtime.FiberFailureCauseId]: Cause.Cause<E>
 }
 
-export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
+export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R> | undefined>) => {
   // TODO: options
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
@@ -47,6 +48,7 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
     arg?: I | WatchSource<I>,
     options: QueryObserverOptionsCustom<unknown, KnownFiberFailure<E>, A> = {} // TODO
   ) => {
+    const runPromise = Runtime.runPromise(getRuntime(runtime))
     const arr = arg
     const req: { value: I } = !arg
       ? undefined
@@ -76,7 +78,7 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
           },
           queryKey,
           queryFn: ({ signal }) =>
-            Runtime.runPromise(runtime.value)(
+            runPromise(
               handler
                 .pipe(
                   Effect.tapDefect(reportRuntimeError),
@@ -100,7 +102,7 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
           },
           queryKey: [...queryKey, req],
           queryFn: ({ signal }) =>
-            Runtime.runPromise(runtime.value)(
+            runPromise(
               handler(req.value)
                 .pipe(
                   Effect.tapDefect(reportRuntimeError),
