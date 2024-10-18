@@ -38,23 +38,7 @@ export const getRuntime = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined
 export const mapHandler: {
   <I, E, R, A, E2, A2, R2, Request extends TaggedRequestClassAny>(
     self: RequestHandlerWithInput<I, A, E, R, Request>,
-    map: (i: I) => (handler: Effect<A, E, R>) => Effect<A2, E2, R2>
-  ): RequestHandlerWithInput<I, A2, E2, R2, Request>
-  <E, A, R, E2, A2, R2, Request extends TaggedRequestClassAny>(
-    self: RequestHandler<A, E, R, Request>,
-    map: (handler: Effect<A, E, R>) => Effect<A2, E2, R2>
-  ): RequestHandler<A2, E2, R2, Request>
-} = (self: any, map: any): any => ({
-  ...self,
-  handler: typeof self.handler === "function"
-    ? (i: any) => map(i)((self.handler as (i: any) => Effect<any, any, any>)(i))
-    : map(self.handler)
-})
-
-export const mapHandler2: {
-  <I, E, R, A, E2, A2, R2, Request extends TaggedRequestClassAny>(
-    self: RequestHandlerWithInput<I, A, E, R, Request>,
-    map: (handler: (i: I) => Effect<A, E, R>) => Effect<A2, E2, R2>
+    map: (handler: (i: I) => Effect<A, E, R>) => (i: I) => Effect<A2, E2, R2>
   ): RequestHandlerWithInput<I, A2, E2, R2, Request>
   <E, A, R, E2, A2, R2, Request extends TaggedRequestClassAny>(
     self: RequestHandler<A, E, R, Request>,
