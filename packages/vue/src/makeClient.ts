@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { flow, pipe, tuple } from "@effect-app/core/Function"
-import type { MutationResult } from "@effect-app/vue"
-import { Result } from "@effect-app/vue"
 import * as Sentry from "@sentry/browser"
-import { type MaybeRefOrGetter, type Pausable, useIntervalFn, type UseIntervalFnOptions } from "@vueuse/core"
 import type { Either } from "effect-app"
-import { Array, Cause, Effect, Match, Option, Runtime, S } from "effect-app"
+import { Cause, Effect, Match, Runtime, S } from "effect-app"
 import { type SupportedErrors } from "effect-app/client"
 import { Failure, Success } from "effect-app/Operations"
 import { dropUndefinedT } from "effect-app/utils"
-import type { R } from "vitest/dist/chunks/config.Crbj2GAb.js"
 import { computed, type ComputedRef } from "vue"
 import type { MakeIntlReturn } from "./makeIntl.js"
-import type { MakeMutation, MutationOptions } from "./mutate.js"
+import type { MakeMutation, MutationOptions, Res } from "./mutate.js"
+import { mutationResultToVue } from "./mutate.js"
 
 /**
  * Use this after handling an error yourself, still continueing on the Error track, but the error will not be reported.
@@ -22,31 +19,6 @@ export class SuppressErrors extends Cause.YieldableError {
 }
 
 export type ResponseErrors = S.ParseResult.ParseError | SupportedErrors | SuppressErrors
-
-export function pauseWhileProcessing(
-  iv: Pausable,
-  pmf: () => Promise<unknown>
-) {
-  return Promise
-    .resolve(iv.pause())
-    .then(() => pmf())
-    .finally(() => iv.resume())
-}
-
-export function useIntervalPauseWhileProcessing(
-  pmf: () => Promise<unknown>,
-  interval?: MaybeRefOrGetter<number>,
-  options?: Omit<UseIntervalFnOptions, "immediateCallback">
-) {
-  const iv = useIntervalFn(
-    () => pauseWhileProcessing(iv, pmf),
-    interval,
-    options ? { ...options, immediateCallback: false } : options
-  )
-  return {
-    isActive: iv.isActive
-  }
-}
 
 export interface Opts<A, I = void> extends MutationOptions<A, I> {
   suppressErrorToast?: boolean
@@ -83,7 +55,7 @@ export const withSuccess: {
         (
           self.handler as (
             i: any
-          ) => Effect<any, any, R>
+          ) => Effect<any, any, any>
         )(i),
         Effect.flatMap((_) =>
           Effect.promise(() => onSuccess(_, i)).pipe(
@@ -128,12 +100,6 @@ export const withSuccessE: {
   }
 }
 
-export interface Res<A, E> {
-  readonly loading: boolean
-  readonly data: A | undefined
-  readonly error: E | undefined
-}
-
 type WithAction<A> = A & {
   action: string
 }
@@ -149,33 +115,6 @@ type ActResp<E, A> = readonly [
   ComputedRef<Res<A, E>>,
   WithAction<() => Promise<void>>
 ]
-
-export function mutationResultToVue<A, E>(
-  mutationResult: MutationResult<A, E>
-): Res<A, E> {
-  switch (mutationResult._tag) {
-    case "Loading": {
-      return { loading: true, data: undefined, error: undefined }
-    }
-    case "Success": {
-      return {
-        loading: false,
-        data: mutationResult.data,
-        error: undefined
-      }
-    }
-    case "Error": {
-      return {
-        loading: false,
-        data: undefined,
-        error: mutationResult.error
-      }
-    }
-    case "Initial": {
-      return { loading: false, data: undefined, error: undefined }
-    }
-  }
-}
 
 export const makeClient = <Locale extends string, R>(
   useIntl: MakeIntlReturn<Locale>["useIntl"],
@@ -452,25 +391,21 @@ export const mapHandler: {
     self: {
       handler: (i: I) => Effect<A, E, R>
       name: string
-      mapPath: (i: I) => string
     },
     map: (i: I) => (handler: Effect<A, E, R>) => Effect<A2, E2, R2>
   ): {
     handler: (i: I) => Effect<A2, E2, R2>
     name: string
-    mapPath: (i: I) => string
   }
   <E, A, R, E2, A2, R2>(
     self: {
       handler: Effect<A, E, R>
       name: string
-      mapPath: string
     },
     map: (handler: Effect<A, E, R>) => Effect<A2, E2, R2>
   ): {
     handler: Effect<A2, E2, R2>
     name: string
-    mapPath: string
   }
 } = (self: any, map: any): any => ({
   ...self,
@@ -478,49 +413,3 @@ export const mapHandler: {
     ? (i: any) => map(i)((self.handler as (i: any) => Effect<any, any, any>)(i))
     : map(self.handler)
 })
-
-export function composeQueries<
-  R extends Record<string, Result.Result<any, any>>
->(
-  results: R,
-  renderPreviousOnFailure?: boolean
-): Result.Result<
-  {
-    [Property in keyof R]: R[Property] extends Result.Result<infer A, any> ? A
-      : never
-  },
-  {
-    [Property in keyof R]: R[Property] extends Result.Result<any, infer E> ? E
-      : never
-  }[keyof R]
-> {
-  const values = renderPreviousOnFailure
-    ? Object.values(results).map(orPrevious)
-    : Object.values(results)
-  const error = values.find(Result.isFailure)
-  if (error) {
-    return error
-  }
-  const initial = Array.findFirst(values, (x) => x._tag === "Initial" ? Option.some(x) : Option.none())
-  if (initial.value !== undefined) {
-    return initial.value
-  }
-  const loading = Array.findFirst(values, (x) => Result.isInitial(x) && x.waiting ? Option.some(x) : Option.none())
-  if (loading.value !== undefined) {
-    return loading.value
-  }
-
-  const isRefreshing = values.some((x) => x.waiting)
-
-  const r = Object.entries(results).reduce((prev, [key, value]) => {
-    prev[key] = Result.value(value).value
-    return prev
-  }, {} as any)
-  return Result.success(r, isRefreshing)
-}
-
-function orPrevious<E, A>(result: Result.Result<A, E>) {
-  return Result.isFailure(result) && Option.isSome(result.previousValue)
-    ? Result.success(result.previousValue.value, result.waiting)
-    : result
-}

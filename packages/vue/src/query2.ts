@@ -17,6 +17,7 @@ import { ServiceUnavailableError } from "effect-app/client"
 import { computed, ref } from "vue"
 import type { ComputedRef, Ref, WatchSource } from "vue"
 import { makeQueryKey, reportRuntimeError } from "./internal.js"
+import type { RequestHandler, RequestHandlerWithInput } from "./makeClient2.js"
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface QueryObserverOptionsCustom<
@@ -39,28 +40,10 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UseQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
-  const useSafeQuery_ = <I, A, E>(
+  const useSafeQuery_ = <I, A, E, Request extends S.TaggedRequest.Any>(
     q:
-      | {
-        readonly handler: (
-          req: I
-        ) => Effect<
-          A,
-          E,
-          R
-        >
-        mapPath: (req: I) => string
-        name: string
-      }
-      | {
-        readonly handler: Effect<
-          A,
-          E,
-          R
-        >
-        mapPath: string
-        name: string
-      },
+      | RequestHandlerWithInput<I, A, E, R, Request>
+      | RequestHandler<A, E, R, Request>,
     arg?: I | WatchSource<I>,
     options: QueryObserverOptionsCustom<unknown, KnownFiberFailure<E>, A> = {} // TODO
   ) => {
@@ -167,12 +150,8 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
     return Result.initial(r.isValidating)
   }
 
-  function useSafeQuery<E, A>(
-    self: {
-      handler: Effect<A, E, R>
-      mapPath: string
-      name: string
-    },
+  function useSafeQuery<E, A, Request extends S.TaggedRequest.Any>(
+    self: RequestHandler<A, E, R, Request>,
     options?: QueryObserverOptionsCustom // TODO
   ): readonly [
     ComputedRef<Result.Result<A, E>>,
@@ -180,12 +159,8 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
     (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
     UseQueryReturnType<any, any>
   ]
-  function useSafeQuery<Arg, E, A>(
-    self: {
-      handler: (arg: Arg) => Effect<A, E, R>
-      mapPath: (arg: Arg) => string
-      name: string
-    },
+  function useSafeQuery<Arg, E, A, Request extends S.TaggedRequest.Any>(
+    self: RequestHandlerWithInput<Arg, A, E, R, Request>,
     arg: Arg | WatchSource<Arg>,
     options?: QueryObserverOptionsCustom // TODO
   ): readonly [
@@ -196,29 +171,6 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
   ]
   function useSafeQuery(
     self: any,
-    /*
-  q:
-    | {
-      handler: (
-        req: I
-      ) => Effect<
-        A,
-        E,
-        R
-      >
-      mapPath: (req: I) => string
-      name: string
-    }
-    | {
-      handler: Effect<
-        A,
-        E,
-        R
-      >
-      mapPath: string
-      name: string
-    },
-  */
     argOrOptions?: any,
     options?: any
   ) {

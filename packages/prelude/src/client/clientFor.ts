@@ -13,7 +13,7 @@ import { HttpClient, HttpClientRequest } from "effect-app/http"
 import type { Schema } from "effect-app/schema"
 import { typedKeysOf } from "effect-app/utils"
 import type * as Request from "effect/Request"
-import { Path } from "path-parser"
+import type { Path } from "path-parser"
 import qs from "query-string"
 
 export function makePathWithQuery(
@@ -68,17 +68,11 @@ const apiClient = Effect.gen(function*() {
   )
 })
 
-export type Client<M extends Requests> =
-  & RequestHandlers<
-    ApiConfig | HttpClient.HttpClient,
-    never, // SupportedErrors | FetchError | ResError,
-    M
-  >
-  & RequestHandlersE<
-    ApiConfig | HttpClient.HttpClient,
-    never, // SupportedErrors | FetchError | ResError,
-    M
-  >
+export type Client<M extends Requests> = RequestHandlers<
+  ApiConfig | HttpClient.HttpClient,
+  never, // SupportedErrors | FetchError | ResError,
+  M
+>
 
 export function makeClientFor(layers: Layer.Layer<never, never, never>) {
   const cache = new Map<any, Client<any>>()
@@ -138,18 +132,11 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
       const Request = h
       const Response = h.success
 
-      const encodeRequest = S.encodeSync(
-        Request as unknown as S.Schema<any, any>
-      )
-
       const requestName = `${meta.moduleName}.${cur as string}`
         .replaceAll(".js", "")
 
       const requestMeta = {
-        method: "POST", // TODO
         Request,
-        Response,
-        mapPath: requestName,
         name: requestName
       }
 
@@ -159,40 +146,8 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
       )
 
       const fields = Struct.omit(Request.fields, "_tag")
-      const p = requestName
-      const path = new Path(p) // TODO
       // @ts-expect-error doc
-      prev[cur] = requestMeta.method === "GET"
-        ? Object.keys(fields).length === 0
-          ? {
-            handler: client
-              .pipe(
-                Effect.andThen((cl) => cl(new Request())),
-                Effect
-                  .withSpan("client.request " + requestName, {
-                    captureStackTrace: false,
-                    attributes: { "request.name": requestName }
-                  }),
-                Effect.provide(layers)
-              ),
-            ...requestMeta
-          }
-          : {
-            handler: (req: any) =>
-              client
-                .pipe(
-                  Effect.andThen((cl) => cl(new Request(req))),
-                  Effect
-                    .withSpan("client.request " + requestName, {
-                      captureStackTrace: false,
-                      attributes: { "request.name": requestName }
-                    }),
-                  Effect.provide(layers)
-                ),
-            ...requestMeta,
-            mapPath: (req: any) => req ? makePathWithQuery(path, encodeRequest(req)) : p
-          }
-        : Object.keys(fields).length === 0
+      prev[cur] = Object.keys(fields).length === 0
         ? {
           handler: client
             .pipe(
@@ -203,7 +158,20 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
               }),
               Effect.provide(layers)
             ),
-          ...requestMeta
+          ...requestMeta,
+          raw: {
+            handler: client
+              .pipe(
+                Effect.andThen((cl) => cl(new Request())),
+                Effect.flatMap((res) => S.encode(Response)(res)), // TODO,
+                Effect.withSpan("client.request " + requestName, {
+                  captureStackTrace: false,
+                  attributes: { "request.name": requestName }
+                }),
+                Effect.provide(layers)
+              ),
+            ...requestMeta
+          }
         }
         : {
           handler: (req: any) =>
@@ -218,86 +186,22 @@ function clientFor_<M extends Requests>(models: M, layers = Layer.empty) {
               ),
 
           ...requestMeta,
-          mapPath: (req: any) =>
-            req
-              ? requestMeta.method === "DELETE"
-                ? makePathWithQuery(path, encodeRequest(req))
-                : makePathWithBody(path, encodeRequest(req))
-              : p
-        }
-
-      // generate handler
-
-      // @ts-expect-error doc
-      prev[`${cur}E`] = requestMeta.method === "GET"
-        ? Object.keys(fields).length === 0
-          ? {
-            handler: client
-              .pipe(
-                Effect.andThen((cl) => cl(new Request())),
-                Effect.flatMap((res) => S.encode(Response)(res)), // TODO,
-                Effect
-                  .withSpan("client.request " + requestName, {
-                    captureStackTrace: false,
-                    attributes: { "request.name": requestName }
-                  }),
-                Effect.provide(layers)
-              ),
-            ...requestMeta
-          }
-          : {
+          raw: {
             handler: (req: any) =>
               client
                 .pipe(
                   Effect.andThen((cl) => cl(new Request(req))),
-                  Effect.flatMap((res) => S.encode(Response)(res)), // TODO
-                  Effect
-                    .withSpan("client.request " + requestName, {
-                      captureStackTrace: false,
-                      attributes: { "request.name": requestName }
-                    }),
+                  Effect.flatMap((res) => S.encode(Response)(res)), // TODO,
+                  Effect.withSpan("client.request " + requestName, {
+                    captureStackTrace: false,
+                    attributes: { "request.name": requestName }
+                  }),
                   Effect.provide(layers)
                 ),
 
-            ...requestMeta,
-            mapPath: (req: any) => req ? makePathWithQuery(path, encodeRequest(req)) : p
+            ...requestMeta
           }
-        : Object.keys(fields).length === 0
-        ? {
-          handler: client
-            .pipe(
-              Effect.andThen((cl) => cl(new Request())),
-              Effect.flatMap((res) => S.encode(Response)(res)), // TODO,
-              Effect.withSpan("client.request " + requestName, {
-                captureStackTrace: false,
-                attributes: { "request.name": requestName }
-              }),
-              Effect.provide(layers)
-            ),
-          ...requestMeta
         }
-        : {
-          handler: (req: any) =>
-            client
-              .pipe(
-                Effect.andThen((cl) => cl(new Request(req))),
-                Effect.flatMap((res) => S.encode(Response)(res)), // TODO,
-                Effect.withSpan("client.request " + requestName, {
-                  captureStackTrace: false,
-                  attributes: { "request.name": requestName }
-                }),
-                Effect.provide(layers)
-              ),
-
-          ...requestMeta,
-          mapPath: (req: any) =>
-            req
-              ? requestMeta.method === "DELETE"
-                ? makePathWithQuery(path, encodeRequest(req))
-                : makePathWithBody(path, encodeRequest(req))
-              : p
-        }
-      // generate handler
 
       return prev
     }, {} as Client<M>))
@@ -321,8 +225,6 @@ type RequestHandlers<R, E, M extends Requests> = {
   [K in keyof M]: IsEmpty<Omit<S.Schema.Type<M[K]>, Cruft>> extends true ? {
       handler: Effect<Schema.Type<M[K]["success"]>, Schema.Type<M[K]["failure"]> | E, R>
       Request: M[K]
-      Reponse: Schema.Type<M[K]["success"]>
-      mapPath: string
       name: string
     }
     : {
@@ -334,38 +236,21 @@ type RequestHandlers<R, E, M extends Requests> = {
         R
       >
       Request: M[K]
-      Reponse: Schema.Type<M[K]["success"]>
-      mapPath: (req: Omit<S.Schema.Type<M[K]>, Cruft>) => string
       name: string
-    }
-}
 
-type RequestHandlersE<R, E, M extends Requests> = {
-  [K in keyof M & string as `${K}E`]: IsEmpty<Omit<S.Schema.Type<M[K]>, Cruft>> extends true ? {
-      handler: Effect<
-        Schema.Encoded<M[K]["success"]>,
-        Schema.Type<M[K]["failure"]> | E,
-        R
-      >
-      Request: M[K]
-      Reponse: Schema.Type<M[K]["success"]>
-      mapPath: string
-      name: string
-    }
-    : {
-      handler: (
-        req: Omit<
-          S.Schema.Type<M[K]>,
-          Cruft
+      raw: {
+        handler: (
+          req: Omit<
+            S.Schema.Type<M[K]>,
+            Cruft
+          >
+        ) => Effect<
+          Schema.Encoded<M[K]["success"]>,
+          Schema.Type<M[K]["failure"]> | E,
+          R
         >
-      ) => Effect<
-        Schema.Encoded<M[K]["success"]>,
-        Schema.Type<M[K]["failure"]> | E,
-        R
-      >
-      Request: M[K]
-      Reponse: Schema.Type<M[K]["success"]>
-      mapPath: (req: Omit<S.Schema.Type<M[K]>, Cruft>) => string
-      name: string
+        Request: M[K]
+        name: string
+      }
     }
 }

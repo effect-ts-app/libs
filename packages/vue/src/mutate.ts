@@ -225,3 +225,36 @@ export const makeMutation = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface MakeMutation<R> extends ReturnType<typeof makeMutation<R>> {}
+
+export function mutationResultToVue<A, E>(
+  mutationResult: MutationResult<A, E>
+): Res<A, E> {
+  switch (mutationResult._tag) {
+    case "Loading": {
+      return { loading: true, data: undefined, error: undefined }
+    }
+    case "Success": {
+      return {
+        loading: false,
+        data: mutationResult.data,
+        error: undefined
+      }
+    }
+    case "Error": {
+      return {
+        loading: false,
+        data: undefined,
+        error: mutationResult.error
+      }
+    }
+    case "Initial": {
+      return { loading: false, data: undefined, error: undefined }
+    }
+  }
+}
+
+export interface Res<A, E> {
+  readonly loading: boolean
+  readonly data: A | undefined
+  readonly error: E | undefined
+}

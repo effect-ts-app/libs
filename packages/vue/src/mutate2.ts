@@ -3,10 +3,12 @@ import { tuple } from "@effect-app/core/Function"
 import * as Result from "@effect-rx/rx/Result"
 import type { InvalidateOptions, InvalidateQueryFilters } from "@tanstack/vue-query"
 import { useQueryClient } from "@tanstack/vue-query"
+import type { S } from "effect-app"
 import { Cause, Effect, Exit, Option } from "effect-app"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
 import { reportRuntimeError } from "./internal.js"
+import type { RequestHandler, RequestHandlerWithInput } from "./makeClient2.js"
 import { getQueryKey } from "./mutate.js"
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
@@ -78,35 +80,27 @@ export interface MutationOptions {
                 */
 
 export const makeMutation2 = () => {
-  type HandlerWithInput<I, A, E, R> = {
-    handler: (i: I) => Effect<A, E, R>
-    name: string
-  }
-  type Handler<A, E, R> = { handler: Effect<A, E, R>; name: string }
-
   /**
    * Pass a function that returns an Effect, e.g from a client action, or an Effect
    * Returns a tuple with state ref and execution function which reports errors as Toast.
    */
   const useSafeMutation: {
-    <I, E, A, R>(
-      self: HandlerWithInput<I, A, E, R>,
+    <I, E, A, R, Request extends S.TaggedRequest.Any>(
+      self: RequestHandlerWithInput<I, A, E, R, Request>,
       options?: MutationOptions
     ): readonly [
       Readonly<Ref<MutationResult<A, E>>>,
       (i: I) => Effect<A, E, R>
     ]
-    <E, A, R>(self: Handler<A, E, R>, options?: MutationOptions): readonly [
+    <E, A, R, Request extends S.TaggedRequest.Any>(
+      self: RequestHandler<A, E, R, Request>,
+      options?: MutationOptions
+    ): readonly [
       Readonly<Ref<MutationResult<A, E>>>,
       () => Effect<A, E, R> // TODO: remove () =>
     ]
-  } = <I, E, A, R>(
-    self: {
-      handler:
-        | HandlerWithInput<I, A, E, R>["handler"]
-        | Handler<A, E, R>["handler"]
-      name: string
-    },
+  } = <I, E, A, R, Request extends S.TaggedRequest.Any>(
+    self: RequestHandlerWithInput<I, A, E, R, Request> | RequestHandler<A, E, R, Request>,
     options?: MutationOptions
   ) => {
     const queryClient = useQueryClient()

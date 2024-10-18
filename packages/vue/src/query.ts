@@ -12,7 +12,7 @@ import type {
   UseQueryReturnType
 } from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
-import { Cause, Effect, Option, Runtime, S } from "effect-app"
+import { Array, Cause, Effect, Option, Runtime, S } from "effect-app"
 import { ServiceUnavailableError } from "effect-app/client"
 import { computed, ref } from "vue"
 import type { ComputedRef, Ref, WatchSource } from "vue"
@@ -49,7 +49,6 @@ export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
           E,
           R
         >
-        mapPath: (req: I) => string
         name: string
       }
       | {
@@ -58,7 +57,6 @@ export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
           E,
           R
         >
-        mapPath: string
         name: string
       },
     arg?: I | WatchSource<I>,
@@ -162,7 +160,6 @@ export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
   function useSafeQuery<E, A>(
     self: {
       handler: Effect<A, E, R>
-      mapPath: string
       name: string
     },
     options?: QueryObserverOptionsCustom // TODO
@@ -175,7 +172,6 @@ export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
   function useSafeQuery<Arg, E, A>(
     self: {
       handler: (arg: Arg) => Effect<A, E, R>
-      mapPath: (arg: Arg) => string
       name: string
     },
     arg: Arg | WatchSource<Arg>,
@@ -198,7 +194,6 @@ export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
         E,
         R
       >
-      mapPath: (req: I) => string
       name: string
     }
     | {
@@ -207,7 +202,6 @@ export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
         E,
         R
       >
-      mapPath: string
       name: string
     },
   */
@@ -223,3 +217,49 @@ export const makeQuery = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface MakeQuery<R> extends ReturnType<typeof makeQuery<R>> {}
+
+export function composeQueries<
+  R extends Record<string, Result.Result<any, any>>
+>(
+  results: R,
+  renderPreviousOnFailure?: boolean
+): Result.Result<
+  {
+    [Property in keyof R]: R[Property] extends Result.Result<infer A, any> ? A
+      : never
+  },
+  {
+    [Property in keyof R]: R[Property] extends Result.Result<any, infer E> ? E
+      : never
+  }[keyof R]
+> {
+  const values = renderPreviousOnFailure
+    ? Object.values(results).map(orPrevious)
+    : Object.values(results)
+  const error = values.find(Result.isFailure)
+  if (error) {
+    return error
+  }
+  const initial = Array.findFirst(values, (x) => x._tag === "Initial" ? Option.some(x) : Option.none())
+  if (initial.value !== undefined) {
+    return initial.value
+  }
+  const loading = Array.findFirst(values, (x) => Result.isInitial(x) && x.waiting ? Option.some(x) : Option.none())
+  if (loading.value !== undefined) {
+    return loading.value
+  }
+
+  const isRefreshing = values.some((x) => x.waiting)
+
+  const r = Object.entries(results).reduce((prev, [key, value]) => {
+    prev[key] = Result.value(value).value
+    return prev
+  }, {} as any)
+  return Result.success(r, isRefreshing)
+}
+
+function orPrevious<E, A>(result: Result.Result<A, E>) {
+  return Result.isFailure(result) && Option.isSome(result.previousValue)
+    ? Result.success(result.previousValue.value, result.waiting)
+    : result
+}

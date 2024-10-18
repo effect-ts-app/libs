@@ -1,62 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { flow, pipe, tuple } from "@effect-app/core/Function"
-import type { MutationResult } from "@effect-app/vue"
-import { Result } from "@effect-app/vue"
 import * as Sentry from "@sentry/browser"
-import { type MaybeRefOrGetter, type Pausable, useIntervalFn, type UseIntervalFnOptions } from "@vueuse/core"
-import { Array, Cause, Effect, Exit, Match, Option, S } from "effect-app"
-import { type SupportedErrors } from "effect-app/client"
+import { Cause, Effect, Exit, Match, Option, S } from "effect-app"
 import { Failure, Success } from "effect-app/Operations"
 import { dropUndefinedT } from "effect-app/utils"
 import { computed, type ComputedRef } from "vue"
+import type { Opts, ResponseErrors } from "./makeClient.js"
 import type { MakeIntlReturn } from "./makeIntl.js"
-import type { MakeMutation2, MutationOptions } from "./mutate2.js"
-
-/**
- * Use this after handling an error yourself, still continueing on the Error track, but the error will not be reported.
- */
-export class SuppressErrors extends Cause.YieldableError {
-  readonly _tag = "SuppressErrors"
-}
-
-export type ResponseErrors = S.ParseResult.ParseError | SupportedErrors | SuppressErrors
-
-export function pauseWhileProcessing(
-  iv: Pausable,
-  pmf: () => Promise<unknown>
-) {
-  return Promise
-    .resolve(iv.pause())
-    .then(() => pmf())
-    .finally(() => iv.resume())
-}
-
-export function useIntervalPauseWhileProcessing(
-  pmf: () => Promise<unknown>,
-  interval?: MaybeRefOrGetter<number>,
-  options?: Omit<UseIntervalFnOptions, "immediateCallback">
-) {
-  const iv = useIntervalFn(
-    () => pauseWhileProcessing(iv, pmf),
-    interval,
-    options ? { ...options, immediateCallback: false } : options
-  )
-  return {
-    isActive: iv.isActive
-  }
-}
-
-export interface Opts<A> extends MutationOptions {
-  suppressErrorToast?: boolean
-  suppressSuccessToast?: boolean
-  successToast?: (a: A) => any
-}
-
-export interface Res<A, E> {
-  readonly loading: boolean
-  readonly data: A | undefined
-  readonly error: E | undefined
-}
+import { mutationResultToVue } from "./mutate.js"
+import type { Res } from "./mutate.js"
+import type { MakeMutation2 } from "./mutate2.js"
 
 type WithAction<A> = A & {
   action: string
@@ -73,33 +26,6 @@ type ActResp<E, A, R> = readonly [
   ComputedRef<Res<A, E>>,
   WithAction<() => Effect<A, E, R>>
 ]
-
-export function mutationResultToVue<A, E>(
-  mutationResult: MutationResult<A, E>
-): Res<A, E> {
-  switch (mutationResult._tag) {
-    case "Loading": {
-      return { loading: true, data: undefined, error: undefined }
-    }
-    case "Success": {
-      return {
-        loading: false,
-        data: mutationResult.data,
-        error: undefined
-      }
-    }
-    case "Error": {
-      return {
-        loading: false,
-        data: undefined,
-        error: mutationResult.error
-      }
-    }
-    case "Initial": {
-      return { loading: false, data: undefined, error: undefined }
-    }
-  }
-}
 
 export const makeClient2 = <Locale extends string, R>(
   useIntl: MakeIntlReturn<Locale>["useIntl"],
@@ -271,19 +197,13 @@ export const makeClient2 = <Locale extends string, R>(
    * Returns a tuple with state ref and execution function which reports errors as Toast.
    */
   const useAndHandleMutation: {
-    <I, E extends ResponseErrors, A, R>(
-      self: {
-        handler: (i: I) => Effect<A, E, R>
-        name: string
-      },
+    <I, E extends ResponseErrors, A, R, Request extends S.TaggedRequest.Any>(
+      self: RequestHandlerWithInput<I, A, E, R, Request>,
       action: string,
       options?: Opts<A>
     ): Resp<I, A, E, R>
-    <E extends ResponseErrors, A, R>(
-      self: {
-        handler: Effect<A, E, R>
-        name: string
-      },
+    <E extends ResponseErrors, A, R, Request extends S.TaggedRequest.Any>(
+      self: RequestHandler<A, E, R, Request>,
       action: string,
       options?: Opts<A>
     ): ActResp<E, A, R>
@@ -291,6 +211,7 @@ export const makeClient2 = <Locale extends string, R>(
     const handleRequestWithToast = useHandleRequestWithToast()
     const [a, b] = useSafeMutation(
       {
+        ...self,
         handler: Effect.isEffect(self.handler)
           ? (pipe(
             Effect.annotateCurrentSpan({ action }),
@@ -300,8 +221,7 @@ export const makeClient2 = <Locale extends string, R>(
             pipe(
               Effect.annotateCurrentSpan({ action }),
               Effect.andThen(self.handler(...args))
-            ),
-        name: self.name
+            )
       },
       dropUndefinedT({
         queryInvalidation: options?.queryInvalidation
@@ -319,37 +239,27 @@ export const makeClient2 = <Locale extends string, R>(
   ) {
     return ((self: any, action: any, options: any) => {
       return useAndHandleMutation(
-        {
-          handler: self.handler,
-          name: self.name
-        },
+        self,
         action,
         { ...defaultOptions, ...options }
       )
     }) as {
-      <I, E extends ResponseErrors, A, R>(
-        self: {
-          handler: (i: I) => Effect<A, E, R>
-          name: string
-        },
+      <I, E extends ResponseErrors, A, R, Request extends S.TaggedRequest.Any>(
+        self: RequestHandlerWithInput<I, A, E, R, Request>,
         action: string,
         options?: Opts<A>
       ): Resp<I, A, E, R>
-      <E extends ResponseErrors, A>(
-        self: {
-          handler: Effect<A, E, R>
-          name: string
-        },
+      <E extends ResponseErrors, A, Request extends S.TaggedRequest.Any>(
+        self: RequestHandler<A, E, R, Request>,
         action: string,
         options?: Opts<A>
       ): ActResp<E, A, R>
     }
   }
 
-  const useSafeMutationWithState = <I, E, A>(self: {
-    handler: (i: I) => Effect<A, E, R>
-    name: string
-  }) => {
+  const useSafeMutationWithState = <I, E, A, Request extends S.TaggedRequest.Any>(
+    self: RequestHandlerWithInput<I, A, E, R, Request>
+  ) => {
     const [a, b] = useSafeMutation(self)
 
     return tuple(
@@ -366,80 +276,14 @@ export const makeClient2 = <Locale extends string, R>(
   }
 }
 
-export const mapHandler: {
-  <I, E, R, A, E2, A2, R2>(
-    self: {
-      handler: (i: I) => Effect<A, E, R>
-      name: string
-      mapPath: (i: I) => string
-    },
-    map: (i: I) => (handler: Effect<A, E, R>) => Effect<A2, E2, R2>
-  ): {
-    handler: (i: I) => Effect<A2, E2, R2>
-    name: string
-    mapPath: (i: I) => string
-  }
-  <E, A, R, E2, A2, R2>(
-    self: {
-      handler: Effect<A, E, R>
-      name: string
-      mapPath: string
-    },
-    map: (handler: Effect<A, E, R>) => Effect<A2, E2, R2>
-  ): {
-    handler: Effect<A2, E2, R2>
-    name: string
-    mapPath: string
-  }
-} = (self: any, map: any): any => ({
-  ...self,
-  handler: typeof self.handler === "function"
-    ? (i: any) => map(i)((self.handler as (i: any) => Effect<any, any, any>)(i))
-    : map(self.handler)
-})
-
-export function composeQueries<
-  R extends Record<string, Result.Result<any, any>>
->(
-  results: R,
-  renderPreviousOnFailure?: boolean
-): Result.Result<
-  {
-    [Property in keyof R]: R[Property] extends Result.Result<infer A, any> ? A
-      : never
-  },
-  {
-    [Property in keyof R]: R[Property] extends Result.Result<any, infer E> ? E
-      : never
-  }[keyof R]
-> {
-  const values = renderPreviousOnFailure
-    ? Object.values(results).map(orPrevious)
-    : Object.values(results)
-  const error = values.find(Result.isFailure)
-  if (error) {
-    return error
-  }
-  const initial = Array.findFirst(values, (x) => x._tag === "Initial" ? Option.some(x) : Option.none())
-  if (initial.value !== undefined) {
-    return initial.value
-  }
-  const loading = Array.findFirst(values, (x) => Result.isInitial(x) && x.waiting ? Option.some(x) : Option.none())
-  if (loading.value !== undefined) {
-    return loading.value
-  }
-
-  const isRefreshing = values.some((x) => x.waiting)
-
-  const r = Object.entries(results).reduce((prev, [key, value]) => {
-    prev[key] = Result.value(value).value
-    return prev
-  }, {} as any)
-  return Result.success(r, isRefreshing)
+export interface RequestHandler<A, E, R, Request extends S.TaggedRequest.Any> {
+  handler: Effect<A, E, R>
+  name: string
+  Request: Request
 }
 
-function orPrevious<E, A>(result: Result.Result<A, E>) {
-  return Result.isFailure(result) && Option.isSome(result.previousValue)
-    ? Result.success(result.previousValue.value, result.waiting)
-    : result
+export interface RequestHandlerWithInput<I, A, E, R, Request extends S.TaggedRequest.Any> {
+  handler: (i: I) => Effect<A, E, R>
+  name: string
+  Request: Request
 }
