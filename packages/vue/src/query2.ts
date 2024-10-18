@@ -58,7 +58,7 @@ export const makeQuery2 = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
         }
       } as any)
       : ref(arg)
-    const queryKey = makeQueryKey(q.name)
+    const queryKey = makeQueryKey(q)
     const handler = q.handler
     const r = useQuery<unknown, KnownFiberFailure<E>, A>(
       Effect.isEffect(handler)
