@@ -4,7 +4,13 @@ import type { MaybeRefOrGetter, ShallowRef } from "vue"
 
 export * as Result from "@effect-rx/rx/Result"
 
-export type TaggedRequestClassAny = S.TaggedRequestClass<any, any, any, any, any>
+export type TaggedRequestClassAny = S.Schema.Any & {
+  readonly _tag: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly success: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  readonly failure: any
+}
 
 export function pauseWhileProcessing(
   iv: Pausable,
