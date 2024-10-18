@@ -6,7 +6,7 @@ import { subHours } from "date-fns"
 import type { Fiber } from "effect-app"
 import { Cause, Context, copy, Duration, Effect, Exit, Layer, Option, S, Schedule } from "effect-app"
 import type { OperationProgress } from "effect-app/Operations"
-import { Failure, Operation, OperationId, Success } from "effect-app/Operations"
+import { Operation, OperationFailure, OperationId, OperationSuccess } from "effect-app/Operations"
 import * as Scope from "effect/Scope"
 import { batch } from "../rateLimit.js"
 import { MainFiberSet } from "./MainFiberSet.js"
@@ -51,8 +51,8 @@ const make = Effect.gen(function*() {
             copy(_, {
               updatedAt: new Date(),
               result: Exit.isSuccess(exit)
-                ? new Success()
-                : new Failure({
+                ? new OperationSuccess()
+                : new OperationFailure({
                   message: Cause.isInterrupted(exit.cause)
                     ? NonEmptyString2k("Interrupted")
                     : Cause.isDie(exit.cause)

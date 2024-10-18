@@ -11,15 +11,19 @@ export class OperationProgress extends S.ExtendedClass<
   total: S.NonNegativeInt
 }) {}
 
-export class Success extends S.ExtendedTaggedClass<Success, Success.From>()("Success", {
-  message: S.NullOr(S.NonEmptyString2k).withDefault
-}) {}
+export class OperationSuccess
+  extends S.ExtendedTaggedClass<OperationSuccess, OperationSuccess.From>()("OperationSuccess", {
+    message: S.NullOr(S.NonEmptyString2k).withDefault
+  })
+{}
 
-export class Failure extends S.ExtendedTaggedClass<Failure, Failure.From>()("Failure", {
-  message: S.NullOr(S.NonEmptyString2k).withDefault
-}) {}
+export class OperationFailure
+  extends S.ExtendedTaggedClass<OperationFailure, OperationFailure.From>()("OperationFailure", {
+    message: S.NullOr(S.NonEmptyString2k).withDefault
+  })
+{}
 
-export const OperationResult = S.TaggedUnion(Success, Failure)
+export const OperationResult = S.TaggedUnion(OperationSuccess, OperationFailure)
 export type OperationResult = S.Schema.Type<typeof OperationResult>
 
 export class Operation extends S.ExtendedClass<Operation, Operation.From>()({
@@ -37,11 +41,11 @@ export class Operation extends S.ExtendedClass<Operation, Operation.From>()({
 export namespace OperationProgress {
   export interface From extends S.Struct.Encoded<typeof OperationProgress["fields"]> {}
 }
-export namespace Success {
-  export interface From extends S.Struct.Encoded<typeof Success["fields"]> {}
+export namespace OperationSuccess {
+  export interface From extends S.Struct.Encoded<typeof OperationSuccess["fields"]> {}
 }
-export namespace Failure {
-  export interface From extends S.Struct.Encoded<typeof Failure["fields"]> {}
+export namespace OperationFailure {
+  export interface From extends S.Struct.Encoded<typeof OperationFailure["fields"]> {}
 }
 export namespace Operation {
   export interface From extends S.Struct.Encoded<typeof Operation["fields"]> {}

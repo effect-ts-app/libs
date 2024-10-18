@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/browser"
 import type { Either } from "effect-app"
 import { Cause, Effect, Match, Runtime, S } from "effect-app"
 import { type SupportedErrors } from "effect-app/client"
-import { Failure, Success } from "effect-app/Operations"
+import { OperationFailure, OperationSuccess } from "effect-app/Operations"
 import { dropUndefinedT } from "effect-app/utils"
 import { computed, type ComputedRef } from "vue"
 import type { MakeIntlReturn } from "./makeIntl.js"
@@ -18,7 +18,7 @@ export class SuppressErrors extends Cause.YieldableError {
   readonly _tag = "SuppressErrors"
 }
 
-export type ResponseErrors = S.ParseResult.ParseError | SupportedErrors | SuppressErrors
+export type ResponseErrors = S.ParseResult.ParseError | SupportedErrors | SuppressErrors | OperationFailure
 
 export interface Opts<A, I = void> extends MutationOptions<A, I> {
   suppressErrorToast?: boolean
@@ -162,7 +162,7 @@ export const makeClient = <Locale extends string, R>(
           p.then(
             (r) =>
               r._tag === "Right"
-                ? S.is(Failure)(r.right)
+                ? S.is(OperationFailure)(r.right)
                   ? Promise
                     .resolve(
                       toast.warning(
@@ -176,7 +176,7 @@ export const makeClient = <Locale extends string, R>(
                     .resolve(
                       toast.success(
                         successMessage
-                          + (S.is(Success)(r.right) && r.right.message
+                          + (S.is(OperationSuccess)(r.right) && r.right.message
                             ? "\n" + r.right.message
                             : "")
                       )

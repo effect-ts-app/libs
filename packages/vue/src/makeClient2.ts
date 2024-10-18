@@ -2,7 +2,7 @@
 import { flow, pipe, tuple } from "@effect-app/core/Function"
 import * as Sentry from "@sentry/browser"
 import { Cause, Effect, Exit, Match, Option, S } from "effect-app"
-import { Failure, Success } from "effect-app/Operations"
+import { OperationSuccess } from "effect-app/Operations"
 import { dropUndefinedT } from "effect-app/utils"
 import { computed, type ComputedRef } from "vue"
 import type { TaggedRequestClassAny } from "./lib.js"
@@ -78,18 +78,9 @@ export const makeClient2 = <Locale extends string, R>(
             Exit.matchEffect({
               onSuccess: (r) =>
                 Effect.gen(function*() {
-                  if (S.is(Failure)(r)) {
-                    toast.warning(
-                      warnMessage + r.message
-                        ? "\n" + r.message
-                        : ""
-                    )
-                    return
-                  }
-
                   toast.success(
                     successMessage
-                      + (S.is(Success)(r) && r.message
+                      + (S.is(OperationSuccess)(r) && r.message
                         ? "\n" + r.message
                         : "")
                   )
@@ -102,8 +93,17 @@ export const makeClient2 = <Locale extends string, R>(
 
                   const fail = Cause.failureOption(err)
                   if (Option.isSome(fail)) {
-                    if ((fail as any)._tag === "SuppressErrors") {
+                    if (fail.value._tag === "SuppressErrors") {
                       return Effect.succeed(void 0)
+                    }
+
+                    if (fail.value._tag === "OperationFailure") {
+                      toast.warning(
+                        warnMessage + fail.value.message
+                          ? "\n" + fail.value.message
+                          : ""
+                      )
+                      return
                     }
 
                     if (!options.suppressErrorToast) {
@@ -193,7 +193,7 @@ export const makeClient2 = <Locale extends string, R>(
   }
 
   /**
-   * Pass a function that returns an Effect, e.g from a client action, give it a name, and optionally pass an onSuccess callback.
+   * Pass a function that returns an Effect, e.g from a client action, give it a name, and optionally pass an onOperationSuccess callback.
    * Returns a tuple with state ref and execution function which reports errors as Toast.
    */
   const useAndHandleMutation: {
