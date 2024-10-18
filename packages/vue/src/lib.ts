@@ -1,6 +1,7 @@
 import { type Pausable, useIntervalFn, type UseIntervalFnOptions } from "@vueuse/core"
-import type { Runtime, S } from "effect-app"
+import type { Effect, Runtime, S } from "effect-app"
 import type { MaybeRefOrGetter, ShallowRef } from "vue"
+import type { RequestHandler, RequestHandlerWithInput } from "./makeClient2.js"
 
 export * as Result from "@effect-rx/rx/Result"
 
@@ -41,3 +42,25 @@ export const getRuntime = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined
   if (!runtime.value) throw new Error("Effect runtime not set")
   return runtime.value
 }
+
+export const mapHandler: {
+  <I, E, R, A, E2, A2, R2, Request extends TaggedRequestClassAny>(
+    self: RequestHandlerWithInput<I, A, E, R, Request>,
+    map: (i: I) => (handler: Effect<A, E, R>) => Effect<A2, E2, R2>
+  ): {
+    handler: (i: I) => Effect<A2, E2, R2>
+    name: string
+  }
+  <E, A, R, E2, A2, R2, Request extends TaggedRequestClassAny>(
+    self: RequestHandler<A, E, R, Request>,
+    map: (handler: Effect<A, E, R>) => Effect<A2, E2, R2>
+  ): {
+    handler: Effect<A2, E2, R2>
+    name: string
+  }
+} = (self: any, map: any): any => ({
+  ...self,
+  handler: typeof self.handler === "function"
+    ? (i: any) => map(i)((self.handler as (i: any) => Effect<any, any, any>)(i))
+    : map(self.handler)
+})

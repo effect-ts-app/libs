@@ -27,7 +27,7 @@ export interface Opts<A, I = void> extends MutationOptions<A, I> {
 }
 
 export const withSuccess: {
-  <I, E extends ResponseErrors, A, X, R>(
+  <I, A, E, X, R>(
     self: {
       handler: (i: I) => Effect<A, E, R>
       name: string
@@ -37,7 +37,7 @@ export const withSuccess: {
     handler: (i: I) => Effect<X, E, R>
     name: string
   }
-  <E extends ResponseErrors, A, X, R>(
+  <A, E, X, R>(
     self: {
       handler: Effect<A, E, R>
       name: string
@@ -67,7 +67,7 @@ export const withSuccess: {
 })
 
 export const withSuccessE: {
-  <I, E extends ResponseErrors, A, E2, X, R>(
+  <I, E, A, E2, X, R>(
     self: {
       handler: (i: I) => Effect<A, E, R>
       name: string
@@ -77,7 +77,7 @@ export const withSuccessE: {
     handler: (i: I) => Effect<X, E | E2, R>
     name: string
   }
-  <E extends ResponseErrors, A, E2, X, R>(
+  <E, A, E2, X, R>(
     self: {
       handler: Effect<A, E, R>
       name: string
@@ -385,31 +385,3 @@ export const makeClient = <Locale extends string, R>(
     useHandleRequestWithToast
   }
 }
-
-export const mapHandler: {
-  <I, E, R, A, E2, A2, R2>(
-    self: {
-      handler: (i: I) => Effect<A, E, R>
-      name: string
-    },
-    map: (i: I) => (handler: Effect<A, E, R>) => Effect<A2, E2, R2>
-  ): {
-    handler: (i: I) => Effect<A2, E2, R2>
-    name: string
-  }
-  <E, A, R, E2, A2, R2>(
-    self: {
-      handler: Effect<A, E, R>
-      name: string
-    },
-    map: (handler: Effect<A, E, R>) => Effect<A2, E2, R2>
-  ): {
-    handler: Effect<A2, E2, R2>
-    name: string
-  }
-} = (self: any, map: any): any => ({
-  ...self,
-  handler: typeof self.handler === "function"
-    ? (i: any) => map(i)((self.handler as (i: any) => Effect<any, any, any>)(i))
-    : map(self.handler)
-})
