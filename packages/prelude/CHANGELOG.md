@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 1.30.3
+
+### Patch Changes
+
+- 4a814f5: improve error report
+
 ## 1.30.2
 
 ### Patch Changes

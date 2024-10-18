@@ -1,5 +1,13 @@
 # @effect-app/infra-adapters
 
+## 1.20.4
+
+### Patch Changes
+
+- 4a814f5: improve error report
+- Updated dependencies [4a814f5]
+  - effect-app@1.30.3
+
 ## 1.20.3
 
 ### Patch Changes

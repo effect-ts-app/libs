@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 1.26.9
+
+### Patch Changes
+
+- 4a814f5: improve error report
+- Updated dependencies [4a814f5]
+  - effect-app@1.30.3
+  - @effect-app/vue@1.26.9
+
 ## 1.26.8
 
 ### Patch Changes
