@@ -3,11 +3,11 @@ import { tuple } from "@effect-app/core/Function"
 import * as Result from "@effect-rx/rx/Result"
 import type { InvalidateOptions, InvalidateQueryFilters } from "@tanstack/vue-query"
 import { useQueryClient } from "@tanstack/vue-query"
-import type { S } from "effect-app"
 import { Cause, Effect, Exit, Option } from "effect-app"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
 import { reportRuntimeError } from "./internal.js"
+import type { TaggedRequestClassAny } from "./lib.js"
 import type { RequestHandler, RequestHandlerWithInput } from "./makeClient2.js"
 import { getQueryKey } from "./mutate.js"
 
@@ -85,21 +85,21 @@ export const makeMutation2 = () => {
    * Returns a tuple with state ref and execution function which reports errors as Toast.
    */
   const useSafeMutation: {
-    <I, E, A, R, Request extends S.TaggedRequest.Any>(
+    <I, E, A, R, Request extends TaggedRequestClassAny>(
       self: RequestHandlerWithInput<I, A, E, R, Request>,
       options?: MutationOptions
     ): readonly [
       Readonly<Ref<MutationResult<A, E>>>,
       (i: I) => Effect<A, E, R>
     ]
-    <E, A, R, Request extends S.TaggedRequest.Any>(
+    <E, A, R, Request extends TaggedRequestClassAny>(
       self: RequestHandler<A, E, R, Request>,
       options?: MutationOptions
     ): readonly [
       Readonly<Ref<MutationResult<A, E>>>,
       () => Effect<A, E, R> // TODO: remove () =>
     ]
-  } = <I, E, A, R, Request extends S.TaggedRequest.Any>(
+  } = <I, E, A, R, Request extends TaggedRequestClassAny>(
     self: RequestHandlerWithInput<I, A, E, R, Request> | RequestHandler<A, E, R, Request>,
     options?: MutationOptions
   ) => {

@@ -1,8 +1,10 @@
 import { type Pausable, useIntervalFn, type UseIntervalFnOptions } from "@vueuse/core"
-import type { Runtime } from "effect-app"
+import type { Runtime, S } from "effect-app"
 import type { MaybeRefOrGetter, ShallowRef } from "vue"
 
 export * as Result from "@effect-rx/rx/Result"
+
+export type TaggedRequestClassAny = S.TaggedRequestClass<any, any, any, any, any>
 
 export function pauseWhileProcessing(
   iv: Pausable,

@@ -17,6 +17,7 @@ import { ServiceUnavailableError } from "effect-app/client"
 import { computed, ref } from "vue"
 import type { ComputedRef, ShallowRef, WatchSource } from "vue"
 import { makeQueryKey, reportRuntimeError } from "./internal.js"
+import type { TaggedRequestClassAny } from "./lib.js"
 import { getRuntime } from "./lib.js"
 import type { RequestHandler, RequestHandlerWithInput } from "./makeClient2.js"
 
@@ -41,7 +42,7 @@ export const makeQuery2 = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UseQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
-  const useSafeQuery_ = <I, A, E, Request extends S.TaggedRequest.Any>(
+  const useSafeQuery_ = <I, A, E, Request extends TaggedRequestClassAny>(
     q:
       | RequestHandlerWithInput<I, A, E, R, Request>
       | RequestHandler<A, E, R, Request>,
@@ -151,7 +152,7 @@ export const makeQuery2 = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined
     return Result.initial(r.isValidating)
   }
 
-  function useSafeQuery<E, A, Request extends S.TaggedRequest.Any>(
+  function useSafeQuery<E, A, Request extends TaggedRequestClassAny>(
     self: RequestHandler<A, E, R, Request>,
     options?: QueryObserverOptionsCustom // TODO
   ): readonly [
@@ -160,7 +161,7 @@ export const makeQuery2 = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined
     (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
     UseQueryReturnType<any, any>
   ]
-  function useSafeQuery<Arg, E, A, Request extends S.TaggedRequest.Any>(
+  function useSafeQuery<Arg, E, A, Request extends TaggedRequestClassAny>(
     self: RequestHandlerWithInput<Arg, A, E, R, Request>,
     arg: Arg | WatchSource<Arg>,
     options?: QueryObserverOptionsCustom // TODO

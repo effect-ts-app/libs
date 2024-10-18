@@ -5,6 +5,7 @@ import { Cause, Effect, Exit, Match, Option, S } from "effect-app"
 import { Failure, Success } from "effect-app/Operations"
 import { dropUndefinedT } from "effect-app/utils"
 import { computed, type ComputedRef } from "vue"
+import type { TaggedRequestClassAny } from "./lib.js"
 import type { Opts, ResponseErrors } from "./makeClient.js"
 import type { MakeIntlReturn } from "./makeIntl.js"
 import { mutationResultToVue } from "./mutate.js"
@@ -197,12 +198,12 @@ export const makeClient2 = <Locale extends string, R>(
    * Returns a tuple with state ref and execution function which reports errors as Toast.
    */
   const useAndHandleMutation: {
-    <I, E extends ResponseErrors, A, R, Request extends S.TaggedRequest.Any>(
+    <I, E extends ResponseErrors, A, R, Request extends TaggedRequestClassAny>(
       self: RequestHandlerWithInput<I, A, E, R, Request>,
       action: string,
       options?: Opts<A>
     ): Resp<I, A, E, R>
-    <E extends ResponseErrors, A, R, Request extends S.TaggedRequest.Any>(
+    <E extends ResponseErrors, A, R, Request extends TaggedRequestClassAny>(
       self: RequestHandler<A, E, R, Request>,
       action: string,
       options?: Opts<A>
@@ -244,12 +245,12 @@ export const makeClient2 = <Locale extends string, R>(
         { ...defaultOptions, ...options }
       )
     }) as {
-      <I, E extends ResponseErrors, A, R, Request extends S.TaggedRequest.Any>(
+      <I, E extends ResponseErrors, A, R, Request extends TaggedRequestClassAny>(
         self: RequestHandlerWithInput<I, A, E, R, Request>,
         action: string,
         options?: Opts<A>
       ): Resp<I, A, E, R>
-      <E extends ResponseErrors, A, Request extends S.TaggedRequest.Any>(
+      <E extends ResponseErrors, A, Request extends TaggedRequestClassAny>(
         self: RequestHandler<A, E, R, Request>,
         action: string,
         options?: Opts<A>
@@ -257,7 +258,7 @@ export const makeClient2 = <Locale extends string, R>(
     }
   }
 
-  const useSafeMutationWithState = <I, E, A, Request extends S.TaggedRequest.Any>(
+  const useSafeMutationWithState = <I, E, A, Request extends TaggedRequestClassAny>(
     self: RequestHandlerWithInput<I, A, E, R, Request>
   ) => {
     const [a, b] = useSafeMutation(self)
@@ -276,13 +277,13 @@ export const makeClient2 = <Locale extends string, R>(
   }
 }
 
-export interface RequestHandler<A, E, R, Request extends S.TaggedRequest.Any> {
+export interface RequestHandler<A, E, R, Request extends TaggedRequestClassAny> {
   handler: Effect<A, E, R>
   name: string
   Request: Request
 }
 
-export interface RequestHandlerWithInput<I, A, E, R, Request extends S.TaggedRequest.Any> {
+export interface RequestHandlerWithInput<I, A, E, R, Request extends TaggedRequestClassAny> {
   handler: (i: I) => Effect<A, E, R>
   name: string
   Request: Request
