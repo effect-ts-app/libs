@@ -69,13 +69,13 @@ export interface MutationOptions<A, I = void> {
   onSuccess?: (a: A, i: I) => Promise<unknown>
 }
 
-export const getQueryKey = (name: string) => {
-  const key = makeQueryKey(name)
+export const getQueryKey = (h: { name: string }) => {
+  const key = makeQueryKey(h)
   const ns = key.filter((_) => _.startsWith("$"))
   // we invalidate the parent namespace e.g $project/$configuration.get, we invalidate $project
   // for $project/$configuration/$something.get, we invalidate $project/$configuration
   const k = ns.length ? ns.length > 1 ? ns.slice(0, ns.length - 1) : ns : undefined
-  if (!k) throw new Error("empty query key for: " + name)
+  if (!k) throw new Error("empty query key for: " + h.name)
   return k
 }
 // TODO: more efficient invalidation, including args etc
@@ -180,7 +180,7 @@ export const makeMutation = <R>(runtime: Ref<Runtime.Runtime<R>>) => {
             Effect.tap(() =>
               Effect
                 .suspend(() => {
-                  const queryKey = getQueryKey(self.name)
+                  const queryKey = getQueryKey(self)
 
                   if (options?.queryInvalidation) {
                     const opts = options.queryInvalidation(queryKey, self.name)

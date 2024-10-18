@@ -127,7 +127,7 @@ export const makeMutation2 = () => {
     }
 
     const invalidateCache = Effect.suspend(() => {
-      const queryKey = getQueryKey(self.name)
+      const queryKey = getQueryKey(self)
 
       if (options?.queryInvalidation) {
         const opts = options.queryInvalidation(queryKey, self.name)
