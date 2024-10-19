@@ -98,7 +98,7 @@ const make = Effect.gen(function*() {
               Effect.flatMap((id) =>
                 reqFiberSet
                   .forkDaemonReportUnexpected(Scope.use(
-                    self(id).pipe(Effect.withSpan(title)),
+                    self(id).pipe(Effect.withSpan(title, { captureStackTrace: false })),
                     scope
                   ))
                   .pipe(Effect.map((fiber): RunningOperation<A, E> => ({ fiber, id })))
@@ -134,7 +134,7 @@ const make = Effect.gen(function*() {
                 .flatMap((id) =>
                   reqFiberSet
                     .forkDaemonReportUnexpected(Scope.use(
-                      self(id).pipe(Effect.withSpan(title)),
+                      self(id).pipe(Effect.withSpan(title, { captureStackTrace: false })),
                       scope
                     ))
                     .pipe(Effect.map((fiber): RunningOperation<A, E> => ({ fiber, id })))
@@ -164,7 +164,7 @@ const make = Effect.gen(function*() {
                 .flatMap((id) =>
                   reqFiberSet
                     .forkDaemonReportUnexpected(Scope.use(
-                      self.pipe(Effect.withSpan(title)),
+                      self.pipe(Effect.withSpan(title, { captureStackTrace: false })),
                       scope
                     ))
                     .pipe(Effect.map((fiber): RunningOperation<A, E> => ({ fiber, id })))

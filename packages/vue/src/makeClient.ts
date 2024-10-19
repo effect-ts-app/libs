@@ -26,6 +26,7 @@ export interface Opts<A, I = void> extends MutationOptions<A, I> {
   successToast?: (a: A) => any
 }
 
+/** @deprecated - use mapHandler */
 export const withSuccess: {
   <I, A, E, X, R>(
     self: {
@@ -66,6 +67,7 @@ export const withSuccess: {
     : Effect.flatMap(self.handler, (_) => Effect.promise(() => onSuccess(_)).pipe(Effect.withSpan("onSuccess")))
 })
 
+/** @deprecated - use mapHandler */
 export const withSuccessE: {
   <I, E, A, E2, X, R>(
     self: {
