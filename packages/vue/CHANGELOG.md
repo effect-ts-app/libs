@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 1.27.0
+
+### Minor Changes
+
+- 7117b61: improve form integration for client2
+
+### Patch Changes
+
+- Updated dependencies [7117b61]
+  - @effect-app/vue@1.27.0
+
 ## 1.26.17
 
 ### Patch Changes
