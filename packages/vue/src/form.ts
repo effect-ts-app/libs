@@ -195,9 +195,10 @@ export function buildFieldInfoFromFields<
 
 export function buildFieldInfoFromFieldsRoot<
   From extends Record<PropertyKey, any>,
-  To extends Record<PropertyKey, any>
+  To extends Record<PropertyKey, any>,
+  R
 >(
-  schema: Schema<To, From, never> & { fields?: S.Struct.Fields }
+  schema: Schema<To, From, R> & { fields?: S.Struct.Fields }
 ): NestedFieldInfo<To> {
   const ast = getTypeLiteralAST(schema.ast)
 
@@ -405,7 +406,15 @@ export const buildFormFromSchema = <
 
   const submitFromState = () => submit(Promise.resolve({ valid: isValid.value }))
 
-  return { fields, submit, submitFromState, isDirty, isValid }
+  return {
+    fields,
+    /** optimized for Vuetify v-form submit callback */
+    submit,
+    /** optimized for Native form submit callback or general use */
+    submitFromState,
+    isDirty,
+    isValid
+  }
 }
 
 export function getMetadataFromSchema(

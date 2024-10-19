@@ -1,16 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { flow, pipe, tuple } from "@effect-app/core/Function"
+import type { Schema } from "@effect-app/schema"
 import * as Sentry from "@sentry/browser"
-import { Cause, Effect, Exit, Match, Option, S } from "effect-app"
+import { Cause, Effect, Exit, Match, Option, Runtime, S, Struct } from "effect-app"
 import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
 import { OperationSuccess } from "effect-app/Operations"
 import { dropUndefinedT } from "effect-app/utils"
-import { computed, type ComputedRef } from "vue"
+import type { ComputedRef, Ref, ShallowRef } from "vue"
+import { computed, ref, watch } from "vue"
+import { buildFieldInfoFromFieldsRoot } from "./form.js"
+import { getRuntime } from "./lib.js"
 import type { Opts, ResponseErrors } from "./makeClient.js"
 import type { MakeIntlReturn } from "./makeIntl.js"
 import { mutationResultToVue } from "./mutate.js"
 import type { Res } from "./mutate.js"
-import type { MakeMutation2 } from "./mutate2.js"
+import { makeMutation2 } from "./mutate2.js"
+import { makeQuery2 } from "./query2.js"
 
 type WithAction<A> = A & {
   action: string
@@ -35,9 +40,11 @@ export const makeClient2 = <Locale extends string, R>(
     warning: (message: string) => void
     success: (message: string) => void
   },
-  useSafeMutation: MakeMutation2,
+  runtime: ShallowRef<Runtime.Runtime<R> | undefined>,
   messages: Record<string, string | undefined> = {}
 ) => {
+  const useSafeMutation = makeMutation2()
+  const useSafeQuery = makeQuery2(runtime)
   const useHandleRequestWithToast = () => {
     const toast = useToast()
     const { intl } = useIntl()
@@ -268,10 +275,69 @@ export const makeClient2 = <Locale extends string, R>(
     )
   }
 
+  const buildFormFromSchema = <
+    From extends Record<PropertyKey, any>,
+    To extends Record<PropertyKey, any>,
+    C extends Record<PropertyKey, any>,
+    OnSubmitA
+  >(
+    s:
+      & Schema<
+        To,
+        From,
+        R
+      >
+      & { new(c: C): any; fields: S.Struct.Fields },
+    state: Ref<Omit<From, "_tag">>,
+    onSubmit: (a: To) => Effect<OnSubmitA, never, R>
+  ) => {
+    const fields = buildFieldInfoFromFieldsRoot(s).fields
+    const schema = S.Struct(Struct.omit(s.fields, "_tag")) as any
+    const parse = S.decodeUnknown<any, any, R>(schema)
+    const isDirty = ref(false)
+    const isValid = ref(true)
+    const runPromise = Runtime.runPromise(getRuntime(runtime))
+
+    const submit1 =
+      (onSubmit: (a: To) => Effect<OnSubmitA, never, R>) => async <T extends Promise<{ valid: boolean }>>(e: T) => {
+        const r = await e
+        if (!r.valid) return
+        return runPromise(onSubmit(new s(await runPromise(parse(state.value)))))
+      }
+    const submit = submit1(onSubmit)
+
+    watch(
+      state,
+      (v) => {
+        // TODO: do better
+        isDirty.value = JSON.stringify(v) !== JSON.stringify(state.value)
+      },
+      { deep: true }
+    )
+
+    const submitFromState = Effect.gen(function*() {
+      if (!isValid.value) return
+      return yield* onSubmit(yield* parse(state.value))
+    }) // () => submit(Promise.resolve({ valid: isValid.value }))
+
+    return {
+      fields,
+      /** optimized for Vuetify v-form submit callback */
+      submit,
+      /** optimized for Native form submit callback or general use */
+      submitFromState,
+      isDirty,
+      isValid
+    }
+  }
+
   return {
     useSafeMutationWithState,
     useAndHandleMutation,
     makeUseAndHandleMutation,
-    useHandleRequestWithToast
+    useHandleRequestWithToast,
+    buildFormFromSchema,
+    useSafeQuery,
+    useSafeMutation
   }
 }
