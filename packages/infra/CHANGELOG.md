@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.44.5
+
+### Patch Changes
+
+- fix bs
+
 ## 1.44.4
 
 ### Patch Changes

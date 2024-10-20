@@ -1148,9 +1148,11 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
       }
       static get Default() {
         const self = this as any
-        return layerCache2 ??= self
-          .DefaultWithoutDependencies
-          .pipe(Layer.unwrapEffect, options.dependencies ? Layer.provide(options.dependencies as any) : (_: any) => _)
+        return layerCache2 ??= options.dependencies
+          ? self
+            .DefaultWithoutDependencies
+            .pipe(Layer.provide(options.dependencies as any))
+          : self.DefaultWithoutDependencies
       }
       static readonly type: Repository<T, Encoded, Evt, ItemType> = undefined as any
     }
