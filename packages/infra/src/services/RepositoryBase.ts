@@ -31,6 +31,7 @@ import {
   Equivalence,
   Exit,
   flow,
+  Layer,
   Option,
   pipe,
   PubSub,
@@ -1027,6 +1028,112 @@ export const RepositoryDefaultImpl = <Service, Evt = never>() => {
       static readonly makeWith = ((a: any, b: any) => Effect.map(mkRepo.make(a), b)) as any
 
       static readonly Q = Q.make<Encoded>()
+
+      static readonly type: Repository<T, Encoded, Evt, ItemType> = undefined as any
+    }
+    const limit = Error.stackTraceLimit
+    Error.stackTraceLimit = 2
+    const creationError = new Error()
+    Error.stackTraceLimit = limit
+    return Context.assignTag<Service>(undefined, creationError)(
+      Object.assign(Cls, makeRepoFunctions(Cls, itemType))
+    ) as any // impl is missing, but its marked protected
+  }
+}
+
+export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
+  return <
+    ItemType extends string,
+    R,
+    Encoded extends { id: string },
+    T extends { id: unknown },
+    E = never,
+    RInitial = never,
+    R2 = never,
+    Layers extends [Layer.Layer.Any, ...Layer.Layer.Any[]] = [Layer.Layer<never>],
+    E1 = never,
+    R1 = never
+  >(
+    itemType: ItemType,
+    schema: S.Schema<T, Encoded, R>,
+    options: [Evt] extends [never] ? {
+        dependencies?: Layers
+        config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+          partitionValue?: (a: Encoded) => string
+        }
+        jitM?: (pm: Encoded) => Encoded
+        options?: Effect<
+          {
+            makeInitial?: Effect<readonly T[], E, RInitial>
+          },
+          E1,
+          R1
+        >
+      }
+      : {
+        dependencies?: Layers
+        jitM?: (pm: Encoded) => Encoded
+        config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+          partitionValue?: (a: Encoded) => string
+        }
+        options?: Effect<
+          {
+            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+            makeInitial?: Effect<readonly T[], E, RInitial>
+          },
+          E1,
+          R1
+        >
+      }
+  ):
+    & (abstract new(
+      impl: Repository<T, Encoded, Evt, ItemType>
+    ) => RepositoryBaseC3<T, Encoded, Evt, ItemType>)
+    & Context.Tag<Service, Service>
+    & {
+      Default: Layer.Layer<
+        Service,
+        E1 | Layer.Layer.Error<Layers[number]>,
+        Exclude<
+          R1 | R | StoreMaker | ContextMapContainer,
+          { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
+        >
+      >
+    }
+    & Repos<
+      T,
+      Encoded,
+      R,
+      Evt,
+      ItemType
+    >
+    & RepoFunctions<T, Encoded, Evt, ItemType, Service> =>
+  {
+    abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType> {
+      constructor(
+        impl: Repository<T, Encoded, Evt, ItemType>
+      ) {
+        super(itemType, impl)
+      }
+      static readonly Q = Q.make<Encoded>()
+
+      static getThis() {
+        return this
+      }
+
+      static Default = Effect
+        .gen(function*() {
+          const opts = yield* options.options ?? Effect.succeed({})
+          const mkRepo = makeRepo<Evt>()(
+            itemType,
+            schema,
+            options?.jitM ? (pm) => options.jitM!(pm) : (pm) => pm,
+            (e, _etag) => ({ ...e, _etag })
+          )
+          const r = yield* mkRepo.make({ ...options, ...opts } as any)
+          return Layer.succeed(Cls.getThis() as any, new (Cls.getThis() as any)(r))
+        })
+        .pipe(Layer.unwrapEffect, options.dependencies ? Layer.provide(options.dependencies as any) : (_) => _)
 
       static readonly type: Repository<T, Encoded, Evt, ItemType> = undefined as any
     }
