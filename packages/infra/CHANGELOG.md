@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.44.2
+
+### Patch Changes
+
+- 3834195: add DefaultWithoutDependencies
+
 ## 1.44.1
 
 ### Patch Changes
