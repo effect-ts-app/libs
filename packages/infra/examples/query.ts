@@ -1,4 +1,4 @@
-import { RepositoryDefaultImpl } from "@effect-app/infra/services/RepositoryBase"
+import { RepositoryDefaultImpl2 } from "@effect-app/infra/services/RepositoryBase"
 import { Effect, flow, Layer, ManagedRuntime, S } from "effect-app"
 import { and, or, order, page, project, where } from "../src/services/query.js"
 import { ContextMapContainer } from "../src/services/Store/ContextMapContainer.js"
@@ -28,9 +28,10 @@ const items = [
   })
 ]
 
-class SomethingRepo extends RepositoryDefaultImpl<SomethingRepo>()(
+class SomethingRepo extends RepositoryDefaultImpl2<SomethingRepo>()(
   "Something",
-  Something
+  Something,
+  { idKey: "id" }
 ) {
   static readonly Test = Layer
     .effect(

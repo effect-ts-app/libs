@@ -13,13 +13,14 @@ import type { Repository } from "./service.js"
  * @tsplus fluent Repository get
  */
 export function get<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
+  ItemType extends string,
+  IdKey extends keyof T
 >(
-  self: RepositoryBaseC<T, Encoded, Evt, ItemType>,
-  id: T["id"]
+  self: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>,
+  id: T[IdKey]
 ) {
   return self
     .find(id)
@@ -30,11 +31,12 @@ export function get<
  * @tsplus getter Repository log
  */
 export function log<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
->(_: RepositoryBaseC<T, Encoded, Evt, ItemType>) {
+  ItemType extends string,
+  IdKey extends keyof T
+>(_: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>) {
   return (evt: Evt) => AnyPureDSL.log(evt)
 }
 
@@ -42,11 +44,12 @@ export function log<
  * @tsplus fluent Repository byIdAndSaveWithPure
  */
 export function byIdAndSaveWithPure<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
->(self: RepositoryBaseC<T, Encoded, Evt, ItemType>, id: T["id"]) {
+  ItemType extends string,
+  IdKey extends keyof T
+>(self: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>, id: T[IdKey]) {
   return <R, A, E, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, T, S2>>) =>
     get(self, id).pipe(Effect.flatMap((item) => saveWithPure_(self, item, pure)))
 }
@@ -56,12 +59,13 @@ export function byIdAndSaveWithPure<
  * @tsplus getter Repository handleByIdAndSaveWithPure
  */
 export function handleByIdAndSaveWithPure<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
->(self: RepositoryBaseC<T, Encoded, Evt, ItemType>) {
-  return <Req extends { id: T["id"] }, Context, R, A, E, S2 extends T>(
+  ItemType extends string,
+  IdKey extends keyof T
+>(self: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>) {
+  return <Req extends { id: T[IdKey] }, Context, R, A, E, S2 extends T>(
     pure: (req: Req, ctx: Context) => Effect<A, E, FixEnv<R, Evt, T, S2>>
   ) =>
   (req: Req, ctx: Context) => byIdAndSaveWithPure(self, req.id)(pure(req, ctx))
@@ -72,16 +76,17 @@ export function handleByIdAndSaveWithPure<
  */
 export function saveManyWithPure_<
   R,
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   A,
   E,
   Evt,
   S1 extends T,
   S2 extends T,
-  ItemType extends string
+  ItemType extends string,
+  IdKey extends keyof T
 >(
-  self: RepositoryBaseC<T, Encoded, Evt, ItemType>,
+  self: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>,
   items: Iterable<S1>,
   pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
 ) {
@@ -96,16 +101,17 @@ export function saveManyWithPure_<
  */
 export function saveWithPure_<
   R,
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   A,
   E,
   Evt,
   S1 extends T,
   S2 extends T,
-  ItemType extends string
+  ItemType extends string,
+  IdKey extends keyof T
 >(
-  self: RepositoryBaseC<T, Encoded, Evt, ItemType>,
+  self: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>,
   item: S1,
   pure: Effect<A, E, FixEnv<R, Evt, S1, S2>>
 ) {
@@ -118,16 +124,17 @@ export function saveWithPure_<
 }
 
 export function saveAllWithEffectInt<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   P extends T,
   Evt,
   ItemType extends string,
+  IdKey extends keyof T,
   R,
   E,
   A
 >(
-  self: RepositoryBaseC<T, Encoded, Evt, ItemType>,
+  self: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>,
   gen: Effect<readonly [Iterable<P>, Iterable<Evt>, A], E, R>
 ) {
   return Effect.flatMap(gen, ([items, events, a]) => self.saveAndPublish(items, events).pipe(Effect.map(() => a)))
@@ -137,11 +144,12 @@ export function saveAllWithEffectInt<
  * @tsplus fluent Repository saveManyWithPureBatched
  */
 export function saveManyWithPureBatched<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
->(self: RepositoryBaseC<T, Encoded, Evt, ItemType>, batchSize = 100) {
+  ItemType extends string,
+  IdKey extends keyof T
+>(self: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>, batchSize = 100) {
   return <R, A, E, S1 extends T, S2 extends T>(pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>) =>
   (items: Iterable<S1>) => saveManyWithPureBatched_(self, items, pure, batchSize)
 }
@@ -151,16 +159,17 @@ export function saveManyWithPureBatched<
  */
 export function saveManyWithPureBatched_<
   R,
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   A,
   E,
   Evt,
   S1 extends T,
   S2 extends T,
-  ItemType extends string
+  ItemType extends string,
+  IdKey extends keyof T
 >(
-  self: RepositoryBaseC<T, Encoded, Evt, ItemType>,
+  self: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>,
   items: Iterable<S1>,
   pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>,
   batchSize = 100
@@ -179,12 +188,13 @@ export function saveManyWithPureBatched_<
  * @tsplus getter Repository save
  */
 export function save<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
+  ItemType extends string,
+  IdKey extends keyof T
 >(
-  self: RepositoryBaseC<T, Encoded, Evt, ItemType>
+  self: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>
 ) {
   return (...items: NonEmptyArray<T>) => self.saveAndPublish(items)
 }
@@ -193,12 +203,13 @@ export function save<
  * @tsplus getter Repository saveWithEvents
  */
 export function saveWithEvents<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
+  ItemType extends string,
+  IdKey extends keyof T
 >(
-  self: RepositoryBaseC<T, Encoded, Evt, ItemType>
+  self: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>
 ) {
   return (events: Iterable<Evt>) => (...items: NonEmptyArray<T>) => self.saveAndPublish(items, events)
 }
@@ -212,10 +223,11 @@ export function itemUpdateWithEffect<
   T extends { id: string },
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
+  ItemType extends string,
+  IdKey extends keyof T
 >(
-  repo: RepositoryBaseC<T, Encoded, Evt, ItemType>,
-  id: T["id"],
+  repo: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>,
+  id: T[IdKey],
   mod: (item: T) => Effect<T, E, R>
 ) {
   return get(repo, id).pipe(Effect.andThen(mod), Effect.andThen(save(repo)))
@@ -228,10 +240,11 @@ export function itemUpdate<
   T extends { id: string },
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
+  ItemType extends string,
+  IdKey extends keyof T
 >(
-  repo: RepositoryBaseC<T, Encoded, Evt, ItemType>,
-  id: T["id"],
+  repo: RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey>,
+  id: T[IdKey],
   mod: (item: T) => T
 ) {
   return itemUpdateWithEffect(
@@ -246,13 +259,14 @@ export function itemUpdate<
  * @tsplus fluent Repository removeById
  */
 export function removeById<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
+  ItemType extends string,
+  IdKey extends keyof T
 >(
-  self: Repository<T, Encoded, Evt, ItemType>,
-  id: T["id"]
+  self: Repository<T, Encoded, Evt, ItemType, IdKey>,
+  id: T[IdKey]
 ) {
   return get(self, id).pipe(Effect.flatMap((_) => self.removeAndPublish([_])))
 }

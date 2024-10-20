@@ -2,7 +2,7 @@ import { Context, Effect, flow, Layer, Option, pipe, S, Struct } from "effect-ap
 import { inspect } from "util"
 import { expect, it } from "vitest"
 import { and, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
-import { RepositoryDefaultImpl } from "../src/services/RepositoryBase.js"
+import { RepositoryDefaultImpl2 } from "../src/services/RepositoryBase.js"
 import { ContextMapContainer } from "../src/services/Store/ContextMapContainer.js"
 import { memFilter, MemoryStoreLive } from "../src/services/Store/Memory.js"
 
@@ -85,9 +85,10 @@ it("works", () => {
   expect(processed).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("id", "displayName")))
 })
 
-class SomethingRepo extends RepositoryDefaultImpl<SomethingRepo>()(
+class SomethingRepo extends RepositoryDefaultImpl2<SomethingRepo>()(
   "test",
-  Something
+  Something,
+  { idKey: "id" }
 ) {
   static readonly Test = Layer.effect(SomethingRepo, SomethingRepo.makeWith({}, (_) => new SomethingRepo(_))).pipe(
     Layer.provide(Layer.merge(MemoryStoreLive, ContextMapContainer.live))
