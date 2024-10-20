@@ -1109,6 +1109,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
     >
     & RepoFunctions<T, Encoded, Evt, ItemType, Service> =>
   {
+    let layerCache = undefined
     abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType> {
       constructor(
         impl: Repository<T, Encoded, Evt, ItemType>
@@ -1117,24 +1118,22 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
       }
       static readonly Q = Q.make<Encoded>()
 
-      static getThis() {
-        return this
+      static get Default() {
+        const self = this as any
+        return layerCache ??= Effect
+          .gen(function*() {
+            const opts = yield* options.options ?? Effect.succeed({})
+            const mkRepo = makeRepo<Evt>()(
+              itemType,
+              schema,
+              options?.jitM ? (pm) => options.jitM!(pm) : (pm) => pm,
+              (e, _etag) => ({ ...e, _etag })
+            )
+            const r = yield* mkRepo.make({ ...options, ...opts } as any)
+            return Layer.succeed(self, new (self)(r))
+          })
+          .pipe(Layer.unwrapEffect, options.dependencies ? Layer.provide(options.dependencies as any) : (_) => _)
       }
-
-      static Default = Effect
-        .gen(function*() {
-          const opts = yield* options.options ?? Effect.succeed({})
-          const mkRepo = makeRepo<Evt>()(
-            itemType,
-            schema,
-            options?.jitM ? (pm) => options.jitM!(pm) : (pm) => pm,
-            (e, _etag) => ({ ...e, _etag })
-          )
-          const r = yield* mkRepo.make({ ...options, ...opts } as any)
-          return Layer.succeed(Cls.getThis() as any, new (Cls.getThis() as any)(r))
-        })
-        .pipe(Layer.unwrapEffect, options.dependencies ? Layer.provide(options.dependencies as any) : (_) => _)
-
       static readonly type: Repository<T, Encoded, Evt, ItemType> = undefined as any
     }
     const limit = Error.stackTraceLimit
