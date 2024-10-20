@@ -1142,7 +1142,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
               (e, _etag) => ({ ...e, _etag })
             )
             const r = yield* mkRepo.make({ ...options, ...opts } as any)
-            return Layer.succeed(self, new self(r))
+            return Layer.succeed(self, new self(Object.assign(r, "ext" in opts ? opts.ext : {})))
           })
           .pipe(Layer.unwrapEffect)
       }
