@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.45.0
+
+### Minor Changes
+
+- 1717216: feat: add support for custom T id key
+
 ## 1.44.6
 
 ### Patch Changes
