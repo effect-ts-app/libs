@@ -450,12 +450,11 @@ export function makeRepo<
                 })
             )
           }
-          // TODO: deal with idKey <-> "id" in encoded
           function findE(id: T[IdKey]) {
             return pipe(
               encodeId({ [idKey]: id } as any),
               Effect.orDie,
-              Effect.map((_) => (_ as any).id),
+              Effect.map((_) => (_ as any)[idKey]), // we will have idKey because the transform is undone again by the encode schema mumbo jumbo above
               Effect.flatMap(findEId)
             )
           }
