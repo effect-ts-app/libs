@@ -1099,6 +1099,11 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
           { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
         >
       >
+      DefaultWithoutDependencies: Layer.Layer<
+        Service,
+        E1,
+        R1 | R | StoreMaker | ContextMapContainer
+      >
     }
     & Repos<
       T,
@@ -1110,6 +1115,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
     & RepoFunctions<T, Encoded, Evt, ItemType, Service> =>
   {
     let layerCache = undefined
+    let layerCache2 = undefined
     abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType> {
       constructor(
         impl: Repository<T, Encoded, Evt, ItemType>
@@ -1117,8 +1123,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
         super(itemType, impl)
       }
       static readonly Q = Q.make<Encoded>()
-
-      static get Default() {
+      static get DefaultWithoutDependencies() {
         const self = this as any
         return layerCache ??= Effect
           .gen(function*() {
@@ -1130,9 +1135,15 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
               (e, _etag) => ({ ...e, _etag })
             )
             const r = yield* mkRepo.make({ ...options, ...opts } as any)
-            return Layer.succeed(self, new (self)(r))
+            return Layer.succeed(self, new self(r))
           })
-          .pipe(Layer.unwrapEffect, options.dependencies ? Layer.provide(options.dependencies as any) : (_) => _)
+          .pipe(Layer.unwrapEffect)
+      }
+      static get Default() {
+        const self = this as any
+        return layerCache2 ??= self
+          .DefaultWithoutDependencies
+          .pipe(Layer.unwrapEffect, options.dependencies ? Layer.provide(options.dependencies as any) : (_: any) => _)
       }
       static readonly type: Repository<T, Encoded, Evt, ItemType> = undefined as any
     }
