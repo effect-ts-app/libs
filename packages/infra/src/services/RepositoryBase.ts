@@ -294,7 +294,7 @@ export class RepositoryBaseC3<
 
   byIdAndSaveWithPure: {
     <R, A, E, S2 extends T>(
-      id: T["id"],
+      id: T[IdKey],
       pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
     ): Effect<
       A,
@@ -335,13 +335,15 @@ export function makeRepo<
     ItemType extends string,
     R,
     Encoded extends { id: string },
-    T extends { id: unknown }
+    T,
+    IdKey extends keyof T
   >(
     name: ItemType,
     schema: S.Schema<T, Encoded, R>,
     mapFrom: (pm: Encoded) => Encoded,
     mapTo: (e: Encoded, etag: string | undefined) => PersistenceModelType<Encoded>
   ) => {
+    const idKey = "id" as IdKey // TODO
     type PM = PersistenceModelType<Encoded>
     function mapToPersistenceModel(
       e: Encoded,
@@ -448,7 +450,7 @@ export function makeRepo<
                 })
             )
           }
-          function findE(id: T["id"]) {
+          function findE(id: T[IdKey]) {
             return pipe(
               encodeId({ id }),
               Effect.orDie,
@@ -457,7 +459,7 @@ export function makeRepo<
             )
           }
 
-          function find(id: T["id"]) {
+          function find(id: T[IdKey]) {
             return Effect.flatMapOption(findE(id), (_) => Effect.orDie(decode(_)))
           }
 
@@ -609,7 +611,7 @@ export function makeRepo<
             )
           }) as any
 
-          const r: Repository<T, Encoded, Evt, ItemType> = {
+          const r: Repository<T, Encoded, Evt, ItemType, IdKey> = {
             changeFeed,
             itemType: name,
             find,
@@ -682,7 +684,7 @@ export function makeStore<
     ItemType extends string,
     R,
     E extends { id: string },
-    T extends { id: unknown }
+    T
   >(
     name: ItemType,
     schema: S.Schema<T, E, R>,
@@ -740,11 +742,12 @@ export function makeStore<
 }
 
 export interface Repos<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   R,
   Evt,
-  ItemType extends string
+  ItemType extends string,
+  IdKey extends keyof T
 > {
   make<RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
@@ -760,7 +763,7 @@ export interface Repos<
           partitionValue?: (a: Encoded) => string
         }
       }
-  ): Effect<Repository<T, Encoded, Evt, ItemType>, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
+  ): Effect<Repository<T, Encoded, Evt, ItemType, IdKey>, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
   makeWith<Out, RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
         makeInitial?: Effect<readonly T[], E, RInitial>
@@ -775,20 +778,20 @@ export interface Repos<
           partitionValue?: (a: Encoded) => string
         }
       },
-    f: (r: Repository<T, Encoded, Evt, ItemType>) => Out
+    f: (r: Repository<T, Encoded, Evt, ItemType, IdKey>) => Out
   ): Effect<Out, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
   readonly Q: ReturnType<typeof Q.make<Encoded>>
-  readonly type: Repository<T, Encoded, Evt, ItemType>
+  readonly type: Repository<T, Encoded, Evt, ItemType, IdKey>
 }
 
 export type GetRepoType<T> = T extends { type: infer R } ? R : never
 
-export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: string }, Evt, ItemType, Service> {
+export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType, IdKey extends keyof T, Service> {
   itemType: ItemType
   T: T
   all: Effect<readonly T[], never, Service>
-  find: (id: T["id"]) => Effect<Option<T>, never, Service>
-  removeById: (id: T["id"]) => Effect<void, NotFoundError<ItemType>, Service>
+  find: (id: T[IdKey]) => Effect<Option<T>, never, Service>
+  removeById: (id: T[IdKey]) => Effect<void, NotFoundError<ItemType>, Service>
   saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
@@ -798,7 +801,7 @@ export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: 
     events?: Iterable<Evt>
   ) => Effect<void, never, Service>
   save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
-  get: (id: T["id"]) => Effect<T, NotFoundError<ItemType>, Service>
+  get: (id: T[IdKey]) => Effect<T, NotFoundError<ItemType>, Service>
 
   queryAndSavePure: {
     <A, E2, R2, T2 extends T>(
@@ -875,7 +878,7 @@ export interface RepoFunctions<T extends { id: unknown }, Encoded extends { id: 
 
   byIdAndSaveWithPure: {
     <R, A, E, S2 extends T>(
-      id: T["id"],
+      id: T[IdKey],
       pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
     ): Effect<
       A,
@@ -958,21 +961,22 @@ export const RepositoryBaseImpl = <Service>() => {
   return <
     Evt = never
   >() =>
-  <ItemType extends string, R, Encoded extends { id: string }, T extends { id: unknown }>(
+  <ItemType extends string, R, Encoded extends { id: string }, T, IdKey extends keyof T>(
     itemType: ItemType,
     schema: S.Schema<T, Encoded, R>,
     jitM?: (pm: Encoded) => Encoded
   ):
-    & (abstract new() => RepositoryBaseC1<T, Encoded, Evt, ItemType>)
+    & (abstract new() => RepositoryBaseC1<T, Encoded, Evt, ItemType, IdKey>)
     & Context.Tag<Service, Service>
     & Repos<
       T,
       Encoded,
       R,
       Evt,
-      ItemType
+      ItemType,
+      IdKey
     >
-    & RepoFunctions<T, Encoded, Evt, ItemType, Service> =>
+    & RepoFunctions<T, Encoded, Evt, ItemType, IdKey, Service> =>
   {
     const mkRepo = makeRepo<Evt>()(
       itemType,
@@ -980,7 +984,7 @@ export const RepositoryBaseImpl = <Service>() => {
       jitM ? (pm) => jitM(pm as unknown as Encoded) : (pm) => pm as any,
       (e, _etag) => ({ ...e, _etag })
     )
-    abstract class Cls extends RepositoryBaseC1<T, Encoded, Evt, ItemType> {
+    abstract class Cls extends RepositoryBaseC1<T, Encoded, Evt, ItemType, IdKey> {
       constructor() {
         super(itemType)
       }
@@ -988,7 +992,7 @@ export const RepositoryBaseImpl = <Service>() => {
       static readonly makeWith = ((a: any, b: any) => Effect.map(mkRepo.make(a), b)) as any
 
       static readonly Q = Q.make<Encoded>()
-      static readonly type: Repository<T, Encoded, Evt, ItemType> = undefined as any
+      static readonly type: Repository<T, Encoded, Evt, ItemType, IdKey> = undefined as any
     }
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 2
@@ -1001,23 +1005,24 @@ export const RepositoryBaseImpl = <Service>() => {
 }
 
 export const RepositoryDefaultImpl = <Service, Evt = never>() => {
-  return <ItemType extends string, R, Encoded extends { id: string }, T extends { id: unknown }>(
+  return <ItemType extends string, R, Encoded extends { id: string }, T, IdKey extends keyof T>(
     itemType: ItemType,
     schema: S.Schema<T, Encoded, R>,
     jitM?: (pm: Encoded) => Encoded
   ):
     & (abstract new(
-      impl: Repository<T, Encoded, Evt, ItemType>
-    ) => RepositoryBaseC3<T, Encoded, Evt, ItemType, {}>)
+      impl: Repository<T, Encoded, Evt, ItemType, IdKey>
+    ) => RepositoryBaseC3<T, Encoded, Evt, ItemType, {}, IdKey>)
     & Context.Tag<Service, Service>
     & Repos<
       T,
       Encoded,
       R,
       Evt,
-      ItemType
+      ItemType,
+      IdKey
     >
-    & RepoFunctions<T, Encoded, Evt, ItemType, Service> =>
+    & RepoFunctions<T, Encoded, Evt, ItemType, IdKey, Service> =>
   {
     const mkRepo = makeRepo<Evt>()(
       itemType,
@@ -1025,9 +1030,9 @@ export const RepositoryDefaultImpl = <Service, Evt = never>() => {
       jitM ? (pm) => jitM(pm) : (pm) => pm,
       (e, _etag) => ({ ...e, _etag })
     )
-    abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType, {}> {
+    abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType, {}, IdKey> {
       constructor(
-        impl: Repository<T, Encoded, Evt, ItemType>
+        impl: Repository<T, Encoded, Evt, ItemType, IdKey>
       ) {
         super(itemType, impl)
       }
@@ -1036,7 +1041,7 @@ export const RepositoryDefaultImpl = <Service, Evt = never>() => {
 
       static readonly Q = Q.make<Encoded>()
 
-      static readonly type: Repository<T, Encoded, Evt, ItemType> = undefined as any
+      static readonly type: Repository<T, Encoded, Evt, ItemType, IdKey> = undefined as any
     }
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 2
@@ -1053,7 +1058,8 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
     ItemType extends string,
     R,
     Encoded extends { id: string },
-    T extends { id: unknown },
+    T,
+    IdKey extends keyof T,
     E = never,
     RInitial = never,
     R2 = never,
@@ -1098,8 +1104,8 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
       }
   ):
     & (abstract new(
-      impl: Repository<T, Encoded, Evt, ItemType> & Ext
-    ) => RepositoryBaseC3<T, Encoded, Evt, ItemType, Ext>)
+      impl: Repository<T, Encoded, Evt, ItemType, IdKey> & Ext
+    ) => RepositoryBaseC3<T, Encoded, Evt, ItemType, Ext, IdKey>)
     & Context.Tag<Service, Service>
     & {
       Default: Layer.Layer<
@@ -1121,15 +1127,16 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
       Encoded,
       R,
       Evt,
-      ItemType
+      ItemType,
+      IdKey
     >
-    & RepoFunctions<T, Encoded, Evt, ItemType, Service> =>
+    & RepoFunctions<T, Encoded, Evt, ItemType, IdKey, Service> =>
   {
     let layerCache = undefined
     let layerCache2 = undefined
-    abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType, Ext> {
+    abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType, Ext, IdKey> {
       constructor(
-        impl: Repository<T, Encoded, Evt, ItemType> & Ext
+        impl: Repository<T, Encoded, Evt, ItemType, IdKey> & Ext
       ) {
         super(itemType, impl)
       }
@@ -1158,7 +1165,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
             .pipe(Layer.provide(options.dependencies as any))
           : self.DefaultWithoutDependencies
       }
-      static readonly type: Repository<T, Encoded, Evt, ItemType> = undefined as any
+      static readonly type: Repository<T, Encoded, Evt, ItemType, IdKey> = undefined as any
     }
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 2
@@ -1173,14 +1180,15 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
 // TODO: integrate with repo
 export const makeRequest = <
   ItemType extends string,
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string } & FieldValues,
   Evt,
-  Service
->(repo: Context.Tag<Service, Service> & RepoFunctions<T, Encoded, Evt, ItemType, Service>) => {
+  Service,
+  IdKey extends keyof T
+>(repo: Context.Tag<Service, Service> & RepoFunctions<T, Encoded, Evt, ItemType, IdKey, Service>) => {
   type Req =
     & Request.Request<T, NotFoundError<ItemType>>
-    & { _tag: `Get${ItemType}`; id: T["id"] }
+    & { _tag: `Get${ItemType}`; id: T[IdKey] }
   const _request = Request.tagged<Req>(`Get${repo.itemType}`)
 
   const requestResolver = RequestResolver
@@ -1211,5 +1219,5 @@ export const makeRequest = <
       RequestResolver.contextFromServices(repo)
     )
 
-  return (id: T["id"]) => Effect.request(_request({ id }), requestResolver)
+  return (id: T[IdKey]) => Effect.request(_request({ id }), requestResolver)
 }
