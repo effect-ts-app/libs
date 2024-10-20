@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/ban-types */
+
 // import type { ParserEnv } from "@effect-app/schema/custom/Parser"
 import {
   AnyPureDSL,
@@ -1052,7 +1052,9 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
     R2 = never,
     Layers extends [Layer.Layer.Any, ...Layer.Layer.Any[]] = [Layer.Layer<never>],
     E1 = never,
-    R1 = never
+    R1 = never,
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    Ext = {}
   >(
     itemType: ItemType,
     schema: S.Schema<T, Encoded, R>,
@@ -1065,6 +1067,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
         options?: Effect<
           {
             makeInitial?: Effect<readonly T[], E, RInitial>
+            ext?: Ext
           },
           E1,
           R1
@@ -1080,6 +1083,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
           {
             publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
             makeInitial?: Effect<readonly T[], E, RInitial>
+            ext?: Ext
           },
           E1,
           R1
@@ -1087,7 +1091,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
       }
   ):
     & (abstract new(
-      impl: Repository<T, Encoded, Evt, ItemType>
+      impl: Repository<T, Encoded, Evt, ItemType> & Ext
     ) => RepositoryBaseC3<T, Encoded, Evt, ItemType>)
     & Context.Tag<Service, Service>
     & {

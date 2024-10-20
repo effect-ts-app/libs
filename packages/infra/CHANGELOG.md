@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.44.3
+
+### Patch Changes
+
+- enable to extend
+
 ## 1.44.2
 
 ### Patch Changes
