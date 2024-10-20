@@ -77,13 +77,14 @@ export interface MM<Repo, Encoded extends { id: string }> {
  * @tsplus type Repository
  */
 export abstract class RepositoryBaseC<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
+  ItemType extends string,
+  IdKey extends keyof T
 > {
   abstract readonly itemType: ItemType
-  abstract readonly find: (id: T["id"]) => Effect<Option<T>>
+  abstract readonly find: (id: T[IdKey]) => Effect<Option<T>>
   abstract readonly all: Effect<T[]>
   abstract readonly saveAndPublish: (
     items: Iterable<T>,
@@ -120,11 +121,12 @@ export abstract class RepositoryBaseC<
 }
 
 export abstract class RepositoryBaseC1<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
-> extends RepositoryBaseC<T, Encoded, Evt, ItemType> {
+  ItemType extends string,
+  IdKey extends keyof T
+> extends RepositoryBaseC<T, Encoded, Evt, ItemType, IdKey> {
   constructor(
     public readonly itemType: ItemType
   ) {
@@ -133,15 +135,16 @@ export abstract class RepositoryBaseC1<
 }
 
 export class RepositoryBaseC2<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
   ItemType extends string,
-  Ext
-> extends RepositoryBaseC1<T, Encoded, Evt, ItemType> {
+  Ext,
+  IdKey extends keyof T
+> extends RepositoryBaseC1<T, Encoded, Evt, ItemType, IdKey> {
   constructor(
     itemType: ItemType,
-    protected readonly impl: Repository<T, Encoded, Evt, ItemType> & Ext
+    protected readonly impl: Repository<T, Encoded, Evt, ItemType, IdKey> & Ext
   ) {
     super(itemType)
     this.saveAndPublish = this.impl.saveAndPublish
@@ -163,13 +166,14 @@ export class RepositoryBaseC2<
 }
 
 export class RepositoryBaseC3<
-  T extends { id: unknown },
+  T,
   Encoded extends { id: string },
   Evt,
   ItemType extends string,
-  Ext
-> extends RepositoryBaseC2<T, Encoded, Evt, ItemType, Ext> {
-  get(id: T["id"]) {
+  Ext,
+  IdKey extends keyof T
+> extends RepositoryBaseC2<T, Encoded, Evt, ItemType, Ext, IdKey> {
+  get(id: T[IdKey]) {
     return Effect.andThen(
       this
         .find(id),
@@ -179,7 +183,7 @@ export class RepositoryBaseC3<
 
   readonly log = (evt: Evt) => AnyPureDSL.log(evt)
 
-  removeById(id: T["id"]) {
+  removeById(id: T[IdKey]) {
     return Effect.andThen(this.get(id), (_) => this.removeAndPublish([_]))
   }
 
@@ -246,7 +250,7 @@ export class RepositoryBaseC3<
   /**
    * NOTE: it's not as composable, only useful when the request is simple, and only this part needs request args.
    */
-  readonly handleByIdAndSaveWithPure = <Req extends { id: T["id"] }, Context, R, A, E, S2 extends T>(
+  readonly handleByIdAndSaveWithPure = <Req extends { id: T[IdKey] }, Context, R, A, E, S2 extends T>(
     pure: (req: Req, ctx: Context) => Effect<A, E, FixEnv<R, Evt, T, S2>>
   ) =>
   (req: Req, ctx: Context) => byIdAndSaveWithPure(this, req.id)(pure(req, ctx))
