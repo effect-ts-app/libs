@@ -422,7 +422,7 @@ export function makeRepo<
                 // we need to get the TypeLiteral, incase of class it's behind a transform...
                 ? S.Union(..._.ast.types.map((_) =>
                   (S.make(_._tag === "Transformation" ? _.from : _) as unknown as Schema<T, Encoded>)
-                    .pipe(S.pick("id"))
+                    .pipe(S.pick(idKey))
                 ))
                 : _
                     .ast
@@ -434,10 +434,10 @@ export function makeRepo<
                       .from
                   ) as unknown as Schema<T, Encoded>)
                   .pipe(S
-                    .pick("id"))
+                    .pick(idKey))
                 : _
                   .pipe(S
-                    .pick("id"))
+                    .pick(idKey))
             )
           const encodeId = flow(S.encode(i), Effect.provide(rctx))
           function findEId(id: Encoded["id"]) {
@@ -450,9 +450,10 @@ export function makeRepo<
                 })
             )
           }
+          // TODO: deal with idKey <-> "id" in encoded
           function findE(id: T[IdKey]) {
             return pipe(
-              encodeId({ id }),
+              encodeId({ [idKey]: id }),
               Effect.orDie,
               Effect.map((_) => _.id),
               Effect.flatMap(findEId)
@@ -1191,6 +1192,8 @@ export const makeRequest = <
     & { _tag: `Get${ItemType}`; id: T[IdKey] }
   const _request = Request.tagged<Req>(`Get${repo.itemType}`)
 
+  const idKey = "id" as IdKey // TODO
+
   const requestResolver = RequestResolver
     .makeBatched((requests: NonEmptyReadonlyArray<Req>) =>
       (repo
@@ -1201,7 +1204,7 @@ export const makeRequest = <
               Request.complete(
                 r,
                 Array
-                  .findFirst(items, (_) => _.id === r.id)
+                  .findFirst(items, (_) => _[idKey] === r.id)
                   .pipe(Option.match({
                     onNone: () => Exit.fail(new NotFoundError({ type: repo.itemType, id: r.id })),
                     onSome: Exit.succeed
