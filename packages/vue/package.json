@@ -17,8 +17,8 @@
   "peerDependencies": {
     "@effect/platform": "^0.68.6",
     "@effect/platform-browser": "^0.47.6",
-    "@effect-rx/rx": "^0.34.1",
-    "@effect-rx/rx-vue": "^0.11.1",
+    "@effect-rx/rx": "^0.34.2",
+    "@effect-rx/rx-vue": "^0.11.2",
     "@effect/schema": "^0.75.5",
     "@sentry/browser": "^8.34.0",
     "effect": "^3.9.2",
@@ -27,7 +27,7 @@
   "devDependencies": {
     "@babel/cli": "^7.25.7",
     "@rollup/pluginutils": "^5.1.2",
-    "@types/node": "~22.7.6",
+    "@types/node": "~22.7.7",
     "intl-messageformat": "^10.7.0",
     "json5": "^2.2.3",
     "typescript": "^5.6.3",
