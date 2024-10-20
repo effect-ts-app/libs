@@ -1,5 +1,15 @@
 # @effect-app/infra
 
+## 1.44.0
+
+### Minor Changes
+
+- 274e188: simpler Repository
+
+### Patch Changes
+
+- ff78ff4: cleanup
+
 ## 1.43.6
 
 ### Patch Changes

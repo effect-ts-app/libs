@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.27.1
+
+### Patch Changes
+
+- ff78ff4: cleanup
+- Updated dependencies [ff78ff4]
+  - @effect-app/vue@1.27.1
+
 ## 1.27.0
 
 ### Minor Changes
