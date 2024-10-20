@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -135,11 +136,12 @@ export class RepositoryBaseC2<
   T extends { id: unknown },
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
+  ItemType extends string,
+  Ext
 > extends RepositoryBaseC1<T, Encoded, Evt, ItemType> {
   constructor(
     itemType: ItemType,
-    protected readonly impl: Repository<T, Encoded, Evt, ItemType>
+    protected readonly impl: Repository<T, Encoded, Evt, ItemType> & Ext
   ) {
     super(itemType)
     this.saveAndPublish = this.impl.saveAndPublish
@@ -164,8 +166,9 @@ export class RepositoryBaseC3<
   T extends { id: unknown },
   Encoded extends { id: string },
   Evt,
-  ItemType extends string
-> extends RepositoryBaseC2<T, Encoded, Evt, ItemType> {
+  ItemType extends string,
+  Ext
+> extends RepositoryBaseC2<T, Encoded, Evt, ItemType, Ext> {
   get(id: T["id"]) {
     return Effect.andThen(
       this
@@ -1001,7 +1004,7 @@ export const RepositoryDefaultImpl = <Service, Evt = never>() => {
   ):
     & (abstract new(
       impl: Repository<T, Encoded, Evt, ItemType>
-    ) => RepositoryBaseC3<T, Encoded, Evt, ItemType>)
+    ) => RepositoryBaseC3<T, Encoded, Evt, ItemType, {}>)
     & Context.Tag<Service, Service>
     & Repos<
       T,
@@ -1018,7 +1021,7 @@ export const RepositoryDefaultImpl = <Service, Evt = never>() => {
       jitM ? (pm) => jitM(pm) : (pm) => pm,
       (e, _etag) => ({ ...e, _etag })
     )
-    abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType> {
+    abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType, {}> {
       constructor(
         impl: Repository<T, Encoded, Evt, ItemType>
       ) {
@@ -1092,7 +1095,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
   ):
     & (abstract new(
       impl: Repository<T, Encoded, Evt, ItemType> & Ext
-    ) => RepositoryBaseC3<T, Encoded, Evt, ItemType>)
+    ) => RepositoryBaseC3<T, Encoded, Evt, ItemType, Ext>)
     & Context.Tag<Service, Service>
     & {
       Default: Layer.Layer<
@@ -1120,9 +1123,9 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
   {
     let layerCache = undefined
     let layerCache2 = undefined
-    abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType> {
+    abstract class Cls extends RepositoryBaseC3<T, Encoded, Evt, ItemType, Ext> {
       constructor(
-        impl: Repository<T, Encoded, Evt, ItemType>
+        impl: Repository<T, Encoded, Evt, ItemType> & Ext
       ) {
         super(itemType, impl)
       }
