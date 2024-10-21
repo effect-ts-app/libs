@@ -1,5 +1,11 @@
 # @effect-app/infra-adapters
 
+## 1.21.0
+
+### Minor Changes
+
+- b49cd25: refactor: remove RequestContextContainer
+
 ## 1.20.6
 
 ### Patch Changes
