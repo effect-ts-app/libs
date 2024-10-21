@@ -6,12 +6,9 @@ import {
   ServiceBusReceiverFactory,
   subscribe
 } from "@effect-app/infra-adapters/ServiceBus"
-import { RequestContext } from "@effect-app/infra/RequestContext"
 import { Tracer } from "effect"
-import { Cause, Effect, flow, Layer, Option, S } from "effect-app"
-import { RequestId } from "effect-app/ids"
+import { Cause, Effect, flow, Layer, S } from "effect-app"
 import type { StringId } from "effect-app/schema"
-import { NonEmptyString255 } from "effect-app/schema"
 import { pretty } from "effect-app/utils"
 import { setupRequestContext } from "../../api/setupRequest.js"
 import { InfraLogger } from "../../logger.js"
@@ -83,11 +80,7 @@ export function makeServiceBusQueue<
                           (_) =>
                             setupRequestContext(
                               _,
-                              RequestContext.inherit(meta.requestContext, {
-                                id: RequestId(body.id),
-                                locale: "en" as const,
-                                name: NonEmptyString255(`${queueDrainName}.${body._tag}`)
-                              })
+                              meta
                             ),
                           Effect
                             .withSpan(
@@ -134,7 +127,6 @@ export function makeServiceBusQueue<
         Effect
           .gen(function*() {
             const requestContext = yield* rcc.requestContext
-            const span = yield* Effect.serviceOption(Tracer.ParentSpan)
             return yield* Effect
               .promise((abortSignal) =>
                 s.sendMessages(
@@ -142,7 +134,7 @@ export function makeServiceBusQueue<
                     body: JSON.stringify(
                       S.encodeSync(wireSchema)({
                         body: m,
-                        meta: { requestContext, span: Option.getOrUndefined(span) }
+                        meta: requestContext
                       })
                     ),
                     messageId: m.id, /* correllationid: requestId */

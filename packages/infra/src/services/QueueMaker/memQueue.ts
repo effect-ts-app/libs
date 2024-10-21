@@ -1,9 +1,6 @@
 import { MemQueue } from "@effect-app/infra-adapters/memQueue"
-import { RequestContext } from "@effect-app/infra/RequestContext"
-import { NonEmptyString255 } from "@effect-app/schema"
 import { Tracer } from "effect"
-import { Effect, Fiber, flow, Option, S } from "effect-app"
-import { RequestId } from "effect-app/ids"
+import { Effect, Fiber, flow, S } from "effect-app"
 import { pretty } from "effect-app/utils"
 import { setupRequestContext } from "../../api/setupRequest.js"
 import { InfraLogger } from "../../logger.js"
@@ -40,11 +37,10 @@ export function makeMemQueue<
         Effect
           .gen(function*() {
             const requestContext = yield* rcc.requestContext
-            const span = yield* Effect.serviceOption(Tracer.ParentSpan)
             return yield* Effect
               .forEach(messages, (m) =>
                 // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)
-                S.encode(wireSchema)({ body: m, meta: { requestContext, span: Option.getOrUndefined(span) } }).pipe(
+                S.encode(wireSchema)({ body: m, meta: requestContext }).pipe(
                   Effect.orDie,
                   Effect
                     .andThen(JSON.stringify),
@@ -83,11 +79,7 @@ export function makeMemQueue<
                         (_) =>
                           setupRequestContext(
                             _,
-                            RequestContext.inherit(meta.requestContext, {
-                              id: RequestId(body.id),
-                              locale: "en" as const,
-                              name: NonEmptyString255(`${queueDrainName}.${body._tag}`)
-                            })
+                            meta
                           ),
                         Effect
                           .withSpan(`queue.drain: ${queueDrainName}.${body._tag}`, {

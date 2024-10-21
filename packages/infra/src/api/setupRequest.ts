@@ -1,20 +1,20 @@
 import { NonEmptyString255 } from "@effect-app/schema"
 import { Effect, Layer, pipe } from "effect-app"
-import { RequestId } from "effect-app/ids"
 import { RequestContext, spanAttributes } from "../RequestContext.js"
 import { RequestContextContainer } from "../services/RequestContextContainer.js"
 import { ContextMapContainer } from "../services/Store/ContextMapContainer.js"
 
 function makeInternalRequestContext(name: string) {
-  return Effect.sync(() => {
-    const id = RequestId.make()
-    return new RequestContext({
-      id,
-      rootId: id,
-      locale: "en",
-      name: NonEmptyString255(name)
-    })
-  })
+  return Effect.currentSpan.pipe(
+    Effect.orDie,
+    Effect.map((span) =>
+      new RequestContext({
+        span,
+        locale: "en",
+        name: NonEmptyString255(name)
+      })
+    )
+  )
 }
 
 const withRequestSpan = <R, E, A>(f: Effect<A, E, R>) =>

@@ -1,9 +1,10 @@
-import { Effect } from "effect-app"
+import { Effect, FiberRef } from "effect-app"
 import { HttpMiddleware, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { RequestId } from "effect-app/ids"
 import { NonEmptyString255 } from "effect-app/schema"
-import { Locale, RequestContext } from "../../RequestContext.js"
+import { Locale, LocaleRef, RequestContext } from "../../RequestContext.js"
 import { RequestContextContainer } from "../../services/RequestContextContainer.js"
+import { storeId } from "../../services/Store/Memory.js"
 import { setupExistingRequestContext } from "../setupRequest.js"
 
 export const RequestContextMiddleware = (defaultLocale: Locale = "en") =>
@@ -11,9 +12,7 @@ export const RequestContextMiddleware = (defaultLocale: Locale = "en") =>
     Effect.gen(function*() {
       const req = yield* HttpServerRequest.HttpServerRequest
 
-      const currentSpan = yield* Effect.currentSpan
-      const parent = currentSpan?.parent ? currentSpan.parent.value : undefined
-      const start = new Date()
+      const currentSpan = yield* Effect.currentSpan.pipe(Effect.orDie)
       const supported = Locale.literals
       const desiredLocale = req.headers["x-locale"]
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
@@ -21,35 +20,24 @@ export const RequestContextMiddleware = (defaultLocale: Locale = "en") =>
         ? (desiredLocale as typeof supported[number])
         : defaultLocale
 
-      const requestId = req.headers["request-id"]
-      const rootId = parent?.spanId
-        ? RequestId(parent.spanId)
-        : requestId
-        ? RequestId(requestId)
-        : RequestId.make()
+      const ns = req.headers["x-store-id"]
+      const namespace = NonEmptyString255((ns && (Array.isArray(ns) ? ns[0] : ns)) || "primary")
 
-      const storeId = req.headers["x-store-id"]
-      const namespace = NonEmptyString255((storeId && (Array.isArray(storeId) ? storeId[0] : storeId)) || "primary")
+      yield* FiberRef.set(storeId, namespace)
+      yield* FiberRef.set(LocaleRef, locale)
 
       const deviceId = req.headers["x-fe-device-id"]
 
       const requestContext = new RequestContext({
-        id: currentSpan?.spanId ? RequestId(currentSpan.spanId) : RequestId.make(),
-        rootId,
+        span: {
+          traceId: RequestId(currentSpan.traceId),
+          spanId: RequestId(currentSpan.spanId),
+          sampled: currentSpan.sampled
+        },
         name: NonEmptyString255(req.originalUrl), // set more detailed elsewhere
         locale,
-        createdAt: start,
         namespace,
         sourceId: deviceId ? NonEmptyString255(deviceId) : undefined
-        // ...(context.operation.parentId
-        //   ? {
-        //     parent: new RequestContextParent({
-        //       id: RequestId(context.operation.parentId),
-        //       locale,
-        //       name: NonEmptyString255("API Request")
-        //     })
-        //   }
-        //   : {})
       })
       const rcc = yield* RequestContextContainer
       yield* rcc.update((_) => requestContext)
@@ -57,7 +45,6 @@ export const RequestContextMiddleware = (defaultLocale: Locale = "en") =>
 
       // TODO: how to set also on errors?
       return HttpServerResponse.setHeaders(res, {
-        "request-id": requestContext.rootId,
         "Content-Language": requestContext.locale
       })
     })

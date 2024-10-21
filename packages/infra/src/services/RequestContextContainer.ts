@@ -10,6 +10,7 @@ import { restoreFromRequestContext } from "./Store/Memory.js"
  */
 export abstract class RequestContextContainer
   extends Context.TagId("effect-app/RequestContextContainer")<RequestContextContainer, {
+    // TODO: must flow from current span/info
     requestContext: Effect<RequestContext>
     update: (f: (rc: RequestContext) => RequestContext) => Effect<RequestContext>
     start: (f: RequestContext) => Effect<void>
@@ -32,7 +33,7 @@ export abstract class RequestContextContainer
     .andThen(
       Effect
         .sync(() =>
-          new RequestContext({ name: NonEmptyString255("_root_"), rootId: RequestId("_root_"), locale: "en" })
+          new RequestContext({ name: NonEmptyString255("_root_"))
         ),
       FiberRef.make<RequestContext>
     )

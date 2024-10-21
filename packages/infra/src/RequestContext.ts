@@ -1,21 +1,11 @@
 import { ExtendedTaggedClass, NonEmptyString255 } from "@effect-app/schema"
-import { S } from "effect-app"
-import { RequestId, UserProfileId } from "effect-app/ids"
+import { FiberRef, S } from "effect-app"
+import { UserProfileId } from "effect-app/ids"
 
 export const Locale = S.Literal("en", "de")
 export type Locale = typeof Locale.Type
 
-// TPDP: kind of obsolete now that we use actual spans
-export class RequestContextParent extends ExtendedTaggedClass<
-  RequestContextParent,
-  RequestContextParent.From
->()("RequestContext", {
-  id: RequestId,
-  name: NonEmptyString255,
-  userProfile: S.optional(S.Struct({ sub: UserProfileId })),
-  locale: Locale,
-  createdAt: S.Date.withDefault
-}) {}
+export const LocaleRef = FiberRef.unsafeMake<Locale>("en")
 
 /**
  * @tsplus type RequestContext
@@ -25,47 +15,28 @@ export class RequestContext extends ExtendedTaggedClass<
   RequestContext,
   RequestContext.From
 >()("RequestContext", {
-  ...RequestContextParent.omit("_tag", "id"),
-  id: RequestId.withDefault,
-  rootId: RequestId,
+  span: S.Struct({
+    traceId: S.String,
+    spanId: S.String,
+    sampled: S.Boolean
+  }),
+  name: NonEmptyString255,
+  userProfile: S.optional(S.Struct({ sub: UserProfileId })),
+  locale: Locale,
   sourceId: S.optional(NonEmptyString255),
-  parent: S.optional(RequestContextParent),
   namespace: S.optional(NonEmptyString255)
-  // ...RequestContextParent.omit("id").extend({
-  //   id: RequestId.withDefault,
-  //   rootId: RequestId,
-  //   parent: RequestContextParent.optional(),
-  //   namespace: NonEmptyString255.optional()
-  // })
 }) {
   // static Tag = Context.Tag<RequestContext>()
-  static inherit(
-    this: void,
-    parent: RequestContext,
-    newSelf: ConstructorParameters<typeof RequestContextParent>[0]
-  ) {
-    return new RequestContext({
-      namespace: parent?.namespace,
-      ...newSelf,
-      rootId: parent.rootId,
-      parent
-    })
-  }
 
   static toMonitoring(this: void, self: RequestContext) {
     return {
       operationName: self.name,
-      locale: self.locale,
-      ...(self.parent
-        ? { parentOperationName: self.parent.name, parentLocale: self.parent.locale }
-        : {})
+      locale: self.locale
     }
   }
 }
 
 export const spanAttributes = (ctx: RequestContext) => ({
-  "request.id": ctx.id,
-  "request.root.id": ctx.rootId,
   "request.name": ctx.name,
   "request.locale": ctx.locale,
   "request.namespace": ctx.namespace,
@@ -86,9 +57,6 @@ export const spanAttributes = (ctx: RequestContext) => ({
 // codegen:start {preset: model}
 //
 /* eslint-disable */
-export namespace RequestContextParent {
-  export interface From extends S.Struct.Encoded<typeof RequestContextParent["fields"]> {}
-}
 export namespace RequestContext {
   export interface From extends S.Struct.Encoded<typeof RequestContext["fields"]> {}
 }
