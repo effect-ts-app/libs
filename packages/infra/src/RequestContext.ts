@@ -21,10 +21,11 @@ export class RequestContext extends ExtendedTaggedClass<
     sampled: S.Boolean
   }),
   name: NonEmptyString255,
-  userProfile: S.optional(S.Struct({ sub: UserProfileId })),
   locale: Locale,
   sourceId: S.optional(NonEmptyString255), // TODO?
-  namespace: NonEmptyString255
+  namespace: NonEmptyString255,
+  /** @deprecated */
+  userProfile: S.optional(S.Struct({ sub: UserProfileId })) //
 }) {
   // static Tag = Context.Tag<RequestContext>()
 
