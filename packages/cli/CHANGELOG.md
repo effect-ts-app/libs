@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.88.0
+
+### Minor Changes
+
+- 480f0ef: add new controller setup support
+
 ## 0.87.1
 
 ### Patch Changes
