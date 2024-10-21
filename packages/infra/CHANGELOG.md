@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.47.3
+
+### Patch Changes
+
+- faea871: improve repo identifiers
+
 ## 1.47.2
 
 ### Patch Changes
