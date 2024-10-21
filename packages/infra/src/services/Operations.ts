@@ -8,6 +8,7 @@ import { Cause, Context, copy, Duration, Effect, Exit, Layer, Option, S, Schedul
 import type { OperationProgress } from "effect-app/Operations"
 import { Operation, OperationFailure, OperationId, OperationSuccess } from "effect-app/Operations"
 import * as Scope from "effect/Scope"
+import { setupRequestContextFromCurrent } from "../api/setupRequest.js"
 import { batch } from "../rateLimit.js"
 import { MainFiberSet } from "./MainFiberSet.js"
 import { OperationsRepo } from "./OperationsRepo.js"
@@ -34,7 +35,7 @@ const make = Effect.gen(function*() {
   const cleanup = Effect.sync(() => subHours(new Date(), 1)).pipe(
     Effect.andThen((before) => repo.query(where("updatedAt", "lt", before.toISOString()))),
     Effect.andThen((ops) => pipe(ops, batch(100, Effect.succeed, (items) => repo.removeAndPublish(items)))),
-    Effect.withSpan("Operations.cleanup")
+    setupRequestContextFromCurrent("Operations.cleanup")
   )
 
   function addOp(id: OperationId, title: NonEmptyString2k) {

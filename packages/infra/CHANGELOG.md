@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.47.1
+
+### Patch Changes
+
+- fix Operations Cleanup
+
 ## 1.47.0
 
 ### Minor Changes
