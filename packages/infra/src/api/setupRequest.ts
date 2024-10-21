@@ -1,91 +1,57 @@
 import { NonEmptyString255 } from "@effect-app/schema"
-import { Effect, Layer, pipe } from "effect-app"
-import { RequestId } from "effect-app/ids"
-import { RequestContext, spanAttributes } from "../RequestContext.js"
-import { RequestContextContainer } from "../services/RequestContextContainer.js"
+import { Effect, FiberRef, Layer } from "effect-app"
+import { LocaleRef, RequestContext, spanAttributes } from "../RequestContext.js"
 import { ContextMapContainer } from "../services/Store/ContextMapContainer.js"
+import { storeId } from "../services/Store/Memory.js"
 
-function makeInternalRequestContext(name: string) {
-  return Effect.sync(() => {
-    const id = RequestId.make()
-    return new RequestContext({
-      id,
-      rootId: id,
-      locale: "en",
-      name: NonEmptyString255(name)
-    })
+export const getRequestContext = Effect
+  .all({
+    span: Effect.currentSpan.pipe(Effect.orDie),
+    locale: FiberRef.get(LocaleRef),
+    namespace: FiberRef.get(storeId)
   })
-}
-
-const withRequestSpan = <R, E, A>(f: Effect<A, E, R>) =>
-  Effect.andThen(
-    RequestContextContainer
-      .get,
-    (ctx) =>
-      f.pipe(
-        Effect.withSpan("request " + ctx.name, { attributes: spanAttributes(ctx), captureStackTrace: false }),
-        // request context info is picked up directly in the logger for annotations.
-        Effect.withLogSpan("request")
-      )
+  .pipe(
+    Effect.map(({ locale, namespace, span }) =>
+      new RequestContext({
+        span,
+        locale,
+        namespace,
+        // TODO: get through span context, or don't care at all.
+        name: NonEmptyString255("_root_")
+      })
+    )
   )
 
-const withExistingRequestSpan = <R, E, A>(f: Effect<A, E, R>) =>
+const withRequestSpan = (name = "request") => <R, E, A>(f: Effect<A, E, R>) =>
   Effect.andThen(
-    RequestContextContainer.get,
+    getRequestContext,
     (ctx) =>
-      Effect.annotateCurrentSpan(spanAttributes(ctx)).pipe(
-        Effect.andThen(f),
+      f.pipe(
+        Effect.withSpan(name, { attributes: spanAttributes(ctx), captureStackTrace: false }),
+        // TODO: false
         // request context info is picked up directly in the logger for annotations.
-        Effect.withLogSpan("request")
+        Effect.withLogSpan(name)
       )
   )
 
 const setupContextMap = Effect.andThen(ContextMapContainer, (_) => _.start).pipe(Layer.effectDiscard)
 
-// const RequestContextLiveFromRequestContext = (requestContext: RequestContext) =>
-//   RequestContext.Tag.makeLayer(requestContext)
-// memoization problem
-// const RequestContextLive = RequestContextContainer.get.toLayer(RequestContext.Tag)
-const RequestContextStartLiveFromRequestContext = (requestContext: RequestContext) =>
-  Layer.provideMerge(
-    setupContextMap,
-    // .provideMerge(RequestContextLiveFromRequestContext(requestContext))
-    Effect
-      .andThen(RequestContextContainer, (_) => _.start(requestContext))
-      .pipe(Layer.effectDiscard)
-  )
-
-const RequestContextStartLive = (requestContext: RequestContext | string) =>
-  typeof requestContext === "string"
-    ? pipe(
-      makeInternalRequestContext(requestContext),
-      Effect.andThen(RequestContextStartLiveFromRequestContext),
-      Layer.unwrapEffect
-    )
-    : RequestContextStartLiveFromRequestContext(requestContext)
-
-export function setupRequestContext<R, E, A>(self: Effect<A, E, R>, requestContext: RequestContext | string) {
-  return self
+export const setupRequestContextFromCurrent = (name = "request") => <R, E, A>(self: Effect<A, E, R>) =>
+  self
     .pipe(
-      withRequestSpan,
-      Effect.provide(RequestContextStartLive(requestContext))
+      withRequestSpan(name),
+      Effect.provide(setupContextMap)
     )
-}
 
-export function setupExistingRequestContext<R, E, A>(self: Effect<A, E, R>, requestContext: RequestContext | string) {
-  return self
-    .pipe(
-      withExistingRequestSpan,
-      Effect.provide(RequestContextStartLive(requestContext))
-    )
-}
+export function setupRequestContext<R, E, A>(self: Effect<A, E, R>, requestContext: RequestContext) {
+  return Effect.gen(function*() {
+    yield* FiberRef.set(LocaleRef, requestContext.locale)
+    yield* FiberRef.set(storeId, requestContext.namespace)
 
-const UpdateRequestContextLive = (f: (rc: RequestContext) => RequestContext) =>
-  Effect.andThen(RequestContextContainer, (rcc) => rcc.update(f)).pipe(Layer.effectDiscard)
-
-/**
- * @tsplus fluent effect/io/Effect updateRequestContext
- */
-export function updateRequestContext<R, E, A>(self: Effect<A, E, R>, f: (rc: RequestContext) => RequestContext) {
-  return Effect.provide(self, UpdateRequestContextLive(f))
+    return yield* self
+      .pipe(
+        withRequestSpan(requestContext.name),
+        Effect.provide(setupContextMap)
+      )
+  })
 }

@@ -1,16 +1,13 @@
 import { Model } from "@effect-app/infra-adapters/SQL"
-import { setupRequestContext } from "@effect-app/infra/api/setupRequest"
-import { RequestContext } from "@effect-app/infra/RequestContext"
+import { getRequestContext, setupRequestContext } from "@effect-app/infra/api/setupRequest"
 import { reportNonInterruptedFailure } from "@effect-app/infra/services/QueueMaker/errors"
 import type { QueueBase } from "@effect-app/infra/services/QueueMaker/service"
 import { QueueMeta } from "@effect-app/infra/services/QueueMaker/service"
-import { RequestContextContainer } from "@effect-app/infra/services/RequestContextContainer"
 import { SqlClient } from "@effect/sql"
 import { randomUUID } from "crypto"
 import { subMinutes } from "date-fns"
 import { Effect, Fiber, Option, S, Tracer } from "effect-app"
-import { RequestId } from "effect-app/ids"
-import { NonEmptyString255 } from "effect-app/schema"
+import type { NonEmptyString255 } from "effect-app/schema"
 import { pretty } from "effect-app/utils"
 import { InfraLogger } from "../../logger.js"
 
@@ -112,22 +109,15 @@ export function makeSQLQueue<
       finish: ({ createdAt, updatedAt, ...q }: Drain) =>
         drainRepo.updateVoid(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) })) // auto in lib , etag: randomUUID()
     }
-    const rcc = yield* RequestContextContainer
-
     return {
       publish: (...messages) =>
         Effect
           .gen(function*() {
-            const requestContext = yield* rcc.requestContext
-            const span = yield* Effect.serviceOption(Tracer.ParentSpan)
+            const requestContext = yield* getRequestContext
             return yield* Effect
               .forEach(
                 messages,
-                (m) =>
-                  q.offer(m, {
-                    requestContext: new RequestContext(requestContext), // workaround Schema expecting exact class
-                    span: Option.getOrUndefined(span)
-                  }),
+                (m) => q.offer(m, requestContext),
                 {
                   discard: true
                 }
@@ -160,11 +150,7 @@ export function makeSQLQueue<
                       (_) =>
                         setupRequestContext(
                           _,
-                          RequestContext.inherit(meta.requestContext, {
-                            id: RequestId(body.id),
-                            locale: "en" as const,
-                            name: NonEmptyString255(`${queueDrainName}.${body._tag}`)
-                          })
+                          meta
                         ),
                       Effect
                         .withSpan(`queue.drain: ${queueDrainName}.${body._tag}`, {

@@ -6,16 +6,12 @@ import {
   ServiceBusReceiverFactory,
   subscribe
 } from "@effect-app/infra-adapters/ServiceBus"
-import { RequestContext } from "@effect-app/infra/RequestContext"
 import { Tracer } from "effect"
-import { Cause, Effect, flow, Layer, Option, S } from "effect-app"
-import { RequestId } from "effect-app/ids"
+import { Cause, Effect, flow, Layer, S } from "effect-app"
 import type { StringId } from "effect-app/schema"
-import { NonEmptyString255 } from "effect-app/schema"
 import { pretty } from "effect-app/utils"
-import { setupRequestContext } from "../../api/setupRequest.js"
+import { getRequestContext, setupRequestContext } from "../../api/setupRequest.js"
 import { InfraLogger } from "../../logger.js"
-import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure, reportNonInterruptedFailureCause, reportQueueError } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
@@ -45,7 +41,6 @@ export function makeServiceBusQueue<
     const receiver = yield* ServiceBusReceiverFactory
     const silenceAndReportError = reportNonInterruptedFailure({ name: "ServiceBusQueue.drain." + queueDrainName })
     const reportError = reportNonInterruptedFailureCause({ name: "ServiceBusQueue.drain." + queueDrainName })
-    const rcc = yield* RequestContextContainer
 
     // TODO: or do async?
     // This will make sure that the host receives the error (MainFiberSet.join), who will then interrupt everything and commence a shutdown and restart of app
@@ -83,11 +78,7 @@ export function makeServiceBusQueue<
                           (_) =>
                             setupRequestContext(
                               _,
-                              RequestContext.inherit(meta.requestContext, {
-                                id: RequestId(body.id),
-                                locale: "en" as const,
-                                name: NonEmptyString255(`${queueDrainName}.${body._tag}`)
-                              })
+                              meta
                             ),
                           Effect
                             .withSpan(
@@ -133,8 +124,7 @@ export function makeServiceBusQueue<
       publish: (...messages) =>
         Effect
           .gen(function*() {
-            const requestContext = yield* rcc.requestContext
-            const span = yield* Effect.serviceOption(Tracer.ParentSpan)
+            const requestContext = yield* getRequestContext
             return yield* Effect
               .promise((abortSignal) =>
                 s.sendMessages(
@@ -142,7 +132,7 @@ export function makeServiceBusQueue<
                     body: JSON.stringify(
                       S.encodeSync(wireSchema)({
                         body: m,
-                        meta: { requestContext, span: Option.getOrUndefined(span) }
+                        meta: requestContext
                       })
                     ),
                     messageId: m.id, /* correllationid: requestId */

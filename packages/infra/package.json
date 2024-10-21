@@ -507,16 +507,6 @@
         "default": "./_cjs/services/RepositoryBase.cjs"
       }
     },
-    "./services/RequestContextContainer": {
-      "import": {
-        "types": "./dist/services/RequestContextContainer.d.ts",
-        "default": "./dist/services/RequestContextContainer.js"
-      },
-      "require": {
-        "types": "./dist/services/RequestContextContainer.d.ts",
-        "default": "./_cjs/services/RequestContextContainer.cjs"
-      }
-    },
     "./services/RequestFiberSet": {
       "import": {
         "types": "./dist/services/RequestFiberSet.d.ts",
