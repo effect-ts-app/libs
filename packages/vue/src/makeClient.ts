@@ -4,7 +4,8 @@ import * as Sentry from "@sentry/browser"
 import type { Either } from "effect-app"
 import { Cause, Effect, Match, Runtime, S } from "effect-app"
 import { type SupportedErrors } from "effect-app/client"
-import { OperationFailure, OperationSuccess } from "effect-app/Operations"
+import type { OperationFailure } from "effect-app/Operations"
+import { OperationSuccess } from "effect-app/Operations"
 import { dropUndefinedT } from "effect-app/utils"
 import { computed, type ComputedRef } from "vue"
 import type { MakeIntlReturn } from "./makeIntl.js"
@@ -162,38 +163,36 @@ export const makeClient = <Locale extends string, R>(
       return Object.assign(
         flow(f, (p) =>
           p.then(
-            (r) =>
-              r._tag === "Right"
-                ? S.is(OperationFailure)(r.right)
-                  ? Promise
-                    .resolve(
-                      toast.warning(
-                        warnMessage + r.right.message
-                          ? "\n" + r.right.message
-                          : ""
-                      )
-                    )
-                    .then((_) => {})
-                  : Promise
-                    .resolve(
-                      toast.success(
-                        successMessage
-                          + (S.is(OperationSuccess)(r.right) && r.right.message
-                            ? "\n" + r.right.message
-                            : "")
-                      )
-                    )
-                    .then((_) => {})
-                : r.left._tag === "SuppressErrors"
-                ? Promise.resolve(void 0)
-                : Promise
+            (r) => {
+              if (r._tag === "Right") {
+                return Promise
                   .resolve(
-                    !options.suppressErrorToast
-                      && toast.error(`${errorMessage}:\n` + renderError(r.left))
+                    toast.success(
+                      successMessage
+                        + (S.is(OperationSuccess)(r.right) && r.right.message
+                          ? "\n" + r.right.message
+                          : "")
+                    )
                   )
-                  .then((_) => {
-                    console.warn(r.left, r.left.toString())
-                  }),
+                  .then((_) => {})
+              }
+              if (r.left._tag === "SuppressErrors") {
+                return Promise.resolve(void 0)
+              }
+
+              if (r.left._tag === "OperationFailure") {
+                return toast.warning(
+                  warnMessage + r.left.message
+                    ? "\n" + r.left.message
+                    : ""
+                )
+              }
+              if (!options.suppressErrorToast) {
+                toast.error(`${errorMessage}:\n` + renderError(r.left))
+              }
+
+              console.warn(r.left, r.left.toString())
+            },
             (err) => {
               if (
                 Cause.isInterruptedException(err)
