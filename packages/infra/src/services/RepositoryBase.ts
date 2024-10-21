@@ -48,7 +48,7 @@ import type { FieldValues } from "../filter/types.js"
 import { make as makeQuery } from "./query.js"
 import type { QAll, Query, QueryEnd, QueryProjection, QueryWhere } from "./query.js"
 import * as Q from "./query.js"
-import { ContextMapContainer } from "./Store/ContextMapContainer.js"
+import { getContextMap } from "./Store/ContextMapContainer.js"
 
 export interface Mapped1<A, IdKey extends keyof A, R> {
   all: Effect<A[], ParseResult.ParseError, R>
@@ -393,8 +393,7 @@ export function makeRepo<
           )
 
           const store = yield* mkStore(args.makeInitial, args.config)
-          const { get } = yield* ContextMapContainer
-          const cms = Effect.andThen(get, (_) => ({
+          const cms = Effect.andThen(getContextMap.pipe(Effect.orDie), (_) => ({
             get: (id: string) => _.get(`${name}.${id}`),
             set: (id: string, etag: string | undefined) => _.set(`${name}.${id}`, etag)
           }))
@@ -763,7 +762,7 @@ export interface Repos<
           partitionValue?: (a: Encoded) => string
         }
       }
-  ): Effect<Repository<T, Encoded, Evt, ItemType, IdKey>, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
+  ): Effect<Repository<T, Encoded, Evt, ItemType, IdKey>, E, StoreMaker | R | RInitial | R2>
   makeWith<Out, RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
         makeInitial?: Effect<readonly T[], E, RInitial>
@@ -779,7 +778,7 @@ export interface Repos<
         }
       },
     f: (r: Repository<T, Encoded, Evt, ItemType, IdKey>) => Out
-  ): Effect<Out, E, StoreMaker | ContextMapContainer | R | RInitial | R2>
+  ): Effect<Out, E, StoreMaker | R | RInitial | R2>
   readonly Q: ReturnType<typeof Q.make<Encoded>>
   readonly type: Repository<T, Encoded, Evt, ItemType, IdKey>
 }
@@ -1145,14 +1144,14 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
           Service,
           E1 | Layer.Layer.Error<Layers[number]>,
           Exclude<
-            R1 | R | StoreMaker | ContextMapContainer,
+            R1 | R | StoreMaker,
             { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
           >
         >
         DefaultWithoutDependencies: Layer.Layer<
           Service,
           E1,
-          R1 | R | StoreMaker | ContextMapContainer
+          R1 | R | StoreMaker
         >
       }
       & Repos<
@@ -1221,14 +1220,14 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
           Service,
           E1 | Layer.Layer.Error<Layers[number]>,
           Exclude<
-            R1 | R | StoreMaker | ContextMapContainer,
+            R1 | R | StoreMaker,
             { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
           >
         >
         DefaultWithoutDependencies: Layer.Layer<
           Service,
           E1,
-          R1 | R | StoreMaker | ContextMapContainer
+          R1 | R | StoreMaker
         >
       }
       & Repos<

@@ -3,7 +3,6 @@ import { inspect } from "util"
 import { expect, it } from "vitest"
 import { and, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
 import { RepositoryDefaultImpl2 } from "../src/services/RepositoryBase.js"
-import { ContextMapContainer } from "../src/services/Store/ContextMapContainer.js"
 import { memFilter, MemoryStoreLive } from "../src/services/Store/Memory.js"
 
 const str = S.Struct({ _tag: S.Literal("string"), value: S.String })
@@ -91,7 +90,7 @@ class SomethingRepo extends RepositoryDefaultImpl2<SomethingRepo>()(
   { idKey: "id" }
 ) {
   static readonly Test = Layer.effect(SomethingRepo, SomethingRepo.makeWith({}, (_) => new SomethingRepo(_))).pipe(
-    Layer.provide(Layer.merge(MemoryStoreLive, ContextMapContainer.live))
+    Layer.provide(MemoryStoreLive)
   )
 }
 

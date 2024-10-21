@@ -1,7 +1,6 @@
 import { RepositoryDefaultImpl2 } from "@effect-app/infra/services/RepositoryBase"
 import { Effect, flow, Layer, ManagedRuntime, S } from "effect-app"
 import { and, or, order, page, project, where } from "../src/services/query.js"
-import { ContextMapContainer } from "../src/services/Store/ContextMapContainer.js"
 import { MemoryStoreLive } from "../src/services/Store/Memory.js"
 
 const str = S.Struct({ _tag: S.Literal("string"), value: S.String })
@@ -39,7 +38,7 @@ class SomethingRepo extends RepositoryDefaultImpl2<SomethingRepo>()(
       SomethingRepo.makeWith({ makeInitial: Effect.sync(() => items) }, (_) => new SomethingRepo(_))
     )
     .pipe(
-      Layer.provide(Layer.merge(MemoryStoreLive, ContextMapContainer.live))
+      Layer.provide(MemoryStoreLive)
     )
 }
 

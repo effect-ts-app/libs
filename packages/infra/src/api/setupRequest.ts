@@ -1,7 +1,7 @@
 import { NonEmptyString255 } from "@effect-app/schema"
 import { Effect, FiberRef, Layer } from "effect-app"
 import { LocaleRef, RequestContext, spanAttributes } from "../RequestContext.js"
-import { ContextMapContainer } from "../services/Store/ContextMapContainer.js"
+import { startContextMap } from "../services/Store/ContextMapContainer.js"
 import { storeId } from "../services/Store/Memory.js"
 
 export const getRequestContext = Effect
@@ -39,7 +39,7 @@ const withRequestSpan = (name = "request") => <R, E, A>(f: Effect<A, E, R>) =>
       )
   )
 
-const setupContextMap = Effect.andThen(ContextMapContainer, (_) => _.start).pipe(Layer.effectDiscard)
+const setupContextMap = startContextMap.pipe(Layer.effectDiscard)
 
 export const setupRequestContextFromCurrent = (name = "request") => <R, E, A>(self: Effect<A, E, R>) =>
   self
