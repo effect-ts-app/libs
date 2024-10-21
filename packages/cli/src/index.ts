@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import cp from "child_process"
+import { Array, Equivalence } from "effect"
 import fs from "fs"
 import w from "node-watch"
-
 import path from "path"
 
 const _cmd = process.argv[2]
@@ -25,6 +25,8 @@ if (
 }
 
 const cmd = _cmd as typeof supportedCommands[number]
+
+const debug = process.argv.includes("--debug")
 
 function touch(path: string) {
   const time = new Date()
@@ -48,19 +50,45 @@ function monitorIndexes(path: string) {
 }
 
 function monitorChildIndexes(path: string) {
-  return w.default(path, { recursive: true }, (_, path) => {
+  return w.default(path, { recursive: true }, (evt, path) => {
     const pathParts = path.split("/")
-    if (pathParts.length < 3) {
-      return
-    }
-    // const dirName = pathParts[pathParts.length - 2]!
-    const indexFile = pathParts.slice(0, -1).join("/") + ".ts"
+    const oneButLast = pathParts.slice(0, -1).join("/")
+    const twoButLast = pathParts.slice(0, -2).join("/")
 
-    // console.log("change!", evt, path, dirName, indexFile)
-    if (!fs.existsSync(indexFile)) {
-      return
-    }
-    cp.execSync(`pnpm eslint --fix "${indexFile}"`)
+    const indexFiles = pathParts.length < 3
+      ? pathParts[pathParts.length - 1]?.toLowerCase().includes(".controllers.")
+        ? [
+          oneButLast + "/routes.ts",
+          oneButLast + "/controllers.ts",
+          oneButLast + "/Controllers.ts"
+        ]
+        : []
+      : [
+        oneButLast + ".ts",
+        ...pathParts[pathParts.length - 1]?.toLowerCase().includes(".controllers.")
+          ? [
+            oneButLast + ".controllers.ts",
+            oneButLast + ".Controllers.ts",
+            oneButLast + ".index.Controllers.ts",
+            oneButLast + ".index.controllers.ts",
+            oneButLast + "/routes.ts",
+            oneButLast + "/controllers.ts",
+            oneButLast + "/Controllers.ts",
+            twoButLast + "/controllers.ts",
+            twoButLast + "/Controllers.ts",
+            twoButLast + "controllers.ts"
+          ]
+          : []
+      ]
+
+    const foundIndexFiles = Array.dedupeWith(
+      indexFiles.filter((_) => fs.existsSync(_)),
+      Equivalence.mapInput(Equivalence.string, (_) => _.toLowerCase())
+    )
+    if (debug) console.log("change!", evt, path, indexFiles, foundIndexFiles)
+
+    if (!foundIndexFiles.length) return
+    cp.execSync(`pnpm eslint --fix ${foundIndexFiles.map((_) => `"${_}"`).join(" ")}`)
   })
 }
 
@@ -138,7 +166,7 @@ function monitorPackagejson(path: string, levels = 0) {
   })
 }
 
-let cmds = process.argv.slice(3)
+let cmds = process.argv.slice(3).filter((_) => _ !== "--debug")
 switch (cmd) {
   case "link":
     await import("./link.js")
