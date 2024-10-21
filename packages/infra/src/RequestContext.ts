@@ -1,4 +1,4 @@
-import { ExtendedTaggedClass, NonEmptyString255 } from "@effect-app/schema"
+import { NonEmptyString255 } from "@effect-app/schema"
 import { FiberRef, S } from "effect-app"
 import { UserProfileId } from "effect-app/ids"
 
@@ -11,10 +11,10 @@ export const LocaleRef = FiberRef.unsafeMake<Locale>("en")
  * @tsplus type RequestContext
  * @tsplus companion RequestContext.Ops
  */
-export class RequestContext extends ExtendedTaggedClass<
+export class RequestContext extends S.ExtendedClass<
   RequestContext,
   RequestContext.From
->()("RequestContext", {
+>()({
   span: S.Struct({
     traceId: S.String,
     spanId: S.String,
