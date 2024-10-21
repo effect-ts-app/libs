@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { NonEmptyString255 } from "@effect-app/schema"
 import { Array, Effect, FiberRef, flow, Option, Order, pipe, Ref, Struct } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { get } from "effect-app/utils"
 import { InfraLogger } from "../../logger.js"
-import type { RequestContext } from "../../RequestContext.js"
 import type { FilterArgs, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
 import { codeFilter, makeUpdateETag } from "./utils.js"
@@ -55,12 +55,8 @@ export function memFilter<T extends { id: string }, U extends keyof T = never>(f
   })
 }
 
-export const storeId = FiberRef.unsafeMake("primary")
-
-/**
- * @tsplus getter RequestContext restoreStoreId
- */
-export const restoreFromRequestContext = (ctx: RequestContext) => FiberRef.set(storeId, ctx.namespace ?? "primary")
+const defaultNs = NonEmptyString255("primary")
+export const storeId = FiberRef.unsafeMake<NonEmptyString255>(defaultNs)
 
 function logQuery(f: FilterArgs<any, any>, defaultValues?: any) {
   return InfraLogger

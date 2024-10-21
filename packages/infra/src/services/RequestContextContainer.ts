@@ -1,8 +1,7 @@
 import { NonEmptyString255 } from "@effect-app/schema"
 import { Context, Effect, FiberRef, Layer, Option } from "effect-app"
-import { RequestId } from "effect-app/ids"
-import { RequestContext, spanAttributes } from "../RequestContext.js"
-import { restoreFromRequestContext } from "./Store/Memory.js"
+import { LocaleRef, RequestContext } from "../RequestContext.js"
+import { storeId } from "./Store/Memory.js"
 
 /**
  * @tsplus type RequestContextContainer
@@ -10,10 +9,7 @@ import { restoreFromRequestContext } from "./Store/Memory.js"
  */
 export abstract class RequestContextContainer
   extends Context.TagId("effect-app/RequestContextContainer")<RequestContextContainer, {
-    // TODO: must flow from current span/info
     requestContext: Effect<RequestContext>
-    update: (f: (rc: RequestContext) => RequestContext) => Effect<RequestContext>
-    start: (f: RequestContext) => Effect<void>
   }>()
 {
   static get get(): Effect<RequestContext, never, RequestContextContainer> {
@@ -30,23 +26,29 @@ export abstract class RequestContextContainer
     )
   }
   static readonly live = Effect
-    .andThen(
-      Effect
-        .sync(() =>
-          new RequestContext({ name: NonEmptyString255("_root_"))
-        ),
-      FiberRef.make<RequestContext>
+    .sync(() =>
+      RequestContextContainer.of({
+        requestContext: Effect
+          .all({
+            span: Effect.currentSpan.pipe(Effect.orDie),
+            locale: FiberRef.get(LocaleRef),
+            namespace: FiberRef.get(storeId)
+          })
+          .pipe(
+            Effect.map(({ locale, namespace, span }) =>
+              new RequestContext({
+                span,
+                locale,
+                namespace,
+                // TODO: get through span context, or don't care at all.
+                name: NonEmptyString255("_root_")
+              })
+            )
+          )
+      })
     )
     .pipe(
-      Effect.map((ref) =>
-        RequestContextContainer.of({
-          requestContext: FiberRef.get(ref),
-          update: (f: (a: RequestContext) => RequestContext) =>
-            Effect.tap(FiberRef.updateAndGet(ref, f), (rc) => Effect.annotateCurrentSpan(spanAttributes(rc))),
-          start: (a: RequestContext) => Effect.zipRight(FiberRef.set(ref, a), restoreFromRequestContext(a))
-        })
-      ),
-      Layer.scoped(this)
+      Layer.effect(this)
     )
 }
 

@@ -1,4 +1,4 @@
-import { setupRequestContext } from "@effect-app/infra/api/setupRequest"
+import { setupRequestContextFromCurrent } from "@effect-app/infra/api/setupRequest"
 import { reportError } from "@effect-app/infra/errorReporter"
 import { Duration, Effect, pipe, S, Schedule, Stream } from "effect-app"
 import { HttpHeaders, HttpServerResponse } from "effect-app/http"
@@ -53,4 +53,4 @@ export const makeSSE = <A extends { id: any }, E, R, SI, SR>(
       )
       return res
     })
-    .pipe(Effect.tapErrorCause(reportError("Request")), (_) => setupRequestContext(_, "events"))
+    .pipe(Effect.tapErrorCause(reportError("Request")), setupRequestContextFromCurrent)

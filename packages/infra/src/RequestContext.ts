@@ -23,8 +23,8 @@ export class RequestContext extends ExtendedTaggedClass<
   name: NonEmptyString255,
   userProfile: S.optional(S.Struct({ sub: UserProfileId })),
   locale: Locale,
-  sourceId: S.optional(NonEmptyString255),
-  namespace: S.optional(NonEmptyString255)
+  sourceId: S.optional(NonEmptyString255), // TODO?
+  namespace: NonEmptyString255
 }) {
   // static Tag = Context.Tag<RequestContext>()
 

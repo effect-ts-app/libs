@@ -1,11 +1,9 @@
-import { Effect, FiberRef } from "effect-app"
+import { Effect } from "effect-app"
 import { HttpMiddleware, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { RequestId } from "effect-app/ids"
 import { NonEmptyString255 } from "effect-app/schema"
-import { Locale, LocaleRef, RequestContext } from "../../RequestContext.js"
-import { RequestContextContainer } from "../../services/RequestContextContainer.js"
-import { storeId } from "../../services/Store/Memory.js"
-import { setupExistingRequestContext } from "../setupRequest.js"
+import { Locale, RequestContext } from "../../RequestContext.js"
+import { setupRequestContext } from "../setupRequest.js"
 
 export const RequestContextMiddleware = (defaultLocale: Locale = "en") =>
   HttpMiddleware.make((app) =>
@@ -22,10 +20,6 @@ export const RequestContextMiddleware = (defaultLocale: Locale = "en") =>
 
       const ns = req.headers["x-store-id"]
       const namespace = NonEmptyString255((ns && (Array.isArray(ns) ? ns[0] : ns)) || "primary")
-
-      yield* FiberRef.set(storeId, namespace)
-      yield* FiberRef.set(LocaleRef, locale)
-
       const deviceId = req.headers["x-fe-device-id"]
 
       const requestContext = new RequestContext({
@@ -39,9 +33,7 @@ export const RequestContextMiddleware = (defaultLocale: Locale = "en") =>
         namespace,
         sourceId: deviceId ? NonEmptyString255(deviceId) : undefined
       })
-      const rcc = yield* RequestContextContainer
-      yield* rcc.update((_) => requestContext)
-      const res = yield* setupExistingRequestContext(app, requestContext)
+      const res = yield* setupRequestContext(app, requestContext)
 
       // TODO: how to set also on errors?
       return HttpServerResponse.setHeaders(res, {
