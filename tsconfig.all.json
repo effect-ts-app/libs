@@ -17,6 +17,12 @@
       "path": "packages/schema"
     },
     {
+      "path": "packages/cli"
+    },
+    {
+      "path": "packages/eslint-codegen-model"
+    },
+    {
       "path": "packages/core"
     },
     {
