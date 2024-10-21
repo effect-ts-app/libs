@@ -2,9 +2,8 @@ import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { Tracer } from "effect"
 import { Effect, Fiber, flow, S } from "effect-app"
 import { pretty } from "effect-app/utils"
-import { setupRequestContext } from "../../api/setupRequest.js"
+import { getRequestContext, setupRequestContext } from "../../api/setupRequest.js"
 import { InfraLogger } from "../../logger.js"
-import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
@@ -26,7 +25,6 @@ export function makeMemQueue<
     const mem = yield* MemQueue
     const q = yield* mem.getOrCreateQueue(queueName)
     const qDrain = yield* mem.getOrCreateQueue(queueDrainName)
-    const rcc = yield* RequestContextContainer
 
     const wireSchema = S.Struct({ body: schema, meta: QueueMeta })
     const drainW = S.Struct({ body: drainSchema, meta: QueueMeta })
@@ -36,7 +34,7 @@ export function makeMemQueue<
       publish: (...messages) =>
         Effect
           .gen(function*() {
-            const requestContext = yield* rcc.requestContext
+            const requestContext = yield* getRequestContext
             return yield* Effect
               .forEach(messages, (m) =>
                 // we JSON encode, because that is what the wire also does, and it reveals holes in e.g unknown encoders (Date->String)

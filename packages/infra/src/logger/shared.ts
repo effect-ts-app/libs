@@ -1,15 +1,21 @@
-import { RuntimeFlags } from "effect"
-import { Context, FiberRef, Option, Runtime } from "effect-app"
+import { NonEmptyString255 } from "@effect-app/schema"
+import { Context, FiberRef, Option, Tracer } from "effect-app"
 import * as FiberRefs from "effect/FiberRefs"
-import { RequestContextContainer } from "../services/RequestContextContainer.js"
+import { LocaleRef, RequestContext } from "../RequestContext.js"
+import { storeId } from "../services/Store/Memory.js"
 
 export function getRequestContext(fiberRefs: FiberRefs.FiberRefs) {
   const context = FiberRefs.getOrDefault(fiberRefs, FiberRef.currentContext)
-  const a = Context.getOption(context, RequestContextContainer)
-  const c = Option.map(a, (_) => {
-    // TODO: perhaps a litle expensive?
-    const rt = Runtime.make({ context, fiberRefs, runtimeFlags: RuntimeFlags.none })
-    return Runtime.runSync(rt)(_.requestContext)
+  const span = Context.getOption(context, Tracer.ParentSpan)
+  const locale = FiberRefs.getOrDefault(fiberRefs, LocaleRef)
+  const namespace = FiberRefs.getOrDefault(fiberRefs, storeId)
+  return new RequestContext({
+    span: Option.getOrElse(
+      span,
+      () => ({ spanId: "bogus", sampled: true, traceId: "bogus" })
+    ),
+    name: NonEmptyString255("_"),
+    locale,
+    namespace
   })
-  return c
 }

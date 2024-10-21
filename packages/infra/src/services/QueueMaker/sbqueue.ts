@@ -10,9 +10,8 @@ import { Tracer } from "effect"
 import { Cause, Effect, flow, Layer, S } from "effect-app"
 import type { StringId } from "effect-app/schema"
 import { pretty } from "effect-app/utils"
-import { setupRequestContext } from "../../api/setupRequest.js"
+import { getRequestContext, setupRequestContext } from "../../api/setupRequest.js"
 import { InfraLogger } from "../../logger.js"
-import { RequestContextContainer } from "../RequestContextContainer.js"
 import { reportNonInterruptedFailure, reportNonInterruptedFailureCause, reportQueueError } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
@@ -42,7 +41,6 @@ export function makeServiceBusQueue<
     const receiver = yield* ServiceBusReceiverFactory
     const silenceAndReportError = reportNonInterruptedFailure({ name: "ServiceBusQueue.drain." + queueDrainName })
     const reportError = reportNonInterruptedFailureCause({ name: "ServiceBusQueue.drain." + queueDrainName })
-    const rcc = yield* RequestContextContainer
 
     // TODO: or do async?
     // This will make sure that the host receives the error (MainFiberSet.join), who will then interrupt everything and commence a shutdown and restart of app
@@ -126,7 +124,7 @@ export function makeServiceBusQueue<
       publish: (...messages) =>
         Effect
           .gen(function*() {
-            const requestContext = yield* rcc.requestContext
+            const requestContext = yield* getRequestContext
             return yield* Effect
               .promise((abortSignal) =>
                 s.sendMessages(

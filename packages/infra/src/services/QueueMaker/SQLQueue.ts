@@ -1,10 +1,8 @@
 import { Model } from "@effect-app/infra-adapters/SQL"
-import { setupRequestContext } from "@effect-app/infra/api/setupRequest"
-import { RequestContext } from "@effect-app/infra/RequestContext"
+import { getRequestContext, setupRequestContext } from "@effect-app/infra/api/setupRequest"
 import { reportNonInterruptedFailure } from "@effect-app/infra/services/QueueMaker/errors"
 import type { QueueBase } from "@effect-app/infra/services/QueueMaker/service"
 import { QueueMeta } from "@effect-app/infra/services/QueueMaker/service"
-import { RequestContextContainer } from "@effect-app/infra/services/RequestContextContainer"
 import { SqlClient } from "@effect/sql"
 import { randomUUID } from "crypto"
 import { subMinutes } from "date-fns"
@@ -111,17 +109,15 @@ export function makeSQLQueue<
       finish: ({ createdAt, updatedAt, ...q }: Drain) =>
         drainRepo.updateVoid(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) })) // auto in lib , etag: randomUUID()
     }
-    const rcc = yield* RequestContextContainer
-
     return {
       publish: (...messages) =>
         Effect
           .gen(function*() {
-            const requestContext = yield* rcc.requestContext
+            const requestContext = yield* getRequestContext
             return yield* Effect
               .forEach(
                 messages,
-                (m) => q.offer(m, new RequestContext(requestContext)),
+                (m) => q.offer(m, requestContext),
                 {
                   discard: true
                 }

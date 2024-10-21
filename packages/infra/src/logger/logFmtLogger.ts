@@ -1,12 +1,11 @@
-import { HashMap, Logger, Option } from "effect-app"
+import { HashMap, Logger } from "effect-app"
 import { spanAttributes } from "../RequestContext.js"
 import { getRequestContext } from "./shared.js"
 
 export const logfmtLogger = Logger.make<unknown, void>(
   (_) => {
     let { annotations } = _
-    const c = getRequestContext(_.context)
-    const requestContext = Option.getOrUndefined(c)
+    const requestContext = getRequestContext(_.context)
     if (requestContext && requestContext.name !== "_root_") {
       annotations = HashMap.make(...[
         ...annotations,

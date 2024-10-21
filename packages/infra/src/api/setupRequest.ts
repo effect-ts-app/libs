@@ -1,13 +1,30 @@
+import { NonEmptyString255 } from "@effect-app/schema"
 import { Effect, FiberRef, Layer } from "effect-app"
-import type { RequestContext } from "../RequestContext.js"
-import { LocaleRef, spanAttributes } from "../RequestContext.js"
-import { RequestContextContainer } from "../services/RequestContextContainer.js"
+import { LocaleRef, RequestContext, spanAttributes } from "../RequestContext.js"
 import { ContextMapContainer } from "../services/Store/ContextMapContainer.js"
 import { storeId } from "../services/Store/Memory.js"
 
+export const getRequestContext = Effect
+  .all({
+    span: Effect.currentSpan.pipe(Effect.orDie),
+    locale: FiberRef.get(LocaleRef),
+    namespace: FiberRef.get(storeId)
+  })
+  .pipe(
+    Effect.map(({ locale, namespace, span }) =>
+      new RequestContext({
+        span,
+        locale,
+        namespace,
+        // TODO: get through span context, or don't care at all.
+        name: NonEmptyString255("_root_")
+      })
+    )
+  )
+
 const withRequestSpan = <R, E, A>(f: Effect<A, E, R>) =>
   Effect.andThen(
-    RequestContextContainer.get,
+    getRequestContext,
     (ctx) =>
       f.pipe(
         Effect.withSpan("request " + ctx.name, { attributes: spanAttributes(ctx), captureStackTrace: false }),
