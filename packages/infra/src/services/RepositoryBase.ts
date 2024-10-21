@@ -1338,12 +1338,26 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
     Error.stackTraceLimit = 2
     const creationError = new Error()
     Error.stackTraceLimit = limit
-    return Context.assignTag<Service>(undefined, creationError)(
+    // TODO: actual class name or expect a string identifier - careful with overlapping between modules
+    return Context.assignTag<Service>(registerName(itemType + "Repo"), creationError)(
       Object.assign(Cls, makeRepoFunctions(Cls, itemType))
     ) as any // impl is missing, but its marked protected
   }
 
   return f
+}
+
+const names = new Map<string, number>()
+const registerName = (name: string) => {
+  const existing = names.get(name)
+  if (existing === undefined) {
+    names.set(name, 1)
+    return name
+  } else {
+    const n = existing + 1
+    names.set(name, n)
+    return name + "-" + existing
+  }
 }
 
 // TODO: integrate with repo
