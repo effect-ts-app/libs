@@ -37,7 +37,7 @@ export class RequestContext extends ExtendedTaggedClass<
   }
 }
 
-export const spanAttributes = (ctx: RequestContext) => ({
+export const spanAttributes = (ctx: Pick<RequestContext, "locale" | "namespace"> & Partial<RequestContext>) => ({
   "request.name": ctx.name,
   "request.locale": ctx.locale,
   "request.namespace": ctx.namespace,

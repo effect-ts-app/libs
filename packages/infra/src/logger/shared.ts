@@ -4,7 +4,7 @@ import * as FiberRefs from "effect/FiberRefs"
 import { LocaleRef, RequestContext } from "../RequestContext.js"
 import { storeId } from "../services/Store/Memory.js"
 
-export function getRequestContext(fiberRefs: FiberRefs.FiberRefs) {
+export function getRequestContextFromFiberRefs(fiberRefs: FiberRefs.FiberRefs) {
   const context = FiberRefs.getOrDefault(fiberRefs, FiberRef.currentContext)
   const span = Context.getOption(context, Tracer.ParentSpan)
   const locale = FiberRefs.getOrDefault(fiberRefs, LocaleRef)

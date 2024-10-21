@@ -1,7 +1,7 @@
 import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/node"
 import { Cause, Effect } from "effect-app"
-import { getRequestContext } from "./api/setupRequest.js"
+import { getRC } from "./api/setupRequest.js"
 import { CauseException, ErrorReported, tryToJson } from "./errors.js"
 import { InfraLogger } from "./logger.js"
 
@@ -38,7 +38,7 @@ function reportSentry(
   error: CauseException<unknown>,
   extras: Record<string, unknown> | undefined
 ) {
-  return getRequestContext.pipe(Effect.map((context) => {
+  return getRC.pipe(Effect.map((context) => {
     const scope = new Sentry.Scope()
     if (context) scope.setContext("context", context as unknown as Record<string, unknown>)
     if (extras) scope.setContext("extras", extras)
@@ -77,7 +77,7 @@ export function captureException(error: unknown) {
 }
 
 export function reportMessage(message: string, extras?: Record<string, unknown>) {
-  return getRequestContext.pipe(Effect.map((context) => {
+  return getRC.pipe(Effect.map((context) => {
     const scope = new Sentry.Scope()
     if (context) scope.setContext("context", context as unknown as Record<string, unknown>)
     if (extras) scope.setContext("extras", extras)

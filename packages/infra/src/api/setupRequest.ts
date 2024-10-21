@@ -22,9 +22,14 @@ export const getRequestContext = Effect
     )
   )
 
+export const getRC = Effect.all({
+  locale: FiberRef.get(LocaleRef),
+  namespace: FiberRef.get(storeId)
+})
+
 const withRequestSpan = (name = "request") => <R, E, A>(f: Effect<A, E, R>) =>
   Effect.andThen(
-    getRequestContext,
+    getRC,
     (ctx) =>
       f.pipe(
         Effect.withSpan(name, { attributes: spanAttributes(ctx), captureStackTrace: false }),
@@ -43,6 +48,7 @@ export const setupRequestContextFromCurrent = (name = "request") => <R, E, A>(se
       Effect.provide(setupContextMap)
     )
 
+// TODO: consider integrating Effect.withParentSpan
 export function setupRequestContext<R, E, A>(self: Effect<A, E, R>, requestContext: RequestContext) {
   return Effect.gen(function*() {
     yield* FiberRef.set(LocaleRef, requestContext.locale)
