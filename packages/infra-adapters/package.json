@@ -7,7 +7,7 @@
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
     "@effect/experimental": "^0.29.6",
-    "@effect/sql": "^0.16.6",
+    "@effect/sql": "^0.17.0",
     "effect-app": "workspace:*",
     "query-string": "^9.1.1"
   },

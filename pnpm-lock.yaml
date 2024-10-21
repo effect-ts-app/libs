@@ -358,8 +358,8 @@ importers:
         specifier: ^0.75.5
         version: 0.75.5(effect@3.9.2)
       '@effect/sql':
-        specifier: ^0.16.6
-        version: 0.16.6(@effect/experimental@0.29.6(@effect/platform-node@0.63.6(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(effect@3.9.2))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)(ws@8.18.0))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)
+        specifier: ^0.17.0
+        version: 0.17.0(@effect/experimental@0.29.6(@effect/platform-node@0.63.6(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(effect@3.9.2))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)(ws@8.18.0))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)
       '@effect/vitest':
         specifier: ^0.12.1
         version: 0.12.1(effect@3.9.2)(vitest@2.1.3(@types/node@22.7.7)(terser@5.34.1))
@@ -467,8 +467,8 @@ importers:
         specifier: ^0.75.5
         version: 0.75.5(effect@3.9.2)
       '@effect/sql':
-        specifier: ^0.16.6
-        version: 0.16.6(@effect/experimental@0.29.6(@effect/platform-node@0.63.6(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(effect@3.9.2))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)(ws@8.18.0))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)
+        specifier: ^0.17.0
+        version: 0.17.0(@effect/experimental@0.29.6(@effect/platform-node@0.63.6(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(effect@3.9.2))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)(ws@8.18.0))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)
       effect:
         specifier: ^3.9.2
         version: 3.9.2
@@ -1074,8 +1074,8 @@ packages:
     peerDependencies:
       effect: ^3.9.2
 
-  '@effect/sql@0.16.6':
-    resolution: {integrity: sha512-bwrDqppb0omTf4YDEMMzsDd6nbjTxIDm9iytmxv1251lyQ1/NoNE6uMvEHpiVsVYSQcdT7+5ie8ZhQForFO1UA==}
+  '@effect/sql@0.17.0':
+    resolution: {integrity: sha512-xM7CwvAJ74KU5iDR+LrZBZlibPjN/DYPmErYbei4cMA0GJseODSTn7dH4k2xPROWAHSkK9Cdx0CqKlWD/dvIfA==}
     peerDependencies:
       '@effect/experimental': ^0.29.6
       '@effect/platform': ^0.68.6
@@ -5694,7 +5694,7 @@ snapshots:
       effect: 3.9.2
       fast-check: 3.22.0
 
-  '@effect/sql@0.16.6(@effect/experimental@0.29.6(@effect/platform-node@0.63.6(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(effect@3.9.2))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)(ws@8.18.0))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)':
+  '@effect/sql@0.17.0(@effect/experimental@0.29.6(@effect/platform-node@0.63.6(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(effect@3.9.2))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)(ws@8.18.0))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)':
     dependencies:
       '@effect/experimental': 0.29.6(@effect/platform-node@0.63.6(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(effect@3.9.2))(@effect/platform@0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2))(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)(ws@8.18.0)
       '@effect/platform': 0.68.6(@effect/schema@0.75.5(effect@3.9.2))(effect@3.9.2)
