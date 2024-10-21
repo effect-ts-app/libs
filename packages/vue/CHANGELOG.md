@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 1.27.2
+
+### Patch Changes
+
+- 9392073: fix legacy client Operation error handling
+- Updated dependencies [9392073]
+  - @effect-app/vue@1.27.2
+
 ## 1.27.1
 
 ### Patch Changes
