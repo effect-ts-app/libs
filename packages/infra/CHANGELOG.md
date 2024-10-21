@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.47.2
+
+### Patch Changes
+
+- 557e38d: fix: makeInitial context
+
 ## 1.47.1
 
 ### Patch Changes
