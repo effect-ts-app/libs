@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 1.47.0
+
+### Minor Changes
+
+- f193f39: refactor: remove ContextMapContainer
+
 ## 1.46.3
 
 ### Patch Changes
