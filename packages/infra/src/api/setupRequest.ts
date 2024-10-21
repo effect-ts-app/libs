@@ -1,4 +1,5 @@
 import { NonEmptyString255 } from "@effect-app/schema"
+import type { Tracer } from "effect-app"
 import { Effect, FiberRef, Layer } from "effect-app"
 import { LocaleRef, RequestContext, spanAttributes } from "../RequestContext.js"
 import { startContextMap } from "../services/Store/ContextMapContainer.js"
@@ -27,12 +28,16 @@ export const getRC = Effect.all({
   namespace: FiberRef.get(storeId)
 })
 
-const withRequestSpan = (name = "request") => <R, E, A>(f: Effect<A, E, R>) =>
+const withRequestSpan = (name = "request", options?: Tracer.SpanOptions) => <R, E, A>(f: Effect<A, E, R>) =>
   Effect.andThen(
     getRC,
     (ctx) =>
       f.pipe(
-        Effect.withSpan(name, { attributes: spanAttributes(ctx), captureStackTrace: false }),
+        Effect.withSpan(name, {
+          ...options,
+          attributes: { ...spanAttributes(ctx), ...options?.attributes },
+          captureStackTrace: false
+        }),
         // TODO: false
         // request context info is picked up directly in the logger for annotations.
         Effect.withLogSpan(name)
@@ -41,12 +46,13 @@ const withRequestSpan = (name = "request") => <R, E, A>(f: Effect<A, E, R>) =>
 
 const setupContextMap = startContextMap.pipe(Layer.effectDiscard)
 
-export const setupRequestContextFromCurrent = (name = "request") => <R, E, A>(self: Effect<A, E, R>) =>
-  self
-    .pipe(
-      withRequestSpan(name),
-      Effect.provide(setupContextMap)
-    )
+export const setupRequestContextFromCurrent =
+  (name = "request", options?: Tracer.SpanOptions) => <R, E, A>(self: Effect<A, E, R>) =>
+    self
+      .pipe(
+        withRequestSpan(name, options),
+        Effect.provide(setupContextMap)
+      )
 
 // TODO: consider integrating Effect.withParentSpan
 export function setupRequestContext<R, E, A>(self: Effect<A, E, R>, requestContext: RequestContext) {

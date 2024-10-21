@@ -43,6 +43,7 @@ import {
 } from "effect-app"
 import { runTerm } from "effect-app/Pure"
 import type { FixEnv, PureEnv } from "effect-app/Pure"
+import { setupRequestContextFromCurrent } from "../api/setupRequest.js"
 import { type InvalidStateError, NotFoundError, type OptimisticConcurrencyException } from "../errors.js"
 import type { FieldValues } from "../filter/types.js"
 import { make as makeQuery } from "./query.js"
@@ -720,7 +721,7 @@ export function makeStore<
             ? makeInitial
               .pipe(
                 Effect.flatMap(Effect.forEach(encodeToEncoded())),
-                Effect.withSpan("Repository.makeInitial [effect-app/infra]", {
+                setupRequestContextFromCurrent("Repository.makeInitial [effect-app/infra]", {
                   attributes: { "repository.model_name": name }
                 })
               )
