@@ -22,27 +22,26 @@ export const getRequestContext = Effect
     )
   )
 
-const withRequestSpan = <R, E, A>(f: Effect<A, E, R>) =>
+const withRequestSpan = (name = "request") => <R, E, A>(f: Effect<A, E, R>) =>
   Effect.andThen(
     getRequestContext,
     (ctx) =>
       f.pipe(
-        Effect.withSpan("request " + ctx.name, { attributes: spanAttributes(ctx), captureStackTrace: false }),
+        Effect.withSpan(name, { attributes: spanAttributes(ctx), captureStackTrace: false }),
         // TODO: false
         // request context info is picked up directly in the logger for annotations.
-        Effect.withLogSpan("request")
+        Effect.withLogSpan(name)
       )
   )
 
 const setupContextMap = Effect.andThen(ContextMapContainer, (_) => _.start).pipe(Layer.effectDiscard)
 
-export function setupRequestContextFromCurrent<R, E, A>(self: Effect<A, E, R>) {
-  return self
+export const setupRequestContextFromCurrent = (name = "request") => <R, E, A>(self: Effect<A, E, R>) =>
+  self
     .pipe(
-      withRequestSpan,
+      withRequestSpan(name),
       Effect.provide(setupContextMap)
     )
-}
 
 export function setupRequestContext<R, E, A>(self: Effect<A, E, R>, requestContext: RequestContext) {
   return Effect.gen(function*() {
@@ -51,7 +50,7 @@ export function setupRequestContext<R, E, A>(self: Effect<A, E, R>, requestConte
 
     return yield* self
       .pipe(
-        withRequestSpan,
+        withRequestSpan(requestContext.name),
         Effect.provide(setupContextMap)
       )
   })

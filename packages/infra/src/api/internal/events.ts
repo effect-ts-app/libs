@@ -53,4 +53,4 @@ export const makeSSE = <A extends { id: any }, E, R, SI, SR>(
       )
       return res
     })
-    .pipe(Effect.tapErrorCause(reportError("Request")), setupRequestContextFromCurrent)
+    .pipe(Effect.tapErrorCause(reportError("Request")), setupRequestContextFromCurrent("events"))
