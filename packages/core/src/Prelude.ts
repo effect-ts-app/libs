@@ -25,6 +25,7 @@ import type * as LAYER from "effect/Layer"
 import type * as O from "effect/Option"
 import type * as ORD from "effect/Order"
 import type * as REF from "effect/Ref"
+import type * as SCHEMA from "effect/Schema"
 import type * as SCOPE from "effect/Scope"
 
 export type { NonEmptyArray, NonEmptyReadonlyArray } from "@effect-app/core/Array"
@@ -203,3 +204,17 @@ export namespace ReadonlySet {
  * @tsplus type ets/ReadonlySet
  */
 export type ReadonlySet<A> = SET.Set<A>
+
+export namespace Schema {
+  // @ts-expect-error
+  export * from "effect/Schema"
+  export type Type<S> = SCHEMA.Schema.Type<S>
+  export type Encoded<S> = SCHEMA.Schema.Encoded<S>
+  export type Context<S> = SCHEMA.Schema.Context<S>
+}
+
+/**
+ * @tsplus type ets/Set
+ * @tsplus type ets/Schema
+ */
+export type Schema<A, I, R> = SCHEMA.Schema<A, I, R>

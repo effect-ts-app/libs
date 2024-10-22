@@ -1,6 +1,6 @@
-import * as A from "@effect/schema/Arbitrary"
-import * as AST from "@effect/schema/AST"
-import * as P from "@effect/schema/ParseResult"
+import * as A from "effect/Arbitrary"
 import type * as B from "effect/Brand"
+import * as P from "effect/ParseResult"
+import * as AST from "effect/SchemaAST"
 
 export { A, AST, B, P }

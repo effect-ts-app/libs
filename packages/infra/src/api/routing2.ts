@@ -10,9 +10,22 @@ import { pretty, typedKeysOf, typedValuesOf } from "@effect-app/core/utils"
 import type { Compute } from "@effect-app/core/utils"
 import type * as HttpApp from "@effect/platform/HttpApp"
 import { Rpc, RpcRouter } from "@effect/rpc"
-import { Serializable } from "@effect/schema"
 import type { NonEmptyArray } from "effect-app"
-import { Cause, Chunk, Context, Effect, FiberRef, flow, Layer, Predicate, S, Scope, Stream, Tracer } from "effect-app"
+import {
+  Cause,
+  Chunk,
+  Context,
+  Effect,
+  FiberRef,
+  flow,
+  Layer,
+  Predicate,
+  S,
+  Schema,
+  Scope,
+  Stream,
+  Tracer
+} from "effect-app"
 import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
 import { HttpMiddleware, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
@@ -323,10 +336,10 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
           handler._tag === "raw"
             ? class extends (req as any) {
               static success = S.encodedSchema(req.success)
-              get [Serializable.symbol]() {
+              get [Schema.symbolSerializable]() {
                 return this.constructor
               }
-              get [Serializable.symbolResult]() {
+              get [Schema.symbolWithResult]() {
                 return {
                   failure: req.failure,
                   success: S.encodedSchema(req.success)
@@ -494,10 +507,10 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
               handler._tag === "raw"
                 ? class extends (req as any) {
                   static success = S.encodedSchema(req.success)
-                  get [Serializable.symbol]() {
+                  get [Schema.symbolSerializable]() {
                     return this.constructor
                   }
-                  get [Serializable.symbolResult]() {
+                  get [Schema.symbolWithResult]() {
                     return {
                       failure: req.failure,
                       success: S.encodedSchema(req.success)

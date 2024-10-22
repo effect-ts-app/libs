@@ -29,6 +29,7 @@ export {
   Option,
   Order,
   Ref,
+  Schema,
   Scope
 } from "./Prelude.js"
 

@@ -1,6 +1,5 @@
 // import { generateFromArbitrary } from "@effect-app/infra/test"
-import { JSONSchema } from "@effect/schema"
-import { Array, S } from "effect-app"
+import { Array, JSONSchema, S } from "effect-app"
 import { test } from "vitest"
 
 const A = S.Struct({ a: S.NonEmptyString255, email: S.NullOr(S.Email) })

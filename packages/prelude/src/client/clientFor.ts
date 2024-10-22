@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Effect, flow, HashMap, Layer, Option, Predicate, Struct } from "@effect-app/core"
 import { RpcResolver } from "@effect/rpc"
 import { HttpRpcResolver } from "@effect/rpc-http"
 import type { RpcRouter } from "@effect/rpc/RpcRouter"
-import type * as Serializable from "@effect/schema/Serializable"
 import { Record } from "effect"
 import { S } from "effect-app"
 import { ApiConfig } from "effect-app/client"
 import { HttpClient, HttpClientRequest } from "effect-app/http"
-import type { Schema } from "effect-app/schema"
 import { typedKeysOf } from "effect-app/utils"
 import type * as Request from "effect/Request"
 import type { Path } from "path-parser"
 import qs from "query-string"
+import type { Schema } from "../lib.js"
+import { Effect, flow, HashMap, Layer, Option, Predicate, Struct } from "../lib.js"
 
 export function makePathWithQuery(
   path: Path,
@@ -218,7 +217,7 @@ export type ExtractEResponse<T> = T extends Schema<any, any, any> ? Schema.Encod
 type IsEmpty<T> = keyof T extends never ? true
   : false
 
-type Cruft = "_tag" | Request.RequestTypeId | typeof Serializable.symbol | typeof Serializable.symbolResult
+type Cruft = "_tag" | Request.RequestTypeId | typeof Schema.symbolSerializable | typeof Schema.symbolWithResult
 
 export type TaggedRequestClassAny = S.Schema.Any & {
   readonly _tag: string
@@ -242,22 +241,22 @@ export interface RequestHandlerWithInput<I, A, E, R, Request extends TaggedReque
 
 type RequestHandlers<R, E, M extends Requests> = {
   [K in keyof M]: IsEmpty<Omit<S.Schema.Type<M[K]>, Cruft>> extends true
-    ? RequestHandler<Schema.Type<M[K]["success"]>, Schema.Type<M[K]["failure"]> | E, R, M[K]> & {
-      raw: RequestHandler<Schema.Type<M[K]["success"]>, Schema.Type<M[K]["failure"]> | E, R, M[K]>
+    ? RequestHandler<Schema.Type<M[K]["success"]>, Schema.Schema.Type<M[K]["failure"]> | E, R, M[K]> & {
+      raw: RequestHandler<Schema.Type<M[K]["success"]>, Schema.Schema.Type<M[K]["failure"]> | E, R, M[K]>
     }
     :
       & RequestHandlerWithInput<
         Omit<S.Schema.Type<M[K]>, Cruft>,
-        Schema.Type<M[K]["success"]>,
-        Schema.Type<M[K]["failure"]> | E,
+        Schema.Schema.Type<M[K]["success"]>,
+        Schema.Schema.Type<M[K]["failure"]> | E,
         R,
         M[K]
       >
       & {
         raw: RequestHandlerWithInput<
           Omit<S.Schema.Type<M[K]>, Cruft>,
-          Schema.Encoded<M[K]["success"]>,
-          Schema.Type<M[K]["failure"]> | E,
+          Schema.Schema.Encoded<M[K]["success"]>,
+          Schema.Schema.Type<M[K]["failure"]> | E,
           R,
           M[K]
         >
