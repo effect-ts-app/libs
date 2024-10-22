@@ -1,7 +1,7 @@
-import { Arbitrary } from "@effect/schema"
-import type { PropertySignature } from "@effect/schema/Schema"
+import { Arbitrary } from "effect"
 import { Predicate, S } from "effect-app"
 import { copy } from "effect-app/utils"
+import type { PropertySignature } from "effect/Schema"
 import { generate } from "./test/arbs.js"
 
 const isPropertySignature = (u: unknown): u is PropertySignature.All =>

@@ -1,4 +1,4 @@
-import * as S from "@effect/schema/Schema"
+import * as S from "effect/Schema"
 import type * as B from "effect/Brand"
 import type { Simplify } from "effect/Types"
 import { fromBrand, nominal } from "./brand.js"

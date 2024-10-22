@@ -10,7 +10,7 @@
 import * as RRX from "@effect/experimental/RequestResolver"
 import * as VariantSchema from "@effect/experimental/VariantSchema"
 import * as ParseResult from "@effect/schema/ParseResult"
-import * as Schema from "@effect/schema/Schema"
+import * as Schema from "effect/Schema"
 import { SqlClient } from "@effect/sql/SqlClient"
 import * as SqlResolver from "@effect/sql/SqlResolver"
 import * as SqlSchema from "@effect/sql/SqlSchema"

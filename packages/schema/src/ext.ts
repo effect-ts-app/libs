@@ -3,8 +3,8 @@
 import type { NonEmptyReadonlyArray } from "@effect-app/core"
 import { Effect, pipe } from "@effect-app/core"
 import { extendM, typedKeysOf } from "@effect-app/core/utils"
-import type { Schema } from "@effect/schema/Schema"
-import * as S from "@effect/schema/Schema"
+import type { Schema } from "effect/Schema"
+import * as S from "effect/Schema"
 import type { AST, ParseResult } from "./index.js"
 
 export const withDefaultConstructor: <A, I, R>(

@@ -1,7 +1,7 @@
 import type { Refinement } from "@effect-app/core/Function"
 import { extendM } from "@effect-app/core/utils"
 import type { LazyArbitrary } from "@effect/schema/Arbitrary"
-import * as S from "@effect/schema/Schema"
+import * as S from "effect/Schema"
 import { pipe } from "effect"
 import type { Simplify } from "effect/Types"
 import { customRandom, nanoid, urlAlphabet } from "nanoid"

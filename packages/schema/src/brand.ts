@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import type { Option } from "@effect-app/core"
-import * as S from "@effect/schema/Schema"
+import * as S from "effect/Schema"
 import * as B from "effect/Brand"
 import type * as Brand from "effect/Brand"
 import type * as Either from "effect/Either"

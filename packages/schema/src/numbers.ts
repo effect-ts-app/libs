@@ -1,5 +1,5 @@
 import { extendM } from "@effect-app/core/utils"
-import * as S from "@effect/schema/Schema"
+import * as S from "effect/Schema"
 import type { Simplify } from "effect/Types"
 import { fromBrand, nominal } from "./brand.js"
 import { withDefaultConstructor, withDefaultMake } from "./ext.js"
