@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.89.0
+
+### Minor Changes
+
+- 3872061: migrate to effect/Schema
+
 ## 0.88.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.18.0
+
+### Minor Changes
+
+- 3872061: migrate to effect/Schema
+
 ## 1.17.1
 
 ### Patch Changes
