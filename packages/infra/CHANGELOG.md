@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.3.0
+
+### Minor Changes
+
+- d907123: add middleware dependencies []
+
 ## 2.2.0
 
 ### Minor Changes
