@@ -143,17 +143,6 @@ type Filter<T> = {
   [K in keyof T as T[K] extends S.Schema.All & { success: S.Schema.Any; failure: S.Schema.Any } ? K : never]: T[K]
 }
 
-export interface ExtendedMiddleware<Context, CTXMap extends Record<string, RPCContextMap.Any>, R>
-  extends Middleware<Context, CTXMap, R>
-{
-  // TODO
-  makeContext: Effect<
-    { [K in keyof CTXMap as CTXMap[K][1] extends never ? never : CTXMap[K][0]]: CTXMap[K][1] },
-    never,
-    never
-  >
-}
-
 export const RouterSymbol = Symbol()
 export interface RouterShape<Rsc> {
   [RouterSymbol]: Rsc
@@ -237,8 +226,20 @@ export type RouteMatcher<
 //   Rsc extends Filtered
 // > extends RouteMatcherInt<Filtered, CTXMap, Rsc> {}
 
-export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.Any>, RMW>(
-  middleware: ExtendedMiddleware<Context, CTXMap, RMW>,
+export const makeMiddleware = <
+  Context,
+  CTXMap extends Record<string, RPCContextMap.Any>,
+  RMW,
+  Layers extends Array<Layer.Layer.Any>
+>(content: Middleware<Context, CTXMap, RMW, Layers>): Middleware<Context, CTXMap, RMW, Layers> => content
+
+export const makeRouter = <
+  Context,
+  CTXMap extends Record<string, RPCContextMap.Any>,
+  RMW,
+  Layers extends Array<Layer.Layer.Any>
+>(
+  middleware: Middleware<Context, CTXMap, RMW, Layers>,
   devMode: boolean
 ) => {
   function matchFor<
@@ -312,6 +313,9 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
       layers: TLayers,
       make: (requests: typeof items) => Effect<THandlers, E, R>
     ) => {
+      type ProvidedLayers =
+        | { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
+        | { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
       type Router = RouterShape<Rsc>
       const r: HttpRouter.HttpRouter.TagClass<
         Router,
@@ -322,7 +326,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
           | RPCRouteR<
             { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
           >,
-          | { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
+          | ProvidedLayers
           | HttpRouter.HttpRouter.Provided
         >
       > = (class Router extends HttpRouter.Tag(`${meta.moduleName}Router`)<Router>() {}) as any
@@ -444,13 +448,16 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       const routes = layer.pipe(
         Layer.provideMerge(r.Live),
-        layers ? Layer.provide(layers) as any : (_) => _
+        layers ? Layer.provide(layers) as any : (_) => _,
+        Layer.provide(middleware.dependencies as any)
       ) as Layer.Layer<
         Router,
         { [k in keyof TLayers]: Layer.Layer.Error<TLayers[k]> }[number] | E,
         | { [k in keyof TLayers]: Layer.Layer.Context<TLayers[k]> }[number]
-        | RMW
-        | Exclude<R, { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]>
+        | Exclude<
+          RMW | R,
+          ProvidedLayers
+        >
       >
 
       // Effect.Effect<HttpRouter.HttpRouter<unknown, HttpRouter.HttpRouter.DefaultServices>, never, UserRouter>

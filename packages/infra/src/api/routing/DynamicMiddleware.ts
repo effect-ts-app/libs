@@ -2,12 +2,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rpc } from "@effect/rpc"
-import type { Request, S } from "effect-app"
+import type { Layer, Request, S } from "effect-app"
 import { Effect } from "effect-app"
 import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type * as EffectRequest from "effect/Request"
 
-export interface Middleware<Context, CTXMap extends Record<string, RPCContextMap.Any>, R> {
+export interface Middleware<
+  Context,
+  CTXMap extends Record<string, RPCContextMap.Any>,
+  R,
+  Layers extends Array<Layer.Layer.Any>
+> {
+  dependencies?: Layers
   contextMap: CTXMap
   context: Context
   execute: Effect<
@@ -35,8 +41,13 @@ export interface Middleware<Context, CTXMap extends Record<string, RPCContextMap
   >
 }
 
-export const makeRpc = <Context, CTXMap extends Record<string, RPCContextMap.Any>, R>(
-  middleware: Middleware<Context, CTXMap, R>
+export const makeRpc = <
+  Context,
+  CTXMap extends Record<string, RPCContextMap.Any>,
+  R,
+  Layers extends Array<Layer.Layer.Any>
+>(
+  middleware: Middleware<Context, CTXMap, R, Layers>
 ) =>
   middleware.execute.pipe(Effect.map((execute) => ({
     effect: <T extends { config?: { [K in keyof CTXMap]?: any } }, Req extends S.TaggedRequest.All, R>(
