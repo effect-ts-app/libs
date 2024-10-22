@@ -1,4 +1,4 @@
-export * from "@effect/schema/Schema"
+export * from "effect/Schema"
 
 export * from "./Class.js"
 export { Class, TaggedClass } from "./Class.js"
@@ -16,6 +16,6 @@ export * from "./schema.js"
 export * from "./strings.js"
 export { NonEmptyString } from "./strings.js"
 
-export * as ParseResult from "@effect/schema/ParseResult"
+export * as ParseResult from "effect/ParseResult"
 
-export { Void as Void_ } from "@effect/schema/Schema"
+export { Void as Void_ } from "effect/Schema"

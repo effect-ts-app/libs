@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type Effect, pipe, Struct as Struct2, type Types } from "@effect-app/core"
-import type { ParseOptions } from "@effect/schema/AST"
-import type { Schema, Struct } from "@effect/schema/Schema"
-import * as S from "@effect/schema/Schema"
+import type { Schema, Struct } from "effect/Schema"
+import * as S from "effect/Schema"
+import type { ParseOptions } from "effect/SchemaAST"
 import type { Simplify } from "effect/Types"
 import type { ParseResult } from "./index.js"
 import type { AST } from "./schema.js"

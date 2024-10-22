@@ -25,6 +25,7 @@ import type * as LAYER from "effect/Layer"
 import type * as O from "effect/Option"
 import type * as ORD from "effect/Order"
 import type * as REF from "effect/Ref"
+import type * as SCHEMA from "effect/Schema"
 import type * as SCOPE from "effect/Scope"
 
 export type { NonEmptyArray, NonEmptyReadonlyArray } from "@effect-app/core/Array"
@@ -36,7 +37,7 @@ export namespace Effect {
   export type Error<T extends Effect<any, any, any>> = EFFECT.Effect.Error<T>
   export type Context<T extends Effect<any, any, any>> = EFFECT.Effect.Context<T>
 }
-export type Effect<A, E = never, R = never> = EFFECT.Effect<A, E, R>
+export type Effect<out A, out E = never, out R = never> = EFFECT.Effect<A, E, R>
 
 export namespace Layer {
   // @ts-ignore
@@ -45,7 +46,7 @@ export namespace Layer {
   export type Error<T extends Layer<never, any, any>> = LAYER.Layer.Error<T>
   export type Context<T extends Layer<never, any, any>> = LAYER.Layer.Context<T>
 }
-export type Layer<ROut, E = never, RIn = never> = LAYER.Layer<ROut, E, RIn>
+export type Layer<in ROut, out E = never, out RIn = never> = LAYER.Layer<ROut, E, RIn>
 
 export namespace Either {
   // @ts-expect-error abc
@@ -59,14 +60,14 @@ export namespace Order {
   export * from "effect/Order"
 }
 /** @tsplus type effect/data/Order */
-export type Order<A> = ORD.Order<A>
+export type Order<in A> = ORD.Order<A>
 
 export namespace Ref {
   // @ts-expect-error abc
   export * from "effect/Ref"
 }
 /** @tsplus type effect/data/Ref */
-export type Ref<A> = REF.Ref<A>
+export type Ref<in out A> = REF.Ref<A>
 
 export namespace Duration {
   // @ts-expect-error abc
@@ -80,14 +81,14 @@ export namespace Context {
   export * from "@effect-app/core/Context"
 }
 /** @tsplus type effect/data/Context */
-export type Context<A> = CTX.Context<A>
+export type Context<in Services> = CTX.Context<Services>
 
 export namespace FiberRef {
   // @ts-expect-error abc
   export * from "effect/FiberRef"
 }
 /** @tsplus type effect/data/FiberRef */
-export type FiberRef<A> = FR.FiberRef<A>
+export type FiberRef<in out A> = FR.FiberRef<A>
 
 export namespace Cause {
   // @ts-expect-error abc
@@ -108,7 +109,7 @@ export namespace HashMap {
   export * from "effect/HashMap"
 }
 /** @tsplus type effect/data/HashMap */
-export type HashMap<Key, Value> = HM.HashMap<Key, Value>
+export type HashMap<out Key, out Value> = HM.HashMap<Key, Value>
 
 export namespace Scope {
   // @ts-expect-error abc
@@ -131,13 +132,13 @@ export namespace Equivalence {
   // @ts-expect-error abc
   export * from "effect/Equivalence"
 }
-export type Equivalence<A> = EQ.Equivalence<A>
+export type Equivalence<in A> = EQ.Equivalence<A>
 
 export namespace Config {
   // @ts-expect-error abc
   export * from "effect/Config"
 }
-export type Config<A> = CFG.Config<A>
+export type Config<out A> = CFG.Config<A>
 
 export namespace Equal {
   // @ts-expect-error abc
@@ -153,7 +154,7 @@ export namespace Chunk {
  * @tsplus companion effect/data/Chunk.Ops
  * @tsplus type effect/data/Chunk
  */
-export type Chunk<A> = CNK.Chunk<A>
+export type Chunk<out A> = CNK.Chunk<A>
 
 export namespace NonEmptySet {
   // @ts-expect-error
@@ -203,3 +204,17 @@ export namespace ReadonlySet {
  * @tsplus type ets/ReadonlySet
  */
 export type ReadonlySet<A> = SET.Set<A>
+
+export namespace Schema {
+  // @ts-expect-error
+  export * from "effect/Schema"
+  export type Type<S> = SCHEMA.Schema.Type<S>
+  export type Encoded<S> = SCHEMA.Schema.Encoded<S>
+  export type Context<S> = SCHEMA.Schema.Context<S>
+}
+
+/**
+ * @tsplus type ets/Set
+ * @tsplus type ets/Schema
+ */
+export type Schema<in out A, in out I = A, out R = never> = SCHEMA.Schema<A, I, R>

@@ -1,6 +1,6 @@
-import * as JSONSchema from "@effect/schema/JSONSchema"
-import type { ParseError } from "@effect/schema/ParseResult"
 import { createIntl, type IntlFormatters } from "@formatjs/intl"
+import * as JSONSchema from "effect/JSONSchema"
+import type { ParseError } from "effect/ParseResult"
 import type {} from "intl-messageformat"
 import type { Unbranded } from "@effect-app/schema/brand"
 import { Either, Option, pipe, S, Struct } from "effect-app"

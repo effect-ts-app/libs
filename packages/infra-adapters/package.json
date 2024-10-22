@@ -6,8 +6,8 @@
   "dependencies": {
     "@effect-app/core": "workspace:*",
     "@effect-app/schema": "workspace:*",
-    "@effect/experimental": "^0.29.6",
-    "@effect/sql": "^0.17.0",
+    "@effect/experimental": "^0.30.3",
+    "@effect/sql": "^0.18.3",
     "effect-app": "workspace:*",
     "query-string": "^9.1.1"
   },
@@ -17,16 +17,15 @@
     "@types/express": "^5.0.0",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.7",
-    "mongodb": "6.9.0",
+    "mongodb": "6.10.0",
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
     "strip-ansi": "^7.1.0",
     "typescript": "^5.6.3"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.68.6",
-    "@effect/schema": "^0.75.5",
-    "effect": "^3.9.2"
+    "@effect/platform": "^0.69.2",
+    "effect": "^3.10.0"
   },
   "scripts": {
     "watch": "pnpm build:tsc -w",

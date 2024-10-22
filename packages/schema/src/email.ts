@@ -1,6 +1,6 @@
 import type { Refinement } from "@effect-app/core/Function"
 import { isValidEmail } from "@effect-app/core/validation"
-import * as S from "@effect/schema/Schema"
+import * as S from "effect/Schema"
 import type { Simplify } from "effect/Types"
 import type { B } from "./schema.js"
 import type { NonEmptyStringBrand } from "./strings.js"
