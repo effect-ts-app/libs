@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { Array } from "effect-app"
+import { Array, Option } from "effect-app"
 import { assertUnreachable, get } from "effect-app/utils"
 import type { FilterR, FilterResult } from "./filterApi/query.js"
+import type { Filter } from "./service.js"
 import { compare, greaterThan, greaterThanExclusive, lowerThan, lowerThanExclusive } from "./utils.js"
 
 const vAsArr = (v: string) => v as unknown as any[]
@@ -117,4 +118,8 @@ export const codeFilter3_ = <E>(state: readonly FilterResult[], sut: E): boolean
   const statements: any[] = [] // must be defined here to be used by eval.
   const s = codeFilter3__(state, sut, statements)
   return eval(s)
+}
+
+export function codeFilter<E extends { id: string }, NE extends E>(filter: Filter) {
+  return (x: E) => codeFilter3_(filter, x) ? Option.some(x as unknown as NE) : Option.none()
 }

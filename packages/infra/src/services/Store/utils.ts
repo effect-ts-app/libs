@@ -1,8 +1,7 @@
 import { Effect, Option } from "effect-app"
 import objectHash from "object-hash"
 import { OptimisticConcurrencyException } from "../../errors.js"
-import { codeFilter3_ } from "./codeFilter.js"
-import type { Filter, PersistenceModelType, SupportedValues2 } from "./service.js"
+import type { PersistenceModelType, SupportedValues2 } from "./service.js"
 
 export const makeETag = <E extends PersistenceModelType<{}>>(
   { _etag, ...e }: E
@@ -30,10 +29,6 @@ export const makeUpdateETag =
       const newE = makeETag(e)
       return newE
     })
-
-export function codeFilter<E extends { id: string }, NE extends E>(filter: Filter) {
-  return (x: E) => codeFilter3_(filter, x) ? Option.some(x as unknown as NE) : Option.none()
-}
 
 export function lowercaseIfString<T>(val: T) {
   if (typeof val === "string") {
