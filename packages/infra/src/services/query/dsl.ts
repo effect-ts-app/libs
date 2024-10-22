@@ -4,8 +4,8 @@
 import type { FieldValues } from "@effect-app/infra/filter/types"
 import type { FieldPath, FieldPathValue } from "@effect-app/infra/filter/types/path/eager"
 import type { Ops } from "@effect-app/infra/services/Store/filterApi/query"
-import type { Option, Pipeable, S } from "effect-app"
-import { Data, flow } from "effect-app"
+import type { Option, S } from "effect-app"
+import { Data, flow, Pipeable } from "effect-app"
 import type { NonNegativeInt } from "effect-app/Schema"
 import type { Covariant } from "effect/Types"
 
@@ -91,7 +91,7 @@ export class Initial<TFieldValues extends FieldValues> extends Data.TaggedClass(
   }
   pipe() {
     // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
+    return Pipeable.pipeArguments(this, arguments)
   }
 }
 
@@ -103,7 +103,7 @@ export class Where<TFieldValues extends FieldValues> extends Data.TaggedClass("w
 
   pipe() {
     // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
+    return Pipeable.pipeArguments(this, arguments)
   }
 }
 
@@ -114,7 +114,7 @@ export class And<TFieldValues extends FieldValues> extends Data.TaggedClass("and
   readonly [QId]!: any
   pipe() {
     // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
+    return Pipeable.pipeArguments(this, arguments)
   }
 }
 
@@ -125,7 +125,7 @@ export class Or<TFieldValues extends FieldValues> extends Data.TaggedClass("or")
   readonly [QId]!: any
   pipe() {
     // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
+    return Pipeable.pipeArguments(this, arguments)
   }
 }
 
@@ -137,7 +137,7 @@ export class Page<TFieldValues extends FieldValues> extends Data.TaggedClass("pa
   readonly [QId]!: any
   pipe() {
     // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
+    return Pipeable.pipeArguments(this, arguments)
   }
 }
 
@@ -147,7 +147,7 @@ export class One<TFieldValues extends FieldValues> extends Data.TaggedClass("one
   readonly [QId]!: any
   pipe() {
     // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
+    return Pipeable.pipeArguments(this, arguments)
   }
 }
 
@@ -157,7 +157,7 @@ export class Count<TFieldValues extends FieldValues> extends Data.TaggedClass("c
   readonly [QId]!: any
   pipe() {
     // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
+    return Pipeable.pipeArguments(this, arguments)
   }
 }
 
@@ -172,7 +172,7 @@ export class Order<TFieldValues extends FieldValues, TFieldName extends FieldPat
   readonly [QId]!: any
   pipe() {
     // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
+    return Pipeable.pipeArguments(this, arguments)
   }
 }
 
@@ -187,7 +187,7 @@ export class Project<A, TFieldValues extends FieldValues, R, TType extends "one"
   readonly [QId]!: any
   pipe() {
     // eslint-disable-next-line prefer-rest-params
-    return pipeArguments(this, arguments)
+    return Pipeable.pipeArguments(this, arguments)
   }
 }
 
