@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 1.1.0
+
+### Minor Changes
+
+- 964b0d2: refactor: merge adapters into infra
+
 ## 1.0.0
 
 ### Major Changes
