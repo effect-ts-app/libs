@@ -30,9 +30,6 @@
     "references": [
         {
             "path": "../prelude"
-        },
-        {
-            "path": "../infra-adapters"
-        },
+        }
     ]
 }

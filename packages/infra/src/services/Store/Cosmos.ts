@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { CosmosClient, CosmosClientLayer } from "@effect-app/infra-adapters/cosmos-client"
 import { Array, Chunk, Duration, Effect, Layer, Option, pipe, Secret, Struct } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { toNonEmptyArray } from "effect-app/Array"
 import { dropUndefinedT } from "effect-app/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
 import { InfraLogger } from "../../logger.js"
+import { CosmosClient, CosmosClientLayer } from "../adapters/cosmos-client.js"
 import { buildWhereCosmosQuery3, logQuery } from "./Cosmos/query.js"
 import { StoreMaker } from "./service.js"
 import type { FilterArgs, PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"

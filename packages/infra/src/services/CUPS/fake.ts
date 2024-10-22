@@ -1,6 +1,6 @@
 import { Effect } from "effect-app"
 import { pretty } from "effect-app/utils"
-import { InfraLogger } from "../logger.js"
+import { InfraLogger } from "../../logger.js"
 import { CUPS } from "./service.js"
 
 /**

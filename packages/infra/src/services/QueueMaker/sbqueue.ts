@@ -1,17 +1,17 @@
 import type {} from "@azure/service-bus"
-import {
-  LiveSender,
-  LiveServiceBusClient,
-  Sender,
-  ServiceBusReceiverFactory,
-  subscribe
-} from "@effect-app/infra-adapters/ServiceBus"
 import { Tracer } from "effect"
 import { Cause, Effect, flow, Layer, S } from "effect-app"
 import type { StringId } from "effect-app/Schema"
 import { pretty } from "effect-app/utils"
 import { getRequestContext, setupRequestContext } from "../../api/setupRequest.js"
 import { InfraLogger } from "../../logger.js"
+import {
+  LiveSender,
+  LiveServiceBusClient,
+  Sender,
+  ServiceBusReceiverFactory,
+  subscribe
+} from "../adapters/ServiceBus.js"
 import { reportNonInterruptedFailure, reportNonInterruptedFailureCause, reportQueueError } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
