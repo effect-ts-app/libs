@@ -38,9 +38,6 @@
             "path": "../infra-adapters"
         },
         {
-            "path": "../schema"
-        },
-        {
             "path": "../core"
         },
     ]

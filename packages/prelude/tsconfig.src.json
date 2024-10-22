@@ -29,9 +29,6 @@
     ],
     "references": [
         {
-            "path": "../schema"
-        },
-        {
             "path": "../core"
         },
     ]

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import type { NonEmptyReadonlyArray } from "@effect-app/core"
-import { Effect, pipe } from "@effect-app/core"
-import { extendM, typedKeysOf } from "@effect-app/core/utils"
+import { Effect, pipe } from "effect"
+import type { ParseResult, SchemaAST } from "effect"
+import type { NonEmptyReadonlyArray } from "effect/Array"
 import type { Schema } from "effect/Schema"
 import * as S from "effect/Schema"
-import type { AST, ParseResult } from "./index.js"
+import { extendM, typedKeysOf } from "../utils.js"
 
 export const withDefaultConstructor: <A, I, R>(
   makeDefault: () => NoInfer<A>
@@ -136,7 +136,7 @@ export const withDefaultMake = <Self extends S.Schema<any, any, never>>(s: Self)
 
 export type WithDefaults<Self extends S.Schema<any, any, never>> = (
   i: S.Schema.Encoded<Self>,
-  options?: AST.ParseOptions
+  options?: SchemaAST.ParseOptions
 ) => S.Schema.Type<Self>
 
 // type GetKeys<U> = U extends Record<infer K, any> ? K : never
@@ -250,8 +250,8 @@ export const transformTo = <To extends Schema.Any, From extends Schema.Any>(
   to: To,
   decode: (
     fromA: Schema.Type<From>,
-    options: AST.ParseOptions,
-    ast: AST.Transformation,
+    options: SchemaAST.ParseOptions,
+    ast: SchemaAST.Transformation,
     fromI: Schema.Encoded<From>
   ) => Schema.Encoded<To>
 ) =>
@@ -267,7 +267,7 @@ export const transformToOrFail = <To extends Schema.Any, From extends Schema.Any
   to: To,
   decode: (
     fromA: Schema.Type<From>,
-    options: AST.ParseOptions,
-    ast: AST.Transformation
+    options: SchemaAST.ParseOptions,
+    ast: SchemaAST.Transformation
   ) => Effect.Effect<Schema.Encoded<To>, ParseResult.ParseIssue, RD>
 ) => S.transformOrFail<To, From, RD, never>(from, to, { decode, encode: () => Effect.die("one way schema") })

@@ -6,6 +6,7 @@
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/core",
   "dependencies": {
     "cross-fetch": "^4.0.0",
+    "nanoid": "^5.0.7",
     "path-parser": "^6.1.0",
     "query-string": "^9.1.1",
     "uuid": "^10.0.0",
@@ -173,6 +174,126 @@
       "require": {
         "types": "./dist/Option.d.ts",
         "default": "./_cjs/Option.cjs"
+      }
+    },
+    "./Schema": {
+      "import": {
+        "types": "./dist/Schema.d.ts",
+        "default": "./dist/Schema.js"
+      },
+      "require": {
+        "types": "./dist/Schema.d.ts",
+        "default": "./_cjs/Schema.cjs"
+      }
+    },
+    "./Schema/Class": {
+      "import": {
+        "types": "./dist/Schema/Class.d.ts",
+        "default": "./dist/Schema/Class.js"
+      },
+      "require": {
+        "types": "./dist/Schema/Class.d.ts",
+        "default": "./_cjs/Schema/Class.cjs"
+      }
+    },
+    "./Schema/FastCheck": {
+      "import": {
+        "types": "./dist/Schema/FastCheck.d.ts",
+        "default": "./dist/Schema/FastCheck.js"
+      },
+      "require": {
+        "types": "./dist/Schema/FastCheck.d.ts",
+        "default": "./_cjs/Schema/FastCheck.cjs"
+      }
+    },
+    "./Schema/Methods": {
+      "import": {
+        "types": "./dist/Schema/Methods.d.ts",
+        "default": "./dist/Schema/Methods.js"
+      },
+      "require": {
+        "types": "./dist/Schema/Methods.d.ts",
+        "default": "./_cjs/Schema/Methods.cjs"
+      }
+    },
+    "./Schema/brand": {
+      "import": {
+        "types": "./dist/Schema/brand.d.ts",
+        "default": "./dist/Schema/brand.js"
+      },
+      "require": {
+        "types": "./dist/Schema/brand.d.ts",
+        "default": "./_cjs/Schema/brand.cjs"
+      }
+    },
+    "./Schema/email": {
+      "import": {
+        "types": "./dist/Schema/email.d.ts",
+        "default": "./dist/Schema/email.js"
+      },
+      "require": {
+        "types": "./dist/Schema/email.d.ts",
+        "default": "./_cjs/Schema/email.cjs"
+      }
+    },
+    "./Schema/ext": {
+      "import": {
+        "types": "./dist/Schema/ext.d.ts",
+        "default": "./dist/Schema/ext.js"
+      },
+      "require": {
+        "types": "./dist/Schema/ext.d.ts",
+        "default": "./_cjs/Schema/ext.cjs"
+      }
+    },
+    "./Schema/moreStrings": {
+      "import": {
+        "types": "./dist/Schema/moreStrings.d.ts",
+        "default": "./dist/Schema/moreStrings.js"
+      },
+      "require": {
+        "types": "./dist/Schema/moreStrings.d.ts",
+        "default": "./_cjs/Schema/moreStrings.cjs"
+      }
+    },
+    "./Schema/numbers": {
+      "import": {
+        "types": "./dist/Schema/numbers.d.ts",
+        "default": "./dist/Schema/numbers.js"
+      },
+      "require": {
+        "types": "./dist/Schema/numbers.d.ts",
+        "default": "./_cjs/Schema/numbers.cjs"
+      }
+    },
+    "./Schema/phoneNumber": {
+      "import": {
+        "types": "./dist/Schema/phoneNumber.d.ts",
+        "default": "./dist/Schema/phoneNumber.js"
+      },
+      "require": {
+        "types": "./dist/Schema/phoneNumber.d.ts",
+        "default": "./_cjs/Schema/phoneNumber.cjs"
+      }
+    },
+    "./Schema/schema": {
+      "import": {
+        "types": "./dist/Schema/schema.d.ts",
+        "default": "./dist/Schema/schema.js"
+      },
+      "require": {
+        "types": "./dist/Schema/schema.d.ts",
+        "default": "./_cjs/Schema/schema.cjs"
+      }
+    },
+    "./Schema/strings": {
+      "import": {
+        "types": "./dist/Schema/strings.d.ts",
+        "default": "./dist/Schema/strings.js"
+      },
+      "require": {
+        "types": "./dist/Schema/strings.d.ts",
+        "default": "./_cjs/Schema/strings.cjs"
       }
     },
     "./Set": {

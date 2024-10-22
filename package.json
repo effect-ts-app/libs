@@ -67,7 +67,6 @@
     "@effect-app/infra": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",
     "@effect-app/pnpm-singleton": "workspace:*",
-    "@effect-app/schema": "workspace:*",
     "@effect/language-service": "0.2.0",
     "@effect/platform": "^0.69.2",
     "@effect/platform-node": "^0.64.3",

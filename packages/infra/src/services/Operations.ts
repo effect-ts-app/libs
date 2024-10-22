@@ -1,7 +1,7 @@
 import { annotateLogscoped } from "@effect-app/core/Effect"
 import { dual, pipe } from "@effect-app/core/Function"
 import { reportError } from "@effect-app/infra/errorReporter"
-import { NonEmptyString2k } from "@effect-app/schema"
+import { NonEmptyString2k } from "@effect-app/core/Schema"
 import { subHours } from "date-fns"
 import type { Fiber } from "effect-app"
 import { Cause, Context, copy, Duration, Effect, Exit, Layer, Option, S, Schedule } from "effect-app"

@@ -26,9 +26,6 @@
             "path": "../core"
         },
         {
-            "path": "../schema"
-        },
-        {
             "path": "../prelude"
         }
     ]

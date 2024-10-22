@@ -11,7 +11,6 @@
     "@effect/rpc": "^0.44.2",
     "@effect/rpc-http": "^0.42.2",
     "effect-app": "workspace:*",
-    "@effect-app/schema": "workspace:*",
     "express-oauth2-jwt-bearer": "^1.6.0",
     "@faker-js/faker": "^8.4.1",
     "@sendgrid/helpers": "^8.0.0",

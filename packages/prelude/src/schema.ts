@@ -1,11 +1,11 @@
 import type { NonEmptyReadonlyArray, Tracer } from "@effect-app/core"
 import { Array, Option, pipe } from "@effect-app/core"
-import { type A, type Email as EmailT, type PhoneNumber as PhoneNumberT } from "@effect-app/schema"
-import * as S from "@effect-app/schema"
+import { type A, type Email as EmailT, type PhoneNumber as PhoneNumberT } from "@effect-app/core/Schema"
+import * as S from "@effect-app/core/Schema"
 import { fakerArb } from "./faker.js"
 import { extendM } from "./utils.js"
 
-export * from "@effect-app/schema"
+export * from "@effect-app/core/Schema"
 
 export const SpanId = Symbol()
 export type SpanId = typeof SpanId
