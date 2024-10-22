@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 1.20.0
+
+### Minor Changes
+
+- 2dfcb9f: remove "resources" level from moduleName
+
 ## 1.19.0
 
 ### Minor Changes
