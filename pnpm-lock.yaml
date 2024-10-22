@@ -287,9 +287,6 @@ importers:
       '@azure/service-bus':
         specifier: ^7.9.5
         version: 7.9.5
-      '@effect-app/infra-adapters':
-        specifier: workspace:*
-        version: link:../infra-adapters
       '@effect/platform':
         specifier: ^0.69.2
         version: 0.69.2(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e))
@@ -393,6 +390,9 @@ importers:
 
   packages/infra-adapters:
     dependencies:
+      '@effect-app/infra':
+        specifier: workspace:*
+        version: link:../infra
       '@effect/experimental':
         specifier: ^0.30.3
         version: 0.30.3(@effect/platform-node@0.64.3(@effect/platform@0.69.2(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)))(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)))(@effect/platform@0.69.2(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)))(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e))(ws@8.18.0)

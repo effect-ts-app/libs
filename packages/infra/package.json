@@ -6,7 +6,6 @@
   "dependencies": {
     "@azure/cosmos": "^4.1.1",
     "@azure/service-bus": "^7.9.5",
-    "@effect-app/infra-adapters": "workspace:*",
     "@effect/rpc": "^0.44.2",
     "@effect/rpc-http": "^0.42.2",
     "effect-app": "workspace:*",
