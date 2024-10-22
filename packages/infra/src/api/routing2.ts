@@ -408,7 +408,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
       }, {} as any) as {
         [K in Keys]: Rpc.Rpc<
           Rsc[K],
-          _R<ReturnType<THandlers[K]["handler"]>>
+          Context | _R<ReturnType<THandlers[K]["handler"]>>
         >
       }
 
@@ -423,7 +423,8 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
         `${typeof meta.moduleName}Router`,
         never,
         Exclude<
-          RPCRouteR<
+          | Context
+          | RPCRouteR<
             { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
           >,
           { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
@@ -579,7 +580,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
           }, {} as any) as {
             [K in Keys]: Rpc.Rpc<
               Rsc[K],
-              _R<ReturnType<THandlers[K]["handler"]>>
+              Context | _R<ReturnType<THandlers[K]["handler"]>>
             >
           }
 
