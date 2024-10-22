@@ -1,5 +1,13 @@
 # @effect-app/infra
 
+## 2.3.3
+
+### Patch Changes
+
+- 25b154d: fix circular
+- Updated dependencies [25b154d]
+  - effect-app@2.0.2
+
 ## 2.3.2
 
 ### Patch Changes
