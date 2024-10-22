@@ -1,4 +1,4 @@
-import { toNonEmptyArray } from "@effect-app/core/Array"
+import { toNonEmptyArray } from "effect-app/Array"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { Effect } from "effect-app"
 import { get, logMany, set } from "effect-app/Pure"

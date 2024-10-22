@@ -6,8 +6,8 @@
  * https://github.com/microsoft/TypeScript/issues/52644
  */
 
-import type { Scope } from "@effect-app/core"
-import { Effect, Layer } from "@effect-app/core"
+import type { Scope } from "effect-app"
+import { Effect, Layer } from "effect-app"
 import * as Context from "effect/Context"
 
 export * from "effect/Context"

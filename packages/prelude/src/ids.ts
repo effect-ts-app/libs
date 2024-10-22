@@ -1,4 +1,4 @@
-import type { B } from "@effect-app/core/Schema/schema"
+import type { B } from "effect-app/Schema/schema"
 import { brandedStringId, NonEmptyString255, StringId, withDefaultMake } from "effect-app/schema"
 import type { Schema, StringIdBrand } from "effect-app/schema"
 import type { Simplify } from "effect/Types"

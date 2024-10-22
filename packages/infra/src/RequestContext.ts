@@ -1,4 +1,4 @@
-import { NonEmptyString255 } from "@effect-app/core/Schema"
+import { NonEmptyString255 } from "effect-app/Schema"
 import { FiberRef, S } from "effect-app"
 import { UserProfileId } from "effect-app/ids"
 

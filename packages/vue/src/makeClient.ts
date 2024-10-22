@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { flow, pipe, tuple } from "@effect-app/core/Function"
+import { flow, pipe, tuple } from "effect-app/Function"
 import * as Sentry from "@sentry/browser"
 import type { Either } from "effect-app"
 import { Cause, Effect, Match, Runtime, S } from "effect-app"

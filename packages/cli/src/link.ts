@@ -6,7 +6,6 @@ const pj = (await import(process.cwd() + "/package.json", { with: { type: "json"
 
 pj.resolutions = {
   ...pj.resolutions,
-  "@effect-app/core": "file:" + EFFECT_APP_LIBS + "/packages/core",
   "@effect-app/eslint-codegen-model": "file:" + EFFECT_APP_LIBS + "/packages/eslint-codegen-model",
   "effect-app": "file:" + EFFECT_APP_LIBS + "/packages/prelude",
   "@effect-app/infra": "file:" + EFFECT_APP_LIBS + "/packages/infra",

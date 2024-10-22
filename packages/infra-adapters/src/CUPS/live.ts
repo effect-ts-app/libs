@@ -1,4 +1,4 @@
-import { pretty } from "@effect-app/core/utils"
+import { pretty } from "effect-app/utils"
 import cp from "child_process"
 import { Effect, Predicate } from "effect-app"
 import { NonEmptyString255 } from "effect-app/schema"

@@ -23,7 +23,7 @@
 //   }
 // }
 
-import type { Semaphore } from "@effect-app/core/Effect"
+import type { Semaphore } from "effect-app/Effect"
 import type { Duration, NonEmptyArray } from "effect-app"
 import { Array, Effect } from "effect-app"
 

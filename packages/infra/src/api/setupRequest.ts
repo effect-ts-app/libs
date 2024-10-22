@@ -1,4 +1,4 @@
-import { NonEmptyString255 } from "@effect-app/core/Schema"
+import { NonEmptyString255 } from "effect-app/Schema"
 import type { Tracer } from "effect-app"
 import { Effect, FiberRef, Layer } from "effect-app"
 import { LocaleRef, RequestContext, spanAttributes } from "../RequestContext.js"

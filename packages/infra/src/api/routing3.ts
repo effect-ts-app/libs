@@ -5,7 +5,7 @@
 TODO: Effect.retry(r2, optimisticConcurrencySchedule) / was for PATCH only
 TODO: uninteruptible commands! was for All except GET.
 */
-import { pretty, typedKeysOf, typedValuesOf } from "@effect-app/core/utils"
+import { pretty, typedKeysOf, typedValuesOf } from "effect-app/utils"
 import type * as HttpApp from "@effect/platform/HttpApp"
 import { Rpc, RpcRouter } from "@effect/rpc"
 import type { NonEmptyArray } from "effect-app"

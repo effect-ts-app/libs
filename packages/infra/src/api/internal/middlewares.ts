@@ -5,7 +5,7 @@
  */
 import * as crypto from "crypto"
 
-import { dropUndefined } from "@effect-app/core/utils"
+import { dropUndefined } from "effect-app/utils"
 import { NotLoggedInError } from "@effect-app/infra/errors"
 import * as Middleware from "@effect/platform/HttpMiddleware"
 import * as HttpServerRequest from "@effect/platform/HttpServerRequest"

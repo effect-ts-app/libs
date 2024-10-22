@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { isHttpRequestError, isHttpResponseError } from "@effect-app/core/http/http-client"
+import { isHttpRequestError, isHttpResponseError } from "effect-app/http/http-client"
 import * as Result from "@effect-rx/rx/Result"
 import type {
   QueryKey,

@@ -5,9 +5,9 @@
 TODO: Effect.retry(r2, optimisticConcurrencySchedule) / was for PATCH only
 TODO: uninteruptible commands! was for All except GET.
 */
-import { allLower, type EffectUnunified, type LowerServices } from "@effect-app/core/Effect"
-import { pretty, typedKeysOf, typedValuesOf } from "@effect-app/core/utils"
-import type { Compute } from "@effect-app/core/utils"
+import { allLower, type EffectUnunified, type LowerServices } from "effect-app/Effect"
+import { pretty, typedKeysOf, typedValuesOf } from "effect-app/utils"
+import type { Compute } from "effect-app/utils"
 import type * as HttpApp from "@effect/platform/HttpApp"
 import { Rpc, RpcRouter } from "@effect/rpc"
 import type { NonEmptyArray } from "effect-app"

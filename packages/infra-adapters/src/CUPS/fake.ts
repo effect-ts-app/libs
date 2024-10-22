@@ -1,4 +1,4 @@
-import { pretty } from "@effect-app/core/utils"
+import { pretty } from "effect-app/utils"
 import { Effect } from "effect-app"
 import { InfraLogger } from "../logger.js"
 import { CUPS } from "./service.js"

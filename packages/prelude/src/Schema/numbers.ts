@@ -1,4 +1,4 @@
-import { extendM } from "@effect-app/core/utils"
+import { extendM } from "effect-app/utils"
 import * as S from "effect/Schema"
 import type { Simplify } from "effect/Types"
 import { fromBrand, nominal } from "./brand.js"

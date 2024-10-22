@@ -1,11 +1,44 @@
-import type { NonEmptyReadonlyArray, Tracer } from "@effect-app/core"
-import { Array, Option, pipe } from "@effect-app/core"
-import { type A, type Email as EmailT, type PhoneNumber as PhoneNumberT } from "@effect-app/core/Schema"
-import * as S from "@effect-app/core/Schema"
+import type { NonEmptyReadonlyArray, Tracer } from "effect-app"
+import { Option, pipe } from "effect-app"
 import { fakerArb } from "./faker.js"
+import { S } from "./lib.js"
+import { type Email as EmailT } from "./Schema/email.js"
+import { type PhoneNumber as PhoneNumberT } from "./Schema/phoneNumber.js"
+import type { A } from "./Schema/schema.js"
 import { extendM } from "./utils.js"
 
-export * from "@effect-app/core/Schema"
+export * from "effect/Schema"
+
+export * from "./Schema/Class.js"
+export { Class, TaggedClass } from "./Schema/Class.js"
+
+export { fromBrand, nominal } from "./Schema/brand.js"
+export {
+  Array,
+  Boolean,
+  Date,
+  NonEmptyArray,
+  NullOr,
+  Number,
+  ReadonlyMap,
+  ReadonlySet,
+  Struct,
+  Tuple
+} from "./Schema/ext.js"
+export { Int } from "./Schema/numbers.js"
+
+export * from "./Schema/email.js"
+export * from "./Schema/ext.js"
+export * from "./Schema/moreStrings.js"
+export * from "./Schema/numbers.js"
+export * from "./Schema/phoneNumber.js"
+export * from "./Schema/schema.js"
+export * from "./Schema/strings.js"
+export { NonEmptyString } from "./Schema/strings.js"
+
+export * as ParseResult from "effect/ParseResult"
+
+export { Void as Void_ } from "effect/Schema"
 
 export const SpanId = Symbol()
 export type SpanId = typeof SpanId

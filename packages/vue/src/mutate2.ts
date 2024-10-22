@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { tuple } from "@effect-app/core/Function"
+import { tuple } from "effect-app/Function"
 import * as Result from "@effect-rx/rx/Result"
 import type { InvalidateOptions, InvalidateQueryFilters } from "@tanstack/vue-query"
 import { useQueryClient } from "@tanstack/vue-query"

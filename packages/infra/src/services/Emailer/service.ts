@@ -1,4 +1,4 @@
-import type { Email, NonEmptyString255 } from "@effect-app/core/Schema"
+import type { Email, NonEmptyString255 } from "effect-app/Schema"
 import type { MailContent, MailData } from "@sendgrid/helpers/classes/mail.js"
 import type { ResponseError } from "@sendgrid/mail"
 import type sgMail from "@sendgrid/mail"

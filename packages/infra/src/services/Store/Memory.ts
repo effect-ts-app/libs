@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { NonEmptyString255 } from "@effect-app/core/Schema"
+import { NonEmptyString255 } from "effect-app/Schema"
 import { Array, Effect, FiberRef, flow, Option, Order, pipe, Ref, Struct } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { get } from "effect-app/utils"

@@ -7,10 +7,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable unused-imports/no-unused-imports */
 
-import type * as CTX from "@effect-app/core/Context"
-import type * as EFFECT from "@effect-app/core/Effect"
-import type * as NS from "@effect-app/core/NonEmptySet"
-import type * as SET from "@effect-app/core/Set"
+import type * as CTX from "effect-app/Context"
+import type * as EFFECT from "effect-app/Effect"
+import type * as NS from "effect-app/NonEmptySet"
+import type * as SET from "effect-app/Set"
 import type * as C from "effect/Cause"
 import type * as CNK from "effect/Chunk"
 import type * as CFG from "effect/Config"
@@ -28,11 +28,11 @@ import type * as REF from "effect/Ref"
 import type * as SCHEMA from "effect/Schema"
 import type * as SCOPE from "effect/Scope"
 
-export type { NonEmptyArray, NonEmptyReadonlyArray } from "@effect-app/core/Array"
+export type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app/Array"
 
 export namespace Effect {
   // @ts-expect-error abc
-  export * from "@effect-app/core/Effect"
+  export * from "effect-app/Effect"
   export type Success<T extends Effect<any, any, any>> = EFFECT.Effect.Success<T>
   export type Error<T extends Effect<any, any, any>> = EFFECT.Effect.Error<T>
   export type Context<T extends Effect<any, any, any>> = EFFECT.Effect.Context<T>
@@ -78,7 +78,7 @@ export type Duration = DUR.Duration
 
 export namespace Context {
   // @ts-expect-error abc
-  export * from "@effect-app/core/Context"
+  export * from "effect-app/Context"
 }
 /** @tsplus type effect/data/Context */
 export type Context<in Services> = CTX.Context<Services>
@@ -158,14 +158,14 @@ export type Chunk<out A> = CNK.Chunk<A>
 
 export namespace NonEmptySet {
   // @ts-expect-error
-  export * from "@effect-app/core/NonEmptySet"
+  export * from "effect-app/NonEmptySet"
 }
 /** @tsplus type ets/NonEmptySet */
 export type NonEmptySet<A> = NS.NonEmptySet<A>
 
 export namespace Record {
   // @ts-expect-error
-  export * from "@effect-app/core/Record"
+  export * from "effect-app/Record"
 }
 /**
  * @tsplus type Record
@@ -177,7 +177,7 @@ export type Record<K extends string | symbol | number, V> = globalThis.Record<K,
 
 export namespace Array {
   // @ts-expect-error
-  export * from "@effect-app/core/Array"
+  export * from "effect-app/Array"
 }
 /**
  * @tsplus type Array
@@ -197,7 +197,7 @@ export type Array<A> = globalThis.ReadonlyArray<A>
 
 export namespace ReadonlySet {
   // @ts-expect-error
-  export * from "@effect-app/core/Set"
+  export * from "effect-app/Set"
 }
 /**
  * @tsplus type ets/Set

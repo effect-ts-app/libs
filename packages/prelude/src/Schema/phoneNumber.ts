@@ -1,5 +1,5 @@
-import type { Refinement } from "@effect-app/core/Function"
-import { isValidPhone } from "@effect-app/core/validation"
+import type { Refinement } from "effect-app/Function"
+import { isValidPhone } from "effect-app/validation"
 import * as S from "effect/Schema"
 import type { Simplify } from "effect/Types"
 import { withDefaultMake } from "./ext.js"

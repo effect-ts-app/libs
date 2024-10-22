@@ -1,4 +1,4 @@
-import { flow } from "@effect-app/core/Function"
+import { flow } from "effect-app/Function"
 
 import { Effect, Option } from "effect-app"
 import type { Equivalence } from "effect-app"
