@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.1.2
+
+### Patch Changes
+
+- a66651b: fix missing overall context
+
 ## 2.1.1
 
 ### Patch Changes
