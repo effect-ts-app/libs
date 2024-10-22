@@ -119,7 +119,7 @@ importers:
         version: 3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)
       effect-app:
         specifier: workspace:*
-        version: link:packages/prelude
+        version: link:packages/effect-app
       enhanced-resolve:
         specifier: ^5.17.1
         version: 5.17.1
@@ -214,6 +214,73 @@ importers:
       json5:
         specifier: ^2.2.3
         version: 2.2.3
+      typescript:
+        specifier: ^5.6.3
+        version: 5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q)
+      vitest:
+        specifier: ^2.1.3
+        version: 2.1.3(@types/node@22.7.8)(terser@5.34.1)
+
+  packages/effect-app:
+    dependencies:
+      '@effect/platform':
+        specifier: ^0.69.2
+        version: 0.69.2(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e))
+      '@effect/rpc':
+        specifier: ^0.44.2
+        version: 0.44.2(@effect/platform@0.69.2(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)))(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e))
+      '@effect/rpc-http':
+        specifier: ^0.42.2
+        version: 0.42.2(@effect/platform@0.69.2(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)))(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e))
+      '@tsconfig/strictest':
+        specifier: ^2.0.5
+        version: 2.0.5
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
+      effect:
+        specifier: ^3.10.0
+        version: 3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)
+      nanoid:
+        specifier: ^5.0.7
+        version: 5.0.7
+      path-parser:
+        specifier: ^6.1.0
+        version: 6.1.0
+      query-string:
+        specifier: ^9.1.1
+        version: 9.1.1
+      ts-pattern:
+        specifier: ^5.5.0
+        version: 5.5.0
+      ts-toolbelt:
+        specifier: ^9.6.0
+        version: 9.6.0
+      uuid:
+        specifier: ^10.0.0
+        version: 10.0.0
+      validator:
+        specifier: ^13.12.0
+        version: 13.12.0
+    devDependencies:
+      '@babel/cli':
+        specifier: ^7.25.7
+        version: 7.25.7(@babel/core@7.25.8)
+      '@faker-js/faker':
+        specifier: ^8.4.1
+        version: 8.4.1
+      '@types/node':
+        specifier: ~22.7.8
+        version: 22.7.8
+      '@types/uuid':
+        specifier: ^10.0.0
+        version: 10.0.0
+      '@types/validator':
+        specifier: ^13.12.2
+        version: 13.12.2
+      fast-check:
+        specifier: ^3.22.0
+        version: 3.22.0
       typescript:
         specifier: ^5.6.3
         version: 5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q)
@@ -316,7 +383,7 @@ importers:
         version: 3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)
       effect-app:
         specifier: workspace:*
-        version: link:../prelude
+        version: link:../effect-app
       express-oauth2-jwt-bearer:
         specifier: ^1.6.0
         version: 1.6.0
@@ -406,73 +473,6 @@ importers:
         specifier: ^2.1.3
         version: 2.1.3(@types/node@22.7.8)(terser@5.34.1)
 
-  packages/prelude:
-    dependencies:
-      '@effect/platform':
-        specifier: ^0.69.2
-        version: 0.69.2(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e))
-      '@effect/rpc':
-        specifier: ^0.44.2
-        version: 0.44.2(@effect/platform@0.69.2(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)))(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e))
-      '@effect/rpc-http':
-        specifier: ^0.42.2
-        version: 0.42.2(@effect/platform@0.69.2(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)))(effect@3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e))
-      '@tsconfig/strictest':
-        specifier: ^2.0.5
-        version: 2.0.5
-      date-fns:
-        specifier: ^4.1.0
-        version: 4.1.0
-      effect:
-        specifier: ^3.10.0
-        version: 3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)
-      nanoid:
-        specifier: ^5.0.7
-        version: 5.0.7
-      path-parser:
-        specifier: ^6.1.0
-        version: 6.1.0
-      query-string:
-        specifier: ^9.1.1
-        version: 9.1.1
-      ts-pattern:
-        specifier: ^5.5.0
-        version: 5.5.0
-      ts-toolbelt:
-        specifier: ^9.6.0
-        version: 9.6.0
-      uuid:
-        specifier: ^10.0.0
-        version: 10.0.0
-      validator:
-        specifier: ^13.12.0
-        version: 13.12.0
-    devDependencies:
-      '@babel/cli':
-        specifier: ^7.25.7
-        version: 7.25.7(@babel/core@7.25.8)
-      '@faker-js/faker':
-        specifier: ^8.4.1
-        version: 8.4.1
-      '@types/node':
-        specifier: ~22.7.8
-        version: 22.7.8
-      '@types/uuid':
-        specifier: ^10.0.0
-        version: 10.0.0
-      '@types/validator':
-        specifier: ^13.12.2
-        version: 13.12.2
-      fast-check:
-        specifier: ^3.22.0
-        version: 3.22.0
-      typescript:
-        specifier: ^5.6.3
-        version: 5.6.3(patch_hash=yoypwiw4x7ikhinpyfewievf3q)
-      vitest:
-        specifier: ^2.1.3
-        version: 2.1.3(@types/node@22.7.8)(terser@5.34.1)
-
   packages/vue:
     dependencies:
       '@effect-app/vue':
@@ -507,7 +507,7 @@ importers:
         version: 3.10.0(patch_hash=pknxnlnopxqwfakxocgrmgal2e)
       effect-app:
         specifier: workspace:*
-        version: link:../prelude
+        version: link:../effect-app
       query-string:
         specifier: ^9.1.1
         version: 9.1.1

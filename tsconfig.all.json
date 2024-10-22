@@ -17,7 +17,7 @@
       "path": "packages/eslint-codegen-model"
     },
     {
-      "path": "packages/prelude"
+      "path": "packages/effect-app"
     },
     {
       "path": "packages/infra"

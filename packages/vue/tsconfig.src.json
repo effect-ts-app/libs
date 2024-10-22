@@ -29,7 +29,7 @@
     ],
     "references": [
         {
-            "path": "../prelude"
+            "path": "../effect-app"
         }
     ]
 }
