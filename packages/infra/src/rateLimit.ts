@@ -23,9 +23,9 @@
 //   }
 // }
 
-import type { Semaphore } from "effect-app/Effect"
 import type { Duration, NonEmptyArray } from "effect-app"
 import { Array, Effect } from "effect-app"
+import type { Semaphore } from "effect-app/Effect"
 
 /**
  * Executes the specified effect, acquiring the specified number of permits

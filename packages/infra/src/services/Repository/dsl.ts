@@ -1,6 +1,6 @@
-import { toNonEmptyArray } from "effect-app/Array"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { Effect } from "effect-app"
+import { toNonEmptyArray } from "effect-app/Array"
 import { get, logMany, set } from "effect-app/Pure"
 import type { FixEnv, Pure, PureEnvEnv, PureLogT } from "effect-app/Pure"
 

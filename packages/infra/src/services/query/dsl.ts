@@ -4,9 +4,9 @@
 import type { FieldValues } from "@effect-app/infra/filter/types"
 import type { FieldPath, FieldPathValue } from "@effect-app/infra/filter/types/path/eager"
 import type { Ops } from "@effect-app/infra/services/Store/filterApi/query"
-import type { NonNegativeInt } from "effect-app/Schema"
 import type { Option, Pipeable, S } from "effect-app"
 import { Data, flow } from "effect-app"
+import type { NonNegativeInt } from "effect-app/Schema"
 import type { Covariant } from "effect/Types"
 
 import { pipeArguments } from "effect/Pipeable"

@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { isHttpRequestError, isHttpResponseError } from "effect-app/http/http-client"
 import * as Result from "@effect-rx/rx/Result"
 import type {
   QueryKey,
@@ -15,6 +14,7 @@ import { useQuery } from "@tanstack/vue-query"
 import { Cause, Effect, Option, Runtime, S } from "effect-app"
 import { ServiceUnavailableError } from "effect-app/client"
 import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
+import { isHttpRequestError, isHttpResponseError } from "effect-app/http/http-client"
 import { computed, ref } from "vue"
 import type { ComputedRef, ShallowRef, WatchSource } from "vue"
 import { makeQueryKey, reportRuntimeError } from "./internal.js"

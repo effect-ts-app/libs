@@ -1,6 +1,6 @@
+import { pipe } from "effect"
 import type { Refinement } from "effect-app/Function"
 import { extendM } from "effect-app/utils"
-import { pipe } from "effect"
 import type { LazyArbitrary } from "effect/Arbitrary"
 import * as S from "effect/Schema"
 import type { Simplify } from "effect/Types"

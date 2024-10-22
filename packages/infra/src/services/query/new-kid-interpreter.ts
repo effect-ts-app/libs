@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { toNonEmptyArray } from "effect-app/Array"
 import { Match, Option, pipe, S } from "effect-app"
+import { toNonEmptyArray } from "effect-app/Array"
 import { dropUndefinedT } from "effect-app/utils"
 import type { FieldValues } from "../../filter/types.js"
 import type { FieldPath } from "../../filter/types/path/eager.js"

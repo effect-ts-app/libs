@@ -1,5 +1,5 @@
-import * as S from "effect/Schema"
 import type * as B from "effect/Brand"
+import * as S from "effect/Schema"
 import type { Simplify } from "effect/Types"
 import { fromBrand, nominal } from "./brand.js"
 import { withDefaultMake } from "./ext.js"

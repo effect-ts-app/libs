@@ -1,6 +1,6 @@
-import { NonEmptyString255 } from "effect-app/Schema"
 import { FiberRef, S } from "effect-app"
 import { UserProfileId } from "effect-app/ids"
+import { NonEmptyString255 } from "effect-app/Schema"
 
 export const Locale = S.Literal("en", "de")
 export type Locale = typeof Locale.Type

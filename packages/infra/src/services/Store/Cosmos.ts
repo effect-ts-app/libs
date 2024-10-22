@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { toNonEmptyArray } from "effect-app/Array"
 import { CosmosClient, CosmosClientLayer } from "@effect-app/infra-adapters/cosmos-client"
 import { Array, Chunk, Duration, Effect, Layer, Option, pipe, Secret, Struct } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
+import { toNonEmptyArray } from "effect-app/Array"
 import { dropUndefinedT } from "effect-app/utils"
 import { OptimisticConcurrencyException } from "../../errors.js"
 import { InfraLogger } from "../../logger.js"

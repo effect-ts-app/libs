@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { dropUndefined } from "effect-app/utils"
 import * as Sentry from "@sentry/browser"
 import { Cause, Effect } from "effect-app"
 import { CauseException, ErrorReported, tryToJson } from "effect-app/client/errors"
+import { dropUndefined } from "effect-app/utils"
 
 export function reportError(
   name: string
