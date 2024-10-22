@@ -10,9 +10,8 @@ export function getRequestContextFromFiberRefs(fiberRefs: FiberRefs.FiberRefs) {
   const locale = FiberRefs.getOrDefault(fiberRefs, LocaleRef)
   const namespace = FiberRefs.getOrDefault(fiberRefs, storeId)
   return new RequestContext({
-    span: Option.getOrElse(
-      span,
-      () => ({ spanId: "bogus", sampled: true, traceId: "bogus" })
+    span: Option.map(span, Tracer.externalSpan).pipe(
+      Option.getOrElse(() => ({ spanId: "bogus", sampled: true, traceId: "bogus" }))
     ),
     name: NonEmptyString255("_"),
     locale,

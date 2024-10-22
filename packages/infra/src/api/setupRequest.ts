@@ -1,5 +1,4 @@
-import type { Tracer } from "effect-app"
-import { Effect, FiberRef, Layer } from "effect-app"
+import { Effect, FiberRef, Layer, Tracer } from "effect-app"
 import { NonEmptyString255 } from "effect-app/Schema"
 import { LocaleRef, RequestContext, spanAttributes } from "../RequestContext.js"
 import { startContextMap } from "../services/Store/ContextMapContainer.js"
@@ -14,7 +13,7 @@ export const getRequestContext = Effect
   .pipe(
     Effect.map(({ locale, namespace, span }) =>
       new RequestContext({
-        span,
+        span: Tracer.externalSpan(span),
         locale,
         namespace,
         // TODO: get through span context, or don't care at all.

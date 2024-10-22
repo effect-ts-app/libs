@@ -1,6 +1,5 @@
 import { Effect } from "effect-app"
 import { HttpMiddleware, HttpServerRequest, HttpServerResponse } from "effect-app/http"
-import { RequestId } from "effect-app/ids"
 import { NonEmptyString255 } from "effect-app/Schema"
 import { Locale, RequestContext } from "../../RequestContext.js"
 import { setupRequestContext } from "../setupRequest.js"
@@ -24,8 +23,8 @@ export const RequestContextMiddleware = (defaultLocale: Locale = "en") =>
 
       const requestContext = new RequestContext({
         span: {
-          traceId: RequestId(currentSpan.traceId),
-          spanId: RequestId(currentSpan.spanId),
+          traceId: currentSpan.traceId,
+          spanId: currentSpan.spanId,
           sampled: currentSpan.sampled
         },
         name: NonEmptyString255(req.originalUrl), // set more detailed elsewhere
