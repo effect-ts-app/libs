@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.0.1
+
+### Patch Changes
+
+- 39e4f3d: fix: missing export
+
 ## 2.0.0
 
 ### Major Changes
