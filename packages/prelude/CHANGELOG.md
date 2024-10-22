@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 1.32.0
+
+### Minor Changes
+
+- d0471b1: refactor: merge @effect-app/schema into core
+
+### Patch Changes
+
+- Updated dependencies [d0471b1]
+  - @effect-app/core@1.19.0
+
 ## 1.31.0
 
 ### Minor Changes

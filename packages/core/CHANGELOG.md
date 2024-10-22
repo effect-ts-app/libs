@@ -1,5 +1,11 @@
 # @effect-app/core
 
+## 1.19.0
+
+### Minor Changes
+
+- d0471b1: refactor: merge @effect-app/schema into core
+
 ## 1.18.0
 
 ### Minor Changes

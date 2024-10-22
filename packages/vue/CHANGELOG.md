@@ -1,5 +1,18 @@
 # @effect-app/vue
 
+## 1.29.0
+
+### Minor Changes
+
+- d0471b1: refactor: merge @effect-app/schema into core
+
+### Patch Changes
+
+- Updated dependencies [d0471b1]
+  - effect-app@1.32.0
+  - @effect-app/core@1.19.0
+  - @effect-app/vue@1.29.0
+
 ## 1.28.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 0.90.0
+
+### Minor Changes
+
+- d0471b1: refactor: merge @effect-app/schema into core
+
 ## 0.89.0
 
 ### Minor Changes
