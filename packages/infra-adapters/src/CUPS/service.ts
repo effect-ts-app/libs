@@ -1,5 +1,5 @@
 import { Context, type Effect } from "effect-app"
-import { NonEmptyString255 } from "effect-app/schema"
+import { NonEmptyString255 } from "effect-app/Schema"
 import type { makeCUPS } from "./live.js"
 
 export const PrinterId = NonEmptyString255

@@ -1,4 +1,4 @@
-import { Effect } from "@effect-app/core"
+import { Effect } from "effect-app"
 import { S } from "effect-app"
 import type { DiscriminatedUnionFieldInfo, FieldInfo, NestedFieldInfo, UnionFieldInfo } from "../src/form.js"
 import { buildFieldInfoFromFieldsRoot } from "../src/form.js"

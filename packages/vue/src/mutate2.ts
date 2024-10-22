@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { tuple } from "@effect-app/core/Function"
 import * as Result from "@effect-rx/rx/Result"
 import type { InvalidateOptions, InvalidateQueryFilters } from "@tanstack/vue-query"
 import { useQueryClient } from "@tanstack/vue-query"
 import { Cause, Effect, Exit, Option } from "effect-app"
 import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
+import { tuple } from "effect-app/Function"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
 import { reportRuntimeError } from "./internal.js"

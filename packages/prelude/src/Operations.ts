@@ -1,4 +1,4 @@
-import * as S from "./schema.js"
+import * as S from "./Schema.js"
 
 export type OperationId = S.StringId
 export const OperationId = S.StringId

@@ -1,6 +1,6 @@
-import { dropUndefined } from "@effect-app/core/utils"
 import * as Sentry from "@sentry/node"
 import { Cause, Effect } from "effect-app"
+import { dropUndefined } from "effect-app/utils"
 import { getRC } from "./api/setupRequest.js"
 import { CauseException, ErrorReported, tryToJson } from "./errors.js"
 import { InfraLogger } from "./logger.js"

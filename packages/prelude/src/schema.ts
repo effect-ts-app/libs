@@ -1,11 +1,45 @@
-import type { NonEmptyReadonlyArray, Tracer } from "@effect-app/core"
-import { Array, Option, pipe } from "@effect-app/core"
-import { type A, type Email as EmailT, type PhoneNumber as PhoneNumberT } from "@effect-app/core/Schema"
-import * as S from "@effect-app/core/Schema"
+import * as S from "effect/Schema"
 import { fakerArb } from "./faker.js"
+import type { NonEmptyReadonlyArray, Tracer } from "./lib.js"
+import { Array, Option, pipe, SchemaAST } from "./lib.js"
+import { Email as EmailT } from "./Schema/email.js"
+import { withDefaultMake } from "./Schema/ext.js"
+import { PhoneNumber as PhoneNumberT } from "./Schema/phoneNumber.js"
+import type { A } from "./Schema/schema.js"
 import { extendM } from "./utils.js"
 
-export * from "@effect-app/core/Schema"
+export * from "effect/Schema"
+
+export * from "./Schema/Class.js"
+export { Class, TaggedClass } from "./Schema/Class.js"
+
+export { fromBrand, nominal } from "./Schema/brand.js"
+export {
+  Array,
+  Boolean,
+  Date,
+  NonEmptyArray,
+  NullOr,
+  Number,
+  ReadonlyMap,
+  ReadonlySet,
+  Struct,
+  Tuple
+} from "./Schema/ext.js"
+export { Int } from "./Schema/numbers.js"
+
+export * from "./Schema/email.js"
+export * from "./Schema/ext.js"
+export * from "./Schema/moreStrings.js"
+export * from "./Schema/numbers.js"
+export * from "./Schema/phoneNumber.js"
+export * from "./Schema/schema.js"
+export * from "./Schema/strings.js"
+export { NonEmptyString } from "./Schema/strings.js"
+
+export * as ParseResult from "effect/ParseResult"
+
+export { Void as Void_ } from "effect/Schema"
 
 export const SpanId = Symbol()
 export type SpanId = typeof SpanId
@@ -14,44 +48,42 @@ export interface WithOptionalSpan {
   [SpanId]?: Tracer.Span
 }
 
-export const Email = S
-  .Email
+export const Email = EmailT
   .pipe(
     S.annotations({
       // eslint-disable-next-line @typescript-eslint/unbound-method
       arbitrary: (): A.LazyArbitrary<Email> => (fc) => fakerArb((faker) => faker.internet.exampleEmail)(fc).map(Email)
     }),
-    S.withDefaultMake
+    withDefaultMake
   )
 
 export type Email = EmailT
 
-export const PhoneNumber = S
-  .PhoneNumber
+export const PhoneNumber = PhoneNumberT
   .pipe(
     S.annotations({
       arbitrary: (): A.LazyArbitrary<PhoneNumber> => (fc) =>
         // eslint-disable-next-line @typescript-eslint/unbound-method
         fakerArb((faker) => faker.phone.number)(fc).map(PhoneNumber)
     }),
-    S.withDefaultMake
+    withDefaultMake
   )
 
 export const makeIs = <A extends { _tag: string }, I, R>(
   schema: S.Schema<A, I, R>
 ) => {
-  if (S.AST.isUnion(schema.ast)) {
+  if (SchemaAST.isUnion(schema.ast)) {
     return schema.ast.types.reduce((acc, t) => {
-      if (S.AST.isTransformation(t)) {
-        if (S.AST.isDeclaration(t.to)) {
+      if (SchemaAST.isTransformation(t)) {
+        if (SchemaAST.isDeclaration(t.to)) {
           t = t.from
         } else {
           t = t.to
         }
       }
-      if (!S.AST.isTypeLiteral(t)) return acc
+      if (!SchemaAST.isTypeLiteral(t)) return acc
       const tag = Array.findFirst(t.propertySignatures, (_) => {
-        if (_.name === "_tag" && S.AST.isLiteral(_.type)) {
+        if (_.name === "_tag" && SchemaAST.isLiteral(_.type)) {
           return Option.some(_.type)
         }
         return Option.none()
@@ -72,7 +104,7 @@ export const makeIs = <A extends { _tag: string }, I, R>(
 export const makeIsAnyOf = <A extends { _tag: string }, I, R>(
   schema: S.Schema<A, I, R>
 ): IsAny<A> => {
-  if (S.AST.isUnion(schema.ast)) {
+  if (SchemaAST.isUnion(schema.ast)) {
     return <Keys extends A["_tag"][]>(...keys: Keys) => (a: A): a is ExtractUnion<A, ElemType<Keys>> =>
       keys.includes(a._tag)
   }
@@ -95,7 +127,7 @@ export const taggedUnionMap = <
   self.reduce((acc, key) => {
     // TODO: check upstream what's going on with literals of _tag
     const ast = key.fields._tag.ast as S.PropertySignatureDeclaration
-    const tag = (ast.type as S.AST.Literal).literal as string // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+    const tag = (ast.type as SchemaAST.Literal).literal as string // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
     ;(acc as any)[tag] = key as any
     return acc
   }, {} as { [Key in Members[number] as ReturnType<Key["fields"]["_tag"][S.TypeId]["_A"]>]: Key })
@@ -108,7 +140,7 @@ export const tags = <
 ) =>
   S.Literal(...self.map((key) => {
     const ast = key.fields._tag.ast as S.PropertySignatureDeclaration
-    const tag = (ast.type as S.AST.Literal).literal
+    const tag = (ast.type as SchemaAST.Literal).literal
     return tag
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   })) as any as S.Literal<
@@ -122,7 +154,7 @@ export const ExtendTaggedUnion = <A extends { _tag: string }, I, R>(
 
 export const TaggedUnion = <
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Members extends S.AST.Members<S.Schema.Any & { fields: { _tag: S.tag<any> } }>
+  Members extends SchemaAST.Members<S.Schema.Any & { fields: { _tag: S.tag<any> } }>
 >(...a: Members) =>
   pipe(
     S.Union(...a),

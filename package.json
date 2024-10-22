@@ -38,7 +38,7 @@
     "watch-packages": "pnpm packages build && pnpm packages watch",
     "build:tsc": "effect-app-cli packagejson-packages tsc --build ./tsconfig.all.json",
     "watch": "pnpm build:tsc --watch",
-    "build": "cd packages/cli && pnpm build && cd ../../ && pnpm build:tsc && cd packages/core && pnpm build",
+    "build": "cd packages/cli && pnpm build && cd ../../ && pnpm build:tsc && cd packages/prelude && pnpm build",
     "rbuild": "pnpm clean && pnpm build",
     "nnm": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' + && pnpm i"
   },
@@ -62,7 +62,6 @@
     "@changesets/cli": "^2.27.9",
     "@dprint/typescript": "^0.93.0",
     "@effect-app/cli": "^0.88.0",
-    "@effect-app/core": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
     "@effect-app/infra": "workspace:*",
     "@effect-app/infra-adapters": "workspace:*",

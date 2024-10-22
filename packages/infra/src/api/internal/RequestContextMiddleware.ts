@@ -1,7 +1,7 @@
 import { Effect } from "effect-app"
 import { HttpMiddleware, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { RequestId } from "effect-app/ids"
-import { NonEmptyString255 } from "effect-app/schema"
+import { NonEmptyString255 } from "effect-app/Schema"
 import { Locale, RequestContext } from "../../RequestContext.js"
 import { setupRequestContext } from "../setupRequest.js"
 

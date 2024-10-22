@@ -4,7 +4,6 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect-app/core": "workspace:*",
     "@effect/experimental": "^0.30.3",
     "@effect/sql": "^0.18.3",
     "effect-app": "workspace:*",

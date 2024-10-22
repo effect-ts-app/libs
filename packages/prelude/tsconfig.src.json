@@ -27,9 +27,5 @@
         "**/.*",
         "**/*.tmp"
     ],
-    "references": [
-        {
-            "path": "../core"
-        },
-    ]
+    "references": []
 }

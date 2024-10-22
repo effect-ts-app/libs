@@ -1,5 +1,5 @@
 import type { IndexingPolicy } from "@azure/cosmos"
-import { typedKeysOf } from "@effect-app/core/utils"
+import { typedKeysOf } from "effect-app/utils"
 
 import * as Cosmos from "@effect-app/infra-adapters/cosmos-client"
 import { Data, Effect, Option } from "effect-app"

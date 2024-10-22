@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { tuple } from "@effect-app/core/Function"
 import * as Result from "@effect-rx/rx/Result"
 import type { InvalidateOptions, InvalidateQueryFilters } from "@tanstack/vue-query"
 import { useQueryClient } from "@tanstack/vue-query"
 import { Cause, Effect, Exit, Option, Runtime } from "effect-app"
+import { tuple } from "effect-app/Function"
 import { dropUndefinedT } from "effect-app/utils"
 import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"

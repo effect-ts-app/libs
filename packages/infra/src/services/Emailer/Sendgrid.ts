@@ -1,7 +1,7 @@
-import { dropUndefinedT } from "@effect-app/core/utils"
 import type { EmailData } from "@sendgrid/helpers/classes/email-address.js"
 import sgMail from "@sendgrid/mail"
 import { Array, Effect, Equivalence, Secret } from "effect-app"
+import { dropUndefinedT } from "effect-app/utils"
 import { inspect } from "util"
 import { InfraLogger } from "../../logger.js"
 import { Emailer } from "./service.js"

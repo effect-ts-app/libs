@@ -1,3 +1,3 @@
-import "@effect-app/core/builtin"
+import "./builtin.js"
 
 export * from "./lib.js"

@@ -1,4 +1,4 @@
-import { Context, Effect, Fiber, FiberSet, Layer } from "@effect-app/core"
+import { Context, Effect, Fiber, FiberSet, Layer } from "effect-app"
 import type {} from "effect/Scope"
 import type {} from "effect/Context"
 import { InfraLogger } from "../logger.js"

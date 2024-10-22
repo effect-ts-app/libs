@@ -1,6 +1,6 @@
-import { NonEmptyString255 } from "@effect-app/core/Schema"
 import type { Tracer } from "effect-app"
 import { Effect, FiberRef, Layer } from "effect-app"
+import { NonEmptyString255 } from "effect-app/Schema"
 import { LocaleRef, RequestContext, spanAttributes } from "../RequestContext.js"
 import { startContextMap } from "../services/Store/ContextMapContainer.js"
 import { storeId } from "../services/Store/Memory.js"

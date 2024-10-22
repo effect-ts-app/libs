@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import type { FieldValues } from "../fields.js"
 import type { BrowserNativeObject, Primitive } from "../utils.js"
 

@@ -7,7 +7,7 @@ import { SqlClient } from "@effect/sql"
 import { randomUUID } from "crypto"
 import { subMinutes } from "date-fns"
 import { Effect, Fiber, Option, S, Tracer } from "effect-app"
-import type { NonEmptyString255 } from "effect-app/schema"
+import type { NonEmptyString255 } from "effect-app/Schema"
 import { pretty } from "effect-app/utils"
 import { InfraLogger } from "../../logger.js"
 

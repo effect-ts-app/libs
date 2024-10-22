@@ -151,7 +151,7 @@ function packagejson(p: string, levels = 0) {
         if (cur !== "./index" && !cur.includes("/internal/")) prev[cur] = t[cur]
         return prev
       }, {} as Record<string, unknown>)
-    // ...pkg.name === "@effect-app/core" ? {
+    // ...pkg.name === "effect-app" ? {
     //   "./types/awesome": { "types": "./types/awesome.d.ts" }
     // } : {},
   }

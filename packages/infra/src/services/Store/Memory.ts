@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { NonEmptyString255 } from "@effect-app/core/Schema"
 import { Array, Effect, FiberRef, flow, Option, Order, pipe, Ref, Struct } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
+import { NonEmptyString255 } from "effect-app/Schema"
 import { get } from "effect-app/utils"
 import { InfraLogger } from "../../logger.js"
 import type { FilterArgs, PersistenceModelType, Store, StoreConfig } from "./service.js"

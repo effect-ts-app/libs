@@ -34,8 +34,5 @@
         {
             "path": "../infra-adapters"
         },
-        {
-            "path": "../core"
-        },
     ]
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { BuiltInObject } from "@effect-app/core/utils"
+import type { BuiltInObject } from "effect-app/utils"
 
 type AllKeys<T> = T extends any ? keyof T : never
 

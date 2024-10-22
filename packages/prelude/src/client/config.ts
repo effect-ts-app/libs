@@ -1,4 +1,4 @@
-import { Context, Effect, type HashMap, Layer, type Option } from "@effect-app/core"
+import { Context, Effect, type HashMap, Layer, type Option } from "../lib.js"
 
 export interface ApiConfig {
   apiUrl: string

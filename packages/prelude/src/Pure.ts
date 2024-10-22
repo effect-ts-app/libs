@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Chunk, Context, Effect, Either, Layer } from "@effect-app/core"
-import { tuple } from "@effect-app/core/Function"
+import { Chunk, Effect, Either, Layer } from "effect"
+import * as Context from "./Context.js"
+import { tuple } from "./Function.js"
 
 const S1 = Symbol()
 const S2 = Symbol()
@@ -21,7 +22,7 @@ export interface PureState<S, S2 = S> {
  */
 export interface PureLog<W> {
   readonly [W]: () => W
-  log: Chunk<W>
+  log: Chunk.Chunk<W>
 }
 
 /**
@@ -36,7 +37,7 @@ class PureEnvBase<W, S, S2 = S> implements PureEnv<W, S, S2> {
   readonly [S1]!: (_: S) => void
   readonly [S2]!: () => S2
   readonly state: S2
-  readonly log: Chunk<W>
+  readonly log: Chunk.Chunk<W>
 
   constructor(s: S2) {
     this.state = s
@@ -66,7 +67,7 @@ export function unifyPureEnv<X extends PureEnv<any, any, any>>(
 /**
  * @tsplus type Pure
  */
-export type Pure<W, S, S2, R, E, A> = Effect<A, E, PureEnvEnv<W, S, S2> | R>
+export type Pure<W, S, S2, R, E, A> = Effect.Effect<A, E, PureEnvEnv<W, S, S2> | R>
 
 // type dsl<W, S, S2> = ProgramDSL<W, S, S2>
 
@@ -158,9 +159,13 @@ export function logMany<W>(w: Iterable<W>): PureLogT<W> {
  * @tsplus fluent effect/io/Effect runAll
  */
 export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
-  self: Effect<A, E, FixEnv<R, W3, S1, S3>>,
+  self: Effect.Effect<A, E, FixEnv<R, W3, S1, S3>>,
   s: S4
-): Effect<readonly [Chunk<W3>, Either.Either<readonly [S3, A], E>], never, Exclude<R, { env: PureEnv<W3, S1, S3> }>> {
+): Effect.Effect<
+  readonly [Chunk.Chunk<W3>, Either.Either<readonly [S3, A], E>],
+  never,
+  Exclude<R, { env: PureEnv<W3, S1, S3> }>
+> {
   const a = Effect
     .flatMap(self, (x) =>
       castTag<W3, S1, S3>()
@@ -181,7 +186,7 @@ export function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
  * @tsplus fluent effect/io/Effect runResult
  */
 export function runResult<R, E, A, W3, S1, S3, S4 extends S1>(
-  self: Effect<A, E, FixEnv<R, W3, S1, S3>>,
+  self: Effect.Effect<A, E, FixEnv<R, W3, S1, S3>>,
   s: S4
 ) {
   return Effect.map(runAll(self, s), ([log, r]) => tuple(log, Effect.map(r, ([s]) => s)))
@@ -192,7 +197,7 @@ export function runResult<R, E, A, W3, S1, S3, S4 extends S1>(
  * @tsplus fluent effect/io/Effect runTerm
  */
 export function runTerm<R, E, A, W3, S1, S3, S4 extends S1>(
-  self: Effect<A, E, FixEnv<R, W3, S1, S3>>,
+  self: Effect.Effect<A, E, FixEnv<R, W3, S1, S3>>,
   s: S4
 ) {
   return Effect.flatMap(runAll(self, s), ([evts, r]) => Effect.map(r, ([s3, a]) => tuple(s3, Chunk.toArray(evts), a)))
@@ -203,7 +208,7 @@ export function runTerm<R, E, A, W3, S1, S3, S4 extends S1>(
  * @tsplus fluent effect/io/Effect runTermDiscard
  */
 export function runTermDiscard<R, E, A, W3, S1, S3, S4 extends S1>(
-  self: Effect<A, E, FixEnv<R, W3, S1, S3>>,
+  self: Effect.Effect<A, E, FixEnv<R, W3, S1, S3>>,
   s: S4
 ) {
   return Effect.map(runTerm(self, s), ([s3, w3]) => tuple(s3, w3))
@@ -214,7 +219,7 @@ export function runTermDiscard<R, E, A, W3, S1, S3, S4 extends S1>(
  * @tsplus fluent effect/io/Effect runA
  */
 export function runA<R, E, A, W3, S1, S3, S4 extends S1>(
-  self: Effect<A, E, FixEnv<R, W3, S1, S3>>,
+  self: Effect.Effect<A, E, FixEnv<R, W3, S1, S3>>,
   s: S4
 ) {
   return Effect.map(runAll(self, s), ([log, r]) => tuple(log, Effect.map(r, ([, a]) => a)))
@@ -223,7 +228,9 @@ export function runA<R, E, A, W3, S1, S3, S4 extends S1>(
 /**
  * @tsplus static Pure.Ops modifyWith
  */
-export function modify<S2, A, S3>(mod: (s: S2) => readonly [S3, A]): Effect<A, never, { env: PureEnv<never, S2, S3> }> {
+export function modify<S2, A, S3>(
+  mod: (s: S2) => readonly [S3, A]
+): Effect.Effect<A, never, { env: PureEnv<never, S2, S3> }> {
   return Effect.map(castTag<never, S3, S2>(), (_) =>
     Effect.map(Effect.sync(() => mod(_.env.state)), ([s, a]) => {
       _.env.state = s as any
@@ -235,8 +242,8 @@ export function modify<S2, A, S3>(mod: (s: S2) => readonly [S3, A]): Effect<A, n
  * @tsplus static Pure.Ops modifyWithEffect
  */
 export function modifyM<W, R, E, A, S2, S3>(
-  mod: (s: S2) => Effect<readonly [S3, A], E, FixEnv<R, W, S2, S3>>
-): Effect<A, E, FixEnv<R, W, S2, S3>> {
+  mod: (s: S2) => Effect.Effect<readonly [S3, A], E, FixEnv<R, W, S2, S3>>
+): Effect.Effect<A, E, FixEnv<R, W, S2, S3>> {
   // return serviceWithEffect(_ => Ref.modifyM_(_.state, mod))
   return Effect.flatMap(
     castTag<W, S3, S2>(),
@@ -258,8 +265,8 @@ export function updateWith<S2, S3>(upd: (s: S2) => S3) {
  * @tsplus static Pure.Ops updateWithEffect
  */
 export function updateWithEffect<W, R, E, S2, S3>(
-  upd: (s: S2, log: (evt: W) => PureLogT<W>) => Effect<S3, E, FixEnv<R, W, S2, S3>>
-): Effect<S3, E, FixEnv<R, W, S2, S3>> {
+  upd: (s: S2, log: (evt: W) => PureLogT<W>) => Effect.Effect<S3, E, FixEnv<R, W, S2, S3>>
+): Effect.Effect<S3, E, FixEnv<R, W, S2, S3>> {
   return modifyM((_: S2) => Effect.map(upd(_, log), (_) => tuple(_, _)))
 }
 
@@ -317,12 +324,12 @@ export const Pure: PureOps = {
 // function makeDSL_<W, S, S2 = S>() {
 //   const tag = tagg as unknown as Tag<PureEnvEnv<W, S, S2>>
 //   const get = Effect.serviceWithEffect(tag, _ => _.env.state.get)
-//   function getM<R, E, A>(self: (s: S2) => Effect<R, E, A>) { return get.flatMap(self) }
+//   function getM<R, E, A>(self: (s: S2) => Effect.Effect<R, E, A>) { return get.flatMap(self) }
 //   function get_<A>(self: (s: S2) => A) { return get.map(self)}
 //   function set(s: S2) {
 //     return Effect.serviceWithEffect(tag, _ => _.env.state.set(s))
 //   }
-//   function log<W2>(w: W2): Effect<{
+//   function log<W2>(w: W2): Effect.Effect<{
 //     env: PureEnv<W | W2, never, never>;
 // }, never, void> {
 //     return Effect.serviceWithEffect(tag, _ => _.env.log.update(l => l.append(w as any))) as any
@@ -334,7 +341,7 @@ export const Pure: PureOps = {
 //     set
 //   }
 
-//   function modify<A, S3>(mod: (s: S2) => readonly [S3, A]): Effect<{
+//   function modify<A, S3>(mod: (s: S2) => readonly [S3, A]): Effect.Effect<{
 //     env: PureEnv<W, S, S3>;
 // }, never, A> {
 //     return Effect.serviceWithEffect(tag, _ =>
@@ -342,7 +349,7 @@ export const Pure: PureOps = {
 //     ) as any
 //   }
 
-//   function modifyM<R, E, A, S3>(mod: (s: S2) => Effect<R, E, readonly [S3, A]>): Effect<{
+//   function modifyM<R, E, A, S3>(mod: (s: S2) => Effect.Effect<R, E, readonly [S3, A]>): Effect.Effect<{
 //     env: PureEnv<W, S, S3>;
 // } | R, E, A> {
 //     // return serviceWithEffect(_ => Ref.modifyM_(_.state, mod))
@@ -355,16 +362,16 @@ export const Pure: PureOps = {
 //     return modify(_ => tuple(upd(_), void 0 as void))
 //   }
 
-//   function updateM<R, E, S3>(upd: (s: S2) => Effect<R, E, S3>) {
+//   function updateM<R, E, S3>(upd: (s: S2) => Effect.Effect<R, E, S3>) {
 //     return modifyM(_ => upd(_).map(_ => tuple(_, void 0 as void)))
 //   }
 
 //   const accessLog = Effect.serviceWithEffect(tag, _ => _.env.log.get)
 
 //   function runAll<R, E, A, W3, S1, S3, S4 extends S1>(
-//     self: Effect<FixEnv<R, W3, S1, S3>, E, A>,
+//     self: Effect.Effect<FixEnv<R, W3, S1, S3>, E, A>,
 //     s: S4
-//   ): Effect<Exclude<R, { env: PureEnv<W3, S1, S3>}>, never, readonly [Chunk<W3>, Either.Either<E, readonly [S3, A]>]> {
+//   ): Effect.Effect<Exclude<R, { env: PureEnv<W3, S1, S3>}>, never, readonly [Chunk<W3>, Either.Either<E, readonly [S3, A]>]> {
 //     return self.flatMap(x =>
 //       Effect.serviceWithEffect(tag, ({ env: _ }) =>
 //         Effect.all({ log: _.log.get, state: _.state.get })
@@ -383,14 +390,14 @@ export const Pure: PureOps = {
 //   }
 
 //   function runResult<R, E, A, W3, S1, S3, S4 extends S1>(
-//     self: Effect<FixEnv<R, W3, S1, S3>, E, A>,
+//     self: Effect.Effect<FixEnv<R, W3, S1, S3>, E, A>,
 //     s: S4
 //   ) {
 //     return runAll(self, s).map(([log, r]) => tuple(log, r.map(([s]) => s)))
 //   }
 
 //   function runA<R, E, A, W3, S1, S3, S4 extends S1>(
-//     self: Effect<FixEnv<R, W3, S1, S3>, E, A>,
+//     self: Effect.Effect<FixEnv<R, W3, S1, S3>, E, A>,
 //     s: S4
 //   ) {
 //     return runAll(self, s).map(([log, r]) => tuple(log, r.map(([, a]) => a)))
@@ -423,7 +430,7 @@ export const Pure: PureOps = {
 // /**
 //  * @tsplus fluent Pure/DSL modifyWithEffect
 //  */
-// export function dslmodifyM<W, S, R, E, A>(dsl: ProgramDSL<W, S>, mod: (s: S, dsl: ProgramDSL<W, S>) => Effect<R, E, readonly [S, A]>) {
+// export function dslmodifyM<W, S, R, E, A>(dsl: ProgramDSL<W, S>, mod: (s: S, dsl: ProgramDSL<W, S>) => Effect.Effect<R, E, readonly [S, A]>) {
 //     return dsl.modifyM(_ => mod(_, dsl))
 // }
 
@@ -437,7 +444,7 @@ export const Pure: PureOps = {
 // /**
 //  * @tsplus fluent Pure/DSL updateWithEffect
 //  */
-// export function dslupdateM<W, S, R, E, S2, S3>(dsl: ProgramDSL<W, S, S2>, upd: (s: S2, dsl: ProgramDSL<W, S, S2>) => Effect<R, E, S3>) {
+// export function dslupdateM<W, S, R, E, S2, S3>(dsl: ProgramDSL<W, S, S2>, upd: (s: S2, dsl: ProgramDSL<W, S, S2>) => Effect.Effect<R, E, S3>) {
 //     return dsl.updateM(_ => upd(_, dsl))
 // }
 
@@ -465,9 +472,9 @@ export const Pure: PureOps = {
 //   }
 // }
 
-// declare type Eff1 = Effect<PureEnv2<string, PrintingPickItem, PickItem>, never, void>
+// declare type Eff1 = Effect.Effect<PureEnv2<string, PrintingPickItem, PickItem>, never, void>
 
-// function flatMap<R, R2, E, E2, A, A2, W, S, S2>(self: Effect<R| PureEnv2<W, S, S2>, E, A>, (s: S) => Effect<R2 | PureEnv2>) {
+// function flatMap<R, R2, E, E2, A, A2, W, S, S2>(self: Effect.Effect<R| PureEnv2<W, S, S2>, E, A>, (s: S) => Effect.Effect<R2 | PureEnv2>) {
 // }
 
 // export interface PureEnv2<W, S, S2> extends PureState2<S, S2>, PureLog<W> {}
@@ -491,7 +498,7 @@ export const Pure: PureOps = {
 //   $(Pure.log<"hallo" | "hello" | 5>(5))
 // })
 
-// declare const a: Effect<
+// declare const a: Effect.Effect<
 //   | {
 //     env: PureEnv<never, never, {
 //       a: 1
