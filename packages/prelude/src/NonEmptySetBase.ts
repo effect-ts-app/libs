@@ -1,6 +1,7 @@
+import type { Equivalence, Order } from "effect"
+import { Option } from "effect"
+import type { NonEmptyReadonlyArray } from "effect/Array"
 import { flow, pipe } from "./Function.js"
-import type { Equivalence, NonEmptyReadonlyArray, Order } from "./Prelude.js"
-import { Option } from "./Prelude.js"
 import {
   filter_,
   filterMap,
@@ -27,7 +28,7 @@ export interface NonEmptyBrand {
  */
 export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 
-function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
+function make_<A>(ord: Order.Order<A>, eq_?: Equivalence.Equivalence<A>) {
   const eq = eq_
     ?? ((x, y) => ord(x, y) === 0)
 
@@ -77,14 +78,14 @@ function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
       set: NonEmptySet<A>,
       f: (x: A) => A
     ) => NonEmptySet<A>,
-    filterMap: (f: (a: A) => Option<A>) => flow(filterMap__<A>((a) => f(a)), fromSet),
+    filterMap: (f: (a: A) => Option.Option<A>) => flow(filterMap__<A>((a) => f(a)), fromSet),
     filterMap_: flow(filterMap_(eq), fromSet)
   }
   // TODO: extend
 }
 
 class Wrapper<A> {
-  wrapped(ord: Order<A>, eq?: Equivalence<A>) {
+  wrapped(ord: Order.Order<A>, eq?: Equivalence.Equivalence<A>) {
     return make_(ord, eq)
   }
 }
@@ -92,8 +93,8 @@ class Wrapper<A> {
 export interface NonEmptySetSchemaExtensions<A> extends ReturnType<Wrapper<A>["wrapped"]> {}
 
 export const make: <A>(
-  ord: Order<A>,
-  eq?: Equivalence<A>
+  ord: Order.Order<A>,
+  eq?: Equivalence.Equivalence<A>
 ) => NonEmptySetSchemaExtensions<A> = make_
 
 export function fromSet<A>(set: Set<A>) {

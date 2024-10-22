@@ -1,11 +1,10 @@
 // ets_tracing: off
 
 import { Array, Option } from "effect"
-import type { Either } from "effect"
+import type { Either, Equivalence, Order } from "effect"
 import { not } from "effect/Predicate"
 import type { Predicate, Refinement } from "./Function.js"
 import { identity, pipe, tuple } from "./Function.js"
-import type { Equivalence, Order } from "./Prelude.js"
 
 /**
  * @tsplus fluent ets/Set find
@@ -49,7 +48,7 @@ export const empty: Set<never> = new Set()
 /**
  * The set of elements which are in both the first and second set
  */
-export function intersection_<A>(E: Equivalence<A>): (l: Set<A>, r: Set<A>) => Set<A> {
+export function intersection_<A>(E: Equivalence.Equivalence<A>): (l: Set<A>, r: Set<A>) => Set<A> {
   const elemE = elem_(E)
   return (x, y) => {
     if (x === empty || y === empty) {
@@ -68,7 +67,7 @@ export function intersection_<A>(E: Equivalence<A>): (l: Set<A>, r: Set<A>) => S
 /**
  * The set of elements which are in both the first and second set
  */
-export function intersection<A>(E: Equivalence<A>): (r: Set<A>) => (l: Set<A>) => Set<A> {
+export function intersection<A>(E: Equivalence.Equivalence<A>): (r: Set<A>) => (l: Set<A>) => Set<A> {
   const i = intersection_(E)
   return (x) => (y) => i(x, y)
 }
@@ -108,7 +107,7 @@ export function toMutable<A>(s: Set<A>): MutableSet<A> {
 /**
  * Convert a set to an Array
  */
-export function toArray<A>(O: Order<A>): (set: Set<A>) => ReadonlyArray<A> {
+export function toArray<A>(O: Order.Order<A>): (set: Set<A>) => ReadonlyArray<A> {
   return (x) => {
     const r: Array<A> = []
     x.forEach((e) => r.push(e))
@@ -119,14 +118,14 @@ export function toArray<A>(O: Order<A>): (set: Set<A>) => ReadonlyArray<A> {
 /**
  * Convert a set to an Array
  */
-export function toArray_<A>(x: Set<A>, O: Order<A>): ReadonlyArray<A> {
+export function toArray_<A>(x: Set<A>, O: Order.Order<A>): ReadonlyArray<A> {
   return toArray(O)(x)
 }
 
 // /**
 //  * Get Equivalence for Setgiven Equivalence for element
 //  */
-// export function getEquivalence<A>(E: Equivalence<A>): Equivalence<Set<A>> {
+// export function getEquivalence.Equivalence<A>(E: Equivalence.Equivalence<A>): Equivalence.Equivalence<Set<A>> {
 //   const subsetE = isSubset_(E)
 //   return makeEquivalence((x, y) => subsetE(x, y) && subsetE(y, x))
 // }
@@ -162,7 +161,7 @@ export function some_<A>(set: Set<A>, predicate: Predicate<A>): boolean {
 /**
  * Projects a Set through a function
  */
-export function map<B>(E: Equivalence<B>): <A>(f: (x: A) => B) => (set: Set<A>) => Set<B> {
+export function map<B>(E: Equivalence.Equivalence<B>): <A>(f: (x: A) => B) => (set: Set<A>) => Set<B> {
   const m = map_(E)
   return (f) => (set) => m(set, f)
 }
@@ -170,7 +169,7 @@ export function map<B>(E: Equivalence<B>): <A>(f: (x: A) => B) => (set: Set<A>) 
 /**
  * Projects a Set through a function
  */
-export function map_<B>(E: Equivalence<B>): <A>(set: Set<A>, f: (x: A) => B) => Set<B> {
+export function map_<B>(E: Equivalence.Equivalence<B>): <A>(set: Set<A>, f: (x: A) => B) => Set<B> {
   const elemE = elem_(E)
   return (set, f) => {
     const r = new Set<B>()
@@ -202,7 +201,7 @@ export function every_<A>(set: Set<A>, predicate: Predicate<A>): boolean {
  * Map + Flatten
  */
 export function chain<B>(
-  E: Equivalence<B>
+  E: Equivalence.Equivalence<B>
 ): <A>(f: (x: A) => Set<B>) => (set: Set<A>) => Set<B> {
   const c = chain_(E)
   return (f) => (set) => c(set, f)
@@ -212,7 +211,7 @@ export function chain<B>(
  * Map + Flatten
  */
 export function chain_<B>(
-  E: Equivalence<B>
+  E: Equivalence.Equivalence<B>
 ): <A>(set: Set<A>, f: (x: A) => Set<B>) => Set<B> {
   const elemE = elem_(E)
   return (set, f) => {
@@ -231,7 +230,7 @@ export function chain_<B>(
 /**
  * `true` if and only if every element in the first set is an element of the second set
  */
-export function isSubset<A>(E: Equivalence<A>): (x: Set<A>, y: Set<A>) => boolean {
+export function isSubset<A>(E: Equivalence.Equivalence<A>): (x: Set<A>, y: Set<A>) => boolean {
   const i = isSubset_(E)
   return (x, y) => i(y, x)
 }
@@ -239,7 +238,7 @@ export function isSubset<A>(E: Equivalence<A>): (x: Set<A>, y: Set<A>) => boolea
 /**
  * `true` if and only if every element in the first set is an element of the second set
  */
-export function isSubset_<A>(E: Equivalence<A>): (x: Set<A>, y: Set<A>) => boolean {
+export function isSubset_<A>(E: Equivalence.Equivalence<A>): (x: Set<A>, y: Set<A>) => boolean {
   const elemE = elem_(E)
   return (x, y) => every((a: A) => elemE(y, a))(x)
 }
@@ -325,7 +324,7 @@ export function partition_<A>(
 /**
  * Test if a value is a member of a set
  */
-export function elem_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => boolean {
+export function elem_<A>(E: Equivalence.Equivalence<A>): (set: Set<A>, a: A) => boolean {
   return (set, a) => {
     const values = set.values()
     let e: Next<A>
@@ -340,7 +339,7 @@ export function elem_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => boolean {
 /**
  * Test if a value is a member of a set
  */
-export function elem<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => boolean {
+export function elem<A>(E: Equivalence.Equivalence<A>): (a: A) => (set: Set<A>) => boolean {
   const e = elem_(E)
   return (a) => (set) => e(set, a)
 }
@@ -349,8 +348,8 @@ export function elem<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => boolean {
  * Partition elements according to f
  */
 export function partitionMap<B, C>(
-  EB: Equivalence<B>,
-  EC: Equivalence<C>
+  EB: Equivalence.Equivalence<B>,
+  EC: Equivalence.Equivalence<C>
 ): <A>(f: (a: A) => Either.Either<C, B>) => (set: Set<A>) => readonly [Set<B>, Set<C>] {
   const pm = partitionMap_(EB, EC)
   return <A>(f: (a: A) => Either.Either<C, B>) => (set: Set<A>) => pm(set, f)
@@ -360,8 +359,8 @@ export function partitionMap<B, C>(
  * Partition elements according to f
  */
 export function partitionMap_<B, C>(
-  EB: Equivalence<B>,
-  EC: Equivalence<C>
+  EB: Equivalence.Equivalence<B>,
+  EC: Equivalence.Equivalence<C>
 ): <A>(set: Set<A>, f: (a: A) => Either.Either<C, B>) => readonly [Set<B>, Set<C>] {
   return <A>(set: Set<A>, f: (a: A) => Either.Either<C, B>) => {
     const values = set.values()
@@ -392,7 +391,7 @@ export function partitionMap_<B, C>(
 /**
  * Form the set difference (`x` - `y`)
  */
-export function difference_<A>(E: Equivalence<A>): (l: Set<A>, r: Set<A>) => Set<A> {
+export function difference_<A>(E: Equivalence.Equivalence<A>): (l: Set<A>, r: Set<A>) => Set<A> {
   const elemE = elem_(E)
   return (x, y) => filter((a: A) => !elemE(y, a))(x)
 }
@@ -400,7 +399,7 @@ export function difference_<A>(E: Equivalence<A>): (l: Set<A>, r: Set<A>) => Set
 /**
  * Form the set difference (`x` - `y`)
  */
-export function difference<A>(E: Equivalence<A>): (x: Set<A>, y: Set<A>) => Set<A> {
+export function difference<A>(E: Equivalence.Equivalence<A>): (x: Set<A>, y: Set<A>) => Set<A> {
   const diff = difference_(E)
   return (x, y) => diff(x, y)
 }
@@ -409,7 +408,7 @@ export function difference<A>(E: Equivalence<A>): (x: Set<A>, y: Set<A>) => Set<
  * Reduce over the set values
  */
 export function reduce<A>(
-  O: Order<A>
+  O: Order.Order<A>
 ): <B>(b: B, f: (b: B, a: A) => B) => (fa: Set<A>) => B {
   const red = reduce_(O)
   return (b, f) => (fa) => red(fa, b, f)
@@ -419,7 +418,7 @@ export function reduce<A>(
  * Reduce over the set values
  */
 export function reduce_<A>(
-  O: Order<A>
+  O: Order.Order<A>
 ): <B>(fa: Set<A>, b: B, f: (b: B, a: A) => B) => B {
   const toArrayO = toArray(O)
   return (fa, b, f) => toArrayO(fa).reduce(f, b)
@@ -429,7 +428,7 @@ export function reduce_<A>(
 //  * Fold + Map
 //  */
 // export function foldMap<A, M>(
-//   O: Order<A>,
+//   O: Order.Order<A>,
 //   M: Identity<M>
 // ): (f: (a: A) => M) => (fa: Set<A>) => M {
 //   const fm = foldMap_(O, M)
@@ -440,7 +439,7 @@ export function reduce_<A>(
 //  * Fold + Map
 //  */
 // export function foldMap_<A, M>(
-//   O: Order<A>,
+//   O: Order.Order<A>,
 //   M: Identity<M>
 // ): (fa: Set<A>, f: (a: A) => M) => M {
 //   const toArrayO = toArray(O)
@@ -457,7 +456,7 @@ export function singleton<A>(a: A): Set<A> {
 /**
  * Insert a value into a set
  */
-export function insert<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> {
+export function insert<A>(E: Equivalence.Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> {
   const i = insert_(E)
   return (a) => (set) => i(set, a)
 }
@@ -465,7 +464,7 @@ export function insert<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> 
 /**
  * Insert a value into a set
  */
-export function insert_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
+export function insert_<A>(E: Equivalence.Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
   const elemE = elem_(E)
   return (set, a) => {
     if (!elemE(set, a)) {
@@ -481,7 +480,7 @@ export function insert_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
 /**
  * Delete a value from a set
  */
-export function remove<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> {
+export function remove<A>(E: Equivalence.Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> {
   const rem = remove_(E)
   return (a) => (set) => rem(set, a)
 }
@@ -489,14 +488,14 @@ export function remove<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> 
 /**
  * Delete a value from a set
  */
-export function remove_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
+export function remove_<A>(E: Equivalence.Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
   return (set, a) => filter((ax: A) => !E(a, ax))(set)
 }
 
 /**
  * If element is present remove it, if not add it
  */
-export function toggle<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> {
+export function toggle<A>(E: Equivalence.Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> {
   const t = toggle_(E)
   return (a) => (set) => t(set, a)
 }
@@ -504,7 +503,7 @@ export function toggle<A>(E: Equivalence<A>): (a: A) => (set: Set<A>) => Set<A> 
 /**
  * If element is present remove it, if not add it
  */
-export function toggle_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
+export function toggle_<A>(E: Equivalence.Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
   const elemE = elem_(E)
   const removeE = remove(E)
   const insertE = insert(E)
@@ -514,7 +513,7 @@ export function toggle_<A>(E: Equivalence<A>): (set: Set<A>, a: A) => Set<A> {
 /**
  * Create a set from an array
  */
-export function fromArray<A>(E: Equivalence<A>): (as: ReadonlyArray<A>) => Set<A> {
+export function fromArray<A>(E: Equivalence.Equivalence<A>): (as: ReadonlyArray<A>) => Set<A> {
   return (as) => {
     const len = as.length
     const r = new Set<A>()
@@ -532,7 +531,7 @@ export function fromArray<A>(E: Equivalence<A>): (as: ReadonlyArray<A>) => Set<A
 /**
  * Set compaction, remove none
  */
-export function compact<A>(E: Equivalence<A>): (fa: Set<Option.Option<A>>) => Set<A> {
+export function compact<A>(E: Equivalence.Equivalence<A>): (fa: Set<Option.Option<A>>) => Set<A> {
   return filterMap(E)(identity)
 }
 
@@ -540,8 +539,8 @@ export function compact<A>(E: Equivalence<A>): (fa: Set<Option.Option<A>>) => Se
  * Separate elements
  */
 export function separate<E, A>(
-  EE: Equivalence<E>,
-  EA: Equivalence<A>
+  EE: Equivalence.Equivalence<E>,
+  EA: Equivalence.Equivalence<A>
 ): (fa: Set<Either.Either<A, E>>) => readonly [Set<E>, Set<A>] {
   return (fa) => {
     const elemEE = elem_(EE)
@@ -570,7 +569,7 @@ export function separate<E, A>(
  * Filter + Map
  */
 export function filterMap<B>(
-  E: Equivalence<B>
+  E: Equivalence.Equivalence<B>
 ): <A>(f: (a: A) => Option.Option<B>) => (fa: Set<A>) => Set<B> {
   const fm = filterMap_(E)
   return (f) => (fa) => fm(fa, f)
@@ -580,7 +579,7 @@ export function filterMap<B>(
  * Filter + Map
  */
 export function filterMap_<B>(
-  E: Equivalence<B>
+  E: Equivalence.Equivalence<B>
 ): <A>(fa: Set<A>, f: (a: A) => Option.Option<B>) => Set<B> {
   const elemE = elem_(E)
   return (fa, f) => {
@@ -598,7 +597,7 @@ export function filterMap_<B>(
 /**
  * Form the union of two sets
  */
-export function union_<A>(E: Equivalence<A>): (set: Set<A>, y: Set<A>) => Set<A> {
+export function union_<A>(E: Equivalence.Equivalence<A>): (set: Set<A>, y: Set<A>) => Set<A> {
   const elemE = elem_(E)
   return (x, y) => {
     if (x === empty) {
@@ -620,12 +619,12 @@ export function union_<A>(E: Equivalence<A>): (set: Set<A>, y: Set<A>) => Set<A>
 /**
  * Form the union of two sets
  */
-export function union<A>(E: Equivalence<A>): (set: Set<A>, y: Set<A>) => Set<A> {
+export function union<A>(E: Equivalence.Equivalence<A>): (set: Set<A>, y: Set<A>) => Set<A> {
   const u = union_(E)
   return (x, y) => u(x, y)
 }
 
-function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
+function make_<A>(ord: Order.Order<A>, eq_?: Equivalence.Equivalence<A>) {
   const eq = eq_ ?? ((x, y) => ord(x, y) === 0)
 
   const fromArray_ = fromArray(eq)
@@ -662,7 +661,7 @@ function make_<A>(ord: Order<A>, eq_?: Equivalence<A>) {
 }
 
 class Wrapper<A> {
-  wrapped(ord: Order<A>, eq: Equivalence<A>) {
+  wrapped(ord: Order.Order<A>, eq: Equivalence.Equivalence<A>) {
     return make_(ord, eq)
   }
 }
@@ -670,6 +669,6 @@ class Wrapper<A> {
 export interface SetSchemaExtensions<A> extends ReturnType<Wrapper<A>["wrapped"]> {}
 
 export const make: <A>(
-  ord: Order<A>,
-  eq?: Equivalence<A>
+  ord: Order.Order<A>,
+  eq?: Equivalence.Equivalence<A>
 ) => SetSchemaExtensions<A> = make_

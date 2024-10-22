@@ -5,9 +5,9 @@
  * https://github.com/microsoft/TypeScript/issues/52644
  */
 
+import type { Scope } from "effect"
+import { Effect, Layer } from "effect"
 import * as Context from "effect/Context"
-import type { Scope } from "./Prelude.js"
-import { Effect, Layer } from "./Prelude.js"
 
 export * from "effect/Context"
 
@@ -71,17 +71,19 @@ export type ServiceAcessorShape<Self, Type> =
         k in keyof Type as Type[k] extends ((...args: [...infer Args]) => infer Ret)
           ? ((...args: Readonly<Args>) => Ret) extends Type[k] ? k : never
           : k
-      ]: Type[k] extends (...args: [...infer Args]) => Effect<infer A, infer E, infer R>
-        ? (...args: Readonly<Args>) => Effect<A, E, Self | R>
-        : Type[k] extends (...args: [...infer Args]) => infer A ? (...args: Readonly<Args>) => Effect<A, never, Self>
-        : Type[k] extends Effect<infer A, infer E, infer R> ? Effect<A, E, Self | R>
-        : Effect<Type[k], never, Self>
+      ]: Type[k] extends (...args: [...infer Args]) => Effect.Effect<infer A, infer E, infer R>
+        ? (...args: Readonly<Args>) => Effect.Effect<A, E, Self | R>
+        : Type[k] extends (...args: [...infer Args]) => infer A
+          ? (...args: Readonly<Args>) => Effect.Effect<A, never, Self>
+        : Type[k] extends Effect.Effect<infer A, infer E, infer R> ? Effect.Effect<A, E, Self | R>
+        : Effect.Effect<Type[k], never, Self>
     }
     : {})
   & {
     use: <X>(
       body: (_: Type) => X
-    ) => X extends Effect<infer A, infer E, infer R> ? Effect<A, E, R | Self> : Effect<X, never, Self>
+    ) => X extends Effect.Effect<infer A, infer E, infer R> ? Effect.Effect<A, E, R | Self>
+      : Effect.Effect<X, never, Self>
   }
 
 export const proxify = <T extends object>(Tag: T) =>
@@ -116,7 +118,7 @@ export const proxify = <T extends object>(Tag: T) =>
 
 // export const TagMake = <ServiceImpl, R, E, const Key extends string>(
 //   key: Key,
-//   make: Effect<ServiceImpl, E, R>
+//   make: Effect.Effect<ServiceImpl, E, R>
 // ) =>
 // <Id>() => {
 //   const limit = Error.stackTraceLimit
@@ -147,17 +149,17 @@ export const proxify = <T extends object>(Tag: T) =>
 //   const creationError = new Error()
 //   Error.stackTraceLimit = limit
 //   const c: (abstract new(impl: ServiceImpl) => Readonly<ServiceImpl>) & {
-//     toLayer: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, R>
-//     toLayerScoped: <E, R>(eff: Effect<ServiceImpl, E, R>) => Layer<Id, E, Exclude<R, Scope>>
+//     toLayer: <E, R>(eff: Effect.Effect<ServiceImpl, E, R>) => Layer<Id, E, R>
+//     toLayerScoped: <E, R>(eff: Effect.Effect<ServiceImpl, E, R>) => Layer<Id, E, Exclude<R, Scope>>
 //   } = class {
 //     constructor(service: ServiceImpl) {
 //       Object.assign(this, service)
 //     }
 //     static _key?: string
-//     static toLayer = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
+//     static toLayer = <E, R>(eff: Effect.Effect<ServiceImpl, E, R>) => {
 //       return Layer.effect(this as any, eff)
 //     }
-//     static toLayerScoped = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
+//     static toLayerScoped = <E, R>(eff: Effect.Effect<ServiceImpl, E, R>) => {
 //       return Layer.scoped(this as any, eff)
 //     }
 //     static get key() {
@@ -169,7 +171,7 @@ export const proxify = <T extends object>(Tag: T) =>
 // }
 
 // export const TagMake = <ServiceImpl, R, E>(
-//   make: Effect<ServiceImpl, E, R>,
+//   make: Effect.Effect<ServiceImpl, E, R>,
 //   key?: string
 // ) =>
 // <Id, Service = Id>() => {
@@ -178,12 +180,12 @@ export const proxify = <T extends object>(Tag: T) =>
 //   const creationError = new Error()
 //   Error.stackTraceLimit = limit
 //   const c: (abstract new(impl: ServiceImpl) => Readonly<ServiceImpl>) & {
-//     toLayer: { (): Layer<Id, E, R>; <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, R> }
+//     toLayer: { (): Layer<Id, E, R>; <E, R>(eff: Effect.Effect<ServiceImpl, E, R>): Layer<Id, E, R> }
 //     toLayerScoped: {
 //       (): Layer<Id, E, Exclude<R, Scope>>
-//       <E, R>(eff: Effect<ServiceImpl, E, R>): Layer<Id, E, Exclude<R, Scope>>
+//       <E, R>(eff: Effect.Effect<ServiceImpl, E, R>): Layer<Id, E, Exclude<R, Scope>>
 //     }
-//     make: Effect<Id, E, R>
+//     make: Effect.Effect<Id, E, R>
 //   } = class {
 //     constructor(service: ServiceImpl) {
 //       Object.assign(this, service)
@@ -219,10 +221,12 @@ export function TagId<const Key extends string>(key: Key) {
         service: ServiceImpl
       ) => Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>)
       & {
-        toLayer: <E, R>(eff: Effect<Omit<Id, keyof Context.TagClassShape<any, any>>, E, R>) => Layer<Id, E, R>
+        toLayer: <E, R>(
+          eff: Effect.Effect<Omit<Id, keyof Context.TagClassShape<any, any>>, E, R>
+        ) => Layer.Layer<Id, E, R>
         toLayerScoped: <E, R>(
-          eff: Effect<Omit<Id, keyof Context.TagClassShape<any, any>>, E, R>
-        ) => Layer<Id, E, Exclude<R, Scope>>
+          eff: Effect.Effect<Omit<Id, keyof Context.TagClassShape<any, any>>, E, R>
+        ) => Layer.Layer<Id, E, Exclude<R, Scope.Scope>>
         of: (service: Omit<Id, keyof Context.TagClassShape<any, any>>) => Id
       } = class {
         constructor(service: any) {
@@ -230,10 +234,10 @@ export function TagId<const Key extends string>(key: Key) {
           Object.assign(this, service)
         }
         static of = (service: ServiceImpl) => service
-        static toLayer = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
+        static toLayer = <E, R>(eff: Effect.Effect<ServiceImpl, E, R>) => {
           return Layer.effect(this as any, eff)
         }
-        static toLayerScoped = <E, R>(eff: Effect<ServiceImpl, E, R>) => {
+        static toLayerScoped = <E, R>(eff: Effect.Effect<ServiceImpl, E, R>) => {
           return Layer.scoped(this as any, eff)
         }
       } as any
@@ -244,7 +248,7 @@ export function TagId<const Key extends string>(key: Key) {
 
 export const TagMakeId = <ServiceImpl, R, E, const Key extends string>(
   key: Key,
-  make: Effect<ServiceImpl, E, R>
+  make: Effect.Effect<ServiceImpl, E, R>
 ) =>
 <Id>() => {
   const limit = Error.stackTraceLimit
@@ -257,15 +261,15 @@ export const TagMakeId = <ServiceImpl, R, E, const Key extends string>(
     ) => Readonly<ServiceImpl> & Context.TagClassShape<Key, ServiceImpl>)
     & {
       toLayer: {
-        (): Layer<Id, E, R>
-        <E, R>(eff: Effect<Omit<Id, keyof Context.TagClassShape<any, any>>, E, R>): Layer<Id, E, R>
+        (): Layer.Layer<Id, E, R>
+        <E, R>(eff: Effect.Effect<Omit<Id, keyof Context.TagClassShape<any, any>>, E, R>): Layer.Layer<Id, E, R>
       }
       toLayerScoped: {
-        (): Layer<Id, E, Exclude<R, Scope>>
-        <E, R>(eff: Effect<Context.TagClassShape<any, any>, E, R>): Layer<Id, E, Exclude<R, Scope>>
+        (): Layer.Layer<Id, E, Exclude<R, Scope.Scope>>
+        <E, R>(eff: Effect.Effect<Context.TagClassShape<any, any>, E, R>): Layer.Layer<Id, E, Exclude<R, Scope.Scope>>
       }
       of: (service: Context.TagClassShape<any, any>) => Id
-      make: Effect<Id, E, R>
+      make: Effect.Effect<Id, E, R>
     } = class {
       constructor(service: any) {
         // TODO: instead, wrap the service, and direct calls?

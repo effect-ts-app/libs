@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Effect, Option } from "effect"
 import * as Either from "effect/Either"
 import { dual, isFunction } from "effect/Function"
 import type { GetFieldType, NumericDictionary, PropertyPath } from "lodash"
 import type { Dictionary } from "./Dictionary.js"
 import * as D from "./Dictionary.js"
 import { identity, pipe } from "./Function.js"
-import { Effect, Option } from "./Prelude.js"
 
 // codegen:start {preset: barrel, include: ./utils/*.ts, nodir: false }
 export * from "./utils/effectify.js"
@@ -139,7 +139,7 @@ export const unsafeRight = <E, A>(ei: Either.Either<A, E>) => {
   return ei.right
 }
 
-export const unsafeSome = (makeErrorMessage: () => string) => <A>(o: Option<A>) => {
+export const unsafeSome = (makeErrorMessage: () => string) => <A>(o: Option.Option<A>) => {
   if (Option.isNone(o)) {
     throw new Error(makeErrorMessage())
   }
@@ -773,7 +773,7 @@ export function arrayMoveDropUndefined<T>(
 }
 
 export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
-  return (arrInput: ReadonlyArray<T | undefined>): Option<ReadonlyArray<T>> => {
+  return (arrInput: ReadonlyArray<T | undefined>): Option.Option<ReadonlyArray<T>> => {
     const ar = [...arrInput]
     const index = ar.findIndex((x) => x === el)
     if (index === -1) {
@@ -784,7 +784,7 @@ export function arMoveElDropUndefined<T>(el: T, newIndex: number) {
 }
 
 export function setMoveElDropUndefined<T>(el: T, newIndex: number) {
-  return (arrInput: ReadonlySet<T | undefined>): Option<ReadonlySet<T>> =>
+  return (arrInput: ReadonlySet<T | undefined>): Option.Option<ReadonlySet<T>> =>
     pipe([...arrInput], arMoveElDropUndefined(el, newIndex), Option.map((ar) => new Set(ar)))
 }
 

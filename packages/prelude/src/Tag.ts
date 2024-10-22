@@ -5,7 +5,7 @@
 //   return Effect.serviceWithEffect(self)(f)
 // }
 
-import { Layer } from "./Prelude.js"
+import { Layer } from "effect"
 
 // /**
 //  * @tsplus fluent effect/data/Context/Tag with_

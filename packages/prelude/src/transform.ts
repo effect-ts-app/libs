@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Option } from "effect"
+import type { NonEmptyReadonlyArray } from "effect/Array"
 import type { Misc, Union } from "ts-toolbelt"
-import { Option } from "./Prelude.js"
-import type { NonEmptyReadonlyArray } from "./Prelude.js"
 import type * as SET from "./Set.js"
 
 // type SomeObject = {
@@ -22,7 +22,7 @@ type OptOf<A> = Union.Exclude<
 >
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
-export type TransformRoot<O> = O extends Option<any> ? Transform<OptOf<O>>
+export type TransformRoot<O> = O extends Option.Option<any> ? Transform<OptOf<O>>
   : Transform<O>
 export type Transform<O> = O extends Misc.BuiltIn | Misc.Primitive ? O
   : {
@@ -65,7 +65,7 @@ const encodeOptsAsNullable_ = (value: any, cacheMap: Map<any, any>): any => {
 
   if (value instanceof Object) {
     if (value._tag === "Some" || value._tag === "None") {
-      const v = value as Option<unknown>
+      const v = value as Option.Option<unknown>
       return encodeOptsAsNullable_(Option.getOrNull(v), cacheMap)
     }
     const newObj = {} as Record<string, any>

@@ -60,8 +60,9 @@ export class ServiceBusReceiverFactory extends Context.TagId(
 }>() {
   static readonly Live = (queueName: string) =>
     this.toLayer(Client.pipe(Effect.andThen((cl) => ({
-      make: (waitTillEmpty) => makeReceiver(queueName, waitTillEmpty).pipe(Effect.provideService(Client, cl)),
-      makeSession: (sessionId: string, waitTillEmpty) =>
+      make: (waitTillEmpty: Effect<void>) =>
+        makeReceiver(queueName, waitTillEmpty).pipe(Effect.provideService(Client, cl)),
+      makeSession: (sessionId: string, waitTillEmpty: Effect<void>) =>
         makeReceiver(queueName, waitTillEmpty, sessionId).pipe(Effect.provideService(Client, cl))
     }))))
 }

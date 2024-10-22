@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Add effect cause/exit etc
 
+import type { Chunk, Either, Option } from "effect"
 import type { Effect, EffectTypeId } from "effect/Effect"
-import type { Chunk, Either, Option } from "./Prelude.js"
 
 /**
  * @tsplus unify effect/io/Effect
@@ -20,9 +20,9 @@ export function unifyEffect<X extends { readonly [EffectTypeId]: Effect.Variance
 /**
  * @tsplus unify effect/data/Chunk
  */
-export function unifyChunk<X extends Chunk<any>>(
+export function unifyChunk<X extends Chunk.Chunk<any>>(
   self: X
-): Chunk<[X] extends [Chunk<infer A>] ? A : never> {
+): Chunk.Chunk<[X] extends [Chunk.Chunk<infer A>] ? A : never> {
   return self
 }
 
@@ -45,9 +45,9 @@ export function unifyEither<X extends Either.Either<any, any>>(
  * @tsplus unify effect/data/Option.Some
  * @tsplus unify effect/data/Option.None
  */
-export function unifyOption<X extends Option<any>>(
+export function unifyOption<X extends Option.Option<any>>(
   self: X
-): Option<
+): Option.Option<
   X extends Option.Some<infer A> ? A
     : X extends Option.None<infer A> ? A
     : never

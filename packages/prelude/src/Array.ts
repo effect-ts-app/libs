@@ -1,10 +1,11 @@
+import type { Order } from "effect"
+import { Chunk, Effect } from "effect"
+import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect/Array"
 import * as Array from "effect/Array"
 import * as T from "effect/Effect"
 import type { Predicate } from "./Function.js"
 import { dual, identity, tuple } from "./Function.js"
 import * as Option from "./Option.js"
-import type { NonEmptyArray, NonEmptyReadonlyArray, Order } from "./Prelude.js"
-import { Chunk, Effect } from "./Prelude.js"
 
 /**
  * @tsplus getter ReadonlyArray toNonEmpty
@@ -41,7 +42,7 @@ export function NEROArrayFromArray<T>(ar: ReadonlyArray<T>) {
  * @tsplus pipeable NonEmptyArrayReadonlyArray sortByO
  */
 export function sortByO<A>(
-  ords: Option.Option<NonEmptyReadonlyArray<Order<A>>>
+  ords: Option.Option<NonEmptyReadonlyArray<Order.Order<A>>>
 ): (a: ReadonlyArray<A>) => ReadonlyArray<A> {
   return Option.match(ords, { onNone: () => identity, onSome: (_) => Array.sortBy(..._) })
 }
@@ -119,7 +120,7 @@ export function chunk_<T>(items_: Iterable<T>, size: number) {
 /**
  * @tsplus fluent effect/data/ReadonlyArray/NonEmptyReadonlyArray forEachEffect
  */
-export function forEachEffectNA<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A) => Effect<B, E, R>) {
+export function forEachEffectNA<A, R, E, B>(as: NonEmptyReadonlyArray<A>, f: (a: A) => Effect.Effect<B, E, R>) {
   return Effect.map(T.forEach(as, f), (_) => Option.getOrNull(toNonEmptyArray(_)))
 }
 
