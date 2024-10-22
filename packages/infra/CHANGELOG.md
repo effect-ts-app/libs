@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.1.1
+
+### Patch Changes
+
+- 9c81959: export config
+
 ## 2.1.0
 
 ### Minor Changes
