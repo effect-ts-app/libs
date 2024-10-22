@@ -1,5 +1,17 @@
 # @effect-app/vue
 
+## 2.0.0
+
+### Major Changes
+
+- 13abe12: refactor: merge core into prelude
+
+### Patch Changes
+
+- Updated dependencies [13abe12]
+  - effect-app@2.0.0
+  - @effect-app/vue@2.0.0
+
 ## 1.29.0
 
 ### Minor Changes

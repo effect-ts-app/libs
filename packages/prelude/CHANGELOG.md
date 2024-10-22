@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.0.0
+
+### Major Changes
+
+- 13abe12: refactor: merge core into prelude
+
 ## 1.32.0
 
 ### Minor Changes

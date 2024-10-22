@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 1.0.0
+
+### Major Changes
+
+- 13abe12: refactor: merge core into prelude
+
 ## 0.90.0
 
 ### Minor Changes

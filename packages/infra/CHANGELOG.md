@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 2.0.0
+
+### Major Changes
+
+- 13abe12: refactor: merge core into prelude
+
+### Patch Changes
+
+- Updated dependencies [13abe12]
+  - @effect-app/infra-adapters@2.0.0
+  - effect-app@2.0.0
+
 ## 1.49.0
 
 ### Minor Changes
