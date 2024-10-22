@@ -15,6 +15,7 @@ export * as Layer from "effect/Layer"
 export * as Option from "effect/Option"
 export * as Order from "effect/Order"
 export * as Ref from "effect/Ref"
+export * as Schema from "effect/Schema"
 export * as Scope from "effect/Scope"
 
 export {} from "effect-app/Effect"
