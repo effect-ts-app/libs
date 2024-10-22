@@ -1,11 +1,11 @@
 /**
  * @since 1.0.0
  */
+import type { Equal, Redacted } from "effect"
+import { Config } from "effect"
 import type * as Chunk from "effect/Chunk"
 import * as Either from "effect/Either"
 import type { SecretTypeId } from "effect/Secret"
-import type { Equal, Redacted } from "../lib.js"
-import { Config } from "../lib.js"
 import * as internal from "./internal/configSecretURL.js"
 
 // /**
@@ -97,7 +97,7 @@ export const unsafeWipe: (self: SecretURL) => void = internal.unsafeWipe
 /**
  * @tsplus static effect/io/Config.Ops secretURL
  */
-export const secretURL = (name?: string): Config<SecretURL> => {
+export const secretURL = (name?: string): Config.Config<SecretURL> => {
   const config = Config.primitive(
     "a secret property",
     (text) => Either.right(fromString(text))
