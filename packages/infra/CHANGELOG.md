@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.3.1
+
+### Patch Changes
+
+- 77a27ec: simpler middleware
+
 ## 2.3.0
 
 ### Minor Changes
