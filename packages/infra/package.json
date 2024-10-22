@@ -120,16 +120,6 @@
         "default": "./_cjs/api/reportError.cjs"
       }
     },
-    "./api/routing": {
-      "import": {
-        "types": "./dist/api/routing.d.ts",
-        "default": "./dist/api/routing.js"
-      },
-      "require": {
-        "types": "./dist/api/routing.d.ts",
-        "default": "./_cjs/api/routing.cjs"
-      }
-    },
     "./api/routing/DynamicMiddleware": {
       "import": {
         "types": "./dist/api/routing/DynamicMiddleware.d.ts",
@@ -148,16 +138,6 @@
       "require": {
         "types": "./dist/api/routing/schema/jwt.d.ts",
         "default": "./_cjs/api/routing/schema/jwt.cjs"
-      }
-    },
-    "./api/routing2": {
-      "import": {
-        "types": "./dist/api/routing2.d.ts",
-        "default": "./dist/api/routing2.js"
-      },
-      "require": {
-        "types": "./dist/api/routing2.d.ts",
-        "default": "./_cjs/api/routing2.cjs"
       }
     },
     "./api/routing3": {

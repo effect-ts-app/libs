@@ -143,8 +143,8 @@ type Filter<T> = {
   [K in keyof T as T[K] extends S.Schema.All & { success: S.Schema.Any; failure: S.Schema.Any } ? K : never]: T[K]
 }
 
-export interface ExtendedMiddleware<Context, CTXMap extends Record<string, RPCContextMap.Any>>
-  extends Middleware<Context, CTXMap>
+export interface ExtendedMiddleware<Context, CTXMap extends Record<string, RPCContextMap.Any>, R>
+  extends Middleware<Context, CTXMap, R>
 {
   // TODO
   makeContext: Effect<
@@ -173,7 +173,8 @@ type Match<
   Rsc extends Record<string, any>,
   CTXMap extends Record<string, any>,
   RT extends "raw" | "d",
-  Key extends keyof Rsc
+  Key extends keyof Rsc,
+  Context
 > = {
   // TODO: deal with HandleVoid and ability to extends from GetSuccessShape...
   // aka we want to make sure that the return type is void if the success is void,
@@ -188,7 +189,10 @@ type Match<
     Handler<
       Rsc[Key],
       RT,
-      Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
+      Exclude<
+        Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>,
+        HttpRouter.HttpRouter.Provided
+      >
     >
   >
 
@@ -200,27 +204,31 @@ type Match<
     Handler<
       Rsc[Key],
       RT,
-      Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>
+      Exclude<
+        Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[Key]["config"]>>,
+        HttpRouter.HttpRouter.Provided
+      >
     >
   >
 }
 
 export type RouteMatcher<
   CTXMap extends Record<string, any>,
-  Rsc extends Record<string, any>
+  Rsc extends Record<string, any>,
+  Context
 > = {
   // use Rsc as Key over using Keys, so that the Go To on X.Action remain in tact in Controllers files
   /**
    * Requires the Type shape
    */
-  [Key in keyof Filter<Rsc>]: Match<Rsc, CTXMap, "d", Key> & {
+  [Key in keyof Filter<Rsc>]: Match<Rsc, CTXMap, "d", Key, Context> & {
     success: Rsc[Key]["success"]
     successRaw: S.SchemaClass<S.Schema.Encoded<Rsc[Key]["success"]>>
     failure: Rsc[Key]["failure"]
     /**
      * Requires the Encoded shape (e.g directly undecoded from DB, so that we don't do multiple Decode/Encode)
      */
-    raw: Match<Rsc, CTXMap, "raw", Key>
+    raw: Match<Rsc, CTXMap, "raw", Key, Context>
   }
 }
 // export interface RouteMatcher<
@@ -229,11 +237,10 @@ export type RouteMatcher<
 //   Rsc extends Filtered
 // > extends RouteMatcherInt<Filtered, CTXMap, Rsc> {}
 
-export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.Any>>(
-  middleware: ExtendedMiddleware<Context, CTXMap>,
+export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.Any>, RMW>(
+  middleware: ExtendedMiddleware<Context, CTXMap, RMW>,
   devMode: boolean
 ) => {
-  const rpc = makeRpc(middleware)
   function matchFor<
     const ModuleName extends string,
     const Rsc extends Record<string, any>
@@ -288,7 +295,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
         })
         return prev
       },
-      {} as RouteMatcher<CTXMap, Rsc>
+      {} as RouteMatcher<CTXMap, Rsc, Context>
     )
 
     type Keys = keyof Filtered
@@ -315,13 +322,16 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
           | RPCRouteR<
             { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
           >,
-          { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
+          | { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
+          | HttpRouter.HttpRouter.Provided
         >
       > = (class Router extends HttpRouter.Tag(`${meta.moduleName}Router`)<Router>() {}) as any
 
       const layer = r.use((router) =>
         Effect.gen(function*() {
           const controllers = yield* make(items)
+          const rpc = yield* makeRpc(middleware)
+
           // return make.pipe(Effect.map((c) => controllers(c, layers)))
           const mapped = typedKeysOf(filtered).reduce((acc, cur) => {
             const handler = controllers[cur as keyof typeof controllers]
@@ -439,6 +449,7 @@ export const makeRouter = <Context, CTXMap extends Record<string, RPCContextMap.
         Router,
         { [k in keyof TLayers]: Layer.Layer.Error<TLayers[k]> }[number] | E,
         | { [k in keyof TLayers]: Layer.Layer.Context<TLayers[k]> }[number]
+        | RMW
         | Exclude<R, { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]>
       >
 
