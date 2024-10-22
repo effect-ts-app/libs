@@ -449,7 +449,7 @@ export const makeRouter = <
       const routes = layer.pipe(
         Layer.provideMerge(r.Live),
         layers ? Layer.provide(layers) as any : (_) => _,
-        Layer.provide(middleware.dependencies as any)
+        middleware.dependencies ? Layer.provide(middleware.dependencies as any) : (_) => _
       ) as Layer.Layer<
         Router,
         { [k in keyof TLayers]: Layer.Layer.Error<TLayers[k]> }[number] | E,
