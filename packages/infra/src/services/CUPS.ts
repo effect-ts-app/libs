@@ -92,16 +92,23 @@ function* buildListArgs(config?: { host?: string | undefined }) {
   }
 }
 
+export const CUPSConfig = Config.all({
+  server: Config
+    .string("server")
+    .pipe(
+      Config.map((s) => new URL(s)),
+      Config.option,
+      Config.nested("cups")
+    )
+})
+
 export class CUPS extends Effect.Service<CUPS>()("effect-app/CUPS", {
   effect: Effect.gen(function*() {
-    const cupsServer = yield* Config.string("cupsServer").pipe(
-      Config.mapAttempt((_) => new URL(_)),
-      Config.withDefault(undefined)
-    )
+    const config = yield* CUPSConfig
     function print(buffer: ArrayBuffer, printerId: PrinterId, ...options: string[]) {
       const _print = printBuffer({
         id: printerId,
-        url: cupsServer
+        url: config.server.value
       }, options)
       return _print(buffer)
     }
@@ -110,9 +117,9 @@ export class CUPS extends Effect.Service<CUPS>()("effect-app/CUPS", {
       printFile: (filePath: string, printerId: PrinterId, ...options: string[]) =>
         printFile({
           id: printerId,
-          url: cupsServer
+          url: config.server.value
         }, options)(filePath),
-      getAvailablePrinters: getAvailablePrinters(cupsServer?.host)
+      getAvailablePrinters: getAvailablePrinters(config.server.value?.host)
     }
   })
 }) {
