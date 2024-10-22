@@ -11,9 +11,6 @@
   ],
   "references": [
     {
-      "path": "packages/infra-adapters"
-    },
-    {
       "path": "packages/cli"
     },
     {

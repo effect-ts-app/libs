@@ -1,8 +1,8 @@
-import { setupRequestContextFromCurrent } from "@effect-app/infra/api/setupRequest"
-import { reportError } from "@effect-app/infra/errorReporter"
 import { Duration, Effect, pipe, S, Schedule, Stream } from "effect-app"
 import { HttpHeaders, HttpServerResponse } from "effect-app/http"
+import { reportError } from "../../errorReporter.js"
 import { InfraLogger } from "../../logger.js"
+import { setupRequestContextFromCurrent } from "../setupRequest.js"
 
 // Tell the client to retry every 10 seconds if connectivity is lost
 const setRetry = Stream.succeed("retry: 10000")

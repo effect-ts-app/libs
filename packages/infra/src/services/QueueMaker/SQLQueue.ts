@@ -1,4 +1,3 @@
-import { Model } from "@effect-app/infra-adapters/SQL"
 import { getRequestContext, setupRequestContext } from "@effect-app/infra/api/setupRequest"
 import { reportNonInterruptedFailure } from "@effect-app/infra/services/QueueMaker/errors"
 import type { QueueBase } from "@effect-app/infra/services/QueueMaker/service"
@@ -10,6 +9,7 @@ import { Effect, Fiber, Option, S, Tracer } from "effect-app"
 import type { NonEmptyString255 } from "effect-app/Schema"
 import { pretty } from "effect-app/utils"
 import { InfraLogger } from "../../logger.js"
+import { Model } from "../adapters/SQL.js"
 
 export const QueueId = S.Number.pipe(S.brand("QueueId"))
 export type QueueId = typeof QueueId.Type

@@ -1,9 +1,9 @@
-import { MemQueue } from "@effect-app/infra-adapters/memQueue"
 import { Tracer } from "effect"
 import { Effect, Fiber, flow, S } from "effect-app"
 import { pretty } from "effect-app/utils"
 import { getRequestContext, setupRequestContext } from "../../api/setupRequest.js"
 import { InfraLogger } from "../../logger.js"
+import { MemQueue } from "../adapters/memQueue.js"
 import { reportNonInterruptedFailure } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 

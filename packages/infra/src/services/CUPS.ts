@@ -1,44 +1,17 @@
+import type { FileOptions } from "@effect-app/infra/fileUtil"
+import { tempFile } from "@effect-app/infra/fileUtil"
 import cp from "child_process"
-import { Effect, Predicate } from "effect-app"
+import { Config, Effect, Layer, Predicate } from "effect-app"
 import { NonEmptyString255 } from "effect-app/Schema"
 import { pretty } from "effect-app/utils"
 import fs from "fs"
 import os from "os"
 import path from "path"
 import util from "util"
-import type { FileOptions } from "../fileUtil.js"
-import { tempFile } from "../fileUtil.js"
 import { InfraLogger } from "../logger.js"
-import { CUPS } from "./service.js"
-import type { PrinterId } from "./service.js"
 
-/**
- * @tsplus static CUPS.Ops Layer
- */
-export function CUPSLayer(cupsServer?: URL) {
-  return CUPS.toLayer(makeCUPS(cupsServer))
-}
-
-export function makeCUPS(cupsServer?: URL) {
-  return Effect.sync(() => {
-    function print(buffer: ArrayBuffer, printerId: PrinterId, ...options: string[]) {
-      const _print = printBuffer({
-        id: printerId,
-        url: cupsServer
-      }, options)
-      return _print(buffer)
-    }
-    return {
-      print,
-      printFile: (filePath: string, printerId: PrinterId, ...options: string[]) =>
-        printFile({
-          id: printerId,
-          url: cupsServer
-        }, options)(filePath),
-      getAvailablePrinters: getAvailablePrinters(cupsServer?.host)
-    }
-  })
-}
+export const PrinterId = NonEmptyString255
+export type PrinterId = NonEmptyString255
 
 const exec_ = util.promisify(cp.exec)
 const exec = (command: string) =>
@@ -50,6 +23,7 @@ const exec = (command: string) =>
       (r) => (InfraLogger.logDebug(`Executed`).pipe(Effect.annotateLogs("result", pretty(r))))
     )
   )
+
 type PrinterConfig = { url?: URL | undefined; id: string }
 
 function printFile(printer: PrinterConfig | undefined, options: string[]) {
@@ -116,4 +90,62 @@ function* buildListArgs(config?: { host?: string | undefined }) {
   if (config?.host) {
     yield `-h ${config.host}`
   }
+}
+
+export class CUPS extends Effect.Service<CUPS>()("effect-app/CUPS", {
+  effect: Effect.gen(function*() {
+    const cupsServer = yield* Config.string("cupsServer").pipe(
+      Config.mapAttempt((_) => new URL(_)),
+      Config.withDefault(undefined)
+    )
+    function print(buffer: ArrayBuffer, printerId: PrinterId, ...options: string[]) {
+      const _print = printBuffer({
+        id: printerId,
+        url: cupsServer
+      }, options)
+      return _print(buffer)
+    }
+    return {
+      print,
+      printFile: (filePath: string, printerId: PrinterId, ...options: string[]) =>
+        printFile({
+          id: printerId,
+          url: cupsServer
+        }, options)(filePath),
+      getAvailablePrinters: getAvailablePrinters(cupsServer?.host)
+    }
+  })
+}) {
+  static readonly Fake = Layer.effect(
+    this,
+    Effect.sync(() => {
+      return this.make({
+        print: (buffer, printerId, ...options) =>
+          InfraLogger
+            .logInfo("Printing to fake printer")
+            .pipe(
+              Effect.zipRight(Effect.sync(() => ({ stdout: "fake", stderr: "" }))),
+              Effect
+                .annotateLogs({
+                  printerId,
+                  "options": pretty(options),
+                  "bufferSize": buffer.byteLength.toString()
+                })
+            ),
+        printFile: (filePath, printerId, ...options) =>
+          InfraLogger
+            .logInfo("Printing to fake printer")
+            .pipe(
+              Effect.zipRight(Effect.sync(() => ({ stdout: "fake", stderr: "" }))),
+              Effect
+                .annotateLogs({
+                  printerId,
+                  filePath,
+                  "options": pretty(options)
+                })
+            ),
+        getAvailablePrinters: Effect.sync(() => [])
+      })
+    })
+  )
 }

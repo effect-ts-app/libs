@@ -64,7 +64,6 @@
     "@effect-app/cli": "^0.88.0",
     "@effect-app/eslint-codegen-model": "workspace:*",
     "@effect-app/infra": "workspace:*",
-    "@effect-app/infra-adapters": "workspace:*",
     "@effect-app/pnpm-singleton": "workspace:*",
     "@effect/language-service": "0.2.0",
     "@effect/platform": "^0.69.2",

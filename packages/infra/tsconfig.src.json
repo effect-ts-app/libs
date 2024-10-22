@@ -34,8 +34,5 @@
         {
             "path": "../prelude"
         },
-        {
-            "path": "../infra-adapters"
-        }
     ]
 }
