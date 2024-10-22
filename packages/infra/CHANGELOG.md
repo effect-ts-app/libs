@@ -1,5 +1,12 @@
 # @effect-app/infra
 
+## 2.2.0
+
+### Minor Changes
+
+- c0fd2c2: rename routing3 to routing
+- 2e24efe: make middleware execute a constructor
+
 ## 2.1.2
 
 ### Patch Changes
