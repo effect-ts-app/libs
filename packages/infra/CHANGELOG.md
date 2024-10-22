@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.0.2
+
+### Patch Changes
+
+- c2d2d9a: fix: make sure the span in RequestContext is filtered for serialization
+
 ## 2.0.1
 
 ### Patch Changes
