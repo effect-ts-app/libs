@@ -1,5 +1,5 @@
-import { Effect, Either, Option, type Scope } from "effect-app"
 import type { LazyArg } from "effect-app/Function"
+import { Effect, Either, Option, type Scope } from "../lib.js"
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<any, any, infer R>

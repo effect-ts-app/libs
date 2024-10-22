@@ -1,4 +1,4 @@
-import { Redacted } from "effect-app"
+import { Redacted } from "effect"
 import * as Chunk from "effect/Chunk"
 import { SecretTypeId } from "effect/Secret"
 import type * as SecretURL from "../SecretURL.js"

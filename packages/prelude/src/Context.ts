@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/ban-types */
 /**
  * We're doing the long way around here with assignTag, TagBase & TagBaseTagged,
  * because there's a typescript compiler issue where it will complain about Equal.symbol, and Hash.symbol not being accessible.
  * https://github.com/microsoft/TypeScript/issues/52644
  */
 
-import type { Scope } from "effect-app"
-import { Effect, Layer } from "effect-app"
 import * as Context from "effect/Context"
+import type { Scope } from "./Prelude.js"
+import { Effect, Layer } from "./Prelude.js"
 
 export * from "effect/Context"
 
@@ -98,13 +97,12 @@ export const proxify = <T extends object>(Tag: T) =>
         return (body) => Effect.andThen(Tag, body)
       }
       if (prop in Tag) {
-        return Tag[prop]
+        return (Tag as any)[prop]
       }
       if (cache.has(prop)) {
         return cache.get(prop)
       }
-      // @ts-expect-error abc
-      const fn = (...args: Array<any>) => Effect.andThen(Tag, (s: any) => s[prop](...args))
+      const fn = (...args: Array<any>) => Effect.andThen(Tag as any, (s: any) => s[prop](...args))
       // @ts-expect-error abc
       const cn = Effect.andThen(Tag, (s) => s[prop])
       Object.assign(fn, cn)

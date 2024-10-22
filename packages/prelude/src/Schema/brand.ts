@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import type { Option } from "effect-app"
-import * as S from "effect/Schema"
+import type { Option } from "effect"
 import * as B from "effect/Brand"
 import type * as Brand from "effect/Brand"
 import type * as Either from "effect/Either"
+import * as S from "effect/Schema"
 
 export interface Constructor<in out A extends B.Brand<any>> {
   readonly [B.RefinedConstructorsTypeId]: B.RefinedConstructorsTypeId

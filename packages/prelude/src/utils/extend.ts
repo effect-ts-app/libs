@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 export const extend = <T extends {}, X extends {}>(a: T, ext: X) => {
   Object.assign(a, ext)
   return a as T & X

@@ -36,7 +36,7 @@ export function findFirstMap<A, B>(
     const ass = Chunk.toReadonlyArray(as)
     const len = ass.length
     for (let i = 0; i < len; i++) {
-      const v = f(ass[i])
+      const v = f(ass[i]!)
       if (Option.isSome(v)) {
         return v
       }

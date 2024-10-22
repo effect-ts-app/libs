@@ -1,13 +1,13 @@
 import type { YieldWrap } from "effect/Utils"
 import { Effect } from "./Prelude.js"
 
-export * as Record from "effect-app/Object"
 export * as Fnc from "./Function.js"
+export * as Record from "./Object.js"
 export * as Utils from "./utils.js"
 
 export * from "effect"
 
-// we cannot export types colliding with namespaces from .ts files, only from .d.ts files with custom .js trick, applied in @effect-app/core
+// we cannot export types colliding with namespaces from .ts files, only from .d.ts files with custom .js trick, applied in effect-app
 // for app land, it may make sense to create an app/prelude?
 export * from "./Prelude.js"
 
@@ -35,9 +35,9 @@ export {
 
 export * as Struct from "./Struct.js"
 
-export * as SecretURL from "effect-app/Config/SecretURL"
-export * as S from "effect-app/schema"
-export { copy } from "effect-app/utils"
+export * as SecretURL from "./Config/SecretURL.js"
+export * as S from "./Schema.js"
+export { copy } from "./utils.js"
 
 // Simply Effect! https://github.com/kasperpeulen/simply-effect
 type InferE<Eff extends YieldWrap<Effect<any, any, any>>> = [

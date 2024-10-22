@@ -161,7 +161,7 @@ export const Class: <Self = never>(identifier?: string) => <Fields extends S.Str
   > = (identifier) => (fields, annotations) => {
     const cls = S.Class as any
     return class extends cls(identifier)(fields, annotations) {
-      constructor(a, b = true) {
+      constructor(a: any, b = true) {
         super(a, b)
       }
       // static readonly include = include(fields)
@@ -186,7 +186,7 @@ export const TaggedClass: <Self = never>(identifier?: string) => <Tag extends st
   > = (identifier) => (tag, fields, annotations) => {
     const cls = S.TaggedClass as any
     return class extends cls(identifier)(tag, fields, annotations) {
-      constructor(a, b = true) {
+      constructor(a: any, b = true) {
         super(a, b)
       }
       // static readonly include = include(fields)

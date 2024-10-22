@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Chunk, Context, Effect, Either, Layer } from "effect-app"
-import { tuple } from "effect-app/Function"
+import { tuple } from "./Function.js"
+import { Chunk, Context, Effect, Either, Layer } from "./lib.js"
 
 const S1 = Symbol()
 const S2 = Symbol()

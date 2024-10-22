@@ -2,7 +2,7 @@
 
 import { faker } from "@faker-js/faker"
 import { setFaker } from "effect-app/faker"
-import type { A } from "effect-app/schema"
+import type { A } from "effect-app/Schema"
 import * as FastCheck from "effect/FastCheck"
 import { Random } from "fast-check"
 import * as rand from "pure-rand"

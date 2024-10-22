@@ -1,6 +1,6 @@
 import { flow } from "effect"
 import { Option, S } from "effect-app"
-import type { Schema } from "effect-app/schema"
+import type { Schema } from "effect-app/Schema"
 import { typedKeysOf } from "effect-app/utils"
 import type { ParsedQuery } from "query-string"
 

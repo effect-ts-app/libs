@@ -1,4 +1,4 @@
-import * as S from "effect-app/schema"
+import * as S from "effect-app/Schema"
 
 export function makeCodec<
   From,

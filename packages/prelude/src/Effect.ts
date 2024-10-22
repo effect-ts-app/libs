@@ -181,7 +181,7 @@ export function allLower<T extends Record<string, Context.Tag<any, any> | Effect
   return Effect.all(
     typedKeysOf(services).reduce((prev, cur) => {
       const svc = services[cur]
-      prev[((cur as string)[0].toLowerCase() + (cur as string).slice(1)) as unknown as LowerFirst<typeof cur>] = svc // "_id" in svc && svc._id === TagTypeId ? svc : svc
+      prev[((cur as string)[0]!.toLowerCase() + (cur as string).slice(1)) as unknown as LowerFirst<typeof cur>] = svc // "_id" in svc && svc._id === TagTypeId ? svc : svc
       return prev
     }, {} as any),
     { concurrency: "inherit" }

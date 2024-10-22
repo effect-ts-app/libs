@@ -1,4 +1,4 @@
-import { TaggedError } from "effect-app/schema"
+import { TaggedError } from "effect-app/Schema"
 import { makeFiberFailure } from "effect/Runtime"
 import { Cause, S } from "../lib.js"
 

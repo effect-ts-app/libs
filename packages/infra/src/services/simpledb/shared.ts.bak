@@ -1,5 +1,5 @@
 import { Data, Effect, Option } from "effect-app"
-import * as S from "effect-app/schema"
+import * as S from "effect-app/Schema"
 
 export class CouldNotAquireDbLockException
   extends Data.TaggedError("CouldNotAquireDbLockException")<{ type: string; id: string; error: Error; message: string }>

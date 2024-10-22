@@ -1,11 +1,11 @@
 /**
  * @since 1.0.0
  */
-import type { Equal, Redacted } from "effect-app"
-import { Config } from "effect-app"
 import type * as Chunk from "effect/Chunk"
 import * as Either from "effect/Either"
 import type { SecretTypeId } from "effect/Secret"
+import type { Equal, Redacted } from "../lib.js"
+import { Config } from "../lib.js"
 import * as internal from "./internal/configSecretURL.js"
 
 // /**

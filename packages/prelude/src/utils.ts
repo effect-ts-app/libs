@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Either from "effect/Either"
 import { dual, isFunction } from "effect/Function"
@@ -7,6 +6,12 @@ import type { Dictionary } from "./Dictionary.js"
 import * as D from "./Dictionary.js"
 import { identity, pipe } from "./Function.js"
 import { Effect, Option } from "./Prelude.js"
+
+// codegen:start {preset: barrel, include: ./utils/*.ts, nodir: false }
+export * from "./utils/effectify.js"
+export * from "./utils/extend.js"
+export * from "./utils/logger.js"
+// codegen:end
 
 export const cloneTrait = Symbol.for("clone-trait")
 export interface Clone {
@@ -107,9 +112,9 @@ function get<TObject, TPath extends string, TDefault = GetFieldType<TObject, TPa
   defaultValue: TDefault
 ): Exclude<GetFieldType<TObject, TPath>, null | undefined> | TDefault
 function get(object: any, path: PropertyPath, defaultValue?: any): any
-function get(obj, path, defaultValue = undefined) {
+function get(obj: any, path: any, defaultValue = undefined) {
   // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore?tab=readme-ov-file#_get
-  const travel = (regexp) =>
+  const travel = (regexp: any) =>
     String
       .prototype
       .split
@@ -121,7 +126,9 @@ function get(obj, path, defaultValue = undefined) {
 }
 
 // codegen:start {preset: barrel, include: ./utils/*.ts }
-
+export * from "./utils/effectify.js"
+export * from "./utils/extend.js"
+export * from "./utils/logger.js"
 // codegen:end
 
 export const unsafeRight = <E, A>(ei: Either.Either<A, E>) => {
