@@ -360,36 +360,6 @@
         "default": "./_cjs/services/CUPS.cjs"
       }
     },
-    "./services/CUPS/fake": {
-      "import": {
-        "types": "./dist/services/CUPS/fake.d.ts",
-        "default": "./dist/services/CUPS/fake.js"
-      },
-      "require": {
-        "types": "./dist/services/CUPS/fake.d.ts",
-        "default": "./_cjs/services/CUPS/fake.cjs"
-      }
-    },
-    "./services/CUPS/live": {
-      "import": {
-        "types": "./dist/services/CUPS/live.d.ts",
-        "default": "./dist/services/CUPS/live.js"
-      },
-      "require": {
-        "types": "./dist/services/CUPS/live.d.ts",
-        "default": "./_cjs/services/CUPS/live.cjs"
-      }
-    },
-    "./services/CUPS/service": {
-      "import": {
-        "types": "./dist/services/CUPS/service.d.ts",
-        "default": "./dist/services/CUPS/service.js"
-      },
-      "require": {
-        "types": "./dist/services/CUPS/service.d.ts",
-        "default": "./_cjs/services/CUPS/service.cjs"
-      }
-    },
     "./services/Emailer": {
       "import": {
         "types": "./dist/services/Emailer.d.ts",
