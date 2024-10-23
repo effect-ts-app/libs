@@ -788,6 +788,11 @@ export interface Repos<
 
 export type GetRepoType<T> = T extends { type: infer R } ? R : never
 
+type RefineTHelper<T, EncodedRefined> = EncodedRefined extends { _tag: any }
+  ? T extends { _tag: any } ? Extract<T, { _tag: EncodedRefined["_tag"] }>
+  : T
+  : T
+
 export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType, IdKey extends keyof T, Service> {
   itemType: ItemType
   T: T
@@ -868,13 +873,11 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
     <
       R = never,
       TType extends "one" | "many" = "many",
-      EncodedRefined extends Encoded = Encoded,
-      $RefinedTags = EncodedRefined["_tag" & keyof EncodedRefined],
-      $RefinedT = [never] extends [$RefinedTags] ? T : { _tag: any } extends T ? Extract<T, { _tag: $RefinedTags }> : T
+      EncodedRefined extends Encoded = Encoded
     >(
-      q: (initial: Query<Encoded>) => QAll<Encoded, EncodedRefined, $RefinedT, R, TType>
+      q: (initial: Query<Encoded>) => QAll<Encoded, EncodedRefined, RefineTHelper<T, EncodedRefined>, R, TType>
     ): Effect.Effect<
-      TType extends "many" ? readonly $RefinedT[] : $RefinedT,
+      TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
       Service | R
     >

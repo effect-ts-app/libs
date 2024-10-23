@@ -1,6 +1,6 @@
 import { RepositoryDefaultImpl2 } from "@effect-app/infra/services/RepositoryBase"
 import { Effect, flow, Layer, ManagedRuntime, S } from "effect-app"
-import { and, page, where } from "../src/services/query.js"
+import { and, one, page, where } from "../src/services/query.js"
 import { MemoryStoreLive } from "../src/services/Store/Memory.js"
 
 const str = S.Struct({ _tag: S.Literal("string"), value: S.String })
@@ -73,7 +73,8 @@ const program = Effect.gen(function*() {
     //   and("_tag", "Something")
     // ),
     // order("displayName")
-    page({ take: 1 })
+    page({ take: 1 }),
+    one
     // one
     // project(S.Struct(Something.pick("id", "displayName")))
   ))
