@@ -5,7 +5,7 @@ import { toNonEmptyArray } from "effect-app/Array"
 import { dropUndefinedT } from "effect-app/utils"
 import type { FieldValues } from "../../filter/types.js"
 import type { FieldPath } from "../../filter/types/path/eager.js"
-import { make, type Q, type QAll } from "../query.js"
+import { make, type Q, type QAll } from "../query/dsl.js"
 import type { FilterResult } from "../Store/filterApi/query.js"
 
 type Result<TFieldValues extends FieldValues, A = TFieldValues, R = never> = {

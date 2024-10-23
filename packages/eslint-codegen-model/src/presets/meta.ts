@@ -13,6 +13,7 @@ export const meta: Preset<{ sourcePrefix?: string }> = ({ meta, options }) => {
       .split("/"),
     Array.dedupeAdjacent
   )
+    .filter((_) => _ !== "resources")
     .join("/")
   const expectedContent = `export const meta = { moduleName: "${moduleName}" } as const`
 

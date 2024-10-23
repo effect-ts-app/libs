@@ -5,7 +5,6 @@ import { RpcResolver } from "@effect/rpc"
 import { HttpRpcResolver } from "@effect/rpc-http"
 import type { RpcRouter } from "@effect/rpc/RpcRouter"
 import { Record } from "effect"
-import { ApiConfig } from "effect-app/client"
 import { HttpClient, HttpClientRequest } from "effect-app/http"
 import { typedKeysOf } from "effect-app/utils"
 import type * as Request from "effect/Request"
@@ -14,6 +13,7 @@ import qs from "query-string"
 import type { Schema } from "../lib.js"
 import { Effect, flow, HashMap, Layer, Option, Predicate, Struct } from "../lib.js"
 import * as S from "../Schema.js"
+import { ApiConfig } from "./config.js"
 
 export function makePathWithQuery(
   path: Path,

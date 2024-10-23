@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra",
-  "version": "2.1.1",
+  "version": "2.3.5",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -68,6 +68,16 @@
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./_cjs/index.cjs"
+      }
+    },
+    "./Model": {
+      "import": {
+        "types": "./dist/Model.d.ts",
+        "default": "./dist/Model.js"
+      },
+      "require": {
+        "types": "./dist/Model.d.ts",
+        "default": "./_cjs/Model.cjs"
       }
     },
     "./RequestContext": {
@@ -148,26 +158,6 @@
       "require": {
         "types": "./dist/api/routing/schema/jwt.d.ts",
         "default": "./_cjs/api/routing/schema/jwt.cjs"
-      }
-    },
-    "./api/routing2": {
-      "import": {
-        "types": "./dist/api/routing2.d.ts",
-        "default": "./dist/api/routing2.js"
-      },
-      "require": {
-        "types": "./dist/api/routing2.d.ts",
-        "default": "./_cjs/api/routing2.cjs"
-      }
-    },
-    "./api/routing3": {
-      "import": {
-        "types": "./dist/api/routing3.d.ts",
-        "default": "./dist/api/routing3.js"
-      },
-      "require": {
-        "types": "./dist/api/routing3.d.ts",
-        "default": "./_cjs/api/routing3.cjs"
       }
     },
     "./api/setupRequest": {

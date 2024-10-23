@@ -5,9 +5,10 @@ import type { NonEmptyReadonlyArray } from "effect-app"
 import { NonEmptyString255 } from "effect-app/Schema"
 import { get } from "effect-app/utils"
 import { InfraLogger } from "../../logger.js"
+import { codeFilter } from "./codeFilter.js"
 import type { FilterArgs, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
-import { codeFilter, makeUpdateETag } from "./utils.js"
+import { makeUpdateETag } from "./utils.js"
 
 export function memFilter<T extends { id: string }, U extends keyof T = never>(f: FilterArgs<T, U>) {
   type M = U extends undefined ? T : Pick<T, U>

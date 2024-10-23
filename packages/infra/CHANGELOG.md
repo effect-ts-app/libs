@@ -1,5 +1,56 @@
 # @effect-app/infra
 
+## 2.3.5
+
+### Patch Changes
+
+- c6ea36f: simpler
+
+## 2.3.4
+
+### Patch Changes
+
+- c379c87: prepare Model module
+
+## 2.3.3
+
+### Patch Changes
+
+- 25b154d: fix circular
+- Updated dependencies [25b154d]
+  - effect-app@2.0.2
+
+## 2.3.2
+
+### Patch Changes
+
+- fix
+
+## 2.3.1
+
+### Patch Changes
+
+- 77a27ec: simpler middleware
+
+## 2.3.0
+
+### Minor Changes
+
+- d907123: add middleware dependencies []
+
+## 2.2.0
+
+### Minor Changes
+
+- c0fd2c2: rename routing3 to routing
+- 2e24efe: make middleware execute a constructor
+
+## 2.1.2
+
+### Patch Changes
+
+- a66651b: fix missing overall context
+
 ## 2.1.1
 
 ### Patch Changes

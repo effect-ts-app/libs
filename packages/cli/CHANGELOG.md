@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 1.1.1
+
+### Patch Changes
+
+- a66651b: m
+
 ## 1.1.0
 
 ### Minor Changes
