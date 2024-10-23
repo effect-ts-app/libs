@@ -192,6 +192,11 @@ export class Project<A, TFieldValues extends FieldValues, R, TType extends "one"
   }
 }
 
+type ExtractFieldValues<T> = T extends QueryTogether<infer TFieldValues, any, any, any, any, any> ? TFieldValues : never
+type ExtractFieldValuesRefined<T> = T extends QueryTogether<any, infer TFieldValuesRefined, any, any, any, any>
+  ? TFieldValuesRefined
+  : never
+
 export const make: <TFieldValues extends FieldValues>() => Query<TFieldValues> = () => new Initial()
 
 export const where: FilterWhere = (...operation: any[]) => (current: any) =>
@@ -205,23 +210,21 @@ export const or: FilterContinuation = (...operation: any[]) => (current: any) =>
 
 export const order: {
   <
-    TFieldValues extends FieldValues,
-    TFieldName extends FieldPath<TFieldValues>,
-    TFieldValuesRefined extends TFieldValues = TFieldValues
+    Q extends Query<any> | QueryWhere<any, any> | QueryEnd<any>
   >(
-    field: TFieldName,
+    field: FieldPath<ExtractFieldValuesRefined<Q>>,
     direction?: "ASC" | "DESC"
   ): (
-    current: Query<TFieldValues> | QueryWhere<TFieldValues, TFieldValuesRefined> | QueryEnd<TFieldValues>
-  ) => QueryEnd<TFieldValuesRefined>
-} = (field, direction = "ASC") => (current) => new Order({ current, field, direction })
+    current: Q
+  ) => QueryEnd<ExtractFieldValuesRefined<Q>>
+} = (field, direction = "ASC") => (current) => new Order({ current, field: field as any, direction })
 
 export const page: {
   (
     page: { skip?: number; take?: number }
-  ): <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-    current: Query<TFieldValues> | QueryWhere<TFieldValues, TFieldValuesRefined> | QueryEnd<TFieldValues>
-  ) => QueryEnd<TFieldValuesRefined>
+  ): <Q extends Query<any> | QueryWhere<any, any> | QueryEnd<any>>(
+    current: Q
+  ) => QueryEnd<ExtractFieldValuesRefined<Q>>
 } = ({ skip, take }) => (current) =>
   new Page({
     current,
@@ -230,9 +233,9 @@ export const page: {
   })
 
 export const one: {
-  <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-    current: Query<TFieldValues> | QueryWhere<TFieldValues, TFieldValuesRefined> | QueryEnd<TFieldValues>
-  ): QueryEnd<TFieldValuesRefined, "one">
+  <Q extends Query<any> | QueryWhere<any, any> | QueryEnd<any>>(
+    current: Q
+  ): QueryEnd<ExtractFieldValuesRefined<Q>, "one">
 } = (current) =>
   new One({
     current
@@ -242,11 +245,10 @@ export const one: {
 // no it's better to implement a distinct count so that the implementation can be optimised per adapter.
 export const count: {
   <
-    TFieldValues extends FieldValues,
-    TFieldValuesRefined extends TFieldValues = TFieldValues
+    Q extends Query<any> | QueryWhere<any, any> | QueryEnd<any>
   >(
-    current: Query<TFieldValues> | QueryWhere<TFieldValues, TFieldValuesRefined> | QueryEnd<TFieldValues, "many">
-  ): QueryProjection<TFieldValuesRefined, NonNegativeInt, never, "count">
+    current: Q
+  ): QueryProjection<ExtractFieldValuesRefined<Q>, NonNegativeInt, never, "count">
 } = (current) =>
   // new Project({ current: current as any, /* TODO: why */ schema: S.Struct({ id: S.unknown }) })
   new Count({ current })
