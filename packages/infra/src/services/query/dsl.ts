@@ -42,6 +42,12 @@ export interface QueryTogether<
   }
 }
 
+type ExtractTType<T> = T extends QueryTogether<any, any, any, any, any, infer TType> ? TType : never
+type ExtractFieldValues<T> = T extends QueryTogether<infer TFieldValues, any, any, any, any, any> ? TFieldValues : never
+type ExtractFieldValuesRefined<T> = T extends QueryTogether<any, infer TFieldValuesRefined, any, any, any, any>
+  ? TFieldValuesRefined
+  : never
+
 export type Query<TFieldValues extends FieldValues> = QueryTogether<TFieldValues, TFieldValues, "initial">
 export type QueryWhere<TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues> =
   QueryTogether<
@@ -192,11 +198,6 @@ export class Project<A, TFieldValues extends FieldValues, R, TType extends "one"
   }
 }
 
-type ExtractFieldValues<T> = T extends QueryTogether<infer TFieldValues, any, any, any, any, any> ? TFieldValues : never
-type ExtractFieldValuesRefined<T> = T extends QueryTogether<any, infer TFieldValuesRefined, any, any, any, any>
-  ? TFieldValuesRefined
-  : never
-
 export const make: <TFieldValues extends FieldValues>() => Query<TFieldValues> = () => new Initial()
 
 export const where: FilterWhere = (...operation: any[]) => (current: any) =>
@@ -263,41 +264,38 @@ export const count: {
 
 export const project: {
   <
-    TFieldValues extends FieldValues,
-    TFieldValuesRefined extends TFieldValues = TFieldValues,
-    A = FieldValues,
-    R = never,
-    TType extends "one" | "many" = "many"
+    Q extends Query<any> | QueryWhere<any, any> | QueryEnd<any, "one" | "many">,
+    I extends Partial<ExtractFieldValuesRefined<Q>> = ExtractFieldValuesRefined<Q>,
+    A = ExtractFieldValuesRefined<Q>,
+    R = never
   >(
-    schema: S.Schema<Option<A>, TFieldValues, R>,
+    schema: S.Schema<Option<A>, { [K in keyof I & keyof ExtractFieldValuesRefined<Q>]: I[K] }, R>,
     mode: "collect"
   ): (
-    current: Query<TFieldValues> | QueryWhere<TFieldValues, TFieldValuesRefined> | QueryEnd<TFieldValues, TType>
-  ) => QueryProjection<TFieldValuesRefined, A, R, TType>
+    current: Q
+  ) => QueryProjection<ExtractFieldValuesRefined<Q>, A, R, ExtractTType<Q>>
 
   <
-    TFieldValues extends FieldValues,
-    TFieldValuesRefined extends TFieldValues = TFieldValues,
-    A = FieldValues,
-    R = never,
-    TType extends "one" | "many" = "many"
+    Q extends Query<any> | QueryWhere<any, any> | QueryEnd<any, "one" | "many">,
+    I extends Partial<ExtractFieldValuesRefined<Q>> = ExtractFieldValuesRefined<Q>,
+    A = ExtractFieldValuesRefined<Q>,
+    R = never
   >(
-    schema: S.Schema<A, TFieldValues, R>,
+    schema: S.Schema<A, { [K in keyof I & keyof ExtractFieldValuesRefined<Q>]: I[K] }, R>,
     mode: "project"
   ): (
-    current: Query<TFieldValues> | QueryWhere<TFieldValues, TFieldValuesRefined> | QueryEnd<TFieldValues, TType>
-  ) => QueryProjection<TFieldValuesRefined, A, R, TType>
+    current: Q
+  ) => QueryProjection<ExtractFieldValuesRefined<Q>, A, R, ExtractTType<Q>>
   <
-    TFieldValues extends FieldValues,
-    TFieldValuesRefined extends TFieldValues = TFieldValues,
-    A = FieldValues,
-    R = never,
-    TType extends "one" | "many" = "many"
+    Q extends Query<any> | QueryWhere<any, any> | QueryEnd<any, "one" | "many">,
+    I extends Partial<ExtractFieldValuesRefined<Q>> = ExtractFieldValuesRefined<Q>,
+    A = ExtractFieldValuesRefined<Q>,
+    R = never
   >(
-    schema: S.Schema<A, TFieldValues, R>
+    schema: S.Schema<A, { [K in keyof I & keyof ExtractFieldValuesRefined<Q>]: I[K] }, R>
   ): (
-    current: Query<TFieldValues> | QueryWhere<TFieldValues, TFieldValuesRefined> | QueryEnd<TFieldValues, TType>
-  ) => QueryProjection<TFieldValuesRefined, A, R, TType>
+    current: Q
+  ) => QueryProjection<ExtractFieldValuesRefined<Q>, A, R, ExtractTType<Q>>
 } = (schema: any, mode = "transform") => (current: any) => new Project({ current, /* TODO: why */ schema, mode } as any)
 
 export type FilterWheres = {
