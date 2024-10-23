@@ -1,7 +1,16 @@
+import { Effect } from "effect-app"
 import { Operation } from "effect-app/Operations"
-import { RepositoryDefaultImpl } from "./RepositoryBase.js"
+import { makeRepo } from "./RepositoryBase.js"
 
-export class OperationsRepo extends RepositoryDefaultImpl<OperationsRepo>()(
-  "Operation",
-  Operation
+export class OperationsRepo extends Effect.Service<OperationsRepo>()(
+  "OperationRepo",
+  {
+    effect: Effect.gen(function*() {
+      return yield* makeRepo("Operation", Operation, {
+        config: {
+          allowNamespace: () => true
+        }
+      })
+    })
+  }
 ) {}

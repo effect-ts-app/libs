@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { Effect } from "effect-app"
 import { toNonEmptyArray } from "effect-app/Array"

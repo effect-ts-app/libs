@@ -2,7 +2,7 @@ import { Context, Effect, flow, Layer, Option, pipe, S, Struct } from "effect-ap
 import { inspect } from "util"
 import { expect, it } from "vitest"
 import { and, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
-import { RepositoryDefaultImpl2 } from "../src/services/RepositoryBase.js"
+import { RepositoryDefaultImpl2 } from "../src/services/Repository/legacy.js"
 import { memFilter, MemoryStoreLive } from "../src/services/Store/Memory.js"
 
 const str = S.Struct({ _tag: S.Literal("string"), value: S.String })
@@ -89,7 +89,7 @@ class SomethingRepo extends RepositoryDefaultImpl2<SomethingRepo>()(
   Something,
   { idKey: "id" }
 ) {
-  static readonly Test = Layer.effect(SomethingRepo, SomethingRepo.makeWith({}, (_) => new SomethingRepo(_))).pipe(
+  static readonly Test = SomethingRepo.DefaultWithoutDependencies.pipe(
     Layer.provide(MemoryStoreLive)
   )
 }
@@ -97,11 +97,12 @@ class SomethingRepo extends RepositoryDefaultImpl2<SomethingRepo>()(
 it("works with repo", () =>
   Effect
     .gen(function*() {
-      yield* SomethingRepo.saveAndPublish(items)
+      const somethingRepo = yield* SomethingRepo
+      yield* somethingRepo.saveAndPublish(items)
 
-      const q1 = yield* SomethingRepo.query(() => q)
+      const q1 = yield* somethingRepo.query(() => q)
       // same as above, but with the `flow` helper
-      const q2 = yield* SomethingRepo
+      const q2 = yield* somethingRepo
         .query(flow(
           where("displayName", "Verona"),
           or(
@@ -127,10 +128,11 @@ it("works with repo", () =>
 it("collect", () =>
   Effect
     .gen(function*() {
-      yield* SomethingRepo.saveAndPublish(items)
+      const somethingRepo = yield* SomethingRepo
+      yield* somethingRepo.saveAndPublish(items)
 
       expect(
-        yield* SomethingRepo
+        yield* somethingRepo
           .query(flow(
             where("displayName", "Riley"), // TODO: work with To type translation, so Date?
             // one,
@@ -151,7 +153,7 @@ it("collect", () =>
         .toEqual(["Riley-2020-01-01T00:00:00.000Z"])
 
       expect(
-        yield* SomethingRepo
+        yield* somethingRepo
           .query(flow(
             where("union._tag", "string"),
             one,

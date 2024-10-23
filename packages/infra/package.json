@@ -500,6 +500,16 @@
         "default": "./_cjs/services/Repository/ext.cjs"
       }
     },
+    "./services/Repository/legacy": {
+      "import": {
+        "types": "./dist/services/Repository/legacy.d.ts",
+        "default": "./dist/services/Repository/legacy.js"
+      },
+      "require": {
+        "types": "./dist/services/Repository/legacy.d.ts",
+        "default": "./_cjs/services/Repository/legacy.cjs"
+      }
+    },
     "./services/Repository/service": {
       "import": {
         "types": "./dist/services/Repository/service.d.ts",
