@@ -157,6 +157,7 @@ export const toFilter = <
     }
   }
   return dropUndefinedT({
+    t: null as unknown as TFieldValues,
     limit: a.limit,
     skip: a.skip,
     select: Option.getOrUndefined(toNonEmptyArray(select)),
