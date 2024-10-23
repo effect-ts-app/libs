@@ -1,4 +1,4 @@
-import { RepositoryDefaultImpl2 } from "@effect-app/infra/services/RepositoryBase"
+import { RepositoryDefaultImpl2 } from "@effect-app/infra/services/Repository"
 import { Effect, flow, Layer, ManagedRuntime, S } from "effect-app"
 import { and, or, order, page, project, where } from "../src/services/query.js"
 import { MemoryStoreLive } from "../src/services/Store/Memory.js"
@@ -43,7 +43,8 @@ class SomethingRepo extends RepositoryDefaultImpl2<SomethingRepo>()(
 }
 
 const program = Effect.gen(function*() {
-  const r = yield* SomethingRepo.query(flow(
+  const somethingRepo = yield* SomethingRepo
+  const r = yield* somethingRepo.query(flow(
     where("displayName", "Verona"),
     or(
       where("displayName", "Riley"),

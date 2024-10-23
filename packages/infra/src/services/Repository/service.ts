@@ -1,9 +1,10 @@
-import type { Effect, Option, PubSub, S } from "effect-app"
+import type { ParseResult } from "effect"
+import type { Effect, Option, PubSub } from "effect-app"
 import type { InvalidStateError, NotFoundError, OptimisticConcurrencyException } from "effect-app/client"
-import type { NonNegativeInt } from "effect-app/Schema"
+import type { NonNegativeInt } from "effect-app/Schema/numbers"
 import type { FieldValues } from "../../filter/types.js"
 import type { QAll, Query, QueryProjection } from "../query.js"
-import type { Mapped } from "../RepositoryBase.js"
+import type { Mapped } from "./legacy.js"
 
 /**
  * @tsplus type Repository
@@ -36,7 +37,7 @@ export interface Repository<
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
-      | (TType extends "count" ? never : S.ParseResult.ParseError),
+      | (TType extends "count" ? never : ParseResult.ParseError),
       R
     >
     <R = never, TType extends "one" | "many" = "many">(
