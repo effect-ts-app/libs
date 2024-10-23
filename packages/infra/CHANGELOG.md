@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.4.0
+
+### Minor Changes
+
+- 759b1cd: drop repo legacy
+
 ## 2.3.5
 
 ### Patch Changes
