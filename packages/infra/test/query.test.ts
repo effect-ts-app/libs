@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Context, Effect, flow, Layer, Option, pipe, S, Struct } from "effect-app"
 import { inspect } from "util"
 import { expect, it } from "vitest"
 import { and, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
-import { RepositoryDefaultImpl2 } from "../src/services/RepositoryBase.js"
+import { makeRepo, RepositoryDefaultImpl2 } from "../src/services/RepositoryBase.js"
 import { memFilter, MemoryStoreLive } from "../src/services/Store/Memory.js"
 
 const str = S.Struct({ _tag: S.Literal("string"), value: S.String })
@@ -174,3 +175,43 @@ it("collect", () =>
         .toEqual("hi")
     })
     .pipe(Effect.provide(Layer.mergeAll(SomethingRepo.Test, SomeService.toLayer())), Effect.runPromise))
+
+class Person extends S.ExtendedTaggedClass<Person, Person.From>()("person", {
+  id: S.String,
+  surname: S.String
+}) {}
+class Animal extends S.ExtendedTaggedClass<Animal, Animal.From>()("animal", {
+  id: S.String,
+  surname: S.String
+}) {}
+class Test extends S.ExtendedTaggedClass<Test, Test.From>()("test", {
+  id: S.String
+}) {}
+
+namespace Person {
+  export interface From extends S.Struct.Encoded<typeof Person["fields"]> {}
+}
+namespace Animal {
+  export interface From extends S.Struct.Encoded<typeof Animal["fields"]> {}
+}
+namespace Test {
+  export interface From extends S.Struct.Encoded<typeof Test["fields"]> {}
+}
+
+const TestUnion = S.Union(Person, Animal, Test)
+type TestUnion = typeof TestUnion.Type
+namespace TestUnion {
+  export type From = typeof TestUnion.Encoded
+}
+
+it(
+  "refine",
+  Effect
+    .gen(function*() {
+      const repo = yield* makeRepo("test", TestUnion, {})
+      const result = (yield* repo.query(flow(where("id", "123"), and("_tag", "animal")))) satisfies readonly Animal[]
+
+      expect(result).toEqual([])
+    })
+    .pipe(Effect.provide(MemoryStoreLive), Effect.runPromise)
+)
