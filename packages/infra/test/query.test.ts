@@ -214,6 +214,7 @@ it(
         const result2 = (yield* repo.query(flow(where("_tag", "animal")))) satisfies readonly Animal[]
 
         expect(result).toEqual([])
+        expect(result2).toEqual([])
       })
       .pipe(Effect.provide(MemoryStoreLive), Effect.runPromise)
 )
