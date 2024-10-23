@@ -9,7 +9,7 @@ import { Effect, Fiber, Option, S, Tracer } from "effect-app"
 import type { NonEmptyString255 } from "effect-app/Schema"
 import { pretty } from "effect-app/utils"
 import { InfraLogger } from "../../logger.js"
-import { Model } from "../adapters/SQL.js"
+import { SQLModel } from "../adapters/SQL.js"
 
 export const QueueId = S.Number.pipe(S.brand("QueueId"))
 export type QueueId = typeof QueueId.Type
@@ -28,36 +28,36 @@ export function makeSQLQueue<
 ) {
   return Effect.gen(function*() {
     const base = {
-      id: Model.Generated(QueueId),
-      meta: Model.JsonFromString(QueueMeta),
+      id: SQLModel.Generated(QueueId),
+      meta: SQLModel.JsonFromString(QueueMeta),
       name: S.NonEmptyString255,
-      createdAt: Model.DateTimeInsert,
-      updatedAt: Model.DateTimeUpdate,
+      createdAt: SQLModel.DateTimeInsert,
+      updatedAt: SQLModel.DateTimeUpdate,
       // TODO: at+owner
-      processingAt: Model.FieldOption(S.Date),
-      finishedAt: Model.FieldOption(S.Date),
-      etag: S.String // TODO: use a Model thing that auto updates it?
+      processingAt: SQLModel.FieldOption(S.Date),
+      finishedAt: SQLModel.FieldOption(S.Date),
+      etag: S.String // TODO: use a SQLModel thing that auto updates it?
       // TODO: record locking.. / optimistic locking
-      // rowVersion: Model.DateTimeFromNumberWithNow
+      // rowVersion: SQLModel.DateTimeFromNumberWithNow
     }
-    class Queue extends Model.Class<Queue>("Queue")({
-      body: Model.JsonFromString(schema),
+    class Queue extends SQLModel.Class<Queue>("Queue")({
+      body: SQLModel.JsonFromString(schema),
       ...base
     }) {}
-    class Drain extends Model.Class<Drain>("Drain")({
-      body: Model.JsonFromString(drainSchema),
+    class Drain extends SQLModel.Class<Drain>("Drain")({
+      body: SQLModel.JsonFromString(drainSchema),
       ...base
     }) {}
     const sql = yield* SqlClient.SqlClient
 
-    const queueRepo = yield* Model.makeRepository(Queue, {
+    const queueRepo = yield* SQLModel.makeRepository(Queue, {
       tableName: "queue",
       spanPrefix: "QueueRepo",
       idColumn: "id",
       versionColumn: "etag"
     })
 
-    const drainRepo = yield* Model.makeRepository(Drain, {
+    const drainRepo = yield* SQLModel.makeRepository(Drain, {
       tableName: "queue",
       spanPrefix: "DrainRepo",
       idColumn: "id",

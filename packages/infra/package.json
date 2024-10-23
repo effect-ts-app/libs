@@ -70,6 +70,16 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./Model": {
+      "import": {
+        "types": "./dist/Model.d.ts",
+        "default": "./dist/Model.js"
+      },
+      "require": {
+        "types": "./dist/Model.d.ts",
+        "default": "./_cjs/Model.cjs"
+      }
+    },
     "./RequestContext": {
       "import": {
         "types": "./dist/RequestContext.d.ts",
