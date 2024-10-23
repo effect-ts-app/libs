@@ -865,10 +865,16 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
       | (TType extends "count" ? never : S.ParseResult.ParseError),
       Service | R
     >
-    <R = never, TType extends "one" | "many" = "many", EncodedRefined extends Encoded = Encoded>(
-      q: (initial: Query<Encoded>) => QAll<Encoded, EncodedRefined, T, R, TType>
+    <
+      R = never,
+      TType extends "one" | "many" = "many",
+      EncodedRefined extends Encoded = Encoded,
+      $RefinedTags = EncodedRefined["_tag" & keyof EncodedRefined],
+      $RefinedT = [never] extends [$RefinedTags] ? T : { _tag: any } extends T ? Extract<T, { _tag: $RefinedTags }> : T
+    >(
+      q: (initial: Query<Encoded>) => QAll<Encoded, EncodedRefined, $RefinedT, R, TType>
     ): Effect.Effect<
-      TType extends "many" ? readonly T[] : T,
+      TType extends "many" ? readonly $RefinedT[] : $RefinedT,
       TType extends "many" ? never : NotFoundError<ItemType>,
       Service | R
     >

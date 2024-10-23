@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Context, Effect, flow, Layer, Option, pipe, S, Struct } from "effect-app"
 import { inspect } from "util"
 import { expect, it } from "vitest"
@@ -16,6 +17,7 @@ export class Something extends S.Class<Something>()({
   union: someUnion.pipe(S.withDefaultConstructor(() => ({ _tag: "string" as const, value: "hi" })))
 }) {}
 export declare namespace Something {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface Encoded extends S.Schema.Encoded<typeof Something> {}
 }
 
