@@ -387,6 +387,18 @@ export type FilterWheres = {
 
 export type FilterWhere =
   & {
+    <
+      TFieldValues extends FieldValues,
+      TFieldName extends FieldPath<TFieldValues>,
+      const V extends FieldPathValue<TFieldValues, TFieldName>
+    >(
+      path: TFieldName,
+      value: V
+    ): (
+      current: Query<TFieldValues>
+    ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Extract<TFieldValues, { _tag: V }> : TFieldValues>
+  }
+  & {
     <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
       fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
     ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
