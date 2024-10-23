@@ -24,7 +24,7 @@ const registerName = (name: string) => {
 }
 
 /** @deprecated use makeRepo/extendRepo */
-class RepositoryBase<T, Encoded extends { id: string }, Evt, ItemType extends string, Ext, IdKey extends keyof T>
+export class RepositoryBase<T, Encoded extends { id: string }, Evt, ItemType extends string, Ext, IdKey extends keyof T>
   implements ExtendedRepository<T, Encoded, Evt, ItemType, IdKey>
 {
   constructor(protected readonly impl: ExtendedRepository<T, Encoded, Evt, ItemType, IdKey> & Ext) {
@@ -37,6 +37,7 @@ class RepositoryBase<T, Encoded extends { id: string }, Evt, ItemType extends st
     this.query = this.impl.query
     this.get = this.impl.get
     this.itemType = this.impl.itemType
+    this.idKey = this.impl.idKey
     this.log = this.impl.log
     this.removeById = this.impl.removeById
     this.save = this.impl.save
@@ -45,8 +46,11 @@ class RepositoryBase<T, Encoded extends { id: string }, Evt, ItemType extends st
     this.saveManyWithPure = this.impl.saveManyWithPure
     this.byIdAndSaveWithPure = this.impl.byIdAndSaveWithPure
     this.saveWithPure = this.impl.saveWithPure
+    this.request = this.impl.request
   }
   get: (id: T[IdKey]) => Effect<T, NotFoundError<ItemType>>
+  idKey
+  request
   itemType
   saveAndPublish
   removeAndPublish

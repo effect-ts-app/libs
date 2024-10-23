@@ -17,6 +17,7 @@ export interface Repository<
   IdKey extends keyof T
 > {
   readonly itemType: ItemType
+  readonly idKey: IdKey
   readonly find: (id: T[IdKey]) => Effect<Option<T>>
   readonly all: Effect<T[]>
   readonly saveAndPublish: (

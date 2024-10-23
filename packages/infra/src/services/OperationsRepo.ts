@@ -5,10 +5,12 @@ import { makeRepo } from "./RepositoryBase.js"
 export class OperationsRepo extends Effect.Service<OperationsRepo>()(
   "OperationRepo",
   {
-    effect: makeRepo("Operation", Operation, {
-      config: {
-        allowNamespace: () => true
-      }
+    effect: Effect.gen(function*() {
+      return yield* makeRepo("Operation", Operation, {
+        config: {
+          allowNamespace: () => true
+        }
+      })
     })
   }
 ) {}

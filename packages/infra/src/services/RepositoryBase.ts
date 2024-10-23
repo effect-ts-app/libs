@@ -10,22 +10,8 @@ import { StoreMaker } from "./Store.js"
 import type { FilterArgs, PersistenceModelType, StoreConfig } from "./Store.js"
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
-import type { Context, NonEmptyReadonlyArray } from "effect-app"
-import {
-  Array,
-  Chunk,
-  Effect,
-  Equivalence,
-  Exit,
-  flow,
-  Option,
-  pipe,
-  PubSub,
-  Request,
-  RequestResolver,
-  S,
-  Unify
-} from "effect-app"
+import type { NonEmptyReadonlyArray } from "effect-app"
+import { Array, Chunk, Effect, Equivalence, flow, Option, pipe, PubSub, S, Unify } from "effect-app"
 import { toNonEmptyArray } from "effect-app/Array"
 import { flatMapOption } from "effect-app/Effect"
 import type { Schema } from "effect-app/Schema"
@@ -330,6 +316,7 @@ export function makeRepoInternal<
           const r: Repository<T, Encoded, Evt, ItemType, IdKey> = {
             changeFeed,
             itemType: name,
+            idKey,
             find,
             all,
             saveAndPublish,
@@ -524,8 +511,7 @@ export const makeRepo: {
       publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
       makeInitial?: Effect<readonly T[], E, RInitial>
     }
-  ): // TODO: drop ext
-  Effect.Effect<ExtendedRepository<T, Encoded, Evt, ItemType, IdKey>, E, R | RInitial | R2 | StoreMaker>
+  ): Effect.Effect<ExtendedRepository<T, Encoded, Evt, ItemType, IdKey>, E, R | RInitial | R2 | StoreMaker>
   <
     ItemType extends string,
     R,
@@ -582,55 +568,3 @@ export const makeRepo: {
     const repo = extendRepo(r)
     return repo
   })
-
-// TODO: integrate with repo
-export const makeRequest = <
-  ItemType extends string,
-  T,
-  Encoded extends { id: string } & FieldValues,
-  Evt,
-  Service,
-  IdKey extends keyof T
->(repo: Context.Tag<Service, Repository<T, Encoded, Evt, ItemType, IdKey>>, idKey: IdKey, itemType: ItemType) => {
-  type Req =
-    & Request.Request<T, NotFoundError<ItemType>>
-    & { _tag: `Get${ItemType}`; id: T[IdKey] }
-  const _request = Request.tagged<Req>(`Get${itemType}`)
-
-  const requestResolver = RequestResolver
-    .makeBatched((
-      requests: NonEmptyReadonlyArray<Req>
-    ) =>
-      Effect
-        .flatMap(
-          repo,
-          (repo) =>
-            (repo.query(Q.where("id", "in", requests.map((_) => _.id)) as any) as Effect<readonly T[], never, Service>)
-              // TODO
-              .pipe(
-                Effect.andThen((items) =>
-                  Effect.forEach(requests, (r) =>
-                    Request.complete(
-                      r,
-                      Array
-                        .findFirst(items, (_) => _[idKey] === r.id)
-                        .pipe(Option.match({
-                          onNone: () => Exit.fail(new NotFoundError({ type: itemType, id: r.id })),
-                          onSome: Exit.succeed
-                        }))
-                    ), { discard: true })
-                ),
-                Effect
-                  .catchAllCause((cause) =>
-                    Effect.forEach(requests, Request.complete(Exit.failCause(cause)), { discard: true })
-                  )
-              )
-        )
-    )
-    .pipe(
-      RequestResolver.batchN(20),
-      RequestResolver.contextFromServices(repo)
-    )
-
-  return (id: T[IdKey]) => Effect.request(_request({ id }), requestResolver)
-}
