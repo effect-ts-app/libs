@@ -7,7 +7,7 @@ import * as Q from "../query.js"
 import type { Repos } from "../RepositoryBase.js"
 import { makeRepoInternal } from "../RepositoryBase.js"
 import type { StoreConfig, StoreMaker } from "../Store.js"
-import type { ExtendedRepository } from "./ext.js"
+import { type ExtendedRepository, extendRepo } from "./ext.js"
 import type { Repository } from "./service.js"
 
 const names = new Map<string, number>()
@@ -299,7 +299,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
               options.idKey ?? "id" as any
             )
             const r = yield* mkRepo.make({ ...options, ...opts } as any)
-            const repo = new self(Object.assign(r, "ext" in opts ? opts.ext : {}))
+            const repo = new self(Object.assign(extendRepo(r), "ext" in opts ? opts.ext : {}))
             return Layer.succeed(self, repo)
           })
           .pipe(Layer.unwrapEffect)
