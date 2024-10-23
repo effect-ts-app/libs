@@ -54,6 +54,7 @@ export type QueryEnd<TFieldValues extends FieldValues, TType extends "many" | "o
   TFieldValues,
   TFieldValues,
   "end",
+  TFieldValues,
   never,
   TType
 >
