@@ -108,8 +108,8 @@ export abstract class RepositoryBaseC<
       | (TType extends "count" ? never : S.ParseResult.ParseError),
       R
     >
-    <R = never, TType extends "one" | "many" = "many">(
-      q: (initial: Query<Encoded>) => QAll<Encoded, T, R, TType>
+    <R = never, TType extends "one" | "many" = "many", EncodedRefined extends Encoded = Encoded>(
+      q: (initial: Query<Encoded>) => QAll<Encoded, EncodedRefined, T, R, TType>
     ): Effect.Effect<TType extends "many" ? readonly T[] : T, TType extends "many" ? never : NotFoundError<ItemType>, R>
     // <R = never>(q: QAll<Encoded, T, R>): Effect.Effect<readonly T[], never, R>
     // <A, R, Encoded2 extends FieldValues>(
@@ -558,8 +558,10 @@ export function makeRepo<
             <A, R, From extends FieldValues>(
               q: QueryProjection<Encoded extends From ? From : never, A, R>
             ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
-            <A, R>(q: QAll<NoInfer<Encoded>, A, R>): Effect.Effect<readonly A[], never, R>
-          } = (<A, R>(q: QAll<Encoded, A, R>) => {
+            <A, R, EncodedRefined extends Encoded = Encoded>(
+              q: QAll<NoInfer<Encoded>, NoInfer<EncodedRefined>, A, R>
+            ): Effect.Effect<readonly A[], never, R>
+          } = (<A, R, EncodedRefined extends Encoded = Encoded>(q: QAll<Encoded, EncodedRefined, A, R>) => {
             const a = Q.toFilter(q)
             const eff = a.mode === "project"
               ? filter(a)
@@ -863,8 +865,8 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
       | (TType extends "count" ? never : S.ParseResult.ParseError),
       Service | R
     >
-    <R = never, TType extends "one" | "many" = "many">(
-      q: (initial: Query<Encoded>) => QAll<Encoded, T, R, TType>
+    <R = never, TType extends "one" | "many" = "many", EncodedRefined extends Encoded = Encoded>(
+      q: (initial: Query<Encoded>) => QAll<Encoded, EncodedRefined, T, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly T[] : T,
       TType extends "many" ? never : NotFoundError<ItemType>,
