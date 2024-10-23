@@ -312,6 +312,17 @@ export type FilterWheres = {
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
+    const V extends FieldPathValue<TFieldValues, TFieldName>
+  >(
+    path: TFieldName,
+    op: "neq",
+    value: V
+  ): (
+    current: Query<TFieldValues>
+  ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Exclude<TFieldValues, { _tag: V }> : TFieldValues>
+  <
+    TFieldValues extends FieldValues,
+    TFieldName extends FieldPath<TFieldValues>,
     V extends FieldPathValue<TFieldValues, TFieldName>
   >(
     path: TFieldName,
@@ -1145,6 +1156,17 @@ export type FilterContinuationAnd =
     ): (
       current: QueryWhere<TFieldValues>
     ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Extract<TFieldValues, { _tag: V }> : TFieldValues>
+    <
+      TFieldValues extends FieldValues,
+      TFieldName extends FieldPath<TFieldValues>,
+      const V extends FieldPathValue<TFieldValues, TFieldName>
+    >(
+      path: TFieldName,
+      op: "neq",
+      value: V
+    ): (
+      current: QueryWhere<TFieldValues>
+    ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Exclude<TFieldValues, { _tag: V }> : TFieldValues>
   }
   & FilterContinuation
 
