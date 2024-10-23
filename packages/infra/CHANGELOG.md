@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.3.5
+
+### Patch Changes
+
+- c6ea36f: simpler
+
 ## 2.3.4
 
 ### Patch Changes
