@@ -206,12 +206,13 @@ namespace TestUnion {
 
 it(
   "refine",
-  Effect
-    .gen(function*() {
-      const repo = yield* makeRepo("test", TestUnion, {})
-      const result = (yield* repo.query(flow(where("id", "123"), and("_tag", "animal")))) satisfies readonly Animal[]
+  () =>
+    Effect
+      .gen(function*() {
+        const repo = yield* makeRepo("test", TestUnion, {})
+        const result = (yield* repo.query(flow(where("id", "123"), and("_tag", "animal")))) satisfies readonly Animal[]
 
-      expect(result).toEqual([])
-    })
-    .pipe(Effect.provide(MemoryStoreLive), Effect.runPromise)
+        expect(result).toEqual([])
+      })
+      .pipe(Effect.provide(MemoryStoreLive), Effect.runPromise)
 )
