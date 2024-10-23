@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.3.4
+
+### Patch Changes
+
+- c379c87: prepare Model module
+
 ## 2.3.3
 
 ### Patch Changes
