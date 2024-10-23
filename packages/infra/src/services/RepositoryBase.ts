@@ -1348,67 +1348,8 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
   return f
 }
 
-export const makeRepo = <Evt = never>() => {
-  const f: {
-    <
-      ItemType extends string,
-      R,
-      Encoded extends { id: string },
-      T,
-      IdKey extends keyof T,
-      E = never,
-      RInitial = never,
-      R2 = never
-    >(
-      itemType: ItemType,
-      schema: S.Schema<T, Encoded, R>,
-      options: [Evt] extends [never] ? {
-          idKey: IdKey
-          config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
-            partitionValue?: (a: Encoded) => string
-          }
-          jitM?: (pm: Encoded) => Encoded
-          makeInitial?: Effect<readonly T[], E, RInitial>
-        }
-        : {
-          idKey: IdKey
-          jitM?: (pm: Encoded) => Encoded
-          config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
-            partitionValue?: (a: Encoded) => string
-          }
-          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
-          makeInitial?: Effect<readonly T[], E, RInitial>
-        }
-    ): // TODO: drop ext
-    Effect.Effect<RepositoryBaseC3<T, Encoded, Evt, ItemType, {}, IdKey>, E, R | RInitial | R2 | StoreMaker>
-    <
-      ItemType extends string,
-      R,
-      Encoded extends { id: string },
-      T extends { id: unknown },
-      E = never,
-      RInitial = never,
-      R2 = never
-    >(
-      itemType: ItemType,
-      schema: S.Schema<T, Encoded, R>,
-      options: [Evt] extends [never] ? {
-          config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
-            partitionValue?: (a: Encoded) => string
-          }
-          jitM?: (pm: Encoded) => Encoded
-          makeInitial?: Effect<readonly T[], E, RInitial>
-        }
-        : {
-          jitM?: (pm: Encoded) => Encoded
-          config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
-            partitionValue?: (a: Encoded) => string
-          }
-          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
-          makeInitial?: Effect<readonly T[], E, RInitial>
-        }
-    ): Effect.Effect<RepositoryBaseC3<T, Encoded, Evt, ItemType, {}, "id">, E, R | RInitial | R2 | StoreMaker>
-  } = <
+export const makeRepo: {
+  <
     ItemType extends string,
     R,
     Encoded extends { id: string },
@@ -1416,43 +1357,78 @@ export const makeRepo = <Evt = never>() => {
     IdKey extends keyof T,
     E = never,
     RInitial = never,
-    R2 = never
+    R2 = never,
+    Evt = never
   >(
     itemType: ItemType,
     schema: S.Schema<T, Encoded, R>,
-    options: [Evt] extends [never] ? {
-        idKey?: IdKey
-        config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
-          partitionValue?: (a: Encoded) => string
-        }
-        jitM?: (pm: Encoded) => Encoded
-        makeInitial?: Effect<readonly T[], E, RInitial>
+    options: {
+      idKey: IdKey
+      jitM?: (pm: Encoded) => Encoded
+      config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+        partitionValue?: (a: Encoded) => string
       }
-      : {
-        idKey?: IdKey
-        jitM?: (pm: Encoded) => Encoded
-        config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
-          partitionValue?: (a: Encoded) => string
-        }
-        publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
-        makeInitial?: Effect<readonly T[], E, RInitial>
+      publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+      makeInitial?: Effect<readonly T[], E, RInitial>
+    }
+  ): // TODO: drop ext
+  Effect.Effect<RepositoryBaseC3<T, Encoded, Evt, ItemType, {}, IdKey>, E, R | RInitial | R2 | StoreMaker>
+  <
+    ItemType extends string,
+    R,
+    Encoded extends { id: string },
+    T extends { id: unknown },
+    E = never,
+    RInitial = never,
+    R2 = never,
+    Evt = never
+  >(
+    itemType: ItemType,
+    schema: S.Schema<T, Encoded, R>,
+    options: {
+      jitM?: (pm: Encoded) => Encoded
+      config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+        partitionValue?: (a: Encoded) => string
       }
-  ) =>
-    Effect.gen(function*() {
-      const mkRepo = makeRepoInternal<Evt>()(
-        itemType,
-        schema,
-        options?.jitM ? (pm) => options.jitM!(pm) : (pm) => pm,
-        (e, _etag) => ({ ...e, _etag }),
-        options.idKey ?? "id" as any
-      )
-      const r = yield* mkRepo.make(options)
-      const repo = new RepositoryBaseC3(itemType, r)
-      return repo
-    })
-
-  return f
-}
+      publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+      makeInitial?: Effect<readonly T[], E, RInitial>
+    }
+  ): Effect.Effect<RepositoryBaseC3<T, Encoded, Evt, ItemType, {}, "id">, E, R | RInitial | R2 | StoreMaker>
+} = <
+  ItemType extends string,
+  R,
+  Encoded extends { id: string },
+  T,
+  IdKey extends keyof T,
+  E = never,
+  RInitial = never,
+  R2 = never,
+  Evt = never
+>(
+  itemType: ItemType,
+  schema: S.Schema<T, Encoded, R>,
+  options: {
+    idKey?: IdKey
+    jitM?: (pm: Encoded) => Encoded
+    config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
+      partitionValue?: (a: Encoded) => string
+    }
+    publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+    makeInitial?: Effect<readonly T[], E, RInitial>
+  }
+) =>
+  Effect.gen(function*() {
+    const mkRepo = makeRepoInternal<Evt>()(
+      itemType,
+      schema,
+      options?.jitM ? (pm) => options.jitM!(pm) : (pm) => pm,
+      (e, _etag) => ({ ...e, _etag }),
+      options.idKey ?? "id" as any
+    )
+    const r = yield* mkRepo.make(options as any)
+    const repo = new RepositoryBaseC3(itemType, r)
+    return repo
+  })
 
 const names = new Map<string, number>()
 const registerName = (name: string) => {
