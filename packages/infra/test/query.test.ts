@@ -211,6 +211,7 @@ it(
       .gen(function*() {
         const repo = yield* makeRepo("test", TestUnion, {})
         const result = (yield* repo.query(flow(where("id", "123"), and("_tag", "animal")))) satisfies readonly Animal[]
+        const result2 = (yield* repo.query(flow(where("_tag", "animal")))) satisfies readonly Animal[]
 
         expect(result).toEqual([])
       })
