@@ -408,3 +408,29 @@ it(
       })
       .pipe(Effect.runPromise)
 )
+
+it(
+  "project",
+  () =>
+    Effect
+      .gen(function*() {
+        const schema = S.Struct({
+          id: S.String,
+          createdAt: S
+            .optional(S.Date)
+            .pipe(
+              S.withDefaults({ constructor: () => new Date(), decoding: () => new Date() })
+            )
+        })
+        const repo = yield* makeRepo(
+          "test",
+          schema,
+          {}
+        )
+
+        const result = yield* repo.query(flow(where("id", "123"), project(schema)))
+
+        expect(result).toEqual([])
+      })
+      .pipe(Effect.provide(MemoryStoreLive), Effect.runPromise)
+)

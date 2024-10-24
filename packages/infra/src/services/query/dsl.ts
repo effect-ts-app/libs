@@ -269,7 +269,13 @@ export const project: {
     A = ExtractFieldValuesRefined<Q>,
     R = never
   >(
-    schema: S.Schema<Option<A>, { [K in keyof I & keyof ExtractFieldValuesRefined<Q>]: I[K] }, R>,
+    schema: S.Schema<
+      Option<A>,
+      {
+        [K in keyof I]: K extends keyof ExtractFieldValuesRefined<Q> ? I[K] : never
+      },
+      R
+    >,
     mode: "collect"
   ): (
     current: Q
@@ -281,7 +287,13 @@ export const project: {
     A = ExtractFieldValuesRefined<Q>,
     R = never
   >(
-    schema: S.Schema<A, { [K in keyof I & keyof ExtractFieldValuesRefined<Q>]: I[K] }, R>,
+    schema: S.Schema<
+      A,
+      {
+        [K in keyof I]: K extends keyof ExtractFieldValuesRefined<Q> ? I[K] : never
+      },
+      R
+    >,
     mode: "project"
   ): (
     current: Q
@@ -292,7 +304,13 @@ export const project: {
     A = ExtractFieldValuesRefined<Q>,
     R = never
   >(
-    schema: S.Schema<A, { [K in keyof I & keyof ExtractFieldValuesRefined<Q>]: I[K] }, R>
+    schema: S.Schema<
+      A,
+      {
+        [K in keyof I]: K extends keyof ExtractFieldValuesRefined<Q> ? I[K] : never
+      },
+      R
+    >
   ): (
     current: Q
   ) => QueryProjection<ExtractFieldValuesRefined<Q>, A, R, ExtractTType<Q>>
