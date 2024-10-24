@@ -115,21 +115,19 @@ it("works with repo", () =>
       // same as above, but with the `flow` helper
       const q2 = yield* somethingRepo
         .query(
-          (
-            where("displayName", "Verona"),
-              or(
-                where("displayName", "Riley"),
-                and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
-              ),
-              order("displayName"),
-              page({ take: 10 }),
-              project(
-                S.transformToOrFail(
-                  S.Struct({ displayName: S.String }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                  S.Struct(Struct.pick(Something.fields, "displayName")),
-                  (_) => Effect.andThen(SomeService, _)
-                )
-              )
+          where("displayName", "Verona"),
+          or(
+            where("displayName", "Riley"),
+            and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
+          ),
+          order("displayName"),
+          page({ take: 10 }),
+          project(
+            S.transformToOrFail(
+              S.Struct({ displayName: S.String }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+              S.Struct(Struct.pick(Something.fields, "displayName")),
+              (_) => Effect.andThen(SomeService, _)
+            )
           )
         )
 
@@ -147,21 +145,19 @@ it("collect", () =>
       expect(
         yield* somethingRepo
           .query(
-            (
-              where("displayName", "Riley"), // TODO: work with To type translation, so Date?
-                // one,
-                project(
-                  S.transformTo(
-                    // TODO: sample case with narrowing down a union?
-                    S.encodedSchema(S.Struct(Struct.pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                    S.typeSchema(S.Option(S.String)),
-                    (_) =>
-                      _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
-                        ? Option.some(`${_.displayName}-${_.n}`)
-                        : Option.none()
-                  ),
-                  "collect"
-                )
+            where("displayName", "Riley"), // TODO: work with To type translation, so Date?
+            // one,
+            project(
+              S.transformTo(
+                // TODO: sample case with narrowing down a union?
+                S.encodedSchema(S.Struct(Struct.pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                S.typeSchema(S.Option(S.String)),
+                (_) =>
+                  _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
+                    ? Option.some(`${_.displayName}-${_.n}`)
+                    : Option.none()
+              ),
+              "collect"
             )
           )
       )
@@ -170,21 +166,19 @@ it("collect", () =>
       expect(
         yield* somethingRepo
           .query(
-            (
-              where("union._tag", "string"),
-                one,
-                project(
-                  S.transformTo(
-                    // TODO: sample case with narrowing down a union?
-                    S.encodedSchema(S.Struct(Struct.pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                    S.typeSchema(S.Option(S.String)),
-                    (_) =>
-                      _.union._tag === "string"
-                        ? Option.some(_.union.value)
-                        : Option.none()
-                  ),
-                  "collect"
-                )
+            where("union._tag", "string"),
+            one,
+            project(
+              S.transformTo(
+                // TODO: sample case with narrowing down a union?
+                S.encodedSchema(S.Struct(Struct.pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                S.typeSchema(S.Option(S.String)),
+                (_) =>
+                  _.union._tag === "string"
+                    ? Option.some(_.union.value)
+                    : Option.none()
+              ),
+              "collect"
             )
           )
       )
