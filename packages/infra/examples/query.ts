@@ -1,5 +1,5 @@
-import { Effect, flow, Layer, ManagedRuntime, S } from "effect-app"
-import { and, or, order, page, project, where } from "../src/services/query.js"
+import { Effect, Layer, ManagedRuntime, S } from "effect-app"
+import { and, one, or, order, page, project, where } from "../src/services/query.js"
 import { makeRepo } from "../src/services/RepositoryBase.js"
 import { MemoryStoreLive } from "../src/services/Store/Memory.js"
 
@@ -67,7 +67,7 @@ class SomethingRepo extends Effect.Service<SomethingRepo>()("SomethingRepo", {
 
 const program = Effect.gen(function*() {
   const somethingRepo = yield* SomethingRepo
-  const r = yield* somethingRepo.query(flow(
+  const r = yield* somethingRepo.query(
     where("id", "Verona"),
     and("_tag", "Something"),
     or(
@@ -77,9 +77,21 @@ const program = Effect.gen(function*() {
     ),
     order("displayName"),
     page({ take: 1 }),
+    one,
     project(S.Struct(Something.pick("id", "displayName")))
-    // one
-  ))
+  )
+
+  const r2 = yield* somethingRepo.query(
+    where("id", "Verona"),
+    and("_tag", "Something"),
+    or(
+      where("displayName", "Riley"),
+      and("n", "gt", "2021-01-01T00:00:00Z"), // TODO: work with To type translation, so Date?
+      and("_tag", "Something")
+    ),
+    order("displayName"),
+    page({ take: 1 })
+  )
   console.log("$$ result", r)
 })
 
