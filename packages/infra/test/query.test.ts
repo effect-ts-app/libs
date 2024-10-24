@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Context, Effect, flow, Layer, Option, pipe, S, Struct } from "effect-app"
 import { inspect } from "util"
-import { expect, it } from "vitest"
-import { and, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
-import { RepositoryDefaultImpl2 } from "../src/services/Repository/legacy.js"
+import { expect, expectTypeOf, it } from "vitest"
+import type { QueryEnd, QueryProjection, QueryWhere } from "../src/services/query.js"
+import { and, count, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
+import { makeRepo } from "../src/services/RepositoryBase.js"
 import { memFilter, MemoryStoreLive } from "../src/services/Store/Memory.js"
 
 const str = S.Struct({ _tag: S.Literal("string"), value: S.String })
@@ -16,6 +19,7 @@ export class Something extends S.Class<Something>()({
   union: someUnion.pipe(S.withDefaultConstructor(() => ({ _tag: "string" as const, value: "hi" })))
 }) {}
 export declare namespace Something {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface Encoded extends S.Schema.Encoded<typeof Something> {}
 }
 
@@ -84,14 +88,21 @@ it("works", () => {
   expect(processed).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("id", "displayName")))
 })
 
-class SomethingRepo extends RepositoryDefaultImpl2<SomethingRepo>()(
-  "test",
-  Something,
-  { idKey: "id" }
-) {
-  static readonly Test = SomethingRepo.DefaultWithoutDependencies.pipe(
-    Layer.provide(MemoryStoreLive)
-  )
+class SomethingRepo extends Effect.Service<SomethingRepo>()("SomethingRepo", {
+  effect: Effect.gen(function*() {
+    return yield* makeRepo("Something", Something, {})
+  })
+}) {
+  static readonly Test = Layer
+    .effect(
+      SomethingRepo,
+      Effect.gen(function*() {
+        return SomethingRepo.make(yield* makeRepo("Something", Something, { makeInitial: Effect.sync(() => items) }))
+      })
+    )
+    .pipe(
+      Layer.provide(MemoryStoreLive)
+    )
 }
 
 it("works with repo", () =>
@@ -174,3 +185,225 @@ it("collect", () =>
         .toEqual("hi")
     })
     .pipe(Effect.provide(Layer.mergeAll(SomethingRepo.Test, SomeService.toLayer())), Effect.runPromise))
+
+class Person extends S.ExtendedTaggedClass<Person, Person.From>()("person", {
+  id: S.String,
+  surname: S.String
+}) {}
+class Animal extends S.ExtendedTaggedClass<Animal, Animal.From>()("animal", {
+  id: S.String,
+  surname: S.String
+}) {}
+class Test extends S.ExtendedTaggedClass<Test, Test.From>()("test", {
+  id: S.String
+}) {}
+
+namespace Person {
+  export interface From extends S.Struct.Encoded<typeof Person["fields"]> {}
+}
+namespace Animal {
+  export interface From extends S.Struct.Encoded<typeof Animal["fields"]> {}
+}
+namespace Test {
+  export interface From extends S.Struct.Encoded<typeof Test["fields"]> {}
+}
+
+const TestUnion = S.Union(Person, Animal, Test)
+type TestUnion = typeof TestUnion.Type
+namespace TestUnion {
+  export type From = typeof TestUnion.Encoded
+}
+
+it(
+  "refine",
+  () =>
+    Effect
+      .gen(function*() {
+        const repo = yield* makeRepo("test", TestUnion, {})
+        const result = (yield* repo.query(flow(where("id", "123"), and("_tag", "animal")))) satisfies readonly Animal[]
+        const result2 = (yield* repo.query(flow(where("_tag", "animal")))) satisfies readonly Animal[]
+
+        expect(result).toEqual([])
+        expect(result2).toEqual([])
+      })
+      .pipe(Effect.provide(MemoryStoreLive), Effect.runPromise)
+)
+
+it(
+  "refine2",
+  () =>
+    Effect
+      .gen(function*() {
+        class AA extends S.TaggedClass<AA>()("AA", {
+          id: S.String,
+          a: S.Unknown
+        }) {}
+
+        class BB extends S.TaggedClass<BB>()("BB", {
+          id: S.String,
+          b: S.Unknown
+        }) {}
+
+        class CC extends S.TaggedClass<CC>()("CC", {
+          id: S.String,
+          c: S.Unknown
+        }) {}
+
+        class DD extends S.TaggedClass<DD>()("DD", {
+          id: S.String,
+          d: S.Unknown
+        }) {}
+
+        type Union = AA | BB | CC | DD
+
+        const query1 = make<Union>().pipe(
+          where("id", "bla"),
+          and("_tag", "AA")
+        )
+        expectTypeOf(query1).toEqualTypeOf<QueryWhere<Union, AA>>()
+
+        const query2 = make<Union>().pipe(
+          where("_tag", "AA")
+        )
+        expectTypeOf(query2).toEqualTypeOf<QueryWhere<Union, AA>>()
+
+        const query3 = make<Union>().pipe(
+          where("_tag", "AA"),
+          or(
+            where("id", "test"),
+            and("_tag", "BB")
+          )
+        )
+        expectTypeOf(query3).toEqualTypeOf<QueryWhere<Union, AA | BB>>()
+
+        const query3b = make<Union>().pipe(
+          where("_tag", "AA"),
+          or(
+            where("_tag", "BB")
+          )
+        )
+        expectTypeOf(query3b).toEqualTypeOf<QueryWhere<Union, AA | BB>>()
+
+        const query4 = make<Union>().pipe(
+          where("_tag", "AA"),
+          project(S.Struct({ id: S.String, a: S.Unknown }))
+        )
+        expectTypeOf(query4).toEqualTypeOf<
+          QueryProjection<
+            AA,
+            {
+              readonly id: string
+              readonly a: unknown
+            },
+            never,
+            "many"
+          >
+        >()
+
+        // eslint-disable-next-line unused-imports/no-unused-vars
+        const query5 = make<Union>().pipe(
+          where("id", "bla"),
+          // @ts-expect-error cannot project over fields that are not in common between the union members (you must refine the union first)
+          project(S.Struct({ id: S.String, a: S.Unknown }))
+        )
+
+        const query6 = make<Union>().pipe(
+          where("_tag", "neq", "AA")
+        )
+        expectTypeOf(query6).toEqualTypeOf<QueryWhere<Union, BB | CC | DD>>()
+
+        const query7 = make<Union>().pipe(
+          where("_tag", "AA"),
+          or(
+            where("id", "test"),
+            and("_tag", "neq", "BB")
+          )
+        )
+        expectTypeOf(query7).toEqualTypeOf<QueryWhere<Union, AA | CC | DD>>()
+
+        const query8 = make<Union>().pipe(
+          where("_tag", "neq", "AA"),
+          and("_tag", "AA")
+        )
+        expectTypeOf(query8).toEqualTypeOf<QueryWhere<Union, never>>()
+
+        const query9 = make<Union>().pipe(
+          where("id", "AA"),
+          and("_tag", "AA"),
+          or(
+            where("_tag", "BB"),
+            or(
+              where("id", "test"),
+              and("_tag", "CC")
+            )
+          )
+        )
+        expectTypeOf(query9).toEqualTypeOf<QueryWhere<Union, AA | BB | CC>>()
+
+        const query10 = make<Union>().pipe(
+          where("id", "AA"),
+          and("_tag", "AA"),
+          or(
+            where("id", "test"),
+            and("_tag", "BB")
+          ),
+          order("id", "ASC"),
+          page({ take: 10 }),
+          count
+        )
+        expectTypeOf(query10).toEqualTypeOf<QueryProjection<AA | BB, S.NonNegativeInt, never, "count">>()
+
+        const query11 = make<Union>().pipe(
+          where("id", "AA"),
+          and("_tag", "AA"),
+          or(
+            where("id", "test"),
+            and("_tag", "BB")
+          ),
+          order("id", "ASC"),
+          page({ take: 10 }),
+          one
+        )
+        expectTypeOf(query11).toEqualTypeOf<QueryEnd<AA | BB, "one">>()
+
+        expect([]).toEqual([])
+      })
+      .pipe(Effect.runPromise)
+)
+
+it(
+  "refine2",
+  () =>
+    Effect
+      .gen(function*() {
+        class AA extends S.Class<AA>()({
+          id: S.Literal("AA"),
+          a: S.Unknown
+        }) {}
+
+        class BB extends S.Class<BB>()({
+          id: S.Literal("BB"),
+          b: S.Unknown
+        }) {}
+
+        class CC extends S.Class<CC>()({
+          id: S.Literal("CC"),
+          c: S.Unknown
+        }) {}
+
+        class DD extends S.Class<DD>()({
+          id: S.Literal("DD"),
+          d: S.Unknown
+        }) {}
+
+        type Union = AA | BB | CC | DD
+
+        const query1 = make<Union>().pipe(
+          where("id", "AA")
+        )
+        expectTypeOf(query1).toEqualTypeOf<QueryWhere<Union, AA>>()
+
+        expect([]).toEqual([])
+      })
+      .pipe(Effect.runPromise)
+)

@@ -18,7 +18,12 @@ type Result<TFieldValues extends FieldValues, A = TFieldValues, R = never> = {
   mode: "collect" | "project" | "transform" | undefined
 }
 
-const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never>(_: QAll<TFieldValues, A, R>) => {
+const interpret = <
+  TFieldValues extends FieldValues,
+  TFieldValuesRefined extends TFieldValues = TFieldValues,
+  A = TFieldValues,
+  R = never
+>(_: QAll<TFieldValues, TFieldValuesRefined, A, R>) => {
   const a = _ as Q<TFieldValues>
 
   const data: Result<TFieldValues, any, any> = {
@@ -133,9 +138,10 @@ const interpret = <TFieldValues extends FieldValues, A = TFieldValues, R = never
 export const toFilter = <
   TFieldValues extends FieldValues,
   A,
-  R
+  R,
+  TFieldValuesRefined extends TFieldValues = TFieldValues
 >(
-  q: QAll<TFieldValues, A, R>
+  q: QAll<TFieldValues, TFieldValuesRefined, A, R>
 ) => {
   // TODO: Native interpreter for each db adapter, instead of the intermediate "new-kid" format
   const a = interpret(q)
@@ -151,6 +157,7 @@ export const toFilter = <
     }
   }
   return dropUndefinedT({
+    t: null as unknown as TFieldValues,
     limit: a.limit,
     skip: a.skip,
     select: Option.getOrUndefined(toNonEmptyArray(select)),

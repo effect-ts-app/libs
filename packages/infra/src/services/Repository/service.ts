@@ -1,5 +1,4 @@
-import type { ParseResult } from "effect"
-import type { Effect, Option, PubSub } from "effect-app"
+import type { Effect, Option, PubSub, S } from "effect-app"
 import type { InvalidStateError, NotFoundError, OptimisticConcurrencyException } from "effect-app/client"
 import type { NonNegativeInt } from "effect-app/Schema/numbers"
 import type { FieldValues } from "../../filter/types.js"
@@ -32,24 +31,33 @@ export interface Repository<
   ) => Effect<void, never, R>
 
   readonly query: {
-    <A, R, Encoded2 extends FieldValues, TType extends "one" | "many" | "count" = "many">(
+    <A, R, From extends FieldValues, TType extends "one" | "many" | "count" = "many">(
       q: (
         initial: Query<Encoded>
-      ) => QueryProjection<Encoded extends Encoded2 ? Encoded2 : never, A, R, TType>
+      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
-      | (TType extends "count" ? never : ParseResult.ParseError),
+      | (TType extends "count" ? never : S.ParseResult.ParseError),
       R
     >
-    <R = never, TType extends "one" | "many" = "many">(
-      q: (initial: Query<Encoded>) => QAll<Encoded, T, R, TType>
-    ): Effect.Effect<TType extends "many" ? readonly T[] : T, TType extends "many" ? never : NotFoundError<ItemType>, R>
-    // <R = never>(q: QAll<Encoded, T, R>): Effect.Effect<readonly T[], never, R>
-    // <A, R, Encoded2 extends FieldValues>(
-    //   q: QueryProjection<Encoded extends Encoded2 ? Encoded2 : never, A, R>
-    // ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
+    <
+      R = never,
+      TType extends "one" | "many" = "many",
+      EncodedRefined extends Encoded = Encoded
+    >(
+      q: (initial: Query<Encoded>) => QAll<Encoded, EncodedRefined, RefineTHelper<T, EncodedRefined>, R, TType>
+    ): Effect.Effect<
+      TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
+      TType extends "many" ? never : NotFoundError<ItemType>,
+      R
+    >
   }
   /** @deprecated use query */
   readonly mapped: Mapped<Encoded>
 }
+
+type RefineTHelper<T, EncodedRefined> = EncodedRefined extends { _tag: any }
+  ? T extends { _tag: any } ? Extract<T, { _tag: EncodedRefined["_tag"] }>
+  : T
+  : T

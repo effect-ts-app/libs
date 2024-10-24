@@ -258,8 +258,10 @@ export function makeRepoInternal<
             <A, R, From extends FieldValues>(
               q: QueryProjection<Encoded extends From ? From : never, A, R>
             ): Effect.Effect<readonly A[], S.ParseResult.ParseError, R>
-            <A, R>(q: QAll<NoInfer<Encoded>, A, R>): Effect.Effect<readonly A[], never, R>
-          } = (<A, R>(q: QAll<Encoded, A, R>) => {
+            <A, R, EncodedRefined extends Encoded = Encoded>(
+              q: QAll<NoInfer<Encoded>, NoInfer<EncodedRefined>, A, R>
+            ): Effect.Effect<readonly A[], never, R>
+          } = (<A, R, EncodedRefined extends Encoded = Encoded>(q: QAll<Encoded, EncodedRefined, A, R>) => {
             const a = Q.toFilter(q)
             const eff = a.mode === "project"
               ? filter(a)

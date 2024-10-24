@@ -3,6 +3,8 @@ import type { UniqueKey } from "@azure/cosmos"
 import { Context, Effect } from "effect-app"
 import type { NonEmptyReadonlyArray, Option, Secret } from "effect-app"
 import type { OptimisticConcurrencyException } from "../../errors.js"
+import type { FieldValues } from "../../filter/types.js"
+import type { FieldPath } from "../../filter/types/path/index.js"
 import type { FilterResult } from "./filterApi/query.js"
 
 export type StoreConfig<E> = {
@@ -34,15 +36,16 @@ export type Where =
 
 export type Filter = readonly FilterResult[]
 
-export interface O<Encoded extends { id: string }> {
-  key: keyof Encoded
+export interface O<TFieldValues extends FieldValues> {
+  key: FieldPath<TFieldValues>
   direction: "ASC" | "DESC"
 }
 
 export interface FilterArgs<Encoded extends { id: string }, U extends keyof Encoded = never> {
+  t: Encoded
   filter?: Filter | undefined
   select?: NonEmptyReadonlyArray<U> | undefined
-  order?: NonEmptyReadonlyArray<O<Encoded>>
+  order?: NonEmptyReadonlyArray<O<NoInfer<Encoded>>>
   limit?: number | undefined
   skip?: number | undefined
 }
