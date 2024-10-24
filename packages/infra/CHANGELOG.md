@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.7.2
+
+### Patch Changes
+
+- projection fix #1
+
 ## 2.7.1
 
 ### Patch Changes
