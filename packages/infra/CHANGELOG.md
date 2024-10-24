@@ -1,5 +1,31 @@
 # @effect-app/infra
 
+## 2.6.0
+
+### Minor Changes
+
+- 7b2cc36: support schemaContext for repository creation
+
+## 2.5.2
+
+### Patch Changes
+
+- Updated dependencies
+  - effect-app@2.1.1
+
+## 2.5.1
+
+### Patch Changes
+
+- Updated dependencies [a34ba2a]
+  - effect-app@2.1.0
+
+## 2.5.0
+
+### Minor Changes
+
+- 0c52792: change: require the context of Schema to be eliminated beforehand, or trickle down
+
 ## 2.4.1
 
 ### Patch Changes

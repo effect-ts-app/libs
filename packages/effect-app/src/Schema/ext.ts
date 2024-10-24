@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Effect, pipe } from "effect"
-import type { ParseResult, SchemaAST } from "effect"
+import type { SchemaAST } from "effect"
+import { Effect, ParseResult, pipe } from "effect"
 import type { NonEmptyReadonlyArray } from "effect/Array"
 import type { Schema } from "effect/Schema"
 import * as S from "effect/Schema"
+import type { Context } from "../lib.js"
 import { extendM, typedKeysOf } from "../utils.js"
 
 export const withDefaultConstructor: <A, I, R>(
@@ -271,3 +272,15 @@ export const transformToOrFail = <To extends Schema.Any, From extends Schema.Any
     ast: SchemaAST.Transformation
   ) => Effect.Effect<Schema.Encoded<To>, ParseResult.ParseIssue, RD>
 ) => S.transformOrFail<To, From, RD, never>(from, to, { decode, encode: () => Effect.die("one way schema") })
+
+export const provide = <Self extends S.Schema.Any, R>(
+  self: Self,
+  context: Context.Context<R> // TODO: support Layers?
+): S.SchemaClass<S.Schema.Type<Self>, S.Schema.Encoded<Self>, Exclude<S.Schema.Context<Self>, R>> => {
+  const provide = Effect.provide(context)
+  return S
+    .declare([self], {
+      decode: (t) => (n) => provide(ParseResult.decodeUnknown(t)(n)),
+      encode: (t) => (n) => provide(ParseResult.encodeUnknown(t)(n))
+    }) as any
+}

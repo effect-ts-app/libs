@@ -1,5 +1,17 @@
 # @effect-app/prelude
 
+## 2.1.1
+
+### Patch Changes
+
+- bs
+
+## 2.1.0
+
+### Minor Changes
+
+- a34ba2a: add Schema.provide
+
 ## 2.0.2
 
 ### Patch Changes

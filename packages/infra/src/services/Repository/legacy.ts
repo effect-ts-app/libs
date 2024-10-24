@@ -24,10 +24,16 @@ const registerName = (name: string) => {
 }
 
 /** @deprecated use makeRepo/extendRepo */
-export class RepositoryBase<T, Encoded extends { id: string }, Evt, ItemType extends string, Ext, IdKey extends keyof T>
-  implements ExtendedRepository<T, Encoded, Evt, ItemType, IdKey>
-{
-  constructor(protected readonly impl: ExtendedRepository<T, Encoded, Evt, ItemType, IdKey> & Ext) {
+export class RepositoryBase<
+  T,
+  Encoded extends { id: string },
+  Evt,
+  ItemType extends string,
+  Ext,
+  IdKey extends keyof T,
+  R
+> implements ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, R> {
+  constructor(protected readonly impl: ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, R> & Ext) {
     this.saveAndPublish = this.impl.saveAndPublish
     this.removeAndPublish = this.impl.removeAndPublish
     this.find = this.impl.find
@@ -48,7 +54,7 @@ export class RepositoryBase<T, Encoded extends { id: string }, Evt, ItemType ext
     this.saveWithPure = this.impl.saveWithPure
     this.request = this.impl.request
   }
-  get: (id: T[IdKey]) => Effect<T, NotFoundError<ItemType>>
+  get: (id: T[IdKey]) => Effect<T, NotFoundError<ItemType>, R>
   idKey
   request
   itemType
@@ -123,8 +129,8 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
         }
     ):
       & (abstract new(
-        impl: Repository<T, Encoded, Evt, ItemType, IdKey> & Ext
-      ) => RepositoryBase<T, Encoded, Evt, ItemType, Ext, IdKey>)
+        impl: Repository<T, Encoded, Evt, ItemType, IdKey, R> & Ext
+      ) => RepositoryBase<T, Encoded, Evt, ItemType, Ext, IdKey, R>)
       & Context.Tag<Service, Service>
       & {
         Default: Layer.Layer<
@@ -198,8 +204,8 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
         }
     ):
       & (abstract new(
-        impl: Repository<T, Encoded, Evt, ItemType, "id"> & Ext
-      ) => RepositoryBase<T, Encoded, Evt, ItemType, Ext, "id">)
+        impl: Repository<T, Encoded, Evt, ItemType, "id", R> & Ext
+      ) => RepositoryBase<T, Encoded, Evt, ItemType, Ext, "id", R>)
       & Context.Tag<Service, Service>
       & {
         Default: Layer.Layer<
@@ -283,7 +289,8 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
       Evt,
       ItemType,
       Ext,
-      IdKey
+      IdKey,
+      R
     > {
       static readonly Q = Q.make<Encoded>()
       static get DefaultWithoutDependencies() {
@@ -312,7 +319,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
             .pipe(Layer.provide(options.dependencies as any))
           : self.DefaultWithoutDependencies
       }
-      static readonly type: Repository<T, Encoded, Evt, ItemType, IdKey> = undefined as any
+      static readonly type: Repository<T, Encoded, Evt, ItemType, IdKey, R> = undefined as any
     }
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 2
