@@ -397,17 +397,36 @@ export type FilterWheres = {
 }
 
 export type FilterWhere =
+  // the one below should take care of this case as well
+  // & {
+  //   <
+  //     TFieldValues extends FieldValues,
+  //     TFieldName extends FieldPath<TFieldValues>,
+  //     const V extends FieldPathValue<TFieldValues, TFieldName>
+  //   >(
+  //     path: TFieldName,
+  //     value: V
+  //   ): (
+  //     current: Query<TFieldValues>
+  //   ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Extract<TFieldValues, { _tag: V }> : TFieldValues>
+  // }
   & {
     <
       TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
+      const TFieldName extends FieldPath<TFieldValues>,
       const V extends FieldPathValue<TFieldValues, TFieldName>
     >(
       path: TFieldName,
       value: V
     ): (
       current: Query<TFieldValues>
-    ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Extract<TFieldValues, { _tag: V }> : TFieldValues>
+    ) => QueryWhere<
+      TFieldValues,
+      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
+      string extends TFieldValues[TFieldName] ? TFieldValues
+        : TFieldValues[TFieldName] extends string ? Extract<TFieldValues, { [K in TFieldName]: V }>
+        : TFieldValues
+    >
   }
   & {
     <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(

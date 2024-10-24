@@ -276,6 +276,14 @@ it(
         )
         expectTypeOf(query3).toEqualTypeOf<QueryWhere<Union, AA | BB>>()
 
+        const query3b = make<Union>().pipe(
+          where("_tag", "AA"),
+          or(
+            where("_tag", "BB")
+          )
+        )
+        expectTypeOf(query3b).toEqualTypeOf<QueryWhere<Union, AA | BB>>()
+
         const query4 = make<Union>().pipe(
           where("_tag", "AA"),
           project(S.Struct({ id: S.String, a: S.Unknown }))
@@ -357,6 +365,43 @@ it(
           one
         )
         expectTypeOf(query11).toEqualTypeOf<QueryEnd<AA | BB, "one">>()
+
+        expect([]).toEqual([])
+      })
+      .pipe(Effect.runPromise)
+)
+
+it(
+  "refine2",
+  () =>
+    Effect
+      .gen(function*() {
+        class AA extends S.Class<AA>()({
+          id: S.Literal("AA"),
+          a: S.Unknown
+        }) {}
+
+        class BB extends S.Class<BB>()({
+          id: S.Literal("BB"),
+          b: S.Unknown
+        }) {}
+
+        class CC extends S.Class<CC>()({
+          id: S.Literal("CC"),
+          c: S.Unknown
+        }) {}
+
+        class DD extends S.Class<DD>()({
+          id: S.Literal("DD"),
+          d: S.Unknown
+        }) {}
+
+        type Union = AA | BB | CC | DD
+
+        const query1 = make<Union>().pipe(
+          where("id", "AA")
+        )
+        expectTypeOf(query1).toEqualTypeOf<QueryWhere<Union, AA>>()
 
         expect([]).toEqual([])
       })
