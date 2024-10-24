@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Effect, pipe } from "effect"
-import { ParseResult, SchemaAST } from "effect"
+import type { SchemaAST } from "effect"
+import { Effect, ParseResult, pipe } from "effect"
 import type { NonEmptyReadonlyArray } from "effect/Array"
 import type { Schema } from "effect/Schema"
 import * as S from "effect/Schema"
 import type { Context } from "../lib.js"
-import type { extendM, typedKeysOf } from "../utils.js"
+import { extendM, typedKeysOf } from "../utils.js"
 
 export const withDefaultConstructor: <A, I, R>(
   makeDefault: () => NoInfer<A>
