@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.7.1
+
+### Patch Changes
+
+- 2905c02: fix hidden error
+
 ## 2.7.0
 
 ### Minor Changes
