@@ -114,22 +114,24 @@ it("works with repo", () =>
       const q1 = yield* somethingRepo.query(() => q)
       // same as above, but with the `flow` helper
       const q2 = yield* somethingRepo
-        .query(flow(
-          where("displayName", "Verona"),
-          or(
-            where("displayName", "Riley"),
-            and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
-          ),
-          order("displayName"),
-          page({ take: 10 }),
-          project(
-            S.transformToOrFail(
-              S.Struct({ displayName: S.String }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-              S.Struct(Struct.pick(Something.fields, "displayName")),
-              (_) => Effect.andThen(SomeService, _)
-            )
+        .query(
+          (
+            where("displayName", "Verona"),
+              or(
+                where("displayName", "Riley"),
+                and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
+              ),
+              order("displayName"),
+              page({ take: 10 }),
+              project(
+                S.transformToOrFail(
+                  S.Struct({ displayName: S.String }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                  S.Struct(Struct.pick(Something.fields, "displayName")),
+                  (_) => Effect.andThen(SomeService, _)
+                )
+              )
           )
-        ))
+        )
 
       expect(q1).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("id", "displayName")))
       expect(q2).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("displayName")))
@@ -144,43 +146,47 @@ it("collect", () =>
 
       expect(
         yield* somethingRepo
-          .query(flow(
-            where("displayName", "Riley"), // TODO: work with To type translation, so Date?
-            // one,
-            project(
-              S.transformTo(
-                // TODO: sample case with narrowing down a union?
-                S.encodedSchema(S.Struct(Struct.pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                S.typeSchema(S.Option(S.String)),
-                (_) =>
-                  _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
-                    ? Option.some(`${_.displayName}-${_.n}`)
-                    : Option.none()
-              ),
-              "collect"
+          .query(
+            (
+              where("displayName", "Riley"), // TODO: work with To type translation, so Date?
+                // one,
+                project(
+                  S.transformTo(
+                    // TODO: sample case with narrowing down a union?
+                    S.encodedSchema(S.Struct(Struct.pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                    S.typeSchema(S.Option(S.String)),
+                    (_) =>
+                      _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
+                        ? Option.some(`${_.displayName}-${_.n}`)
+                        : Option.none()
+                  ),
+                  "collect"
+                )
             )
-          ))
+          )
       )
         .toEqual(["Riley-2020-01-01T00:00:00.000Z"])
 
       expect(
         yield* somethingRepo
-          .query(flow(
-            where("union._tag", "string"),
-            one,
-            project(
-              S.transformTo(
-                // TODO: sample case with narrowing down a union?
-                S.encodedSchema(S.Struct(Struct.pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-                S.typeSchema(S.Option(S.String)),
-                (_) =>
-                  _.union._tag === "string"
-                    ? Option.some(_.union.value)
-                    : Option.none()
-              ),
-              "collect"
+          .query(
+            (
+              where("union._tag", "string"),
+                one,
+                project(
+                  S.transformTo(
+                    // TODO: sample case with narrowing down a union?
+                    S.encodedSchema(S.Struct(Struct.pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                    S.typeSchema(S.Option(S.String)),
+                    (_) =>
+                      _.union._tag === "string"
+                        ? Option.some(_.union.value)
+                        : Option.none()
+                  ),
+                  "collect"
+                )
             )
-          ))
+          )
       )
         .toEqual("hi")
     })
@@ -220,8 +226,8 @@ it(
     Effect
       .gen(function*() {
         const repo = yield* makeRepo("test", TestUnion, {})
-        const result = (yield* repo.query(flow(where("id", "123"), and("_tag", "animal")))) satisfies readonly Animal[]
-        const result2 = (yield* repo.query(flow(where("_tag", "animal")))) satisfies readonly Animal[]
+        const result = (yield* repo.query(where("id", "123"), and("_tag", "animal"))) satisfies readonly Animal[]
+        const result2 = (yield* repo.query(where("_tag", "animal"))) satisfies readonly Animal[]
 
         expect(result).toEqual([])
         expect(result2).toEqual([])
