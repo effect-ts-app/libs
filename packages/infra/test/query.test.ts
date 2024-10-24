@@ -292,6 +292,7 @@ it(
           >
         >()
 
+        // eslint-disable-next-line unused-imports/no-unused-vars
         const query5 = make<Union>().pipe(
           where("id", "bla"),
           // @ts-expect-error cannot project over fields that are not in common between the union members (you must refine the union first)
