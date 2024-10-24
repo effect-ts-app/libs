@@ -2,7 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { NonEmptyReadonlyArray, Option, ParseResult, S } from "effect-app"
 import { Context, Effect, Layer } from "effect-app"
-import type { NotFoundError, OptimisticConcurrencyException } from "effect-app/client"
+import type { InvalidStateError, NotFoundError, OptimisticConcurrencyException } from "effect-app/client"
+import type { FixEnv, PureEnv } from "effect-app/Pure"
+import type { NonNegativeInt } from "effect-app/Schema"
+import type { FieldValues } from "../../filter/types.js"
 import * as Q from "../query.js"
 import type { Repos } from "../RepositoryBase.js"
 import { makeRepoInternal } from "../RepositoryBase.js"
@@ -20,6 +23,175 @@ const registerName = (name: string) => {
     const n = existing + 1
     names.set(name, n)
     return name + "-" + existing
+  }
+}
+
+/**
+ * @deprecated
+ */
+export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType, IdKey extends keyof T, Service> {
+  itemType: ItemType
+  T: T
+  all: Effect<readonly T[], never, Service>
+  find: (id: T[IdKey]) => Effect<Option<T>, never, Service>
+  removeById: (id: T[IdKey]) => Effect<void, NotFoundError<ItemType>, Service>
+  saveAndPublish: (
+    items: Iterable<T>,
+    events?: Iterable<Evt>
+  ) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
+  removeAndPublish: (
+    items: Iterable<T>,
+    events?: Iterable<Evt>
+  ) => Effect<void, never, Service>
+  save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
+  get: (id: T[IdKey]) => Effect<T, NotFoundError<ItemType>, Service>
+  queryAndSavePure: {
+    <A, E2, R2, T2 extends T>(
+      q: (
+        q: Q.Query<Encoded>
+      ) => Q.QueryEnd<Encoded, "one">,
+      pure: Effect<A, E2, FixEnv<R2, Evt, T, T2>>
+    ): Effect.Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E2,
+      | Service
+      | Exclude<R2, {
+        env: PureEnv<Evt, T, T2>
+      }>
+    >
+    <A, E2, R2, T2 extends T>(
+      q: (
+        q: Q.Query<Encoded>
+      ) =>
+        | Q.Query<Encoded>
+        | Q.QueryWhere<Encoded>
+        | Q.QueryEnd<Encoded, "many">,
+      pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>
+    ): Effect.Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | E2,
+      | Service
+      | Exclude<R2, {
+        env: PureEnv<Evt, readonly T[], readonly T2[]>
+      }>
+    >
+    <A, E2, R2, T2 extends T>(
+      q: (
+        q: Q.Query<Encoded>
+      ) =>
+        | Q.Query<Encoded>
+        | Q.QueryWhere<Encoded>
+        | Q.QueryEnd<Encoded, "many">,
+      pure: Effect<A, E2, FixEnv<R2, Evt, readonly T[], readonly T2[]>>,
+      batch: "batched" | number
+    ): Effect.Effect<
+      A[],
+      InvalidStateError | OptimisticConcurrencyException | E2,
+      | Service
+      | Exclude<R2, {
+        env: PureEnv<Evt, readonly T[], readonly T2[]>
+      }>
+    >
+  }
+  readonly query: {
+    <A, R, From extends FieldValues, TType extends "one" | "many" | "count" = "many">(
+      q: (
+        initial: Q.Query<Encoded>
+      ) => Q.QueryProjection<Encoded extends From ? From : never, A, R, TType>
+    ): Effect.Effect<
+      TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
+      | (TType extends "many" ? never : NotFoundError<ItemType>)
+      | (TType extends "count" ? never : S.ParseResult.ParseError),
+      Service | R
+    >
+    <R = never, TType extends "one" | "many" = "many">(
+      q: (initial: Q.Query<Encoded>) => Q.QAll<Encoded, T, R, TType>
+    ): Effect.Effect<
+      TType extends "many" ? readonly T[] : T,
+      TType extends "many" ? never : NotFoundError<ItemType>,
+      Service | R
+    >
+    // <R = never>(q: QAll<Encoded, T, R>): Effect.Effect<readonly T[], never, Service | R>
+    // <A, R, From extends FieldValues>(
+    //   q: QueryProjection<Encoded extends From ? From : never, A, R>
+    // ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
+  }
+  byIdAndSaveWithPure: {
+    <R, A, E, S2 extends T>(
+      id: T[IdKey],
+      pure: Effect<A, E, FixEnv<R, Evt, T, S2>>
+    ): Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | E | NotFoundError<ItemType>,
+      | Service
+      | Exclude<R, {
+        env: PureEnv<Evt, T, S2>
+      }>
+    >
+  }
+  saveManyWithPure: {
+    <R, A, E, S1 extends T, S2 extends T>(
+      items: Iterable<S1>,
+      pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
+    ): Effect.Effect<
+      A,
+      InvalidStateError | OptimisticConcurrencyException | E,
+      Exclude<R, {
+        env: PureEnv<Evt, readonly S1[], readonly S2[]>
+      }>
+    >
+    <R, A, E, S1 extends T, S2 extends T>(
+      items: Iterable<S1>,
+      pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>,
+      batch: "batched" | number
+    ): Effect.Effect<
+      A[],
+      InvalidStateError | OptimisticConcurrencyException | E,
+      Exclude<R, {
+        env: PureEnv<Evt, readonly S1[], readonly S2[]>
+      }>
+    >
+  }
+  /** @experimental */
+  mapped: MM<Service, Encoded>
+  use: <X>(
+    body: (_: Service) => X
+  ) => X extends Effect<infer A, infer E, infer R> ? Effect<A, E, R | Service> : Effect<X, never, Service>
+}
+
+/**
+ * @deprecated
+ */
+const makeRepoFunctions = (tag: any, itemType: any) => {
+  const { all } = Effect.serviceConstants(tag) as any
+  const {
+    byIdAndSaveWithPure,
+    find,
+    get,
+    query,
+    queryAndSavePure,
+    removeAndPublish,
+    removeById,
+    save,
+    saveAndPublish,
+    saveManyWithPure
+  } = Effect.serviceFunctions(tag) as any
+  const mapped = (s: any) => Effect.map(tag, (_: any) => _.mapped(s))
+  return {
+    itemType,
+    all,
+    byIdAndSaveWithPure,
+    find,
+    removeById,
+    saveAndPublish,
+    removeAndPublish,
+    save,
+    get,
+    query,
+    mapped,
+    queryAndSavePure,
+    saveManyWithPure,
+    use: (body: any) => Effect.andThen(tag, body)
   }
 }
 
@@ -132,6 +304,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
         impl: Repository<T, Encoded, Evt, ItemType, IdKey, R> & Ext
       ) => RepositoryBase<T, Encoded, Evt, ItemType, Ext, IdKey, R>)
       & Context.Tag<Service, Service>
+      & RepoFunctions<T, Encoded, Evt, ItemType, IdKey, Service>
       & {
         Default: Layer.Layer<
           Service,
@@ -207,6 +380,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
         impl: Repository<T, Encoded, Evt, ItemType, "id", R> & Ext
       ) => RepositoryBase<T, Encoded, Evt, ItemType, Ext, "id", R>)
       & Context.Tag<Service, Service>
+      & RepoFunctions<T, Encoded, Evt, ItemType, "id", Service>
       & {
         Default: Layer.Layer<
           Service,
@@ -327,7 +501,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
     Error.stackTraceLimit = limit
     // TODO: actual class name or expect a string identifier - careful with overlapping between modules
     return Context.assignTag<Service>(registerName(itemType + "Repo"), creationError)(
-      Cls
+      Object.assign(Cls, makeRepoFunctions(Cls, itemType))
     ) as any // impl is missing, but its marked protected
   }
 
