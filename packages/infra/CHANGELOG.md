@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.6.0
+
+### Minor Changes
+
+- 7b2cc36: support schemaContext for repository creation
+
 ## 2.5.2
 
 ### Patch Changes
