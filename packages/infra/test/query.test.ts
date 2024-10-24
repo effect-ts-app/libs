@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Context, Effect, flow, Layer, Option, pipe, S, Struct } from "effect-app"
+import { Context, Effect, Layer, Option, pipe, S, Struct } from "effect-app"
 import { inspect } from "util"
 import { expect, expectTypeOf, it } from "vitest"
 import type { QueryEnd, QueryProjection, QueryWhere } from "../src/services/query.js"
@@ -434,7 +434,7 @@ it(
           {}
         )
 
-        const result = yield* repo.query(flow(where("id", "123"), project(schema)))
+        const result = yield* repo.query(where("id", "123"), project(schema))
 
         expect(result).toEqual([])
       })
