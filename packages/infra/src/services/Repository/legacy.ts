@@ -310,7 +310,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
       & {
         Default: Layer.Layer<
           Service,
-          E1 | Layer.Layer.Error<Layers[number]>,
+          E | E1 | Layer.Layer.Error<Layers[number]>,
           Exclude<
             R1 | R | StoreMaker,
             { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
@@ -386,7 +386,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
       & {
         Default: Layer.Layer<
           Service,
-          E1 | Layer.Layer.Error<Layers[number]>,
+          E | E1 | Layer.Layer.Error<Layers[number]>,
           Exclude<
             R1 | R | StoreMaker,
             { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
