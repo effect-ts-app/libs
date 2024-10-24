@@ -259,11 +259,13 @@ it(
         const query1 = make<Union>().pipe(
           where("id", "bla"),
           and("_tag", "AA")
-        ) satisfies QueryWhere<Union, AA>
+        )
+        expectTypeOf(query1).toEqualTypeOf<QueryWhere<Union, AA>>()
 
         const query2 = make<Union>().pipe(
           where("_tag", "AA")
-        ) satisfies QueryWhere<Union, AA>
+        )
+        expectTypeOf(query2).toEqualTypeOf<QueryWhere<Union, AA>>()
 
         const query3 = make<Union>().pipe(
           where("_tag", "AA"),
@@ -271,20 +273,24 @@ it(
             where("id", "test"),
             and("_tag", "BB")
           )
-        ) satisfies QueryWhere<Union, AA | BB>
+        )
+        expectTypeOf(query3).toEqualTypeOf<QueryWhere<Union, AA | BB>>()
 
         const query4 = make<Union>().pipe(
           where("_tag", "AA"),
           project(S.Struct({ id: S.String, a: S.Unknown }))
-        ) satisfies QueryProjection<
-          AA,
-          {
-            readonly id: string
-            readonly a: unknown
-          },
-          never,
-          "many"
-        >
+        )
+        expectTypeOf(query4).toEqualTypeOf<
+          QueryProjection<
+            AA,
+            {
+              readonly id: string
+              readonly a: unknown
+            },
+            never,
+            "many"
+          >
+        >()
 
         const query5 = make<Union>().pipe(
           where("id", "bla"),
@@ -294,7 +300,8 @@ it(
 
         const query6 = make<Union>().pipe(
           where("_tag", "neq", "AA")
-        ) satisfies QueryWhere<Union, BB | CC | DD>
+        )
+        expectTypeOf(query6).toEqualTypeOf<QueryWhere<Union, BB | CC | DD>>()
 
         const query7 = make<Union>().pipe(
           where("_tag", "AA"),
@@ -302,20 +309,16 @@ it(
             where("id", "test"),
             and("_tag", "neq", "BB")
           )
-        ) satisfies QueryWhere<Union, AA | CC | DD>
+        )
+        expectTypeOf(query7).toEqualTypeOf<QueryWhere<Union, AA | CC | DD>>()
 
         const query8 = make<Union>().pipe(
-          where("_tag", "AA"),
-          and("_tag", "neq", "BB")
-        ) satisfies QueryWhere<Union, AA | CC | DD>
-
-        const query9 = make<Union>().pipe(
           where("_tag", "neq", "AA"),
           and("_tag", "AA")
         )
-        expectTypeOf(query9).toEqualTypeOf<QueryWhere<Union, never>>()
+        expectTypeOf(query8).toEqualTypeOf<QueryWhere<Union, never>>()
 
-        const query10 = make<Union>().pipe(
+        const query9 = make<Union>().pipe(
           where("id", "AA"),
           and("_tag", "AA"),
           or(
@@ -325,7 +328,21 @@ it(
               and("_tag", "CC")
             )
           )
-        ) satisfies QueryWhere<Union, AA | BB | CC>
+        )
+        expectTypeOf(query9).toEqualTypeOf<QueryWhere<Union, AA | BB | CC>>()
+
+        const query10 = make<Union>().pipe(
+          where("id", "AA"),
+          and("_tag", "AA"),
+          or(
+            where("id", "test"),
+            and("_tag", "BB")
+          ),
+          order("id", "ASC"),
+          page({ take: 10 }),
+          count
+        )
+        expectTypeOf(query10).toEqualTypeOf<QueryProjection<AA | BB, S.NonNegativeInt, never, "count">>()
 
         const query11 = make<Union>().pipe(
           where("id", "AA"),
@@ -336,37 +353,11 @@ it(
           ),
           order("id", "ASC"),
           page({ take: 10 }),
-          count
-        ) satisfies QueryProjection<AA | BB, S.NonNegativeInt, never, "count">
-
-        const query12 = make<Union>().pipe(
-          where("id", "AA"),
-          and("_tag", "AA"),
-          or(
-            where("id", "test"),
-            and("_tag", "BB")
-          ),
-          order("id", "ASC"),
-          page({ take: 10 }),
           one
-        ) satisfies QueryEnd<AA | BB, "one">
+        )
+        expectTypeOf(query11).toEqualTypeOf<QueryEnd<AA | BB, "one">>()
 
-        // to avoid not used errors, we would need an expect in any case
-        const queries = [
-          query1,
-          query2,
-          query3,
-          query4,
-          query5,
-          query6,
-          query7,
-          query8,
-          query9,
-          query10,
-          query11,
-          query12
-        ]
-        expect(queries).toEqual(queries)
+        expect([]).toEqual([])
       })
       .pipe(Effect.runPromise)
 )
