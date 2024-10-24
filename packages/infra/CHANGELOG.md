@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.7.0
+
+### Minor Changes
+
+- feat: add support for refining types through queries
+
 ## 2.6.1
 
 ### Patch Changes
