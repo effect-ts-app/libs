@@ -2,8 +2,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Context, Effect, flow, Layer, Option, pipe, S, Struct } from "effect-app"
 import { inspect } from "util"
-import { expect, it } from "vitest"
-import { and, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
+import { expect, expectTypeOf, it } from "vitest"
+import type { QueryEnd, QueryProjection, QueryWhere } from "../src/services/query.js"
+import { and, count, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
 import { makeRepo } from "../src/services/RepositoryBase.js"
 import { memFilter, MemoryStoreLive } from "../src/services/Store/Memory.js"
 
@@ -226,4 +227,146 @@ it(
         expect(result2).toEqual([])
       })
       .pipe(Effect.provide(MemoryStoreLive), Effect.runPromise)
+)
+
+it(
+  "refine2",
+  () =>
+    Effect
+      .gen(function*() {
+        class AA extends S.TaggedClass<AA>()("AA", {
+          id: S.String,
+          a: S.Unknown
+        }) {}
+
+        class BB extends S.TaggedClass<BB>()("BB", {
+          id: S.String,
+          b: S.Unknown
+        }) {}
+
+        class CC extends S.TaggedClass<CC>()("CC", {
+          id: S.String,
+          c: S.Unknown
+        }) {}
+
+        class DD extends S.TaggedClass<DD>()("DD", {
+          id: S.String,
+          d: S.Unknown
+        }) {}
+
+        type Union = AA | BB | CC | DD
+
+        const query1 = make<Union>().pipe(
+          where("id", "bla"),
+          and("_tag", "AA")
+        ) satisfies QueryWhere<Union, AA>
+
+        const query2 = make<Union>().pipe(
+          where("_tag", "AA")
+        ) satisfies QueryWhere<Union, AA>
+
+        const query3 = make<Union>().pipe(
+          where("_tag", "AA"),
+          or(
+            where("id", "test"),
+            and("_tag", "BB")
+          )
+        ) satisfies QueryWhere<Union, AA | BB>
+
+        const query4 = make<Union>().pipe(
+          where("_tag", "AA"),
+          project(S.Struct({ id: S.String, a: S.Unknown }))
+        ) satisfies QueryProjection<
+          AA,
+          {
+            readonly id: string
+            readonly a: unknown
+          },
+          never,
+          "many"
+        >
+
+        const query5 = make<Union>().pipe(
+          where("id", "bla"),
+          // @ts-expect-error cannot project over fields that are not in common between the union members (you must refine the union first)
+          project(S.Struct({ id: S.String, a: S.Unknown }))
+        )
+
+        const query6 = make<Union>().pipe(
+          where("_tag", "neq", "AA")
+        ) satisfies QueryWhere<Union, BB | CC | DD>
+
+        const query7 = make<Union>().pipe(
+          where("_tag", "AA"),
+          or(
+            where("id", "test"),
+            and("_tag", "neq", "BB")
+          )
+        ) satisfies QueryWhere<Union, AA | CC | DD>
+
+        const query8 = make<Union>().pipe(
+          where("_tag", "AA"),
+          and("_tag", "neq", "BB")
+        ) satisfies QueryWhere<Union, AA | CC | DD>
+
+        const query9 = make<Union>().pipe(
+          where("_tag", "neq", "AA"),
+          and("_tag", "AA")
+        )
+        expectTypeOf(query9).toEqualTypeOf<QueryWhere<Union, never>>()
+
+        const query10 = make<Union>().pipe(
+          where("id", "AA"),
+          and("_tag", "AA"),
+          or(
+            where("_tag", "BB"),
+            or(
+              where("id", "test"),
+              and("_tag", "CC")
+            )
+          )
+        ) satisfies QueryWhere<Union, AA | BB | CC>
+
+        const query11 = make<Union>().pipe(
+          where("id", "AA"),
+          and("_tag", "AA"),
+          or(
+            where("id", "test"),
+            and("_tag", "BB")
+          ),
+          order("id", "ASC"),
+          page({ take: 10 }),
+          count
+        ) satisfies QueryProjection<AA | BB, S.NonNegativeInt, never, "count">
+
+        const query12 = make<Union>().pipe(
+          where("id", "AA"),
+          and("_tag", "AA"),
+          or(
+            where("id", "test"),
+            and("_tag", "BB")
+          ),
+          order("id", "ASC"),
+          page({ take: 10 }),
+          one
+        ) satisfies QueryEnd<AA | BB, "one">
+
+        // to avoid not used errors, we would need an expect in any case
+        const queries = [
+          query1,
+          query2,
+          query3,
+          query4,
+          query5,
+          query6,
+          query7,
+          query8,
+          query9,
+          query10,
+          query11,
+          query12
+        ]
+        expect(queries).toEqual(queries)
+      })
+      .pipe(Effect.runPromise)
 )
