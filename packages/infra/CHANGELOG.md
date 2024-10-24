@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.5.0
+
+### Minor Changes
+
+- 0c52792: change: require the context of Schema to be eliminated beforehand, or trickle down
+
 ## 2.4.1
 
 ### Patch Changes
