@@ -1,6 +1,6 @@
-import { RepositoryDefaultImpl2 } from "@effect-app/infra/services/RepositoryBase"
 import { Effect, flow, Layer, ManagedRuntime, S } from "effect-app"
 import { and, one, page, where } from "../src/services/query.js"
+import { makeRepo } from "../src/services/RepositoryBase.js"
 import { MemoryStoreLive } from "../src/services/Store/Memory.js"
 
 const str = S.Struct({ _tag: S.Literal("string"), value: S.String })
@@ -48,15 +48,17 @@ const items = [
   new SomethingElse({ banana: S.NonEmptyString255("Banana2") })
 ]
 
-class SomethingRepo extends RepositoryDefaultImpl2<SomethingRepo>()(
-  "Union",
-  Union,
-  { idKey: "id" }
-) {
+class SomethingRepo extends Effect.Service<SomethingRepo>()("SomethingRepo", {
+  effect: Effect.gen(function*() {
+    return yield* makeRepo("Union", Union, {})
+  })
+}) {
   static readonly Test = Layer
     .effect(
       SomethingRepo,
-      SomethingRepo.makeWith({ makeInitial: Effect.sync(() => items) }, (_) => new SomethingRepo(_))
+      Effect.gen(function*() {
+        return SomethingRepo.make(yield* makeRepo("Union", Union, { makeInitial: Effect.sync(() => items) }))
+      })
     )
     .pipe(
       Layer.provide(MemoryStoreLive)
@@ -64,7 +66,8 @@ class SomethingRepo extends RepositoryDefaultImpl2<SomethingRepo>()(
 }
 
 const program = Effect.gen(function*() {
-  const r = yield* SomethingRepo.query(flow(
+  const somethingRepo = yield* SomethingRepo
+  const r = yield* somethingRepo.query(flow(
     where("id", "Verona"),
     and("_tag", "Something"),
     // or(

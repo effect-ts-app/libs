@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra",
-  "version": "2.3.5",
+  "version": "2.4.1",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -498,6 +498,16 @@
       "require": {
         "types": "./dist/services/Repository/ext.d.ts",
         "default": "./_cjs/services/Repository/ext.cjs"
+      }
+    },
+    "./services/Repository/legacy": {
+      "import": {
+        "types": "./dist/services/Repository/legacy.d.ts",
+        "default": "./dist/services/Repository/legacy.js"
+      },
+      "require": {
+        "types": "./dist/services/Repository/legacy.d.ts",
+        "default": "./_cjs/services/Repository/legacy.cjs"
       }
     },
     "./services/Repository/service": {
