@@ -11,7 +11,7 @@ import type { Repos } from "../RepositoryBase.js"
 import { makeRepoInternal } from "../RepositoryBase.js"
 import type { StoreConfig, StoreMaker } from "../Store.js"
 import { type ExtendedRepository, extendRepo } from "./ext.js"
-import type { Repository } from "./service.js"
+import type { RefineTHelper, Repository } from "./service.js"
 
 const names = new Map<string, number>()
 const registerName = (name: string) => {
@@ -102,19 +102,21 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      Service | R
+      R | Service
     >
-    <R = never, TType extends "one" | "many" = "many">(
-      q: (initial: Q.Query<Encoded>) => Q.QAll<Encoded, T, R, TType>
+    <
+      R = never,
+      TType extends "one" | "many" = "many",
+      EncodedRefined extends Encoded = Encoded
+    >(
+      q: (
+        initial: Q.Query<Encoded>
+      ) => Q.QAll<Encoded, EncodedRefined, RefineTHelper<T, EncodedRefined>, R, TType>
     ): Effect.Effect<
-      TType extends "many" ? readonly T[] : T,
+      TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      Service | R
+      R | Service
     >
-    // <R = never>(q: QAll<Encoded, T, R>): Effect.Effect<readonly T[], never, Service | R>
-    // <A, R, From extends FieldValues>(
-    //   q: QueryProjection<Encoded extends From ? From : never, A, R>
-    // ): Effect.Effect<readonly A[], S.ParseResult.ParseError, Service | R>
   }
   byIdAndSaveWithPure: {
     <R, A, E, S2 extends T>(

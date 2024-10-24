@@ -306,6 +306,7 @@ it(
           // @ts-expect-error cannot project over fields that are not in common between the union members (you must refine the union first)
           project(S.Struct({ id: S.String, a: S.Unknown }))
         )
+        console.log(query5)
 
         const query6 = make<Union>().pipe(
           where("_tag", "neq", "AA")

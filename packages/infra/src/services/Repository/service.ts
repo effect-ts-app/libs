@@ -57,7 +57,7 @@ export interface Repository<
   readonly mapped: Mapped<Encoded>
 }
 
-type RefineTHelper<T, EncodedRefined> = EncodedRefined extends { _tag: any }
+export type RefineTHelper<T, EncodedRefined> = EncodedRefined extends { _tag: any }
   ? T extends { _tag: any } ? Extract<T, { _tag: EncodedRefined["_tag"] }>
   : T
   : T
