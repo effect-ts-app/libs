@@ -43,7 +43,7 @@ export interface QueryTogether<
 }
 
 type ExtractTType<T> = T extends QueryTogether<any, any, any, any, any, infer TType> ? TType : never
-type ExtractFieldValues<T> = T extends QueryTogether<infer TFieldValues, any, any, any, any, any> ? TFieldValues : never
+// type ExtractFieldValues<T> = T extends QueryTogether<infer TFieldValues, any, any, any, any, any> ? TFieldValues : never
 type ExtractFieldValuesRefined<T> = T extends QueryTogether<any, infer TFieldValuesRefined, any, any, any, any>
   ? TFieldValuesRefined
   : never
