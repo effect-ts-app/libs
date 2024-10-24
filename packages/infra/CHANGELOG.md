@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.6.1
+
+### Patch Changes
+
+- aba6aab: restore legacy functionality for now
+
 ## 2.6.0
 
 ### Minor Changes
