@@ -11,7 +11,7 @@ import type { FilterArgs, PersistenceModelType, StoreConfig } from "./Store.js"
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import type { NonEmptyReadonlyArray } from "effect-app"
-import { Array, Chunk, Effect, Equivalence, flow, Option, pipe, PubSub, S, Unify } from "effect-app"
+import { Array, Chunk, Context, Effect, Equivalence, flow, Option, pipe, PubSub, S, Unify } from "effect-app"
 import { toNonEmptyArray } from "effect-app/Array"
 import { flatMapOption } from "effect-app/Effect"
 import type { Schema } from "effect-app/Schema"
@@ -65,14 +65,16 @@ export function makeRepoInternal<
 
     const mkStore = makeStore<Encoded>()(name, schema, mapTo)
 
-    function make<RInitial = never, E = never, R2 = never>(
+    function make<RInitial = never, E = never, R2 = never, RCtx = never>(
       args: [Evt] extends [never] ? {
+          schemaContext?: Context.Context<RCtx>
           makeInitial?: Effect<readonly T[], E, RInitial>
           config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
             partitionValue?: (a: Encoded) => string
           }
         }
         : {
+          schemaContext?: Context.Context<RCtx>
           publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
           makeInitial?: Effect<readonly T[], E, RInitial>
           config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
@@ -82,13 +84,17 @@ export function makeRepoInternal<
     ) {
       return Effect
         .gen(function*() {
+          const rctx: Context<RCtx> = args.schemaContext ?? Context.empty() as any
+          const provideRctx = Effect.provide(rctx)
           const encodeMany = flow(
             S.encode(S.Array(schema)),
+            provideRctx,
             Effect.withSpan("encodeMany", { captureStackTrace: false })
           )
-          const decode = S.decode(schema)
+          const decode = flow(S.decode(schema), provideRctx)
           const decodeMany = flow(
             S.decode(S.Array(schema)),
+            provideRctx,
             Effect.withSpan("decodeMany", { captureStackTrace: false })
           )
 
@@ -133,7 +139,7 @@ export function makeRepoInternal<
                 )
                 : s.pipe(S.pick(idKey as any))
             })
-          const encodeId = S.encode(i)
+          const encodeId = flow(S.encode(i), provideRctx)
           function findEId(id: Encoded["id"]) {
             return Effect.flatMap(
               store.find(id),
@@ -259,7 +265,7 @@ export function makeRepoInternal<
               ? filter(a)
                 // TODO: mapFrom but need to support per field and dependencies
                 .pipe(
-                  Effect.andThen(S.decode(S.Array(a.schema ?? schema)))
+                  Effect.andThen(flow(S.decode(S.Array(a.schema ?? schema)), provideRctx))
                 )
               : a.mode === "collect"
               ? filter(a)
@@ -267,7 +273,8 @@ export function makeRepoInternal<
                 .pipe(
                   Effect.flatMap(flow(
                     S.decode(S.Array(a.schema)),
-                    Effect.map(Array.getSomes)
+                    Effect.map(Array.getSomes),
+                    provideRctx
                   ))
                 )
               : Effect.flatMap(
@@ -304,7 +311,7 @@ export function makeRepoInternal<
             )
           }) as any
 
-          const r: Repository<T, Encoded, Evt, ItemType, IdKey, R> = {
+          const r: Repository<T, Encoded, Evt, ItemType, IdKey, Exclude<R, RCtx>> = {
             changeFeed,
             itemType: name,
             idKey,
@@ -489,7 +496,8 @@ export const makeRepo: {
     E = never,
     RInitial = never,
     R2 = never,
-    Evt = never
+    Evt = never,
+    RCtx = never
   >(
     itemType: ItemType,
     schema: S.Schema<T, Encoded, R>,
@@ -501,8 +509,13 @@ export const makeRepo: {
       }
       publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
       makeInitial?: Effect<readonly T[], E, RInitial>
+      schemaContext?: Context.Context<RCtx>
     }
-  ): Effect.Effect<ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, R>, E, RInitial | R2 | StoreMaker>
+  ): Effect.Effect<
+    ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, Exclude<R, RCtx>>,
+    E,
+    RInitial | R2 | StoreMaker
+  >
   <
     ItemType extends string,
     R,
@@ -511,7 +524,8 @@ export const makeRepo: {
     E = never,
     RInitial = never,
     R2 = never,
-    Evt = never
+    Evt = never,
+    RCtx = never
   >(
     itemType: ItemType,
     schema: S.Schema<T, Encoded, R>,
@@ -522,8 +536,9 @@ export const makeRepo: {
       }
       publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
       makeInitial?: Effect<readonly T[], E, RInitial>
+      schemaContext?: Context.Context<RCtx>
     }
-  ): Effect.Effect<ExtendedRepository<T, Encoded, Evt, ItemType, "id", R>, E, RInitial | R2 | StoreMaker>
+  ): Effect.Effect<ExtendedRepository<T, Encoded, Evt, ItemType, "id", Exclude<R, RCtx>>, E, RInitial | R2 | StoreMaker>
 } = <
   ItemType extends string,
   R,
@@ -533,7 +548,8 @@ export const makeRepo: {
   E = never,
   RInitial = never,
   R2 = never,
-  Evt = never
+  Evt = never,
+  RCtx = never
 >(
   itemType: ItemType,
   schema: S.Schema<T, Encoded, R>,
@@ -545,6 +561,7 @@ export const makeRepo: {
     }
     publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
     makeInitial?: Effect<readonly T[], E, RInitial>
+    schemaContext?: Context.Context<RCtx>
   }
 ) =>
   Effect.gen(function*() {
@@ -555,7 +572,7 @@ export const makeRepo: {
       (e, _etag) => ({ ...e, _etag }),
       options.idKey ?? "id" as any
     )
-    const r = yield* mkRepo.make(options as any)
+    const r = yield* mkRepo.make<RInitial, E, R2, RCtx>(options as any)
     const repo = extendRepo(r)
     return repo
   })
