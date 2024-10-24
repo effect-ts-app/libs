@@ -82,16 +82,13 @@ export function makeRepoInternal<
     ) {
       return Effect
         .gen(function*() {
-          const rctx = yield* Effect.context<R>()
           const encodeMany = flow(
             S.encode(S.Array(schema)),
-            Effect.provide(rctx),
             Effect.withSpan("encodeMany", { captureStackTrace: false })
           )
-          const decode = flow(S.decode(schema), Effect.provide(rctx))
+          const decode = S.decode(schema)
           const decodeMany = flow(
             S.decode(S.Array(schema)),
-            Effect.provide(rctx),
             Effect.withSpan("decodeMany", { captureStackTrace: false })
           )
 
@@ -118,30 +115,25 @@ export function makeRepoInternal<
             .pipe(Effect.map((_) => _ as T[]))
 
           const fieldsSchema = schema as unknown as { fields: any }
+          // assumes the id field never needs a service...
           const i = ("fields" in fieldsSchema ? S.Struct(fieldsSchema["fields"]) as unknown as typeof schema : schema)
-            .pipe((_) =>
-              _.ast._tag === "Union"
+            .pipe((_) => {
+              let ast = _.ast
+              if (ast._tag === "Declaration") ast = ast.typeParameters[0]!
+
+              const s = S.make(ast) as unknown as Schema<T, Encoded, R>
+
+              return ast._tag === "Union"
                 // we need to get the TypeLiteral, incase of class it's behind a transform...
-                ? S.Union(..._.ast.types.map((_) =>
-                  (S.make(_._tag === "Transformation" ? _.from : _) as unknown as Schema<T, Encoded>)
-                    .pipe(S.pick(idKey as any))
-                ))
-                : _
-                    .ast
-                    ._tag === "Transformation"
-                ? (S
-                  .make(
-                    _
-                      .ast
-                      .from
-                  ) as unknown as Schema<T, Encoded>)
-                  .pipe(S
-                    .pick(idKey as any))
-                : _
-                  .pipe(S
-                    .pick(idKey as any))
-            )
-          const encodeId = flow(S.encode(i), Effect.provide(rctx))
+                ? S.Union(
+                  ...ast.types.map((_) =>
+                    (S.make(_._tag === "Transformation" ? _.from : _) as unknown as Schema<T, Encoded>)
+                      .pipe(S.pick(idKey as any))
+                  )
+                )
+                : s.pipe(S.pick(idKey as any))
+            })
+          const encodeId = S.encode(i)
           function findEId(id: Encoded["id"]) {
             return Effect.flatMap(
               store.find(id),
@@ -267,7 +259,7 @@ export function makeRepoInternal<
               ? filter(a)
                 // TODO: mapFrom but need to support per field and dependencies
                 .pipe(
-                  Effect.andThen(flow(S.decode(S.Array(a.schema ?? schema)), Effect.provide(rctx)))
+                  Effect.andThen(S.decode(S.Array(a.schema ?? schema)))
                 )
               : a.mode === "collect"
               ? filter(a)
@@ -275,8 +267,7 @@ export function makeRepoInternal<
                 .pipe(
                   Effect.flatMap(flow(
                     S.decode(S.Array(a.schema)),
-                    Effect.map(Array.getSomes),
-                    Effect.provide(rctx)
+                    Effect.map(Array.getSomes)
                   ))
                 )
               : Effect.flatMap(
@@ -313,7 +304,7 @@ export function makeRepoInternal<
             )
           }) as any
 
-          const r: Repository<T, Encoded, Evt, ItemType, IdKey> = {
+          const r: Repository<T, Encoded, Evt, ItemType, IdKey, R> = {
             changeFeed,
             itemType: name,
             idKey,
@@ -417,7 +408,7 @@ export function makeStore<
       return Effect.gen(function*() {
         const { make } = yield* StoreMaker
 
-        const store = yield* make<Encoded, string, R | RInitial, EInitial>(
+        const store = yield* make<Encoded, string, RInitial | R, EInitial>(
           pluralize(name),
           makeInitial
             ? makeInitial
@@ -465,7 +456,7 @@ export interface Repos<
           partitionValue?: (a: Encoded) => string
         }
       }
-  ): Effect<Repository<T, Encoded, Evt, ItemType, IdKey>, E, StoreMaker | R | RInitial | R2>
+  ): Effect<Repository<T, Encoded, Evt, ItemType, IdKey, R>, E, StoreMaker | RInitial | R2>
   makeWith<Out, RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
         makeInitial?: Effect<readonly T[], E, RInitial>
@@ -480,10 +471,10 @@ export interface Repos<
           partitionValue?: (a: Encoded) => string
         }
       },
-    f: (r: Repository<T, Encoded, Evt, ItemType, IdKey>) => Out
-  ): Effect<Out, E, StoreMaker | R | RInitial | R2>
+    f: (r: Repository<T, Encoded, Evt, ItemType, IdKey, R>) => Out
+  ): Effect<Out, E, StoreMaker | RInitial | R2>
   readonly Q: ReturnType<typeof Q.make<Encoded>>
-  readonly type: Repository<T, Encoded, Evt, ItemType, IdKey>
+  readonly type: Repository<T, Encoded, Evt, ItemType, IdKey, R>
 }
 
 export type GetRepoType<T> = T extends { type: infer R } ? R : never
@@ -511,7 +502,7 @@ export const makeRepo: {
       publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
       makeInitial?: Effect<readonly T[], E, RInitial>
     }
-  ): Effect.Effect<ExtendedRepository<T, Encoded, Evt, ItemType, IdKey>, E, R | RInitial | R2 | StoreMaker>
+  ): Effect.Effect<ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, R>, E, RInitial | R2 | StoreMaker>
   <
     ItemType extends string,
     R,
@@ -532,7 +523,7 @@ export const makeRepo: {
       publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
       makeInitial?: Effect<readonly T[], E, RInitial>
     }
-  ): Effect.Effect<ExtendedRepository<T, Encoded, Evt, ItemType, "id">, E, R | RInitial | R2 | StoreMaker>
+  ): Effect.Effect<ExtendedRepository<T, Encoded, Evt, ItemType, "id", R>, E, RInitial | R2 | StoreMaker>
 } = <
   ItemType extends string,
   R,

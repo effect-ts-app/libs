@@ -14,21 +14,22 @@ export interface Repository<
   Encoded extends { id: string },
   Evt,
   ItemType extends string,
-  IdKey extends keyof T
+  IdKey extends keyof T,
+  R
 > {
   readonly itemType: ItemType
   readonly idKey: IdKey
-  readonly find: (id: T[IdKey]) => Effect<Option<T>>
-  readonly all: Effect<T[]>
+  readonly find: (id: T[IdKey]) => Effect<Option<T>, never, R>
+  readonly all: Effect<T[], never, R>
   readonly saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<void, InvalidStateError | OptimisticConcurrencyException>
+  ) => Effect<void, InvalidStateError | OptimisticConcurrencyException, R>
   readonly changeFeed: PubSub.PubSub<[T[], "save" | "remove"]>
   readonly removeAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<void>
+  ) => Effect<void, never, R>
 
   readonly query: {
     <A, R, Encoded2 extends FieldValues, TType extends "one" | "many" | "count" = "many">(

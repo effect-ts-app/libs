@@ -11,8 +11,15 @@ import * as Q from "../query.js"
 import { AnyPureDSL } from "./dsl.js"
 import type { Repository } from "./service.js"
 
-export const extendRepo = <T, Encoded extends { id: string }, Evt, ItemType extends string, IdKey extends keyof T>(
-  repo: Repository<T, Encoded, Evt, ItemType, IdKey>
+export const extendRepo = <
+  T,
+  Encoded extends { id: string },
+  Evt,
+  ItemType extends string,
+  IdKey extends keyof T,
+  R
+>(
+  repo: Repository<T, Encoded, Evt, ItemType, IdKey, R>
 ) => {
   const get = (id: T[IdKey]) =>
     Effect.flatMap(
@@ -21,44 +28,30 @@ export const extendRepo = <T, Encoded extends { id: string }, Evt, ItemType exte
     )
   function saveManyWithPure_<
     R,
-    T,
-    Encoded extends { id: string },
     A,
     E,
-    Evt,
     S1 extends T,
-    S2 extends T,
-    ItemType extends string,
-    IdKey extends keyof T
+    S2 extends T
   >(
-    self: Repository<T, Encoded, Evt, ItemType, IdKey>,
     items: Iterable<S1>,
     pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>
   ) {
     return saveAllWithEffectInt(
-      self,
       runTerm(pure, [...items])
     )
   }
 
   function saveWithPure_<
     R,
-    T,
-    Encoded extends { id: string },
     A,
     E,
-    Evt,
     S1 extends T,
-    S2 extends T,
-    ItemType extends string,
-    IdKey extends keyof T
+    S2 extends T
   >(
-    self: Repository<T, Encoded, Evt, ItemType, IdKey>,
     item: S1,
     pure: Effect<A, E, FixEnv<R, Evt, S1, S2>>
   ) {
     return saveAllWithEffectInt(
-      self,
       runTerm(pure, item)
         .pipe(Effect
           .map(([item, events, a]) => [[item], events, a]))
@@ -66,35 +59,23 @@ export const extendRepo = <T, Encoded extends { id: string }, Evt, ItemType exte
   }
 
   function saveAllWithEffectInt<
-    T,
-    Encoded extends { id: string },
     P extends T,
-    Evt,
-    ItemType extends string,
-    IdKey extends keyof T,
     R,
     E,
     A
   >(
-    self: Repository<T, Encoded, Evt, ItemType, IdKey>,
     gen: Effect<readonly [Iterable<P>, Iterable<Evt>, A], E, R>
   ) {
-    return Effect.flatMap(gen, ([items, events, a]) => self.saveAndPublish(items, events).pipe(Effect.map(() => a)))
+    return Effect.flatMap(gen, ([items, events, a]) => repo.saveAndPublish(items, events).pipe(Effect.map(() => a)))
   }
 
   function saveManyWithPureBatched_<
     R,
-    T,
-    Encoded extends { id: string },
     A,
     E,
-    Evt,
     S1 extends T,
-    S2 extends T,
-    ItemType extends string,
-    IdKey extends keyof T
+    S2 extends T
   >(
-    self: Repository<T, Encoded, Evt, ItemType, IdKey>,
     items: Iterable<S1>,
     pure: Effect<A, E, FixEnv<R, Evt, readonly S1[], readonly S2[]>>,
     batchSize = 100
@@ -103,7 +84,6 @@ export const extendRepo = <T, Encoded extends { id: string }, Evt, ItemType exte
       Array.chunk_(items, batchSize),
       (batch) =>
         saveAllWithEffectInt(
-          self,
           runTerm(pure, batch)
         )
     )
@@ -158,9 +138,9 @@ export const extendRepo = <T, Encoded extends { id: string }, Evt, ItemType exte
       Effect.andThen((_) =>
         Array.isArray(_)
           ? batch === undefined
-            ? saveManyWithPure_(repo, _ as any, pure as any)
-            : saveManyWithPureBatched_(repo, _ as any, pure as any, batch === "batched" ? 100 : batch)
-          : saveWithPure_(repo, _ as any, pure as any)
+            ? saveManyWithPure_(_ as any, pure as any)
+            : saveManyWithPureBatched_(_ as any, pure as any, batch === "batched" ? 100 : batch)
+          : saveWithPure_(_ as any, pure as any)
       )
     ) as any
 
@@ -192,12 +172,10 @@ export const extendRepo = <T, Encoded extends { id: string }, Evt, ItemType exte
         Array.chunk_(items, batch === "batched" ? 100 : batch),
         (batch) =>
           saveAllWithEffectInt(
-            repo,
             runTerm(pure, batch)
           )
       )
       : saveAllWithEffectInt(
-        repo,
         runTerm(pure, [...items])
       )
 
@@ -212,7 +190,7 @@ export const extendRepo = <T, Encoded extends { id: string }, Evt, ItemType exte
         env: PureEnv<Evt, T, S2>
       }>
     >
-  } = (id, pure): any => get(id).pipe(Effect.flatMap((item) => saveWithPure_(repo, item, pure)))
+  } = (id, pure): any => get(id).pipe(Effect.flatMap((item) => saveWithPure_(item, pure)))
 
   type Req =
     & Request.Request<T, NotFoundError<ItemType>>
@@ -269,7 +247,6 @@ export const extendRepo = <T, Encoded extends { id: string }, Evt, ItemType exte
       pure: Effect<A, E, FixEnv<R, Evt, S1, S2>>
     ) =>
       saveAllWithEffectInt(
-        repo,
         runTerm(pure, item)
           .pipe(Effect.map(([item, events, a]) => [[item], events, a]))
       )
@@ -278,7 +255,7 @@ export const extendRepo = <T, Encoded extends { id: string }, Evt, ItemType exte
   return {
     ...repo,
     ...exts
-  } as Repository<T, Encoded, Evt, ItemType, IdKey> & typeof exts
+  } as Repository<T, Encoded, Evt, ItemType, IdKey, R> & typeof exts
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -287,5 +264,6 @@ export interface ExtendedRepository<
   Encoded extends { id: string },
   Evt,
   ItemType extends string,
-  IdKey extends keyof T
-> extends ReturnType<typeof extendRepo<T, Encoded, Evt, ItemType, IdKey>> {}
+  IdKey extends keyof T,
+  R
+> extends ReturnType<typeof extendRepo<T, Encoded, Evt, ItemType, IdKey, R>> {}
