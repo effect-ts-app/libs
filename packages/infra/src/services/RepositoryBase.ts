@@ -65,7 +65,7 @@ export function makeRepoInternal<
 
     const mkStore = makeStore<Encoded>()(name, schema, mapTo)
 
-    function make<RInitial = never, E = never, R2 = never, RCtx = never>(
+    function make<RInitial = never, E = never, RPublish = never, RCtx = never>(
       args: [Evt] extends [never] ? {
           schemaContext?: Context.Context<RCtx>
           makeInitial?: Effect<readonly T[], E, RInitial>
@@ -75,7 +75,7 @@ export function makeRepoInternal<
         }
         : {
           schemaContext?: Context.Context<RCtx>
-          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+          publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, RPublish>
           makeInitial?: Effect<readonly T[], E, RInitial>
           config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
             partitionValue?: (a: Encoded) => string

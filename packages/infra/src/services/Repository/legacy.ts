@@ -29,7 +29,15 @@ const registerName = (name: string) => {
 /**
  * @deprecated
  */
-export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType, IdKey extends keyof T, Service> {
+export interface RepoFunctions<
+  T,
+  Encoded extends { id: string },
+  Evt,
+  ItemType,
+  RPublish,
+  IdKey extends keyof T,
+  Service
+> {
   itemType: ItemType
   T: T
   all: Effect<readonly T[], never, Service>
@@ -38,13 +46,13 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
   saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
+  ) => Effect<void, InvalidStateError | OptimisticConcurrencyException, RPublish | Service>
   removeAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
   ) => Effect<void, never, Service>
   save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
-  get: (id: T[IdKey]) => Effect<T, NotFoundError<ItemType>, Service>
+  get: (id: T[IdKey]) => Effect<T, NotFoundError<ItemType>, RPublish | Service>
   queryAndSavePure: {
     <A, E2, R2, T2 extends T>(
       q: (
@@ -55,6 +63,7 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
       A,
       InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E2,
       | Service
+      | RPublish
       | Exclude<R2, {
         env: PureEnv<Evt, T, T2>
       }>
@@ -71,6 +80,7 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
       A,
       InvalidStateError | OptimisticConcurrencyException | E2,
       | Service
+      | RPublish
       | Exclude<R2, {
         env: PureEnv<Evt, readonly T[], readonly T2[]>
       }>
@@ -88,6 +98,7 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
       A[],
       InvalidStateError | OptimisticConcurrencyException | E2,
       | Service
+      | RPublish
       | Exclude<R2, {
         env: PureEnv<Evt, readonly T[], readonly T2[]>
       }>
@@ -102,7 +113,7 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R | Service
+      RPublish | R | Service
     >
     <
       R = never,
@@ -115,7 +126,7 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R | Service
+      RPublish | R | Service
     >
   }
   byIdAndSaveWithPure: {
@@ -126,6 +137,7 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
       A,
       InvalidStateError | OptimisticConcurrencyException | E | NotFoundError<ItemType>,
       | Service
+      | RPublish
       | Exclude<R, {
         env: PureEnv<Evt, T, S2>
       }>
@@ -138,7 +150,8 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
     ): Effect.Effect<
       A,
       InvalidStateError | OptimisticConcurrencyException | E,
-      Exclude<R, {
+      | RPublish
+      | Exclude<R, {
         env: PureEnv<Evt, readonly S1[], readonly S2[]>
       }>
     >
@@ -149,7 +162,8 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
     ): Effect.Effect<
       A[],
       InvalidStateError | OptimisticConcurrencyException | E,
-      Exclude<R, {
+      | RPublish
+      | Exclude<R, {
         env: PureEnv<Evt, readonly S1[], readonly S2[]>
       }>
     >
