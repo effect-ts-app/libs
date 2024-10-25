@@ -1,8 +1,8 @@
 import { Effect, FiberRef, Layer, Tracer } from "effect-app"
 import { NonEmptyString255 } from "effect-app/Schema"
 import { LocaleRef, RequestContext, spanAttributes } from "../RequestContext.js"
-import { startContextMap } from "../services/Store/ContextMapContainer.js"
-import { storeId } from "../services/Store/Memory.js"
+import { startContextMap } from "../Store/ContextMapContainer.js"
+import { storeId } from "../Store/Memory.js"
 
 export const getRequestContext = Effect
   .all({
