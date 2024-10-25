@@ -15,21 +15,22 @@ export interface Repository<
   Evt,
   ItemType extends string,
   IdKey extends keyof T,
-  R
+  RSchema,
+  RPublish
 > {
   readonly itemType: ItemType
   readonly idKey: IdKey
-  readonly find: (id: T[IdKey]) => Effect<Option<T>, never, R>
-  readonly all: Effect<T[], never, R>
+  readonly find: (id: T[IdKey]) => Effect<Option<T>, never, RSchema>
+  readonly all: Effect<T[], never, RSchema>
   readonly saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<void, InvalidStateError | OptimisticConcurrencyException, R>
+  ) => Effect<void, InvalidStateError | OptimisticConcurrencyException, RSchema | RPublish>
   readonly changeFeed: PubSub.PubSub<[T[], "save" | "remove"]>
   readonly removeAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<void, never, R>
+  ) => Effect<void, never, RSchema | RPublish>
 
   readonly query: {
     // ending with projection
@@ -46,7 +47,7 @@ export interface Repository<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R
+      R | RSchema
     >
     <
       A,
@@ -292,7 +293,7 @@ export interface Repository<
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R
+      R | RSchema
     >
     <
       R = never,

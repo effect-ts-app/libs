@@ -29,22 +29,31 @@ const registerName = (name: string) => {
 /**
  * @deprecated
  */
-export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType, IdKey extends keyof T, Service> {
+export interface RepoFunctions<
+  T,
+  Encoded extends { id: string },
+  Evt,
+  ItemType,
+  IdKey extends keyof T,
+  RSchema,
+  RPublish,
+  Service
+> {
   itemType: ItemType
   T: T
-  all: Effect<readonly T[], never, Service>
-  find: (id: T[IdKey]) => Effect<Option<T>, never, Service>
-  removeById: (id: T[IdKey]) => Effect<void, NotFoundError<ItemType>, Service>
+  all: Effect<readonly T[], never, RSchema | Service>
+  find: (id: T[IdKey]) => Effect<Option<T>, never, RSchema | Service>
+  removeById: (id: T[IdKey]) => Effect<void, NotFoundError<ItemType>, RSchema | Service>
   saveAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
+  ) => Effect<void, InvalidStateError | OptimisticConcurrencyException, RSchema | RPublish | Service>
   removeAndPublish: (
     items: Iterable<T>,
     events?: Iterable<Evt>
-  ) => Effect<void, never, Service>
-  save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, Service>
-  get: (id: T[IdKey]) => Effect<T, NotFoundError<ItemType>, Service>
+  ) => Effect<void, never, RSchema | Service>
+  save: (...items: T[]) => Effect<void, InvalidStateError | OptimisticConcurrencyException, RSchema | Service>
+  get: (id: T[IdKey]) => Effect<T, NotFoundError<ItemType>, RSchema | RPublish | Service>
   queryAndSavePure: {
     <A, E2, R2, T2 extends T>(
       q: (
@@ -54,6 +63,8 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
     ): Effect.Effect<
       A,
       InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E2,
+      | RSchema
+      | RPublish
       | Service
       | Exclude<R2, {
         env: PureEnv<Evt, T, T2>
@@ -70,6 +81,8 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
     ): Effect.Effect<
       A,
       InvalidStateError | OptimisticConcurrencyException | E2,
+      | RSchema
+      | RPublish
       | Service
       | Exclude<R2, {
         env: PureEnv<Evt, readonly T[], readonly T2[]>
@@ -87,6 +100,8 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
     ): Effect.Effect<
       A[],
       InvalidStateError | OptimisticConcurrencyException | E2,
+      | RSchema
+      | RPublish
       | Service
       | Exclude<R2, {
         env: PureEnv<Evt, readonly T[], readonly T2[]>
@@ -102,7 +117,7 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R | Service
+      R | RSchema | Service
     >
     <
       R = never,
@@ -115,7 +130,7 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R | Service
+      R | RSchema | Service
     >
   }
   byIdAndSaveWithPure: {
@@ -125,6 +140,8 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
     ): Effect<
       A,
       InvalidStateError | OptimisticConcurrencyException | E | NotFoundError<ItemType>,
+      | RSchema
+      | RPublish
       | Service
       | Exclude<R, {
         env: PureEnv<Evt, T, S2>
@@ -138,7 +155,10 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
     ): Effect.Effect<
       A,
       InvalidStateError | OptimisticConcurrencyException | E,
-      Exclude<R, {
+      | RSchema
+      | RPublish
+      | Service
+      | Exclude<R, {
         env: PureEnv<Evt, readonly S1[], readonly S2[]>
       }>
     >
@@ -149,7 +169,10 @@ export interface RepoFunctions<T, Encoded extends { id: string }, Evt, ItemType,
     ): Effect.Effect<
       A[],
       InvalidStateError | OptimisticConcurrencyException | E,
-      Exclude<R, {
+      | RSchema
+      | RPublish
+      | Service
+      | Exclude<R, {
         env: PureEnv<Evt, readonly S1[], readonly S2[]>
       }>
     >
@@ -205,9 +228,10 @@ export class RepositoryBase<
   ItemType extends string,
   Ext,
   IdKey extends keyof T,
-  R
-> implements ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, R> {
-  constructor(protected readonly impl: ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, R> & Ext) {
+  RSchema,
+  RPublish
+> implements ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, RSchema, RPublish> {
+  constructor(protected readonly impl: ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, RSchema, RPublish> & Ext) {
     this.saveAndPublish = this.impl.saveAndPublish
     this.removeAndPublish = this.impl.removeAndPublish
     this.find = this.impl.find
@@ -228,7 +252,7 @@ export class RepositoryBase<
     this.saveWithPure = this.impl.saveWithPure
     this.request = this.impl.request
   }
-  get: (id: T[IdKey]) => Effect<T, NotFoundError<ItemType>, R>
+  get: (id: T[IdKey]) => Effect<T, NotFoundError<ItemType>, RSchema>
   idKey
   request
   itemType
@@ -253,13 +277,13 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
   const f: {
     <
       ItemType extends string,
-      R,
+      RSchema,
       Encoded extends { id: string },
       T,
       IdKey extends keyof T,
       E = never,
       RInitial = never,
-      R2 = never,
+      RPublish = never,
       Layers extends [Layer.Layer.Any, ...Layer.Layer.Any[]] = [Layer.Layer<never>],
       E1 = never,
       R1 = never,
@@ -267,7 +291,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
       Ext = {}
     >(
       itemType: ItemType,
-      schema: S.Schema<T, Encoded, R>,
+      schema: S.Schema<T, Encoded, RSchema>,
       options: [Evt] extends [never] ? {
           dependencies?: Layers
           idKey: IdKey
@@ -293,7 +317,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
           }
           options?: Effect<
             {
-              publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+              publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, RPublish>
               makeInitial?: Effect<readonly T[], E, RInitial>
               ext?: Ext
             },
@@ -303,41 +327,42 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
         }
     ):
       & (abstract new(
-        impl: Repository<T, Encoded, Evt, ItemType, IdKey, R> & Ext
-      ) => RepositoryBase<T, Encoded, Evt, ItemType, Ext, IdKey, R>)
+        impl: Repository<T, Encoded, Evt, ItemType, IdKey, RSchema, RPublish> & Ext
+      ) => RepositoryBase<T, Encoded, Evt, ItemType, Ext, IdKey, RSchema, RPublish>)
       & Context.Tag<Service, Service>
-      & RepoFunctions<T, Encoded, Evt, ItemType, IdKey, Service>
+      & RepoFunctions<T, Encoded, Evt, ItemType, IdKey, RSchema, RPublish, Service>
       & {
         Default: Layer.Layer<
           Service,
           E | E1 | Layer.Layer.Error<Layers[number]>,
           Exclude<
-            R1 | R | StoreMaker,
+            R1 | StoreMaker,
             { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
           >
         >
         DefaultWithoutDependencies: Layer.Layer<
           Service,
           E1,
-          R1 | R | StoreMaker
+          R1 | StoreMaker
         >
       }
       & Repos<
         T,
         Encoded,
-        R,
+        RSchema,
         Evt,
         ItemType,
-        IdKey
+        IdKey,
+        RPublish
       >
     <
       ItemType extends string,
-      R,
+      RSchema,
       Encoded extends { id: string },
       T extends { id: unknown },
       E = never,
       RInitial = never,
-      R2 = never,
+      RPublish = never,
       Layers extends [Layer.Layer.Any, ...Layer.Layer.Any[]] = [Layer.Layer<never>],
       E1 = never,
       R1 = never,
@@ -345,7 +370,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
       Ext = {}
     >(
       itemType: ItemType,
-      schema: S.Schema<T, Encoded, R>,
+      schema: S.Schema<T, Encoded, RSchema>,
       options: [Evt] extends [never] ? {
           dependencies?: Layers
           config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
@@ -369,7 +394,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
           }
           options?: Effect<
             {
-              publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+              publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, RPublish>
               makeInitial?: Effect<readonly T[], E, RInitial>
               ext?: Ext
             },
@@ -379,42 +404,43 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
         }
     ):
       & (abstract new(
-        impl: Repository<T, Encoded, Evt, ItemType, "id", R> & Ext
-      ) => RepositoryBase<T, Encoded, Evt, ItemType, Ext, "id", R>)
+        impl: Repository<T, Encoded, Evt, ItemType, "id", RSchema, RPublish> & Ext
+      ) => RepositoryBase<T, Encoded, Evt, ItemType, Ext, "id", RSchema, RPublish>)
       & Context.Tag<Service, Service>
-      & RepoFunctions<T, Encoded, Evt, ItemType, "id", Service>
+      & RepoFunctions<T, Encoded, Evt, ItemType, "id", RSchema, RPublish, Service>
       & {
         Default: Layer.Layer<
           Service,
           E | E1 | Layer.Layer.Error<Layers[number]>,
           Exclude<
-            R1 | R | StoreMaker,
+            R1 | StoreMaker,
             { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
           >
         >
         DefaultWithoutDependencies: Layer.Layer<
           Service,
           E1,
-          R1 | R | StoreMaker
+          R1 | StoreMaker
         >
       }
       & Repos<
         T,
         Encoded,
-        R,
+        RSchema,
         Evt,
         ItemType,
-        "id"
+        "id",
+        RPublish
       >
   } = <
     ItemType extends string,
-    R,
+    RSchema,
     Encoded extends { id: string },
     T,
     IdKey extends keyof T,
     E = never,
     RInitial = never,
-    R2 = never,
+    RPublish = never,
     Layers extends [Layer.Layer.Any, ...Layer.Layer.Any[]] = [Layer.Layer<never>],
     E1 = never,
     R1 = never,
@@ -422,7 +448,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
     Ext = {}
   >(
     itemType: ItemType,
-    schema: S.Schema<T, Encoded, R>,
+    schema: S.Schema<T, Encoded, RSchema>,
     options: [Evt] extends [never] ? {
         dependencies?: Layers
         idKey?: IdKey
@@ -448,7 +474,7 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
         }
         options?: Effect<
           {
-            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+            publishEvents: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, RPublish>
             makeInitial?: Effect<readonly T[], E, RInitial>
             ext?: Ext
           },
@@ -466,7 +492,8 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
       ItemType,
       Ext,
       IdKey,
-      R
+      RSchema,
+      RPublish
     > {
       static readonly Q = Q.make<Encoded>()
       static get DefaultWithoutDependencies() {
@@ -495,7 +522,6 @@ export const RepositoryDefaultImpl2 = <Service, Evt = never>() => {
             .pipe(Layer.provide(options.dependencies as any))
           : self.DefaultWithoutDependencies
       }
-      static readonly type: Repository<T, Encoded, Evt, ItemType, IdKey, R> = undefined as any
     }
     const limit = Error.stackTraceLimit
     Error.stackTraceLimit = 2
