@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.9.3
+
+### Patch Changes
+
+- c1c7e01: clean
+
 ## 2.9.2
 
 ### Patch Changes
