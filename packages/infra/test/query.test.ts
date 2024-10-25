@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Context, Effect, flow, Layer, Option, pipe, S, Struct } from "effect-app"
+import { Context, Effect, Layer, Option, pipe, S, Struct } from "effect-app"
 import { inspect } from "util"
 import { expect, expectTypeOf, it } from "vitest"
 import { setupRequestContextFromCurrent } from "../src/api/setupRequest.js"
@@ -115,7 +115,7 @@ it("works with repo", () =>
       const q1 = yield* somethingRepo.query(() => q)
       // same as above, but with the `flow` helper
       const q2 = yield* somethingRepo
-        .query(flow(
+        .query(
           where("displayName", "Verona"),
           or(
             where("displayName", "Riley"),
@@ -130,7 +130,7 @@ it("works with repo", () =>
               (_) => Effect.andThen(SomeService, _)
             )
           )
-        ))
+        )
 
       expect(q1).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("id", "displayName")))
       expect(q2).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("displayName")))
@@ -145,7 +145,7 @@ it("collect", () =>
 
       expect(
         yield* somethingRepo
-          .query(flow(
+          .query(
             where("displayName", "Riley"), // TODO: work with To type translation, so Date?
             // one,
             project(
@@ -160,13 +160,13 @@ it("collect", () =>
               ),
               "collect"
             )
-          ))
+          )
       )
         .toEqual(["Riley-2020-01-01T00:00:00.000Z"])
 
       expect(
         yield* somethingRepo
-          .query(flow(
+          .query(
             where("union._tag", "string"),
             one,
             project(
@@ -181,7 +181,7 @@ it("collect", () =>
               ),
               "collect"
             )
-          ))
+          )
       )
         .toEqual("hi")
     })
@@ -221,8 +221,8 @@ it(
     Effect
       .gen(function*() {
         const repo = yield* makeRepo("test", TestUnion, {})
-        const result = (yield* repo.query(flow(where("id", "123"), and("_tag", "animal")))) satisfies readonly Animal[]
-        const result2 = (yield* repo.query(flow(where("_tag", "animal")))) satisfies readonly Animal[]
+        const result = (yield* repo.query(where("id", "123"), and("_tag", "animal"))) satisfies readonly Animal[]
+        const result2 = (yield* repo.query(where("_tag", "animal"))) satisfies readonly Animal[]
 
         expect(result).toEqual([])
         expect(result2).toEqual([])
@@ -429,7 +429,7 @@ it(
           {}
         )
 
-        const result = yield* repo.query(flow(where("id", "123"), project(schema)))
+        const result = yield* repo.query(where("id", "123"), project(schema))
 
         expect(result).toEqual([])
       })

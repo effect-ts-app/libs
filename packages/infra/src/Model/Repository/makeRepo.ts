@@ -8,7 +8,7 @@
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import type { NonEmptyReadonlyArray } from "effect-app"
-import { Array, Chunk, Context, Effect, Equivalence, flow, Option, pipe, PubSub, S, Unify } from "effect-app"
+import { Array, Chunk, Context, Effect, Equivalence, flow, Option, pipe, Pipeable, PubSub, S, Unify } from "effect-app"
 import { toNonEmptyArray } from "effect-app/Array"
 import { NotFoundError } from "effect-app/client"
 import { flatMapOption } from "effect-app/Effect"
@@ -318,7 +318,10 @@ export function makeRepoInternal<
             all,
             saveAndPublish,
             removeAndPublish,
-            query: (q: any) => query(typeof q === "function" ? q(Q.make()) : q) as any,
+            query(q: any) {
+              // eslint-disable-next-line prefer-rest-params
+              return query(typeof q === "function" ? Pipeable.pipeArguments(Q.make(), arguments) : q) as any
+            },
             /**
              * @internal
              */
