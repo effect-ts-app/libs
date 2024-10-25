@@ -496,9 +496,9 @@ export const makeRepo: {
     T,
     IdKey extends keyof T,
     E = never,
+    Evt = never,
     RInitial = never,
     RPublish = never,
-    Evt = never,
     RCtx = never
   >(
     itemType: ItemType,
@@ -524,9 +524,9 @@ export const makeRepo: {
     Encoded extends { id: string },
     T extends { id: unknown },
     E = never,
+    Evt = never,
     RInitial = never,
     RPublish = never,
-    Evt = never,
     RCtx = never
   >(
     itemType: ItemType,
