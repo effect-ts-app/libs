@@ -320,7 +320,10 @@ export function makeRepoInternal<
             all,
             saveAndPublish,
             removeAndPublish,
-            query: (q: any) => query(typeof q === "function" ? q(makeQuery()) : q) as any,
+            query(q: any) {
+              // eslint-disable-next-line prefer-rest-params
+              return query(typeof q === "function" ? flow(...arguments)(makeQuery()) : q) as any
+            },
             /**
              * @internal
              */
