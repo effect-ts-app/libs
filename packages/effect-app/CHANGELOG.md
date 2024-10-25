@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.2.0
+
+### Minor Changes
+
+- 02c3f55: refactor: restructure infra
+
 ## 2.1.1
 
 ### Patch Changes
