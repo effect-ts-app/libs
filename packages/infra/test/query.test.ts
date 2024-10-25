@@ -3,6 +3,7 @@
 import { Context, Effect, Layer, Option, pipe, S, Struct } from "effect-app"
 import { inspect } from "util"
 import { expect, expectTypeOf, it } from "vitest"
+import { setupRequestContextFromCurrent } from "../src/api/setupRequest.js"
 import type { QueryEnd, QueryProjection, QueryWhere } from "../src/Model/query.js"
 import { and, count, make, one, or, order, page, project, toFilter, where } from "../src/Model/query.js"
 import { makeRepo } from "../src/Model/Repository.js"
@@ -226,7 +227,7 @@ it(
         expect(result).toEqual([])
         expect(result2).toEqual([])
       })
-      .pipe(Effect.provide(MemoryStoreLive), Effect.runPromise)
+      .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise)
 )
 
 it(
@@ -432,5 +433,5 @@ it(
 
         expect(result).toEqual([])
       })
-      .pipe(Effect.provide(MemoryStoreLive), Effect.runPromise)
+      .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise)
 )
