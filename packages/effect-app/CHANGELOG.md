@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.2.1
+
+### Patch Changes
+
+- f68dbd2: update packages
+
 ## 2.2.0
 
 ### Minor Changes
