@@ -272,7 +272,12 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 .pipe(Effect
                   .withSpan("Cosmos.find [effect-app/infra/Store]", {
                     captureStackTrace: false,
-                    attributes: { "repository.container_id": containerId, "repository.model_name": name }
+                    attributes: {
+                      "repository.container_id": containerId,
+                      "repository.model_name": name,
+                      partitionValue: config?.partitionValue({ id } as Encoded),
+                      id
+                    }
                   })),
             set: (e) =>
               Option
@@ -322,7 +327,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   Effect
                     .withSpan("Cosmos.set [effect-app/infra/Store]", {
                       captureStackTrace: false,
-                      attributes: { "repository.container_id": containerId, "repository.model_name": name }
+                      attributes: { "repository.container_id": containerId, "repository.model_name": name, id: e.id }
                     })
                 ),
             batchSet,
@@ -333,7 +338,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 .pipe(Effect
                   .withSpan("Cosmos.remove [effect-app/infra/Store]", {
                     captureStackTrace: false,
-                    attributes: { "repository.container_id": containerId, "repository.model_name": name }
+                    attributes: { "repository.container_id": containerId, "repository.model_name": name, id: e.id }
                   }))
           }
 

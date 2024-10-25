@@ -357,6 +357,7 @@ export const makeRouter = <
                 } as any
                 : req,
               (req) =>
+                // TODO: render more data... similar to console?
                 Effect
                   .annotateCurrentSpan(
                     "requestInput",

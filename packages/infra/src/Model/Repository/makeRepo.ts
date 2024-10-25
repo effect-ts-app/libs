@@ -151,7 +151,9 @@ export function makeRepoInternal<
             return pipe(
               encodeId({ [idKey]: id } as any),
               Effect.orDie,
-              Effect.map((_) => (_ as any)[idKey]), // we will have idKey because the transform is undone again by the encode schema mumbo jumbo above
+              // we will have idKey because the transform is undone again by the encode schema mumbo jumbo above
+              // TODO: make reliable. (Security: isin: PrimaryKey(ISIN), idKey: "isin", does end up with "id")
+              Effect.map((_) => (_ as any)[idKey] ?? (_ as any).id),
               Effect.flatMap(findEId)
             )
           }
