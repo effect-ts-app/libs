@@ -10,7 +10,6 @@
     "effect-app": "workspace:*",
     "express-oauth2-jwt-bearer": "^1.6.0",
     "fast-check": "~3.22.0",
-    "object-hash": "^3.0.0",
     "path-parser": "^6.1.0",
     "proper-lockfile": "^4.1.2",
     "pure-rand": "6.1.0",

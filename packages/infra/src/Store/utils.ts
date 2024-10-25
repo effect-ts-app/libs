@@ -1,14 +1,17 @@
+import { createHash } from "crypto"
 import { Effect, Option } from "effect-app"
-import objectHash from "object-hash"
 import { OptimisticConcurrencyException } from "../errors.js"
 import type { PersistenceModelType, SupportedValues2 } from "./service.js"
 
 export const makeETag = <E extends PersistenceModelType<{}>>(
   { _etag, ...e }: E
-): E => (({
-  ...e,
-  _etag: objectHash(e)
-}) as any)
+): E =>
+  ({
+    ...e,
+    // we have to hash the JSON, as hashing the object might contain elements that won't be serialized anyway
+    _etag: createHash("sha256").update(JSON.stringify(e)).digest("hex")
+  }) as any
+
 export const makeUpdateETag =
   (type: string) => <E extends PersistenceModelType<{ id: string }>>(e: E, current: Option<E>) =>
     Effect.gen(function*() {
