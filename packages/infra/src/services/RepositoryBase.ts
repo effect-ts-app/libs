@@ -104,9 +104,8 @@ export function makeRepoInternal<
             set: (id: string, etag: string | undefined) => _.set(`${name}.${id}`, etag)
           }))
 
-          const pubCfg = yield* Effect.context<R2>()
           const pub = "publishEvents" in args
-            ? flow(args.publishEvents, Effect.provide(pubCfg))
+            ? args.publishEvents
             : () => Effect.void
           const changeFeed = yield* PubSub.unbounded<[T[], "save" | "remove"]>()
 
@@ -313,7 +312,7 @@ export function makeRepoInternal<
             )
           }) as any
 
-          const r: Repository<T, Encoded, Evt, ItemType, IdKey, Exclude<R, RCtx>> = {
+          const r: Repository<T, Encoded, Evt, ItemType, IdKey, Exclude<R, RCtx>, RPublish> = {
             changeFeed,
             itemType: name,
             idKey,
@@ -446,10 +445,11 @@ export function makeStore<
 export interface Repos<
   T,
   Encoded extends { id: string },
-  R,
+  RSchema,
   Evt,
   ItemType extends string,
-  IdKey extends keyof T
+  IdKey extends keyof T,
+  RPublish
 > {
   make<RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
@@ -465,7 +465,7 @@ export interface Repos<
           partitionValue?: (a: Encoded) => string
         }
       }
-  ): Effect<Repository<T, Encoded, Evt, ItemType, IdKey, R>, E, StoreMaker | RInitial | R2>
+  ): Effect<Repository<T, Encoded, Evt, ItemType, IdKey, RSchema, RPublish>, E, StoreMaker | RInitial | R2>
   makeWith<Out, RInitial = never, E = never, R2 = never>(
     args: [Evt] extends [never] ? {
         makeInitial?: Effect<readonly T[], E, RInitial>
@@ -480,10 +480,10 @@ export interface Repos<
           partitionValue?: (a: Encoded) => string
         }
       },
-    f: (r: Repository<T, Encoded, Evt, ItemType, IdKey, R>) => Out
+    f: (r: Repository<T, Encoded, Evt, ItemType, IdKey, RSchema, RPublish>) => Out
   ): Effect<Out, E, StoreMaker | RInitial | R2>
   readonly Q: ReturnType<typeof Q.make<Encoded>>
-  readonly type: Repository<T, Encoded, Evt, ItemType, IdKey, R>
+  readonly type: Repository<T, Encoded, Evt, ItemType, IdKey, RSchema, RPublish>
 }
 
 export type GetRepoType<T> = T extends { type: infer R } ? R : never
@@ -491,56 +491,60 @@ export type GetRepoType<T> = T extends { type: infer R } ? R : never
 export const makeRepo: {
   <
     ItemType extends string,
-    R,
+    RSchema,
     Encoded extends { id: string },
     T,
     IdKey extends keyof T,
     E = never,
     RInitial = never,
-    R2 = never,
+    RPublish = never,
     Evt = never,
     RCtx = never
   >(
     itemType: ItemType,
-    schema: S.Schema<T, Encoded, R>,
+    schema: S.Schema<T, Encoded, RSchema>,
     options: {
       idKey: IdKey
       jitM?: (pm: Encoded) => Encoded
       config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
         partitionValue?: (a: Encoded) => string
       }
-      publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+      publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, RPublish>
       makeInitial?: Effect<readonly T[], E, RInitial>
       schemaContext?: Context.Context<RCtx>
     }
   ): Effect.Effect<
-    ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, Exclude<R, RCtx>>,
+    ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, Exclude<RSchema, RCtx>, RPublish>,
     E,
-    RInitial | R2 | StoreMaker
+    RInitial | StoreMaker
   >
   <
     ItemType extends string,
-    R,
+    RSchema,
     Encoded extends { id: string },
     T extends { id: unknown },
     E = never,
     RInitial = never,
-    R2 = never,
+    RPublish = never,
     Evt = never,
     RCtx = never
   >(
     itemType: ItemType,
-    schema: S.Schema<T, Encoded, R>,
+    schema: S.Schema<T, Encoded, RSchema>,
     options: {
       jitM?: (pm: Encoded) => Encoded
       config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
         partitionValue?: (a: Encoded) => string
       }
-      publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, R2>
+      publishEvents?: (evt: NonEmptyReadonlyArray<Evt>) => Effect<void, never, RPublish>
       makeInitial?: Effect<readonly T[], E, RInitial>
       schemaContext?: Context.Context<RCtx>
     }
-  ): Effect.Effect<ExtendedRepository<T, Encoded, Evt, ItemType, "id", Exclude<R, RCtx>>, E, RInitial | R2 | StoreMaker>
+  ): Effect.Effect<
+    ExtendedRepository<T, Encoded, Evt, ItemType, "id", Exclude<RSchema, RCtx>, RPublish>,
+    E,
+    RInitial | StoreMaker
+  >
 } = <
   ItemType extends string,
   R,
