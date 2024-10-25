@@ -2,7 +2,7 @@ import { Context, FiberRef, Option, Tracer } from "effect-app"
 import { NonEmptyString255 } from "effect-app/Schema"
 import * as FiberRefs from "effect/FiberRefs"
 import { LocaleRef, RequestContext } from "../RequestContext.js"
-import { storeId } from "../services/Store/Memory.js"
+import { storeId } from "../Store/Memory.js"
 
 export function getRequestContextFromFiberRefs(fiberRefs: FiberRefs.FiberRefs) {
   const context = FiberRefs.getOrDefault(fiberRefs, FiberRef.currentContext)

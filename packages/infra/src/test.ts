@@ -2,7 +2,7 @@ import { Arbitrary } from "effect"
 import { Predicate, S } from "effect-app"
 import { copy } from "effect-app/utils"
 import type { PropertySignature } from "effect/Schema"
-import { generate } from "./test/arbs.js"
+import { generate } from "./arbs.js"
 
 const isPropertySignature = (u: unknown): u is PropertySignature.All =>
   Predicate.hasProperty(u, S.PropertySignatureTypeId)
@@ -49,4 +49,4 @@ export const createRandomInstanceI = <A extends object, I>(s: S.Schema<A, I, nev
   }
 }
 
-export * from "./test/arbs.js"
+export * from "./arbs.js"

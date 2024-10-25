@@ -70,6 +70,66 @@
         "default": "./_cjs/index.cjs"
       }
     },
+    "./CUPS": {
+      "import": {
+        "types": "./dist/CUPS.d.ts",
+        "default": "./dist/CUPS.js"
+      },
+      "require": {
+        "types": "./dist/CUPS.d.ts",
+        "default": "./_cjs/CUPS.cjs"
+      }
+    },
+    "./Emailer": {
+      "import": {
+        "types": "./dist/Emailer.d.ts",
+        "default": "./dist/Emailer.js"
+      },
+      "require": {
+        "types": "./dist/Emailer.d.ts",
+        "default": "./_cjs/Emailer.cjs"
+      }
+    },
+    "./Emailer/Sendgrid": {
+      "import": {
+        "types": "./dist/Emailer/Sendgrid.d.ts",
+        "default": "./dist/Emailer/Sendgrid.js"
+      },
+      "require": {
+        "types": "./dist/Emailer/Sendgrid.d.ts",
+        "default": "./_cjs/Emailer/Sendgrid.cjs"
+      }
+    },
+    "./Emailer/fake": {
+      "import": {
+        "types": "./dist/Emailer/fake.d.ts",
+        "default": "./dist/Emailer/fake.js"
+      },
+      "require": {
+        "types": "./dist/Emailer/fake.d.ts",
+        "default": "./_cjs/Emailer/fake.cjs"
+      }
+    },
+    "./Emailer/service": {
+      "import": {
+        "types": "./dist/Emailer/service.d.ts",
+        "default": "./dist/Emailer/service.js"
+      },
+      "require": {
+        "types": "./dist/Emailer/service.d.ts",
+        "default": "./_cjs/Emailer/service.cjs"
+      }
+    },
+    "./MainFiberSet": {
+      "import": {
+        "types": "./dist/MainFiberSet.d.ts",
+        "default": "./dist/MainFiberSet.js"
+      },
+      "require": {
+        "types": "./dist/MainFiberSet.d.ts",
+        "default": "./_cjs/MainFiberSet.cjs"
+      }
+    },
     "./Model": {
       "import": {
         "types": "./dist/Model.d.ts",
@@ -78,6 +138,256 @@
       "require": {
         "types": "./dist/Model.d.ts",
         "default": "./_cjs/Model.cjs"
+      }
+    },
+    "./Model/Repository": {
+      "import": {
+        "types": "./dist/Model/Repository.d.ts",
+        "default": "./dist/Model/Repository.js"
+      },
+      "require": {
+        "types": "./dist/Model/Repository.d.ts",
+        "default": "./_cjs/Model/Repository.cjs"
+      }
+    },
+    "./Model/Repository/ext": {
+      "import": {
+        "types": "./dist/Model/Repository/ext.d.ts",
+        "default": "./dist/Model/Repository/ext.js"
+      },
+      "require": {
+        "types": "./dist/Model/Repository/ext.d.ts",
+        "default": "./_cjs/Model/Repository/ext.cjs"
+      }
+    },
+    "./Model/Repository/legacy": {
+      "import": {
+        "types": "./dist/Model/Repository/legacy.d.ts",
+        "default": "./dist/Model/Repository/legacy.js"
+      },
+      "require": {
+        "types": "./dist/Model/Repository/legacy.d.ts",
+        "default": "./_cjs/Model/Repository/legacy.cjs"
+      }
+    },
+    "./Model/Repository/makeRepo": {
+      "import": {
+        "types": "./dist/Model/Repository/makeRepo.d.ts",
+        "default": "./dist/Model/Repository/makeRepo.js"
+      },
+      "require": {
+        "types": "./dist/Model/Repository/makeRepo.d.ts",
+        "default": "./_cjs/Model/Repository/makeRepo.cjs"
+      }
+    },
+    "./Model/Repository/service": {
+      "import": {
+        "types": "./dist/Model/Repository/service.d.ts",
+        "default": "./dist/Model/Repository/service.js"
+      },
+      "require": {
+        "types": "./dist/Model/Repository/service.d.ts",
+        "default": "./_cjs/Model/Repository/service.cjs"
+      }
+    },
+    "./Model/dsl": {
+      "import": {
+        "types": "./dist/Model/dsl.d.ts",
+        "default": "./dist/Model/dsl.js"
+      },
+      "require": {
+        "types": "./dist/Model/dsl.d.ts",
+        "default": "./_cjs/Model/dsl.cjs"
+      }
+    },
+    "./Model/filter/filterApi": {
+      "import": {
+        "types": "./dist/Model/filter/filterApi.d.ts",
+        "default": "./dist/Model/filter/filterApi.js"
+      },
+      "require": {
+        "types": "./dist/Model/filter/filterApi.d.ts",
+        "default": "./_cjs/Model/filter/filterApi.cjs"
+      }
+    },
+    "./Model/filter/types": {
+      "import": {
+        "types": "./dist/Model/filter/types.d.ts",
+        "default": "./dist/Model/filter/types.js"
+      },
+      "require": {
+        "types": "./dist/Model/filter/types.d.ts",
+        "default": "./_cjs/Model/filter/types.cjs"
+      }
+    },
+    "./Model/filter/types/errors": {
+      "import": {
+        "types": "./dist/Model/filter/types/errors.d.ts",
+        "default": "./dist/Model/filter/types/errors.js"
+      },
+      "require": {
+        "types": "./dist/Model/filter/types/errors.d.ts",
+        "default": "./_cjs/Model/filter/types/errors.cjs"
+      }
+    },
+    "./Model/filter/types/fields": {
+      "import": {
+        "types": "./dist/Model/filter/types/fields.d.ts",
+        "default": "./dist/Model/filter/types/fields.js"
+      },
+      "require": {
+        "types": "./dist/Model/filter/types/fields.d.ts",
+        "default": "./_cjs/Model/filter/types/fields.cjs"
+      }
+    },
+    "./Model/filter/types/path/common": {
+      "import": {
+        "types": "./dist/Model/filter/types/path/common.d.ts",
+        "default": "./dist/Model/filter/types/path/common.js"
+      },
+      "require": {
+        "types": "./dist/Model/filter/types/path/common.d.ts",
+        "default": "./_cjs/Model/filter/types/path/common.cjs"
+      }
+    },
+    "./Model/filter/types/path/eager": {
+      "import": {
+        "types": "./dist/Model/filter/types/path/eager.d.ts",
+        "default": "./dist/Model/filter/types/path/eager.js"
+      },
+      "require": {
+        "types": "./dist/Model/filter/types/path/eager.d.ts",
+        "default": "./_cjs/Model/filter/types/path/eager.cjs"
+      }
+    },
+    "./Model/filter/types/path/index": {
+      "import": {
+        "types": "./dist/Model/filter/types/path/index.d.ts",
+        "default": "./dist/Model/filter/types/path/index.js"
+      },
+      "require": {
+        "types": "./dist/Model/filter/types/path/index.d.ts",
+        "default": "./_cjs/Model/filter/types/path/index.cjs"
+      }
+    },
+    "./Model/filter/types/utils": {
+      "import": {
+        "types": "./dist/Model/filter/types/utils.d.ts",
+        "default": "./dist/Model/filter/types/utils.js"
+      },
+      "require": {
+        "types": "./dist/Model/filter/types/utils.d.ts",
+        "default": "./_cjs/Model/filter/types/utils.cjs"
+      }
+    },
+    "./Model/filter/types/validator": {
+      "import": {
+        "types": "./dist/Model/filter/types/validator.d.ts",
+        "default": "./dist/Model/filter/types/validator.js"
+      },
+      "require": {
+        "types": "./dist/Model/filter/types/validator.d.ts",
+        "default": "./_cjs/Model/filter/types/validator.cjs"
+      }
+    },
+    "./Model/query": {
+      "import": {
+        "types": "./dist/Model/query.d.ts",
+        "default": "./dist/Model/query.js"
+      },
+      "require": {
+        "types": "./dist/Model/query.d.ts",
+        "default": "./_cjs/Model/query.cjs"
+      }
+    },
+    "./Model/query/dsl": {
+      "import": {
+        "types": "./dist/Model/query/dsl.d.ts",
+        "default": "./dist/Model/query/dsl.js"
+      },
+      "require": {
+        "types": "./dist/Model/query/dsl.d.ts",
+        "default": "./_cjs/Model/query/dsl.cjs"
+      }
+    },
+    "./Model/query/new-kid-interpreter": {
+      "import": {
+        "types": "./dist/Model/query/new-kid-interpreter.d.ts",
+        "default": "./dist/Model/query/new-kid-interpreter.js"
+      },
+      "require": {
+        "types": "./dist/Model/query/new-kid-interpreter.d.ts",
+        "default": "./_cjs/Model/query/new-kid-interpreter.cjs"
+      }
+    },
+    "./Operations": {
+      "import": {
+        "types": "./dist/Operations.d.ts",
+        "default": "./dist/Operations.js"
+      },
+      "require": {
+        "types": "./dist/Operations.d.ts",
+        "default": "./_cjs/Operations.cjs"
+      }
+    },
+    "./OperationsRepo": {
+      "import": {
+        "types": "./dist/OperationsRepo.d.ts",
+        "default": "./dist/OperationsRepo.js"
+      },
+      "require": {
+        "types": "./dist/OperationsRepo.d.ts",
+        "default": "./_cjs/OperationsRepo.cjs"
+      }
+    },
+    "./QueueMaker/SQLQueue": {
+      "import": {
+        "types": "./dist/QueueMaker/SQLQueue.d.ts",
+        "default": "./dist/QueueMaker/SQLQueue.js"
+      },
+      "require": {
+        "types": "./dist/QueueMaker/SQLQueue.d.ts",
+        "default": "./_cjs/QueueMaker/SQLQueue.cjs"
+      }
+    },
+    "./QueueMaker/errors": {
+      "import": {
+        "types": "./dist/QueueMaker/errors.d.ts",
+        "default": "./dist/QueueMaker/errors.js"
+      },
+      "require": {
+        "types": "./dist/QueueMaker/errors.d.ts",
+        "default": "./_cjs/QueueMaker/errors.cjs"
+      }
+    },
+    "./QueueMaker/memQueue": {
+      "import": {
+        "types": "./dist/QueueMaker/memQueue.d.ts",
+        "default": "./dist/QueueMaker/memQueue.js"
+      },
+      "require": {
+        "types": "./dist/QueueMaker/memQueue.d.ts",
+        "default": "./_cjs/QueueMaker/memQueue.cjs"
+      }
+    },
+    "./QueueMaker/sbqueue": {
+      "import": {
+        "types": "./dist/QueueMaker/sbqueue.d.ts",
+        "default": "./dist/QueueMaker/sbqueue.js"
+      },
+      "require": {
+        "types": "./dist/QueueMaker/sbqueue.d.ts",
+        "default": "./_cjs/QueueMaker/sbqueue.cjs"
+      }
+    },
+    "./QueueMaker/service": {
+      "import": {
+        "types": "./dist/QueueMaker/service.d.ts",
+        "default": "./dist/QueueMaker/service.js"
+      },
+      "require": {
+        "types": "./dist/QueueMaker/service.d.ts",
+        "default": "./_cjs/QueueMaker/service.cjs"
       }
     },
     "./RequestContext": {
@@ -90,14 +400,204 @@
         "default": "./_cjs/RequestContext.cjs"
       }
     },
-    "./_ext/Array": {
+    "./RequestFiberSet": {
       "import": {
-        "types": "./dist/_ext/Array.d.ts",
-        "default": "./dist/_ext/Array.js"
+        "types": "./dist/RequestFiberSet.d.ts",
+        "default": "./dist/RequestFiberSet.js"
       },
       "require": {
-        "types": "./dist/_ext/Array.d.ts",
-        "default": "./_cjs/_ext/Array.cjs"
+        "types": "./dist/RequestFiberSet.d.ts",
+        "default": "./_cjs/RequestFiberSet.cjs"
+      }
+    },
+    "./Store": {
+      "import": {
+        "types": "./dist/Store.d.ts",
+        "default": "./dist/Store.js"
+      },
+      "require": {
+        "types": "./dist/Store.d.ts",
+        "default": "./_cjs/Store.cjs"
+      }
+    },
+    "./Store/ContextMapContainer": {
+      "import": {
+        "types": "./dist/Store/ContextMapContainer.d.ts",
+        "default": "./dist/Store/ContextMapContainer.js"
+      },
+      "require": {
+        "types": "./dist/Store/ContextMapContainer.d.ts",
+        "default": "./_cjs/Store/ContextMapContainer.cjs"
+      }
+    },
+    "./Store/Cosmos": {
+      "import": {
+        "types": "./dist/Store/Cosmos.d.ts",
+        "default": "./dist/Store/Cosmos.js"
+      },
+      "require": {
+        "types": "./dist/Store/Cosmos.d.ts",
+        "default": "./_cjs/Store/Cosmos.cjs"
+      }
+    },
+    "./Store/Cosmos/query": {
+      "import": {
+        "types": "./dist/Store/Cosmos/query.d.ts",
+        "default": "./dist/Store/Cosmos/query.js"
+      },
+      "require": {
+        "types": "./dist/Store/Cosmos/query.d.ts",
+        "default": "./_cjs/Store/Cosmos/query.cjs"
+      }
+    },
+    "./Store/Disk": {
+      "import": {
+        "types": "./dist/Store/Disk.d.ts",
+        "default": "./dist/Store/Disk.js"
+      },
+      "require": {
+        "types": "./dist/Store/Disk.d.ts",
+        "default": "./_cjs/Store/Disk.cjs"
+      }
+    },
+    "./Store/Memory": {
+      "import": {
+        "types": "./dist/Store/Memory.d.ts",
+        "default": "./dist/Store/Memory.js"
+      },
+      "require": {
+        "types": "./dist/Store/Memory.d.ts",
+        "default": "./_cjs/Store/Memory.cjs"
+      }
+    },
+    "./Store/codeFilter": {
+      "import": {
+        "types": "./dist/Store/codeFilter.d.ts",
+        "default": "./dist/Store/codeFilter.js"
+      },
+      "require": {
+        "types": "./dist/Store/codeFilter.d.ts",
+        "default": "./_cjs/Store/codeFilter.cjs"
+      }
+    },
+    "./Store/index": {
+      "import": {
+        "types": "./dist/Store/index.d.ts",
+        "default": "./dist/Store/index.js"
+      },
+      "require": {
+        "types": "./dist/Store/index.d.ts",
+        "default": "./_cjs/Store/index.cjs"
+      }
+    },
+    "./Store/service": {
+      "import": {
+        "types": "./dist/Store/service.d.ts",
+        "default": "./dist/Store/service.js"
+      },
+      "require": {
+        "types": "./dist/Store/service.d.ts",
+        "default": "./_cjs/Store/service.cjs"
+      }
+    },
+    "./Store/utils": {
+      "import": {
+        "types": "./dist/Store/utils.d.ts",
+        "default": "./dist/Store/utils.js"
+      },
+      "require": {
+        "types": "./dist/Store/utils.d.ts",
+        "default": "./_cjs/Store/utils.cjs"
+      }
+    },
+    "./adapters/SQL": {
+      "import": {
+        "types": "./dist/adapters/SQL.d.ts",
+        "default": "./dist/adapters/SQL.js"
+      },
+      "require": {
+        "types": "./dist/adapters/SQL.d.ts",
+        "default": "./_cjs/adapters/SQL.cjs"
+      }
+    },
+    "./adapters/SQL/Model": {
+      "import": {
+        "types": "./dist/adapters/SQL/Model.d.ts",
+        "default": "./dist/adapters/SQL/Model.js"
+      },
+      "require": {
+        "types": "./dist/adapters/SQL/Model.d.ts",
+        "default": "./_cjs/adapters/SQL/Model.cjs"
+      }
+    },
+    "./adapters/ServiceBus": {
+      "import": {
+        "types": "./dist/adapters/ServiceBus.d.ts",
+        "default": "./dist/adapters/ServiceBus.js"
+      },
+      "require": {
+        "types": "./dist/adapters/ServiceBus.d.ts",
+        "default": "./_cjs/adapters/ServiceBus.cjs"
+      }
+    },
+    "./adapters/cosmos-client": {
+      "import": {
+        "types": "./dist/adapters/cosmos-client.d.ts",
+        "default": "./dist/adapters/cosmos-client.js"
+      },
+      "require": {
+        "types": "./dist/adapters/cosmos-client.d.ts",
+        "default": "./_cjs/adapters/cosmos-client.cjs"
+      }
+    },
+    "./adapters/index": {
+      "import": {
+        "types": "./dist/adapters/index.d.ts",
+        "default": "./dist/adapters/index.js"
+      },
+      "require": {
+        "types": "./dist/adapters/index.d.ts",
+        "default": "./_cjs/adapters/index.cjs"
+      }
+    },
+    "./adapters/logger": {
+      "import": {
+        "types": "./dist/adapters/logger.d.ts",
+        "default": "./dist/adapters/logger.js"
+      },
+      "require": {
+        "types": "./dist/adapters/logger.d.ts",
+        "default": "./_cjs/adapters/logger.cjs"
+      }
+    },
+    "./adapters/memQueue": {
+      "import": {
+        "types": "./dist/adapters/memQueue.d.ts",
+        "default": "./dist/adapters/memQueue.js"
+      },
+      "require": {
+        "types": "./dist/adapters/memQueue.d.ts",
+        "default": "./_cjs/adapters/memQueue.cjs"
+      }
+    },
+    "./adapters/mongo-client": {
+      "import": {
+        "types": "./dist/adapters/mongo-client.d.ts",
+        "default": "./dist/adapters/mongo-client.js"
+      },
+      "require": {
+        "types": "./dist/adapters/mongo-client.d.ts",
+        "default": "./_cjs/adapters/mongo-client.cjs"
+      }
+    },
+    "./adapters/redis-client": {
+      "import": {
+        "types": "./dist/adapters/redis-client.d.ts",
+        "default": "./dist/adapters/redis-client.js"
+      },
+      "require": {
+        "types": "./dist/adapters/redis-client.d.ts",
+        "default": "./_cjs/adapters/redis-client.cjs"
       }
     },
     "./api/codec": {
@@ -180,6 +680,16 @@
         "default": "./_cjs/api/util.cjs"
       }
     },
+    "./arbs": {
+      "import": {
+        "types": "./dist/arbs.d.ts",
+        "default": "./dist/arbs.js"
+      },
+      "require": {
+        "types": "./dist/arbs.d.ts",
+        "default": "./_cjs/arbs.cjs"
+      }
+    },
     "./errorReporter": {
       "import": {
         "types": "./dist/errorReporter.d.ts",
@@ -208,86 +718,6 @@
       "require": {
         "types": "./dist/fileUtil.d.ts",
         "default": "./_cjs/fileUtil.cjs"
-      }
-    },
-    "./filter/types": {
-      "import": {
-        "types": "./dist/filter/types.d.ts",
-        "default": "./dist/filter/types.js"
-      },
-      "require": {
-        "types": "./dist/filter/types.d.ts",
-        "default": "./_cjs/filter/types.cjs"
-      }
-    },
-    "./filter/types/errors": {
-      "import": {
-        "types": "./dist/filter/types/errors.d.ts",
-        "default": "./dist/filter/types/errors.js"
-      },
-      "require": {
-        "types": "./dist/filter/types/errors.d.ts",
-        "default": "./_cjs/filter/types/errors.cjs"
-      }
-    },
-    "./filter/types/fields": {
-      "import": {
-        "types": "./dist/filter/types/fields.d.ts",
-        "default": "./dist/filter/types/fields.js"
-      },
-      "require": {
-        "types": "./dist/filter/types/fields.d.ts",
-        "default": "./_cjs/filter/types/fields.cjs"
-      }
-    },
-    "./filter/types/path/common": {
-      "import": {
-        "types": "./dist/filter/types/path/common.d.ts",
-        "default": "./dist/filter/types/path/common.js"
-      },
-      "require": {
-        "types": "./dist/filter/types/path/common.d.ts",
-        "default": "./_cjs/filter/types/path/common.cjs"
-      }
-    },
-    "./filter/types/path/eager": {
-      "import": {
-        "types": "./dist/filter/types/path/eager.d.ts",
-        "default": "./dist/filter/types/path/eager.js"
-      },
-      "require": {
-        "types": "./dist/filter/types/path/eager.d.ts",
-        "default": "./_cjs/filter/types/path/eager.cjs"
-      }
-    },
-    "./filter/types/path/index": {
-      "import": {
-        "types": "./dist/filter/types/path/index.d.ts",
-        "default": "./dist/filter/types/path/index.js"
-      },
-      "require": {
-        "types": "./dist/filter/types/path/index.d.ts",
-        "default": "./_cjs/filter/types/path/index.cjs"
-      }
-    },
-    "./filter/types/utils": {
-      "import": {
-        "types": "./dist/filter/types/utils.d.ts",
-        "default": "./dist/filter/types/utils.js"
-      },
-      "require": {
-        "types": "./dist/filter/types/utils.d.ts",
-        "default": "./_cjs/filter/types/utils.cjs"
-      }
-    },
-    "./filter/types/validator": {
-      "import": {
-        "types": "./dist/filter/types/validator.d.ts",
-        "default": "./dist/filter/types/validator.js"
-      },
-      "require": {
-        "types": "./dist/filter/types/validator.d.ts",
-        "default": "./_cjs/filter/types/validator.cjs"
       }
     },
     "./logger": {
@@ -340,436 +770,6 @@
         "default": "./_cjs/rateLimit.cjs"
       }
     },
-    "./services/CUPS": {
-      "import": {
-        "types": "./dist/services/CUPS.d.ts",
-        "default": "./dist/services/CUPS.js"
-      },
-      "require": {
-        "types": "./dist/services/CUPS.d.ts",
-        "default": "./_cjs/services/CUPS.cjs"
-      }
-    },
-    "./services/Emailer": {
-      "import": {
-        "types": "./dist/services/Emailer.d.ts",
-        "default": "./dist/services/Emailer.js"
-      },
-      "require": {
-        "types": "./dist/services/Emailer.d.ts",
-        "default": "./_cjs/services/Emailer.cjs"
-      }
-    },
-    "./services/Emailer/Sendgrid": {
-      "import": {
-        "types": "./dist/services/Emailer/Sendgrid.d.ts",
-        "default": "./dist/services/Emailer/Sendgrid.js"
-      },
-      "require": {
-        "types": "./dist/services/Emailer/Sendgrid.d.ts",
-        "default": "./_cjs/services/Emailer/Sendgrid.cjs"
-      }
-    },
-    "./services/Emailer/fake": {
-      "import": {
-        "types": "./dist/services/Emailer/fake.d.ts",
-        "default": "./dist/services/Emailer/fake.js"
-      },
-      "require": {
-        "types": "./dist/services/Emailer/fake.d.ts",
-        "default": "./_cjs/services/Emailer/fake.cjs"
-      }
-    },
-    "./services/Emailer/service": {
-      "import": {
-        "types": "./dist/services/Emailer/service.d.ts",
-        "default": "./dist/services/Emailer/service.js"
-      },
-      "require": {
-        "types": "./dist/services/Emailer/service.d.ts",
-        "default": "./_cjs/services/Emailer/service.cjs"
-      }
-    },
-    "./services/MainFiberSet": {
-      "import": {
-        "types": "./dist/services/MainFiberSet.d.ts",
-        "default": "./dist/services/MainFiberSet.js"
-      },
-      "require": {
-        "types": "./dist/services/MainFiberSet.d.ts",
-        "default": "./_cjs/services/MainFiberSet.cjs"
-      }
-    },
-    "./services/Operations": {
-      "import": {
-        "types": "./dist/services/Operations.d.ts",
-        "default": "./dist/services/Operations.js"
-      },
-      "require": {
-        "types": "./dist/services/Operations.d.ts",
-        "default": "./_cjs/services/Operations.cjs"
-      }
-    },
-    "./services/OperationsRepo": {
-      "import": {
-        "types": "./dist/services/OperationsRepo.d.ts",
-        "default": "./dist/services/OperationsRepo.js"
-      },
-      "require": {
-        "types": "./dist/services/OperationsRepo.d.ts",
-        "default": "./_cjs/services/OperationsRepo.cjs"
-      }
-    },
-    "./services/QueueMaker/SQLQueue": {
-      "import": {
-        "types": "./dist/services/QueueMaker/SQLQueue.d.ts",
-        "default": "./dist/services/QueueMaker/SQLQueue.js"
-      },
-      "require": {
-        "types": "./dist/services/QueueMaker/SQLQueue.d.ts",
-        "default": "./_cjs/services/QueueMaker/SQLQueue.cjs"
-      }
-    },
-    "./services/QueueMaker/errors": {
-      "import": {
-        "types": "./dist/services/QueueMaker/errors.d.ts",
-        "default": "./dist/services/QueueMaker/errors.js"
-      },
-      "require": {
-        "types": "./dist/services/QueueMaker/errors.d.ts",
-        "default": "./_cjs/services/QueueMaker/errors.cjs"
-      }
-    },
-    "./services/QueueMaker/memQueue": {
-      "import": {
-        "types": "./dist/services/QueueMaker/memQueue.d.ts",
-        "default": "./dist/services/QueueMaker/memQueue.js"
-      },
-      "require": {
-        "types": "./dist/services/QueueMaker/memQueue.d.ts",
-        "default": "./_cjs/services/QueueMaker/memQueue.cjs"
-      }
-    },
-    "./services/QueueMaker/sbqueue": {
-      "import": {
-        "types": "./dist/services/QueueMaker/sbqueue.d.ts",
-        "default": "./dist/services/QueueMaker/sbqueue.js"
-      },
-      "require": {
-        "types": "./dist/services/QueueMaker/sbqueue.d.ts",
-        "default": "./_cjs/services/QueueMaker/sbqueue.cjs"
-      }
-    },
-    "./services/QueueMaker/service": {
-      "import": {
-        "types": "./dist/services/QueueMaker/service.d.ts",
-        "default": "./dist/services/QueueMaker/service.js"
-      },
-      "require": {
-        "types": "./dist/services/QueueMaker/service.d.ts",
-        "default": "./_cjs/services/QueueMaker/service.cjs"
-      }
-    },
-    "./services/Repository": {
-      "import": {
-        "types": "./dist/services/Repository.d.ts",
-        "default": "./dist/services/Repository.js"
-      },
-      "require": {
-        "types": "./dist/services/Repository.d.ts",
-        "default": "./_cjs/services/Repository.cjs"
-      }
-    },
-    "./services/Repository/dsl": {
-      "import": {
-        "types": "./dist/services/Repository/dsl.d.ts",
-        "default": "./dist/services/Repository/dsl.js"
-      },
-      "require": {
-        "types": "./dist/services/Repository/dsl.d.ts",
-        "default": "./_cjs/services/Repository/dsl.cjs"
-      }
-    },
-    "./services/Repository/ext": {
-      "import": {
-        "types": "./dist/services/Repository/ext.d.ts",
-        "default": "./dist/services/Repository/ext.js"
-      },
-      "require": {
-        "types": "./dist/services/Repository/ext.d.ts",
-        "default": "./_cjs/services/Repository/ext.cjs"
-      }
-    },
-    "./services/Repository/legacy": {
-      "import": {
-        "types": "./dist/services/Repository/legacy.d.ts",
-        "default": "./dist/services/Repository/legacy.js"
-      },
-      "require": {
-        "types": "./dist/services/Repository/legacy.d.ts",
-        "default": "./_cjs/services/Repository/legacy.cjs"
-      }
-    },
-    "./services/Repository/service": {
-      "import": {
-        "types": "./dist/services/Repository/service.d.ts",
-        "default": "./dist/services/Repository/service.js"
-      },
-      "require": {
-        "types": "./dist/services/Repository/service.d.ts",
-        "default": "./_cjs/services/Repository/service.cjs"
-      }
-    },
-    "./services/RepositoryBase": {
-      "import": {
-        "types": "./dist/services/RepositoryBase.d.ts",
-        "default": "./dist/services/RepositoryBase.js"
-      },
-      "require": {
-        "types": "./dist/services/RepositoryBase.d.ts",
-        "default": "./_cjs/services/RepositoryBase.cjs"
-      }
-    },
-    "./services/RequestFiberSet": {
-      "import": {
-        "types": "./dist/services/RequestFiberSet.d.ts",
-        "default": "./dist/services/RequestFiberSet.js"
-      },
-      "require": {
-        "types": "./dist/services/RequestFiberSet.d.ts",
-        "default": "./_cjs/services/RequestFiberSet.cjs"
-      }
-    },
-    "./services/Store": {
-      "import": {
-        "types": "./dist/services/Store.d.ts",
-        "default": "./dist/services/Store.js"
-      },
-      "require": {
-        "types": "./dist/services/Store.d.ts",
-        "default": "./_cjs/services/Store.cjs"
-      }
-    },
-    "./services/Store/ContextMapContainer": {
-      "import": {
-        "types": "./dist/services/Store/ContextMapContainer.d.ts",
-        "default": "./dist/services/Store/ContextMapContainer.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/ContextMapContainer.d.ts",
-        "default": "./_cjs/services/Store/ContextMapContainer.cjs"
-      }
-    },
-    "./services/Store/Cosmos": {
-      "import": {
-        "types": "./dist/services/Store/Cosmos.d.ts",
-        "default": "./dist/services/Store/Cosmos.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/Cosmos.d.ts",
-        "default": "./_cjs/services/Store/Cosmos.cjs"
-      }
-    },
-    "./services/Store/Cosmos/query": {
-      "import": {
-        "types": "./dist/services/Store/Cosmos/query.d.ts",
-        "default": "./dist/services/Store/Cosmos/query.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/Cosmos/query.d.ts",
-        "default": "./_cjs/services/Store/Cosmos/query.cjs"
-      }
-    },
-    "./services/Store/Disk": {
-      "import": {
-        "types": "./dist/services/Store/Disk.d.ts",
-        "default": "./dist/services/Store/Disk.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/Disk.d.ts",
-        "default": "./_cjs/services/Store/Disk.cjs"
-      }
-    },
-    "./services/Store/Memory": {
-      "import": {
-        "types": "./dist/services/Store/Memory.d.ts",
-        "default": "./dist/services/Store/Memory.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/Memory.d.ts",
-        "default": "./_cjs/services/Store/Memory.cjs"
-      }
-    },
-    "./services/Store/codeFilter": {
-      "import": {
-        "types": "./dist/services/Store/codeFilter.d.ts",
-        "default": "./dist/services/Store/codeFilter.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/codeFilter.d.ts",
-        "default": "./_cjs/services/Store/codeFilter.cjs"
-      }
-    },
-    "./services/Store/filterApi/query": {
-      "import": {
-        "types": "./dist/services/Store/filterApi/query.d.ts",
-        "default": "./dist/services/Store/filterApi/query.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/filterApi/query.d.ts",
-        "default": "./_cjs/services/Store/filterApi/query.cjs"
-      }
-    },
-    "./services/Store/index": {
-      "import": {
-        "types": "./dist/services/Store/index.d.ts",
-        "default": "./dist/services/Store/index.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/index.d.ts",
-        "default": "./_cjs/services/Store/index.cjs"
-      }
-    },
-    "./services/Store/service": {
-      "import": {
-        "types": "./dist/services/Store/service.d.ts",
-        "default": "./dist/services/Store/service.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/service.d.ts",
-        "default": "./_cjs/services/Store/service.cjs"
-      }
-    },
-    "./services/Store/utils": {
-      "import": {
-        "types": "./dist/services/Store/utils.d.ts",
-        "default": "./dist/services/Store/utils.js"
-      },
-      "require": {
-        "types": "./dist/services/Store/utils.d.ts",
-        "default": "./_cjs/services/Store/utils.cjs"
-      }
-    },
-    "./services/adapters/SQL": {
-      "import": {
-        "types": "./dist/services/adapters/SQL.d.ts",
-        "default": "./dist/services/adapters/SQL.js"
-      },
-      "require": {
-        "types": "./dist/services/adapters/SQL.d.ts",
-        "default": "./_cjs/services/adapters/SQL.cjs"
-      }
-    },
-    "./services/adapters/SQL/Model": {
-      "import": {
-        "types": "./dist/services/adapters/SQL/Model.d.ts",
-        "default": "./dist/services/adapters/SQL/Model.js"
-      },
-      "require": {
-        "types": "./dist/services/adapters/SQL/Model.d.ts",
-        "default": "./_cjs/services/adapters/SQL/Model.cjs"
-      }
-    },
-    "./services/adapters/ServiceBus": {
-      "import": {
-        "types": "./dist/services/adapters/ServiceBus.d.ts",
-        "default": "./dist/services/adapters/ServiceBus.js"
-      },
-      "require": {
-        "types": "./dist/services/adapters/ServiceBus.d.ts",
-        "default": "./_cjs/services/adapters/ServiceBus.cjs"
-      }
-    },
-    "./services/adapters/cosmos-client": {
-      "import": {
-        "types": "./dist/services/adapters/cosmos-client.d.ts",
-        "default": "./dist/services/adapters/cosmos-client.js"
-      },
-      "require": {
-        "types": "./dist/services/adapters/cosmos-client.d.ts",
-        "default": "./_cjs/services/adapters/cosmos-client.cjs"
-      }
-    },
-    "./services/adapters/index": {
-      "import": {
-        "types": "./dist/services/adapters/index.d.ts",
-        "default": "./dist/services/adapters/index.js"
-      },
-      "require": {
-        "types": "./dist/services/adapters/index.d.ts",
-        "default": "./_cjs/services/adapters/index.cjs"
-      }
-    },
-    "./services/adapters/logger": {
-      "import": {
-        "types": "./dist/services/adapters/logger.d.ts",
-        "default": "./dist/services/adapters/logger.js"
-      },
-      "require": {
-        "types": "./dist/services/adapters/logger.d.ts",
-        "default": "./_cjs/services/adapters/logger.cjs"
-      }
-    },
-    "./services/adapters/memQueue": {
-      "import": {
-        "types": "./dist/services/adapters/memQueue.d.ts",
-        "default": "./dist/services/adapters/memQueue.js"
-      },
-      "require": {
-        "types": "./dist/services/adapters/memQueue.d.ts",
-        "default": "./_cjs/services/adapters/memQueue.cjs"
-      }
-    },
-    "./services/adapters/mongo-client": {
-      "import": {
-        "types": "./dist/services/adapters/mongo-client.d.ts",
-        "default": "./dist/services/adapters/mongo-client.js"
-      },
-      "require": {
-        "types": "./dist/services/adapters/mongo-client.d.ts",
-        "default": "./_cjs/services/adapters/mongo-client.cjs"
-      }
-    },
-    "./services/adapters/redis-client": {
-      "import": {
-        "types": "./dist/services/adapters/redis-client.d.ts",
-        "default": "./dist/services/adapters/redis-client.js"
-      },
-      "require": {
-        "types": "./dist/services/adapters/redis-client.d.ts",
-        "default": "./_cjs/services/adapters/redis-client.cjs"
-      }
-    },
-    "./services/query": {
-      "import": {
-        "types": "./dist/services/query.d.ts",
-        "default": "./dist/services/query.js"
-      },
-      "require": {
-        "types": "./dist/services/query.d.ts",
-        "default": "./_cjs/services/query.cjs"
-      }
-    },
-    "./services/query/dsl": {
-      "import": {
-        "types": "./dist/services/query/dsl.d.ts",
-        "default": "./dist/services/query/dsl.js"
-      },
-      "require": {
-        "types": "./dist/services/query/dsl.d.ts",
-        "default": "./_cjs/services/query/dsl.cjs"
-      }
-    },
-    "./services/query/new-kid-interpreter": {
-      "import": {
-        "types": "./dist/services/query/new-kid-interpreter.d.ts",
-        "default": "./dist/services/query/new-kid-interpreter.js"
-      },
-      "require": {
-        "types": "./dist/services/query/new-kid-interpreter.d.ts",
-        "default": "./_cjs/services/query/new-kid-interpreter.cjs"
-      }
-    },
     "./test": {
       "import": {
         "types": "./dist/test.d.ts",
@@ -778,16 +778,6 @@
       "require": {
         "types": "./dist/test.d.ts",
         "default": "./_cjs/test.cjs"
-      }
-    },
-    "./test/arbs": {
-      "import": {
-        "types": "./dist/test/arbs.d.ts",
-        "default": "./dist/test/arbs.js"
-      },
-      "require": {
-        "types": "./dist/test/arbs.d.ts",
-        "default": "./_cjs/test/arbs.cjs"
       }
     },
     "./vitest": {
