@@ -3,7 +3,6 @@ import { reportNonInterruptedFailure } from "@effect-app/infra/QueueMaker/errors
 import type { QueueBase } from "@effect-app/infra/QueueMaker/service"
 import { QueueMeta } from "@effect-app/infra/QueueMaker/service"
 import { SqlClient } from "@effect/sql"
-import { randomUUID } from "crypto"
 import { subMinutes } from "date-fns"
 import { Effect, Fiber, Option, S, Tracer } from "effect-app"
 import type { NonEmptyString255 } from "effect-app/Schema"
@@ -88,7 +87,7 @@ export function makeSQLQueue<
               name: queueName,
               processingAt: Option.none(),
               finishedAt: Option.none(),
-              etag: randomUUID()
+              etag: crypto.randomUUID()
             })
           )
         }),
@@ -99,7 +98,7 @@ export function makeSQLQueue<
             const dec = yield* decodeDrain(first)
             const { createdAt, updatedAt, ...rest } = dec
             return yield* drainRepo.update(
-              Drain.update.make({ ...rest, processingAt: Option.some(new Date()) }) // auto in lib , etag: randomUUID()
+              Drain.update.make({ ...rest, processingAt: Option.some(new Date()) }) // auto in lib , etag: crypto.randomUUID()
             )
           }
           if (first) return first
@@ -107,7 +106,7 @@ export function makeSQLQueue<
         }
       }),
       finish: ({ createdAt, updatedAt, ...q }: Drain) =>
-        drainRepo.updateVoid(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) })) // auto in lib , etag: randomUUID()
+        drainRepo.updateVoid(Drain.update.make({ ...q, finishedAt: Option.some(new Date()) })) // auto in lib , etag: crypto.randomUUID()
     }
     return {
       publish: (...messages) =>

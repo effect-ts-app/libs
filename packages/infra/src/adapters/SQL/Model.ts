@@ -12,7 +12,7 @@ import * as VariantSchema from "@effect/experimental/VariantSchema"
 import { SqlClient } from "@effect/sql/SqlClient"
 import * as SqlResolver from "@effect/sql/SqlResolver"
 import * as SqlSchema from "@effect/sql/SqlSchema"
-import { randomUUID } from "crypto" // TODO
+import crypto from "crypto" // TODO
 import type { Brand } from "effect/Brand"
 import * as DateTime from "effect/DateTime"
 import type { DurationInput } from "effect/Duration"
@@ -711,7 +711,7 @@ select * from ${sql(options.tableName)} where ${sql(idColumn)} = LAST_INSERT_ID(
           sql.onDialectOrElse({
             mysql: () =>
               sql`update ${sql(options.tableName)} set ${
-                sql.update({ ...request, [versionColumn]: randomUUID() }, [idColumn])
+                sql.update({ ...request, [versionColumn]: crypto.randomUUID() }, [idColumn])
               } where ${sql(idColumn)} = ${request[idColumn]} and ${sql(versionColumn)} = ${request[versionColumn]};
 select * from ${sql(options.tableName)} where ${sql(idColumn)} = ${request[idColumn]};`
                 .unprepared
@@ -720,7 +720,7 @@ select * from ${sql(options.tableName)} where ${sql(idColumn)} = ${request[idCol
                 ),
             orElse: () =>
               sql`update ${sql(options.tableName)} set ${
-                sql.update({ ...request, [versionColumn]: randomUUID() }, [idColumn])
+                sql.update({ ...request, [versionColumn]: crypto.randomUUID() }, [idColumn])
               } where ${sql(idColumn)} = ${request[idColumn]} and ${sql(versionColumn)} = ${
                 request[versionColumn]
               } returning *`
@@ -758,7 +758,7 @@ select * from ${sql(options.tableName)} where ${sql(idColumn)} = ${request[idCol
       execute: versionColumn
         ? (request) =>
           sql`update ${sql(options.tableName)} set ${
-            sql.update({ ...request, [versionColumn]: randomUUID() }, [idColumn])
+            sql.update({ ...request, [versionColumn]: crypto.randomUUID() }, [idColumn])
           } where ${sql(idColumn)} = ${request[idColumn]} and ${sql(versionColumn)} = ${request[versionColumn]}`
         : (request) =>
           sql`update ${sql(options.tableName)} set ${sql.update(request, [idColumn])} where ${sql(idColumn)} = ${
