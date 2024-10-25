@@ -17,9 +17,10 @@ export const extendRepo = <
   Evt,
   ItemType extends string,
   IdKey extends keyof T,
-  R
+  RSchema,
+  RPublish
 >(
-  repo: Repository<T, Encoded, Evt, ItemType, IdKey, R>
+  repo: Repository<T, Encoded, Evt, ItemType, IdKey, RSchema, RPublish>
 ) => {
   const get = (id: T[IdKey]) =>
     Effect.flatMap(
@@ -113,7 +114,9 @@ export const extendRepo = <
     ): Effect.Effect<
       A,
       InvalidStateError | OptimisticConcurrencyException | E2,
-      Exclude<R2, {
+      | RSchema
+      | RPublish
+      | Exclude<R2, {
         env: PureEnv<Evt, readonly T[], readonly T2[]>
       }>
     >
@@ -129,7 +132,9 @@ export const extendRepo = <
     ): Effect.Effect<
       A[],
       InvalidStateError | OptimisticConcurrencyException | E2,
-      Exclude<R2, {
+      | RSchema
+      | RPublish
+      | Exclude<R2, {
         env: PureEnv<Evt, readonly T[], readonly T2[]>
       }>
     >
@@ -151,7 +156,9 @@ export const extendRepo = <
     ): Effect.Effect<
       A,
       InvalidStateError | OptimisticConcurrencyException | E,
-      Exclude<R, {
+      | RSchema
+      | RPublish
+      | Exclude<R, {
         env: PureEnv<Evt, readonly S1[], readonly S2[]>
       }>
     >
@@ -162,7 +169,9 @@ export const extendRepo = <
     ): Effect.Effect<
       A[],
       InvalidStateError | OptimisticConcurrencyException | E,
-      Exclude<R, {
+      | RSchema
+      | RPublish
+      | Exclude<R, {
         env: PureEnv<Evt, readonly S1[], readonly S2[]>
       }>
     >
@@ -186,7 +195,9 @@ export const extendRepo = <
     ): Effect<
       A,
       InvalidStateError | OptimisticConcurrencyException | NotFoundError<ItemType> | E,
-      Exclude<R, {
+      | RSchema
+      | RPublish
+      | Exclude<R, {
         env: PureEnv<Evt, T, S2>
       }>
     >
@@ -255,7 +266,7 @@ export const extendRepo = <
   return {
     ...repo,
     ...exts
-  } as Repository<T, Encoded, Evt, ItemType, IdKey, R> & typeof exts
+  } as Repository<T, Encoded, Evt, ItemType, IdKey, RSchema, RPublish> & typeof exts
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -265,5 +276,6 @@ export interface ExtendedRepository<
   Evt,
   ItemType extends string,
   IdKey extends keyof T,
-  R
-> extends ReturnType<typeof extendRepo<T, Encoded, Evt, ItemType, IdKey, R>> {}
+  RSchema,
+  RPublish
+> extends ReturnType<typeof extendRepo<T, Encoded, Evt, ItemType, IdKey, RSchema, RPublish>> {}
