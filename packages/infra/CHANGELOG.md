@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 2.8.0
+
+### Minor Changes
+
+- 02c3f55: refactor: restructure infra
+- c56c6ca: properly propagate R
+
+### Patch Changes
+
+- 0dfffcc: fix hidden error
+- Updated dependencies [02c3f55]
+  - effect-app@2.2.0
+
 ## 2.7.1
 
 ### Patch Changes
