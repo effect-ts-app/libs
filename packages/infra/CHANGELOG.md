@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.9.4
+
+### Patch Changes
+
+- 006a397: fix id issue
+
 ## 2.9.3
 
 ### Patch Changes
