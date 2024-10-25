@@ -27,7 +27,9 @@ export default function makeConfig(dirName?: string) {
     },
     resolve: {
       alias: packages.reduce((acc, cur) => { // workaround for /Prelude issue
-      acc[JSON.parse(fs.readFileSync(cur + "/package.json", "utf-8")).name] = path.resolve(cur, cur.endsWith("core") ? "dist" : "src")
+      acc[JSON.parse(fs.readFileSync(cur + "/package.json", "utf-8")).name] = path.resolve(cur, 
+        // workaround Prelude "export *" from namespaces hack
+        cur.endsWith("effect-app") ? "dist" : "src")
       return acc
     }, { }) // "effect-app/Prelude": path.join(__dirname, "packages/core/src/Prelude.code.ts")
   }
