@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.8.2
+
+### Patch Changes
+
+- b95cdf6: get rid of wrapping flow
+
 ## 2.8.1
 
 ### Patch Changes
