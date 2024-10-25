@@ -1,5 +1,18 @@
 # @effect-app/vue
 
+## 2.1.0
+
+### Minor Changes
+
+- 9ef18f6: adapt Prelude workaround
+
+### Patch Changes
+
+- Updated dependencies [9ef18f6]
+- Updated dependencies [9ef18f6]
+  - effect-app@2.3.0
+  - @effect-app/vue@2.1.0
+
 ## 2.0.6
 
 ### Patch Changes

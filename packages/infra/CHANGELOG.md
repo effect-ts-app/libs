@@ -1,5 +1,18 @@
 # @effect-app/infra
 
+## 2.9.0
+
+### Minor Changes
+
+- 9ef18f6: adapt Prelude workaround
+
+### Patch Changes
+
+- 9ef18f6: adapt Prelude workaround
+- Updated dependencies [9ef18f6]
+- Updated dependencies [9ef18f6]
+  - effect-app@2.3.0
+
 ## 2.8.2
 
 ### Patch Changes

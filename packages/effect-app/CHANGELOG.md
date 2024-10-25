@@ -1,5 +1,15 @@
 # @effect-app/prelude
 
+## 2.3.0
+
+### Minor Changes
+
+- 9ef18f6: adapt Prelude workaround
+
+### Patch Changes
+
+- 9ef18f6: adapt Prelude workaround
+
 ## 2.2.1
 
 ### Patch Changes
