@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.9.1
+
+### Patch Changes
+
+- 48aac87: switch to hashing the json
+
 ## 2.9.0
 
 ### Minor Changes
