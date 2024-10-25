@@ -3,10 +3,10 @@
 import { Context, Effect, flow, Layer, Option, pipe, S, Struct } from "effect-app"
 import { inspect } from "util"
 import { expect, expectTypeOf, it } from "vitest"
-import type { QueryEnd, QueryProjection, QueryWhere } from "../src/services/query.js"
-import { and, count, make, one, or, order, page, project, toFilter, where } from "../src/services/query.js"
-import { makeRepo } from "../src/services/RepositoryBase.js"
-import { memFilter, MemoryStoreLive } from "../src/services/Store/Memory.js"
+import type { QueryEnd, QueryProjection, QueryWhere } from "../src/Model/query.js"
+import { and, count, make, one, or, order, page, project, toFilter, where } from "../src/Model/query.js"
+import { makeRepo } from "../src/Model/Repository.js"
+import { memFilter, MemoryStoreLive } from "../src/Store/Memory.js"
 
 const str = S.Struct({ _tag: S.Literal("string"), value: S.String })
 const num = S.Struct({ _tag: S.Literal("number"), value: S.Number })

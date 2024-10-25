@@ -368,6 +368,16 @@
         "default": "./_cjs/Widen.type.cjs"
       }
     },
+    "./_ext/Array": {
+      "import": {
+        "types": "./dist/_ext/Array.d.ts",
+        "default": "./dist/_ext/Array.js"
+      },
+      "require": {
+        "types": "./dist/_ext/Array.d.ts",
+        "default": "./_cjs/_ext/Array.cjs"
+      }
+    },
     "./_ext/date": {
       "import": {
         "types": "./dist/_ext/date.d.ts",

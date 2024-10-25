@@ -1,7 +1,7 @@
 import { Effect, flow, Layer, ManagedRuntime, S } from "effect-app"
-import { and, or, order, page, project, where } from "../src/services/query.js"
-import { makeRepo } from "../src/services/RepositoryBase.js"
-import { MemoryStoreLive } from "../src/services/Store/Memory.js"
+import { makeRepo } from "../src/Model.js"
+import { and, or, order, page, project, where } from "../src/Model/query.js"
+import { MemoryStoreLive } from "../src/Store/Memory.js"
 
 const str = S.Struct({ _tag: S.Literal("string"), value: S.String })
 const num = S.Struct({ _tag: S.Literal("number"), value: S.Number })
