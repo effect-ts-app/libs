@@ -79,16 +79,6 @@
         "default": "./_cjs/hooks.cjs"
       }
     },
-    "./internal": {
-      "import": {
-        "types": "./dist/internal.d.ts",
-        "default": "./dist/internal.js"
-      },
-      "require": {
-        "types": "./dist/internal.d.ts",
-        "default": "./_cjs/internal.cjs"
-      }
-    },
     "./lib": {
       "import": {
         "types": "./dist/lib.d.ts",

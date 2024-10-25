@@ -9,8 +9,7 @@ import { InterruptedException } from "effect/Cause"
 import * as Either from "effect/Either"
 import type { ComputedRef, Ref, ShallowRef } from "vue"
 import { computed, ref, shallowRef } from "vue"
-import { makeQueryKey, reportRuntimeError } from "./internal.js"
-import { getRuntime } from "./lib.js"
+import { getRuntime, makeQueryKey, reportRuntimeError } from "./lib.js"
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)
 export function make<A, E, R>(self: Effect<A, E, R>) {

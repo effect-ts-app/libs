@@ -7,7 +7,7 @@ import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } f
 import { tuple } from "effect-app/Function"
 import type { ComputedRef, Ref } from "vue"
 import { computed, ref, shallowRef } from "vue"
-import { reportRuntimeError } from "./internal.js"
+import { reportRuntimeError } from "./lib.js"
 import { getQueryKey } from "./mutate.js"
 
 export type WatchSource<T = any> = Ref<T> | ComputedRef<T> | (() => T)

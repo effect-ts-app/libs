@@ -1,5 +1,5 @@
 import type { HttpClientResponse } from "@effect/platform/HttpClientResponse"
-import { Effect, Option } from "../lib.js"
+import { Effect, Option } from "../internal/lib.js"
 import { HttpClient, HttpClientError, HttpClientRequest, HttpHeaders } from "./internal/lib.js"
 
 export interface ResponseWithBody<A> extends Pick<HttpClientResponse, "headers" | "status" | "remoteAddress"> {

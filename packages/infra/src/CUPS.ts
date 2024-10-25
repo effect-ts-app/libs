@@ -1,8 +1,7 @@
 import type { FileOptions } from "@effect-app/infra/fileUtil"
 import { tempFile } from "@effect-app/infra/fileUtil"
 import cp from "child_process"
-import { Config, Effect, Layer, Predicate } from "effect-app"
-import { NonEmptyString255 } from "effect-app/Schema"
+import { Config, Effect, Layer, Predicate, S } from "effect-app"
 import { pretty } from "effect-app/utils"
 import fs from "fs"
 import os from "os"
@@ -10,8 +9,8 @@ import path from "path"
 import util from "util"
 import { InfraLogger } from "./logger.js"
 
-export const PrinterId = NonEmptyString255
-export type PrinterId = NonEmptyString255
+export const PrinterId = S.NonEmptyString255
+export type PrinterId = S.NonEmptyString255
 
 const exec_ = util.promisify(cp.exec)
 const exec = (command: string) =>
@@ -82,7 +81,7 @@ function getAvailablePrinters(host?: string) {
     return [...stdout.matchAll(/device for (\w+):/g)]
       .map((_) => _[1])
       .filter(Predicate.isNotNullable)
-      .map((_) => NonEmptyString255(_))
+      .map((_) => S.NonEmptyString255(_))
   })
 }
 

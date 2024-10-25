@@ -27,13 +27,11 @@ export default function makeConfig(dirName?: string) {
     },
     resolve: {
       alias: packages.map(pkg => ({ pkg, json: pkg + "/package.json"})).filter(_ => fs.existsSync(_.json)).reduce((acc, { pkg, json}) => { 
-      acc[JSON.parse(fs.readFileSync(json, "utf-8")).name] = path.resolve(pkg, 
-        // workaround Prelude "export *" from namespaces hack
-        pkg.endsWith("effect-app") ? "dist" : "src")
+      acc[JSON.parse(fs.readFileSync(json, "utf-8")).name] = path.resolve(pkg, "src")
       return acc
     }, { }) // "effect-app/Prelude": path.join(__dirname, "packages/core/src/Prelude.code.ts")
   }
   }
-  console.log(cfg)
+  //console.log(cfg)
   return cfg
 }

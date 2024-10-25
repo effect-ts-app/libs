@@ -1,6 +1,6 @@
 import { TaggedError } from "effect-app/Schema"
 import { makeFiberFailure } from "effect/Runtime"
-import { Cause, S } from "../lib.js"
+import { Cause, S } from "../internal/lib.js"
 
 export const tryToJson = (error: { toJSON(): unknown; toString(): string }) => {
   try {

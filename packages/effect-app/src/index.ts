@@ -1,3 +1,3 @@
 import "./builtin.js"
 
-export * from "./lib.js"
+export * from "./internal/lib.js"

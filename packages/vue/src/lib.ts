@@ -1,9 +1,19 @@
 import { type Pausable, useIntervalFn, type UseIntervalFnOptions } from "@vueuse/core"
-import type { Effect, Runtime } from "effect-app"
+import { type Effect, pipe, type Runtime } from "effect-app"
 import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
 import type { MaybeRefOrGetter, ShallowRef } from "vue"
+import { reportError } from "./errorReporter.js"
 
 export * as Result from "@effect-rx/rx/Result"
+
+export const reportRuntimeError = reportError("Runtime")
+
+// $Project/$Configuration.Index
+// -> "$Project", "$Configuration", "Index"
+export const makeQueryKey = ({ name }: { name: string }) =>
+  pipe(name.split("/"), (split) => split.map((_) => "$" + _))
+    .join(".")
+    .split(".")
 
 export function pauseWhileProcessing(
   iv: Pausable,

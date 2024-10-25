@@ -518,16 +518,6 @@
         "default": "./_cjs/ids.cjs"
       }
     },
-    "./lib": {
-      "import": {
-        "types": "./dist/lib.d.ts",
-        "default": "./dist/lib.js"
-      },
-      "require": {
-        "types": "./dist/lib.d.ts",
-        "default": "./_cjs/lib.cjs"
-      }
-    },
     "./logger": {
       "import": {
         "types": "./dist/logger.d.ts",
@@ -612,7 +602,7 @@
   "scripts": {
     "watch": "pnpm build:tsc -w",
     "build:tsc": "pnpm clean-dist && effect-app-cli packagejson tsc --build",
-    "build": "pnpm build:tsc && pnpm build2:cjs && cp -f ./dist/Prelude.code.js ./dist/Prelude.js || echo 'no prelude' && cp -f ./_cjs/Prelude.code.cjs ./_cjs/Prelude.cjs || echo 'no preludecjs'",
+    "build": "pnpm build:tsc && pnpm build2:cjs && cp -f ./src/internal/Prelude.* ./dist/internal",
     "build2:cjs": "rm -rf _cjs && babel dist --config-file ../../.babel.cjs.json --out-dir _cjs --out-file-extension .cjs --source-maps",
     "build2:mjs": "babel dist --config-file ../../.babel.mjs.json --out-dir _mjs --out-file-extension .mjs --source-maps",
     "watch2": "pnpm clean-dist && NODE_OPTIONS=--max-old-space-size=6144 tsc -w",

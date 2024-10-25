@@ -16,8 +16,7 @@ import { ServiceUnavailableError } from "effect-app/client"
 import { isHttpRequestError, isHttpResponseError } from "effect-app/http/http-client"
 import { computed, ref } from "vue"
 import type { ComputedRef, ShallowRef, WatchSource } from "vue"
-import { makeQueryKey, reportRuntimeError } from "./internal.js"
-import { getRuntime } from "./lib.js"
+import { getRuntime, makeQueryKey, reportRuntimeError } from "./lib.js"
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface QueryObserverOptionsCustom<

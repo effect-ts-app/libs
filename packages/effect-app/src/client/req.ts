@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { S } from "../lib.js"
+import { S } from "../internal/lib.js"
 
 /**
  * Middleware is inactivate by default, the Key is optional in route context, and the service is optionally provided as Effect Context.

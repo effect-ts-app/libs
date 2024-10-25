@@ -1,4 +1,4 @@
-import { Context, Effect, type HashMap, Layer, type Option } from "../lib.js"
+import { Context, Effect, type HashMap, Layer, type Option } from "../internal/lib.js"
 
 export interface ApiConfig {
   apiUrl: string

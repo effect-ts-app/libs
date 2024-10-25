@@ -5,7 +5,7 @@ import { Effect, ParseResult, pipe } from "effect"
 import type { NonEmptyReadonlyArray } from "effect/Array"
 import type { Schema } from "effect/Schema"
 import * as S from "effect/Schema"
-import type { Context } from "../lib.js"
+import type { Context } from "../internal/lib.js"
 import { extendM, typedKeysOf } from "../utils.js"
 
 export const withDefaultConstructor: <A, I, R>(
