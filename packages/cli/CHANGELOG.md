@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 1.1.2
+
+### Patch Changes
+
+- f68dbd2: update packages
+
 ## 1.1.1
 
 ### Patch Changes

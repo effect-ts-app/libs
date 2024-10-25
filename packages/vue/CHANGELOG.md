@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 2.0.6
+
+### Patch Changes
+
+- f68dbd2: update packages
+- Updated dependencies [f68dbd2]
+  - effect-app@2.2.1
+  - @effect-app/vue@2.0.6
+
 ## 2.0.5
 
 ### Patch Changes
