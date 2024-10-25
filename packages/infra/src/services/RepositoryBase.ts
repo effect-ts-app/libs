@@ -11,7 +11,7 @@ import type { FilterArgs, PersistenceModelType, StoreConfig } from "./Store.js"
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import type { NonEmptyReadonlyArray } from "effect-app"
-import { Array, Chunk, Context, Effect, Equivalence, flow, Option, pipe, PubSub, S, Unify } from "effect-app"
+import { Array, Chunk, Context, Effect, Equivalence, flow, Option, pipe, Pipeable, PubSub, S, Unify } from "effect-app"
 import { toNonEmptyArray } from "effect-app/Array"
 import { flatMapOption } from "effect-app/Effect"
 import type { Schema } from "effect-app/Schema"
@@ -322,7 +322,7 @@ export function makeRepoInternal<
             removeAndPublish,
             query(q: any) {
               // eslint-disable-next-line prefer-rest-params
-              return query(typeof q === "function" ? flow(...arguments)(makeQuery()) : q) as any
+              return query(typeof q === "function" ? Pipeable.pipeArguments(makeQuery(), arguments) : q) as any
             },
             /**
              * @internal
