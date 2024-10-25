@@ -66,7 +66,7 @@ export interface Repository<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R
+      R | RSchema
     >
     <
       A,
@@ -87,7 +87,7 @@ export interface Repository<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R
+      R | RSchema
     >
     <
       A,
@@ -110,7 +110,7 @@ export interface Repository<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R
+      R | RSchema
     >
     <
       A,
@@ -135,7 +135,7 @@ export interface Repository<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R
+      R | RSchema
     >
     <
       A,
@@ -160,7 +160,7 @@ export interface Repository<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R
+      R | RSchema
     >
     <
       A,
@@ -187,7 +187,7 @@ export interface Repository<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R
+      R | RSchema
     >
     <
       A,
@@ -216,7 +216,7 @@ export interface Repository<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R
+      R | RSchema
     >
     <
       A,
@@ -247,7 +247,7 @@ export interface Repository<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R
+      R | RSchema
     >
     <
       A,
@@ -280,7 +280,7 @@ export interface Repository<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
       | (TType extends "count" ? never : S.ParseResult.ParseError),
-      R
+      R | RSchema
     >
 
     // ending with generic query
@@ -308,7 +308,7 @@ export interface Repository<
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R
+      R | RSchema
     >
     <
       R = never,
@@ -327,7 +327,7 @@ export interface Repository<
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R
+      R | RSchema
     >
     <
       R = never,
@@ -346,7 +346,7 @@ export interface Repository<
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R
+      R | RSchema
     >
     <
       R = never,
@@ -367,7 +367,7 @@ export interface Repository<
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R
+      R | RSchema
     >
     <
       R = never,
@@ -390,7 +390,7 @@ export interface Repository<
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R
+      R | RSchema
     >
     <
       R = never,
@@ -415,7 +415,7 @@ export interface Repository<
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R
+      R | RSchema
     >
     <
       R = never,
@@ -442,7 +442,7 @@ export interface Repository<
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R
+      R | RSchema
     >
     <
       R = never,
@@ -471,7 +471,7 @@ export interface Repository<
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R
+      R | RSchema
     >
     <
       R = never,
@@ -502,7 +502,7 @@ export interface Repository<
     ): Effect.Effect<
       TType extends "many" ? readonly RefineTHelper<T, EncodedRefined>[] : RefineTHelper<T, EncodedRefined>,
       TType extends "many" ? never : NotFoundError<ItemType>,
-      R
+      R | RSchema
     >
   }
 
