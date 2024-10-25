@@ -93,6 +93,7 @@ const program = Effect.gen(function*() {
     page({ take: 1 })
   )
   console.log("$$ result", r)
+  console.log("$$ result2", r2)
 })
 
 const rt = ManagedRuntime.make(SomethingRepo.Test)
