@@ -233,7 +233,7 @@ export function makeRepoInternal<
                 {
                   ...args,
                   select: args.select
-                    ? dedupe([...args.select, "id", "_etag" as any])
+                    ? dedupe([...args.select, idKey, "_etag" as any])
                     : undefined
                 } as typeof args
               )
