@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UniqueKey } from "@azure/cosmos"
 import { Context, Effect } from "effect-app"
-import type { NonEmptyReadonlyArray, Option, Secret } from "effect-app"
+import type { NonEmptyReadonlyArray, Option, Redacted } from "effect-app"
 import type { OptimisticConcurrencyException } from "../errors.js"
 import type { FilterResult } from "../Model/filter/filterApi.js"
 import type { FieldValues } from "../Model/filter/types.js"
@@ -183,7 +183,7 @@ export type PersistenceModelType<Encoded extends object> = Encoded & {
 }
 
 export interface StorageConfig {
-  url: Secret.Secret
+  url: Redacted.Redacted<string>
   prefix: string
   dbName: string
 }

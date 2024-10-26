@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Secret } from "effect-app"
+import { Redacted } from "effect-app"
 import { CosmosStoreLayer } from "./Cosmos.js"
 import { DiskStoreLayer } from "./Disk.js"
 import { MemoryStoreLive } from "./Memory.js"
@@ -10,7 +10,7 @@ import type { StorageConfig } from "./service.js"
  * @tsplus static StoreMaker.Ops Layer
  */
 export function StoreMakerLayer(cfg: StorageConfig) {
-  const storageUrl = Secret.value(cfg.url)
+  const storageUrl = Redacted.value(cfg.url)
   if (storageUrl.startsWith("mem://")) {
     console.log("Using in memory store")
     return MemoryStoreLive

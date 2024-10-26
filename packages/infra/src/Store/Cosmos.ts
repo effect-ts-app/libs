@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Array, Chunk, Duration, Effect, Layer, Option, pipe, Secret, Struct } from "effect-app"
+import { Array, Chunk, Duration, Effect, Layer, Option, pipe, Redacted, Struct } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
 import { toNonEmptyArray } from "effect-app/Array"
 import { dropUndefinedT } from "effect-app/utils"
@@ -383,5 +383,5 @@ function makeCosmosStore({ prefix }: StorageConfig) {
 export function CosmosStoreLayer(cfg: StorageConfig) {
   return StoreMaker
     .toLayer(makeCosmosStore(cfg))
-    .pipe(Layer.provide(CosmosClientLayer(Secret.value(cfg.url), cfg.dbName)))
+    .pipe(Layer.provide(CosmosClientLayer(Redacted.value(cfg.url), cfg.dbName)))
 }

@@ -1,7 +1,8 @@
 import type { MailContent, MailData } from "@sendgrid/helpers/classes/mail.js"
 import type { ResponseError } from "@sendgrid/mail"
 import type sgMail from "@sendgrid/mail"
-import { Context, type Effect, type NonEmptyReadonlyArray, type Secret } from "effect-app"
+import type { Effect, NonEmptyReadonlyArray, Redacted } from "effect-app"
+import { Context } from "effect-app"
 import type { Email, NonEmptyString255 } from "effect-app/Schema"
 
 /**
@@ -17,7 +18,7 @@ export interface SendgridConfig {
   subjectPrefix: string
   realMail: boolean
   defaultFrom: Email | { name?: NonEmptyString255; email: Email }
-  apiKey: Secret.Secret
+  apiKey: Redacted.Redacted<string>
 }
 export type EmailMsg = sgMail.MailDataRequired
 export type EmailTemplateMsg = MailData & { templateId: string }

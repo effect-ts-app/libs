@@ -1,6 +1,6 @@
 import type { EmailData } from "@sendgrid/helpers/classes/email-address.js"
 import sgMail from "@sendgrid/mail"
-import { Array, Effect, Equivalence, Secret } from "effect-app"
+import { Array, Effect, Equivalence, Redacted } from "effect-app"
 import { dropUndefinedT } from "effect-app/utils"
 import { inspect } from "util"
 import { InfraLogger } from "../logger.js"
@@ -9,7 +9,7 @@ import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.j
 
 const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPrefix }: SendgridConfig) =>
   Effect.sync(() => {
-    sgMail.setApiKey(Secret.value(apiKey))
+    sgMail.setApiKey(Redacted.value(apiKey))
 
     return Emailer.of({
       sendMail(msg_: EmailMsgOptionalFrom) {
