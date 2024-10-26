@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.11.0
+
+### Minor Changes
+
+- 90244e1: chore: remove legacy RepositoryBase and move others internally.
+
 ## 2.10.0
 
 ### Minor Changes
