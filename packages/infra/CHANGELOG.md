@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.12.0
+
+### Minor Changes
+
+- 23c8ca5: pushed idKey mapping down to the driver instead of the repo
+
 ## 2.11.0
 
 ### Minor Changes
