@@ -106,7 +106,7 @@ export const makeRepo: {
   R,
   Encoded extends FieldValues,
   T,
-  IdKey extends keyof T,
+  IdKey extends keyof T & keyof Encoded,
   E = never,
   RInitial = never,
   RPublish = never,

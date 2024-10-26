@@ -412,6 +412,7 @@ export function makeStore<Encoded extends FieldValues>() {
 
         const store = yield* make<IdKey, Encoded, RInitial | R, EInitial>(
           pluralize(name),
+          idKey,
           makeInitial
             ? makeInitial
               .pipe(

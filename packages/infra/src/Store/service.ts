@@ -98,6 +98,7 @@ export interface Store<
 export class StoreMaker extends Context.TagId("effect-app/StoreMaker")<StoreMaker, {
   make: <IdKey extends keyof Encoded, Encoded extends FieldValues, R = never, E = never>(
     name: string,
+    idKey: IdKey,
     seed?: Effect<Iterable<Encoded>, E, R>,
     config?: StoreConfig<Encoded>
   ) => Effect<Store<IdKey, Encoded>, E, R>

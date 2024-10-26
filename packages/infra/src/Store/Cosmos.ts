@@ -265,7 +265,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               Effect
                 .promise(() =>
                   container
-                    .item(id, config?.partitionValue({ id } as Encoded))
+                    .item(id, config?.partitionValue({ [idKey]: id } as Encoded))
                     .read<Encoded>()
                     .then(({ resource }) =>
                       Option.fromNullable(resource).pipe(Option.map((_) => ({ ...defaultValues, ..._ })))
@@ -277,7 +277,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     attributes: {
                       "repository.container_id": containerId,
                       "repository.model_name": name,
-                      partitionValue: config?.partitionValue({ id } as Encoded),
+                      partitionValue: config?.partitionValue({ [idKey]: id } as Encoded),
                       id
                     }
                   })),
