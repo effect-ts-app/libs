@@ -18,8 +18,9 @@ const makeMapId =
     id
   })
 const makeReverseMapId =
-  <IdKey extends keyof Encoded, Encoded extends FieldValues, Type extends FieldValues & { id: string }>(idKey: IdKey) =>
-  ({ id, ...t }: Type) => ({ ...t, [idKey]: id }) as Encoded
+  <IdKey extends keyof Encoded, Encoded extends FieldValues>(idKey: IdKey) =>
+  ({ id, ...t }: PersistenceModelType<Omit<Encoded, IdKey> & { id: string }>) =>
+    ({ ...t, [idKey]: id }) as any as PersistenceModelType<Encoded>
 
 class CosmosDbOperationError {
   constructor(readonly message: string) {}
@@ -37,7 +38,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
       ) =>
         Effect.gen(function*() {
           const mapId = makeMapId<IdKey, Encoded>(idKey)
-          const mapReverseId = makeReverseMapId<IdKey, Encoded, Omit<Encoded, IdKey> & { id: string }>(idKey)
+          const mapReverseId = makeReverseMapId<IdKey, Encoded>(idKey)
           type PM = PersistenceModelType<Encoded>
           type PMCosmos = PersistenceModelType<Omit<Encoded, IdKey> & { id: string }>
           const containerId = `${prefix}${name}`
@@ -124,9 +125,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                                   )
                                 )
                               }
-                              return batch.map(([{ id, ...e }], i) => ({
+                              return batch.map(([e], i) => ({
                                 ...e,
-                                [idKey]: id,
                                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                                 _etag: responses[i]!.eTag
                               }))
@@ -224,7 +224,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       .fetchAll()
                       .then(({ resources }) =>
                         resources.map(
-                          (_) => ({ ...defaultValues, ...mapReverseId(_) }) as PersistenceModelType<Encoded>
+                          (_) => ({ ...defaultValues, ...mapReverseId(_) })
                         )
                       )
                   )
