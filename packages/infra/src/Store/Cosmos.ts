@@ -7,9 +7,20 @@ import { dropUndefinedT } from "effect-app/utils"
 import { CosmosClient, CosmosClientLayer } from "../adapters/cosmos-client.js"
 import { OptimisticConcurrencyException } from "../errors.js"
 import { InfraLogger } from "../logger.js"
+import type { FieldValues } from "../Model/filter/types.js"
 import { buildWhereCosmosQuery3, logQuery } from "./Cosmos/query.js"
 import { StoreMaker } from "./service.js"
 import type { FilterArgs, PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
+
+const makeMapId =
+  <IdKey extends keyof Encoded, Encoded extends FieldValues>(idKey: IdKey) => ({ [idKey]: id, ...e }: Encoded) => ({
+    ...e,
+    id
+  })
+const makeReverseMapId =
+  <IdKey extends keyof Encoded, Encoded extends FieldValues>(idKey: IdKey) =>
+  ({ id, ...t }: PersistenceModelType<Omit<Encoded, IdKey> & { id: string }>) =>
+    ({ ...t, [idKey]: id }) as any as PersistenceModelType<Encoded>
 
 class CosmosDbOperationError {
   constructor(readonly message: string) {}
@@ -19,13 +30,17 @@ function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*() {
     const { db } = yield* CosmosClient
     return {
-      make: <Id extends string, Encoded extends Record<string, any> & { id: Id }, R = never, E = never>(
+      make: <IdKey extends keyof Encoded, Encoded extends FieldValues, R = never, E = never>(
         name: string,
+        idKey: IdKey,
         seed?: Effect<Iterable<Encoded>, E, R>,
         config?: StoreConfig<Encoded>
       ) =>
         Effect.gen(function*() {
+          const mapId = makeMapId<IdKey, Encoded>(idKey)
+          const mapReverseId = makeReverseMapId<IdKey, Encoded>(idKey)
           type PM = PersistenceModelType<Encoded>
+          type PMCosmos = PersistenceModelType<Omit<Encoded, IdKey> & { id: string }>
           const containerId = `${prefix}${name}`
           yield* Effect.promise(() =>
             db.containers.createIfNotExists(dropUndefinedT({
@@ -47,34 +62,37 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               .gen(function*() {
                 // TODO: disable batching if need atomicity
                 // we delay and batch to keep low amount of RUs
-                const b = [...items].map(
-                  (x) =>
-                    [
-                      x,
-                      Option.match(Option.fromNullable(x._etag), {
-                        onNone: () =>
-                          dropUndefinedT({
-                            operationType: "Create" as const,
-                            resourceBody: {
-                              ...Struct.omit(x, "_etag"),
-                              _partitionKey: config?.partitionValue(x)
-                            },
-                            partitionKey: config?.partitionValue(x)
-                          }),
-                        onSome: (eTag) =>
-                          dropUndefinedT({
-                            operationType: "Replace" as const,
-                            id: x.id,
-                            resourceBody: {
-                              ...Struct.omit(x, "_etag"),
-                              _partitionKey: config?.partitionValue(x)
-                            },
-                            ifMatch: eTag,
-                            partitionKey: config?.partitionValue(x)
-                          })
-                      })
-                    ] as const
-                )
+                const b = [...items]
+                  .map(
+                    (x) =>
+                      [
+                        x,
+                        Option.match(Option.fromNullable(x._etag), {
+                          onNone: () =>
+                            dropUndefinedT({
+                              operationType: "Create" as const,
+                              resourceBody: {
+                                ...Struct.omit(x, "_etag", idKey),
+                                id: x[idKey],
+                                _partitionKey: config?.partitionValue(x)
+                              },
+                              partitionKey: config?.partitionValue(x)
+                            }),
+                          onSome: (eTag) =>
+                            dropUndefinedT({
+                              operationType: "Replace" as const,
+                              id: x[idKey],
+                              resourceBody: {
+                                ...Struct.omit(x, "_etag", idKey),
+                                id: x[idKey],
+                                _partitionKey: config?.partitionValue(x)
+                              },
+                              ifMatch: eTag,
+                              partitionKey: config?.partitionValue(x)
+                            })
+                        })
+                      ] as const
+                  )
                 const batches = Chunk.toReadonlyArray(Array.chunk_(b, config?.maxBulkSize ?? 10))
 
                 const batchResult = yield* Effect.forEach(
@@ -135,15 +153,17 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         onNone: () => ({
                           operationType: "Create" as const,
                           resourceBody: {
-                            ...Struct.omit(x, "_etag"),
+                            ...Struct.omit(x, "_etag", idKey),
+                            id: x[idKey],
                             _partitionKey: config?.partitionValue(x)
                           }
                         }),
                         onSome: (eTag) => ({
                           operationType: "Replace" as const,
-                          id: x.id,
+                          id: x[idKey],
                           resourceBody: {
-                            ...Struct.omit(x, "_etag"),
+                            ...Struct.omit(x, "_etag", idKey),
+                            id: x[idKey],
                             _partitionKey: config?.partitionValue(x)
                           },
                           ifMatch: eTag
@@ -173,8 +193,9 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         )
                       }
 
-                      return batch.map(([e], i) => ({
+                      return batch.map(([{ id, ...e }], i) => ({
                         ...e,
+                        [idKey]: id,
                         _etag: result[i]?.eTag
                       })) as unknown as NonEmptyReadonlyArray<Encoded>
                     })
@@ -187,7 +208,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 }))
           }
 
-          const s: Store<Encoded, Id> = {
+          const s: Store<IdKey, Encoded> = {
             all: Effect
               .sync(() => ({
                 query: `SELECT * FROM ${name} f WHERE f.id != @id`,
@@ -199,9 +220,13 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   Effect.promise(() =>
                     container
                       .items
-                      .query<PM>(q)
+                      .query<PMCosmos>(q)
                       .fetchAll()
-                      .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._ })))
+                      .then(({ resources }) =>
+                        resources.map(
+                          (_) => ({ ...defaultValues, ...mapReverseId(_) })
+                        )
+                      )
                   )
                 ),
                 Effect
@@ -223,6 +248,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               return Effect
                 .sync(() =>
                   buildWhereCosmosQuery3(
+                    idKey,
                     filter ?? [],
                     name,
                     importedMarkerId,
@@ -244,13 +270,20 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                             .query<M>(q)
                             .fetchAll()
                             .then(({ resources }) =>
-                              resources.map((_) => ({ ...pipe(defaultValues, Struct.pick(...f.select!)), ..._ }))
+                              resources.map((_) =>
+                                ({
+                                  ...pipe(defaultValues, Struct.pick(...f.select!)),
+                                  ...mapReverseId(_ as any)
+                                }) as any
+                              )
                             )
                           : container
                             .items
                             .query<{ f: M }>(q)
                             .fetchAll()
-                            .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._.f })))
+                            .then(({ resources }) =>
+                              resources.map(({ f }) => ({ ...defaultValues, ...mapReverseId(f as any) }) as any)
+                            )
                       )
                     )
                 )
@@ -263,10 +296,10 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               Effect
                 .promise(() =>
                   container
-                    .item(id, config?.partitionValue({ id } as Encoded))
+                    .item(id, config?.partitionValue({ [idKey]: id } as Encoded))
                     .read<Encoded>()
                     .then(({ resource }) =>
-                      Option.fromNullable(resource).pipe(Option.map((_) => ({ ...defaultValues, ..._ })))
+                      Option.fromNullable(resource).pipe(Option.map((_) => ({ ...defaultValues, ...mapReverseId(_) })))
                     )
                 )
                 .pipe(Effect
@@ -275,7 +308,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     attributes: {
                       "repository.container_id": containerId,
                       "repository.model_name": name,
-                      partitionValue: config?.partitionValue({ id } as Encoded),
+                      partitionValue: config?.partitionValue({ [idKey]: id } as Encoded),
                       id
                     }
                   })),
@@ -288,14 +321,14 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     onNone: () =>
                       Effect.promise(() =>
                         container.items.create({
-                          ...e,
+                          ...mapId(e),
                           _partitionKey: config?.partitionValue(e)
                         })
                       ),
                     onSome: (eTag) =>
                       Effect.promise(() =>
-                        container.item(e.id, config?.partitionValue(e)).replace(
-                          { ...e, _partitionKey: config?.partitionValue(e) },
+                        container.item(e[idKey], config?.partitionValue(e)).replace(
+                          { ...mapId(e), _partitionKey: config?.partitionValue(e) },
                           {
                             accessCondition: {
                               type: "IfMatch",
@@ -310,7 +343,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   Effect
                     .flatMap((x) => {
                       if (x.statusCode === 412 || x.statusCode === 404) {
-                        return new OptimisticConcurrencyException({ type: name, id: e.id })
+                        return new OptimisticConcurrencyException({ type: name, id: e[idKey] })
                       }
                       if (x.statusCode > 299 || x.statusCode < 200) {
                         return Effect.die(
@@ -327,18 +360,22 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   Effect
                     .withSpan("Cosmos.set [effect-app/infra/Store]", {
                       captureStackTrace: false,
-                      attributes: { "repository.container_id": containerId, "repository.model_name": name, id: e.id }
+                      attributes: {
+                        "repository.container_id": containerId,
+                        "repository.model_name": name,
+                        id: e[idKey]
+                      }
                     })
                 ),
             batchSet,
             bulkSet,
             remove: (e: Encoded) =>
               Effect
-                .promise(() => container.item(e.id, config?.partitionValue(e)).delete())
+                .promise(() => container.item(e[idKey], config?.partitionValue(e)).delete())
                 .pipe(Effect
                   .withSpan("Cosmos.remove [effect-app/infra/Store]", {
                     captureStackTrace: false,
-                    attributes: { "repository.container_id": containerId, "repository.model_name": name, id: e.id }
+                    attributes: { "repository.container_id": containerId, "repository.model_name": name, id: e[idKey] }
                   }))
           }
 

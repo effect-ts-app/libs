@@ -57,7 +57,7 @@ export interface O<TFieldValues extends FieldValues> {
   direction: "ASC" | "DESC"
 }
 
-export interface FilterArgs<Encoded extends { id: string }, U extends keyof Encoded = never> {
+export interface FilterArgs<Encoded extends FieldValues, U extends keyof Encoded = never> {
   t: Encoded
   filter?: Filter | undefined
   select?: NonEmptyReadonlyArray<U> | undefined
@@ -66,18 +66,18 @@ export interface FilterArgs<Encoded extends { id: string }, U extends keyof Enco
   skip?: number | undefined
 }
 
-export type FilterFunc<Encoded extends { id: string }> = <U extends keyof Encoded = never>(
+export type FilterFunc<Encoded extends FieldValues> = <U extends keyof Encoded = never>(
   args: FilterArgs<Encoded, U>
 ) => Effect<(U extends undefined ? Encoded : Pick<Encoded, U>)[]>
 
 export interface Store<
-  Encoded extends { id: Id },
-  Id extends string,
+  IdKey extends keyof Encoded,
+  Encoded extends FieldValues,
   PM extends PersistenceModelType<Encoded> = PersistenceModelType<Encoded>
 > {
   all: Effect<PM[]>
   filter: FilterFunc<Encoded>
-  find: (id: Id) => Effect<Option<PM>>
+  find: (id: Encoded[IdKey]) => Effect<Option<PM>>
   set: (e: PM) => Effect<PM, OptimisticConcurrencyException>
   batchSet: (
     items: NonEmptyReadonlyArray<PM>
@@ -96,11 +96,12 @@ export interface Store<
  * @tsplus companion StoreMaker.Ops
  */
 export class StoreMaker extends Context.TagId("effect-app/StoreMaker")<StoreMaker, {
-  make: <Encoded extends { id: Id }, Id extends string, R = never, E = never>(
+  make: <IdKey extends keyof Encoded, Encoded extends FieldValues, R = never, E = never>(
     name: string,
+    idKey: IdKey,
     seed?: Effect<Iterable<Encoded>, E, R>,
     config?: StoreConfig<Encoded>
-  ) => Effect<Store<Encoded, Id>, E, R>
+  ) => Effect<Store<IdKey, Encoded>, E, R>
 }>() {
 }
 

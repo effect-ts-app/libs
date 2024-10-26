@@ -4,12 +4,14 @@ import * as fu from "../fileUtil.js"
 import fs from "fs"
 
 import { Console, Effect, FiberRef, flow } from "effect-app"
+import type { FieldValues } from "../Model/filter/types.js"
 import { makeMemoryStoreInt, storeId } from "./Memory.js"
 import type { PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
 
-function makeDiskStoreInt<Id extends string, Encoded extends { id: Id }, R, E>(
+function makeDiskStoreInt<IdKey extends keyof Encoded, Encoded extends FieldValues, R, E>(
   prefix: string,
+  idKey: IdKey,
   namespace: string,
   dir: string,
   name: string,
@@ -68,8 +70,9 @@ function makeDiskStoreInt<Id extends string, Encoded extends { id: Id }, R, E>(
           )
     }
 
-    const store = yield* makeMemoryStoreInt<Id, Encoded, R, E>(
+    const store = yield* makeMemoryStoreInt<IdKey, Encoded, R, E>(
       name,
+      idKey,
       namespace,
       !fs.existsSync(file)
         ? seed
@@ -107,7 +110,7 @@ function makeDiskStoreInt<Id extends string, Encoded extends { id: Id }, R, E>(
         store.remove,
         Effect.tap(flushToDiskInBackground)
       )
-    } satisfies Store<Encoded, Id>
+    } satisfies Store<IdKey, Encoded>
   })
 }
 
@@ -121,15 +124,16 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
       fs.mkdirSync(dir)
     }
     return {
-      make: <Id extends string, Encoded extends { id: Id }, R, E>(
+      make: <IdKey extends keyof Encoded, Encoded extends FieldValues, R, E>(
         name: string,
+        idKey: IdKey,
         seed?: Effect<Iterable<Encoded>, E, R>,
         config?: StoreConfig<Encoded>
       ) =>
         Effect.gen(function*() {
           const storesSem = Effect.unsafeMakeSemaphore(1)
-          const primary = yield* makeDiskStoreInt(prefix, "primary", dir, name, seed, config?.defaultValues)
-          const stores = new Map<string, Store<Encoded, Id>>([["primary", primary]])
+          const primary = yield* makeDiskStoreInt(prefix, idKey, "primary", dir, name, seed, config?.defaultValues)
+          const stores = new Map<string, Store<IdKey, Encoded>>([["primary", primary]])
           const ctx = yield* Effect.context<R>()
           const getStore = !config?.allowNamespace
             ? Effect.succeed(primary)
@@ -145,7 +149,15 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
                 Effect.suspend(() => {
                   const existing = stores.get(namespace)
                   if (existing) return Effect.sync(() => existing)
-                  return makeDiskStoreInt<Id, Encoded, R, E>(prefix, namespace, dir, name, seed, config?.defaultValues)
+                  return makeDiskStoreInt<IdKey, Encoded, R, E>(
+                    prefix,
+                    idKey,
+                    namespace,
+                    dir,
+                    name,
+                    seed,
+                    config?.defaultValues
+                  )
                     .pipe(
                       Effect.orDie,
                       Effect.provide(ctx),
@@ -155,7 +167,7 @@ export function makeDiskStore({ prefix }: StorageConfig, dir: string) {
               )
             }))
 
-          const s: Store<Encoded, Id> = {
+          const s: Store<IdKey, Encoded> = {
             all: Effect.flatMap(getStore, (_) => _.all),
             find: (...args) => Effect.flatMap(getStore, (_) => _.find(...args)),
             filter: (...args) => Effect.flatMap(getStore, (_) => _.filter(...args)),

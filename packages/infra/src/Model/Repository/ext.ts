@@ -7,16 +7,17 @@ import { NotFoundError } from "effect-app/client"
 import type { FixEnv, PureEnv } from "effect-app/Pure"
 import { runTerm } from "effect-app/Pure"
 import { AnyPureDSL } from "../dsl.js"
+import type { FieldValues } from "../filter/types.js"
 import type { Query, QueryEnd, QueryWhere } from "../query.js"
 import * as Q from "../query.js"
 import type { Repository } from "./service.js"
 
 export const extendRepo = <
   T,
-  Encoded extends { id: string },
+  Encoded extends FieldValues,
   Evt,
   ItemType extends string,
-  IdKey extends keyof T,
+  IdKey extends keyof T & keyof Encoded,
   RSchema,
   RPublish
 >(
@@ -212,7 +213,7 @@ export const extendRepo = <
     .makeBatched((
       requests: NonEmptyReadonlyArray<Req>
     ) =>
-      (repo.query(Q.where("id", "in", requests.map((_) => _.id)) as any) as Effect<readonly T[], never>)
+      (repo.query(Q.where(repo.idKey as any, "in", requests.map((_) => _.id)) as any) as Effect<readonly T[], never>)
         // TODO
         .pipe(
           Effect.andThen((items) =>
@@ -272,10 +273,10 @@ export const extendRepo = <
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ExtendedRepository<
   T,
-  Encoded extends { id: string },
+  Encoded extends FieldValues,
   Evt,
   ItemType extends string,
-  IdKey extends keyof T,
+  IdKey extends keyof T & keyof Encoded,
   RSchema,
   RPublish
 > extends ReturnType<typeof extendRepo<T, Encoded, Evt, ItemType, IdKey, RSchema, RPublish>> {}

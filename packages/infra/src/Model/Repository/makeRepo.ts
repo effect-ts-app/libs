@@ -10,15 +10,14 @@ import type {} from "effect/Hash"
 import type { Context, NonEmptyReadonlyArray, S } from "effect-app"
 import { Effect } from "effect-app"
 import type { StoreConfig, StoreMaker } from "../../Store.js"
+import type { FieldValues } from "../filter/types.js"
 import type { ExtendedRepository } from "./ext.js"
 import { extendRepo } from "./ext.js"
 import { makeRepoInternal } from "./internal/internal.js"
 
 export interface RepositoryOptions<
-  IdKey extends keyof T,
-  Encoded extends {
-    id: string
-  },
+  IdKey extends keyof T & keyof Encoded,
+  Encoded,
   T,
   Evt = never,
   RPublish = never,
@@ -66,9 +65,9 @@ export const makeRepo: {
   <
     ItemType extends string,
     RSchema,
-    Encoded extends { id: string },
+    Encoded extends FieldValues,
     T,
-    IdKey extends keyof T,
+    IdKey extends keyof T & keyof Encoded,
     E = never,
     Evt = never,
     RInitial = never,
@@ -86,7 +85,7 @@ export const makeRepo: {
   <
     ItemType extends string,
     RSchema,
-    Encoded extends { id: string },
+    Encoded extends FieldValues,
     T extends { id: unknown },
     E = never,
     Evt = never,
@@ -105,9 +104,9 @@ export const makeRepo: {
 } = <
   ItemType extends string,
   R,
-  Encoded extends { id: string },
+  Encoded extends FieldValues,
   T,
-  IdKey extends keyof T,
+  IdKey extends keyof T & keyof Encoded,
   E = never,
   RInitial = never,
   RPublish = never,

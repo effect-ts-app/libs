@@ -5,12 +5,13 @@ import type { NonEmptyReadonlyArray } from "effect-app"
 import { NonEmptyString255 } from "effect-app/Schema"
 import { get } from "effect-app/utils"
 import { InfraLogger } from "../logger.js"
+import type { FieldValues } from "../Model/filter/types.js"
 import { codeFilter } from "./codeFilter.js"
 import type { FilterArgs, PersistenceModelType, Store, StoreConfig } from "./service.js"
 import { StoreMaker } from "./service.js"
 import { makeUpdateETag } from "./utils.js"
 
-export function memFilter<T extends { id: string }, U extends keyof T = never>(f: FilterArgs<T, U>) {
+export function memFilter<T extends FieldValues, U extends keyof T = never>(f: FilterArgs<T, U>) {
   type M = U extends undefined ? T : Pick<T, U>
   return ((c: T[]): M[] => {
     const select = (r: T[]): M[] => (f.select ? r.map(Struct.pick(...f.select)) : r) as any
@@ -76,8 +77,9 @@ function logQuery(f: FilterArgs<any, any>, defaultValues?: any) {
     }))
 }
 
-export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }, R = never, E = never>(
+export function makeMemoryStoreInt<IdKey extends keyof Encoded, Encoded extends FieldValues, R = never, E = never>(
   modelName: string,
+  idKey: IdKey,
   namespace: string,
   seed?: Effect<Iterable<Encoded>, E, R>,
   _defaultValues?: Partial<Encoded>
@@ -88,8 +90,8 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
     const items_ = yield* seed ?? Effect.sync(() => [])
     const defaultValues = _defaultValues ?? {}
 
-    const items = new Map([...items_].map((_) => [_.id, { _etag: undefined, ...defaultValues, ..._ }] as const))
-    const store = Ref.unsafeMake<ReadonlyMap<Id, PM>>(items)
+    const items = new Map([...items_].map((_) => [_[idKey], { _etag: undefined, ...defaultValues, ..._ }] as const))
+    const store = Ref.unsafeMake<ReadonlyMap<string, PM>>(items)
     const sem = Effect.unsafeMakeSemaphore(1)
     const withPermit = sem.withPermits(1)
     const values = Effect.map(Ref.get(store), (s) => s.values())
@@ -98,7 +100,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
 
     const batchSet = (items: NonEmptyReadonlyArray<PM>) =>
       Effect
-        .forEach(items, (i) => Effect.flatMap(s.find(i.id), (current) => updateETag(i, current)))
+        .forEach(items, (i) => Effect.flatMap(s.find(i[idKey]), (current) => updateETag(i, idKey, current)))
         .pipe(
           Effect
             .tap((items) =>
@@ -107,8 +109,8 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
                 .pipe(
                   Effect
                     .map((m) => {
-                      const mut = m as Map<Id, PM>
-                      items.forEach((e) => mut.set(e.id, e))
+                      const mut = m as Map<string, PM>
+                      items.forEach((e) => mut.set(e[idKey], e))
                       return mut
                     }),
                   Effect
@@ -119,7 +121,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
             .map((_) => _),
           withPermit
         )
-    const s: Store<Encoded, Id> = {
+    const s: Store<IdKey, Encoded> = {
       all: all.pipe(Effect.withSpan("Memory.all [effect-app/infra/Store]", {
         captureStackTrace: false,
         attributes: {
@@ -153,13 +155,13 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
           ),
       set: (e) =>
         s
-          .find(e.id)
+          .find(e[idKey])
           .pipe(
-            Effect.flatMap((current) => updateETag(e, current)),
+            Effect.flatMap((current) => updateETag(e, idKey, current)),
             Effect
               .tap((e) =>
                 Ref.get(store).pipe(
-                  Effect.map((_) => new Map([..._, [e.id, e]])),
+                  Effect.map((_) => new Map([..._, [e[idKey], e]])),
                   Effect.flatMap((_) => Ref.set(store, _))
                 )
               ),
@@ -197,7 +199,7 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
         Ref
           .get(store)
           .pipe(
-            Effect.map((_) => new Map([..._].filter(([_]) => _ !== e.id))),
+            Effect.map((_) => new Map([..._].filter(([_]) => _ !== e[idKey]))),
             Effect.flatMap((_) => Ref.set(store, _)),
             withPermit,
             Effect.withSpan("Memory.remove [effect-app/infra/Store]", {
@@ -211,14 +213,21 @@ export function makeMemoryStoreInt<Id extends string, Encoded extends { id: Id }
 }
 
 export const makeMemoryStore = () => ({
-  make: <Id extends string, Encoded extends { id: Id }, R = never, E = never>(
+  make: <IdKey extends keyof Encoded, Encoded extends FieldValues, R, E>(
     modelName: string,
+    idKey: IdKey,
     seed?: Effect<Iterable<Encoded>, E, R>,
     config?: StoreConfig<Encoded>
   ) =>
     Effect.gen(function*() {
       const storesSem = Effect.unsafeMakeSemaphore(1)
-      const primary = yield* makeMemoryStoreInt<Id, Encoded, R, E>(modelName, "primary", seed, config?.defaultValues)
+      const primary = yield* makeMemoryStoreInt<IdKey, Encoded, R, E>(
+        modelName,
+        idKey,
+        "primary",
+        seed,
+        config?.defaultValues
+      )
       const ctx = yield* Effect.context<R>()
       const stores = new Map([["primary", primary]])
       const getStore = !config?.allowNamespace
@@ -234,7 +243,7 @@ export const makeMemoryStore = () => ({
           return storesSem.withPermits(1)(Effect.suspend(() => {
             const store = stores.get(namespace)
             if (store) return Effect.sync(() => store)
-            return makeMemoryStoreInt(modelName, namespace, seed, config?.defaultValues)
+            return makeMemoryStoreInt(modelName, idKey, namespace, seed, config?.defaultValues)
               .pipe(
                 Effect.orDie,
                 Effect.provide(ctx),
@@ -242,7 +251,7 @@ export const makeMemoryStore = () => ({
               )
           }))
         }))
-      const s: Store<Encoded, Id> = {
+      const s: Store<IdKey, Encoded> = {
         all: Effect.flatMap(getStore, (_) => _.all),
         find: (...args) => Effect.flatMap(getStore, (_) => _.find(...args)),
         filter: (...args) => Effect.flatMap(getStore, (_) => _.filter(...args)),

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type {} from "effect/Equal"
 import type {} from "effect/Hash"
 import type { NonEmptyReadonlyArray } from "effect-app"
@@ -26,9 +27,9 @@ export function makeRepoInternal<
   return <
     ItemType extends string,
     R,
-    Encoded extends { id: string },
+    Encoded extends FieldValues,
     T,
-    IdKey extends keyof T
+    IdKey extends keyof T & keyof Encoded
   >(
     name: ItemType,
     schema: S.Schema<T, Encoded, R>,
@@ -41,18 +42,18 @@ export function makeRepoInternal<
       e: Encoded,
       getEtag: (id: string) => string | undefined
     ): PM {
-      return mapTo(e, getEtag(e.id))
+      return mapTo(e, getEtag(e[idKey]))
     }
 
     function mapReverse(
       { _etag, ...e }: PM,
       setEtag: (id: string, eTag: string | undefined) => void
     ): Encoded {
-      setEtag(e.id, _etag)
+      setEtag((e as any)[idKey], _etag)
       return mapFrom(e as unknown as Encoded)
     }
 
-    const mkStore = makeStore<Encoded>()(name, schema, mapTo)
+    const mkStore = makeStore<Encoded>()(name, schema, mapTo, idKey)
 
     function make<RInitial = never, E = never, RPublish = never, RCtx = never>(
       args: [Evt] extends [never] ? {
@@ -128,7 +129,7 @@ export function makeRepoInternal<
                 : s.pipe(S.pick(idKey as any))
             })
           const encodeId = flow(S.encode(i), provideRctx)
-          function findEId(id: Encoded["id"]) {
+          function findEId(id: Encoded[IdKey]) {
             return Effect.flatMap(
               store.find(id),
               (item) =>
@@ -138,13 +139,12 @@ export function makeRepoInternal<
                 })
             )
           }
+          // TODO: select the particular field, instead of as struct
           function findE(id: T[IdKey]) {
             return pipe(
               encodeId({ [idKey]: id } as any),
               Effect.orDie,
-              // we will have idKey because the transform is undone again by the encode schema mumbo jumbo above
-              // TODO: make reliable. (Security: isin: PrimaryKey(ISIN), idKey: "isin", does end up with "id")
-              Effect.map((_) => (_ as any)[idKey] ?? (_ as any).id),
+              Effect.map((_) => (_ as any)[idKey]),
               Effect.flatMap(findEId)
             )
           }
@@ -163,7 +163,7 @@ export function makeRepoInternal<
                     const { get, set } = yield* cms
                     const items = a.map((_) => mapToPersistenceModel(_, get))
                     const ret = yield* store.batchSet(items)
-                    ret.forEach((_) => set(_.id, _._etag))
+                    ret.forEach((_) => set(_[idKey], _._etag))
                   })
               )
               .pipe(Effect.asVoid)
@@ -199,7 +199,7 @@ export function makeRepoInternal<
               // TODO: we should have a batchRemove on store so the adapter can actually batch...
               for (const e of items) {
                 yield* store.remove(mapToPersistenceModel(e, get))
-                set(e.id, undefined)
+                set(e[idKey], undefined)
               }
               yield* Effect
                 .sync(() => toNonEmptyArray([...events]))
@@ -233,13 +233,13 @@ export function makeRepoInternal<
                 {
                   ...args,
                   select: args.select
-                    ? dedupe([...args.select, "id", "_etag" as any])
+                    ? dedupe([...args.select, idKey, "_etag" as any])
                     : undefined
                 } as typeof args
               )
               .pipe(
                 Effect.tap((items) =>
-                  Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as Encoded).id, (_ as PM)._etag)))
+                  Effect.map(cms, ({ set }) => items.forEach((_) => set((_ as Encoded)[idKey], (_ as PM)._etag)))
                 )
               )
 
@@ -372,46 +372,47 @@ const pluralize = (s: string) =>
     ? s.substring(0, s.length - 1) + "ies"
     : s + "s"
 
-export function makeStore<
-  Encoded extends { id: string }
->() {
+export function makeStore<Encoded extends FieldValues>() {
   return <
     ItemType extends string,
     R,
-    E extends { id: string },
-    T
+    E,
+    T,
+    IdKey extends keyof Encoded
   >(
     name: ItemType,
     schema: S.Schema<T, E, R>,
-    mapTo: (e: E, etag: string | undefined) => Encoded
+    mapTo: (e: E, etag: string | undefined) => Encoded,
+    idKey: IdKey
   ) => {
-    function encodeToEncoded() {
-      const getEtag = () => undefined
-      return (t: T) =>
-        S.encode(schema)(t).pipe(
-          Effect.orDie,
-          Effect.map((_) => mapToPersistenceModel(_, getEtag))
-        )
-    }
-
-    function mapToPersistenceModel(
-      e: E,
-      getEtag: (id: string) => string | undefined
-    ): Encoded {
-      return mapTo(e, getEtag(e.id))
-    }
-
     function makeStore<RInitial = never, EInitial = never>(
       makeInitial?: Effect<readonly T[], EInitial, RInitial>,
       config?: Omit<StoreConfig<Encoded>, "partitionValue"> & {
         partitionValue?: (a: Encoded) => string
       }
     ) {
+      function encodeToEncoded() {
+        const getEtag = () => undefined
+        return (t: T) =>
+          S.encode(schema)(t).pipe(
+            Effect.orDie,
+            Effect.map((_) => mapToPersistenceModel(_, getEtag))
+          )
+      }
+
+      function mapToPersistenceModel(
+        e: E,
+        getEtag: (id: string) => string | undefined
+      ): Encoded {
+        return mapTo(e, getEtag((e as any)[idKey] as string))
+      }
+
       return Effect.gen(function*() {
         const { make } = yield* StoreMaker
 
-        const store = yield* make<Encoded, string, RInitial | R, EInitial>(
+        const store = yield* make<IdKey, Encoded, RInitial | R, EInitial>(
           pluralize(name),
+          idKey,
           makeInitial
             ? makeInitial
               .pipe(

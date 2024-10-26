@@ -11,7 +11,7 @@ import type { Mapped } from "./legacy.js"
  */
 export interface Repository<
   T,
-  Encoded extends { id: string },
+  Encoded extends FieldValues,
   Evt,
   ItemType extends string,
   IdKey extends keyof T,
