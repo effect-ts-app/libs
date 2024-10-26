@@ -252,7 +252,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     name,
                     importedMarkerId,
                     defaultValues,
-                    f.select!.map((_) => (_ as any) === idKey ? "id" : _) as NonEmptyReadonlyArray<string> | undefined,
+                    f.select?.map((_) => (_ as any) === idKey ? "id" : _) as NonEmptyReadonlyArray<string> | undefined,
                     f.order as NonEmptyReadonlyArray<{ key: string; direction: "ASC" | "DESC" }> | undefined,
                     skip,
                     limit
