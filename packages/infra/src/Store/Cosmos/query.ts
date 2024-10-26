@@ -32,6 +32,7 @@ const arrayContains = (v: any[]) => v.map((_) => JSON.stringify(_)).join(", ")
 const vAsArr = (v: string) => v as unknown as any[]
 
 export function buildWhereCosmosQuery3(
+  idKey: PropertyKey,
   filter: readonly FilterResult[],
   name: string,
   importedMarkerId: string,
@@ -42,6 +43,9 @@ export function buildWhereCosmosQuery3(
   limit?: number
 ) {
   const statement = (x: FilterR, i: number) => {
+    if (x.path === idKey) {
+      x = { ...x, path: "id" }
+    }
     let k = x.path.includes(".-1.")
       ? `${x.path.split(".-1.")[0]}.${x.path.split(".-1.")[1]!}`
       : `f.${x.path}`
@@ -180,7 +184,7 @@ export function buildWhereCosmosQuery3(
     query: `
     SELECT ${
       select
-        ? `${select.map((_) => `f.${_}`).join(", ")}`
+        ? `${select.map((_) => (_ as any) === idKey ? "id" : _).map((_) => `f.${_}`).join(", ")}`
         : "f"
     }
     FROM ${name} f
