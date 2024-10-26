@@ -1,5 +1,17 @@
 # @effect-app/vue
 
+## 2.2.0
+
+### Minor Changes
+
+- d5623a6: update packages
+
+### Patch Changes
+
+- Updated dependencies [d5623a6]
+  - effect-app@2.4.0
+  - @effect-app/vue@2.2.0
+
 ## 2.1.0
 
 ### Minor Changes

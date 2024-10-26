@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 2.10.0
+
+### Minor Changes
+
+- d5623a6: update packages
+- 1720c6c: replace Secret with Redacted
+
+### Patch Changes
+
+- Updated dependencies [d5623a6]
+  - effect-app@2.4.0
+
 ## 2.9.5
 
 ### Patch Changes

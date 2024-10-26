@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.4.0
+
+### Minor Changes
+
+- d5623a6: update packages
+
 ## 2.3.0
 
 ### Minor Changes
