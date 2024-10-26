@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.9.5
+
+### Patch Changes
+
+- f230cd4: doc: add documentation to makeRepo
+
 ## 2.9.4
 
 ### Patch Changes
