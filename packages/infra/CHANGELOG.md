@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.12.1
+
+### Patch Changes
+
+- 90aa31c: fix: typo
+
 ## 2.12.0
 
 ### Minor Changes
