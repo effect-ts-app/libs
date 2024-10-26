@@ -14,13 +14,13 @@ export interface Mapped2<A, R> {
   all: Effect<A[], ParseResult.ParseError, R>
 }
 
-export interface Mapped<Encoded extends { id: string }> {
+export interface Mapped<Encoded> {
   <A, R, IdKey extends keyof A>(schema: S.Schema<A, Encoded, R>): Mapped1<A, IdKey, R>
   // TODO: constrain on Encoded2 having to contain only fields that fit Encoded
   <A, Encoded2, R>(schema: S.Schema<A, Encoded2, R>): Mapped2<A, R>
 }
 
-export interface MM<Repo, Encoded extends { id: string }> {
+export interface MM<Repo, Encoded> {
   <A, R, IdKey extends keyof A>(schema: S.Schema<A, Encoded, R>): Effect<Mapped1<A, IdKey, R>, never, Repo>
   // TODO: constrain on Encoded2 having to contain only fields that fit Encoded
   <A, Encoded2, R>(schema: S.Schema<A, Encoded2, R>): Effect<Mapped2<A, R>, never, Repo>

@@ -7,6 +7,7 @@ import { dropUndefinedT } from "effect-app/utils"
 import { CosmosClient, CosmosClientLayer } from "../adapters/cosmos-client.js"
 import { OptimisticConcurrencyException } from "../errors.js"
 import { InfraLogger } from "../logger.js"
+import type { FieldValues } from "../Model/filter/types.js"
 import { buildWhereCosmosQuery3, logQuery } from "./Cosmos/query.js"
 import { StoreMaker } from "./service.js"
 import type { FilterArgs, PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
@@ -19,8 +20,9 @@ function makeCosmosStore({ prefix }: StorageConfig) {
   return Effect.gen(function*() {
     const { db } = yield* CosmosClient
     return {
-      make: <Id extends string, Encoded extends Record<string, any> & { id: Id }, R = never, E = never>(
+      make: <IdKey extends keyof Encoded, Encoded extends FieldValues, R = never, E = never>(
         name: string,
+        idKey: IdKey,
         seed?: Effect<Iterable<Encoded>, E, R>,
         config?: StoreConfig<Encoded>
       ) =>
@@ -64,7 +66,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         onSome: (eTag) =>
                           dropUndefinedT({
                             operationType: "Replace" as const,
-                            id: x.id,
+                            id: x[idKey],
                             resourceBody: {
                               ...Struct.omit(x, "_etag"),
                               _partitionKey: config?.partitionValue(x)
@@ -141,7 +143,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         }),
                         onSome: (eTag) => ({
                           operationType: "Replace" as const,
-                          id: x.id,
+                          id: x[idKey],
                           resourceBody: {
                             ...Struct.omit(x, "_etag"),
                             _partitionKey: config?.partitionValue(x)
@@ -187,7 +189,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 }))
           }
 
-          const s: Store<Encoded, Id> = {
+          const s: Store<IdKey, Encoded> = {
             all: Effect
               .sync(() => ({
                 query: `SELECT * FROM ${name} f WHERE f.id != @id`,
@@ -294,7 +296,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       ),
                     onSome: (eTag) =>
                       Effect.promise(() =>
-                        container.item(e.id, config?.partitionValue(e)).replace(
+                        container.item(e[idKey], config?.partitionValue(e)).replace(
                           { ...e, _partitionKey: config?.partitionValue(e) },
                           {
                             accessCondition: {
@@ -310,7 +312,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   Effect
                     .flatMap((x) => {
                       if (x.statusCode === 412 || x.statusCode === 404) {
-                        return new OptimisticConcurrencyException({ type: name, id: e.id })
+                        return new OptimisticConcurrencyException({ type: name, id: e[idKey] })
                       }
                       if (x.statusCode > 299 || x.statusCode < 200) {
                         return Effect.die(
@@ -327,18 +329,22 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   Effect
                     .withSpan("Cosmos.set [effect-app/infra/Store]", {
                       captureStackTrace: false,
-                      attributes: { "repository.container_id": containerId, "repository.model_name": name, id: e.id }
+                      attributes: {
+                        "repository.container_id": containerId,
+                        "repository.model_name": name,
+                        id: e[idKey]
+                      }
                     })
                 ),
             batchSet,
             bulkSet,
             remove: (e: Encoded) =>
               Effect
-                .promise(() => container.item(e.id, config?.partitionValue(e)).delete())
+                .promise(() => container.item(e[idKey], config?.partitionValue(e)).delete())
                 .pipe(Effect
                   .withSpan("Cosmos.remove [effect-app/infra/Store]", {
                     captureStackTrace: false,
-                    attributes: { "repository.container_id": containerId, "repository.model_name": name, id: e.id }
+                    attributes: { "repository.container_id": containerId, "repository.model_name": name, id: e[idKey] }
                   }))
           }
 
