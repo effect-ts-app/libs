@@ -7,12 +7,28 @@ import type { FilterResult } from "../Model/filter/filterApi.js"
 import type { FieldValues } from "../Model/filter/types.js"
 import type { FieldPath } from "../Model/filter/types/path/index.js"
 
-export type StoreConfig<E> = {
-  uniqueKeys?: UniqueKey[]
-  maxBulkSize?: number
+export interface StoreConfig<E> {
   partitionValue: (e: E) => string | undefined
+  /**
+   * Primarily used for testing, creating namespaces in the database to separate data e.g to run multiple tests in isolation within the same database
+   * currently only supported in disk/memory. CosmosDB is TODO.
+   */
   allowNamespace?: (namespace: string) => boolean
+  /**
+   * just in time migrations, supported by the database driver, supporting queries, for simple default values
+   */
   defaultValues?: Partial<E>
+
+  /**
+   * How many items can be processed in one batch at a time.
+   * Defaults to 100 for CosmosDB.
+   */
+  maxBulkSize?: number
+
+  /**
+   * Unique indexes, mainly for CosmosDB
+   */
+  uniqueKeys?: UniqueKey[]
 }
 
 export type SupportedValues = string | boolean | number | null
