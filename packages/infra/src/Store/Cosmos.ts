@@ -12,6 +12,15 @@ import { buildWhereCosmosQuery3, logQuery } from "./Cosmos/query.js"
 import { StoreMaker } from "./service.js"
 import type { FilterArgs, PersistenceModelType, StorageConfig, Store, StoreConfig } from "./service.js"
 
+const makeMapId =
+  <IdKey extends keyof Encoded, Encoded extends FieldValues>(idKey: IdKey) => ({ [idKey]: id, ...e }: Encoded) => ({
+    ...e,
+    id
+  })
+const makeReverseMapId =
+  <IdKey extends keyof Encoded, Encoded extends FieldValues, Type extends FieldValues & { id: string }>(idKey: IdKey) =>
+  ({ id, ...t }: Type) => ({ ...t, [idKey]: id }) as Encoded
+
 class CosmosDbOperationError {
   constructor(readonly message: string) {}
 } // TODO: Retry operation when running into RU limit.
@@ -27,7 +36,10 @@ function makeCosmosStore({ prefix }: StorageConfig) {
         config?: StoreConfig<Encoded>
       ) =>
         Effect.gen(function*() {
+          const mapId = makeMapId<IdKey, Encoded>(idKey)
+          const mapReverseId = makeReverseMapId<IdKey, Encoded, Omit<Encoded, IdKey> & { id: string }>(idKey)
           type PM = PersistenceModelType<Encoded>
+          type PMCosmos = PersistenceModelType<Omit<Encoded, IdKey> & { id: string }>
           const containerId = `${prefix}${name}`
           yield* Effect.promise(() =>
             db.containers.createIfNotExists(dropUndefinedT({
@@ -49,34 +61,37 @@ function makeCosmosStore({ prefix }: StorageConfig) {
               .gen(function*() {
                 // TODO: disable batching if need atomicity
                 // we delay and batch to keep low amount of RUs
-                const b = [...items].map(
-                  (x) =>
-                    [
-                      x,
-                      Option.match(Option.fromNullable(x._etag), {
-                        onNone: () =>
-                          dropUndefinedT({
-                            operationType: "Create" as const,
-                            resourceBody: {
-                              ...Struct.omit(x, "_etag"),
-                              _partitionKey: config?.partitionValue(x)
-                            },
-                            partitionKey: config?.partitionValue(x)
-                          }),
-                        onSome: (eTag) =>
-                          dropUndefinedT({
-                            operationType: "Replace" as const,
-                            id: x[idKey],
-                            resourceBody: {
-                              ...Struct.omit(x, "_etag"),
-                              _partitionKey: config?.partitionValue(x)
-                            },
-                            ifMatch: eTag,
-                            partitionKey: config?.partitionValue(x)
-                          })
-                      })
-                    ] as const
-                )
+                const b = [...items]
+                  .map(
+                    (x) =>
+                      [
+                        x,
+                        Option.match(Option.fromNullable(x._etag), {
+                          onNone: () =>
+                            dropUndefinedT({
+                              operationType: "Create" as const,
+                              resourceBody: {
+                                ...Struct.omit(x, "_etag", idKey),
+                                id: x[idKey],
+                                _partitionKey: config?.partitionValue(x)
+                              },
+                              partitionKey: config?.partitionValue(x)
+                            }),
+                          onSome: (eTag) =>
+                            dropUndefinedT({
+                              operationType: "Replace" as const,
+                              id: x[idKey],
+                              resourceBody: {
+                                ...Struct.omit(x, "_etag", idKey),
+                                id: x[idKey],
+                                _partitionKey: config?.partitionValue(x)
+                              },
+                              ifMatch: eTag,
+                              partitionKey: config?.partitionValue(x)
+                            })
+                        })
+                      ] as const
+                  )
                 const batches = Chunk.toReadonlyArray(Array.chunk_(b, config?.maxBulkSize ?? 10))
 
                 const batchResult = yield* Effect.forEach(
@@ -109,8 +124,9 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                                   )
                                 )
                               }
-                              return batch.map(([e], i) => ({
+                              return batch.map(([{ id, ...e }], i) => ({
                                 ...e,
+                                [idKey]: id,
                                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                                 _etag: responses[i]!.eTag
                               }))
@@ -137,7 +153,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         onNone: () => ({
                           operationType: "Create" as const,
                           resourceBody: {
-                            ...Struct.omit(x, "_etag"),
+                            ...Struct.omit(x, "_etag", idKey),
+                            id: x[idKey],
                             _partitionKey: config?.partitionValue(x)
                           }
                         }),
@@ -145,7 +162,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                           operationType: "Replace" as const,
                           id: x[idKey],
                           resourceBody: {
-                            ...Struct.omit(x, "_etag"),
+                            ...Struct.omit(x, "_etag", idKey),
+                            id: x[idKey],
                             _partitionKey: config?.partitionValue(x)
                           },
                           ifMatch: eTag
@@ -175,8 +193,9 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         )
                       }
 
-                      return batch.map(([e], i) => ({
+                      return batch.map(([{ id, ...e }], i) => ({
                         ...e,
+                        [idKey]: id,
                         _etag: result[i]?.eTag
                       })) as unknown as NonEmptyReadonlyArray<Encoded>
                     })
@@ -201,9 +220,13 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                   Effect.promise(() =>
                     container
                       .items
-                      .query<PM>(q)
+                      .query<PMCosmos>(q)
                       .fetchAll()
-                      .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._ })))
+                      .then(({ resources }) =>
+                        resources.map(
+                          (_) => ({ ...defaultValues, ...mapReverseId(_) }) as PersistenceModelType<Encoded>
+                        )
+                      )
                   )
                 ),
                 Effect
@@ -229,7 +252,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     name,
                     importedMarkerId,
                     defaultValues,
-                    f.select as NonEmptyReadonlyArray<string> | undefined,
+                    f.select!.map((_) => (_ as any) === idKey ? "id" : _) as NonEmptyReadonlyArray<string> | undefined,
                     f.order as NonEmptyReadonlyArray<{ key: string; direction: "ASC" | "DESC" }> | undefined,
                     skip,
                     limit
@@ -246,13 +269,20 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                             .query<M>(q)
                             .fetchAll()
                             .then(({ resources }) =>
-                              resources.map((_) => ({ ...pipe(defaultValues, Struct.pick(...f.select!)), ..._ }))
+                              resources.map((_) =>
+                                ({
+                                  ...pipe(defaultValues, Struct.pick(...f.select!)),
+                                  ...mapReverseId(_ as any)
+                                }) as any
+                              )
                             )
                           : container
                             .items
                             .query<{ f: M }>(q)
                             .fetchAll()
-                            .then(({ resources }) => resources.map((_) => ({ ...defaultValues, ..._.f })))
+                            .then(({ resources }) =>
+                              resources.map(({ f }) => ({ ...defaultValues, ...mapReverseId(f as any) }) as any)
+                            )
                       )
                     )
                 )
@@ -268,7 +298,7 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     .item(id, config?.partitionValue({ [idKey]: id } as Encoded))
                     .read<Encoded>()
                     .then(({ resource }) =>
-                      Option.fromNullable(resource).pipe(Option.map((_) => ({ ...defaultValues, ..._ })))
+                      Option.fromNullable(resource).pipe(Option.map((_) => ({ ...defaultValues, ...mapReverseId(_) })))
                     )
                 )
                 .pipe(Effect
@@ -290,14 +320,14 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                     onNone: () =>
                       Effect.promise(() =>
                         container.items.create({
-                          ...e,
+                          ...mapId(e),
                           _partitionKey: config?.partitionValue(e)
                         })
                       ),
                     onSome: (eTag) =>
                       Effect.promise(() =>
                         container.item(e[idKey], config?.partitionValue(e)).replace(
-                          { ...e, _partitionKey: config?.partitionValue(e) },
+                          { ...mapId(e), _partitionKey: config?.partitionValue(e) },
                           {
                             accessCondition: {
                               type: "IfMatch",
