@@ -50,6 +50,7 @@ export function buildWhereCosmosQuery3(
       ? `${x.path.split(".-1.")[0]}.${x.path.split(".-1.")[1]!}`
       : `f.${x.path}`
 
+    // would have to map id, but shouldnt allow id in defaultValues anyway..
     k = x.path in defaultValues ? `(${k} ?? ${JSON.stringify(defaultValues[x.path])})` : k
 
     const v = "@v" + i
