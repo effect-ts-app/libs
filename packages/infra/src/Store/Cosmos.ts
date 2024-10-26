@@ -193,9 +193,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         )
                       }
 
-                      return batch.map(([{ id, ...e }], i) => ({
+                      return batch.map(([e], i) => ({
                         ...e,
-                        [idKey]: id,
                         _etag: result[i]?.eTag
                       })) as unknown as NonEmptyReadonlyArray<Encoded>
                     })
