@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.5.2
+
+### Patch Changes
+
+- 19ea035: update packages
+
 ## 2.5.1
 
 ### Patch Changes

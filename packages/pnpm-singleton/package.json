@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/pnpm-singleton",
-  "version": "0.84.0",
+  "version": "0.84.1",
   "license": "MIT",
   "type": "module",
   "scripts": {
