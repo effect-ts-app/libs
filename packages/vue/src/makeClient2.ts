@@ -85,6 +85,9 @@ export const makeClient2 = <Locale extends string, R>(
             Exit.matchEffect({
               onSuccess: (r) =>
                 Effect.gen(function*() {
+                  if (options.suppressSuccessToast) {
+                    return
+                  }
                   toast.success(
                     successMessage
                       + (S.is(OperationSuccess)(r) && r.message
