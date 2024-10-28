@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 2.2.5
+
+### Patch Changes
+
+- f76dbde: suppress to impress
+- Updated dependencies [f76dbde]
+  - @effect-app/vue@2.2.5
+
 ## 2.2.4
 
 ### Patch Changes
