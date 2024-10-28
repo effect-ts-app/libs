@@ -107,11 +107,13 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                         Effect
                           .flatMap((responses) =>
                             Effect.gen(function*() {
-                              const r = responses.find((x) => x.statusCode === 412 || x.statusCode === 404)
+                              const r = responses.find((x) =>
+                                x.statusCode === 412 || x.statusCode === 404 || x.statusCode === 409
+                              )
                               if (r) {
                                 return yield* Effect.fail(
                                   new OptimisticConcurrencyException(
-                                    { type: name, id: JSON.stringify(r.resourceBody?.["id"]) }
+                                    { type: name, id: JSON.stringify(r.resourceBody?.["id"]), code: r.statusCode }
                                   )
                                 )
                               }
@@ -184,8 +186,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                       )
                       if (firstFailed) {
                         const code = firstFailed.statusCode ?? 0
-                        if (code === 412 || code === 404) {
-                          return yield* new OptimisticConcurrencyException({ type: name, id: "batch" })
+                        if (code === 412 || code === 404 || code === 409) {
+                          return yield* new OptimisticConcurrencyException({ type: name, id: "batch", code })
                         }
 
                         return yield* Effect.die(
@@ -341,8 +343,8 @@ function makeCosmosStore({ prefix }: StorageConfig) {
                 .pipe(
                   Effect
                     .flatMap((x) => {
-                      if (x.statusCode === 412 || x.statusCode === 404) {
-                        return new OptimisticConcurrencyException({ type: name, id: e[idKey] })
+                      if (x.statusCode === 412 || x.statusCode === 404 || x.statusCode === 409) {
+                        return new OptimisticConcurrencyException({ type: name, id: e[idKey], code: x.statusCode })
                       }
                       if (x.statusCode > 299 || x.statusCode < 200) {
                         return Effect.die(

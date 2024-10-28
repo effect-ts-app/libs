@@ -86,6 +86,7 @@ export class UnauthorizedError extends TaggedError<UnauthorizedError>()("Unautho
 type OptimisticConcurrencyDetails = {
   readonly type: string
   readonly id: string
+  readonly code: number
   readonly current?: string | undefined
   readonly found?: string | undefined
 }
