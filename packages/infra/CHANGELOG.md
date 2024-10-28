@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 2.13.0
+
+### Minor Changes
+
+- e95cab7: improve: also treat cosmos 409 error as OptimisticConcurrencyException
+
+### Patch Changes
+
+- Updated dependencies [e95cab7]
+  - effect-app@2.5.0
+
 ## 2.12.1
 
 ### Patch Changes

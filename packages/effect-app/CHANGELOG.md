@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.5.0
+
+### Minor Changes
+
+- e95cab7: improve: also treat cosmos 409 error as OptimisticConcurrencyException
+
 ## 2.4.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 2.2.1
+
+### Patch Changes
+
+- Updated dependencies [e95cab7]
+  - effect-app@2.5.0
+  - @effect-app/vue@2.2.1
+
 ## 2.2.0
 
 ### Minor Changes
