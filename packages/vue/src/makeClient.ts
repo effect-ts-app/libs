@@ -165,6 +165,9 @@ export const makeClient = <Locale extends string, R>(
           p.then(
             (r) => {
               if (r._tag === "Right") {
+                if (options.suppressSuccessToast) {
+                  return
+                }
                 return Promise
                   .resolve(
                     toast.success(
