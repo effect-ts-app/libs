@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 2.2.4
+
+### Patch Changes
+
+- 903eb96: fix: suppressSuccessToast
+- Updated dependencies [903eb96]
+  - @effect-app/vue@2.2.4
+
 ## 2.2.3
 
 ### Patch Changes
