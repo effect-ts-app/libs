@@ -19,7 +19,8 @@ export const makeUpdateETag =
       if (e._etag) {
         yield* Effect.mapError(
           current,
-          () => new OptimisticConcurrencyException({ type, id: e[idKey] as string, current: "", found: e._etag })
+          () =>
+            new OptimisticConcurrencyException({ type, id: e[idKey] as string, current: "", found: e._etag, code: 409 })
         )
       }
       if (Option.isSome(current) && current.value._etag !== e._etag) {
@@ -27,7 +28,8 @@ export const makeUpdateETag =
           type,
           id: current.value[idKey] as string,
           current: current.value._etag,
-          found: e._etag
+          found: e._etag,
+          code: 412
         })
       }
       const newE = makeETag(e)
