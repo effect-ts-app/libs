@@ -1,5 +1,13 @@
 # @effect-app/infra
 
+## 2.13.1
+
+### Patch Changes
+
+- 724a1a8: error bs
+- Updated dependencies [724a1a8]
+  - effect-app@2.5.1
+
 ## 2.13.0
 
 ### Minor Changes

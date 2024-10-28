@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.5.1
+
+### Patch Changes
+
+- 724a1a8: error bs
+
 ## 2.5.0
 
 ### Minor Changes

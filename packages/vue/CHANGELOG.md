@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 2.2.2
+
+### Patch Changes
+
+- 724a1a8: error bs
+- Updated dependencies [724a1a8]
+  - effect-app@2.5.1
+  - @effect-app/vue@2.2.2
+
 ## 2.2.1
 
 ### Patch Changes
