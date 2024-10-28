@@ -2,7 +2,7 @@ import * as Sentry from "@sentry/node"
 import { Cause, Effect } from "effect-app"
 import { dropUndefined } from "effect-app/utils"
 import { getRC } from "./api/setupRequest.js"
-import { CauseException, ErrorReported, tryToJson } from "./errors.js"
+import { CauseException, ErrorReported, tryToJson, tryToReport } from "./errors.js"
 import { InfraLogger } from "./logger.js"
 
 export function reportError(
@@ -22,7 +22,8 @@ export function reportError(
         .pipe(
           Effect.annotateLogs(dropUndefined({
             extras,
-            cause: tryToJson(error),
+            error: tryToReport(error),
+            cause: tryToJson(cause),
             __error_name__: name
           })),
           Effect.catchAllCause((cause) => InfraLogger.logError("Failed to log error", cause)),
@@ -42,7 +43,7 @@ function reportSentry(
     const scope = new Sentry.Scope()
     if (context) scope.setContext("context", context as unknown as Record<string, unknown>)
     if (extras) scope.setContext("extras", extras)
-    scope.setContext("error", tryToJson(error) as any)
+    scope.setContext("error", tryToReport(error) as any)
     scope.setContext("cause", tryToJson(error.originalCause) as any)
     Sentry.captureException(error, scope)
   }))

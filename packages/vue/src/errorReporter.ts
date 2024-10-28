@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import * as Sentry from "@sentry/browser"
 import { Cause, Effect } from "effect-app"
-import { CauseException, ErrorReported, tryToJson } from "effect-app/client/errors"
+import { CauseException, ErrorReported, tryToJson, tryToReport } from "effect-app/client/errors"
 import { dropUndefined } from "effect-app/utils"
 
 export function reportError(
@@ -21,6 +21,7 @@ export function reportError(
         .logError("Reporting error", cause)
         .pipe(Effect.annotateLogs(dropUndefined({
           extras,
+          error: tryToReport(error),
           cause: tryToJson(cause),
           __error_name__: name
         })))
@@ -37,7 +38,7 @@ function reportSentry(
   return Effect.sync(() => {
     const scope = new Sentry.Scope()
     if (extras) scope.setContext("extras", extras)
-    scope.setContext("error", tryToJson(error) as any)
+    scope.setContext("error", tryToReport(error) as any)
     scope.setContext("cause", tryToJson(error.originalCause) as any)
     Sentry.captureException(error, scope)
   })

@@ -162,11 +162,20 @@ export class CauseException<E> extends Error {
       this.stack = ff.stack
     }
   }
-  toJSON() {
+  toReport() {
     return {
       _tag: this._tag,
       name: this.name,
       message: this.message
+    }
+  }
+
+  toJSON() {
+    return {
+      _tag: this._tag,
+      name: this.name,
+      message: this.message,
+      originalCause: this.originalCause
     }
   }
 
@@ -178,4 +187,20 @@ export class CauseException<E> extends Error {
   }
 
   [ErrorReported] = false
+}
+
+export const tryToReport = (error: { toReport(): unknown; toString(): string }) => {
+  try {
+    return error.toReport()
+  } catch {
+    try {
+      return error.toString()
+    } catch (err) {
+      try {
+        return `Failed to convert error: ${err}`
+      } catch {
+        return `Failed to convert error: unknown failure`
+      }
+    }
+  }
 }
