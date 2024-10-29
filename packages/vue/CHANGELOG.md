@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 2.2.6
+
+### Patch Changes
+
+- c0635d2: restore onSuccess but marked as deprecated
+- Updated dependencies [c0635d2]
+  - @effect-app/vue@2.2.6
+
 ## 2.2.5
 
 ### Patch Changes
