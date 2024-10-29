@@ -319,10 +319,7 @@ export const makeClient = <Locale extends string, R>(
             ),
         name: self.name
       },
-      dropUndefinedT({
-        queryInvalidation: options?.queryInvalidation,
-        onSuccess: options?.onSuccess
-      })
+      options ? dropUndefinedT(options) : undefined
     )
 
     return tuple(

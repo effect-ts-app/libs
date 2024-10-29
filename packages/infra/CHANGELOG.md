@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 2.14.0
+
+### Minor Changes
+
+- d4ab73f: update packages
+
+### Patch Changes
+
+- Updated dependencies [d4ab73f]
+  - effect-app@2.6.0
+
 ## 2.13.2
 
 ### Patch Changes

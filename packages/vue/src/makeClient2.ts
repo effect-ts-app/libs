@@ -233,9 +233,7 @@ export const makeClient2 = <Locale extends string, R>(
               Effect.andThen(self.handler(...args))
             )
       },
-      dropUndefinedT({
-        queryInvalidation: options?.queryInvalidation
-      })
+      options ? dropUndefinedT(options) : undefined
     )
 
     return tuple(
