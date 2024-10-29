@@ -60,11 +60,13 @@ type MaybeRefDeep<T> = MaybeRef<
     : T
 >
 
-export interface MutationOptions {
+export interface MutationOptions<A, I = void> {
   queryInvalidation?: (defaultKey: string[], name: string) => {
     filters?: MaybeRefDeep<InvalidateQueryFilters> | undefined
     options?: MaybeRefDeep<InvalidateOptions> | undefined
   }[]
+  /** @deprecated use mapHandler with Effect.andThen/tap accordingly */
+  onSuccess?: (a: A, i: I) => Promise<unknown>
 }
 
 // TODO: more efficient invalidation, including args etc
@@ -86,21 +88,21 @@ export const makeMutation2 = () => {
   const useSafeMutation: {
     <I, E, A, R, Request extends TaggedRequestClassAny>(
       self: RequestHandlerWithInput<I, A, E, R, Request>,
-      options?: MutationOptions
+      options?: MutationOptions<A, I>
     ): readonly [
       Readonly<Ref<MutationResult<A, E>>>,
       (i: I) => Effect<A, E, R>
     ]
     <E, A, R, Request extends TaggedRequestClassAny>(
       self: RequestHandler<A, E, R, Request>,
-      options?: MutationOptions
+      options?: MutationOptions<A>
     ): readonly [
       Readonly<Ref<MutationResult<A, E>>>,
       () => Effect<A, E, R> // TODO: remove () =>
     ]
   } = <I, E, A, R, Request extends TaggedRequestClassAny>(
     self: RequestHandlerWithInput<I, A, E, R, Request> | RequestHandler<A, E, R, Request>,
-    options?: MutationOptions
+    options?: MutationOptions<A, I>
   ) => {
     const queryClient = useQueryClient()
     const state: Ref<MutationResult<A, E>> = ref<MutationResult<A, E>>({ _tag: "Initial" }) as any
@@ -151,6 +153,8 @@ export const makeMutation2 = () => {
         .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
     })
 
+    const onSuccess = options?.onSuccess
+
     const exec = (fst?: I) => {
       let effect: Effect<A, E, R>
       if (Effect.isEffect(self.handler)) {
@@ -166,6 +170,7 @@ export const makeMutation2 = () => {
         .pipe(
           Effect.zipRight(effect),
           Effect.tap(invalidateCache),
+          Effect.tap((a) => onSuccess ? Effect.promise(() => onSuccess(a, fst as I)) : Effect.void),
           Effect.tapDefect(reportRuntimeError),
           Effect.onExit(handleExit),
           Effect.withSpan(`mutation ${self.name}`, { captureStackTrace: false })

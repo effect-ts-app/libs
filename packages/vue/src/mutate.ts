@@ -66,6 +66,7 @@ export interface MutationOptions<A, I = void> {
     filters?: MaybeRefDeep<InvalidateQueryFilters> | undefined
     options?: MaybeRefDeep<InvalidateOptions> | undefined
   }[]
+  /** @deprecated use mapHandler with Effect.andThen/tap accordingly */
   onSuccess?: (a: A, i: I) => Promise<unknown>
 }
 
@@ -205,8 +206,10 @@ export const makeMutation = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefin
                     .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
                 })
             ),
+            Effect.tap((a) =>
+              onSuccess ? Effect.promise(() => onSuccess(a, (fst !== signal ? fst : undefined) as any)) : Effect.void
+            ),
             Effect.tapDefect(reportRuntimeError),
-            Effect.tap((i) => onSuccess ? Effect.promise(() => onSuccess(i)) : Effect.void),
             Effect.exit,
             Effect.flatMap(handleExit),
             Effect.withSpan(`mutation ${self.name}`, { captureStackTrace: false })
