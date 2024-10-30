@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as Result from "@effect-rx/rx/Result"
 import type {
+  InitialDataFunction,
   QueryKey,
   QueryObserverOptions,
   QueryObserverResult,
@@ -152,7 +153,26 @@ export const makeQuery2 = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined
 
   function useSafeQuery<E, A, Request extends TaggedRequestClassAny>(
     self: RequestHandler<A, E, R, Request>,
-    options?: QueryObserverOptionsCustom // TODO
+    options?: QueryObserverOptionsCustom<A, E> & { initialData: A | InitialDataFunction<A> }
+  ): readonly [
+    ComputedRef<Result.Result<A, E>>,
+    ComputedRef<A>,
+    (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
+    UseQueryReturnType<any, any>
+  ]
+  function useSafeQuery<Arg, E, A, Request extends TaggedRequestClassAny>(
+    self: RequestHandlerWithInput<Arg, A, E, R, Request>,
+    arg: Arg | WatchSource<Arg>,
+    options?: QueryObserverOptionsCustom<A, E> & { initialData: A | InitialDataFunction<A> }
+  ): readonly [
+    ComputedRef<Result.Result<A, E>>,
+    ComputedRef<A>,
+    (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
+    UseQueryReturnType<any, any>
+  ]
+  function useSafeQuery<E, A, Request extends TaggedRequestClassAny>(
+    self: RequestHandler<A, E, R, Request>,
+    options?: QueryObserverOptionsCustom<A, E>
   ): readonly [
     ComputedRef<Result.Result<A, E>>,
     ComputedRef<A | undefined>,
@@ -162,7 +182,7 @@ export const makeQuery2 = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined
   function useSafeQuery<Arg, E, A, Request extends TaggedRequestClassAny>(
     self: RequestHandlerWithInput<Arg, A, E, R, Request>,
     arg: Arg | WatchSource<Arg>,
-    options?: QueryObserverOptionsCustom // TODO
+    options?: QueryObserverOptionsCustom<A, E>
   ): readonly [
     ComputedRef<Result.Result<A, E>>,
     ComputedRef<A | undefined>,

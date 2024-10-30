@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as Result from "@effect-rx/rx/Result"
 import type {
+  InitialDataFunction,
   QueryKey,
   QueryObserverOptions,
   QueryObserverResult,
@@ -162,7 +163,32 @@ export const makeQuery = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>
       handler: Effect<A, E, R>
       name: string
     },
-    options?: QueryObserverOptionsCustom // TODO
+    options: QueryObserverOptionsCustom<A, E> & { initialData: A | InitialDataFunction<A> }
+  ): readonly [
+    ComputedRef<Result.Result<A, E>>,
+    ComputedRef<A>,
+    (options?: RefetchOptions) => Promise<QueryObserverResult<any, any>>,
+    UseQueryReturnType<any, any>
+  ]
+  function useSafeQuery<Arg, E, A>(
+    self: {
+      handler: (arg: Arg) => Effect<A, E, R>
+      name: string
+    },
+    arg: Arg | WatchSource<Arg>,
+    options: QueryObserverOptionsCustom<A, E>
+  ): readonly [
+    ComputedRef<Result.Result<A, E>>,
+    ComputedRef<A>,
+    (options?: RefetchOptions) => Promise<QueryObserverResult<any, any>>,
+    UseQueryReturnType<any, any>
+  ]
+  function useSafeQuery<E, A>(
+    self: {
+      handler: Effect<A, E, R>
+      name: string
+    },
+    options?: QueryObserverOptionsCustom<A, E>
   ): readonly [
     ComputedRef<Result.Result<A, E>>,
     ComputedRef<A | undefined>,
@@ -175,7 +201,7 @@ export const makeQuery = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>
       name: string
     },
     arg: Arg | WatchSource<Arg>,
-    options?: QueryObserverOptionsCustom // TODO
+    options?: QueryObserverOptionsCustom<A, E>
   ): readonly [
     ComputedRef<Result.Result<A, E>>,
     ComputedRef<A | undefined>,
