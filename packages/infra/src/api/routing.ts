@@ -8,24 +8,10 @@ TODO: uninteruptible commands! was for All except GET.
 import type * as HttpApp from "@effect/platform/HttpApp"
 import { Rpc, RpcRouter } from "@effect/rpc"
 import type { NonEmptyArray } from "effect-app"
-import {
-  Cause,
-  Chunk,
-  Context,
-  Effect,
-  FiberRef,
-  flow,
-  Layer,
-  Predicate,
-  S,
-  Schema,
-  Scope,
-  Stream,
-  Tracer
-} from "effect-app"
+import { Cause, Chunk, Context, Effect, FiberRef, flow, Layer, Predicate, S, Schema, Stream } from "effect-app"
 import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
-import { HttpMiddleware, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
+import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { pretty, typedKeysOf, typedValuesOf } from "effect-app/utils"
 import { logError, reportError } from "../errorReporter.js"
 import { InfraLogger } from "../logger.js"
@@ -326,8 +312,7 @@ export const makeRouter = <
           | RPCRouteR<
             { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
           >,
-          | ProvidedLayers
-          | HttpRouter.HttpRouter.Provided
+          HttpRouter.HttpRouter.Provided
         >
       > = (class Router extends HttpRouter.Tag(`${meta.moduleName}Router`)<Router>() {}) as any
 
@@ -431,15 +416,10 @@ export const makeRouter = <
               .meta
               .moduleName + "."
           })
-          const services = (yield* Effect.context<never>()).pipe(
-            Context.omit(Scope.Scope as never),
-            Context.omit(Tracer.ParentSpan as never)
-          )
           yield* router
             .all(
               "/",
-              (httpApp
-                .pipe(HttpMiddleware.make(Effect.provide(services)))) as any,
+              httpApp as any,
               // TODO: not queries.
               { uninterruptible: true }
             )
@@ -450,6 +430,7 @@ export const makeRouter = <
       const routes = layer.pipe(
         Layer.provideMerge(r.Live),
         layers ? Layer.provide(layers) as any : (_) => _,
+        // TODO: only provide to the middleware?
         middleware.dependencies ? Layer.provide(middleware.dependencies as any) : (_) => _
       ) as Layer.Layer<
         Router,
