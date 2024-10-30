@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 2.3.1
+
+### Patch Changes
+
+- ac2cd3a: improve: support initialData so that the latest value is not a union with undefined
+- Updated dependencies [ac2cd3a]
+  - @effect-app/vue@2.3.1
+
 ## 2.3.0
 
 ### Minor Changes
