@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 2.15.0
+
+### Minor Changes
+
+- 707d135: rename routing / legacy
+- 590e5bf: update packages
+
+### Patch Changes
+
+- Updated dependencies [590e5bf]
+  - effect-app@2.7.0
+
 ## 2.14.0
 
 ### Minor Changes
