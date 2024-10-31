@@ -428,13 +428,20 @@ export type FilteringRefinements<IsCurrentInitial extends boolean = false> = {
   ): (
     current: IsCurrentInitial extends true ? Query<TFieldValues>
       : QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<
-    TFieldValues,
-    // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
-    string extends TFieldValuesRefined[TFieldName] ? TFieldValuesRefined
-      : TFieldValuesRefined[TFieldName] extends string ? Extract<TFieldValuesRefined, { [K in TFieldName]: V }>
-      : TFieldValuesRefined
-  >
+  ) => IsCurrentInitial extends true ? QueryWhere<
+      TFieldValues,
+      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
+      string extends TFieldValues[TFieldName] ? TFieldValues
+        : TFieldValues[TFieldName] extends string ? Extract<TFieldValues, { [K in TFieldName]: V }>
+        : TFieldValues
+    >
+    : QueryWhere<
+      TFieldValues,
+      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
+      string extends TFieldValuesRefined[TFieldName] ? TFieldValuesRefined
+        : TFieldValuesRefined[TFieldName] extends string ? Extract<TFieldValuesRefined, { [K in TFieldName]: V }>
+        : TFieldValuesRefined
+    >
   <
     TFieldValues extends FieldValues,
     const TFieldName extends FieldPath<TFieldValues>,
@@ -447,13 +454,20 @@ export type FilteringRefinements<IsCurrentInitial extends boolean = false> = {
   ): (
     current: IsCurrentInitial extends true ? Query<TFieldValues>
       : QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<
-    TFieldValues,
-    // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
-    string extends TFieldValuesRefined[TFieldName] ? TFieldValuesRefined
-      : TFieldValuesRefined[TFieldName] extends string ? Exclude<TFieldValuesRefined, { [K in TFieldName]: V }>
-      : TFieldValuesRefined
-  >
+  ) => IsCurrentInitial extends true ? QueryWhere<
+      TFieldValues,
+      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
+      string extends TFieldValues[TFieldName] ? TFieldValues
+        : TFieldValues[TFieldName] extends string ? Exclude<TFieldValues, { [K in TFieldName]: V }>
+        : TFieldValues
+    >
+    : QueryWhere<
+      TFieldValues,
+      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
+      string extends TFieldValuesRefined[TFieldName] ? TFieldValuesRefined
+        : TFieldValuesRefined[TFieldName] extends string ? Exclude<TFieldValuesRefined, { [K in TFieldName]: V }>
+        : TFieldValuesRefined
+    >
 }
 
 export type NestedQueriesFixedRefinement = {
