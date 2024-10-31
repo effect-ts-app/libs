@@ -854,8 +854,8 @@ export type NestedQueriesFreeDisjointRefinement = {
 }
 
 export type FilterWhere =
-  & FilteringRefinements<true>
   & NestedQueriesFixedRefinement
+  & FilteringRefinements<true>
   & FilterContinuations<true>
 
 export type FilterContinuationAnd =
