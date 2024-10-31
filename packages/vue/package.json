@@ -17,7 +17,6 @@
     "@effect-rx/rx": "^0.34.2",
     "@effect-rx/rx-vue": "^0.11.2",
     "@sentry/browser": "^8.35.0",
-    "intl-messageformat": "^10.7.3",
     "effect": "^3.10.6",
     "vue": "^3.5.12"
   },
