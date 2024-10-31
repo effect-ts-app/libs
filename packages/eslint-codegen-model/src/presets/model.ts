@@ -47,7 +47,7 @@ export const model: Preset<{
 
       them.push([
         `export namespace ${modelName} {`,
-        `  export interface From extends S.Struct.Encoded<typeof ${modelName}["fields"]> {}`,
+        `  export interface Encoded extends S.Struct.Encoded<typeof ${modelName}["fields"]> {}`,
         "}"
       ])
     }
