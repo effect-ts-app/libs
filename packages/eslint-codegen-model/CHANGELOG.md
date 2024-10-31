@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 1.24.0
+
+### Minor Changes
+
+- 58d373f: switch from `From` to `Encoded`
+
 ## 1.23.0
 
 ### Minor Changes
