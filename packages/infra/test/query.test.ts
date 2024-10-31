@@ -194,32 +194,32 @@ it("collect", () =>
     })
     .pipe(Effect.provide(Layer.mergeAll(SomethingRepo.Test, SomeService.toLayer())), Effect.runPromise))
 
-class Person extends S.ExtendedTaggedClass<Person, Person.From>()("person", {
+class Person extends S.ExtendedTaggedClass<Person, Person.Encoded>()("person", {
   id: S.String,
   surname: S.String
 }) {}
-class Animal extends S.ExtendedTaggedClass<Animal, Animal.From>()("animal", {
+class Animal extends S.ExtendedTaggedClass<Animal, Animal.Encoded>()("animal", {
   id: S.String,
   surname: S.String
 }) {}
-class Test extends S.ExtendedTaggedClass<Test, Test.From>()("test", {
+class Test extends S.ExtendedTaggedClass<Test, Test.Encoded>()("test", {
   id: S.String
 }) {}
 
 namespace Person {
-  export interface From extends S.Struct.Encoded<typeof Person["fields"]> {}
+  export interface Encoded extends S.Struct.Encoded<typeof Person["fields"]> {}
 }
 namespace Animal {
-  export interface From extends S.Struct.Encoded<typeof Animal["fields"]> {}
+  export interface Encoded extends S.Struct.Encoded<typeof Animal["fields"]> {}
 }
 namespace Test {
-  export interface From extends S.Struct.Encoded<typeof Test["fields"]> {}
+  export interface Encoded extends S.Struct.Encoded<typeof Test["fields"]> {}
 }
 
 const TestUnion = S.Union(Person, Animal, Test)
 type TestUnion = typeof TestUnion.Type
 namespace TestUnion {
-  export type From = typeof TestUnion.Encoded
+  export type Encoded = typeof TestUnion.Encoded
 }
 
 it(

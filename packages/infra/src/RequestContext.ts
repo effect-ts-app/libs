@@ -13,7 +13,7 @@ export const LocaleRef = FiberRef.unsafeMake<Locale>("en")
  */
 export class RequestContext extends S.ExtendedClass<
   RequestContext,
-  RequestContext.From
+  RequestContext.Encoded
 >()({
   span: S.Struct({
     traceId: S.String,
@@ -59,7 +59,7 @@ export const spanAttributes = (ctx: Pick<RequestContext, "locale" | "namespace">
 //
 /* eslint-disable */
 export namespace RequestContext {
-  export interface From extends S.Struct.Encoded<typeof RequestContext["fields"]> {}
+  export interface Encoded extends S.Struct.Encoded<typeof RequestContext["fields"]> {}
 }
 /* eslint-enable */
 //
