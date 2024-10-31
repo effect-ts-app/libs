@@ -338,19 +338,6 @@ export type FilterWhere =
     ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Exclude<TFieldValues, { _tag: V }> : TFieldValues>
   }
   & NestedQueriesFixedRefinement
-  & {
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends FieldPathValue<TFieldValues, TFieldName>
-    >(f: {
-      path: TFieldName
-      op: Ops
-      value: V
-    }): (
-      current: Query<TFieldValues>
-    ) => QueryWhere<TFieldValues>
-  }
   & FilterContinuations<true>
 
 export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
