@@ -427,6 +427,19 @@ export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
     current: IsCurrentInitial extends true ? Query<TFieldValues>
       : QueryWhere<TFieldValues, TFieldValuesRefined>
   ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  <
+    TFieldValues extends FieldValues,
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>,
+    TFieldValuesRefined extends TFieldValues = TFieldValues
+  >(f: {
+    path: TFieldName
+    op: Ops
+    value: V
+  }): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues>
+      : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
 }
 
 export type NestedQueriesFixedRefinement = {
@@ -838,14 +851,21 @@ export type FilterContinuationAnd =
   & {
     <
       TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      const V extends FieldPathValue<TFieldValues, TFieldName>
+      const TFieldName extends FieldPath<TFieldValues>,
+      const V extends FieldPathValue<TFieldValues, TFieldName>,
+      TFieldValuesRefined extends TFieldValues = TFieldValues
     >(
       path: TFieldName,
       value: V
     ): (
-      current: QueryWhere<TFieldValues>
-    ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Extract<TFieldValues, { _tag: V }> : TFieldValues>
+      current: QueryWhere<TFieldValues, TFieldValuesRefined>
+    ) => QueryWhere<
+      TFieldValues,
+      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
+      string extends TFieldValuesRefined[TFieldName] ? TFieldValuesRefined
+        : TFieldValuesRefined[TFieldName] extends string ? Extract<TFieldValuesRefined, { [K in TFieldName]: V }>
+        : TFieldValuesRefined
+    >
     <
       TFieldValues extends FieldValues,
       TFieldName extends FieldPath<TFieldValues>,
@@ -857,51 +877,9 @@ export type FilterContinuationAnd =
     ): (
       current: QueryWhere<TFieldValues>
     ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Exclude<TFieldValues, { _tag: V }> : TFieldValues>
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      const V extends FieldPathValue<TFieldValues, TFieldName>,
-      TFieldValuesRefined extends TFieldValues = TFieldValues
-    >(
-      path: TFieldName,
-      value: V
-    ): (
-      current: QueryWhere<TFieldValues, TFieldValuesRefined>
-    ) => QueryWhere<
-      TFieldValues,
-      TFieldName extends "_tag" ? Extract<TFieldValuesRefined, { _tag: V }> : TFieldValuesRefined
-    >
-  }
-  & {
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends FieldPathValue<TFieldValues, TFieldName>,
-      TFieldValuesRefined extends TFieldValues = TFieldValues
-    >(f: {
-      path: TFieldName
-      op: Ops
-      value: V
-    }): (
-      current: QueryWhere<TFieldValues, TFieldValuesRefined>
-    ) => QueryWhere<TFieldValues, TFieldValuesRefined>
   }
   & FilterContinuations
 
 export type FilterContinuationOr =
   & NestedQueriesFreeDisjointRefinement
-  & {
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends FieldPathValue<TFieldValues, TFieldName>,
-      TFieldValuesRefined extends TFieldValues = TFieldValues
-    >(f: {
-      path: TFieldName
-      op: Ops
-      value: V
-    }): (
-      current: QueryWhere<TFieldValues, TFieldValuesRefined>
-    ) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  }
   & FilterContinuations
