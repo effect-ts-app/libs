@@ -1,5 +1,11 @@
 # @effect-app/vue
 
+## 2.4.3
+
+### Patch Changes
+
+- 4026520: fix
+
 ## 2.4.2
 
 ### Patch Changes
