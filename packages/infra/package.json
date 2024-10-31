@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/infra",
-  "version": "2.14.0",
+  "version": "2.15.0",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -21,7 +21,7 @@
     "@babel/cli": "^7.25.9",
     "@sentry/node": "^8.35.0",
     "@types/express": "^5.0.0",
-    "@types/node": "~22.8.2",
+    "@types/node": "~22.8.4",
     "@types/proper-lockfile": "^4.1.4",
     "@types/redis": "^2.8.32",
     "@types/redlock": "^4.0.7",
@@ -38,17 +38,17 @@
   "peerDependencies": {
     "@azure/cosmos": "^4.1.1",
     "@azure/service-bus": "^7.9.5",
-    "@effect/experimental": "^0.30.11",
-    "@effect/platform": "^0.69.10",
-    "@effect/rpc-http": "^0.42.10",
-    "@effect/rpc": "^0.44.10",
-    "@effect/sql": "^0.18.11",
-    "@effect/vitest": "^0.13.5",
+    "@effect/experimental": "^0.30.12",
+    "@effect/platform": "^0.69.11",
+    "@effect/rpc-http": "^0.42.11",
+    "@effect/rpc": "^0.44.11",
+    "@effect/sql": "^0.18.12",
+    "@effect/vitest": "^0.13.6",
     "@sendgrid/helpers": "^8.0.0",
     "@sendgrid/mail": "^8.1.4",
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
-    "effect": "^3.10.5",
+    "effect": "^3.10.6",
     "express": "^4.21.1"
   },
   "typesVersions": {
@@ -639,6 +639,16 @@
         "default": "./_cjs/api/routing.cjs"
       }
     },
+    "./api/routing.legacy": {
+      "import": {
+        "types": "./dist/api/routing.legacy.d.ts",
+        "default": "./dist/api/routing.legacy.js"
+      },
+      "require": {
+        "types": "./dist/api/routing.legacy.d.ts",
+        "default": "./_cjs/api/routing.legacy.cjs"
+      }
+    },
     "./api/routing/DynamicMiddleware": {
       "import": {
         "types": "./dist/api/routing/DynamicMiddleware.d.ts",
@@ -657,16 +667,6 @@
       "require": {
         "types": "./dist/api/routing/schema/jwt.d.ts",
         "default": "./_cjs/api/routing/schema/jwt.cjs"
-      }
-    },
-    "./api/routing4": {
-      "import": {
-        "types": "./dist/api/routing4.d.ts",
-        "default": "./dist/api/routing4.js"
-      },
-      "require": {
-        "types": "./dist/api/routing4.d.ts",
-        "default": "./_cjs/api/routing4.cjs"
       }
     },
     "./api/setupRequest": {
