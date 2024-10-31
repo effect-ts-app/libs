@@ -442,3 +442,33 @@ it(
       })
       .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise)
 )
+
+it(
+  "doesn't mess when refining fields",
+  () =>
+    Effect
+      .gen(function*() {
+        const schema = S.Struct({
+          id: S.String,
+          literals: S.Literal("a", "b", "c")
+        })
+
+        type Schema = typeof schema.Type
+
+        const repo = yield* makeRepo(
+          "test",
+          schema,
+          {}
+        )
+
+        const result = yield* repo.query(
+          where("id", "123"),
+          and("literals", "a")
+        )
+
+        expectTypeOf(result).toEqualTypeOf<readonly Schema[]>()
+
+        expect(result).toEqual([])
+      })
+      .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise)
+)
