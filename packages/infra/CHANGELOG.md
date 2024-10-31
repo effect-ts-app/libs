@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.15.1
+
+### Patch Changes
+
+- a7ed628: refactoring
+
 ## 2.15.0
 
 ### Minor Changes
