@@ -5,12 +5,11 @@
   ],
   "references": [
     {
-      "path": "tsconfig.src.json"
+      "path": "./tsconfig.src.json"
     }
   ],
   "compilerOptions": {
     "tsBuildInfoFile": ".tsbuildinfo/examples.tsbuildinfo",
-    "rootDir": "examples",
-    "noEmit": true
+    "rootDir": "examples"
   }
 }
