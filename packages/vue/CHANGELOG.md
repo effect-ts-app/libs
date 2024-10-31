@@ -1,5 +1,11 @@
 # @effect-app/vue
 
+## 2.4.1
+
+### Patch Changes
+
+- m
+
 ## 2.4.0
 
 ### Minor Changes
