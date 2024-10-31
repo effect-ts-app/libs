@@ -319,7 +319,8 @@ export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
   ): (
     current: IsCurrentInitial extends true ? Query<TFieldValues>
       : QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? Query<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
 
   <
     TFieldValues extends FieldValues,
@@ -333,7 +334,8 @@ export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
   ): (
     current: IsCurrentInitial extends true ? Query<TFieldValues>
       : QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? Query<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
@@ -346,7 +348,8 @@ export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
   ): (
     current: IsCurrentInitial extends true ? Query<TFieldValues>
       : QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? Query<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
@@ -361,7 +364,8 @@ export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
   ): (
     current: IsCurrentInitial extends true ? Query<TFieldValues>
       : QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? Query<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
@@ -376,7 +380,8 @@ export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
   ): (
     current: IsCurrentInitial extends true ? Query<TFieldValues>
       : QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? Query<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
@@ -393,7 +398,8 @@ export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
   ): (
     current: IsCurrentInitial extends true ? Query<TFieldValues>
       : QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? Query<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
@@ -406,7 +412,8 @@ export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
   }): (
     current: IsCurrentInitial extends true ? Query<TFieldValues>
       : QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? Query<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
 }
 
 export type FilteringRefinements<IsCurrentInitial extends boolean = false> = {
