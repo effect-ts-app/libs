@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Context, Effect, Layer, Option, pipe, S, Struct } from "effect-app"
+import { Context, Effect, flow, Layer, Option, pipe, S, Struct } from "effect-app"
 import { inspect } from "util"
 import { expect, expectTypeOf, it } from "vitest"
 import { setupRequestContextFromCurrent } from "../src/api/setupRequest.js"
@@ -131,6 +131,13 @@ it("works with repo", () =>
             )
           )
         )
+
+      const smtArr = yield* somethingRepo
+        .query(
+          flow(where("displayName", "Verona"))
+        )
+
+      expectTypeOf(smtArr).toEqualTypeOf<readonly Something[]>()
 
       expect(q1).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("id", "displayName")))
       expect(q2).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("displayName")))
@@ -430,6 +437,36 @@ it(
         )
 
         const result = yield* repo.query(where("id", "123"), project(schema))
+
+        expect(result).toEqual([])
+      })
+      .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise)
+)
+
+it(
+  "doesn't mess when refining fields",
+  () =>
+    Effect
+      .gen(function*() {
+        const schema = S.Struct({
+          id: S.String,
+          literals: S.Literal("a", "b", "c")
+        })
+
+        type Schema = typeof schema.Type
+
+        const repo = yield* makeRepo(
+          "test",
+          schema,
+          {}
+        )
+
+        const result = yield* repo.query(
+          where("id", "123"),
+          and("literals", "a")
+        )
+
+        expectTypeOf(result).toEqualTypeOf<readonly Schema[]>()
 
         expect(result).toEqual([])
       })

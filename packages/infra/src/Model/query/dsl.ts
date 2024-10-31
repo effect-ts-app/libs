@@ -4,6 +4,7 @@
 import type { Option, S } from "effect-app"
 import { Data, flow, Pipeable } from "effect-app"
 import type { NonNegativeInt } from "effect-app/Schema"
+import type { IsUnion } from "effect-app/utils"
 import type { Covariant } from "effect/Types"
 import type { Ops } from "../filter/filterApi.js"
 import type { FieldValues } from "../filter/types.js"
@@ -242,25 +243,14 @@ export const one: {
     current
   })
 
-// TODO: implement count like one instead? or should we change schema projection to work with arrays, so we can count the elements?
-// no it's better to implement a distinct count so that the implementation can be optimised per adapter.
+// it's better to implement a distinct count so that the implementation can be optimised per adapter
 export const count: {
   <
     Q extends Query<any> | QueryWhere<any, any> | QueryEnd<any>
   >(
     current: Q
   ): QueryProjection<ExtractFieldValuesRefined<Q>, NonNegativeInt, never, "count">
-} = (current) =>
-  // new Project({ current: current as any, /* TODO: why */ schema: S.Struct({ id: S.unknown }) })
-  new Count({ current })
-
-/*
-.andThen(flow(
-        toNonEmptyArray,
-        Effect.mapError(() => new NotFoundError<"User">({ id: auth0Id, type: "User" })),
-        Effect.map((_) => _[0])
-      ))
-*/
+} = (current) => new Count({ current })
 
 export const project: {
   <
@@ -314,356 +304,11 @@ export const project: {
   ): (
     current: Q
   ) => QueryProjection<ExtractFieldValuesRefined<Q>, A, R, ExtractTType<Q>>
-} = (schema: any, mode = "transform") => (current: any) => new Project({ current, /* TODO: why */ schema, mode } as any)
+} = (schema: any, mode = "transform") => (current: any) => new Project({ current, schema, mode } as any)
 
-export type FilterWheres = {
-  <
-    TFieldValues extends FieldValues,
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    value: V
-  ): (
-    current: Query<TFieldValues>
-  ) => QueryWhere<TFieldValues>
-  <
-    TFieldValues extends FieldValues,
-    TFieldName extends FieldPath<TFieldValues>,
-    const V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    op: "neq",
-    value: V
-  ): (
-    current: Query<TFieldValues>
-  ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Exclude<TFieldValues, { _tag: V }> : TFieldValues>
-  <
-    TFieldValues extends FieldValues,
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    op: "neq",
-    value: V
-  ): (
-    current: Query<TFieldValues>
-  ) => QueryWhere<TFieldValues>
-  <
-    TFieldValues extends FieldValues,
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    op: "gt" | "gte" | "lt" | "lte",
-    value: V // only numbers?
-  ): (
-    current: Query<TFieldValues>
-  ) => QueryWhere<TFieldValues>
-  <
-    TFieldValues extends FieldValues,
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends string
-  >(
-    path: TFieldName,
-    op: "startsWith" | "endsWith" | "contains" | "notContains" | "notStartsWith" | "notEndsWith",
-    value: V
-  ): (
-    current: Query<TFieldValues>
-  ) => QueryWhere<TFieldValues>
-  <
-    TFieldValues extends FieldValues,
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    op:
-      | "in"
-      | "notIn",
-    value: readonly V[]
-  ): (
-    current: Query<TFieldValues>
-  ) => QueryWhere<TFieldValues>
-  <
-    TFieldValues extends FieldValues,
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    op:
-      | "includes"
-      | "notIncludes",
-    value: GetArV<V>
-  ): (
-    current: Query<TFieldValues>
-  ) => QueryWhere<TFieldValues>
-  <
-    TFieldValues extends FieldValues,
-    TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName>
-  >(
-    path: TFieldName,
-    op:
-      | "includes-any"
-      | "notIncludes-any"
-      | "includes-all"
-      | "notIncludes-all",
-    value: readonly GetArV<V>[]
-  ): (
-    current: Query<TFieldValues>
-  ) => QueryWhere<TFieldValues>
-}
+type GetArV<T> = T extends readonly (infer R)[] ? R : never
 
-export type FilterWhere =
-  // the one below should take care of this case as well
-  // & {
-  //   <
-  //     TFieldValues extends FieldValues,
-  //     TFieldName extends FieldPath<TFieldValues>,
-  //     const V extends FieldPathValue<TFieldValues, TFieldName>
-  //   >(
-  //     path: TFieldName,
-  //     value: V
-  //   ): (
-  //     current: Query<TFieldValues>
-  //   ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Extract<TFieldValues, { _tag: V }> : TFieldValues>
-  // }
-  & {
-    <
-      TFieldValues extends FieldValues,
-      const TFieldName extends FieldPath<TFieldValues>,
-      const V extends FieldPathValue<TFieldValues, TFieldName>
-    >(
-      path: TFieldName,
-      value: V
-    ): (
-      current: Query<TFieldValues>
-    ) => QueryWhere<
-      TFieldValues,
-      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
-      string extends TFieldValues[TFieldName] ? TFieldValues
-        : TFieldValues[TFieldName] extends string ? Extract<TFieldValues, { [K in TFieldName]: V }>
-        : TFieldValues
-    >
-  }
-  & {
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      ff: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fg: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fg: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fh: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fg: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fh: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fi: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fg: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fh: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fi: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fj: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fg: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fh: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fi: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fj: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fk: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fg: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fh: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fi: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fj: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fk: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fl: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fg: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fh: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fi: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fj: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fk: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fl: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fm: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
-      fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fg: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fh: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fi: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fj: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fk: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fl: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fm: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
-      fn: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-    ): (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  }
-  & {
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends FieldPathValue<TFieldValues, TFieldName>
-    >(f: {
-      path: TFieldName
-      op: Ops
-      value: V
-    }): (
-      current: Query<TFieldValues>
-    ) => QueryWhere<TFieldValues>
-  }
-  & FilterWheres
-  & {
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends FieldPathValue<TFieldValues, TFieldName>
-    >(
-      path: TFieldName,
-      value: V
-    ): (
-      current: Query<TFieldValues>
-    ) => QueryWhere<TFieldValues>
-    // breaks flow pipe type inference
-    // <
-    //   TFieldValues extends FieldValues,
-    //   TFieldName extends FieldPath<TFieldValues>,
-    //   V extends FieldPathValue<TFieldValues, TFieldName>
-    // >(
-    //   path: TFieldName,
-    //   op: "neq",
-    //   value: V
-    // ): (
-    //   current: Query<TFieldValues>
-    // ) => QueryWhere<TFieldValues>
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends FieldPathValue<TFieldValues, TFieldName>
-    >(
-      path: TFieldName,
-      op: "gt" | "gte" | "lt" | "lte" | "neq",
-      value: V // only numbers?
-    ): (
-      current: Query<TFieldValues>
-    ) => QueryWhere<TFieldValues>
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends string
-    >(
-      path: TFieldName,
-      op: "startsWith" | "endsWith" | "contains" | "notContains" | "notStartsWith" | "notEndsWith",
-      value: V
-    ): (
-      current: Query<TFieldValues>
-    ) => QueryWhere<TFieldValues>
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends FieldPathValue<TFieldValues, TFieldName>
-    >(
-      path: TFieldName,
-      op:
-        | "in"
-        | "notIn",
-      value: readonly V[]
-    ): (
-      current: Query<TFieldValues>
-    ) => QueryWhere<TFieldValues>
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends FieldPathValue<TFieldValues, TFieldName>
-    >(
-      path: TFieldName,
-      op:
-        | "includes"
-        | "notIncludes",
-      value: GetArV<V>
-    ): (
-      current: Query<TFieldValues>
-    ) => QueryWhere<TFieldValues>
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends FieldPathValue<TFieldValues, TFieldName>
-    >(
-      path: TFieldName,
-      op:
-        | "includes-any"
-        | "notIncludes-any"
-        | "includes-all"
-        | "notIncludes-all",
-      value: readonly GetArV<V>[]
-    ): (
-      current: Query<TFieldValues>
-    ) => QueryWhere<TFieldValues>
-  }
-
-export type FilterContinuations = {
+export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
@@ -673,20 +318,11 @@ export type FilterContinuations = {
     path: TFieldName,
     value: V
   ): (
-    current: QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  // breaks flow pipe type inference
-  // <
-  //   TFieldValues extends FieldValues,
-  //   TFieldName extends FieldPath<TFieldValues>,
-  //   V extends FieldPathValue<TFieldValues, TFieldName>
-  // >(
-  //   path: TFieldName,
-  //   op: "neq",
-  //   value: V
-  // ): (
-  //   current: QueryWhere<TFieldValues>
-  // ) => QueryWhere<TFieldValues>
+    current: IsCurrentInitial extends true ? Query<TFieldValues>
+      : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? QueryWhere<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
+
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
@@ -697,8 +333,10 @@ export type FilterContinuations = {
     op: "gt" | "gte" | "lt" | "lte" | "neq",
     value: V // only numbers?
   ): (
-    current: QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+    current: IsCurrentInitial extends true ? Query<TFieldValues>
+      : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? QueryWhere<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
@@ -709,8 +347,10 @@ export type FilterContinuations = {
     op: "startsWith" | "endsWith" | "contains" | "notContains" | "notStartsWith" | "notEndsWith",
     value: V
   ): (
-    current: QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+    current: IsCurrentInitial extends true ? Query<TFieldValues>
+      : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? QueryWhere<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
@@ -723,8 +363,10 @@ export type FilterContinuations = {
       | "notIn",
     value: readonly V[]
   ): (
-    current: QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+    current: IsCurrentInitial extends true ? Query<TFieldValues>
+      : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? QueryWhere<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
@@ -737,8 +379,10 @@ export type FilterContinuations = {
       | "notIncludes",
     value: GetArV<V>
   ): (
-    current: QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+    current: IsCurrentInitial extends true ? Query<TFieldValues>
+      : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? QueryWhere<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
@@ -753,34 +397,118 @@ export type FilterContinuations = {
       | "notIncludes-all",
     value: readonly GetArV<V>[]
   ): (
-    current: QueryWhere<TFieldValues, TFieldValuesRefined>
-  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
+    current: IsCurrentInitial extends true ? Query<TFieldValues>
+      : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? QueryWhere<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
+  <
+    TFieldValues extends FieldValues,
+    TFieldName extends FieldPath<TFieldValues>,
+    V extends FieldPathValue<TFieldValues, TFieldName>,
+    TFieldValuesRefined extends TFieldValues = TFieldValues
+  >(f: {
+    path: TFieldName
+    op: Ops
+    value: V
+  }): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues>
+      : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? QueryWhere<TFieldValues>
+    : QueryWhere<TFieldValues, TFieldValuesRefined>
 }
 
-type GetArV<T> = T extends readonly (infer R)[] ? R : never
+export type FilteringRefinements<IsCurrentInitial extends boolean = false> = {
+  <
+    TFieldValues extends FieldValues,
+    const TFieldName extends FieldPath<TFieldValues>,
+    const V extends FieldPathValue<TFieldValues, TFieldName>,
+    TFieldValuesRefined extends TFieldValues = TFieldValues
+  >(
+    path: TFieldName,
+    value: V
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues>
+      : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? QueryWhere<
+      TFieldValues,
+      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
+      // and TFieldValues must not be a union
+      IsUnion<TFieldValues> extends false ? TFieldValues
+        : string extends TFieldValues[TFieldName] ? TFieldValues
+        : TFieldValues[TFieldName] extends string ? Extract<TFieldValues, { [K in TFieldName]: V }>
+        : TFieldValues
+    >
+    : QueryWhere<
+      TFieldValues,
+      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
+      // and TFieldValuesRefined must not be a union
+      IsUnion<TFieldValuesRefined> extends false ? TFieldValues
+        : string extends TFieldValuesRefined[TFieldName] ? TFieldValuesRefined
+        : TFieldValuesRefined[TFieldName] extends string ? Extract<TFieldValuesRefined, { [K in TFieldName]: V }>
+        : TFieldValuesRefined
+    >
+  <
+    TFieldValues extends FieldValues,
+    const TFieldName extends FieldPath<TFieldValues>,
+    const V extends FieldPathValue<TFieldValues, TFieldName>,
+    TFieldValuesRefined extends TFieldValues = TFieldValues
+  >(
+    path: TFieldName,
+    op: "neq",
+    value: V
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues>
+      : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => IsCurrentInitial extends true ? QueryWhere<
+      TFieldValues,
+      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
+      // and TFieldValues must not be a union
+      IsUnion<TFieldValues> extends false ? TFieldValues
+        : string extends TFieldValues[TFieldName] ? TFieldValues
+        : TFieldValues[TFieldName] extends string ? Exclude<TFieldValues, { [K in TFieldName]: V }>
+        : TFieldValues
+    >
+    : QueryWhere<
+      TFieldValues,
+      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
+      // and TFieldValuesRefined must not be a union
+      IsUnion<TFieldValuesRefined> extends false ? TFieldValuesRefined
+        : string extends TFieldValuesRefined[TFieldName] ? TFieldValuesRefined
+        : TFieldValuesRefined[TFieldName] extends string ? Exclude<TFieldValuesRefined, { [K in TFieldName]: V }>
+        : TFieldValuesRefined
+    >
+}
 
-export type FilterContinuationClosure = {
+export type NestedQueriesFixedRefinement<IsCurrentInitial extends boolean = false> = {
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
 
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
 
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
 
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
 
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
@@ -788,14 +516,18 @@ export type FilterContinuationClosure = {
     fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     ff: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fd: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fg: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
@@ -803,7 +535,9 @@ export type FilterContinuationClosure = {
     fe: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fg: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fh: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
@@ -812,7 +546,9 @@ export type FilterContinuationClosure = {
     fg: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fh: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fi: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
@@ -822,7 +558,9 @@ export type FilterContinuationClosure = {
     fh: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fi: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fj: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
@@ -833,7 +571,9 @@ export type FilterContinuationClosure = {
     fi: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fj: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fk: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
@@ -845,7 +585,9 @@ export type FilterContinuationClosure = {
     fj: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fk: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fl: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
@@ -858,7 +600,9 @@ export type FilterContinuationClosure = {
     fk: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fl: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fm: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
   <TFieldValues extends FieldValues, TFieldValuesRefined extends TFieldValues = TFieldValues>(
     fb: (current: Query<TFieldValues>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fc: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
@@ -872,10 +616,12 @@ export type FilterContinuationClosure = {
     fl: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fm: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>,
     fn: (query: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  ): (current: QueryWhere<TFieldValues, TFieldValuesRefined>) => QueryWhere<TFieldValues, TFieldValuesRefined>
+  ): (
+    current: IsCurrentInitial extends true ? Query<TFieldValues> : QueryWhere<TFieldValues, TFieldValuesRefined>
+  ) => QueryWhere<TFieldValues, TFieldValuesRefined>
 }
 
-export type FilterContinuationClosureOr = {
+export type NestedQueriesFreeDisjointRefinement = {
   <
     TFieldValues extends FieldValues,
     TFieldValuesRefined extends TFieldValues = TFieldValues,
@@ -1163,78 +909,16 @@ export type FilterContinuationClosureOr = {
   ) => QueryWhere<TFieldValues, TFieldValuesRefined | TFieldValuesRefined14>
 }
 
-export type FilterContinuation =
-  & FilterContinuationClosure
-  & {
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends FieldPathValue<TFieldValues, TFieldName>,
-      TFieldValuesRefined extends TFieldValues = TFieldValues
-    >(f: {
-      path: TFieldName
-      op: Ops
-      value: V
-    }): (
-      current: QueryWhere<TFieldValues, TFieldValuesRefined>
-    ) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  }
-  & FilterContinuations
+export type FilterWhere =
+  & NestedQueriesFixedRefinement<true>
+  & FilteringRefinements<true>
+  & FilterContinuations<true>
 
 export type FilterContinuationAnd =
-  & {
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      const V extends FieldPathValue<TFieldValues, TFieldName>
-    >(
-      path: TFieldName,
-      value: V
-    ): (
-      current: QueryWhere<TFieldValues>
-    ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Extract<TFieldValues, { _tag: V }> : TFieldValues>
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      const V extends FieldPathValue<TFieldValues, TFieldName>
-    >(
-      path: TFieldName,
-      op: "neq",
-      value: V
-    ): (
-      current: QueryWhere<TFieldValues>
-    ) => QueryWhere<TFieldValues, TFieldName extends "_tag" ? Exclude<TFieldValues, { _tag: V }> : TFieldValues>
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      const V extends FieldPathValue<TFieldValues, TFieldName>,
-      TFieldValuesRefined extends TFieldValues = TFieldValues
-    >(
-      path: TFieldName,
-      value: V
-    ): (
-      current: QueryWhere<TFieldValues, TFieldValuesRefined>
-    ) => QueryWhere<
-      TFieldValues,
-      TFieldName extends "_tag" ? Extract<TFieldValuesRefined, { _tag: V }> : TFieldValuesRefined
-    >
-  }
-  & FilterContinuation
+  & NestedQueriesFixedRefinement
+  & FilteringRefinements
+  & FilterContinuations
 
 export type FilterContinuationOr =
-  & FilterContinuationClosureOr
-  & {
-    <
-      TFieldValues extends FieldValues,
-      TFieldName extends FieldPath<TFieldValues>,
-      V extends FieldPathValue<TFieldValues, TFieldName>,
-      TFieldValuesRefined extends TFieldValues = TFieldValues
-    >(f: {
-      path: TFieldName
-      op: Ops
-      value: V
-    }): (
-      current: QueryWhere<TFieldValues, TFieldValuesRefined>
-    ) => QueryWhere<TFieldValues, TFieldValuesRefined>
-  }
+  & NestedQueriesFreeDisjointRefinement
   & FilterContinuations
