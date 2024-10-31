@@ -472,9 +472,6 @@ importers:
 
   packages/vue:
     dependencies:
-      '@effect-app/vue':
-        specifier: workspace:*
-        version: 'link:'
       '@effect-rx/rx':
         specifier: ^0.34.2
         version: 0.34.2(effect@3.10.6(patch_hash=6apycafvmq4j4gfsfos33litbe))

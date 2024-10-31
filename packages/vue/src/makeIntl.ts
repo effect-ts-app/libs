@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type { Formatters, IntlFormatters, ResolvedIntlConfig } from "@formatjs/intl"
+import type { IntlShape } from "@formatjs/intl"
 import { createIntl, createIntlCache } from "@formatjs/intl"
 import { typedKeysOf } from "effect-app/utils"
 import type { FormatXMLElementFn, PrimitiveType } from "intl-messageformat"
@@ -9,11 +9,6 @@ import { translate } from "./form.js"
 import { makeContext } from "./makeContext.js"
 
 export interface MakeIntlReturn<Locale extends string> extends ReturnType<typeof makeIntl<Locale>> {}
-
-// Re-export in the hope to deal with ts issues
-export interface IntlShape<T = string> extends ResolvedIntlConfig<T>, IntlFormatters<T> {
-  formatters: Formatters
-}
 
 export const makeIntl = <Locale extends string>(
   messages: Record<Locale, Record<string, string>>,

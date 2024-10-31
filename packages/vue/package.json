@@ -1,11 +1,10 @@
 {
   "name": "@effect-app/vue",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "license": "MIT",
   "type": "module",
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
   "dependencies": {
-    "@effect-app/vue": "workspace:*",
     "@formatjs/intl": "^2.10.11",
     "@tanstack/vue-query": "^5.59.16",
     "@vueuse/core": "^11.1.0",
