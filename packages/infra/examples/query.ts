@@ -55,10 +55,8 @@ class SomethingRepo extends Effect.Service<SomethingRepo>()("SomethingRepo", {
 }) {
   static readonly Test = Layer
     .effect(
-      SomethingRepo,
-      Effect.gen(function*() {
-        return SomethingRepo.make(yield* makeRepo("Union", Union, { makeInitial: Effect.sync(() => items) }))
-      })
+      this,
+      makeRepo("Union", Union, { makeInitial: Effect.sync(() => items) }).pipe(Effect.map(this.make))
     )
     .pipe(
       Layer.provide(MemoryStoreLive)
