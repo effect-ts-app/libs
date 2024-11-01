@@ -88,7 +88,7 @@ export const makeRpcClient = <
   generalErrors?: GeneralErrors
 ) => {
   // Long way around Context/C extends etc to support actual jsdoc from passed in RequestConfig etc...
-  type Context = { success: S.Schema.Any | S.Struct.Fields; failure: S.Schema.Any }
+  type Context = { success: S.Schema.Any | S.Struct.Fields; failure: S.Schema.Any | S.Struct.Fields }
   function TaggedRequest<Self>(): {
     <Tag extends string, Payload extends S.Struct.Fields, C extends Context>(
       tag: Tag,
@@ -100,10 +100,15 @@ export const makeRpcClient = <
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
         SchemaOrFields<typeof config["success"]>,
-        JoinSchema<ExcludeFromTuple<[typeof config["failure"] | GetEffectError<CTXMap, C> | GeneralErrors], never>>
+        JoinSchema<
+          ExcludeFromTuple<
+            [SchemaOrFields<typeof config["failure"]> | GetEffectError<CTXMap, C> | GeneralErrors],
+            never
+          >
+        >
       >
       & { config: Omit<C, "success" | "failure"> }
-    <Tag extends string, Payload extends S.Struct.Fields, C extends { success: S.Schema.Any }>(
+    <Tag extends string, Payload extends S.Struct.Fields, C extends { success: S.Schema.Any | S.Struct.Fields }>(
       tag: Tag,
       fields: Payload,
       config: RequestConfig & C
@@ -116,7 +121,7 @@ export const makeRpcClient = <
         JoinSchema<ExcludeFromTuple<[GetEffectError<CTXMap, C> | GeneralErrors], never>>
       >
       & { config: Omit<C, "success" | "failure"> }
-    <Tag extends string, Payload extends S.Struct.Fields, C extends { failure: S.Schema.Any }>(
+    <Tag extends string, Payload extends S.Struct.Fields, C extends { failure: S.Schema.Any | S.Struct.Fields }>(
       tag: Tag,
       fields: Payload,
       config: RequestConfig & C
@@ -126,7 +131,12 @@ export const makeRpcClient = <
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
         typeof S.Void,
-        JoinSchema<ExcludeFromTuple<[typeof config["failure"] | GetEffectError<CTXMap, C> | GeneralErrors], never>>
+        JoinSchema<
+          ExcludeFromTuple<
+            [SchemaOrFields<typeof config["failure"]> | GetEffectError<CTXMap, C> | GeneralErrors],
+            never
+          >
+        >
       >
       & { config: Omit<C, "success" | "failure"> }
     <Tag extends string, Payload extends S.Struct.Fields, C extends Record<string, any>>(
