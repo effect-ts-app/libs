@@ -204,9 +204,9 @@ it("collect", () =>
           .query(
             where("displayName", "Riley"), // TODO: work with To type translation, so Date?
             // one,
+            // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
             project(
               S.transformTo(
-                // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
                 S.encodedSchema(S.Struct({
                   ...Struct.pick(Something.fields, "n"),
                   displayName: S.Literal("Riley")
@@ -245,10 +245,10 @@ it("collect", () =>
           .query(
             where("union._tag", "string"),
             one,
+            // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
             project(
               S.transformTo(
-                // TODO: sample case with narrowing down a union?
-                S.encodedSchema(S.Struct(Struct.pick(Something.fields, "union"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                S.encodedSchema(S.Struct(Struct.pick(Something.fields, "union"))),
                 S.typeSchema(S.Option(S.String)),
                 (_) =>
                   _.union._tag === "string"
@@ -349,6 +349,17 @@ it(
           where("_tag", "AA")
         )
         expectTypeOf(query2).toEqualTypeOf<QueryWhere<Union, AA>>()
+
+        const query2a = make<Union>().pipe(
+          where("c", "something")
+        )
+        expectTypeOf(query2a).toEqualTypeOf<
+          QueryWhere<Union, {
+            readonly id: string
+            readonly _tag: "CC"
+            readonly c: "something"
+          }>
+        >()
 
         const query3 = make<Union>().pipe(
           where("_tag", "AA"),
@@ -631,6 +642,51 @@ it(
         )
 
         expectTypeOf(result).toEqualTypeOf<readonly Schema[]>()
+
+        expect(result).toEqual([])
+      })
+      .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise)
+)
+
+it(
+  "remove null",
+  () =>
+    Effect
+      .gen(function*() {
+        const schema = S.Struct({
+          id: S.String,
+          literals: S.Union(S.Literal("a", "b", "c"), S.Null)
+        })
+
+        type Schema = typeof schema.Type
+
+        const repo = yield* makeRepo(
+          "test",
+          schema,
+          {}
+        )
+
+        const expected = make<Schema>().pipe(
+          where("literals", "neq", null)
+        )
+        expectTypeOf(expected).toEqualTypeOf<
+          QueryWhere<Schema, {
+            readonly id: string
+            readonly literals: "a" | "b" | "c"
+          }>
+        >()
+
+        const result = yield* repo.query(
+          where("literals", "neq", null)
+        )
+
+        // TODO patrick: result shouldn't have nulls, but repo.query is not refining the fields
+        expectTypeOf(result).toEqualTypeOf<
+          readonly {
+            readonly id: string
+            readonly literals: "a" | "b" | "c"
+          }[]
+        >()
 
         expect(result).toEqual([])
       })

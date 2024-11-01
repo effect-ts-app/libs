@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { expectTypeOf } from "@effect/vitest"
 import type { FieldValues } from "../fields.js"
-import type { BrowserNativeObject, Primitive } from "../utils.js"
+import type { BrowserNativeObject, IsNever, Primitive } from "../utils.js"
 
 import type { ArrayKey, IsTuple, TupleKeys } from "./common.js"
 
@@ -106,26 +106,32 @@ export type SetFieldPathValue<
 > = SetPathValue<TFieldValues, TFieldPath, X>
 
 /* dprint-ignore-start */
-export type RefinePathValue<T, P extends Path<T>, X> =
+export type RefinePathValue<T, P extends Path<T>, X, Exclde extends boolean = false> =
   T extends any
     ? P extends `${infer K}.${infer R}`
       ? K extends keyof T
         ? R extends Path<T[K]>
-          ? { [_ in keyof T]: _ extends K ? RefinePathValue<T[K], R, X> : T[_] }
+          ? { [_ in keyof T]: _ extends K ? RefinePathValue<T[K], R, X, Exclde> : T[_] }
           : never
         : K extends `${ArrayKey}`
           ? T extends ReadonlyArray<infer V>
-            ? { [_ in keyof T]: RefinePathValue<V, R & Path<V>, X> }
+            ? { [_ in keyof T]: RefinePathValue<V, R & Path<V>, X, Exclde> }
             : never
           : never
       : P extends keyof T
         ? X extends T[P]
-          ? { [_ in keyof T]: _ extends P ? X : T[_] }
-          : never
+          ? ({ [_ in keyof T]: _ extends P ? Exclde extends true ? Exclude<T[_], X> : X : T[_] }) extends infer $T
+            ? IsNever<$T[P & keyof $T]> extends true
+              ? never
+              : $T
+            : never
+          : Exclde extends true
+            ? T
+            : never
         : P extends `${ArrayKey}`
           ? T extends ReadonlyArray<infer V>
             ? X extends V
-              ? { [_ in keyof T]: X }
+              ? { [_ in keyof T]: Exclde extends true ? Exclude<T[_], X> : X }
               : never
             : never
           : never
@@ -135,8 +141,9 @@ export type RefinePathValue<T, P extends Path<T>, X> =
 export type RefineFieldPathValue<
   TFieldValues extends FieldValues,
   TFieldPath extends FieldPath<TFieldValues>,
-  X
-> = RefinePathValue<TFieldValues, TFieldPath, X>
+  X,
+  Exclde extends boolean = false
+> = RefinePathValue<TFieldValues, TFieldPath, X, Exclde>
 
 export namespace RefinePathValueTests {
   type test1 = RefineFieldPathValue<{ a: { b: "tag1"; v1: string } | { b: "tag2"; v2: number } }, "a.b", "tag1">
@@ -153,6 +160,21 @@ export namespace RefinePathValueTests {
 
   type test5 = RefineFieldPathValue<{ b: "tag1"; v1: unknown } | { b: "tag2"; v2: unknown }, "b", "tag1">
   expectTypeOf<test5>().toEqualTypeOf<{ b: "tag1"; v1: unknown }>()
+
+  type test1E = RefineFieldPathValue<{ a: { b: "tag1"; v1: string } | { b: "tag2"; v2: number } }, "a.b", "tag1", true>
+  expectTypeOf<test1E>().toEqualTypeOf<{ a: { b: "tag2"; v2: number } }>()
+
+  type test2E = RefineFieldPathValue<{ b: "tag1"; v1: string } | { b: "tag2"; v2: number }, "b", "tag2", true>
+  expectTypeOf<test2E>().toEqualTypeOf<{ b: "tag1"; v1: string }>()
+
+  type test3E = RefineFieldPathValue<{ b: "tag1" | "tag2" | null }, "b", null, true>
+  expectTypeOf<test3E>().toEqualTypeOf<{ b: "tag1" | "tag2" }>()
+
+  type test4E = RefineFieldPathValue<{ b: ("tag1" | "tag2")[] }, `b.${number}`, "tag1", true>
+  expectTypeOf<test4E>().toEqualTypeOf<{ b: "tag2"[] }>()
+
+  type test5E = RefineFieldPathValue<{ b: "tag1"; v1: unknown } | { b: "tag2"; v2: unknown }, "b", "tag1", true>
+  expectTypeOf<test5E>().toEqualTypeOf<{ b: "tag2"; v2: unknown }>()
 }
 
 export namespace SetFieldPathValueTests {
