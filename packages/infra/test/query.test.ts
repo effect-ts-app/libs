@@ -118,28 +118,6 @@ it("works with repo", () =>
       const somethingRepo = yield* SomethingRepo
       yield* somethingRepo.saveAndPublish(items)
 
-      // TODO patrick: somethingRepo.query has some problems now that fields like displayName get refined
-      const q1works = make<Something.Encoded>().pipe(
-        () => q
-      )
-      const q2works = make<Something.Encoded>().pipe(
-        where("displayName", "Verona"),
-        or(
-          where("displayName", "Riley"),
-          and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
-        ),
-        order("displayName"),
-        page({ take: 10 }),
-        // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-        project(
-          S.transformToOrFail(
-            S.Struct({ displayName: S.Literal("Verona", "Riley") }),
-            S.Struct(Struct.pick(Something.fields, "displayName")),
-            (_) => Effect.andThen(SomeService, _)
-          )
-        )
-      )
-
       const q1 = yield* somethingRepo.query(() => q)
       const q2 = yield* somethingRepo
         .query(
@@ -153,7 +131,7 @@ it("works with repo", () =>
           // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
           project(
             S.transformToOrFail(
-              S.Struct({ displayName: S.Literal("Verona", "Riley") }),
+              S.Struct({ displayName: S.String }),
               S.Struct(Struct.pick(Something.fields, "displayName")),
               (_) => Effect.andThen(SomeService, _)
             )
@@ -178,27 +156,6 @@ it("collect", () =>
       const somethingRepo = yield* SomethingRepo
       yield* somethingRepo.saveAndPublish(items)
 
-      // TODO patrick: the overload below is not working because of displayName: "Riley" I suppose
-      // it's not a project problem, but a somethingRepo.query problem because thisworks is working and refining as expected
-      const thisworks = make<Something.Encoded>().pipe(
-        where("displayName", "Riley"),
-        project(
-          S.transformTo(
-            // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-            S.encodedSchema(S.Struct({
-              ...Struct.pick(Something.fields, "n"),
-              displayName: S.Literal("Riley")
-            })),
-            S.typeSchema(S.Option(S.String)),
-            (_) =>
-              _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
-                ? Option.some(`${_.displayName}-${_.n}`)
-                : Option.none()
-          ),
-          "collect"
-        )
-      )
-
       expect(
         yield* somethingRepo
           .query(
@@ -209,7 +166,7 @@ it("collect", () =>
               S.transformTo(
                 S.encodedSchema(S.Struct({
                   ...Struct.pick(Something.fields, "n"),
-                  displayName: S.Literal("Riley")
+                  displayName: S.String
                 })),
                 S.typeSchema(S.Option(S.String)),
                 (_) =>
@@ -224,7 +181,7 @@ it("collect", () =>
         .toEqual(["Riley-2020-01-01T00:00:00.000Z"])
 
       // TODO patrick: check the type of alsothisworks
-      // the projection below isn't needed anymore :D (but it errors out probably because of a similar reason as above)
+      // the projection below isn't needed anymore :D (but it errors out for some reason)
       const alsothisworks = make<Something.Encoded>().pipe(
         where("union._tag", "string")
       )
@@ -338,11 +295,7 @@ it(
           and("_tag", "AA")
         )
         expectTypeOf(query1).toEqualTypeOf<
-          QueryWhere<Union, {
-            readonly id: "bla"
-            readonly _tag: "AA"
-            readonly a: unknown
-          }>
+          QueryWhere<Union, AA>
         >()
 
         const query2 = make<Union>().pipe(
@@ -357,7 +310,7 @@ it(
           QueryWhere<Union, {
             readonly id: string
             readonly _tag: "CC"
-            readonly c: "something"
+            readonly c: {} // from unknown to {} because "something" means that it's not null or undefined
           }>
         >()
 
@@ -371,15 +324,7 @@ it(
         expectTypeOf(query3).toEqualTypeOf<
           QueryWhere<
             Union,
-            {
-              readonly id: string
-              readonly _tag: "AA"
-              readonly a: unknown
-            } | {
-              readonly id: "test"
-              readonly _tag: "BB"
-              readonly b: unknown
-            }
+            AA | BB
           >
         >()
 
@@ -430,24 +375,7 @@ it(
         expectTypeOf(query7).toEqualTypeOf<
           QueryWhere<
             Union,
-            // unfortunately TS does not merge the first two
-            {
-              readonly id: string
-              readonly _tag: "AA"
-              readonly a: unknown
-            } | {
-              readonly id: "test"
-              readonly _tag: "AA"
-              readonly a: unknown
-            } | {
-              readonly id: "test"
-              readonly _tag: "CC"
-              readonly c: unknown
-            } | {
-              readonly id: "test"
-              readonly _tag: "DD"
-              readonly d: unknown
-            }
+            AA | CC | DD
           >
         >()
 
@@ -471,19 +399,7 @@ it(
         expectTypeOf(query9).toEqualTypeOf<
           QueryWhere<
             Union,
-            {
-              readonly id: string
-              readonly _tag: "BB"
-              readonly b: unknown
-            } | {
-              readonly id: "AA"
-              readonly a: unknown
-              readonly _tag: "AA"
-            } | {
-              readonly id: "test"
-              readonly _tag: "CC"
-              readonly c: unknown
-            }
+            AA | BB | CC
           >
         >()
 
@@ -500,15 +416,7 @@ it(
         )
         expectTypeOf(query10).toEqualTypeOf<
           QueryProjection<
-            {
-              readonly id: "AA"
-              readonly a: unknown
-              readonly _tag: "AA"
-            } | {
-              readonly id: "test"
-              readonly _tag: "BB"
-              readonly b: unknown
-            },
+            AA | BB,
             S.NonNegativeInt,
             never,
             "count"
@@ -528,15 +436,7 @@ it(
         )
         expectTypeOf(query11).toEqualTypeOf<
           QueryEnd<
-            {
-              readonly id: "AA"
-              readonly a: unknown
-              readonly _tag: "AA"
-            } | {
-              readonly id: "test"
-              readonly _tag: "BB"
-              readonly b: unknown
-            },
+            AA | BB,
             "one"
           >
         >()
