@@ -104,3 +104,9 @@ export type Merge<A, B> = {
     : K extends keyof B ? B[K]
     : never
 }
+
+export type Resolve<T> =
+  & {
+    [K in keyof T]: Resolve<T[K]>
+  }
+  & {}

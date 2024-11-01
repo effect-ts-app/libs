@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { expectTypeOf } from "@effect/vitest"
 import type { FieldValues } from "../fields.js"
-import type { BrowserNativeObject, Primitive } from "../utils.js"
+import type { BrowserNativeObject, Primitive, Resolve } from "../utils.js"
 
 import type { ArrayKey, IsTuple, TupleKeys } from "./common.js"
 
@@ -66,6 +67,7 @@ export type PathValue<T, P extends Path<T>> =
           : never
     : never
 /* dprint-ignore-end */
+
 /**
  * See {@link PathValue}
  */
@@ -73,6 +75,65 @@ export type FieldPathValue<
   TFieldValues extends FieldValues,
   TFieldPath extends FieldPath<TFieldValues>
 > = PathValue<TFieldValues, TFieldPath>
+
+/* dprint-ignore-start */
+export type SetPathValue<T, P extends Path<T>, X> =
+  T extends any
+    ? P extends `${infer K}.${infer R}`
+      ? K extends keyof T
+        ? R extends Path<T[K]>
+          ? { [_ in keyof T]: _ extends K ? SetPathValue<T[K], R, X> : T[_] }
+          : never
+        : K extends `${ArrayKey}`
+          ? T extends ReadonlyArray<infer V>
+            ? { [_ in keyof T]: SetPathValue<V, R & Path<V>, X> }
+            : never
+          : never
+      : P extends keyof T
+        ? { [_ in keyof T]: _ extends P ? X : T[_] }
+        : P extends `${ArrayKey}`
+          ? T extends ReadonlyArray<any>
+            ? { [_ in keyof T]: X }
+            : never
+          : never
+    : never
+/* dprint-ignore-end */
+
+/**
+ * See {@link PathValue}
+ */
+export type SetFieldPathValue<
+  TFieldValues extends FieldValues,
+  TFieldPath extends FieldPath<TFieldValues>,
+  X
+> = Resolve<SetPathValue<TFieldValues, TFieldPath, X>>
+
+export namespace SetFieldPathValueTests {
+  type test1 = SetFieldPathValue<{ foo: { bar: string[] } }, `foo.bar`, boolean>
+  expectTypeOf<test1>().toEqualTypeOf<{ foo: { bar: boolean } }>()
+
+  type test1a = SetFieldPathValue<{ foo: { bar: string[]; baz: 12 } }, `foo.bar`, boolean>
+  expectTypeOf<test1a>().toEqualTypeOf<{ foo: { bar: boolean; baz: 12 } }>()
+
+  type test2 = SetFieldPathValue<{ foo: { bar: string[] } }, `foo.bar.${number}`, boolean>
+  expectTypeOf<test2>().toEqualTypeOf<{ foo: { bar: boolean[] } }>()
+
+  type test2a = SetFieldPathValue<{ foo: { bar: readonly string[]; baz: 3 }; ban: 123 }, `foo.bar.${number}`, boolean>
+  expectTypeOf<test2a>().toEqualTypeOf<{ foo: { bar: readonly boolean[]; baz: 3 }; ban: 123 }>()
+
+  type test2b = SetFieldPathValue<
+    { foo: { bar: readonly { a: 1; b: 2 }[]; baz: 3 }; ban: 123 },
+    `foo.bar.${number}.b`,
+    "b"
+  >
+  expectTypeOf<test2b>().toEqualTypeOf<{ foo: { bar: readonly { a: 1; b: "b" }[]; baz: 3 }; ban: 123 }>()
+
+  type test3 = SetFieldPathValue<{ foo: ["a", "b"] }, `foo.0`, boolean>
+  expectTypeOf<test3>().toEqualTypeOf<{ foo: [boolean, "b"] }>()
+
+  type test3a = SetFieldPathValue<{ foo: [{ a: 123 }, "b"] }, `foo.0.a`, boolean>
+  expectTypeOf<test3a>().toEqualTypeOf<{ foo: [{ a: boolean }, "b"] }>()
+}
 
 /**
  * Type to evaluate the type which the given paths point to.
