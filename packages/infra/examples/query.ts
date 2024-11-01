@@ -64,24 +64,6 @@ class SomethingRepo extends Effect.Service<SomethingRepo>()("SomethingRepo", {
     )
 }
 
-// TODO patrick: this is fine but not for somethingRepo.query, but no error when commenting out the last project
-const expected = make<Union.Encoded>().pipe(
-  where("id", "Verona"),
-  and("_tag", "Something"),
-    or(
-      where("displayName", "Riley"),
-      and("n", "gt", "2021-01-01T00:00:00Z"), // TODO: work with To type translation, so Date?
-      and("_tag", "Something")
-    ),
-    order("displayName"),
-    page({ take: 1 }),
-    one,
-    project(S.Struct({
-      id: S.Literal("Verona"),
-      displayName: S.Literal("Riley", "Verona"),
-    }))
-)
-
 const program = Effect.gen(function*() {
   const somethingRepo = yield* SomethingRepo
   const r = yield* somethingRepo.query(
@@ -95,10 +77,7 @@ const program = Effect.gen(function*() {
     order("displayName"),
     page({ take: 1 }),
     one,
-    project(S.Struct({
-      id: S.Literal("Verona"),
-      displayName: S.Literal("Riley", "Verona"),
-    }))
+    project(S.Struct(Something.pick("id", "displayName")))
   )
 
   const r2 = yield* somethingRepo.query(

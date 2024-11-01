@@ -112,3 +112,7 @@ export type Resolve<T> =
   & unknown
 
 export type Cast<T, U> = T extends U ? T : U
+
+export type IsLiteral<T, True, False> = string extends T ? False : number extends T ? False : True
+
+export type Extends<T, U, True, False> = T extends U ? True : False

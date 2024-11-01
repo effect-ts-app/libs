@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { expectTypeOf } from "@effect/vitest"
 import type { FieldValues } from "../fields.js"
-import type { BrowserNativeObject, IsNever, Primitive } from "../utils.js"
+import type { BrowserNativeObject, Extends, IsLiteral, IsNever, Primitive } from "../utils.js"
 
 import type { ArrayKey, IsTuple, TupleKeys } from "./common.js"
 
@@ -120,18 +120,17 @@ export type RefinePathValue<T, P extends Path<T>, X, Exclde extends boolean = fa
           : never
       : P extends keyof T
         ? X extends T[P]
-          ? ({ [_ in keyof T]: _ extends P ? Exclde extends true ? Exclude<T[_], X> : X : T[_] }) extends infer $T
-            ? IsNever<$T[P & keyof $T]> extends true
-              ? never
-              : $T
-            : never
-          : Exclde extends true
-            ? T
-            : never
+          ? ({ [_ in keyof T]: _ extends P
+              ? Extends<Exclde, true, Exclude<T[_], X>, IsLiteral<T[_], X, Extends<X, null, null, NonNullable<T[_]>>>>
+              : T[_]
+            }) extends infer $T
+              ? Extends<IsNever<$T[P & keyof $T]>, true, never, $T>
+              : never
+          : Extends<Exclde, true, T, never>
         : P extends `${ArrayKey}`
           ? T extends ReadonlyArray<infer V>
             ? X extends V
-              ? { [_ in keyof T]: Exclde extends true ? Exclude<T[_], X> : X }
+              ? { [_ in keyof T]: Extends<Exclde, true,  Exclude<T[_], X>, IsLiteral<T[_], X, Extends<X, null, null, NonNullable<T[_]>>>> }
               : never
             : never
           : never
