@@ -77,6 +77,8 @@ const merge = (a: any, b: Array<any>) =>
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   a !== undefined && b.length ? S.Union(a, ...b) : a !== undefined ? a : b.length ? S.Union(...b) : S.Never
 
+type SchemaOrFields<T> = T extends S.Struct.Fields ? S.TypeLiteral<T, []> : T extends S.Schema.Any ? T : never
+
 export const makeRpcClient = <
   RequestConfig extends object,
   CTXMap extends Record<string, RPCContextMap.Any>,
@@ -86,7 +88,7 @@ export const makeRpcClient = <
   generalErrors?: GeneralErrors
 ) => {
   // Long way around Context/C extends etc to support actual jsdoc from passed in RequestConfig etc...
-  type Context = { success: S.Schema.Any; failure: S.Schema.Any }
+  type Context = { success: S.Schema.Any | S.Struct.Fields; failure: S.Schema.Any }
   function TaggedRequest<Self>(): {
     <Tag extends string, Payload extends S.Struct.Fields, C extends Context>(
       tag: Tag,
@@ -97,7 +99,7 @@ export const makeRpcClient = <
         Self,
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
-        typeof config["success"],
+        SchemaOrFields<typeof config["success"]>,
         JoinSchema<ExcludeFromTuple<[typeof config["failure"] | GetEffectError<CTXMap, C> | GeneralErrors], never>>
       >
       & { config: Omit<C, "success" | "failure"> }
@@ -110,7 +112,7 @@ export const makeRpcClient = <
         Self,
         Tag,
         { readonly _tag: S.tag<Tag> } & Payload,
-        typeof config["success"],
+        SchemaOrFields<typeof config["success"]>,
         JoinSchema<ExcludeFromTuple<[GetEffectError<CTXMap, C> | GeneralErrors], never>>
       >
       & { config: Omit<C, "success" | "failure"> }
@@ -161,7 +163,7 @@ export const makeRpcClient = <
       const req = S.TaggedRequest<Self>()(tag, {
         payload: fields,
         failure: merge(config?.failure, [...errorSchemas, generalErrors].filter(Boolean)),
-        success: config?.success ?? S.Void
+        success: config?.success ? S.isSchema(config.success) ? config.success : S.Struct(config.success) : S.Void
       })
       return class extends (Object.assign(req, { config }) as any) {
         constructor(a: any, b: any = true) {
