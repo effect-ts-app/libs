@@ -652,3 +652,21 @@ it("refine 3", () =>
       expectTypeOf(resQuer1).toEqualTypeOf<readonly AA[]>()
     })
     .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise))
+
+it("my test", () =>
+  Effect
+    .gen(function*() {
+      class AA extends S.Class<AA>()({
+        id: S.String,
+        as: S.Array(S.String)
+      }) {}
+
+      const repo = yield* makeRepo("test", AA, {})
+
+      const resQuer1 = yield* repo.query(
+        where("id", "in", ["id1", "id2"]),
+        and(`as.-1`, "startsWith", "a")
+      )
+      expectTypeOf(resQuer1).toEqualTypeOf<readonly AA[]>()
+    })
+    .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise))
