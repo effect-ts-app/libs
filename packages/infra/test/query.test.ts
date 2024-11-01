@@ -39,7 +39,7 @@ const q = make<Something.Encoded>()
     // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
     project(
       S.transformToOrFail(
-        S.Struct({ id: S.StringId, displayName: S.Literal("Verona", "Riley") }),
+        S.Struct(Struct.pick(Something.fields, "id", "displayName")),
         S.Struct(Struct.pick(Something.fields, "id", "displayName")),
         (_) => Effect.andThen(SomeService, _)
       )
@@ -131,7 +131,7 @@ it("works with repo", () =>
           // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
           project(
             S.transformToOrFail(
-              S.Struct({ displayName: S.String }),
+              S.Struct(Struct.pick(Something.fields, "displayName")),
               S.Struct(Struct.pick(Something.fields, "displayName")),
               (_) => Effect.andThen(SomeService, _)
             )
