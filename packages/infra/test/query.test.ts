@@ -36,9 +36,10 @@ const q = make<Something.Encoded>()
     ),
     order("displayName"),
     page({ take: 10 }),
+    // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
     project(
       S.transformToOrFail(
-        S.Struct({ id: S.StringId, displayName: S.String }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+        S.Struct({ id: S.StringId, displayName: S.Literal("Verona", "Riley") }),
         S.Struct(Struct.pick(Something.fields, "id", "displayName")),
         (_) => Effect.andThen(SomeService, _)
       )
@@ -84,7 +85,12 @@ it("works", () => {
   const interpreted = toFilter(q)
   console.log("interpreted", inspect(interpreted, undefined, 25))
 
-  const processed = memFilter(interpreted)(items.map((_) => S.encodeSync(Something)(_)))
+  const processed = memFilter(interpreted)(items.map((_) =>
+    S.encodeUnknownSync(S.Struct({
+      ...Something.omit("displayName"),
+      displayName: S.Literal("Verona", "Riley")
+    }))(_)
+  ))
 
   expect(processed).toEqual(items.slice(0, 2).toReversed().map(Struct.pick("id", "displayName")))
 })
@@ -112,8 +118,29 @@ it("works with repo", () =>
       const somethingRepo = yield* SomethingRepo
       yield* somethingRepo.saveAndPublish(items)
 
+      // TODO patrick: somethingRepo.query has some problems now that fields like displayName get refined
+      const q1works = make<Something.Encoded>().pipe(
+        () => q
+      )
+      const q2works = make<Something.Encoded>().pipe(
+        where("displayName", "Verona"),
+        or(
+          where("displayName", "Riley"),
+          and("n", "gt", "2021-01-01T00:00:00Z") // TODO: work with To type translation, so Date?
+        ),
+        order("displayName"),
+        page({ take: 10 }),
+        // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+        project(
+          S.transformToOrFail(
+            S.Struct({ displayName: S.Literal("Verona", "Riley") }),
+            S.Struct(Struct.pick(Something.fields, "displayName")),
+            (_) => Effect.andThen(SomeService, _)
+          )
+        )
+      )
+
       const q1 = yield* somethingRepo.query(() => q)
-      // same as above, but with the `flow` helper
       const q2 = yield* somethingRepo
         .query(
           where("displayName", "Verona"),
@@ -123,9 +150,10 @@ it("works with repo", () =>
           ),
           order("displayName"),
           page({ take: 10 }),
+          // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
           project(
             S.transformToOrFail(
-              S.Struct({ displayName: S.String }), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+              S.Struct({ displayName: S.Literal("Verona", "Riley") }),
               S.Struct(Struct.pick(Something.fields, "displayName")),
               (_) => Effect.andThen(SomeService, _)
             )
@@ -150,6 +178,27 @@ it("collect", () =>
       const somethingRepo = yield* SomethingRepo
       yield* somethingRepo.saveAndPublish(items)
 
+      // TODO patrick: the overload below is not working because of displayName: "Riley" I suppose
+      // it's not a project problem, but a somethingRepo.query problem because thisworks is working and refining as expected
+      const thisworks = make<Something.Encoded>().pipe(
+        where("displayName", "Riley"),
+        project(
+          S.transformTo(
+            // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+            S.encodedSchema(S.Struct({
+              ...Struct.pick(Something.fields, "n"),
+              displayName: S.Literal("Riley")
+            })),
+            S.typeSchema(S.Option(S.String)),
+            (_) =>
+              _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
+                ? Option.some(`${_.displayName}-${_.n}`)
+                : Option.none()
+          ),
+          "collect"
+        )
+      )
+
       expect(
         yield* somethingRepo
           .query(
@@ -157,8 +206,11 @@ it("collect", () =>
             // one,
             project(
               S.transformTo(
-                // TODO: sample case with narrowing down a union?
-                S.encodedSchema(S.Struct(Struct.pick(Something.fields, "displayName", "n"))), // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
+                S.encodedSchema(S.Struct({
+                  ...Struct.pick(Something.fields, "n"),
+                  displayName: S.Literal("Riley")
+                })),
                 S.typeSchema(S.Option(S.String)),
                 (_) =>
                   _.displayName === "Riley" && _.n === "2020-01-01T00:00:00.000Z"
@@ -170,6 +222,23 @@ it("collect", () =>
           )
       )
         .toEqual(["Riley-2020-01-01T00:00:00.000Z"])
+
+      // TODO patrick: check the type of alsothisworks
+      // the projection below isn't needed anymore :D (but it errors out probably because of a similar reason as above)
+      const alsothisworks = make<Something.Encoded>().pipe(
+        where("union._tag", "string")
+      )
+      expectTypeOf(alsothisworks).toEqualTypeOf<
+        QueryWhere<Something.Encoded, {
+          readonly id: string
+          readonly displayName: string
+          readonly n: string
+          readonly union: {
+            readonly _tag: "string"
+            readonly value: string
+          }
+        }>
+      >()
 
       expect(
         yield* somethingRepo
@@ -268,7 +337,13 @@ it(
           where("id", "bla"),
           and("_tag", "AA")
         )
-        expectTypeOf(query1).toEqualTypeOf<QueryWhere<Union, AA>>()
+        expectTypeOf(query1).toEqualTypeOf<
+          QueryWhere<Union, {
+            readonly id: "bla"
+            readonly _tag: "AA"
+            readonly a: unknown
+          }>
+        >()
 
         const query2 = make<Union>().pipe(
           where("_tag", "AA")
@@ -282,7 +357,20 @@ it(
             and("_tag", "BB")
           )
         )
-        expectTypeOf(query3).toEqualTypeOf<QueryWhere<Union, AA | BB>>()
+        expectTypeOf(query3).toEqualTypeOf<
+          QueryWhere<
+            Union,
+            {
+              readonly id: string
+              readonly _tag: "AA"
+              readonly a: unknown
+            } | {
+              readonly id: "test"
+              readonly _tag: "BB"
+              readonly b: unknown
+            }
+          >
+        >()
 
         const query3b = make<Union>().pipe(
           where("_tag", "AA"),
@@ -328,7 +416,29 @@ it(
             and("_tag", "neq", "BB")
           )
         )
-        expectTypeOf(query7).toEqualTypeOf<QueryWhere<Union, AA | CC | DD>>()
+        expectTypeOf(query7).toEqualTypeOf<
+          QueryWhere<
+            Union,
+            // unfortunately TS does not merge the first two
+            {
+              readonly id: string
+              readonly _tag: "AA"
+              readonly a: unknown
+            } | {
+              readonly id: "test"
+              readonly _tag: "AA"
+              readonly a: unknown
+            } | {
+              readonly id: "test"
+              readonly _tag: "CC"
+              readonly c: unknown
+            } | {
+              readonly id: "test"
+              readonly _tag: "DD"
+              readonly d: unknown
+            }
+          >
+        >()
 
         const query8 = make<Union>().pipe(
           where("_tag", "neq", "AA"),
@@ -347,7 +457,24 @@ it(
             )
           )
         )
-        expectTypeOf(query9).toEqualTypeOf<QueryWhere<Union, AA | BB | CC>>()
+        expectTypeOf(query9).toEqualTypeOf<
+          QueryWhere<
+            Union,
+            {
+              readonly id: string
+              readonly _tag: "BB"
+              readonly b: unknown
+            } | {
+              readonly id: "AA"
+              readonly a: unknown
+              readonly _tag: "AA"
+            } | {
+              readonly id: "test"
+              readonly _tag: "CC"
+              readonly c: unknown
+            }
+          >
+        >()
 
         const query10 = make<Union>().pipe(
           where("id", "AA"),
@@ -360,7 +487,22 @@ it(
           page({ take: 10 }),
           count
         )
-        expectTypeOf(query10).toEqualTypeOf<QueryProjection<AA | BB, S.NonNegativeInt, never, "count">>()
+        expectTypeOf(query10).toEqualTypeOf<
+          QueryProjection<
+            {
+              readonly id: "AA"
+              readonly a: unknown
+              readonly _tag: "AA"
+            } | {
+              readonly id: "test"
+              readonly _tag: "BB"
+              readonly b: unknown
+            },
+            S.NonNegativeInt,
+            never,
+            "count"
+          >
+        >()
 
         const query11 = make<Union>().pipe(
           where("id", "AA"),
@@ -373,7 +515,20 @@ it(
           page({ take: 10 }),
           one
         )
-        expectTypeOf(query11).toEqualTypeOf<QueryEnd<AA | BB, "one">>()
+        expectTypeOf(query11).toEqualTypeOf<
+          QueryEnd<
+            {
+              readonly id: "AA"
+              readonly a: unknown
+              readonly _tag: "AA"
+            } | {
+              readonly id: "test"
+              readonly _tag: "BB"
+              readonly b: unknown
+            },
+            "one"
+          >
+        >()
 
         expect([]).toEqual([])
       })
@@ -436,7 +591,16 @@ it(
           {}
         )
 
-        const result = yield* repo.query(where("id", "123"), project(schema))
+        const outputSchema = S.Struct({
+          id: S.Literal("123"),
+          createdAt: S
+            .optional(S.Date)
+            .pipe(
+              S.withDefaults({ constructor: () => new Date(), decoding: () => new Date() })
+            )
+        })
+
+        const result = yield* repo.query(where("id", "123"), project(outputSchema))
 
         expect(result).toEqual([])
       })
