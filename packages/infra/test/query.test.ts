@@ -522,7 +522,7 @@ it(
 )
 
 it(
-  "remove null",
+  "remove null 1",
   () =>
     Effect
       .gen(function*() {
@@ -558,6 +558,51 @@ it(
           readonly {
             readonly id: string
             readonly literals: "a" | "b" | "c"
+          }[]
+        >()
+
+        expect(result).toEqual([])
+      })
+      .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise)
+)
+
+it(
+  "remove null 2",
+  () =>
+    Effect
+      .gen(function*() {
+        const schema = S.Struct({
+          id: S.String,
+          literals: S.Union(S.String, S.Null)
+        })
+
+        type Schema = typeof schema.Type
+
+        const repo = yield* makeRepo(
+          "test",
+          schema,
+          {}
+        )
+
+        const expected = make<Schema>().pipe(
+          where("literals", "ciao")
+        )
+        expectTypeOf(expected).toEqualTypeOf<
+          QueryWhere<Schema, {
+            readonly id: string
+            readonly literals: string
+          }>
+        >()
+
+        const result = yield* repo.query(
+          where("literals", "neq", null)
+        )
+
+        // TODO patrick: result shouldn't have nulls, but repo.query is not refining the fields
+        expectTypeOf(result).toEqualTypeOf<
+          readonly {
+            readonly id: string
+            readonly literals: string
           }[]
         >()
 
