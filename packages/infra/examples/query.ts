@@ -63,7 +63,7 @@ class SomethingRepo extends Effect.Service<SomethingRepo>()("SomethingRepo", {
     )
 }
 
-// TODO patrick: this is fine but not for somethingRepo.query, but commenting out the last project is fine
+// TODO patrick: this is fine but not for somethingRepo.query, but no error when commenting out the last project
 const expected = make<Union.Encoded>().pipe(
   where("id", "Verona"),
   and("_tag", "Something"),
