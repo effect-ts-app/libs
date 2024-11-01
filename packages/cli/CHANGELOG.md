@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 1.4.1
+
+### Patch Changes
+
+- 412cb3d: update packages
+
 ## 1.4.0
 
 ### Minor Changes

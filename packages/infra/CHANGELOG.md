@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 2.15.2
+
+### Patch Changes
+
+- 412cb3d: update packages
+- Updated dependencies [ba1c7fc]
+- Updated dependencies [412cb3d]
+  - effect-app@2.8.0
+
 ## 2.15.1
 
 ### Patch Changes

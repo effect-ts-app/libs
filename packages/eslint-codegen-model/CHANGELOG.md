@@ -1,5 +1,11 @@
 # @effect-app/eslint-codegen-model
 
+## 1.24.1
+
+### Patch Changes
+
+- 412cb3d: update packages
+
 ## 1.24.0
 
 ### Minor Changes

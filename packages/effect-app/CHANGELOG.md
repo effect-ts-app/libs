@@ -1,5 +1,16 @@
 # @effect-app/prelude
 
+## 2.8.0
+
+### Minor Changes
+
+- ba1c7fc: feat: add support for specifying success fields directly.
+  closes #102
+
+### Patch Changes
+
+- 412cb3d: update packages
+
 ## 2.7.0
 
 ### Minor Changes
