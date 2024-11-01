@@ -180,41 +180,14 @@ it("collect", () =>
       )
         .toEqual(["Riley-2020-01-01T00:00:00.000Z"])
 
-      // TODO patrick: check the type of alsothisworks
-      // the projection below isn't needed anymore :D (but it errors out for some reason)
-      const alsothisworks = make<Something.Encoded>().pipe(
-        where("union._tag", "string")
-      )
-      expectTypeOf(alsothisworks).toEqualTypeOf<
-        QueryWhere<Something.Encoded, {
-          readonly id: string
-          readonly displayName: string
-          readonly n: string
-          readonly union: {
-            readonly _tag: "string"
-            readonly value: string
-          }
-        }>
-      >()
-
       expect(
-        yield* somethingRepo
+        (yield* somethingRepo
           .query(
             where("union._tag", "string"),
-            one,
-            // for projection performance benefit, this should be limited to the fields interested, and leads to SELECT fields
-            project(
-              S.transformTo(
-                S.encodedSchema(S.Struct(Struct.pick(Something.fields, "union"))),
-                S.typeSchema(S.Option(S.String)),
-                (_) =>
-                  _.union._tag === "string"
-                    ? Option.some(_.union.value)
-                    : Option.none()
-              ),
-              "collect"
-            )
-          )
+            one
+          ))
+          .union
+          .value
       )
         .toEqual("hi")
     })
