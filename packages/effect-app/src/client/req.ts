@@ -172,7 +172,10 @@ export const makeRpcClient = <
     ) => {
       const req = S.TaggedRequest<Self>()(tag, {
         payload: fields,
-        failure: merge(config?.failure, [...errorSchemas, generalErrors].filter(Boolean)),
+        failure: merge(
+          config?.failure ? S.isSchema(config.failure) ? config.failure : S.Struct(config.failure) : undefined,
+          [...errorSchemas, generalErrors].filter(Boolean)
+        ),
         success: config?.success ? S.isSchema(config.success) ? config.success : S.Struct(config.success) : S.Void
       })
       return class extends (Object.assign(req, { config }) as any) {
