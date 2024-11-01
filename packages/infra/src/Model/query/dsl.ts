@@ -8,7 +8,7 @@ import type { IsUnion } from "effect-app/utils"
 import type { Covariant } from "effect/Types"
 import type { Ops } from "../filter/filterApi.js"
 import type { FieldValues } from "../filter/types.js"
-import type { FieldPath, FieldPathValue } from "../filter/types/path/eager.js"
+import type { FieldPath, FieldPathValue, RefineFieldPathValue } from "../filter/types/path/eager.js"
 
 export type QAll<
   TFieldValues extends FieldValues,
@@ -417,6 +417,17 @@ export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
     : QueryWhere<TFieldValues, TFieldValuesRefined>
 }
 
+/* dprint-ignore-start */
+export type RefineWithLiteral<
+  TFieldValues extends FieldValues,
+  TFieldName extends FieldPath<TFieldValues>,
+  V
+> =
+  V extends string | number | boolean | null | bigint
+    ? RefineFieldPathValue<TFieldValues, TFieldName, V>
+    : TFieldValues
+/* dprint-ignore-end */
+
 export type FilteringRefinements<IsCurrentInitial extends boolean = false> = {
   <
     TFieldValues extends FieldValues,
@@ -440,12 +451,8 @@ export type FilteringRefinements<IsCurrentInitial extends boolean = false> = {
     >
     : QueryWhere<
       TFieldValues,
-      // TFieldValues[TFieldName] must be a union of string literals to let the refinement work
-      // and TFieldValuesRefined must not be a union
-      IsUnion<TFieldValuesRefined> extends false ? TFieldValues
-        : string extends TFieldValuesRefined[TFieldName] ? TFieldValuesRefined
-        : TFieldValuesRefined[TFieldName] extends string ? Extract<TFieldValuesRefined, { [K in TFieldName]: V }>
-        : TFieldValuesRefined
+      // @ts-expect-error it's TS
+      RefineWithLiteral<TFieldValuesRefined, TFieldName, V>
     >
   <
     TFieldValues extends FieldValues,
