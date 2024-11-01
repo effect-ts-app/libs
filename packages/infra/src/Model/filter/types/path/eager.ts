@@ -161,6 +161,13 @@ export namespace RefinePathValueTests {
   type test5 = RefineFieldPathValue<{ b: "tag1"; v1: unknown } | { b: "tag2"; v2: unknown }, "b", "tag1">
   expectTypeOf<test5>().toEqualTypeOf<{ b: "tag1"; v1: unknown }>()
 
+  type test6 = RefineFieldPathValue<
+    { a: { b: "tag1"; v1: string } | { b: "tag2"; v2: number } } | { something: "else " },
+    "a.b",
+    "tag2"
+  >
+  expectTypeOf<test6>().toEqualTypeOf<{ a: { b: "tag2"; v2: number } }>()
+
   type test1E = RefineFieldPathValue<{ a: { b: "tag1"; v1: string } | { b: "tag2"; v2: number } }, "a.b", "tag1", true>
   expectTypeOf<test1E>().toEqualTypeOf<{ a: { b: "tag2"; v2: number } }>()
 
@@ -175,6 +182,14 @@ export namespace RefinePathValueTests {
 
   type test5E = RefineFieldPathValue<{ b: "tag1"; v1: unknown } | { b: "tag2"; v2: unknown }, "b", "tag1", true>
   expectTypeOf<test5E>().toEqualTypeOf<{ b: "tag2"; v2: unknown }>()
+
+  type test6E = RefineFieldPathValue<
+    { a: { b: "tag1"; v1: string } | { b: "tag2"; v2: number } } | { something: "else " },
+    "a.b",
+    "tag2",
+    true
+  >
+  expectTypeOf<test6E>().toEqualTypeOf<{ a: { b: "tag1"; v1: string } }>()
 }
 
 export namespace SetFieldPathValueTests {
