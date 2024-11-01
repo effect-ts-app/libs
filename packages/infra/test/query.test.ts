@@ -261,6 +261,8 @@ it(
           d: S.Unknown
         }) {}
 
+        // const repo = yield* makeRepo("test", S.Union(AA, BB, CC, DD), {})
+
         type Union = AA | BB | CC | DD
 
         const query1 = make<Union>().pipe(
@@ -416,7 +418,7 @@ it(
 
         expect([]).toEqual([])
       })
-      .pipe(Effect.runPromise)
+      .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise)
 )
 
 it(
@@ -610,3 +612,43 @@ it(
       })
       .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise)
 )
+
+it("refine 3", () =>
+  Effect
+    .gen(function*() {
+      class AA extends S.Class<AA>()({
+        id: S.Literal("AA"),
+        a: S.Unknown
+      }) {}
+
+      class BB extends S.Class<BB>()({
+        id: S.Literal("BB"),
+        b: S.Unknown
+      }) {}
+
+      class CC extends S.Class<CC>()({
+        id: S.Literal("CC"),
+        c: S.Unknown
+      }) {}
+
+      class DD extends S.Class<DD>()({
+        id: S.Literal("DD"),
+        d: S.Unknown
+      }) {}
+
+      type Union = AA | BB | CC | DD
+
+      const repo = yield* makeRepo("test", S.Union(AA, BB, CC, DD), {})
+
+      const query1 = make<Union>().pipe(
+        where("id", "AA")
+      )
+
+      expectTypeOf(query1).toEqualTypeOf<QueryWhere<Union, AA>>()
+
+      const resQuer1 = repo.query(() => query1)
+
+      // TODO patrick: refinement not propagated from encoded to type
+      expectTypeOf(resQuer1).toEqualTypeOf<readonly AA[]>()
+    })
+    .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise))
