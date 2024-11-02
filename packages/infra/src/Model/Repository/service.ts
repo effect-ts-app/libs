@@ -2,6 +2,7 @@
 import type { Effect, Option, PubSub, S } from "effect-app"
 import type { InvalidStateError, NotFoundError, OptimisticConcurrencyException } from "effect-app/client"
 import type { NonNegativeInt } from "effect-app/Schema/numbers"
+import type { UnionToIntersection } from "effect-app/utils"
 import type { FieldValues } from "../filter/types.js"
 import type { QAll, Query, QueryProjection } from "../query.js"
 import type { Mapped } from "./legacy.js"
@@ -517,14 +518,20 @@ type NullableRefined<T, EncodedRefined> = {
     : T[k]
 }
 
+type A = { id: "1" }
+type B = { id: "2" }
+type C = A | B
+type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true
+type D = IsUnion<C["id"]>
+
 type ExtractTagged<T, EncodedRefined> = EncodedRefined extends { _tag: any }
-  ? T extends { _tag: any } ? NullableRefined<Extract<T, { _tag: EncodedRefined["_tag"] }>, EncodedRefined>
+  ? T extends { _tag: any } ? Extract<T, { _tag: EncodedRefined["_tag"] }>
   : T
   : T
 
 // TODO: only when the id is a union?
 type ExtractIded<T, EncodedRefined> = EncodedRefined extends { id: any }
-  ? T extends { id: any } ? NullableRefined<Extract<T, { id: EncodedRefined["id"] }>, EncodedRefined>
+  ? T extends { id: any } ? Extract<T, { id: EncodedRefined["id"] }>
   : T
   : T
 
