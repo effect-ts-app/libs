@@ -239,8 +239,11 @@ it(
     Effect
       .gen(function*() {
         const repo = yield* makeRepo("test", TestUnion, {})
-        const result = (yield* repo.query(where("id", "123"), and("_tag", "animal"))) satisfies readonly Animal[]
-        const result2 = (yield* repo.query(where("_tag", "animal"))) satisfies readonly Animal[]
+        const result = yield* repo.query(where("id", "123"), and("_tag", "animal"))
+        const result2 = yield* repo.query(where("_tag", "animal"))
+
+        expectTypeOf(result).toEqualTypeOf<readonly Animal[]>()
+        expectTypeOf(result2).toEqualTypeOf<readonly Animal[]>()
 
         expect(result).toEqual([])
         expect(result2).toEqual([])
@@ -460,14 +463,20 @@ it(
 
         type Union = AA | BB | CC | DD
 
+        const repo = yield* makeRepo("test", S.Union(AA, BB, CC, DD), {})
+
         const query1 = make<Union>().pipe(
           where("id", "AA")
         )
         expectTypeOf(query1).toEqualTypeOf<QueryWhere<Union, AA>>()
 
+        const res = yield* repo.query(() => query1)
+
+        expectTypeOf(res).toEqualTypeOf<readonly AA[]>()
+
         expect([]).toEqual([])
       })
-      .pipe(Effect.runPromise)
+      .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise)
 )
 
 it(
