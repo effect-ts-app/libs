@@ -555,7 +555,6 @@ it(
           where("literals", "neq", null)
         )
 
-        // TODO patrick: result shouldn't have nulls, but repo.query is not refining the fields
         expectTypeOf(result).toEqualTypeOf<
           readonly {
             readonly id: string
@@ -600,7 +599,6 @@ it(
           where("literals", "neq", null)
         )
 
-        // TODO patrick: result shouldn't have nulls, but repo.query is not refining the fields
         expectTypeOf(result).toEqualTypeOf<
           readonly {
             readonly id: string
@@ -646,7 +644,7 @@ it("refine 3", () =>
 
       expectTypeOf(query1).toEqualTypeOf<QueryWhere<Union, AA>>()
 
-      const resQuer1 = repo.query(() => query1)
+      const resQuer1 = repo.query(where("id", "AA"))
 
       // TODO patrick: refinement not propagated from encoded to type
       expectTypeOf(resQuer1).toEqualTypeOf<readonly AA[]>()

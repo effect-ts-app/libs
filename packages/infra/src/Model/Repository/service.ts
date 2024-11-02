@@ -510,7 +510,14 @@ export interface Repository<
   readonly mapped: Mapped<Encoded>
 }
 
+type NullableRefined<T, EncodedRefined> = {
+  [k in keyof T]: k extends keyof EncodedRefined ? [null] extends [T[k]] ? [null] extends [EncodedRefined[k]] ? T[k]
+      : Exclude<T[k], null>
+    : T[k]
+    : T[k]
+}
+
 export type RefineTHelper<T, EncodedRefined> = EncodedRefined extends { _tag: any }
-  ? T extends { _tag: any } ? Extract<T, { _tag: EncodedRefined["_tag"] }>
-  : T
-  : T
+  ? T extends { _tag: any } ? NullableRefined<Extract<T, { _tag: EncodedRefined["_tag"] }>, EncodedRefined>
+  : NullableRefined<T, EncodedRefined>
+  : NullableRefined<T, EncodedRefined>
