@@ -42,7 +42,7 @@ export interface Repository<
     >(
       q: (
         initial: Query<Encoded>
-      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      ) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -61,7 +61,7 @@ export interface Repository<
       ) => $A,
       q2: (
         _: $A
-      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      ) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -82,7 +82,7 @@ export interface Repository<
       q2: (_: $A) => $B,
       q3: (
         _: $B
-      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      ) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -105,7 +105,7 @@ export interface Repository<
       q3: (_: $B) => $C,
       q4: (
         _: $C
-      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      ) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -130,7 +130,7 @@ export interface Repository<
       q4: (_: $C) => $D,
       q5: (
         _: $D
-      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      ) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -155,7 +155,7 @@ export interface Repository<
       q3: (_: $B) => $C,
       q4: (_: $C) => $D,
       q5: (_: $D) => $E,
-      q6: (_: $E) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      q6: (_: $E) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -182,7 +182,7 @@ export interface Repository<
       q4: (_: $C) => $D,
       q5: (_: $D) => $E,
       q6: (_: $E) => $F,
-      q7: (_: $F) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      q7: (_: $F) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -211,7 +211,7 @@ export interface Repository<
       q5: (_: $D) => $E,
       q6: (_: $E) => $F,
       q7: (_: $F) => $G,
-      q8: (_: $G) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      q8: (_: $G) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -242,7 +242,7 @@ export interface Repository<
       q6: (_: $E) => $F,
       q7: (_: $F) => $G,
       q8: (_: $G) => $H,
-      q9: (_: $H) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      q9: (_: $H) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -275,7 +275,7 @@ export interface Repository<
       q7: (_: $F) => $G,
       q8: (_: $G) => $H,
       q9: (_: $H) => $I,
-      q10: (_: $I) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      q10: (_: $I) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
