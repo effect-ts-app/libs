@@ -668,7 +668,6 @@ it("remove null from one constituent of a tagged union", () =>
 
       const resQuer1 = yield* repo.query(() => query1)
 
-      // TODO patrick: refinement not propagated from encoded to type
       expectTypeOf(resQuer1).toEqualTypeOf<
         readonly ({
           readonly id: "AA"
@@ -715,8 +714,6 @@ it("refine 3", () =>
       expectTypeOf(query1).toEqualTypeOf<QueryWhere<Union, AA>>()
 
       const resQuer1 = yield* repo.query(where("id", "AA"))
-
-      // TODO patrick: refinement not propagated from encoded to type
       expectTypeOf(resQuer1).toEqualTypeOf<readonly AA[]>()
     })
     .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise))
