@@ -202,7 +202,6 @@ it("collect", () =>
         one,
         project(
           S.Struct({
-            ...Something.pick("id", "displayName", "n"),
             union: S.Struct({
               _tag: S.Literal("string"),
               value: S.String
