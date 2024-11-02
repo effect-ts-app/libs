@@ -180,16 +180,28 @@ it("collect", () =>
       )
         .toEqual(["Riley-2020-01-01T00:00:00.000Z"])
 
-      expect(
-        (yield* somethingRepo
-          .query(
-            where("union._tag", "string"),
-            one
-          ))
-          .union
-          .value
+      const queryRes = make<Something.Encoded>().pipe(
+        where("union._tag", "string"),
+        one
       )
-        .toEqual("hi")
+
+      expectTypeOf(queryRes).toEqualTypeOf<
+        QueryEnd<{
+          readonly id: string
+          readonly displayName: string
+          readonly n: string
+          readonly union: {
+            readonly _tag: "string"
+            readonly value: string
+          }
+        }, "one">
+      >()
+
+      const fromRepo = yield* somethingRepo.query(() => queryRes)
+      const value = fromRepo.union.value
+
+      expectTypeOf(value).toEqualTypeOf<string>()
+      expect(value).toEqual("hi")
     })
     .pipe(Effect.provide(Layer.mergeAll(SomethingRepo.Test, SomeService.toLayer())), Effect.runPromise))
 
