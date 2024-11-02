@@ -197,7 +197,19 @@ it("collect", () =>
         }, "one">
       >()
 
-      const fromRepo = yield* somethingRepo.query(() => queryRes)
+      const fromRepo = yield* somethingRepo.query(
+        where("union._tag", "string"),
+        one,
+        project(
+          S.Struct({
+            ...Something.pick("id", "displayName", "n"),
+            union: S.Struct({
+              _tag: S.Literal("string"),
+              value: S.String
+            })
+          })
+        )
+      )
       const value = fromRepo.union.value
 
       expectTypeOf(value).toEqualTypeOf<string>()
