@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { expectTypeOf } from "@effect/vitest"
 import type { FieldValues } from "../fields.js"
-import type { BrowserNativeObject, Extends, IsLiteral, IsNever, Primitive } from "../utils.js"
+import type { BrowserNativeObject, Equals, IsLiteral, IsNever, Primitive } from "../utils.js"
 
 import type { ArrayKey, IsTuple, TupleKeys } from "./common.js"
 
@@ -106,8 +106,9 @@ export type SetFieldPathValue<
 > = SetPathValue<TFieldValues, TFieldPath, X>
 
 /* dprint-ignore-start */
-export type RefinePathValue<T, P extends Path<T>, X, Exclde extends boolean = false> =
+export type RefinePathValue<T, P extends Path<T>, X extends string | number | boolean | null | bigint, Exclde extends boolean = false> =
   T extends any
+    // recursive cases
     ? P extends `${infer K}.${infer R}`
       ? K extends keyof T
         ? R extends Path<T[K]>
@@ -118,19 +119,30 @@ export type RefinePathValue<T, P extends Path<T>, X, Exclde extends boolean = fa
             ? { [_ in keyof T]: RefinePathValue<V, R & Path<V>, X, Exclde> }
             : never
           : never
+      // base cases
       : P extends keyof T
         ? X extends T[P]
           ? ({ [_ in keyof T]: _ extends P
-              ? Extends<Exclde, true, Exclude<T[_], X>, IsLiteral<T[_], X, Extends<X, null, null, NonNullable<T[_]>>>>
+              ? Equals<
+                  Exclde,
+                  true,
+                  Exclude<T[_], X>,
+                  IsLiteral<T[_], X, Equals<X, null, null, NonNullable<T[_]>>>
+                >
               : T[_]
             }) extends infer $T
-              ? Extends<IsNever<$T[P & keyof $T]>, true, never, $T>
+              ? Equals<IsNever<$T[P & keyof $T]>, true, never, $T>
               : never
-          : Extends<Exclde, true, T, never>
+          : Equals<Exclde, true, T, never>
         : P extends `${ArrayKey}`
           ? T extends ReadonlyArray<infer V>
             ? X extends V
-              ? { [_ in keyof T]: Extends<Exclde, true,  Exclude<T[_], X>, IsLiteral<T[_], X, Extends<X, null, null, NonNullable<T[_]>>>> }
+              ? { [_ in keyof T]: Equals<
+                  Exclde,
+                  true,
+                  Exclude<T[_], X>,
+                  IsLiteral<T[_], X, Equals<X, null, null, NonNullable<T[_]>>>
+                > }
               : never
             : never
           : never
@@ -140,7 +152,7 @@ export type RefinePathValue<T, P extends Path<T>, X, Exclde extends boolean = fa
 export type RefineFieldPathValue<
   TFieldValues extends FieldValues,
   TFieldPath extends FieldPath<TFieldValues>,
-  X,
+  X extends string | number | boolean | null | bigint,
   Exclde extends boolean = false
 > = RefinePathValue<TFieldValues, TFieldPath, X, Exclde>
 

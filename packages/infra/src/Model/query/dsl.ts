@@ -423,7 +423,7 @@ export type RefineWithLiteral<
   V,
   Exclde extends boolean = false
 > =
-// refine only if the value is a literal
+  // refine only if the value is a primitive
   V extends string | number | boolean | null | bigint
     ? RefineFieldPathValue<TFieldValues, TFieldName, V, Exclde>
     : TFieldValues
