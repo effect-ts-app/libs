@@ -644,7 +644,7 @@ it("refine 3", () =>
 
       expectTypeOf(query1).toEqualTypeOf<QueryWhere<Union, AA>>()
 
-      const resQuer1 = repo.query(where("id", "AA"))
+      const resQuer1 = yield* repo.query(where("id", "AA"))
 
       // TODO patrick: refinement not propagated from encoded to type
       expectTypeOf(resQuer1).toEqualTypeOf<readonly AA[]>()
