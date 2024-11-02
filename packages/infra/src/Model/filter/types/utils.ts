@@ -111,6 +111,12 @@ export type Resolve<T> =
   }
   & unknown
 
+export type ResolveFirstLevel<T> =
+  & {
+    [K in keyof T]: T[K]
+  }
+  & unknown
+
 export type Cast<T, U> = T extends U ? T : U
 
 export type IsLiteral<T, True, False> = string extends T ? False : number extends T ? False : True

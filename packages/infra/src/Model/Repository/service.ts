@@ -2,7 +2,7 @@
 import type { Effect, Option, PubSub, S } from "effect-app"
 import type { InvalidStateError, NotFoundError, OptimisticConcurrencyException } from "effect-app/client"
 import type { NonNegativeInt } from "effect-app/Schema/numbers"
-import type { FieldValues } from "../filter/types.js"
+import type { FieldValues, ResolveFirstLevel } from "../filter/types.js"
 import type { QAll, Query, QueryProjection } from "../query.js"
 import type { Mapped } from "./legacy.js"
 
@@ -527,7 +527,9 @@ type ExtractIded<T, EncodedRefined> = EncodedRefined extends { id: any }
   : T
   : T
 
-export type RefineTHelper<T, EncodedRefined> = NullableRefined<
-  ExtractIded<ExtractTagged<T, EncodedRefined>, EncodedRefined>,
-  EncodedRefined
+export type RefineTHelper<T, EncodedRefined> = ResolveFirstLevel<
+  NullableRefined<
+    ExtractIded<ExtractTagged<T, EncodedRefined>, EncodedRefined>,
+    EncodedRefined
+  >
 >
