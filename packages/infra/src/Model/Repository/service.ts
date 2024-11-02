@@ -517,13 +517,13 @@ type NullableRefined<T, EncodedRefined> = {
     : T[k]
 }
 
-type ExtractTagged<T, EncodedRefined> = EncodedRefined extends { _tag: any }
-  ? T extends { _tag: any } ? NullableRefined<Extract<T, { _tag: EncodedRefined["_tag"] }>, EncodedRefined>
+type ExtractTagged<T, EncodedRefined> = EncodedRefined extends { _tag: string }
+  ? T extends { _tag: string } ? Extract<T, { _tag: EncodedRefined["_tag"] }>
   : T
   : T
 
-type ExtractIded<T, EncodedRefined> = EncodedRefined extends { id: any }
-  ? T extends { id: any } ? NullableRefined<Extract<T, { id: EncodedRefined["id"] }>, EncodedRefined>
+type ExtractIded<T, EncodedRefined> = EncodedRefined extends { id: string }
+  ? T extends { id: string } ? Extract<T, { id: EncodedRefined["id"] }>
   : T
   : T
 
