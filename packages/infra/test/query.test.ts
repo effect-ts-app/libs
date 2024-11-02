@@ -632,6 +632,55 @@ it(
       .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise)
 )
 
+it("remove null from one constituent of a tagged union", () =>
+  Effect
+    .gen(function*() {
+      class AA extends S.Class<AA>()({
+        id: S.Literal("AA"),
+        a: S.String
+      }) {}
+
+      class BB extends S.Class<BB>()({
+        id: S.Literal("BB"),
+        b: S.NullOr(S.Number)
+      }) {}
+
+      type Union = AA | BB
+
+      const repo = yield* makeRepo("test", S.Union(AA, BB), {})
+
+      const query1 = make<Union>().pipe(
+        where("id", "AA"),
+        or(
+          where("b", "neq", null)
+        )
+      )
+
+      expectTypeOf(query1).toEqualTypeOf<
+        QueryWhere<
+          Union,
+          AA | {
+            readonly id: "BB"
+            readonly b: number
+          }
+        >
+      >()
+
+      const resQuer1 = yield* repo.query(() => query1)
+
+      // TODO patrick: refinement not propagated from encoded to type
+      expectTypeOf(resQuer1).toEqualTypeOf<
+        readonly ({
+          readonly id: "AA"
+          readonly a: string
+        } | {
+          readonly id: "BB"
+          readonly b: number
+        })[]
+      >()
+    })
+    .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise))
+
 it("refine 3", () =>
   Effect
     .gen(function*() {
