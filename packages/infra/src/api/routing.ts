@@ -7,7 +7,7 @@ TODO: uninteruptible commands! was for All except GET.
 */
 import type * as HttpApp from "@effect/platform/HttpApp"
 import { Rpc, RpcRouter } from "@effect/rpc"
-import type { NonEmptyArray } from "effect-app"
+import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
 import { Array, Cause, Chunk, Context, Effect, FiberRef, flow, Layer, Predicate, S, Schema, Stream } from "effect-app"
 import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
@@ -287,18 +287,65 @@ export const makeRouter = <
 
     type Keys = keyof Filtered
 
+    type GetSuccess<Layers extends ReadonlyArray<Layer.Layer.Any>> = Layers extends
+      NonEmptyReadonlyArray<Layer.Layer.Any> ? {
+        [k in keyof Layers]: Layer.Layer.Success<Layers[k]>
+      }[number]
+      : never
+
+    type GetError<Layers extends ReadonlyArray<Layer.Layer.Any>> = Layers extends NonEmptyReadonlyArray<Layer.Layer.Any>
+      ? { [k in keyof Layers]: Layer.Layer.Error<Layers[k]> }[number]
+      : never
+
     const effect: {
       <
         E,
         R,
+        Make extends (
+          requests: RouteMatcher<CTXMap, Rsc, Context>
+        ) => Effect<
+          { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+          any,
+          Strict extends true ? GetSuccess<TLayers> : any
+        >,
         THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-        TLayers extends Array<Layer.Layer.Any>,
+        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
         Strict extends boolean = true
       >(
-        layers: Strict extends true
-          ? { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number] extends R ? TLayers
-          : "You're missing dependencies specified"
-          : TLayers,
+        layers: TLayers,
+        make: Make & ((requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>),
+        strict?: Strict
+      ): {
+        moduleName: ModuleName
+        Router: HttpRouter.HttpRouter.TagClass<
+          RouterShape<Rsc>,
+          `${ModuleName}Router`,
+          never,
+          | Exclude<Context, HttpRouter.HttpRouter.Provided>
+          | Exclude<
+            RPCRouteR<
+              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+            >,
+            HttpRouter.HttpRouter.Provided
+          >
+        >
+        routes: Layer.Layer<
+          RouterShape<Rsc>,
+          Effect.Error<ReturnType<Make>> | GetError<TLayers>,
+          Exclude<R | RMW, GetSuccess<TLayers>>
+        >
+      }
+      <
+        E,
+        R,
+        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
+        Strict extends boolean = true
+      >(
+        layers: [
+          ...TLayers,
+          Layer.Layer<Exclude<R, GetSuccess<TLayers>>, never, never>
+        ],
         make: (requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>,
         strict?: Strict
       ): {
@@ -317,12 +364,8 @@ export const makeRouter = <
         >
         routes: Layer.Layer<
           RouterShape<Rsc>,
-          E | TLayers extends never[] ? never : { [k in keyof TLayers]: Layer.Layer.Error<TLayers[k]> }[number],
-          Exclude<
-            RMW | R,
-            | { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
-            | TLayers extends never[] ? never : { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
-          >
+          E | GetError<TLayers>,
+          Exclude<R | RMW, GetSuccess<TLayers>>
         >
       }
     } = (<
