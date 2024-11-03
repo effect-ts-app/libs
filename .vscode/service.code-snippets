@@ -6,6 +6,7 @@
       "  dependencies: [$3],",
       "  effect: Effect.gen(function*() {",
       "    $2",
+      "    return {}",
       "  })",
       "}) {}",
     ]
