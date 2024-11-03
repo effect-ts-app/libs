@@ -8,7 +8,7 @@ TODO: uninteruptible commands! was for All except GET.
 import type * as HttpApp from "@effect/platform/HttpApp"
 import { Rpc, RpcRouter } from "@effect/rpc"
 import type { NonEmptyArray } from "effect-app"
-import { Cause, Chunk, Context, Effect, FiberRef, flow, Layer, Predicate, S, Schema, Stream } from "effect-app"
+import { Array, Cause, Chunk, Context, Effect, FiberRef, flow, Layer, Predicate, S, Schema, Stream } from "effect-app"
 import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
 import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
@@ -287,14 +287,58 @@ export const makeRouter = <
 
     type Keys = keyof Filtered
 
-    const effect = <
+    const effect: {
+      <
+        E,
+        R,
+        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+        TLayers extends Array<Layer.Layer.Any>,
+        Strict extends boolean = true
+      >(
+        layers: Strict extends true
+          ? { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number] extends R ? TLayers
+          : "You're missing dependencies specified"
+          : TLayers,
+        make: (requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>,
+        strict?: Strict
+      ): {
+        moduleName: ModuleName
+        Router: HttpRouter.HttpRouter.TagClass<
+          RouterShape<Rsc>,
+          `${ModuleName}Router`,
+          never,
+          | Exclude<Context, HttpRouter.HttpRouter.Provided>
+          | Exclude<
+            RPCRouteR<
+              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+            >,
+            HttpRouter.HttpRouter.Provided
+          >
+        >
+        routes: Layer.Layer<
+          RouterShape<Rsc>,
+          E | TLayers extends never[] ? never : { [k in keyof TLayers]: Layer.Layer.Error<TLayers[k]> }[number],
+          TLayers extends never[] ? RMW | R
+            :
+              | { [k in keyof TLayers]: Layer.Layer.Context<TLayers[k]> }[number]
+              | Exclude<
+                RMW,
+                { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
+              >
+              | Exclude<
+                R,
+                { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
+              >
+        >
+      }
+    } = (<
       E,
       R,
       THandlers extends {
         // import to keep them separate via | for type checking!!
         [K in Keys]: AHandler<Rsc[K]>
       },
-      TLayers extends NonEmptyArray<Layer.Layer.Any>
+      TLayers extends Array<Layer.Layer.Any>
     >(
       layers: TLayers,
       make: (requests: typeof items) => Effect<THandlers, E, R>
@@ -429,7 +473,7 @@ export const makeRouter = <
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       const routes = layer.pipe(
         Layer.provideMerge(r.Live),
-        layers ? Layer.provide(layers) as any : (_) => _,
+        layers && Array.isNonEmptyReadonlyArray(layers) ? Layer.provide(layers as any) as any : (_) => _,
         // TODO: only provide to the middleware?
         middleware.dependencies ? Layer.provide(middleware.dependencies as any) : (_) => _
       ) as Layer.Layer<
@@ -449,7 +493,7 @@ export const makeRouter = <
         Router: r,
         routes
       }
-    }
+    }) as any
 
     return effect
   }

@@ -11,6 +11,8 @@ import { curry } from "./Function.js"
 import { type Context, HashMap } from "./index.js"
 import { typedKeysOf } from "./utils.js"
 
+export { ServiceStrict as Service } from "effect/Effect"
+
 export * from "effect/Effect"
 
 /**

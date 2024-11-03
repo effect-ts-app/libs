@@ -11,6 +11,7 @@ export class OperationsRepo extends Effect.Service<OperationsRepo>()(
           allowNamespace: () => true
         }
       })
-    })
+    }),
+    strict: false
   }
 ) {}
