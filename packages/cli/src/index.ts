@@ -252,6 +252,7 @@ switch (cmd) {
 
     await askQuestion("Are you sure you want to sync snippets")
     await sync()
+    process.exit(0)
   }
 }
 
