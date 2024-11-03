@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.16.7
+
+### Patch Changes
+
+- 3607853: more refinements for queries
+
 ## 2.16.6
 
 ### Patch Changes
