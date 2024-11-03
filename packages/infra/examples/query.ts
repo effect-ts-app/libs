@@ -52,7 +52,8 @@ const items = [
 class SomethingRepo extends Effect.Service<SomethingRepo>()("SomethingRepo", {
   effect: Effect.gen(function*() {
     return yield* makeRepo("Union", Union, {})
-  })
+  }),
+  dependencies: [MemoryStoreLive]
 }) {
   static readonly Test = Layer
     .effect(
