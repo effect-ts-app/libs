@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 1.5.1
+
+### Patch Changes
+
+- 31c79d7: exit
+
 ## 1.5.0
 
 ### Minor Changes
