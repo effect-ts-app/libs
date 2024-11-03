@@ -315,7 +315,7 @@ export const makeRouter = <
       TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[]
     >(
       layers: TLayers,
-      make: (requests: typeof items) => Effect<THandlers, E, R>
+      make: Effect<THandlers, E, R>
     ) => {
       type ProvidedLayers =
         | { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
@@ -336,7 +336,7 @@ export const makeRouter = <
 
       const layer = r.use((router) =>
         Effect.gen(function*() {
-          const controllers = yield* make(items)
+          const controllers = yield* make
           const rpc = yield* makeRpc(middleware)
 
           // return make.pipe(Effect.map((c) => controllers(c, layers)))
