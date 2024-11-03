@@ -171,8 +171,8 @@ export class SomethingService2 extends Effect.Service<SomethingService2>()("Some
   })
 }) {}
 
-const { handle, routes } = matchFor(Something)
-export const r = handle({
+const r = matchFor(Something)
+export const routes = r({
   dependencies: [
     SomethingRepo.Default,
     SomethingService.Default,
@@ -185,7 +185,7 @@ export const r = handle({
 
     console.log({ repo, smth, smth2 })
 
-    const { GetSomething, GetSomethingElse } = routes
+    const { GetSomething, GetSomethingElse } = r
     return {
       GetSomething: GetSomething(Effect.void),
       GetSomethingElse: GetSomethingElse(Effect.succeed("12"))

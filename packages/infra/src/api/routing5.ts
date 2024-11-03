@@ -651,7 +651,7 @@ export const makeRouter = <
       }
     } = f as any
 
-    return { handle: effect, routes: items }
+    return Object.assign(effect, items)
   }
 
   type HR<T> = T extends HttpRouter.HttpRouter<any, infer R> ? R : never
