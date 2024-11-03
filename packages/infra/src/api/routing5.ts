@@ -649,7 +649,7 @@ export const makeRouter = <
         // >
         routes: any
       }
-    } = f as any
+    } = ((m: { dependencies: any; effect: any; strict?: any }) => f(m.dependencies, m.effect)) as any
 
     return Object.assign(effect, items)
   }
