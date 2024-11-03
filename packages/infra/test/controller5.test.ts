@@ -171,8 +171,7 @@ export class SomethingService2 extends Effect.Service<SomethingService2>()("Some
   })
 }) {}
 
-const r = matchFor(Something)
-export const routes = r({
+export const routes = matchFor(Something)({
   dependencies: [
     SomethingRepo.Default,
     SomethingService.Default,
@@ -185,7 +184,7 @@ export const routes = r({
 
     console.log({ repo, smth, smth2 })
 
-    const { GetSomething, GetSomethingElse } = r
+    const { GetSomething, GetSomethingElse } = matchFor(Something)
     return {
       GetSomething: GetSomething(Effect.void),
       GetSomethingElse: GetSomethingElse(Effect.succeed("12"))
