@@ -254,7 +254,7 @@ export const count: {
 export const project: {
   <
     Q extends Query<any> | QueryWhere<any, any> | QueryEnd<any, "one" | "many">,
-    I extends Partial<ExtractFieldValuesRefined<Q>> = ExtractFieldValuesRefined<Q>,
+    I,
     A = ExtractFieldValuesRefined<Q>,
     R = never
   >(
@@ -272,7 +272,7 @@ export const project: {
 
   <
     Q extends Query<any> | QueryWhere<any, any> | QueryEnd<any, "one" | "many">,
-    I extends Partial<ExtractFieldValuesRefined<Q>> = ExtractFieldValuesRefined<Q>,
+    I,
     A = ExtractFieldValuesRefined<Q>,
     R = never
   >(
@@ -289,7 +289,7 @@ export const project: {
   ) => QueryProjection<ExtractFieldValuesRefined<Q>, A, R, ExtractTType<Q>>
   <
     Q extends Query<any> | QueryWhere<any, any> | QueryEnd<any, "one" | "many">,
-    I extends Partial<ExtractFieldValuesRefined<Q>> = ExtractFieldValuesRefined<Q>,
+    I,
     A = ExtractFieldValuesRefined<Q>,
     R = never
   >(

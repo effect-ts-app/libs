@@ -747,3 +747,78 @@ it("my test", () =>
       expectTypeOf(resQuer1).toEqualTypeOf<readonly AA[]>()
     })
     .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise))
+
+it("refine inner without imposing a projection", () =>
+  Effect
+    .gen(function*() {
+      class AA extends S.TaggedClass<AA>()("AA", {
+        a: S.Unknown
+      }) {}
+
+      class BB extends S.TaggedClass<BB>()("BB", {
+        b: S.Unknown
+      }) {}
+
+      class Data extends S.Class<Data>()({
+        id: S.String,
+        union: S.Union(AA, BB)
+      }) {}
+
+      const repo = yield* makeRepo("data", Data, {})
+
+      const query1 = make<Data>().pipe(
+        where("union._tag", "AA"),
+        // I can refine the overall output by providing a proper projection
+        // that mimics the internal refinement of the encoding type
+        project(S.Struct({ union: AA }))
+      )
+      expectTypeOf(query1).toEqualTypeOf<
+        QueryProjection<
+          {
+            readonly id: string
+            readonly union: AA
+          },
+          {
+            readonly union: AA
+          },
+          never,
+          "many"
+        >
+      >()
+
+      const query2 = make<Data>().pipe(
+        where("union._tag", "AA"),
+        // But if I wanna the whole Data as output ignoring the inner refinement
+        // I wanna be able to do so
+        project(S.Struct(Data.pick("union")))
+      )
+
+      expectTypeOf(query2).toEqualTypeOf<
+        QueryProjection<
+          {
+            readonly id: string
+            readonly union: AA
+          },
+          {
+            readonly union: AA | BB
+          },
+          never,
+          "many"
+        >
+      >()
+
+      const resQuer1 = yield* repo.query(() => query1)
+      expectTypeOf(resQuer1).toEqualTypeOf<
+        readonly {
+          readonly union: AA
+        }[]
+      >()
+
+      const resQuer2 = yield* repo.query(() => query2)
+      expectTypeOf(resQuer2).toEqualTypeOf<
+        readonly {
+          readonly union: AA | BB
+        }[]
+      >()
+    })
+    .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise))
