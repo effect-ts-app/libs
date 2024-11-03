@@ -293,6 +293,12 @@ export const makeRouter = <
       }[number]
       : never
 
+    type GetContext<Layers extends ReadonlyArray<Layer.Layer.Any>> = Layers extends
+      NonEmptyReadonlyArray<Layer.Layer.Any> ? {
+        [k in keyof Layers]: Layer.Layer.Context<Layers[k]>
+      }[number]
+      : never
+
     type GetError<Layers extends ReadonlyArray<Layer.Layer.Any>> = Layers extends NonEmptyReadonlyArray<Layer.Layer.Any>
       ? { [k in keyof Layers]: Layer.Layer.Error<Layers[k]> }[number]
       : never
@@ -331,8 +337,10 @@ export const makeRouter = <
         >
         routes: Layer.Layer<
           RouterShape<Rsc>,
-          Effect.Error<ReturnType<Make>> | GetError<TLayers>,
-          Exclude<R | RMW, GetSuccess<TLayers>>
+          E | GetError<TLayers>,
+          | GetContext<TLayers>
+          | GetContext<Layers>
+          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
         >
       }
       <
@@ -365,7 +373,9 @@ export const makeRouter = <
         routes: Layer.Layer<
           RouterShape<Rsc>,
           E | GetError<TLayers>,
-          Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
+          | GetContext<Layers>
+          | GetContext<TLayers>
+          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
         >
       }
     } = (<
@@ -515,8 +525,8 @@ export const makeRouter = <
         middleware.dependencies ? Layer.provide(middleware.dependencies as any) : (_) => _
       ) as Layer.Layer<
         Router,
-        { [k in keyof TLayers]: Layer.Layer.Error<TLayers[k]> }[number] | E,
-        | { [k in keyof TLayers]: Layer.Layer.Context<TLayers[k]> }[number]
+        GetError<TLayers> | E,
+        | GetContext<TLayers>
         | Exclude<
           RMW | R,
           ProvidedLayers
