@@ -216,14 +216,14 @@ export const makeMiddleware = <
   Context,
   CTXMap extends Record<string, RPCContextMap.Any>,
   RMW,
-  Layers extends Array<Layer.Layer.Any>
+  Layers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[]
 >(content: Middleware<Context, CTXMap, RMW, Layers>): Middleware<Context, CTXMap, RMW, Layers> => content
 
 export const makeRouter = <
   Context,
   CTXMap extends Record<string, RPCContextMap.Any>,
   RMW,
-  Layers extends Array<Layer.Layer.Any>
+  Layers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[]
 >(
   middleware: Middleware<Context, CTXMap, RMW, Layers>,
   devMode: boolean
@@ -375,7 +375,7 @@ export const makeRouter = <
         // import to keep them separate via | for type checking!!
         [K in Keys]: AHandler<Rsc[K]>
       },
-      TLayers extends Array<Layer.Layer.Any>
+      TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[]
     >(
       layers: TLayers,
       make: (requests: typeof items) => Effect<THandlers, E, R>
