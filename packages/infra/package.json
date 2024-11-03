@@ -669,6 +669,16 @@
         "default": "./_cjs/api/routing/schema/jwt.cjs"
       }
     },
+    "./api/routing5": {
+      "import": {
+        "types": "./dist/api/routing5.d.ts",
+        "default": "./dist/api/routing5.js"
+      },
+      "require": {
+        "types": "./dist/api/routing5.d.ts",
+        "default": "./_cjs/api/routing5.cjs"
+      }
+    },
     "./api/setupRequest": {
       "import": {
         "types": "./dist/api/setupRequest.d.ts",
