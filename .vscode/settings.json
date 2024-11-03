@@ -8,9 +8,7 @@
     "node_modules/@azure/cosmos",
     "node_modules/effect-app/Schema",
     "node_modules/lodash",
-    "node_modules/@types/lodash",
-    "node_modules/effect",
-    "node_modules/effect/*"
+    "node_modules/@types/lodash"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.workingDirectories": [

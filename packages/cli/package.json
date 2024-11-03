@@ -1,6 +1,6 @@
 {
   "name": "@effect-app/cli",
-  "version": "1.4.1",
+  "version": "1.5.1",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -54,6 +54,16 @@
       "require": {
         "types": "./dist/shared.d.ts",
         "default": "./_cjs/shared.cjs"
+      }
+    },
+    "./sync": {
+      "import": {
+        "types": "./dist/sync.d.ts",
+        "default": "./dist/sync.js"
+      },
+      "require": {
+        "types": "./dist/sync.d.ts",
+        "default": "./_cjs/sync.cjs"
       }
     },
     "./unlink": {

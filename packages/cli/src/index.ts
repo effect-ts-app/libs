@@ -5,6 +5,17 @@ import { Array, Equivalence } from "effect"
 import fs from "fs"
 import w from "node-watch"
 import path from "path"
+import readline from "readline/promises"
+import { sync } from "./sync.js"
+
+function askQuestion(query: string) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+
+  return rl.question(query)
+}
 
 const _cmd = process.argv[2]
 const supportedCommands = [
@@ -15,7 +26,8 @@ const supportedCommands = [
   "packagejson-target",
   "packagejson-packages",
   "link",
-  "unlink"
+  "unlink",
+  "sync"
 ] as const
 if (
   !supportedCommands.includes(_cmd as any)
@@ -233,6 +245,14 @@ switch (cmd) {
       )
       .forEach((_) => monitorPackagejson(_))
     break
+  }
+
+  case "sync": {
+    console.log("Sync all snippets?")
+
+    await askQuestion("Are you sure you want to sync snippets")
+    await sync()
+    process.exit(0)
   }
 }
 

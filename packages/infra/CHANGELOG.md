@@ -1,5 +1,40 @@
 # @effect-app/infra
 
+## 2.16.4
+
+### Patch Changes
+
+- 2d31b4b: fix type
+
+## 2.16.3
+
+### Patch Changes
+
+- be3845d: fix type
+
+## 2.16.2
+
+### Patch Changes
+
+- 673850c: fix routing
+
+## 2.16.1
+
+### Patch Changes
+
+- 4678c24: fix bs
+
+## 2.16.0
+
+### Minor Changes
+
+- 565d678: improve: strict dependencies for routing and services.
+
+### Patch Changes
+
+- Updated dependencies [565d678]
+  - effect-app@2.9.0
+
 ## 2.15.4
 
 ### Patch Changes

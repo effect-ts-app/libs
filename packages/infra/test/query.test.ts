@@ -96,6 +96,7 @@ it("works", () => {
 })
 
 class SomethingRepo extends Effect.Service<SomethingRepo>()("SomethingRepo", {
+  strict: false,
   effect: Effect.gen(function*() {
     return yield* makeRepo("Something", Something, {})
   })

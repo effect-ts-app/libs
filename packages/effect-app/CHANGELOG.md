@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.9.0
+
+### Minor Changes
+
+- 565d678: improve: strict dependencies for routing and services.
+
 ## 2.8.2
 
 ### Patch Changes
