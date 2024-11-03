@@ -2,7 +2,7 @@
 import type { Effect, Option, PubSub, S } from "effect-app"
 import type { InvalidStateError, NotFoundError, OptimisticConcurrencyException } from "effect-app/client"
 import type { NonNegativeInt } from "effect-app/Schema/numbers"
-import type { FieldValues } from "../filter/types.js"
+import type { FieldValues, ResolveFirstLevel } from "../filter/types.js"
 import type { QAll, Query, QueryProjection } from "../query.js"
 import type { Mapped } from "./legacy.js"
 
@@ -42,7 +42,7 @@ export interface Repository<
     >(
       q: (
         initial: Query<Encoded>
-      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      ) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -61,7 +61,7 @@ export interface Repository<
       ) => $A,
       q2: (
         _: $A
-      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      ) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -82,7 +82,7 @@ export interface Repository<
       q2: (_: $A) => $B,
       q3: (
         _: $B
-      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      ) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -105,7 +105,7 @@ export interface Repository<
       q3: (_: $B) => $C,
       q4: (
         _: $C
-      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      ) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -130,7 +130,7 @@ export interface Repository<
       q4: (_: $C) => $D,
       q5: (
         _: $D
-      ) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      ) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -155,7 +155,7 @@ export interface Repository<
       q3: (_: $B) => $C,
       q4: (_: $C) => $D,
       q5: (_: $D) => $E,
-      q6: (_: $E) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      q6: (_: $E) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -182,7 +182,7 @@ export interface Repository<
       q4: (_: $C) => $D,
       q5: (_: $D) => $E,
       q6: (_: $E) => $F,
-      q7: (_: $F) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      q7: (_: $F) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -211,7 +211,7 @@ export interface Repository<
       q5: (_: $D) => $E,
       q6: (_: $E) => $F,
       q7: (_: $F) => $G,
-      q8: (_: $G) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      q8: (_: $G) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -242,7 +242,7 @@ export interface Repository<
       q6: (_: $E) => $F,
       q7: (_: $F) => $G,
       q8: (_: $G) => $H,
-      q9: (_: $H) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      q9: (_: $H) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -275,7 +275,7 @@ export interface Repository<
       q7: (_: $F) => $G,
       q8: (_: $G) => $H,
       q9: (_: $H) => $I,
-      q10: (_: $I) => QueryProjection<Encoded extends From ? From : never, A, R, TType>
+      q10: (_: $I) => QueryProjection<From extends Encoded ? From : never, A, R, TType>
     ): Effect.Effect<
       TType extends "many" ? readonly A[] : TType extends "count" ? NonNegativeInt : A,
       | (TType extends "many" ? never : NotFoundError<ItemType>)
@@ -510,7 +510,27 @@ export interface Repository<
   readonly mapped: Mapped<Encoded>
 }
 
-export type RefineTHelper<T, EncodedRefined> = EncodedRefined extends { _tag: any }
-  ? T extends { _tag: any } ? Extract<T, { _tag: EncodedRefined["_tag"] }>
+type NullableRefined<T, EncodedRefined> = {
+  // EncodedRefined may be a union, so if you just keyof you'll get just common keys
+  // p.s. NullableRefined is homomorphic in T so it distributes itself over T
+  [k in keyof T]: [null] extends [T[k]] ? [null] extends Extract<EncodedRefined, { [j in k]: any }>[k] ? T[k]
+    : Exclude<T[k], null>
+    : T[k]
+}
+
+type ExtractTagged<T, EncodedRefined> = EncodedRefined extends { _tag: string }
+  ? T extends { _tag: string } ? Extract<T, { _tag: EncodedRefined["_tag"] }>
   : T
   : T
+
+type ExtractIded<T, EncodedRefined> = EncodedRefined extends { id: string }
+  ? T extends { id: string } ? Extract<T, { id: EncodedRefined["id"] }>
+  : T
+  : T
+
+export type RefineTHelper<T, EncodedRefined> = ResolveFirstLevel<
+  NullableRefined<
+    ExtractIded<ExtractTagged<T, EncodedRefined>, EncodedRefined>,
+    EncodedRefined
+  >
+>
