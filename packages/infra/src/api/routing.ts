@@ -339,7 +339,7 @@ export const makeRouter = <
           RouterShape<Rsc>,
           E | GetError<TLayers>,
           | GetContext<TLayers>
-          | GetContext<Layers>
+          // | GetContext<Layers> // elsewhere provided
           | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
         >
       }
@@ -373,7 +373,7 @@ export const makeRouter = <
         routes: Layer.Layer<
           RouterShape<Rsc>,
           E | GetError<TLayers>,
-          | GetContext<Layers>
+          // | GetContext<Layers> // elsewhere provided
           | GetContext<TLayers>
           | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
         >
