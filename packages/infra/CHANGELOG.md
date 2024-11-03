@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.16.2
+
+### Patch Changes
+
+- 673850c: fix routing
+
 ## 2.16.1
 
 ### Patch Changes
