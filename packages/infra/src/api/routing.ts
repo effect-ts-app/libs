@@ -365,7 +365,7 @@ export const makeRouter = <
         routes: Layer.Layer<
           RouterShape<Rsc>,
           E | GetError<TLayers>,
-          Exclude<R | RMW, GetSuccess<TLayers>>
+          Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
         >
       }
     } = (<
