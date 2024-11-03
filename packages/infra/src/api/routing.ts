@@ -318,17 +318,11 @@ export const makeRouter = <
         routes: Layer.Layer<
           RouterShape<Rsc>,
           E | TLayers extends never[] ? never : { [k in keyof TLayers]: Layer.Layer.Error<TLayers[k]> }[number],
-          TLayers extends never[] ? RMW | R
-            :
-              | { [k in keyof TLayers]: Layer.Layer.Context<TLayers[k]> }[number]
-              | Exclude<
-                RMW,
-                { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
-              >
-              | Exclude<
-                R,
-                { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
-              >
+          Exclude<
+            RMW | R,
+            | { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
+            | TLayers extends never[] ? never : { [k in keyof TLayers]: Layer.Layer.Success<TLayers[k]> }[number]
+          >
         >
       }
     } = (<
