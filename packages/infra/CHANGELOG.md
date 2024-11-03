@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.16.6
+
+### Patch Changes
+
+- 882702c: fix type
+
 ## 2.16.5
 
 ### Patch Changes
