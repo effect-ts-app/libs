@@ -56,6 +56,16 @@
         "default": "./_cjs/shared.cjs"
       }
     },
+    "./sync": {
+      "import": {
+        "types": "./dist/sync.d.ts",
+        "default": "./dist/sync.js"
+      },
+      "require": {
+        "types": "./dist/sync.d.ts",
+        "default": "./_cjs/sync.cjs"
+      }
+    },
     "./unlink": {
       "import": {
         "types": "./dist/unlink.d.ts",
