@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 1.5.0
+
+### Minor Changes
+
+- 4728346: add 'sync' command
+
 ## 1.4.1
 
 ### Patch Changes
