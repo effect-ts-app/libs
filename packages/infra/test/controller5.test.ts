@@ -26,7 +26,7 @@ const middleware = makeMiddleware({
   context: null as any as HttpServerRequest.HttpServerRequest,
   execute: Effect.gen(function*() {
     return <T extends { config?: { [K in keyof CTXMap]?: any } }, Req extends S.TaggedRequest.All, R>(
-      schema: T & S.Schema<Req, any, never>,
+      _schema: T & S.Schema<Req, any, never>,
       handler: (request: Req) => Effect.Effect<EffectRequest.Request.Success<Req>, EffectRequest.Request.Error<Req>, R>,
       moduleName?: string
     ) =>
@@ -40,10 +40,10 @@ const middleware = makeMiddleware({
     > =>
       Effect
         .gen(function*() {
-          const headers = yield* Rpc.currentHeaders
+          // const headers = yield* Rpc.currentHeaders
           const ctx = Context.empty()
 
-          const config = "config" in schema ? schema.config : undefined
+          // const config = "config" in schema ? schema.config : undefined
 
           // Check JWT
           // TODO
@@ -155,12 +155,11 @@ declare const a: {
   (opt: { b: 3 }): void
 }
 
-const c = a({ a: 5 })
-
 export class SomethingRepo extends Effect.Service<SomethingRepo>()("SomethingRepo", {
   dependencies: [SomethingService.Default],
   effect: Effect.gen(function*() {
     const smth = yield* SomethingService
+    console.log({ smth })
     return {}
   })
 }) {}
@@ -173,16 +172,18 @@ export class SomethingService2 extends Effect.Service<SomethingService2>()("Some
 }) {}
 
 const { handle, routes } = matchFor(Something)
-const d = handle({
+export const r = handle({
   dependencies: [
     SomethingRepo.Default,
-    SomethingService.Default
-    // SomethingService2.Default
+    SomethingService.Default,
+    SomethingService2.Default
   ],
   effect: Effect.gen(function*() {
     const repo = yield* SomethingRepo
     const smth = yield* SomethingService
     const smth2 = yield* SomethingService2
+
+    console.log({ repo, smth, smth2 })
 
     const { GetSomething, GetSomethingElse } = routes
     return {

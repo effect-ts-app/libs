@@ -621,8 +621,9 @@ export const makeRouter = <
       <
         const Make extends {
           dependencies: [
-            ...Make["dependencies"], // This trick works in Effect.Service because it has an options object instead... but not here
-            Layer.Layer<Exclude<Effect.Context<Make["effect"]>, MakeDepsOut<Make>>, never, never>
+            ...Make["dependencies"],
+            ...Exclude<Effect.Context<Make["effect"]>, MakeDepsOut<Make>> extends never ? []
+              : [Layer.Layer<Exclude<Effect.Context<Make["effect"]>, MakeDepsOut<Make>>, never, never>]
           ]
           effect: Effect<
             { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },

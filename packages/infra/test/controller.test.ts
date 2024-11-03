@@ -26,7 +26,7 @@ const middleware = makeMiddleware({
   context: null as any as HttpServerRequest.HttpServerRequest,
   execute: Effect.gen(function*() {
     return <T extends { config?: { [K in keyof CTXMap]?: any } }, Req extends S.TaggedRequest.All, R>(
-      schema: T & S.Schema<Req, any, never>,
+      _schema: T & S.Schema<Req, any, never>,
       handler: (request: Req) => Effect.Effect<EffectRequest.Request.Success<Req>, EffectRequest.Request.Error<Req>, R>,
       moduleName?: string
     ) =>
@@ -40,10 +40,10 @@ const middleware = makeMiddleware({
     > =>
       Effect
         .gen(function*() {
-          const headers = yield* Rpc.currentHeaders
+          // const headers = yield* Rpc.currentHeaders
           const ctx = Context.empty()
 
-          const config = "config" in schema ? schema.config : undefined
+          // const config = "config" in schema ? schema.config : undefined
 
           // Check JWT
           // TODO
