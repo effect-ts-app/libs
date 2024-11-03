@@ -64,8 +64,8 @@ importers:
         specifier: ^0.93.1
         version: 0.93.1
       '@effect-app/cli':
-        specifier: ^1.4.0
-        version: 1.4.0
+        specifier: ^1.5.1
+        version: 1.5.1
       '@effect-app/eslint-codegen-model':
         specifier: workspace:*
         version: link:packages/eslint-codegen-model
@@ -806,8 +806,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@effect-app/cli@1.4.0':
-    resolution: {integrity: sha512-f+fC32yL4tLE4TKYI95lk4iRvigdV8z5MZY3Cn4AE+grpaYH0vWjo7h03ATo6k0hzrndqgcejKwNfjbBpXpTXg==}
+  '@effect-app/cli@1.5.1':
+    resolution: {integrity: sha512-z/MZ1kloclUdrIe8zBa01u6yEHCX/SO3huMHUWwq5MUfNxjlqmQ5JIhp5si20O1JQE7k60HGjOPA1kgk/yJFZQ==}
     hasBin: true
 
   '@effect-rx/rx-vue@0.11.2':
@@ -5398,7 +5398,7 @@ snapshots:
   '@dprint/win32-x64@0.47.5':
     optional: true
 
-  '@effect-app/cli@1.4.0':
+  '@effect-app/cli@1.5.1':
     dependencies:
       node-watch: 0.7.4
 
