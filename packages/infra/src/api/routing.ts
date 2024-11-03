@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -303,82 +304,7 @@ export const makeRouter = <
       ? { [k in keyof Layers]: Layer.Layer.Error<Layers[k]> }[number]
       : never
 
-    const effect: {
-      <
-        E,
-        R,
-        Make extends (
-          requests: RouteMatcher<CTXMap, Rsc, Context>
-        ) => Effect<
-          { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-          any,
-          Strict extends true ? GetSuccess<TLayers> : any
-        >,
-        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
-        Strict extends boolean = true
-      >(
-        layers: TLayers,
-        make: Make & ((requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>),
-        strict?: Strict
-      ): {
-        moduleName: ModuleName
-        Router: HttpRouter.HttpRouter.TagClass<
-          RouterShape<Rsc>,
-          `${ModuleName}Router`,
-          never,
-          | Exclude<Context, HttpRouter.HttpRouter.Provided>
-          | Exclude<
-            RPCRouteR<
-              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
-            >,
-            HttpRouter.HttpRouter.Provided
-          >
-        >
-        routes: Layer.Layer<
-          RouterShape<Rsc>,
-          E | GetError<TLayers>,
-          | GetContext<TLayers>
-          // | GetContext<Layers> // elsewhere provided
-          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
-        >
-      }
-      <
-        E,
-        R,
-        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
-        Strict extends boolean = true
-      >(
-        layers: [
-          ...TLayers,
-          Layer.Layer<Exclude<R, GetSuccess<TLayers>>, never, never>
-        ],
-        make: (requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>,
-        strict?: Strict
-      ): {
-        moduleName: ModuleName
-        Router: HttpRouter.HttpRouter.TagClass<
-          RouterShape<Rsc>,
-          `${ModuleName}Router`,
-          never,
-          | Exclude<Context, HttpRouter.HttpRouter.Provided>
-          | Exclude<
-            RPCRouteR<
-              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
-            >,
-            HttpRouter.HttpRouter.Provided
-          >
-        >
-        routes: Layer.Layer<
-          RouterShape<Rsc>,
-          E | GetError<TLayers>,
-          // | GetContext<Layers> // elsewhere provided
-          | GetContext<TLayers>
-          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
-        >
-      }
-    } = (<
+    const f = <
       E,
       R,
       THandlers extends {
@@ -540,7 +466,163 @@ export const makeRouter = <
         Router: r,
         routes
       }
-    }) as any
+    }
+
+    const effect: {
+      // Multiple times duplicated the "good" overload, so that errors will only mention the last overload when failing
+      <
+        E,
+        R,
+        Make extends (
+          requests: RouteMatcher<CTXMap, Rsc, Context>
+        ) => Effect<
+          { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+          any,
+          Strict extends true ? GetSuccess<TLayers> : any
+        >,
+        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
+        Strict extends boolean = true
+      >(
+        layers: TLayers,
+        make: Make & ((requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>),
+        strict?: Strict
+      ): {
+        moduleName: ModuleName
+        Router: HttpRouter.HttpRouter.TagClass<
+          RouterShape<Rsc>,
+          `${ModuleName}Router`,
+          never,
+          | Exclude<Context, HttpRouter.HttpRouter.Provided>
+          | Exclude<
+            RPCRouteR<
+              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+            >,
+            HttpRouter.HttpRouter.Provided
+          >
+        >
+        routes: Layer.Layer<
+          RouterShape<Rsc>,
+          E | GetError<TLayers>,
+          | GetContext<TLayers>
+          // | GetContext<Layers> // elsewhere provided
+          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
+        >
+      }
+      <
+        E,
+        R,
+        Make extends (
+          requests: RouteMatcher<CTXMap, Rsc, Context>
+        ) => Effect<
+          { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+          any,
+          Strict extends true ? GetSuccess<TLayers> : any
+        >,
+        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
+        Strict extends boolean = true
+      >(
+        layers: TLayers,
+        make: Make & ((requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>),
+        strict?: Strict
+      ): {
+        moduleName: ModuleName
+        Router: HttpRouter.HttpRouter.TagClass<
+          RouterShape<Rsc>,
+          `${ModuleName}Router`,
+          never,
+          | Exclude<Context, HttpRouter.HttpRouter.Provided>
+          | Exclude<
+            RPCRouteR<
+              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+            >,
+            HttpRouter.HttpRouter.Provided
+          >
+        >
+        routes: Layer.Layer<
+          RouterShape<Rsc>,
+          E | GetError<TLayers>,
+          | GetContext<TLayers>
+          // | GetContext<Layers> // elsewhere provided
+          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
+        >
+      }
+      <
+        E,
+        R,
+        Make extends (
+          requests: RouteMatcher<CTXMap, Rsc, Context>
+        ) => Effect<
+          { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+          any,
+          Strict extends true ? GetSuccess<TLayers> : any
+        >,
+        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
+        Strict extends boolean = true
+      >(
+        layers: TLayers,
+        make: Make & ((requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>),
+        strict?: Strict
+      ): {
+        moduleName: ModuleName
+        Router: HttpRouter.HttpRouter.TagClass<
+          RouterShape<Rsc>,
+          `${ModuleName}Router`,
+          never,
+          | Exclude<Context, HttpRouter.HttpRouter.Provided>
+          | Exclude<
+            RPCRouteR<
+              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+            >,
+            HttpRouter.HttpRouter.Provided
+          >
+        >
+        routes: Layer.Layer<
+          RouterShape<Rsc>,
+          E | GetError<TLayers>,
+          | GetContext<TLayers>
+          // | GetContext<Layers> // elsewhere provided
+          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
+        >
+      }
+      <
+        E,
+        R,
+        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
+        Strict extends boolean = true
+      >(
+        layers: [
+          ...TLayers,
+          Layer.Layer<Exclude<R, GetSuccess<TLayers>>, never, never>
+        ],
+        make: (requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>,
+        strict?: Strict
+      ): {
+        moduleName: ModuleName
+        Router: HttpRouter.HttpRouter.TagClass<
+          RouterShape<Rsc>,
+          `${ModuleName}Router`,
+          never,
+          | Exclude<Context, HttpRouter.HttpRouter.Provided>
+          | Exclude<
+            RPCRouteR<
+              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+            >,
+            HttpRouter.HttpRouter.Provided
+          >
+        >
+        routes: Layer.Layer<
+          RouterShape<Rsc>,
+          E | GetError<TLayers>,
+          // | GetContext<Layers> // elsewhere provided
+          | GetContext<TLayers>
+          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
+        >
+      }
+    } = f as any
 
     return effect
   }
