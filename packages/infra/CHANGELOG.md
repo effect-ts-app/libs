@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 2.16.0
+
+### Minor Changes
+
+- 565d678: improve: strict dependencies for routing and services.
+
+### Patch Changes
+
+- Updated dependencies [565d678]
+  - effect-app@2.9.0
+
 ## 2.15.4
 
 ### Patch Changes
