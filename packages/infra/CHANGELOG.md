@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.16.3
+
+### Patch Changes
+
+- be3845d: fix type
+
 ## 2.16.2
 
 ### Patch Changes
