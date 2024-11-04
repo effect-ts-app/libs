@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { makeMiddleware, makeRouter } from "@effect-app/infra/api/routing"
+import type { RequestContext } from "@effect-app/infra/RequestContext"
 import { Rpc } from "@effect/rpc"
 import type { Request } from "effect-app"
 import { Context, Effect, FiberRef, Layer, S, Schedule } from "effect-app"
 import { type GetEffectContext, makeRpcClient, type RPCContextMap, UnauthorizedError } from "effect-app/client"
 import { HttpHeaders, HttpServerRequest } from "effect-app/http"
 import type * as EffectRequest from "effect/Request"
-import { makeMiddleware, makeRouter } from "../src/api/routing.js"
-import type { RequestContext } from "../src/RequestContext.js"
 
 const optimisticConcurrencySchedule = Schedule.once
   && Schedule.recurWhile<any>((a) => a?._tag === "OptimisticConcurrencyException")
@@ -135,17 +135,61 @@ export class GetSomething extends Req<GetSomething>()("GetSomething", {
   id: S.String
 }, { success: S.Void }) {}
 
-const Something = { GetSomething, meta: { moduleName: "Something" as const } }
+export class GetSomethingElse extends Req<GetSomethingElse>()("GetSomethingElse", {
+  id: S.String
+}, { success: S.String }) {}
 
-export class SomethingRepo extends Effect.Service<SomethingRepo>()("SomethingRepo", {
+const Something = { GetSomething, GetSomethingElse, meta: { moduleName: "Something" as const } }
+
+export class SomethingService extends Effect.Service<SomethingService>()("SomethingService", {
   dependencies: [],
   effect: Effect.gen(function*() {
     return {}
   })
 }) {}
 
-matchFor(Something)([], ({ GetSomething }) =>
-  Effect.gen(function*() {
-    // const repo = yield* SomethingRepo
-    return { GetSomething: GetSomething(Effect.void) }
-  }))
+declare const a: {
+  (opt: { a: 1 }): void
+  (opt: { a: 2 }): void
+  (opt: { b: 3 }): void
+  (opt: { b: 3 }): void
+}
+
+export class SomethingRepo extends Effect.Service<SomethingRepo>()("SomethingRepo", {
+  dependencies: [SomethingService.Default],
+  effect: Effect.gen(function*() {
+    const smth = yield* SomethingService
+    console.log({ smth })
+    return {}
+  })
+}) {}
+
+export class SomethingService2 extends Effect.Service<SomethingService2>()("SomethingService2", {
+  dependencies: [],
+  effect: Effect.gen(function*() {
+    return {}
+  })
+}) {}
+
+export const routes = matchFor(Something)({
+  dependencies: [
+    SomethingRepo.Default,
+    SomethingService.Default,
+    SomethingService2.Default
+  ],
+  effect: Effect.gen(function*() {
+    const repo = yield* SomethingRepo
+    const smth = yield* SomethingService
+    const smth2 = yield* SomethingService2
+
+    console.log({ repo, smth, smth2 })
+
+    const { GetSomething, GetSomethingElse } = matchFor(Something)
+    return {
+      GetSomething: GetSomething(Effect.void),
+      GetSomethingElse: GetSomethingElse(Effect.succeed("12"))
+    }
+  })
+})
+
+test("it works", () => {})
