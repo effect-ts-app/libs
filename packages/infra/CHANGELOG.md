@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 2.18.0
+
+### Minor Changes
+
+- 8aec22b: make routing5 the default
+- f19762b: update packages
+
+### Patch Changes
+
+- Updated dependencies [f19762b]
+  - effect-app@2.10.0
+
 ## 2.17.0
 
 ### Minor Changes
