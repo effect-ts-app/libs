@@ -7,6 +7,7 @@ import { Context, Effect, FiberRef, Layer, S, Schedule } from "effect-app"
 import { type GetEffectContext, makeRpcClient, type RPCContextMap, UnauthorizedError } from "effect-app/client"
 import { HttpHeaders, HttpServerRequest } from "effect-app/http"
 import type * as EffectRequest from "effect/Request"
+import { it } from "vitest"
 
 const optimisticConcurrencySchedule = Schedule.once
   && Schedule.recurWhile<any>((a) => a?._tag === "OptimisticConcurrencyException")
@@ -192,4 +193,4 @@ export const routes = matchFor(Something)({
   })
 })
 
-test("it works", () => {})
+it("works", () => {})
