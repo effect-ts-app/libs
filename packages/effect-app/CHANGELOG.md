@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.11.0
+
+### Minor Changes
+
+- update
+
 ## 2.10.0
 
 ### Minor Changes
