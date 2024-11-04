@@ -14,6 +14,7 @@ import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
 import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { pretty, typedKeysOf, typedValuesOf } from "effect-app/utils"
+import type { Contravariant } from "effect/Types"
 import { logError, reportError } from "../errorReporter.js"
 import { InfraLogger } from "../logger.js"
 import type { Middleware } from "./routing/DynamicMiddleware.js"
@@ -314,7 +315,7 @@ export const makeRouter = <
       TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[]
     >(
       layers: TLayers,
-      make: (requests: typeof items) => Effect<THandlers, E, R>
+      make: Effect<THandlers, E, R>
     ) => {
       type ProvidedLayers =
         | { [k in keyof Layers]: Layer.Layer.Success<Layers[k]> }[number]
@@ -335,7 +336,7 @@ export const makeRouter = <
 
       const layer = r.use((router) =>
         Effect.gen(function*() {
-          const controllers = yield* make(items)
+          const controllers = yield* make
           const rpc = yield* makeRpc(middleware)
 
           // return make.pipe(Effect.map((c) => controllers(c, layers)))
@@ -470,23 +471,57 @@ export const makeRouter = <
 
     const effect: {
       // Multiple times duplicated the "good" overload, so that errors will only mention the last overload when failing
+      // <
+      //   E,
+      //   R,
+      //   Make extends (
+      //     requests: RouteMatcher<CTXMap, Rsc, Context>
+      //   ) => Effect<
+      //     { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+      //     any,
+      //     Strict extends true ? GetSuccess<MakeLayers["dependencies"]> : any
+      //   >,
+      //   THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+      //   MakeLayers extends { dependencies: NonEmptyReadonlyArray<Layer.Layer.Any> | never[] },
+      //   Strict extends boolean = true
+      // >(
+      //   layers: MakeLayers,
+      //   make: Make & ((requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>),
+      //   strict?: Strict
+      // ): {
+      //   moduleName: ModuleName
+      //   Router: HttpRouter.HttpRouter.TagClass<
+      //     RouterShape<Rsc>,
+      //     `${ModuleName}Router`,
+      //     never,
+      //     | Exclude<Context, HttpRouter.HttpRouter.Provided>
+      //     | Exclude<
+      //       RPCRouteR<
+      //         { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+      //       >,
+      //       HttpRouter.HttpRouter.Provided
+      //     >
+      //   >
+      //   routes: Layer.Layer<
+      //     RouterShape<Rsc>,
+      //     E | GetError<MakeLayers["dependencies"]>,
+      //     | GetContext<MakeLayers["dependencies"]>
+      //     // | GetContext<Layers> // elsewhere provided
+      //     | Exclude<R | RMW, GetSuccess<MakeLayers["dependencies"]> | GetSuccess<Layers>>
+      //   >
+      // }
       <
-        E,
-        R,
-        Make extends (
-          requests: RouteMatcher<CTXMap, Rsc, Context>
-        ) => Effect<
-          { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-          any,
-          Strict extends true ? GetSuccess<TLayers> : any
-        >,
-        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
-        Strict extends boolean = true
+        const Make extends {
+          dependencies: Array<Layer.Layer.Any>
+          effect: Effect<
+            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            any,
+            Make["strict"] extends false ? any : GetSuccess<Make["dependencies"]>
+          >
+          strict?: boolean
+        }
       >(
-        layers: TLayers,
-        make: Make & ((requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>),
-        strict?: Strict
+        make: Make
       ): {
         moduleName: ModuleName
         Router: HttpRouter.HttpRouter.TagClass<
@@ -496,36 +531,33 @@ export const makeRouter = <
           | Exclude<Context, HttpRouter.HttpRouter.Provided>
           | Exclude<
             RPCRouteR<
-              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+              {
+                [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<MakeHandlers<Make, Filter<Rsc>>[K]["handler"]>>>
+              }[keyof Filter<Rsc>]
             >,
             HttpRouter.HttpRouter.Provided
           >
         >
         routes: Layer.Layer<
           RouterShape<Rsc>,
-          E | GetError<TLayers>,
-          | GetContext<TLayers>
+          MakeErrors<Make> | GetError<Make["dependencies"]>,
+          | GetContext<Make["dependencies"]>
           // | GetContext<Layers> // elsewhere provided
-          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
+          | Exclude<MakeContext<Make> | RMW, GetSuccess<Make["dependencies"]> | GetSuccess<Layers>>
         >
       }
       <
-        E,
-        R,
-        Make extends (
-          requests: RouteMatcher<CTXMap, Rsc, Context>
-        ) => Effect<
-          { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-          any,
-          Strict extends true ? GetSuccess<TLayers> : any
-        >,
-        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
-        Strict extends boolean = true
+        const Make extends {
+          dependencies: Array<Layer.Layer.Any>
+          effect: Effect<
+            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            any,
+            GetSuccess<Make["dependencies"]>
+          >
+          strict?: boolean
+        }
       >(
-        layers: TLayers,
-        make: Make & ((requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>),
-        strict?: Strict
+        make: Make
       ): {
         moduleName: ModuleName
         Router: HttpRouter.HttpRouter.TagClass<
@@ -535,36 +567,33 @@ export const makeRouter = <
           | Exclude<Context, HttpRouter.HttpRouter.Provided>
           | Exclude<
             RPCRouteR<
-              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+              {
+                [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<MakeHandlers<Make, Filter<Rsc>>[K]["handler"]>>>
+              }[keyof Filter<Rsc>]
             >,
             HttpRouter.HttpRouter.Provided
           >
         >
         routes: Layer.Layer<
           RouterShape<Rsc>,
-          E | GetError<TLayers>,
-          | GetContext<TLayers>
+          MakeErrors<Make> | GetError<Make["dependencies"]>,
+          | GetContext<Make["dependencies"]>
           // | GetContext<Layers> // elsewhere provided
-          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
+          | Exclude<MakeContext<Make> | RMW, GetSuccess<Make["dependencies"]> | GetSuccess<Layers>>
         >
       }
       <
-        E,
-        R,
-        Make extends (
-          requests: RouteMatcher<CTXMap, Rsc, Context>
-        ) => Effect<
-          { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-          any,
-          Strict extends true ? GetSuccess<TLayers> : any
-        >,
-        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
-        Strict extends boolean = true
+        const Make extends {
+          dependencies: Array<Layer.Layer.Any>
+          effect: Effect<
+            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            any,
+            GetSuccess<Make["dependencies"]>
+          >
+          strict?: boolean
+        }
       >(
-        layers: TLayers,
-        make: Make & ((requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>),
-        strict?: Strict
+        make: Make
       ): {
         moduleName: ModuleName
         Router: HttpRouter.HttpRouter.TagClass<
@@ -574,57 +603,55 @@ export const makeRouter = <
           | Exclude<Context, HttpRouter.HttpRouter.Provided>
           | Exclude<
             RPCRouteR<
-              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+              {
+                [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<MakeHandlers<Make, Filter<Rsc>>[K]["handler"]>>>
+              }[keyof Filter<Rsc>]
             >,
             HttpRouter.HttpRouter.Provided
           >
         >
         routes: Layer.Layer<
           RouterShape<Rsc>,
-          E | GetError<TLayers>,
-          | GetContext<TLayers>
+          MakeErrors<Make> | GetError<Make["dependencies"]>,
+          | GetContext<Make["dependencies"]>
           // | GetContext<Layers> // elsewhere provided
-          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
+          | Exclude<MakeContext<Make> | RMW, GetSuccess<Make["dependencies"]> | GetSuccess<Layers>>
         >
       }
       <
-        E,
-        R,
-        THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-        TLayers extends NonEmptyReadonlyArray<Layer.Layer.Any> | never[],
-        Strict extends boolean = true
+        const Make extends {
+          dependencies: [
+            ...Make["dependencies"],
+            ...Exclude<Effect.Context<Make["effect"]>, MakeDepsOut<Make>> extends never ? []
+              : [Layer.Layer<Exclude<Effect.Context<Make["effect"]>, MakeDepsOut<Make>>, never, never>]
+          ]
+          effect: Effect<
+            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            any,
+            any
+          >
+          strict?: boolean
+        }
       >(
-        layers: [
-          ...TLayers,
-          Layer.Layer<Exclude<R, GetSuccess<TLayers>>, never, never>
-        ],
-        make: (requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>,
-        strict?: Strict
+        make: Make
       ): {
         moduleName: ModuleName
         Router: HttpRouter.HttpRouter.TagClass<
           RouterShape<Rsc>,
           `${ModuleName}Router`,
           never,
-          | Exclude<Context, HttpRouter.HttpRouter.Provided>
-          | Exclude<
-            RPCRouteR<
-              { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
-            >,
-            HttpRouter.HttpRouter.Provided
-          >
-        >
-        routes: Layer.Layer<
-          RouterShape<Rsc>,
-          E | GetError<TLayers>,
-          // | GetContext<Layers> // elsewhere provided
-          | GetContext<TLayers>
-          | Exclude<R | RMW, GetSuccess<TLayers> | GetSuccess<Layers>>
-        >
+          Exclude<Context, HttpRouter.HttpRouter.Provided>
+        > // | Exclude<
+        //   RPCRouteR<
+        //     { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
+        //   >,
+        //   HttpRouter.HttpRouter.Provided
+        // >
+        routes: any
       }
-    } = f as any
+    } = ((m: { dependencies: any; effect: any; strict?: any }) => f(m.dependencies, m.effect)) as any
 
-    return effect
+    return Object.assign(effect, items)
   }
 
   type HR<T> = T extends HttpRouter.HttpRouter<any, infer R> ? R : never
@@ -682,3 +709,23 @@ export const makeRouter = <
 
   return { matchAll, matchFor }
 }
+
+export type MakeDeps<Make> = Make extends { readonly dependencies: ReadonlyArray<Layer.Layer.Any> }
+  ? Make["dependencies"][number]
+  : never
+
+export type MakeErrors<Make> = Make extends { readonly effect: Effect<any, infer E, any> } ? E
+  : never
+
+export type MakeContext<Make> = Make extends { readonly effect: Effect<any, any, infer R> } ? R
+  : never
+
+export type MakeHandlers<Make, Handlers extends Record<string, any>> = Make extends
+  { readonly effect: Effect<{ [K in keyof Handlers]: AHandler<Handlers[K]> }, any, any> }
+  ? Effect.Success<Make["effect"]>
+  : never
+
+/**
+ * @since 3.9.0
+ */
+export type MakeDepsOut<Make> = Contravariant.Type<MakeDeps<Make>[Layer.LayerTypeId]["_ROut"]>
