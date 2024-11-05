@@ -14,16 +14,19 @@ import type { FieldValues } from "../filter/types.js"
 import type { ExtendedRepository } from "./ext.js"
 import { extendRepo } from "./ext.js"
 import { makeRepoInternal } from "./internal/internal.js"
+import type { Repository } from "./service.js"
 
 export interface RepositoryOptions<
   IdKey extends keyof T & keyof Encoded,
-  Encoded,
+  Encoded extends FieldValues,
   T,
+  ItemType extends string,
   Evt = never,
   RPublish = never,
   E = never,
   RInitial = never,
-  RCtx = never
+  RCtx = never,
+  RSchema = never
 > {
   /**
    * Specify the idKey of the Type side, if it's different from the default "id".
@@ -52,6 +55,10 @@ export interface RepositoryOptions<
    * Useful for effectful transformations like XWithItems, where items is a transformation retrieving elements from another database table or other source.
    */
   schemaContext?: Context.Context<RCtx>
+
+  overrides?: (
+    repo: Repository<T, Encoded, Evt, ItemType, IdKey, Exclude<RSchema, RCtx>, RPublish>
+  ) => Repository<T, Encoded, Evt, ItemType, IdKey, Exclude<RSchema, RCtx>, RPublish>
 }
 
 /**
@@ -76,7 +83,7 @@ export const makeRepo: {
   >(
     itemType: ItemType,
     schema: S.Schema<T, Encoded, RSchema>,
-    options: RepositoryOptions<IdKey, Encoded, T, Evt, RPublish, E, RInitial, RCtx>
+    options: RepositoryOptions<IdKey, Encoded, T, ItemType, Evt, RPublish, E, RInitial, RCtx, RSchema>
   ): Effect.Effect<
     ExtendedRepository<T, Encoded, Evt, ItemType, IdKey, Exclude<RSchema, RCtx>, RPublish>,
     E,
@@ -95,7 +102,7 @@ export const makeRepo: {
   >(
     itemType: ItemType,
     schema: S.Schema<T, Encoded, RSchema>,
-    options: Omit<RepositoryOptions<"id", Encoded, T, Evt, RPublish, E, RInitial, RCtx>, "idKey">
+    options: Omit<RepositoryOptions<"id", Encoded, T, ItemType, Evt, RPublish, E, RInitial, RCtx, RSchema>, "idKey">
   ): Effect.Effect<
     ExtendedRepository<T, Encoded, Evt, ItemType, "id", Exclude<RSchema, RCtx>, RPublish>,
     E,
@@ -103,7 +110,7 @@ export const makeRepo: {
   >
 } = <
   ItemType extends string,
-  R,
+  RSchema,
   Encoded extends FieldValues,
   T,
   IdKey extends keyof T & keyof Encoded,
@@ -114,8 +121,10 @@ export const makeRepo: {
   RCtx = never
 >(
   itemType: ItemType,
-  schema: S.Schema<T, Encoded, R>,
-  options: Omit<RepositoryOptions<IdKey, Encoded, T, Evt, RPublish, E, RInitial, RCtx>, "idKey"> & { idKey?: IdKey }
+  schema: S.Schema<T, Encoded, RSchema>,
+  options: Omit<RepositoryOptions<IdKey, Encoded, T, ItemType, Evt, RPublish, E, RInitial, RCtx, RSchema>, "idKey"> & {
+    idKey?: IdKey
+  }
 ) =>
   Effect.gen(function*() {
     const mkRepo = makeRepoInternal<Evt>()(
@@ -125,7 +134,8 @@ export const makeRepo: {
       (e, _etag) => ({ ...e, _etag }),
       options.idKey ?? "id" as any
     )
-    const r = yield* mkRepo.make<RInitial, E, RPublish, RCtx>(options as any)
+    let r = yield* mkRepo.make<RInitial, E, RPublish, RCtx>(options as any)
+    if (options.overrides) r = options.overrides(r)
     const repo = extendRepo(r)
     return repo
   })
