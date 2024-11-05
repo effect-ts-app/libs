@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.19.1
+
+### Patch Changes
+
+- 4a52411: add overrides for repo
+
 ## 2.19.0
 
 ### Minor Changes
