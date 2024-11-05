@@ -10,7 +10,7 @@ export function reportError(
 ) {
   return (cause: Cause.Cause<unknown>, extras?: Record<string, unknown>) =>
     Effect.gen(function*() {
-      if (Cause.isInterrupted(cause)) {
+      if (Cause.isInterruptedOnly(cause)) {
         yield* Effect.logDebug("Interrupted").pipe(Effect.annotateLogs("extras", JSON.stringify(extras ?? {})))
         return Cause.squash(cause)
       }
@@ -49,7 +49,7 @@ export function logError<E>(
 ) {
   return (cause: Cause.Cause<E>, extras?: Record<string, unknown>) =>
     Effect.gen(function*() {
-      if (Cause.isInterrupted(cause)) {
+      if (Cause.isInterruptedOnly(cause)) {
         yield* Effect.logDebug("Interrupted").pipe(Effect.annotateLogs(dropUndefined({ extras })))
         return
       }
