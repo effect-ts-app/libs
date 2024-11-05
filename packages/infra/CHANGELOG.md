@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.20.1
+
+### Patch Changes
+
+- 8a7c30d: fix
+
 ## 2.20.0
 
 ### Minor Changes
