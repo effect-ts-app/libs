@@ -88,7 +88,23 @@ type HandleVoid<Expected, Actual, Result> = [Expected] extends [void]
   ? [Actual] extends [void] ? Result : Hint<"You're returning non void for a void Response, please fix">
   : Result
 
-type AnyRequestModule = S.Schema.Any & { success?: S.Schema.Any; failure?: S.Schema.Any }
+type AnyRequestModule = S.Schema.Any & { _tag: string; success?: S.Schema.Any; failure?: S.Schema.Any }
+export interface AddAction<Actions extends AnyRequestModule, Accum extends Record<string, any> = {}> {
+  accum: Accum
+  add<A extends Handler<Actions, any, any>>(
+    a: A
+  ): Exclude<Actions, A extends Handler<infer M, any, any> ? M : never> extends never ?
+      & Accum
+      & { [K in A extends Handler<infer M, any, any> ? M extends AnyRequestModule ? M["_tag"] : never : never]: A }
+    :
+      & AddAction<
+        Exclude<Actions, A extends Handler<infer M, any, any> ? M : never>,
+        & Accum
+        & { [K in A extends Handler<infer M, any, any> ? M extends AnyRequestModule ? M["_tag"] : never : never]: A }
+      >
+      & Accum
+      & { [K in A extends Handler<infer M, any, any> ? M extends AnyRequestModule ? M["_tag"] : never : never]: A }
+}
 
 type GetSuccess<T> = T extends { success: S.Schema.Any } ? T["success"] : typeof S.Void
 
@@ -128,7 +144,7 @@ type AHandler<Action extends AnyRequestModule> = Handler<
 >
 
 type Filter<T> = {
-  [K in keyof T as T[K] extends S.Schema.All & { success: S.Schema.Any; failure: S.Schema.Any } ? K : never]: T[K]
+  [K in keyof T as T[K] extends AnyRequestModule ? K : never]: T[K]
 }
 
 export const RouterSymbol = Symbol()
@@ -251,11 +267,13 @@ export const makeRouter = <
           const stack = new Error().stack?.split("\n").slice(2).join("\n")
           return Effect.isEffect(fnOrEffect)
             ? class {
+              static request = rsc[cur]
               static stack = stack
               static _tag = "d"
               static handler = () => fnOrEffect
             }
             : class {
+              static request = rsc[cur]
               static stack = stack
               static _tag = "d"
               static handler = fnOrEffect
@@ -271,11 +289,13 @@ export const makeRouter = <
               const stack = new Error().stack?.split("\n").slice(2).join("\n")
               return Effect.isEffect(fnOrEffect)
                 ? class {
+                  static request = rsc[cur]
                   static stack = stack
                   static _tag = "raw"
                   static handler = () => fnOrEffect
                 }
                 : class {
+                  static request = rsc[cur]
                   static stack = stack
                   static _tag = "raw"
                   static handler = (req: any, ctx: any) => fnOrEffect(req, { ...ctx, Response: rsc[cur].success })
@@ -471,45 +491,6 @@ export const makeRouter = <
 
     const effect: {
       // Multiple times duplicated the "good" overload, so that errors will only mention the last overload when failing
-      // <
-      //   E,
-      //   R,
-      //   Make extends (
-      //     requests: RouteMatcher<CTXMap, Rsc, Context>
-      //   ) => Effect<
-      //     { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-      //     any,
-      //     Strict extends true ? GetSuccess<MakeLayers["dependencies"]> : any
-      //   >,
-      //   THandlers extends { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
-      //   MakeLayers extends { dependencies: NonEmptyReadonlyArray<Layer.Layer.Any> | never[] },
-      //   Strict extends boolean = true
-      // >(
-      //   layers: MakeLayers,
-      //   make: Make & ((requests: RouteMatcher<CTXMap, Rsc, Context>) => Effect<THandlers, E, R>),
-      //   strict?: Strict
-      // ): {
-      //   moduleName: ModuleName
-      //   Router: HttpRouter.HttpRouter.TagClass<
-      //     RouterShape<Rsc>,
-      //     `${ModuleName}Router`,
-      //     never,
-      //     | Exclude<Context, HttpRouter.HttpRouter.Provided>
-      //     | Exclude<
-      //       RPCRouteR<
-      //         { [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<THandlers[K]["handler"]>>> }[keyof Filter<Rsc>]
-      //       >,
-      //       HttpRouter.HttpRouter.Provided
-      //     >
-      //   >
-      //   routes: Layer.Layer<
-      //     RouterShape<Rsc>,
-      //     E | GetError<MakeLayers["dependencies"]>,
-      //     | GetContext<MakeLayers["dependencies"]>
-      //     // | GetContext<Layers> // elsewhere provided
-      //     | Exclude<R | RMW, GetSuccess<MakeLayers["dependencies"]> | GetSuccess<Layers>>
-      //   >
-      // }
       <
         const Make extends {
           dependencies: Array<Layer.Layer.Any>
@@ -519,6 +500,84 @@ export const makeRouter = <
             Make["strict"] extends false ? any : GetSuccess<Make["dependencies"]>
           >
           strict?: boolean
+          /** @deprecated */
+          readonly ಠ_ಠ: never
+        }
+      >(
+        make: Make
+      ): {
+        moduleName: ModuleName
+        Router: HttpRouter.HttpRouter.TagClass<
+          RouterShape<Rsc>,
+          `${ModuleName}Router`,
+          never,
+          | Exclude<Context, HttpRouter.HttpRouter.Provided>
+          | Exclude<
+            RPCRouteR<
+              {
+                [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<MakeHandlers<Make, Filter<Rsc>>[K]["handler"]>>>
+              }[keyof Filter<Rsc>]
+            >,
+            HttpRouter.HttpRouter.Provided
+          >
+        >
+        routes: Layer.Layer<
+          RouterShape<Rsc>,
+          MakeErrors<Make> | GetError<Make["dependencies"]>,
+          | GetContext<Make["dependencies"]>
+          // | GetContext<Layers> // elsewhere provided
+          | Exclude<MakeContext<Make> | RMW, GetSuccess<Make["dependencies"]> | GetSuccess<Layers>>
+        >
+      }
+      <
+        const Make extends {
+          dependencies: Array<Layer.Layer.Any>
+          effect: Effect<
+            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            any,
+            Make["strict"] extends false ? any : GetSuccess<Make["dependencies"]>
+          >
+          strict?: boolean
+          /** @deprecated */
+          readonly ಠ_ಠ: never
+        }
+      >(
+        make: Make
+      ): {
+        moduleName: ModuleName
+        Router: HttpRouter.HttpRouter.TagClass<
+          RouterShape<Rsc>,
+          `${ModuleName}Router`,
+          never,
+          | Exclude<Context, HttpRouter.HttpRouter.Provided>
+          | Exclude<
+            RPCRouteR<
+              {
+                [K in keyof Filter<Rsc>]: Rpc.Rpc<Rsc[K], _R<ReturnType<MakeHandlers<Make, Filter<Rsc>>[K]["handler"]>>>
+              }[keyof Filter<Rsc>]
+            >,
+            HttpRouter.HttpRouter.Provided
+          >
+        >
+        routes: Layer.Layer<
+          RouterShape<Rsc>,
+          MakeErrors<Make> | GetError<Make["dependencies"]>,
+          | GetContext<Make["dependencies"]>
+          // | GetContext<Layers> // elsewhere provided
+          | Exclude<MakeContext<Make> | RMW, GetSuccess<Make["dependencies"]> | GetSuccess<Layers>>
+        >
+      }
+      <
+        const Make extends {
+          dependencies: Array<Layer.Layer.Any>
+          effect: Effect<
+            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            any,
+            Make["strict"] extends false ? any : GetSuccess<Make["dependencies"]>
+          >
+          strict?: boolean
+          /** @deprecated */
+          readonly ಠ_ಠ: never
         }
       >(
         make: Make
@@ -555,6 +614,8 @@ export const makeRouter = <
             GetSuccess<Make["dependencies"]>
           >
           strict?: boolean
+          /** @deprecated */
+          readonly ಠ_ಠ: never
         }
       >(
         make: Make
@@ -651,7 +712,17 @@ export const makeRouter = <
       }
     } = ((m: { dependencies: any; effect: any; strict?: any }) => f(m.dependencies, m.effect)) as any
 
-    return Object.assign(effect, items)
+    const router: AddAction<Filtered[keyof Filtered]> = {
+      accum: {},
+      add(a: any) {
+        console.log("adding", a, a.request._tag)
+        ;(this.accum as any)[a.request._tag] = a
+        ;(this as any)[a.request._tag] = a
+        if (Object.keys(this.accum).length === 2) return this.accum as any
+        return this as any
+      }
+    }
+    return Object.assign(effect, items, { router })
   }
 
   type HR<T> = T extends HttpRouter.HttpRouter<any, infer R> ? R : never

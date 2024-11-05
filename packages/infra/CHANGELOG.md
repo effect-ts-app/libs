@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.20.0
+
+### Minor Changes
+
+- feat: add experimental fluent router support
+
 ## 2.19.2
 
 ### Patch Changes

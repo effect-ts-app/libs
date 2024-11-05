@@ -185,11 +185,10 @@ export const routes = matchFor(Something)({
 
     console.log({ repo, smth, smth2 })
 
-    const { GetSomething, GetSomethingElse } = matchFor(Something)
-    return {
-      GetSomething: GetSomething(Effect.void),
-      GetSomethingElse: GetSomethingElse(Effect.succeed("12"))
-    }
+    const { GetSomething, GetSomethingElse, router } = matchFor(Something)
+    return router
+      .add(GetSomething(() => Effect.void))
+      .add(GetSomethingElse(Effect.succeed("12")))
   })
 })
 
