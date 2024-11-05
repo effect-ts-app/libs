@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.19.2
+
+### Patch Changes
+
+- 4941599: fix: don't silence interrupts when not only interrupted
+
 ## 2.19.1
 
 ### Patch Changes

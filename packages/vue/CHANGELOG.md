@@ -1,5 +1,11 @@
 # @effect-app/vue
 
+## 2.6.1
+
+### Patch Changes
+
+- 4941599: fix: don't silence interrupts when not only interrupted
+
 ## 2.6.0
 
 ### Minor Changes
