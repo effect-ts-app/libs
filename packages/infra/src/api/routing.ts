@@ -712,13 +712,13 @@ export const makeRouter = <
       }
     } = ((m: { dependencies: any; effect: any; strict?: any }) => f(m.dependencies, m.effect)) as any
 
+    const total = Object.keys(filtered).length
     const router: AddAction<Filtered[keyof Filtered]> = {
       accum: {},
       add(a: any) {
-        console.log("adding", a, a.request._tag)
         ;(this.accum as any)[a.request._tag] = a
         ;(this as any)[a.request._tag] = a
-        if (Object.keys(this.accum).length === 2) return this.accum as any
+        if (Object.keys(this.accum).length === total) return this.accum as any
         return this as any
       }
     }
