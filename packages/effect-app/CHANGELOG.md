@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.12.0
+
+### Minor Changes
+
+- 82363f6: add: Schema.contextFromServices
+
 ## 2.11.1
 
 ### Patch Changes
