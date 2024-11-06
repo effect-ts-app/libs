@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 2.6.2
+
+### Patch Changes
+
+- c971d73: update packages
+- Updated dependencies [c971d73]
+  - effect-app@2.11.1
+
 ## 2.6.1
 
 ### Patch Changes

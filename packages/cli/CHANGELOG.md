@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 1.7.1
+
+### Patch Changes
+
+- c971d73: update packages
+
 ## 1.7.0
 
 ### Minor Changes

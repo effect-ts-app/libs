@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.11.1
+
+### Patch Changes
+
+- c971d73: update packages
+
 ## 2.11.0
 
 ### Minor Changes

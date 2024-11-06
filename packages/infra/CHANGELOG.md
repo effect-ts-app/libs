@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 2.21.1
+
+### Patch Changes
+
+- c971d73: update packages
+- f86ebc5: fix E/R
+- Updated dependencies [c971d73]
+  - effect-app@2.11.1
+
 ## 2.21.0
 
 ### Minor Changes
