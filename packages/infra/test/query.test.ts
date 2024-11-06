@@ -16,6 +16,7 @@ const someUnion = S.Union(str, num)
 export class Something extends S.Class<Something>()({
   id: S.StringId.withDefault,
   displayName: S.NonEmptyString255,
+  name: S.NullOr(S.NonEmptyString255).withDefault,
   n: S.Date.withDefault,
   union: someUnion.pipe(S.withDefaultConstructor(() => ({ _tag: "string" as const, value: "hi" })))
 }) {}
@@ -118,6 +119,8 @@ it("works with repo", () =>
     .gen(function*() {
       const somethingRepo = yield* SomethingRepo
       yield* somethingRepo.saveAndPublish(items)
+
+      const q0 = yield* somethingRepo.query(one)
 
       const q1 = yield* somethingRepo.query(() => q)
       const q2 = yield* somethingRepo
