@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.22.4
+
+### Patch Changes
+
+- 0f7e3e4: fix refinement
+
 ## 2.22.3
 
 ### Patch Changes
