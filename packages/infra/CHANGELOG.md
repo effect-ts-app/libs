@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.21.3
+
+### Patch Changes
+
+- 229c75e: fix filter
+
 ## 2.21.2
 
 ### Patch Changes
