@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.21.5
+
+### Patch Changes
+
+- 9453ae0: fix missing
+
 ## 2.21.4
 
 ### Patch Changes
