@@ -88,7 +88,12 @@ type HandleVoid<Expected, Actual, Result> = [Expected] extends [void]
   ? [Actual] extends [void] ? Result : Hint<"You're returning non void for a void Response, please fix">
   : Result
 
-export type AnyRequestModule = S.Schema.Any & { _tag: string; success?: S.Schema.Any; failure?: S.Schema.Any }
+export type AnyRequestModule = S.Schema.Any & {
+  _tag: string
+  config?: any
+  success?: S.Schema.Any
+  failure?: S.Schema.Any
+}
 export interface AddAction<Actions extends AnyRequestModule, Accum extends Record<string, any> = {}> {
   accum: Accum
   add<A extends Handler<Actions, any, any>>(
@@ -106,50 +111,102 @@ export interface AddAction<Actions extends AnyRequestModule, Accum extends Recor
       & { [K in A extends Handler<infer M, any, any> ? M extends AnyRequestModule ? M["_tag"] : never : never]: A }
 }
 
-type H<Mod extends AnyRequestModule> = {
-  <E, R>(
-    req: Mod["Type"]
-  ): Effect.Effect<Mod["success"] extends S.Schema.Any ? Mod["success"]["Type"] : void, E, R>
-} | Effect.Effect<Mod["success"] extends S.Schema.Any ? Mod["success"]["Type"] : void, any, any>
-
 export interface Method<
   Rsc extends Record<string, AnyRequestModule>,
   K extends keyof Rsc,
-  type extends "d" | "raw",
+  RT extends "d" | "raw",
+  CTXMap extends Record<string, any>,
+  Context,
   Accum
 > {
-  (
-    handler: H<Rsc[K]>
+  // TODO: deal with HandleVoid and ability to extends from GetSuccessShape...
+  // aka we want to make sure that the return type is void if the success is void,
+  // and make sure A is the actual expected type
+
+  // note: the defaults of = never prevent the whole router to error
+  <A extends GetSuccessShape<Rsc[K], RT>, R2 = never, E = never>(
+    f: Effect<A, E, R2>
   ): keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ?
       & {
-        [k in K]: Handler<
-          Rsc[K],
-          type,
-          H<Rsc[K]> extends (...args: any[]) => Effect.Effect<any, any, infer R> ? R
-            : H<Rsc[K]> extends Effect.Effect<any, any, infer R> ? R
-            : never
+        [k in K]: HandleVoid<
+          GetSuccessShape<Rsc[K], RT>,
+          A,
+          Handler<
+            Rsc[K],
+            RT,
+            Exclude<
+              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+              HttpRouter.HttpRouter.Provided
+            >
+          >
         >
       }
       & Accum
     : RRouter<
       { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] },
+      CTXMap,
+      Context,
       {
-        [k in K]: Handler<
-          Rsc[K],
-          type,
-          H<Rsc[K]> extends (...args: any[]) => Effect.Effect<any, any, infer R> ? R
-            : H<Rsc[K]> extends Effect.Effect<any, any, infer R> ? R
-            : never
+        [k in K]: HandleVoid<
+          GetSuccessShape<Rsc[K], RT>,
+          A,
+          Handler<
+            Rsc[K],
+            RT,
+            Exclude<
+              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+              HttpRouter.HttpRouter.Provided
+            >
+          >
+        >
+      } & Accum
+    >
+
+  <A extends GetSuccessShape<Rsc[K], RT>, R2 = never, E = never>(
+    f: (req: S.Schema.Type<Rsc[K]>) => Effect<A, E, R2>
+  ): keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ?
+      & {
+        [k in K]: HandleVoid<
+          GetSuccessShape<Rsc[K], RT>,
+          A,
+          Handler<
+            Rsc[K],
+            RT,
+            Exclude<
+              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+              HttpRouter.HttpRouter.Provided
+            >
+          >
+        >
+      }
+      & Accum
+    : RRouter<
+      { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] },
+      CTXMap,
+      Context,
+      {
+        [k in K]: HandleVoid<
+          GetSuccessShape<Rsc[K], RT>,
+          A,
+          Handler<
+            Rsc[K],
+            RT,
+            Exclude<
+              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+              HttpRouter.HttpRouter.Provided
+            >
+          >
         >
       } & Accum
     >
 }
 
-type RRouter<Rsc extends Record<string, AnyRequestModule>, Accum = {}> = {
-  [K in keyof Rsc]: (Method<Rsc, K, "d", Accum>)
-  /*& {
-    raw: Method<Rsc, K, "raw", Accum>
-  }*/
+type RRouter<Rsc extends Record<string, AnyRequestModule>, CTXMap extends Record<string, any>, Context, Accum = {}> = {
+  [K in keyof Rsc]:
+    & (Method<Rsc, K, "d", CTXMap, Context, Accum>)
+    & {
+      raw: Method<Rsc, K, "raw", CTXMap, Context, Accum>
+    }
 }
 
 type GetSuccess<T> = T extends { success: S.Schema.Any } ? T["success"] : typeof S.Void
@@ -764,7 +821,9 @@ export const makeRouter = <
     const accum: Record<string, any> = {}
 
     const router2: RRouter<
-      Filtered
+      Filtered,
+      CTXMap,
+      Context
     > = typedKeysOf(filtered).reduce((prev, cur) => {
       prev[cur] = Object.assign((it: any) => {
         accum[cur] = items[cur](it)
