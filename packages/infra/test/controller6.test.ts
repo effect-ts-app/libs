@@ -187,7 +187,7 @@ it("router6", () => {
       console.log({ repo, smth, smth2 })
 
       return matchFor(Something)
-        .GetSomething(() => Effect.void)
+        .GetSomething(Effect.void)
         .GetSomethingElse(Effect.succeed("12"))
     })
   })

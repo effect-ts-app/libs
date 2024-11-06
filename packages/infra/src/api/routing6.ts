@@ -111,7 +111,18 @@ export interface AddAction<Actions extends AnyRequestModule, Accum extends Recor
       & { [K in A extends Handler<infer M, any, any> ? M extends AnyRequestModule ? M["_tag"] : never : never]: A }
 }
 
-export interface Method<
+// we have to separate the HandleVoid case, so that we can have the normal case have A extend the success shape and error early
+export type Method<
+  Rsc extends Record<string, AnyRequestModule>,
+  K extends keyof Rsc,
+  RT extends "d" | "raw",
+  CTXMap extends Record<string, any>,
+  Context,
+  Accum
+> = [GetSuccessShape<Rsc[K], RT>] extends [void] ? VoidMethod<Rsc, K, RT, CTXMap, Context, Accum>
+  : NormalMethod<Rsc, K, RT, CTXMap, Context, Accum>
+
+export interface NormalMethod<
   Rsc extends Record<string, AnyRequestModule>,
   K extends keyof Rsc,
   RT extends "d" | "raw",
@@ -119,25 +130,17 @@ export interface Method<
   Context,
   Accum
 > {
-  // TODO: deal with HandleVoid and ability to extends from GetSuccessShape...
-  // aka we want to make sure that the return type is void if the success is void,
-  // and make sure A is the actual expected type
-
   // note: the defaults of = never prevent the whole router to error
   <A extends GetSuccessShape<Rsc[K], RT>, R2 = never, E = never>(
     f: Effect<A, E, R2>
   ): keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ?
       & {
-        [k in K]: HandleVoid<
-          GetSuccessShape<Rsc[K], RT>,
-          A,
-          Handler<
-            Rsc[K],
-            RT,
-            Exclude<
-              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
-              HttpRouter.HttpRouter.Provided
-            >
+        [k in K]: Handler<
+          Rsc[K],
+          RT,
+          Exclude<
+            Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+            HttpRouter.HttpRouter.Provided
           >
         >
       }
@@ -147,16 +150,12 @@ export interface Method<
       CTXMap,
       Context,
       {
-        [k in K]: HandleVoid<
-          GetSuccessShape<Rsc[K], RT>,
-          A,
-          Handler<
-            Rsc[K],
-            RT,
-            Exclude<
-              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
-              HttpRouter.HttpRouter.Provided
-            >
+        [k in K]: Handler<
+          Rsc[K],
+          RT,
+          Exclude<
+            Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+            HttpRouter.HttpRouter.Provided
           >
         >
       } & Accum
@@ -166,16 +165,12 @@ export interface Method<
     f: (req: S.Schema.Type<Rsc[K]>) => Effect<A, E, R2>
   ): keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ?
       & {
-        [k in K]: HandleVoid<
-          GetSuccessShape<Rsc[K], RT>,
-          A,
-          Handler<
-            Rsc[K],
-            RT,
-            Exclude<
-              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
-              HttpRouter.HttpRouter.Provided
-            >
+        [k in K]: Handler<
+          Rsc[K],
+          RT,
+          Exclude<
+            Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+            HttpRouter.HttpRouter.Provided
           >
         >
       }
@@ -185,10 +180,35 @@ export interface Method<
       CTXMap,
       Context,
       {
-        [k in K]: HandleVoid<
-          GetSuccessShape<Rsc[K], RT>,
-          A,
-          Handler<
+        [k in K]: Handler<
+          Rsc[K],
+          RT,
+          Exclude<
+            Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+            HttpRouter.HttpRouter.Provided
+          >
+        >
+      } & Accum
+    >
+}
+
+export interface VoidMethod<
+  Rsc extends Record<string, AnyRequestModule>,
+  K extends keyof Rsc,
+  RT extends "d" | "raw",
+  CTXMap extends Record<string, any>,
+  Context,
+  Accum
+> {
+  // note: the defaults of = never prevent the whole router to error
+  <A, R2 = never, E = never>(
+    f: Effect<A, E, R2>
+  ): HandleVoid<
+    GetSuccessShape<Rsc[K], RT>,
+    A,
+    keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ?
+        & {
+          [k in K]: Handler<
             Rsc[K],
             RT,
             Exclude<
@@ -196,9 +216,58 @@ export interface Method<
               HttpRouter.HttpRouter.Provided
             >
           >
-        >
-      } & Accum
-    >
+        }
+        & Accum
+      : RRouter<
+        { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] },
+        CTXMap,
+        Context,
+        {
+          [k in K]: Handler<
+            Rsc[K],
+            RT,
+            Exclude<
+              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+              HttpRouter.HttpRouter.Provided
+            >
+          >
+        } & Accum
+      >
+  >
+
+  <A, R2 = never, E = never>(
+    f: (req: S.Schema.Type<Rsc[K]>) => Effect<A, E, R2>
+  ): HandleVoid<
+    GetSuccessShape<Rsc[K], RT>,
+    A,
+    keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ?
+        & {
+          [k in K]: Handler<
+            Rsc[K],
+            RT,
+            Exclude<
+              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+              HttpRouter.HttpRouter.Provided
+            >
+          >
+        }
+        & Accum
+      : RRouter<
+        { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] },
+        CTXMap,
+        Context,
+        {
+          [k in K]: Handler<
+            Rsc[K],
+            RT,
+            Exclude<
+              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+              HttpRouter.HttpRouter.Provided
+            >
+          >
+        } & Accum
+      >
+  >
 }
 
 type RRouter<Rsc extends Record<string, AnyRequestModule>, CTXMap extends Record<string, any>, Context, Accum = {}> = {

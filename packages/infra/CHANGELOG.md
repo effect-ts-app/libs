@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.21.2
+
+### Patch Changes
+
+- fix HandleVoid
+
 ## 2.21.1
 
 ### Patch Changes
