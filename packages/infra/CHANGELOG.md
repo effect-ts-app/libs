@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.21.0
+
+### Minor Changes
+
+- 67f43cc: feat: add routing6
+
 ## 2.20.1
 
 ### Patch Changes
