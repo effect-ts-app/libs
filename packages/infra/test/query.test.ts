@@ -121,6 +121,7 @@ it("works with repo", () =>
       yield* somethingRepo.saveAndPublish(items)
 
       const q0 = yield* somethingRepo.query(one)
+      expectTypeOf(q0).toEqualTypeOf<Something>()
 
       const q1 = yield* somethingRepo.query(() => q)
       const q2 = yield* somethingRepo
@@ -198,6 +199,7 @@ it("collect", () =>
             readonly _tag: "string"
             readonly value: string
           }
+          readonly name: string | null
         }, "one">
       >()
 
