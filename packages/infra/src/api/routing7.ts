@@ -768,17 +768,31 @@ export const makeRouter = <
           Handler<
             Filter<Rsc>[K],
             "d",
-            Impl[K] extends (...args: any[]) => Effect<any, any, infer R> ? R
-              : Impl[K] extends Effect<any, any, infer R> ? R
-              : never
+            Exclude<
+              | Context
+              | Exclude<
+                Impl[K] extends (...args: any[]) => Effect<any, any, infer R> ? R
+                  : Impl[K] extends Effect<any, any, infer R> ? R
+                  : never,
+                GetEffectContext<CTXMap, Rsc[K]["config"]>
+              >,
+              HttpRouter.HttpRouter.Provided
+            >
           >
         >
         : Handler<
           Filter<Rsc>[K],
           "d",
-          Impl[K] extends (...args: any[]) => Effect<any, any, infer R> ? R
-            : Impl[K] extends Effect<any, any, infer R> ? R
-            : never
+          Exclude<
+            | Context
+            | Exclude<
+              Impl[K] extends (...args: any[]) => Effect<any, any, infer R> ? R
+                : Impl[K] extends Effect<any, any, infer R> ? R
+                : never,
+              GetEffectContext<CTXMap, Rsc[K]["config"]>
+            >,
+            HttpRouter.HttpRouter.Provided
+          >
         >
     } = (obj: Record<keyof Filtered, any>) =>
       typedKeysOf(obj).reduce((acc, cur) => {
