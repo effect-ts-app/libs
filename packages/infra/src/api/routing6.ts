@@ -90,25 +90,9 @@ type HandleVoid<Expected, Actual, Result> = [Expected] extends [void]
 
 export type AnyRequestModule = S.Schema.Any & {
   _tag: string
-  config?: any
-  success?: S.Schema.Any
-  failure?: S.Schema.Any
-}
-export interface AddAction<Actions extends AnyRequestModule, Accum extends Record<string, any> = {}> {
-  accum: Accum
-  add<A extends Handler<Actions, any, any>>(
-    a: A
-  ): Exclude<Actions, A extends Handler<infer M, any, any> ? M : never> extends never ?
-      & Accum
-      & { [K in A extends Handler<infer M, any, any> ? M extends AnyRequestModule ? M["_tag"] : never : never]: A }
-    :
-      & AddAction<
-        Exclude<Actions, A extends Handler<infer M, any, any> ? M : never>,
-        & Accum
-        & { [K in A extends Handler<infer M, any, any> ? M extends AnyRequestModule ? M["_tag"] : never : never]: A }
-      >
-      & Accum
-      & { [K in A extends Handler<infer M, any, any> ? M extends AnyRequestModule ? M["_tag"] : never : never]: A }
+  config: any
+  success: S.Schema.Any
+  failure: S.Schema.Any
 }
 
 // we have to separate the HandleVoid case, so that we can have the normal case have A extend the success shape and error early
