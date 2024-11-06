@@ -3,9 +3,10 @@
 import type { SchemaAST } from "effect"
 import { Effect, ParseResult, pipe } from "effect"
 import type { NonEmptyReadonlyArray } from "effect/Array"
+import type { Tag } from "effect/Context"
 import type { Schema } from "effect/Schema"
 import * as S from "effect/Schema"
-import type { Context } from "../internal/lib.js"
+import { Context } from "../internal/lib.js"
 import { extendM, typedKeysOf } from "../utils.js"
 
 export const withDefaultConstructor: <A, I, R>(
@@ -284,3 +285,24 @@ export const provide = <Self extends S.Schema.Any, R>(
       encode: (t) => (n) => provide(ParseResult.encodeUnknown(t)(n))
     }) as any
 }
+export const contextFromServices = <Self extends S.Schema.Any, Tags extends readonly Tag<any, any>[]>(
+  self: Self,
+  ...services: Tags
+): Effect.Effect<
+  S.SchemaClass<
+    S.Schema.Type<Self>,
+    S.Schema.Encoded<Self>,
+    Exclude<S.Schema.Context<Self>, { [K in keyof Tags]: Tag.Identifier<Tags[K]> }[number]>
+  >,
+  never,
+  { [K in keyof Tags]: Tag.Identifier<Tags[K]> }[number]
+> =>
+  Effect.gen(function*() {
+    const context = Context.pick(...services)(yield* Effect.context())
+    const provide = Effect.provide(context)
+    return S
+      .declare([self], {
+        decode: (t) => (n) => provide(ParseResult.decodeUnknown(t)(n)),
+        encode: (t) => (n) => provide(ParseResult.encodeUnknown(t)(n))
+      })
+  }) as any
