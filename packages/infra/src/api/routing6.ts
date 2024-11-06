@@ -196,18 +196,21 @@ export interface VoidMethod<
   ): HandleVoid<
     GetSuccessShape<Rsc[K], RT>,
     A,
-    keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ?
-        & {
-          [k in K]: Handler<
-            Rsc[K],
-            RT,
-            Exclude<
-              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
-              HttpRouter.HttpRouter.Provided
+    keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ? {
+        /** @deprecated these are the finalized routes, nothing to see here */
+        ಠ_ಠ:
+          & {
+            [k in K]: Handler<
+              Rsc[K],
+              RT,
+              Exclude<
+                Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+                HttpRouter.HttpRouter.Provided
+              >
             >
-          >
-        }
-        & Accum
+          }
+          & Accum
+      }
       : RRouter<
         { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] },
         CTXMap,
@@ -230,18 +233,21 @@ export interface VoidMethod<
   ): HandleVoid<
     GetSuccessShape<Rsc[K], RT>,
     A,
-    keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ?
-        & {
-          [k in K]: Handler<
-            Rsc[K],
-            RT,
-            Exclude<
-              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
-              HttpRouter.HttpRouter.Provided
+    keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ? {
+        /** @deprecated these are the finalized routes, nothing to see here */
+        ಠ_ಠ:
+          & {
+            [k in K]: Handler<
+              Rsc[K],
+              RT,
+              Exclude<
+                Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+                HttpRouter.HttpRouter.Provided
+              >
             >
-          >
-        }
-        & Accum
+          }
+          & Accum
+      }
       : RRouter<
         { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] },
         CTXMap,
