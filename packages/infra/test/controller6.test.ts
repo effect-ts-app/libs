@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { makeMiddleware, makeRouter } from "@effect-app/infra/api/routing"
+import { makeMiddleware, makeRouter } from "@effect-app/infra/api/routing6"
 import type { RequestContext } from "@effect-app/infra/RequestContext"
 import { Rpc } from "@effect/rpc"
 import type { Request } from "effect-app"
@@ -172,7 +172,7 @@ export class SomethingService2 extends Effect.Service<SomethingService2>()("Some
   })
 }) {}
 
-it("router", () => {
+it("router6", () => {
   const routes = matchFor(Something)({
     dependencies: [
       SomethingRepo.Default,
@@ -186,12 +186,10 @@ it("router", () => {
 
       console.log({ repo, smth, smth2 })
 
-      const { GetSomething, GetSomethingElse, router } = matchFor(Something)
-      return router
-        .add(GetSomething(() => Effect.void))
-        .add(GetSomethingElse(Effect.succeed("12")))
+      return matchFor(Something)
+        .GetSomething(() => Effect.void)
+        .GetSomethingElse(Effect.succeed("12"))
     })
   })
-
   console.log({ routes })
 })
