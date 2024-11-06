@@ -16,6 +16,7 @@ const someUnion = S.Union(str, num)
 export class Something extends S.Class<Something>()({
   id: S.StringId.withDefault,
   displayName: S.NonEmptyString255,
+  name: S.NullOr(S.NonEmptyString255).withDefault,
   n: S.Date.withDefault,
   union: someUnion.pipe(S.withDefaultConstructor(() => ({ _tag: "string" as const, value: "hi" })))
 }) {}
@@ -119,6 +120,9 @@ it("works with repo", () =>
       const somethingRepo = yield* SomethingRepo
       yield* somethingRepo.saveAndPublish(items)
 
+      const q0 = yield* somethingRepo.query(one)
+      expectTypeOf(q0).toEqualTypeOf<Something>()
+
       const q1 = yield* somethingRepo.query(() => q)
       const q2 = yield* somethingRepo
         .query(
@@ -195,6 +199,7 @@ it("collect", () =>
             readonly _tag: "string"
             readonly value: string
           }
+          readonly name: string | null
         }, "one">
       >()
 

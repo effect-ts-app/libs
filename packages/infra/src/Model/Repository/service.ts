@@ -513,7 +513,7 @@ export interface Repository<
 type NullableRefined<T, EncodedRefined> = {
   // EncodedRefined may be a union, so if you just keyof you'll get just common keys
   // p.s. NullableRefined is homomorphic in T so it distributes itself over T
-  [k in keyof T]: [null] extends [T[k]] ? [null] extends Extract<EncodedRefined, { [j in k]: any }>[k] ? T[k]
+  [k in keyof T]: [null] extends [T[k]] ? [null] extends [Extract<EncodedRefined, { [j in k]: any }>[k]] ? T[k]
     : Exclude<T[k], null>
     : T[k]
 }
