@@ -679,6 +679,16 @@
         "default": "./_cjs/api/routing6.cjs"
       }
     },
+    "./api/routing7": {
+      "import": {
+        "types": "./dist/api/routing7.d.ts",
+        "default": "./dist/api/routing7.js"
+      },
+      "require": {
+        "types": "./dist/api/routing7.d.ts",
+        "default": "./_cjs/api/routing7.cjs"
+      }
+    },
     "./api/setupRequest": {
       "import": {
         "types": "./dist/api/setupRequest.d.ts",
