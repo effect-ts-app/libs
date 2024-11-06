@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.22.1
+
+### Patch Changes
+
+- fe019f1: fix context
+
 ## 2.22.0
 
 ### Minor Changes
