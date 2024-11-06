@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.21.4
+
+### Patch Changes
+
+- 175cfb5: improve display when route missing
+
 ## 2.21.3
 
 ### Patch Changes
