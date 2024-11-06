@@ -88,7 +88,12 @@ type HandleVoid<Expected, Actual, Result> = [Expected] extends [void]
   ? [Actual] extends [void] ? Result : Hint<"You're returning non void for a void Response, please fix">
   : Result
 
-type AnyRequestModule = S.Schema.Any & { _tag: string; success?: S.Schema.Any; failure?: S.Schema.Any }
+export type AnyRequestModule = S.Schema.Any & {
+  _tag: string
+  config: any
+  success: S.Schema.Any
+  failure: S.Schema.Any
+}
 export interface AddAction<Actions extends AnyRequestModule, Accum extends Record<string, any> = {}> {
   accum: Accum
   add<A extends Handler<Actions, any, any>>(
