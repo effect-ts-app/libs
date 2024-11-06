@@ -117,18 +117,21 @@ export interface NormalMethod<
   // note: the defaults of = never prevent the whole router to error
   <A extends GetSuccessShape<Rsc[K], RT>, R2 = never, E = never>(
     f: Effect<A, E, R2>
-  ): keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ?
-      & {
-        [k in K]: Handler<
-          Rsc[K],
-          RT,
-          Exclude<
-            Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
-            HttpRouter.HttpRouter.Provided
+  ): keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ? {
+      /** @deprecated these are the finalized routes, nothing to see here */
+      ಠ_ಠ:
+        & {
+          [k in K]: Handler<
+            Rsc[K],
+            RT,
+            Exclude<
+              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+              HttpRouter.HttpRouter.Provided
+            >
           >
-        >
-      }
-      & Accum
+        }
+        & Accum
+    }
     : RRouter<
       { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] },
       CTXMap,
@@ -147,18 +150,21 @@ export interface NormalMethod<
 
   <A extends GetSuccessShape<Rsc[K], RT>, R2 = never, E = never>(
     f: (req: S.Schema.Type<Rsc[K]>) => Effect<A, E, R2>
-  ): keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ?
-      & {
-        [k in K]: Handler<
-          Rsc[K],
-          RT,
-          Exclude<
-            Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
-            HttpRouter.HttpRouter.Provided
+  ): keyof { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] } extends never ? {
+      /** @deprecated these are the finalized routes, nothing to see here */
+      ಠ_ಠ:
+        & {
+          [k in K]: Handler<
+            Rsc[K],
+            RT,
+            Exclude<
+              Context | Exclude<R2, GetEffectContext<CTXMap, Rsc[K]["config"]>>,
+              HttpRouter.HttpRouter.Provided
+            >
           >
-        >
-      }
-      & Accum
+        }
+        & Accum
+    }
     : RRouter<
       { [k in keyof Rsc as k extends K | keyof Accum ? never : k]: Rsc[k] },
       CTXMap,
@@ -254,13 +260,18 @@ export interface VoidMethod<
   >
 }
 
-type RRouter<Rsc extends Record<string, AnyRequestModule>, CTXMap extends Record<string, any>, Context, Accum = {}> = {
-  [K in keyof Rsc]:
-    & (Method<Rsc, K, "d", CTXMap, Context, Accum>)
-    & {
-      raw: Method<Rsc, K, "raw", CTXMap, Context, Accum>
-    }
-}
+type RRouter<Rsc extends Record<string, AnyRequestModule>, CTXMap extends Record<string, any>, Context, Accum = {}> =
+  & {
+    [K in keyof Rsc]:
+      & (Method<Rsc, K, "d", CTXMap, Context, Accum>)
+      & {
+        raw: Method<Rsc, K, "raw", CTXMap, Context, Accum>
+      }
+  }
+  & {
+    /** @deprecated these are the finalized routes, nothing to see here */
+    ಠ_ಠ: Accum
+  }
 
 type GetSuccess<T> = T extends { success: S.Schema.Any } ? T["success"] : typeof S.Void
 
@@ -651,7 +662,7 @@ export const makeRouter = <
         const Make extends {
           dependencies: Array<Layer.Layer.Any>
           effect: Effect<
-            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            { ಠ_ಠ: { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> } },
             any,
             Make["strict"] extends false ? any : GetSuccess<Make["dependencies"]>
           >
@@ -689,7 +700,7 @@ export const makeRouter = <
         const Make extends {
           dependencies: Array<Layer.Layer.Any>
           effect: Effect<
-            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            { ಠ_ಠ: { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> } },
             any,
             Make["strict"] extends false ? any : GetSuccess<Make["dependencies"]>
           >
@@ -727,7 +738,7 @@ export const makeRouter = <
         const Make extends {
           dependencies: Array<Layer.Layer.Any>
           effect: Effect<
-            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            { ಠ_ಠ: { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> } },
             any,
             Make["strict"] extends false ? any : GetSuccess<Make["dependencies"]>
           >
@@ -765,7 +776,7 @@ export const makeRouter = <
         const Make extends {
           dependencies: Array<Layer.Layer.Any>
           effect: Effect<
-            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            { ಠ_ಠ: { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> } },
             any,
             GetSuccess<Make["dependencies"]>
           >
@@ -803,7 +814,7 @@ export const makeRouter = <
         const Make extends {
           dependencies: Array<Layer.Layer.Any>
           effect: Effect<
-            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            { ಠ_ಠ: { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> } },
             any,
             GetSuccess<Make["dependencies"]>
           >
@@ -843,7 +854,7 @@ export const makeRouter = <
               : [Layer.Layer<Exclude<Effect.Context<Make["effect"]>, MakeDepsOut<Make>>, never, never>]
           ]
           effect: Effect<
-            { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> },
+            { ಠ_ಠ: { [K in keyof Filter<Rsc>]: AHandler<Rsc[K]> } },
             any,
             any
           >
@@ -962,8 +973,8 @@ export type MakeContext<Make> = Make extends { readonly effect: Effect<any, any,
   : never
 
 export type MakeHandlers<Make, Handlers extends Record<string, any>> = Make extends
-  { readonly effect: Effect<{ [K in keyof Handlers]: AHandler<Handlers[K]> }, any, any> }
-  ? Effect.Success<Make["effect"]>
+  { readonly effect: Effect<{ ಠ_ಠ: { [K in keyof Handlers]: AHandler<Handlers[K]> } }, any, any> }
+  ? Effect.Success<Make["effect"]> extends { ಠ_ಠ: any } ? Effect.Success<Make["effect"]>["ಠ_ಠ"] : never
   : never
 
 /**
