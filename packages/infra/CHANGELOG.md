@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.22.0
+
+### Minor Changes
+
+- 8d9977f: feat: routing7
+
 ## 2.21.5
 
 ### Patch Changes
