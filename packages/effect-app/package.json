@@ -4,8 +4,8 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect/rpc": "^0.44.18",
-    "@effect/rpc-http": "^0.42.18",
+    "@effect/rpc": "^0.44.19",
+    "@effect/rpc-http": "^0.42.19",
     "@tsconfig/strictest": "^2.0.5",
     "date-fns": "^4.1.0",
     "nanoid": "^5.0.8",
@@ -27,7 +27,7 @@
     "vitest": "^2.1.4"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.69.18",
+    "@effect/platform": "^0.69.19",
     "effect": "^3.10.12"
   },
   "typesVersions": {
