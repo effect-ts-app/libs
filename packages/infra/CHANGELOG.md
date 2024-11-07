@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.22.5
+
+### Patch Changes
+
+- dfa91fc: fix
+
 ## 2.22.4
 
 ### Patch Changes
