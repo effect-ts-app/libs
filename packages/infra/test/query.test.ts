@@ -1,3 +1,4 @@
+/* eslint-disable unused-imports/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Context, Effect, flow, Layer, Option, pipe, S, Struct } from "effect-app"
@@ -851,5 +852,8 @@ it("does not allow string queries on arrays", () =>
 
       const good1 = base.pipe(where("id", "includes", "a"))
       const good2 = base.pipe(where("id", "includes-any", ["a"]))
+
+      expectTypeOf(good1).toEqualTypeOf<QueryWhere<Some, Some>>()
+      expectTypeOf(good2).toEqualTypeOf<QueryWhere<Some, Some>>()
     })
     .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise))
