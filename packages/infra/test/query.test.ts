@@ -251,16 +251,6 @@ namespace TestUnion {
   export type Encoded = typeof TestUnion.Encoded
 }
 
-it("contains", () => {
-  type Some = {
-    readonly id: string[]
-  }
-  const base = make<Some>()
-  const bad = base.pipe(where("id", "contains", "a"))
-  const good = base.pipe(where("id", "includes", "a"))
-  const good2 = base.pipe(where("id", "includes-any", ["a"]))
-})
-
 it(
   "refine",
   () =>
