@@ -34,7 +34,7 @@ const withRequestSpan = (name = "request", options?: Tracer.SpanOptions) => <R, 
       f.pipe(
         Effect.withSpan(name, {
           ...options,
-          attributes: { ...spanAttributes(ctx), ...options?.attributes },
+          attributes: { ...spanAttributes({ ...ctx, name: NonEmptyString255(name) }), ...options?.attributes },
           captureStackTrace: false
         }),
         // TODO: false
