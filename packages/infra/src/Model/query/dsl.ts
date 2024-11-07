@@ -339,7 +339,7 @@ export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
-    V extends string,
+    V extends FieldPathValue<TFieldValues, TFieldName> & string,
     TFieldValuesRefined extends TFieldValues = TFieldValues
   >(
     path: TFieldName,
