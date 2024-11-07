@@ -5,6 +5,11 @@
 ### Minor Changes
 
 - 82363f6: add: Schema.contextFromServices
+## 2.11.2
+
+### Patch Changes
+
+- c7c76b4: update packages
 
 ## 2.11.1
 

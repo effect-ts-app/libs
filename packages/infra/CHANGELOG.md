@@ -18,6 +18,10 @@
 
 - Updated dependencies [82363f6]
   - effect-app@2.12.0
+- 4493bc6: add missing request.naem
+- c7c76b4: update packages
+- Updated dependencies [c7c76b4]
+  - effect-app@2.11.2
 
 ## 2.22.2
 
