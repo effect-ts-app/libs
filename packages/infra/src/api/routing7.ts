@@ -751,12 +751,26 @@ export const makeRouter = <
                   S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
                   any
                 >
-              : Hint<"You're returning non void for a void Response, please fix">
-            : Effect<
-              GetSuccessShape<Rsc[K], "d">,
-              S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
-              any
-            >
+              : Effect<
+                Hint<"You're returning non void for a void Response, please fix">,
+                S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
+                any
+              >
+            :
+              | Effect<
+                GetSuccessShape<Rsc[K], "d">,
+                S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
+                any
+              >
+              | {
+                (
+                  req: S.Schema.Type<Rsc[K]>
+                ): Effect<
+                  GetSuccessShape<Rsc[K], "d">,
+                  S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
+                  any
+                >
+              }
             // the non void case
             :
               | {
