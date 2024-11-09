@@ -4,18 +4,7 @@
 
 ### Minor Changes
 
-- bump
-
-### Patch Changes
-
-- Updated dependencies
-  - effect-app@2.13.0
-
-## 2.22.5
-
-### Patch Changes
-
-- dfa91fc: fix
+- 1f6ae44: improve void catch
 
 ## 2.22.4
 
@@ -29,10 +18,6 @@
 
 - Updated dependencies [82363f6]
   - effect-app@2.12.0
-- 4493bc6: add missing request.naem
-- c7c76b4: update packages
-- Updated dependencies [c7c76b4]
-  - effect-app@2.11.2
 
 ## 2.22.2
 
