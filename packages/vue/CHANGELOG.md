@@ -1,5 +1,13 @@
 # @effect-app/vue
 
+## 2.7.1
+
+### Patch Changes
+
+- 0feb32c: update packages
+- Updated dependencies [0feb32c]
+  - effect-app@2.13.1
+
 ## 2.7.0
 
 ### Minor Changes
