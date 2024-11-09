@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.23.2
+
+### Patch Changes
+
+- edd7572: fix, improve
+
 ## 2.23.1
 
 ### Patch Changes
