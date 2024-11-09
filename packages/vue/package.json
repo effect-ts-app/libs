@@ -12,12 +12,12 @@
     "query-string": "^9.1.1"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.69.19",
-    "@effect/platform-browser": "^0.48.19",
+    "@effect/platform": "^0.69.20",
+    "@effect/platform-browser": "^0.48.20",
     "@effect-rx/rx": "^0.34.2",
     "@effect-rx/rx-vue": "^0.11.2",
     "@sentry/browser": "^8.37.1",
-    "effect": "^3.10.12",
+    "effect": "^3.10.13",
     "vue": "^3.5.12"
   },
   "devDependencies": {
