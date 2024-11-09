@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { makeMiddleware, makeRouter } from "@effect-app/infra/api/routing7"
 import type { RequestContext } from "@effect-app/infra/RequestContext"
@@ -132,15 +133,15 @@ export const { TaggedRequest: Req } = makeRpcClient<RequestConfig, CTXMap>({
   requireRoles: UnauthorizedError
 })
 
-export class GetSomething extends Req<GetSomething>()("GetSomething", {
+export class DoSomething extends Req<DoSomething>()("DoSomething", {
   id: S.String
 }, { success: S.Void }) {}
 
-export class GetSomethingElse extends Req<GetSomethingElse>()("GetSomethingElse", {
+export class GetSomething extends Req<GetSomething>()("GetSomething", {
   id: S.String
 }, { success: S.String }) {}
 
-const Something = { GetSomething, GetSomethingElse, meta: { moduleName: "Something" as const } }
+const Something = { DoSomething, GetSomething, meta: { moduleName: "Something" as const } }
 
 export class SomethingService extends Effect.Service<SomethingService>()("SomethingService", {
   dependencies: [],
@@ -187,8 +188,8 @@ it("router6", () => {
       console.log({ repo, smth, smth2 })
 
       return matchFor(Something)({
-        GetSomething: Effect.void,
-        GetSomethingElse: Effect.succeed("12")
+        DoSomething: Effect.void,
+        GetSomething: Effect.succeed("12")
       })
     })
   })
@@ -209,8 +210,8 @@ export default Router(Something)({
     console.log({ repo, smth, smth2 })
 
     return matchFor(Something)({
-      GetSomething: Effect.void,
-      GetSomethingElse: Effect.succeed("12")
+      GetSomething: Effect.succeed("12"),
+      DoSomething: Effect.void // Effect.succeed(2) should fail
     })
   })
 })
