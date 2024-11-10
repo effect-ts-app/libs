@@ -742,13 +742,19 @@ export const makeRouter = <
       any
     >
 
-    type Hndlrs<Action extends AnyRequestModule> =
+    type DHndlrs<Action extends AnyRequestModule> =
       | HndlrWithInput<Action, "d">
       | Hndlr<Action, "d">
+
+    type RawHndlrs<Action extends AnyRequestModule> =
       | { raw: HndlrWithInput<Action, "raw"> }
       | { raw: Hndlr<Action, "raw"> }
 
-    type CheckAction<Action extends AnyRequestModule, Impl, Mode extends "raw" | "d"> = Impl extends
+    // type Hndlrs<Action extends AnyRequestModule> =
+    //   | DHndlrs<Action>
+    //   | RawHndlrs<Action>
+
+    type CheckAction<Action extends AnyRequestModule, Impl, Mode extends "raw" | "d", Default> = Impl extends
       (...args: any[]) => any ? [Effect.Success<ReturnType<Impl>>] extends [void] ? HndlrWithInput<Action, Mode>
       : Hint<"You're returning non void for a void Response, please fix">
       // this is insane this works...
@@ -758,7 +764,7 @@ export const makeRouter = <
           S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
           any
         >
-      : never
+      : Default
 
     type GetCtx<Impl> = Impl extends (...args: any[]) => Effect<any, any, infer R> ? R
       : Impl extends Effect<any, any, infer R> ? R
@@ -769,15 +775,14 @@ export const makeRouter = <
         [K in keyof Filter<Rsc>]:
           // incase we expect a void return, we want to make sure the return really is only void
           // the problem is that anything is assignable to void. This helps catch accidental return of e.g Errors instead of yielding them
-          [GetSuccessShape<Rsc[K], "d">] extends [void]
+          Impl[K] extends { raw: any } ? [GetSuccessShape<Rsc[K], "raw">] extends [void]
+              // this is insane this works...
+              ? CheckAction<Rsc[K], Impl[K]["raw"], "raw", RawHndlrs<Rsc[K]>>
+            : RawHndlrs<Rsc[K]>
+            : [GetSuccessShape<Rsc[K], "d">] extends [void]
             // this is insane this works...
-            ? CheckAction<Rsc[K], Impl[K], "d"> extends never
-              // TODO: officially this should check the "raw" for [void] instead
-              ? Impl[K] extends { raw: any } ? CheckAction<Rsc[K], Impl[K]["raw"], "raw">
-              : CheckAction<Rsc[K], Impl[K], "d">
-            : Hndlrs<Rsc[K]>
-            // the non void case
-            : Hndlrs<Rsc[K]>
+              ? CheckAction<Rsc[K], Impl[K], "d", DHndlrs<Rsc[K]>>
+            : DHndlrs<Rsc[K]>
       }
     >(
       impl: Impl

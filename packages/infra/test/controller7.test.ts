@@ -216,7 +216,28 @@ export default Router(Something)({
 
     return matchFor(Something)({
       GetSomething: Effect.succeed("12"),
-      DoSomething: Effect.void, // Effect.succeed(2) should fail
+      DoSomething: Effect.succeed(2), // Effect.succeed(2) should fail
+      GetSomething2: Effect.succeed(12)
+    })
+  })
+})
+
+export const RawTest = Router(Something)({
+  dependencies: [
+    SomethingRepo.Default,
+    SomethingService.Default,
+    SomethingService2.Default
+  ],
+  effect: Effect.gen(function*() {
+    const repo = yield* SomethingRepo
+    const smth = yield* SomethingService
+    const smth2 = yield* SomethingService2
+
+    console.log({ repo, smth, smth2 })
+
+    return matchFor(Something)({
+      GetSomething: Effect.succeed("12"),
+      DoSomething: { raw: Effect.succeed(1) }, // Effect.succeed(2) should fail
       GetSomething2: { raw: Effect.succeed("12") }
     })
   })
