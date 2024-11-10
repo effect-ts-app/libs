@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.24.0
+
+### Minor Changes
+
+- 5767ba8: add support for "raw" in route handlers
+
 ## 2.23.2
 
 ### Patch Changes
