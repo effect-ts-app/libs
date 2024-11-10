@@ -141,7 +141,11 @@ export class GetSomething extends Req<GetSomething>()("GetSomething", {
   id: S.String
 }, { success: S.String }) {}
 
-const Something = { DoSomething, GetSomething, meta: { moduleName: "Something" as const } }
+export class GetSomething2 extends Req<GetSomething2>()("GetSomething2", {
+  id: S.String
+}, { success: S.NumberFromString }) {}
+
+const Something = { DoSomething, GetSomething, GetSomething2, meta: { moduleName: "Something" as const } }
 
 export class SomethingService extends Effect.Service<SomethingService>()("SomethingService", {
   dependencies: [],
@@ -189,7 +193,8 @@ it("router6", () => {
 
       return matchFor(Something)({
         DoSomething: Effect.void,
-        GetSomething: Effect.succeed("12")
+        GetSomething: Effect.succeed("12"),
+        GetSomething2: Effect.succeed(12)
       })
     })
   })
@@ -211,7 +216,29 @@ export default Router(Something)({
 
     return matchFor(Something)({
       GetSomething: Effect.succeed("12"),
-      DoSomething: Effect.void // Effect.succeed(2) should fail
+      DoSomething: Effect.void, // Effect.succeed(2) should fail
+      GetSomething2: Effect.succeed(12)
+    })
+  })
+})
+
+export const RawTest = Router(Something)({
+  dependencies: [
+    SomethingRepo.Default,
+    SomethingService.Default,
+    SomethingService2.Default
+  ],
+  effect: Effect.gen(function*() {
+    const repo = yield* SomethingRepo
+    const smth = yield* SomethingService
+    const smth2 = yield* SomethingService2
+
+    console.log({ repo, smth, smth2 })
+
+    return matchFor(Something)({
+      GetSomething: Effect.succeed("12"),
+      DoSomething: { raw: Effect.void }, // Effect.succeed(2) should fail
+      GetSomething2: { raw: Effect.succeed("12") }
     })
   })
 })
