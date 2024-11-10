@@ -339,12 +339,11 @@ export type FilterContinuations<IsCurrentInitial extends boolean = false> = {
   <
     TFieldValues extends FieldValues,
     TFieldName extends FieldPath<TFieldValues>,
-    V extends FieldPathValue<TFieldValues, TFieldName> & string,
     TFieldValuesRefined extends TFieldValues = TFieldValues
   >(
     path: TFieldName,
     op: "startsWith" | "endsWith" | "contains" | "notContains" | "notStartsWith" | "notEndsWith",
-    value: V
+    value: FieldPathValue<TFieldValues, TFieldName> extends string ? string : never
   ): (
     current: IsCurrentInitial extends true ? Query<TFieldValues>
       : QueryWhere<TFieldValues, TFieldValuesRefined>
