@@ -8,10 +8,10 @@ import { setupRequestContextFromCurrent } from "../setupRequest.js"
 const setRetry = Stream.succeed("retry: 10000")
 const keepAlive = Stream.schedule(Effect.succeed(":keep-alive"), Schedule.fixed(Duration.seconds(15)))
 
-export const makeSSE = <A extends { id: any }, E, R, SI, SR>(
-  events: Stream.Stream<{ evt: A; namespace: string }, E, R>,
+export const makeSSE = <A extends { id: any }, SI, SR>(
   schema: S.Schema<A, SI, SR>
 ) =>
+<E, R>(events: Stream.Stream<{ evt: A; namespace: string }, E, R>) =>
   Effect
     .gen(function*() {
       yield* InfraLogger.logInfo("$ start listening to events")
