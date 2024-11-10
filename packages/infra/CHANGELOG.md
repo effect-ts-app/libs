@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.25.0
+
+### Minor Changes
+
+- 499b242: improve makeSSE api
+
 ## 2.24.2
 
 ### Patch Changes
