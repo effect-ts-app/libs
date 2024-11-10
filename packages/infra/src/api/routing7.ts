@@ -742,6 +742,28 @@ export const makeRouter = <
       any
     >
 
+    type Hndlrs<Action extends AnyRequestModule> =
+      | HndlrWithInput<Action, "d">
+      | Hndlr<Action, "d">
+      | { raw: HndlrWithInput<Action, "raw"> }
+      | { raw: Hndlr<Action, "raw"> }
+
+    type CheckAction<Action extends AnyRequestModule, Impl, Mode extends "raw" | "d"> = Impl extends
+      (...args: any[]) => any ? [Effect.Success<ReturnType<Impl>>] extends [void] ? HndlrWithInput<Action, Mode>
+      : Hint<"You're returning non void for a void Response, please fix">
+      // this is insane this works...
+      : Impl extends Effect.Effect<any, any, any> ? [Effect.Success<Impl>] extends [void] ? Hndlr<Action, Mode>
+        : Effect<
+          Hint<"You're returning non void for a void Response, please fix">,
+          S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
+          any
+        >
+      : never
+
+    type GetCtx<Impl> = Impl extends (...args: any[]) => Effect<any, any, infer R> ? R
+      : Impl extends Effect<any, any, infer R> ? R
+      : never
+
     const router3: <
       const Impl extends {
         [K in keyof Filter<Rsc>]:
@@ -749,65 +771,32 @@ export const makeRouter = <
           // the problem is that anything is assignable to void. This helps catch accidental return of e.g Errors instead of yielding them
           [GetSuccessShape<Rsc[K], "d">] extends [void]
             // this is insane this works...
-            ? Impl[K] extends (...args: any[]) => any
-              ? [Effect.Success<ReturnType<Impl[K]>>] extends [void] ? HndlrWithInput<Rsc[K], "d">
-              : Hint<"You're returning non void for a void Response, please fix">
-              // this is insane this works...
-            : Impl[K] extends Effect.Effect<any, any, any>
-              ? [Effect.Success<Impl[K]>] extends [void] ? Hndlr<Rsc[K], "d">
-              : Effect<
-                Hint<"You're returning non void for a void Response, please fix">,
-                S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
-                any
-              >
-            :
-              | Hndlr<Rsc[K], "d">
-              | HndlrWithInput<Rsc[K], "d">
+            ? CheckAction<Rsc[K], Impl[K], "d"> extends never
+              // TODO: officially this should check the "raw" for [void] instead
+              ? Impl[K] extends { raw: any } ? CheckAction<Rsc[K], Impl[K]["raw"], "raw">
+              : CheckAction<Rsc[K], Impl[K], "d">
+            : Hndlrs<Rsc[K]>
             // the non void case
-            :
-              | HndlrWithInput<Rsc[K], "d">
-              | Hndlr<Rsc[K], "d">
+            : Hndlrs<Rsc[K]>
       }
     >(
       impl: Impl
     ) => {
-      [K in keyof Impl & keyof Filter<Rsc>]: [GetSuccessShape<Rsc[K], "d">] extends [void] ? HandleVoid<
-          GetSuccessShape<Rsc[K], "d">,
-          Impl[K] extends (...args: any[]) => Effect<infer A, any, any> ? A
-            : Impl[K] extends Effect<infer A, any, any> ? A
-            : never,
-          Handler<
-            Filter<Rsc>[K],
-            "d",
-            Exclude<
-              | Context
-              | Exclude<
-                Impl[K] extends (...args: any[]) => Effect<any, any, infer R> ? R
-                  : Impl[K] extends Effect<any, any, infer R> ? R
-                  : never,
-                GetEffectContext<CTXMap, Rsc[K]["config"]>
-              >,
-              HttpRouter.HttpRouter.Provided
-            >
-          >
+      [K in keyof Impl & keyof Filter<Rsc>]: Handler<
+        Filter<Rsc>[K],
+        Impl[K] extends { raw: any } ? "raw" : "d",
+        Exclude<
+          | Context
+          | Exclude<
+            Impl[K] extends { raw: any } ? GetCtx<Impl[K]["raw"]> : GetCtx<Impl[K]>,
+            GetEffectContext<CTXMap, Rsc[K]["config"]>
+          >,
+          HttpRouter.HttpRouter.Provided
         >
-        : Handler<
-          Filter<Rsc>[K],
-          "d",
-          Exclude<
-            | Context
-            | Exclude<
-              Impl[K] extends (...args: any[]) => Effect<any, any, infer R> ? R
-                : Impl[K] extends Effect<any, any, infer R> ? R
-                : never,
-              GetEffectContext<CTXMap, Rsc[K]["config"]>
-            >,
-            HttpRouter.HttpRouter.Provided
-          >
-        >
+      >
     } = (obj: Record<keyof Filtered, any>) =>
       typedKeysOf(obj).reduce((acc, cur) => {
-        acc[cur] = items[cur](obj[cur])
+        acc[cur] = "raw" in obj[cur] ? items[cur].raw(obj[cur].raw) : items[cur](obj[cur])
         return acc
       }, {} as any)
 
