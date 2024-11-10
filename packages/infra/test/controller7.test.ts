@@ -236,9 +236,9 @@ export const RawTest = Router(Something)({
     console.log({ repo, smth, smth2 })
 
     return matchFor(Something)({
-      GetSomething: Effect.succeed("12"),
+      GetSomething: SomethingService2.use(() => Effect.succeed("12")),
       DoSomething: { raw: Effect.void }, // Effect.succeed(2) should fail
-      GetSomething2: { raw: Effect.succeed("12") }
+      GetSomething2: { raw: SomethingService2.use(() => Effect.succeed("12")) }
     })
   })
 })

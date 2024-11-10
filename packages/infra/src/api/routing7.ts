@@ -764,10 +764,6 @@ export const makeRouter = <
         >
       : Default
 
-    type GetCtx<Impl> = Impl extends (...args: any[]) => Effect<any, any, infer R> ? R
-      : Impl extends Effect<any, any, infer R> ? R
-      : never
-
     const router3: <
       const Impl extends {
         [K in keyof Filter<Rsc>]:
@@ -791,7 +787,12 @@ export const makeRouter = <
         Exclude<
           | Context
           | Exclude<
-            Impl[K] extends { raw: any } ? GetCtx<Impl[K]["raw"]> : GetCtx<Impl[K]>,
+            Impl[K] extends { raw: any } ? Impl[K]["raw"] extends (...args: any[]) => Effect<any, any, infer R> ? R
+              : Impl[K]["raw"] extends Effect<any, any, infer R> ? R
+              : never
+              : Impl[K] extends (...args: any[]) => Effect<any, any, infer R> ? R
+              : Impl[K] extends Effect<any, any, infer R> ? R
+              : never,
             GetEffectContext<CTXMap, Rsc[K]["config"]>
           >,
           HttpRouter.HttpRouter.Provided
