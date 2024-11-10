@@ -216,7 +216,7 @@ export default Router(Something)({
 
     return matchFor(Something)({
       GetSomething: Effect.succeed("12"),
-      DoSomething: Effect.succeed(2), // Effect.succeed(2) should fail
+      DoSomething: Effect.void, // Effect.succeed(2) should fail
       GetSomething2: Effect.succeed(12)
     })
   })
@@ -237,7 +237,7 @@ export const RawTest = Router(Something)({
 
     return matchFor(Something)({
       GetSomething: Effect.succeed("12"),
-      DoSomething: { raw: Effect.succeed(1) }, // Effect.succeed(2) should fail
+      DoSomething: { raw: Effect.void }, // Effect.succeed(2) should fail
       GetSomething2: { raw: Effect.succeed("12") }
     })
   })

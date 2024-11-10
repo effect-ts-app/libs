@@ -742,17 +742,15 @@ export const makeRouter = <
       any
     >
 
-    type DHndlrs<Action extends AnyRequestModule> =
-      | HndlrWithInput<Action, "d">
-      | Hndlr<Action, "d">
+    type Hndlrs<Action extends AnyRequestModule, Mode extends "d" | "raw"> =
+      | HndlrWithInput<Action, Mode>
+      | Hndlr<Action, Mode>
+
+    type DHndlrs<Action extends AnyRequestModule> = Hndlrs<Action, "d">
 
     type RawHndlrs<Action extends AnyRequestModule> =
       | { raw: HndlrWithInput<Action, "raw"> }
       | { raw: Hndlr<Action, "raw"> }
-
-    // type Hndlrs<Action extends AnyRequestModule> =
-    //   | DHndlrs<Action>
-    //   | RawHndlrs<Action>
 
     type CheckAction<Action extends AnyRequestModule, Impl, Mode extends "raw" | "d", Default> = Impl extends
       (...args: any[]) => any ? [Effect.Success<ReturnType<Impl>>] extends [void] ? HndlrWithInput<Action, Mode>
@@ -777,7 +775,7 @@ export const makeRouter = <
           // the problem is that anything is assignable to void. This helps catch accidental return of e.g Errors instead of yielding them
           Impl[K] extends { raw: any } ? [GetSuccessShape<Rsc[K], "raw">] extends [void]
               // this is insane this works...
-              ? CheckAction<Rsc[K], Impl[K]["raw"], "raw", RawHndlrs<Rsc[K]>>
+              ? { raw: CheckAction<Rsc[K], Impl[K]["raw"], "raw", Hndlrs<Rsc[K], "raw">> }
             : RawHndlrs<Rsc[K]>
             : [GetSuccessShape<Rsc[K], "d">] extends [void]
             // this is insane this works...
