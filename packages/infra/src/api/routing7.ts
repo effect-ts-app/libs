@@ -728,6 +728,20 @@ export const makeRouter = <
       }
     }
 
+    type HndlrWithInput<Action extends AnyRequestModule, Mode extends "d" | "raw"> = (
+      req: S.Schema.Type<Action>
+    ) => Effect<
+      GetSuccessShape<Action, Mode>,
+      S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
+      any
+    >
+
+    type Hndlr<Action extends AnyRequestModule, Mode extends "d" | "raw"> = Effect<
+      GetSuccessShape<Action, Mode>,
+      S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
+      any
+    >
+
     const router3: <
       const Impl extends {
         [K in keyof Filter<Rsc>]:
@@ -735,58 +749,24 @@ export const makeRouter = <
           // the problem is that anything is assignable to void. This helps catch accidental return of e.g Errors instead of yielding them
           [GetSuccessShape<Rsc[K], "d">] extends [void]
             // this is insane this works...
-            ? Impl[K] extends (...args: any[]) => any ? [Effect.Success<ReturnType<Impl[K]>>] extends [void] ? {
-                  (
-                    req: S.Schema.Type<Rsc[K]>
-                  ): Effect<
-                    GetSuccessShape<Rsc[K], "d">,
-                    S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
-                    any
-                  >
-                }
+            ? Impl[K] extends (...args: any[]) => any
+              ? [Effect.Success<ReturnType<Impl[K]>>] extends [void] ? HndlrWithInput<Rsc[K], "d">
               : Hint<"You're returning non void for a void Response, please fix">
               // this is insane this works...
-            : Impl[K] extends Effect.Effect<any, any, any> ? [Effect.Success<Impl[K]>] extends [void] ? Effect<
-                  GetSuccessShape<Rsc[K], "d">,
-                  S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
-                  any
-                >
+            : Impl[K] extends Effect.Effect<any, any, any>
+              ? [Effect.Success<Impl[K]>] extends [void] ? Hndlr<Rsc[K], "d">
               : Effect<
                 Hint<"You're returning non void for a void Response, please fix">,
                 S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
                 any
               >
             :
-              | Effect<
-                GetSuccessShape<Rsc[K], "d">,
-                S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
-                any
-              >
-              | {
-                (
-                  req: S.Schema.Type<Rsc[K]>
-                ): Effect<
-                  GetSuccessShape<Rsc[K], "d">,
-                  S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
-                  any
-                >
-              }
+              | Hndlr<Rsc[K], "d">
+              | HndlrWithInput<Rsc[K], "d">
             // the non void case
             :
-              | {
-                (
-                  req: S.Schema.Type<Rsc[K]>
-                ): Effect<
-                  GetSuccessShape<Rsc[K], "d">,
-                  S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
-                  any
-                >
-              }
-              | Effect<
-                GetSuccessShape<Rsc[K], "d">,
-                S.Schema.Type<GetFailure<Rsc[K]>> | S.ParseResult.ParseError,
-                any
-              >
+              | HndlrWithInput<Rsc[K], "d">
+              | Hndlr<Rsc[K], "d">
       }
     >(
       impl: Impl
