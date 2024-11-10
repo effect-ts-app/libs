@@ -833,27 +833,33 @@ it("does not allow string queries on arrays", () =>
   Effect
     .gen(function*() {
       type Some = {
-        readonly id: string[]
+        readonly id: string
+        readonly id2: `${string}:${string}`
+        readonly items: string[]
       }
       const base = make<Some>()
 
       // @ts-expect-error cannot query with contains on arrays
-      const bad1 = base.pipe(where("id", "contains", "a"))
+      const bad1 = base.pipe(where("items", "contains", "a"))
       // @ts-expect-error cannot query with startsWith on arrays
-      const bad2 = base.pipe(where("id", "startsWith", "a"))
+      const bad2 = base.pipe(where("items", "startsWith", "a"))
       // @ts-expect-error cannot query with endsWith on arrays
-      const bad3 = base.pipe(where("id", "endsWith", "a"))
+      const bad3 = base.pipe(where("items", "endsWith", "a"))
       // @ts-expect-error cannot query with notContains on arrays
-      const bad4 = base.pipe(where("id", "notContains", "a"))
+      const bad4 = base.pipe(where("items", "notContains", "a"))
       // @ts-expect-error cannot query with notStartsWith on arrays
-      const bad5 = base.pipe(where("id", "notStartsWith", "a"))
+      const bad5 = base.pipe(where("items", "notStartsWith", "a"))
       // @ts-expect-error cannot query with notEndsWith on arrays
-      const bad6 = base.pipe(where("id", "notEndsWith", "a"))
+      const bad6 = base.pipe(where("items", "notEndsWith", "a"))
 
-      const good1 = base.pipe(where("id", "includes", "a"))
-      const good2 = base.pipe(where("id", "includes-any", ["a"]))
+      const good1 = base.pipe(where("items", "includes", "a"))
+      const good2 = base.pipe(where("items", "includes-any", ["a"]))
+      const good3 = base.pipe(where("id", "startsWith", "a"))
+      const good4 = base.pipe(where("id2", "startsWith", "a"))
 
       expectTypeOf(good1).toEqualTypeOf<QueryWhere<Some, Some>>()
       expectTypeOf(good2).toEqualTypeOf<QueryWhere<Some, Some>>()
+      expectTypeOf(good3).toEqualTypeOf<QueryWhere<Some, Some>>()
+      expectTypeOf(good4).toEqualTypeOf<QueryWhere<Some, Some>>()
     })
     .pipe(Effect.provide(MemoryStoreLive), setupRequestContextFromCurrent(), Effect.runPromise))
