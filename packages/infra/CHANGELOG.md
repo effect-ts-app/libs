@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.24.2
+
+### Patch Changes
+
+- 0fcef42: fix literals
+
 ## 2.24.1
 
 ### Patch Changes
