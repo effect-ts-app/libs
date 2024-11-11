@@ -155,13 +155,16 @@ export const makeRpcClient = <
     <Tag extends string, Payload extends S.Struct.Fields>(
       tag: Tag,
       fields: Payload
-    ): S.TaggedRequestClass<
-      Self,
-      Tag,
-      { readonly _tag: S.tag<Tag> } & Payload,
-      typeof S.Void,
-      GeneralErrors extends never ? typeof S.Never : GeneralErrors
-    >
+    ):
+      & S.TaggedRequestClass<
+        Self,
+        Tag,
+        { readonly _tag: S.tag<Tag> } & Payload,
+        typeof S.Void,
+        GeneralErrors extends never ? typeof S.Never : GeneralErrors
+      >
+      // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+      & { config: {} }
   } {
     // TODO: filter errors based on config + take care of inversion
     const errorSchemas = Object.values(errors)
