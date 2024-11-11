@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.26.1
+
+### Patch Changes
+
+- 9c58471: fix bs
+
 ## 2.26.0
 
 ### Minor Changes
