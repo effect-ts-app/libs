@@ -1,5 +1,16 @@
 # @effect-app/infra
 
+## 2.26.0
+
+### Minor Changes
+
+- 8868118: restore retry and interruptibility
+
+### Patch Changes
+
+- Updated dependencies [54f700f]
+  - effect-app@2.13.2
+
 ## 2.25.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.13.2
+
+### Patch Changes
+
+- 54f700f: fix: missing empty config
+
 ## 2.13.1
 
 ### Patch Changes
