@@ -772,6 +772,8 @@ export const makeRouter = <
       | { raw: HndlrWithInput<Action, "raw"> }
       | { raw: Hndlr<Action, "raw"> }
 
+    type AnyHndlrs<Action extends AnyRequestModule> = RawHndlrs<Action> | DHndlrs<Action>
+
     type CheckAction<Action extends AnyRequestModule, Impl, Mode extends "raw" | "d", Default> = Impl extends
       (...args: any[]) => any ? [Effect.Success<ReturnType<Impl>>] extends [void] ? HndlrWithInput<Action, Mode>
       : Hint<"You're returning non void for a void Response, please fix">
@@ -789,14 +791,16 @@ export const makeRouter = <
         [K in keyof Filter<Rsc>]:
           // incase we expect a void return, we want to make sure the return really is only void
           // the problem is that anything is assignable to void. This helps catch accidental return of e.g Errors instead of yielding them
+          // Note: the alternative branches must always include AnyHndlrs, or inference will not work in certain cases
+          // but somehow especially when released (as opposed to local tests)
           Impl[K] extends { raw: any } ? [GetSuccessShape<Rsc[K], "raw">] extends [void]
               // this is insane this works...
-              ? { raw: CheckAction<Rsc[K], Impl[K]["raw"], "raw", Hndlrs<Rsc[K], "raw">> }
-            : RawHndlrs<Rsc[K]>
+              ? { raw: CheckAction<Rsc[K], Impl[K]["raw"], "raw", AnyHndlrs<Rsc[K]>> }
+            : AnyHndlrs<Rsc[K]>
             : [GetSuccessShape<Rsc[K], "d">] extends [void]
             // this is insane this works...
-              ? CheckAction<Rsc[K], Impl[K], "d", DHndlrs<Rsc[K]>>
-            : DHndlrs<Rsc[K]>
+              ? CheckAction<Rsc[K], Impl[K], "d", AnyHndlrs<Rsc[K]>>
+            : AnyHndlrs<Rsc[K]>
       }
     >(
       impl: Impl
