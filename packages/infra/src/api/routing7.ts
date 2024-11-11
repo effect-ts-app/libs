@@ -2,14 +2,24 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/*
-TODO: Effect.retry(r2, optimisticConcurrencySchedule) / was for PATCH only
-TODO: uninteruptible commands! was for All except GET.
-*/
 import type * as HttpApp from "@effect/platform/HttpApp"
 import { Rpc, RpcRouter } from "@effect/rpc"
 import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
-import { Array, Cause, Chunk, Context, Effect, FiberRef, flow, Layer, Predicate, S, Schema, Stream } from "effect-app"
+import {
+  Array,
+  Cause,
+  Chunk,
+  Context,
+  Effect,
+  FiberRef,
+  flow,
+  Layer,
+  Predicate,
+  S,
+  Schedule,
+  Schema,
+  Stream
+} from "effect-app"
 import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
 import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
@@ -19,6 +29,10 @@ import { logError, reportError } from "../errorReporter.js"
 import { InfraLogger } from "../logger.js"
 import type { Middleware } from "./routing/DynamicMiddleware.js"
 import { makeRpc } from "./routing/DynamicMiddleware.js"
+import { determineMethod } from "./routing/utils.js"
+
+const optimisticConcurrencySchedule = Schedule.once
+  && Schedule.recurWhile<{ _tag: string }>((a) => a._tag === "OptimisticConcurrencyException")
 
 const logRequestError = logError("Request")
 const reportRequestError = reportError("Request")
@@ -369,6 +383,13 @@ export const makeRouter = <
             const handler = controllers[cur as keyof typeof controllers]
             const req = rsc[cur]
 
+            const method = determineMethod(String(cur), req)
+            const isCommand = method._tag === "command"
+
+            const handle = isCommand
+              ? (req: any) => Effect.retry(handler.handler(req) as any, optimisticConcurrencySchedule)
+              : (req: any) => Effect.interruptible(handler.handler(req) as any)
+
             acc[cur] = rpc.effect(
               handler._tag === "raw"
                 ? class extends (req as any) {
@@ -408,7 +429,7 @@ export const makeRouter = <
                   )
                   .pipe(
                     // can't use andThen due to some being a function and effect
-                    Effect.zipRight(handler.handler(req as any) as any),
+                    Effect.zipRight(handle(req)),
                     Effect.tapErrorCause((cause) => Cause.isFailure(cause) ? logRequestError(cause) : Effect.void),
                     Effect.tapDefect((cause) =>
                       Effect
@@ -463,7 +484,6 @@ export const makeRouter = <
             .all(
               "/",
               httpApp as any,
-              // TODO: not queries.
               { uninterruptible: true }
             )
         })
