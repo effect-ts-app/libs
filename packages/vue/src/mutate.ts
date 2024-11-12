@@ -171,6 +171,33 @@ export const makeMutation = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefin
         signal = snd
       }
 
+      const invalidateCache = Effect
+        .suspend(() => {
+          const queryKey = getQueryKey(self)
+
+          if (options?.queryInvalidation) {
+            const opts = options.queryInvalidation(queryKey, self.name)
+            if (!opts.length) {
+              return Effect.void
+            }
+            return Effect
+              .andThen(
+                Effect.annotateCurrentSpan({ queryKey, opts }),
+                Effect.forEach(opts, (_) => invalidateQueries(_.filters, _.options), { concurrency: "inherit" })
+              )
+              .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
+          }
+
+          if (!queryKey) return Effect.void
+
+          return Effect
+            .andThen(
+              Effect.annotateCurrentSpan({ queryKey }),
+              invalidateQueries({ queryKey })
+            )
+            .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
+        })
+
       return runPromise(
         Effect
           .sync(() => {
@@ -178,34 +205,7 @@ export const makeMutation = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefin
           })
           .pipe(
             Effect.andThen(effect),
-            Effect.tap(() =>
-              Effect
-                .suspend(() => {
-                  const queryKey = getQueryKey(self)
-
-                  if (options?.queryInvalidation) {
-                    const opts = options.queryInvalidation(queryKey, self.name)
-                    if (!opts.length) {
-                      return Effect.void
-                    }
-                    return Effect
-                      .andThen(
-                        Effect.annotateCurrentSpan({ queryKey, opts }),
-                        Effect.forEach(opts, (_) => invalidateQueries(_.filters, _.options), { concurrency: "inherit" })
-                      )
-                      .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
-                  }
-
-                  if (!queryKey) return Effect.void
-
-                  return Effect
-                    .andThen(
-                      Effect.annotateCurrentSpan({ queryKey }),
-                      invalidateQueries({ queryKey })
-                    )
-                    .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
-                })
-            ),
+            Effect.tapBoth({ onFailure: () => invalidateCache, onSuccess: () => invalidateCache }),
             Effect.tap((a) =>
               onSuccess ? Effect.promise(() => onSuccess(a, (fst !== signal ? fst : undefined) as any)) : Effect.void
             ),

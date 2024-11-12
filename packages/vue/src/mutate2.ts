@@ -169,7 +169,7 @@ export const makeMutation2 = () => {
         })
         .pipe(
           Effect.zipRight(effect),
-          Effect.tap(invalidateCache),
+          Effect.tapBoth({ onFailure: () => invalidateCache, onSuccess: () => invalidateCache }),
           Effect.tap((a) => onSuccess ? Effect.promise(() => onSuccess(a, fst as I)) : Effect.void),
           Effect.tapDefect(reportRuntimeError),
           Effect.onExit(handleExit),
