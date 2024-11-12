@@ -12,12 +12,12 @@
     "query-string": "^9.1.1"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.69.20",
-    "@effect/platform-browser": "^0.48.20",
-    "@effect-rx/rx": "^0.34.2",
-    "@effect-rx/rx-vue": "^0.11.2",
+    "@effect/platform": "^0.69.21",
+    "@effect/platform-browser": "^0.48.21",
+    "@effect-rx/rx": "^0.34.4",
+    "@effect-rx/rx-vue": "^0.11.4",
     "@sentry/browser": "^8.37.1",
-    "effect": "^3.10.13",
+    "effect": "^3.10.14",
     "vue": "^3.5.12"
   },
   "devDependencies": {
@@ -27,7 +27,7 @@
     "intl-messageformat": "^10.7.6",
     "json5": "^2.2.3",
     "typescript": "^5.6.3",
-    "vite": "^5.4.10",
+    "vite": "^5.4.11",
     "vitest": "^2.1.4"
   },
   "typesVersions": {
