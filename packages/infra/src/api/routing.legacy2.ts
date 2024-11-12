@@ -2,24 +2,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/*
+TODO: Effect.retry(r2, optimisticConcurrencySchedule) / was for PATCH only
+TODO: uninteruptible commands! was for All except GET.
+*/
 import type * as HttpApp from "@effect/platform/HttpApp"
 import { Rpc, RpcRouter } from "@effect/rpc"
 import type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app"
-import {
-  Array,
-  Cause,
-  Chunk,
-  Context,
-  Effect,
-  FiberRef,
-  flow,
-  Layer,
-  Predicate,
-  S,
-  Schedule,
-  Schema,
-  Stream
-} from "effect-app"
+import { Array, Cause, Chunk, Context, Effect, FiberRef, flow, Layer, Predicate, S, Schema, Stream } from "effect-app"
 import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
 import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
@@ -29,10 +19,6 @@ import { logError, reportError } from "../errorReporter.js"
 import { InfraLogger } from "../logger.js"
 import type { Middleware } from "./routing/DynamicMiddleware.js"
 import { makeRpc } from "./routing/DynamicMiddleware.js"
-import { determineMethod } from "./routing/utils.js"
-
-const optimisticConcurrencySchedule = Schedule.once
-  && Schedule.recurWhile<{ _tag: string }>((a) => a._tag === "OptimisticConcurrencyException")
 
 const logRequestError = logError("Request")
 const reportRequestError = reportError("Request")
@@ -102,12 +88,7 @@ type HandleVoid<Expected, Actual, Result> = [Expected] extends [void]
   ? [Actual] extends [void] ? Result : Hint<"You're returning non void for a void Response, please fix">
   : Result
 
-export type AnyRequestModule = S.Schema.Any & {
-  _tag: string
-  config: any
-  success: S.Schema.Any
-  failure: S.Schema.Any
-}
+type AnyRequestModule = S.Schema.Any & { _tag: string; success?: S.Schema.Any; failure?: S.Schema.Any }
 export interface AddAction<Actions extends AnyRequestModule, Accum extends Record<string, any> = {}> {
   accum: Accum
   add<A extends Handler<Actions, any, any>>(
@@ -383,13 +364,6 @@ export const makeRouter = <
             const handler = controllers[cur as keyof typeof controllers]
             const req = rsc[cur]
 
-            const method = determineMethod(String(cur), req)
-            const isCommand = method._tag === "command"
-
-            const handle = isCommand
-              ? (req: any) => Effect.retry(handler.handler(req) as any, optimisticConcurrencySchedule)
-              : (req: any) => Effect.interruptible(handler.handler(req) as any)
-
             acc[cur] = rpc.effect(
               handler._tag === "raw"
                 ? class extends (req as any) {
@@ -429,7 +403,7 @@ export const makeRouter = <
                   )
                   .pipe(
                     // can't use andThen due to some being a function and effect
-                    Effect.zipRight(handle(req)),
+                    Effect.zipRight(handler.handler(req as any) as any),
                     Effect.tapErrorCause((cause) => Cause.isFailure(cause) ? logRequestError(cause) : Effect.void),
                     Effect.tapDefect((cause) =>
                       Effect
@@ -484,6 +458,7 @@ export const makeRouter = <
             .all(
               "/",
               httpApp as any,
+              // TODO: not queries.
               { uninterruptible: true }
             )
         })
@@ -747,88 +722,7 @@ export const makeRouter = <
         return this as any
       }
     }
-
-    type HndlrWithInput<Action extends AnyRequestModule, Mode extends "d" | "raw"> = (
-      req: S.Schema.Type<Action>
-    ) => Effect<
-      GetSuccessShape<Action, Mode>,
-      S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
-      any
-    >
-
-    type Hndlr<Action extends AnyRequestModule, Mode extends "d" | "raw"> = Effect<
-      GetSuccessShape<Action, Mode>,
-      S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
-      any
-    >
-
-    type Hndlrs<Action extends AnyRequestModule, Mode extends "d" | "raw"> =
-      | HndlrWithInput<Action, Mode>
-      | Hndlr<Action, Mode>
-
-    type DHndlrs<Action extends AnyRequestModule> = Hndlrs<Action, "d">
-
-    type RawHndlrs<Action extends AnyRequestModule> =
-      | { raw: HndlrWithInput<Action, "raw"> }
-      | { raw: Hndlr<Action, "raw"> }
-
-    type AnyHndlrs<Action extends AnyRequestModule> = RawHndlrs<Action> | DHndlrs<Action>
-
-    type CheckAction<Action extends AnyRequestModule, Impl, Mode extends "raw" | "d", Default> = Impl extends
-      (...args: any[]) => any ? [Effect.Success<ReturnType<Impl>>] extends [void] ? HndlrWithInput<Action, Mode>
-      : Hint<"You're returning non void for a void Response, please fix">
-      // this is insane this works...
-      : Impl extends Effect.Effect<any, any, any> ? [Effect.Success<Impl>] extends [void] ? Hndlr<Action, Mode>
-        : Effect<
-          Hint<"You're returning non void for a void Response, please fix">,
-          S.Schema.Type<GetFailure<Action>> | S.ParseResult.ParseError,
-          any
-        >
-      : Default
-
-    const router3: <
-      const Impl extends {
-        [K in keyof Filter<Rsc>]:
-          // incase we expect a void return, we want to make sure the return really is only void
-          // the problem is that anything is assignable to void. This helps catch accidental return of e.g Errors instead of yielding them
-          // Note: the alternative branches must always include AnyHndlrs, or inference will not work in certain cases
-          // but somehow especially when released (as opposed to local tests)
-          Impl[K] extends { raw: any } ? [GetSuccessShape<Rsc[K], "raw">] extends [void]
-              // this is insane this works...
-              ? { raw: CheckAction<Rsc[K], Impl[K]["raw"], "raw", AnyHndlrs<Rsc[K]>> }
-            : AnyHndlrs<Rsc[K]>
-            : [GetSuccessShape<Rsc[K], "d">] extends [void]
-            // this is insane this works...
-              ? CheckAction<Rsc[K], Impl[K], "d", AnyHndlrs<Rsc[K]>>
-            : AnyHndlrs<Rsc[K]>
-      }
-    >(
-      impl: Impl
-    ) => {
-      [K in keyof Impl & keyof Filter<Rsc>]: Handler<
-        Filter<Rsc>[K],
-        Impl[K] extends { raw: any } ? "raw" : "d",
-        Exclude<
-          | Context
-          | Exclude<
-            Impl[K] extends { raw: any } ? Impl[K]["raw"] extends (...args: any[]) => Effect<any, any, infer R> ? R
-              : Impl[K]["raw"] extends Effect<any, any, infer R> ? R
-              : never
-              : Impl[K] extends (...args: any[]) => Effect<any, any, infer R> ? R
-              : Impl[K] extends Effect<any, any, infer R> ? R
-              : never,
-            GetEffectContext<CTXMap, Rsc[K]["config"]>
-          >,
-          HttpRouter.HttpRouter.Provided
-        >
-      >
-    } = (obj: Record<keyof Filtered, any>) =>
-      typedKeysOf(obj).reduce((acc, cur) => {
-        acc[cur] = "raw" in obj[cur] ? items[cur].raw(obj[cur].raw) : items[cur](obj[cur])
-        return acc
-      }, {} as any)
-
-    return Object.assign(effect, items, { router, router3 })
+    return Object.assign(effect, items, { router })
   }
 
   type HR<T> = T extends HttpRouter.HttpRouter<any, infer R> ? R : never
@@ -884,16 +778,7 @@ export const makeRouter = <
     }
   }
 
-  return {
-    matchAll,
-    matchFor: <
-      const ModuleName extends string,
-      const Rsc extends Record<string, any>
-    >(
-      rsc: Rsc & { meta: { moduleName: ModuleName } }
-    ) => matchFor(rsc).router3,
-    Router: matchFor
-  }
+  return { matchAll, matchFor }
 }
 
 export type MakeDeps<Make> = Make extends { readonly dependencies: ReadonlyArray<Layer.Layer.Any> }

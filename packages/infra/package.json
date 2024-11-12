@@ -649,6 +649,26 @@
         "default": "./_cjs/api/routing.legacy.cjs"
       }
     },
+    "./api/routing.legacy2": {
+      "import": {
+        "types": "./dist/api/routing.legacy2.d.ts",
+        "default": "./dist/api/routing.legacy2.js"
+      },
+      "require": {
+        "types": "./dist/api/routing.legacy2.d.ts",
+        "default": "./_cjs/api/routing.legacy2.cjs"
+      }
+    },
+    "./api/routing.legacy3": {
+      "import": {
+        "types": "./dist/api/routing.legacy3.d.ts",
+        "default": "./dist/api/routing.legacy3.js"
+      },
+      "require": {
+        "types": "./dist/api/routing.legacy3.d.ts",
+        "default": "./_cjs/api/routing.legacy3.cjs"
+      }
+    },
     "./api/routing/DynamicMiddleware": {
       "import": {
         "types": "./dist/api/routing/DynamicMiddleware.d.ts",
@@ -677,26 +697,6 @@
       "require": {
         "types": "./dist/api/routing/utils.d.ts",
         "default": "./_cjs/api/routing/utils.cjs"
-      }
-    },
-    "./api/routing6": {
-      "import": {
-        "types": "./dist/api/routing6.d.ts",
-        "default": "./dist/api/routing6.js"
-      },
-      "require": {
-        "types": "./dist/api/routing6.d.ts",
-        "default": "./_cjs/api/routing6.cjs"
-      }
-    },
-    "./api/routing7": {
-      "import": {
-        "types": "./dist/api/routing7.d.ts",
-        "default": "./dist/api/routing7.js"
-      },
-      "require": {
-        "types": "./dist/api/routing7.d.ts",
-        "default": "./_cjs/api/routing7.cjs"
       }
     },
     "./api/setupRequest": {

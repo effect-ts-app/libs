@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { makeMiddleware, makeRouter } from "@effect-app/infra/api/routing7"
+import { makeMiddleware, makeRouter } from "@effect-app/infra/api/routing.legacy3"
 import type { RequestContext } from "@effect-app/infra/RequestContext"
 import { Rpc } from "@effect/rpc"
 import type { Request } from "effect-app"
@@ -120,7 +119,7 @@ const middleware = makeMiddleware({
   })
 })
 
-export const { Router, matchAll, matchFor } = makeRouter(middleware, true)
+export const { matchAll, matchFor } = makeRouter(middleware, true)
 
 export type RequestConfig = {
   /** Disable authentication requirement */
@@ -133,19 +132,15 @@ export const { TaggedRequest: Req } = makeRpcClient<RequestConfig, CTXMap>({
   requireRoles: UnauthorizedError
 })
 
-export class DoSomething extends Req<DoSomething>()("DoSomething", {
+export class GetSomething extends Req<GetSomething>()("GetSomething", {
   id: S.String
 }, { success: S.Void }) {}
 
-export class GetSomething extends Req<GetSomething>()("GetSomething", {
+export class GetSomethingElse extends Req<GetSomethingElse>()("GetSomethingElse", {
   id: S.String
 }, { success: S.String }) {}
 
-export class GetSomething2 extends Req<GetSomething2>()("GetSomething2", {
-  id: S.String
-}, { success: S.NumberFromString }) {}
-
-const Something = { DoSomething, GetSomething, GetSomething2, meta: { moduleName: "Something" as const } }
+const Something = { GetSomething, GetSomethingElse, meta: { moduleName: "Something" as const } }
 
 export class SomethingService extends Effect.Service<SomethingService>()("SomethingService", {
   dependencies: [],
@@ -177,8 +172,8 @@ export class SomethingService2 extends Effect.Service<SomethingService2>()("Some
   })
 }) {}
 
-it("router6", () => {
-  const routes = Router(Something)({
+it("router.legacy3 fluent", () => {
+  const routes = matchFor(Something)({
     dependencies: [
       SomethingRepo.Default,
       SomethingService.Default,
@@ -191,54 +186,10 @@ it("router6", () => {
 
       console.log({ repo, smth, smth2 })
 
-      return matchFor(Something)({
-        DoSomething: Effect.void,
-        GetSomething: Effect.succeed("12"),
-        GetSomething2: Effect.succeed(12)
-      })
+      return matchFor(Something)
+        .GetSomething(Effect.void)
+        .GetSomethingElse(Effect.succeed("12"))
     })
   })
   console.log({ routes })
-})
-
-export default Router(Something)({
-  dependencies: [
-    SomethingRepo.Default,
-    SomethingService.Default,
-    SomethingService2.Default
-  ],
-  effect: Effect.gen(function*() {
-    const repo = yield* SomethingRepo
-    const smth = yield* SomethingService
-    const smth2 = yield* SomethingService2
-
-    console.log({ repo, smth, smth2 })
-
-    return matchFor(Something)({
-      GetSomething: Effect.succeed("12"),
-      DoSomething: Effect.void, // Effect.succeed(2) should fail
-      GetSomething2: Effect.succeed(12)
-    })
-  })
-})
-
-export const RawTest = Router(Something)({
-  dependencies: [
-    SomethingRepo.Default,
-    SomethingService.Default,
-    SomethingService2.Default
-  ],
-  effect: Effect.gen(function*() {
-    const repo = yield* SomethingRepo
-    const smth = yield* SomethingService
-    const smth2 = yield* SomethingService2
-
-    console.log({ repo, smth, smth2 })
-
-    return matchFor(Something)({
-      GetSomething: SomethingService2.use(() => Effect.succeed("12")),
-      DoSomething: { raw: Effect.void }, // Effect.succeed(2) should fail
-      GetSomething2: { raw: SomethingService2.use(() => Effect.succeed("12")) }
-    })
-  })
 })
