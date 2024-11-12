@@ -1,5 +1,11 @@
 # @effect-app/vue
 
+## 2.8.0
+
+### Minor Changes
+
+- 31030a7: improve: invalidate cache also on mutation error.
+
 ## 2.7.3
 
 ### Patch Changes
