@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 2.27.0
+
+### Minor Changes
+
+- 5d3278c: make routing7 the default
+
+### Patch Changes
+
+- 125e2ea: update packages
+- Updated dependencies [125e2ea]
+  - effect-app@2.13.3
+
 ## 2.26.1
 
 ### Patch Changes
