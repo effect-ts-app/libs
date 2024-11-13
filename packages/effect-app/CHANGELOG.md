@@ -1,5 +1,12 @@
 # @effect-app/prelude
 
+## 2.14.0
+
+### Minor Changes
+
+- a30da33: improve: cleanup client legacy
+- 9301abb: cleanup legacy
+
 ## 2.13.3
 
 ### Patch Changes

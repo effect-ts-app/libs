@@ -1,5 +1,13 @@
 # @effect-app/infra
 
+## 2.27.1
+
+### Patch Changes
+
+- Updated dependencies [a30da33]
+- Updated dependencies [9301abb]
+  - effect-app@2.14.0
+
 ## 2.27.0
 
 ### Minor Changes

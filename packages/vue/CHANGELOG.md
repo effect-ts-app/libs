@@ -1,5 +1,17 @@
 # @effect-app/vue
 
+## 2.9.0
+
+### Minor Changes
+
+- a30da33: improve: cleanup client legacy
+
+### Patch Changes
+
+- Updated dependencies [a30da33]
+- Updated dependencies [9301abb]
+  - effect-app@2.14.0
+
 ## 2.8.0
 
 ### Minor Changes
