@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.15.0
+
+### Minor Changes
+
+- improve: clientFor as part of service so that cache is also fine.
+
 ## 2.14.0
 
 ### Minor Changes
