@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Effect, Option } from "effect"
+import { Effect, Option, Record } from "effect"
 import * as Either from "effect/Either"
 import { dual, isFunction } from "effect/Function"
 import type { GetFieldType, NumericDictionary, PropertyPath } from "lodash"
-import type { Dictionary } from "./Dictionary.js"
-import * as D from "./Dictionary.js"
 import { identity, pipe } from "./Function.js"
 
 // codegen:start {preset: barrel, include: ./utils/*.ts, nodir: false }
@@ -169,9 +167,13 @@ export function dropUndefinedT<A extends Record<string, any>>(
 ): NoUndefinedField<A> {
   const newR = pipe(
     input,
-    D.filter((x): x is A => x !== undefined)
+    Record.filter((x): x is A => x !== undefined)
   )
   return newR as any
+}
+
+export type Dictionary<T> = {
+  readonly [P in string]: T
 }
 
 export function dropUndefined<A>(
@@ -179,7 +181,7 @@ export function dropUndefined<A>(
 ): Dictionary<A> {
   const newR = pipe(
     input,
-    D.filter((x): x is A => x !== undefined)
+    Record.filter((x): x is A => x !== undefined)
   )
   return newR
 }

@@ -21,8 +21,10 @@ import type * as LAYER from "effect/Layer";
 import type * as O from "effect/Option";
 import type * as ORD from "effect/Order";
 import type * as REF from "effect/Ref";
+import type * as REC from "effect/Record";
 import type * as SCHEMA from "effect/Schema";
 import type * as SCOPE from "effect/Scope";
+
 export type { NonEmptyArray, NonEmptyReadonlyArray } from "effect-app/Array";
 export declare namespace Effect {
     export * from "effect-app/Effect";
@@ -122,15 +124,9 @@ export declare namespace NonEmptySet {
 /** @tsplus type ets/NonEmptySet */
 export type NonEmptySet<A> = NS.NonEmptySet<A>;
 export declare namespace Record {
-    export * from "effect-app/Record";
+    export * from "effect/Record";
 }
-/**
- * @tsplus type Record
- * @tsplus type Iterable
- * @tsplus companion effect/data/Record.Ops
- * @tsplus companion effect/data/Record.Ops
- */
-export type Record<K extends string | symbol | number, V> = globalThis.Record<K, V>;
+export type Record<K extends keyof any, T> = globalThis.Record<K, V>;
 export declare namespace Array {
     export * from "effect-app/Array";
 }

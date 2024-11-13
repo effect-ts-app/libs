@@ -88,16 +88,6 @@
         "default": "./_cjs/Context.cjs"
       }
     },
-    "./Dictionary": {
-      "import": {
-        "types": "./dist/Dictionary.d.ts",
-        "default": "./dist/Dictionary.js"
-      },
-      "require": {
-        "types": "./dist/Dictionary.d.ts",
-        "default": "./_cjs/Dictionary.cjs"
-      }
-    },
     "./Effect": {
       "import": {
         "types": "./dist/Effect.d.ts",
@@ -156,16 +146,6 @@
       "require": {
         "types": "./dist/NonEmptySetBase.d.ts",
         "default": "./_cjs/NonEmptySetBase.cjs"
-      }
-    },
-    "./Object": {
-      "import": {
-        "types": "./dist/Object.d.ts",
-        "default": "./dist/Object.js"
-      },
-      "require": {
-        "types": "./dist/Object.d.ts",
-        "default": "./_cjs/Object.cjs"
       }
     },
     "./Operations": {
