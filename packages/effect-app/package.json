@@ -408,6 +408,16 @@
         "default": "./_cjs/client.cjs"
       }
     },
+    "./client/apiClient": {
+      "import": {
+        "types": "./dist/client/apiClient.d.ts",
+        "default": "./dist/client/apiClient.js"
+      },
+      "require": {
+        "types": "./dist/client/apiClient.d.ts",
+        "default": "./_cjs/client/apiClient.cjs"
+      }
+    },
     "./client/clientFor": {
       "import": {
         "types": "./dist/client/clientFor.d.ts",
@@ -416,16 +426,6 @@
       "require": {
         "types": "./dist/client/clientFor.d.ts",
         "default": "./_cjs/client/clientFor.cjs"
-      }
-    },
-    "./client/config": {
-      "import": {
-        "types": "./dist/client/config.d.ts",
-        "default": "./dist/client/config.js"
-      },
-      "require": {
-        "types": "./dist/client/config.d.ts",
-        "default": "./_cjs/client/config.cjs"
       }
     },
     "./client/errors": {
