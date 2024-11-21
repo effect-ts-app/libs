@@ -98,7 +98,7 @@ export const makeMutation2 = () => {
       options?: MutationOptions<A>
     ): readonly [
       Readonly<Ref<MutationResult<A, E>>>,
-      () => Effect<A, E, R> // TODO: remove () =>
+      Effect<A, E, R>
     ]
   } = <I, E, A, R, Request extends TaggedRequestClassAny>(
     self: RequestHandlerWithInput<I, A, E, R, Request> | RequestHandler<A, E, R, Request>,
@@ -155,32 +155,40 @@ export const makeMutation2 = () => {
 
     const onSuccess = options?.onSuccess
 
-    const exec = (fst?: I) => {
-      let effect: Effect<A, E, R>
-      if (Effect.isEffect(self.handler)) {
-        effect = self.handler as any
-      } else {
-        effect = self.handler(fst as I)
-      }
+    const handler = self.handler
+    const r = Effect.isEffect(handler)
+      ? tuple(
+        state,
+        Effect
+          .sync(() => {
+            state.value = { _tag: "Loading" }
+          })
+          .pipe(
+            Effect.zipRight(handler),
+            Effect.tap(invalidateCache),
+            Effect.tap((a) => onSuccess ? Effect.promise(() => onSuccess(a, undefined as I)) : Effect.void),
+            Effect.tapDefect(reportRuntimeError),
+            Effect.onExit(handleExit),
+            Effect.withSpan(`mutation ${self.name}`, { captureStackTrace: false })
+          )
+      )
+      : tuple(state, (fst: I) => {
+        const effect = handler(fst)
+        return Effect
+          .sync(() => {
+            state.value = { _tag: "Loading" }
+          })
+          .pipe(
+            Effect.zipRight(effect),
+            Effect.tapBoth({ onFailure: () => invalidateCache, onSuccess: () => invalidateCache }),
+            Effect.tap((a) => onSuccess ? Effect.promise(() => onSuccess(a, fst)) : Effect.void),
+            Effect.tapDefect(reportRuntimeError),
+            Effect.onExit(handleExit),
+            Effect.withSpan(`mutation ${self.name}`, { captureStackTrace: false })
+          )
+      })
 
-      return Effect
-        .sync(() => {
-          state.value = { _tag: "Loading" }
-        })
-        .pipe(
-          Effect.zipRight(effect),
-          Effect.tapBoth({ onFailure: () => invalidateCache, onSuccess: () => invalidateCache }),
-          Effect.tap((a) => onSuccess ? Effect.promise(() => onSuccess(a, fst as I)) : Effect.void),
-          Effect.tapDefect(reportRuntimeError),
-          Effect.onExit(handleExit),
-          Effect.withSpan(`mutation ${self.name}`, { captureStackTrace: false })
-        )
-    }
-
-    return tuple(
-      state,
-      exec
-    )
+    return r as any
   }
   return useSafeMutation
 }
