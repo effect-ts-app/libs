@@ -1,5 +1,11 @@
 # @effect-app/vue
 
+## 2.10.0
+
+### Minor Changes
+
+- 22d32f6: remove useless thunk
+
 ## 2.9.1
 
 ### Patch Changes
