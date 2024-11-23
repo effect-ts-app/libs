@@ -16,7 +16,7 @@
   "dependencies": {
     "@babel/generator": "7.26.2",
     "@babel/parser": "7.26.2",
-    "@typescript-eslint/utils": "8.14.0",
+    "@typescript-eslint/utils": "8.15.0",
     "eslint-plugin-codegen": "0.17.0",
     "glob": "8.1.0",
     "io-ts": "2.2.21",
@@ -25,7 +25,7 @@
     "lodash": "4.17.21"
   },
   "peerDependencies": {
-    "effect": "^3.10.14"
+    "effect": "^3.10.16"
   },
   "devDependencies": {
     "@babel/types": "7.26.0",
@@ -33,9 +33,9 @@
     "@types/babel__traverse": "7.20.6",
     "@types/glob": "8.1.0",
     "@types/lodash": "4.17.13",
-    "effect": "^3.10.14",
+    "effect": "^3.10.16",
     "madge": "8.0.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   },
   "main": "index.js",
   "author": "Wessel van der Veen & Scott vanBommel",
