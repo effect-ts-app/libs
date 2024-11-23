@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 1.9.0
+
+### Minor Changes
+
+- cc2c43e: update packages
+
 ## 1.8.0
 
 ### Minor Changes

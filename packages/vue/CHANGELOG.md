@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 2.11.0
+
+### Minor Changes
+
+- cc2c43e: update packages
+
+### Patch Changes
+
+- Updated dependencies [cc2c43e]
+  - effect-app@2.16.0
+
 ## 2.10.0
 
 ### Minor Changes

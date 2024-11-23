@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.16.0
+
+### Minor Changes
+
+- cc2c43e: update packages
+
 ## 2.15.0
 
 ### Minor Changes
