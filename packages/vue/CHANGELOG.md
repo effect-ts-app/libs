@@ -1,5 +1,11 @@
 # @effect-app/vue
 
+## 2.12.0
+
+### Minor Changes
+
+- fix: input-less action is just an effect.
+
 ## 2.11.0
 
 ### Minor Changes

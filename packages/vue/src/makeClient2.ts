@@ -30,7 +30,7 @@ type Resp<I, A, E, R> = readonly [
 
 type ActResp<A, E, R> = readonly [
   ComputedRef<Res<A, E>>,
-  WithAction<() => Effect<Exit<A, E>, never, R>>
+  WithAction<Effect<Exit<A, E>, never, R>>
 ]
 
 export const makeClient2 = <Locale extends string, R>(
@@ -60,7 +60,7 @@ export const makeClient2 = <Locale extends string, R>(
       R,
       Args extends unknown[]
     >(
-      f: (...args: Args) => Effect<A, E, R>,
+      f: Effect<A, E, R> | ((...args: Args) => Effect<A, E, R>),
       action: string,
       options: Opts<A> = { suppressErrorToast: false }
     ) {
@@ -77,9 +77,8 @@ export const makeClient2 = <Locale extends string, R>(
         { id: "handle.with_errors" },
         { action: message }
       )
-      return Object.assign(
-        flow(
-          f,
+      const handleEffect = (self: Effect<A, E, R>) =>
+        self.pipe(
           Effect.exit,
           Effect.tap(
             Exit.matchEffect({
@@ -143,7 +142,17 @@ export const makeClient2 = <Locale extends string, R>(
                 })
             })
           )
-        ),
+        )
+      return Object.assign(
+        Effect.isEffect(f)
+          ? pipe(
+            f,
+            handleEffect
+          )
+          : flow(
+            f,
+            handleEffect
+          ),
         { action }
       )
     }
