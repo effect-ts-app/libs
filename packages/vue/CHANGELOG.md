@@ -1,5 +1,17 @@
 # @effect-app/vue
 
+## 2.13.0
+
+### Minor Changes
+
+- d84aef7: update packages
+
+### Patch Changes
+
+- Updated dependencies [47a543b]
+- Updated dependencies [d84aef7]
+  - effect-app@2.17.0
+
 ## 2.12.0
 
 ### Minor Changes

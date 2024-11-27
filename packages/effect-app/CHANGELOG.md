@@ -1,5 +1,12 @@
 # @effect-app/prelude
 
+## 2.17.0
+
+### Minor Changes
+
+- 47a543b: remove transform-paths as default plugin
+- d84aef7: update packages
+
 ## 2.16.0
 
 ### Minor Changes
