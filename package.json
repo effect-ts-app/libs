@@ -102,7 +102,6 @@
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "typescript-transform-paths": "^3.5.2",
     "unplugin-auto-import": "^0.18.5",
     "vite": "^5.4.11",
     "vitest": "^2.1.5"
