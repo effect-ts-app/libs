@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.18.0
+
+### Minor Changes
+
+- fe7783b: improve: TaggedUnion .is is now S.is, isA, is the old is
+
 ## 2.17.0
 
 ### Minor Changes
