@@ -151,7 +151,8 @@ export const tags = <
   >
 export const ExtendTaggedUnion = <A extends { _tag: string }, I, R>(
   schema: S.Schema<A, I, R>
-) => extendM(schema, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_) /*, map: taggedUnionMap(a) */ }))
+) =>
+  extendM(schema, (_) => ({ is: S.is(schema), isA: makeIs(_), isAnyOf: makeIsAnyOf(_) /*, map: taggedUnionMap(a) */ }))
 
 export const TaggedUnion = <
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -159,7 +160,14 @@ export const TaggedUnion = <
 >(...a: Members) =>
   pipe(
     S.Union(...a),
-    (_) => extendM(_, (_) => ({ is: makeIs(_), isAnyOf: makeIsAnyOf(_), tagMap: taggedUnionMap(a), tags: tags(a) }))
+    (_) =>
+      extendM(_, (_) => ({
+        is: S.is(_),
+        isA: makeIs(_),
+        isAnyOf: makeIsAnyOf(_),
+        tagMap: taggedUnionMap(a),
+        tags: tags(a)
+      }))
   )
 
 export type PhoneNumber = PhoneNumberT
