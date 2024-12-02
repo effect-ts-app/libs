@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.19.0
+
+### Minor Changes
+
+- 29a1a65: update packages
+
 ## 2.18.0
 
 ### Minor Changes
