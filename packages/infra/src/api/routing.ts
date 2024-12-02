@@ -10,11 +10,13 @@ import {
   Cause,
   Chunk,
   Context,
+  Duration,
   Effect,
   FiberRef,
   flow,
   Layer,
   Predicate,
+  Request,
   S,
   Schedule,
   Schema,
@@ -22,7 +24,7 @@ import {
 } from "effect-app"
 import type { GetEffectContext, RPCContextMap } from "effect-app/client/req"
 import type { HttpServerError } from "effect-app/http"
-import { HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
+import { HttpHeaders, HttpRouter, HttpServerRequest, HttpServerResponse } from "effect-app/http"
 import { pretty, typedKeysOf, typedValuesOf } from "effect-app/utils"
 import type { Contravariant } from "effect/Types"
 import { logError, reportError } from "../errorReporter.js"
@@ -31,11 +33,12 @@ import type { Middleware } from "./routing/DynamicMiddleware.js"
 import { makeRpc } from "./routing/DynamicMiddleware.js"
 import { determineMethod } from "./routing/utils.js"
 
-const optimisticConcurrencySchedule = Schedule.once
-  && Schedule.recurWhile<{ _tag: string }>((a) => a._tag === "OptimisticConcurrencyException")
-
 const logRequestError = logError("Request")
 const reportRequestError = reportError("Request")
+
+const optimisticConcurrencySchedule = Schedule.once.pipe(
+  Schedule.intersect(Schedule.recurWhile<any>((a) => a?._tag === "OptimisticConcurrencyException"))
+)
 
 export type _R<T extends Effect<any, any, any>> = [T] extends [
   Effect<any, any, infer R>
@@ -915,3 +918,22 @@ export type MakeHandlers<Make, Handlers extends Record<string, any>> = Make exte
  * @since 3.9.0
  */
 export type MakeDepsOut<Make> = Contravariant.Type<MakeDeps<Make>[Layer.LayerTypeId]["_ROut"]>
+
+export const RequestCacheLayers = Layer.mergeAll(
+  Layer.setRequestCache(
+    Request.makeCache({ capacity: 500, timeToLive: Duration.hours(8) })
+  ),
+  Layer.setRequestCaching(true),
+  Layer.setRequestBatching(true)
+)
+
+export const RpcHeadersFromHttpHeaders = Effect
+  .gen(function*() {
+    const httpReq = yield* HttpServerRequest.HttpServerRequest
+    // TODO: only pass Authentication etc, or move headers to actual Rpc Headers
+    yield* FiberRef.update(
+      Rpc.currentHeaders,
+      (headers) => HttpHeaders.merge(httpReq.headers, headers)
+    )
+  })
+  .pipe(Layer.effectDiscard)
