@@ -1,5 +1,11 @@
 # @effect-app/vue
 
+## 2.15.2
+
+### Patch Changes
+
+- 331b3b5: fix missing exports
+
 ## 2.15.1
 
 ### Patch Changes
