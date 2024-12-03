@@ -6,18 +6,18 @@
   "homepage": "https://github.com/effect-ts-app/libs/tree/main/packages/vue",
   "dependencies": {
     "@formatjs/intl": "^3.0.1",
-    "@tanstack/vue-query": "^5.62.0",
+    "@tanstack/vue-query": "^5.62.2",
     "@vueuse/core": "^12.0.0",
     "effect-app": "workspace:*",
     "query-string": "^9.1.1"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.70.0",
-    "@effect/platform-browser": "^0.49.0",
+    "@effect/platform": "^0.70.2",
+    "@effect/platform-browser": "^0.49.2",
     "@effect-rx/rx": "^0.34.5",
     "@effect-rx/rx-vue": "^0.11.5",
-    "@sentry/browser": "^8.41.0",
-    "effect": "^3.11.0",
+    "@sentry/browser": "^8.42.0",
+    "effect": "^3.11.2",
     "vue": "^3.5.13"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "json5": "^2.2.3",
     "typescript": "^5.7.2",
     "vite": "^6.0.2",
-    "vitest": "^2.1.7"
+    "vitest": "^2.1.8"
   },
   "typesVersions": {
     "*": {
