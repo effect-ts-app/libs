@@ -12,7 +12,7 @@ import type {
   UseQueryReturnType
 } from "@tanstack/vue-query"
 import { useQuery } from "@tanstack/vue-query"
-import { Cause, Effect, Option, Runtime, S } from "effect-app"
+import { Array, Cause, Effect, Option, Runtime, S } from "effect-app"
 import { ServiceUnavailableError } from "effect-app/client"
 import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
 import { isHttpRequestError, isHttpResponseError } from "effect-app/http/http-client"
@@ -203,3 +203,49 @@ export const makeQuery = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface MakeQuery2<R> extends ReturnType<typeof makeQuery<R>> {}
+
+function orPrevious<E, A>(result: Result.Result<A, E>) {
+  return Result.isFailure(result) && Option.isSome(result.previousValue)
+    ? Result.success(result.previousValue.value, result.waiting)
+    : result
+}
+
+export function composeQueries<
+  R extends Record<string, Result.Result<any, any>>
+>(
+  results: R,
+  renderPreviousOnFailure?: boolean
+): Result.Result<
+  {
+    [Property in keyof R]: R[Property] extends Result.Result<infer A, any> ? A
+      : never
+  },
+  {
+    [Property in keyof R]: R[Property] extends Result.Result<any, infer E> ? E
+      : never
+  }[keyof R]
+> {
+  const values = renderPreviousOnFailure
+    ? Object.values(results).map(orPrevious)
+    : Object.values(results)
+  const error = values.find(Result.isFailure)
+  if (error) {
+    return error
+  }
+  const initial = Array.findFirst(values, (x) => x._tag === "Initial" ? Option.some(x) : Option.none())
+  if (initial.value !== undefined) {
+    return initial.value
+  }
+  const loading = Array.findFirst(values, (x) => Result.isInitial(x) && x.waiting ? Option.some(x) : Option.none())
+  if (loading.value !== undefined) {
+    return loading.value
+  }
+
+  const isRefreshing = values.some((x) => x.waiting)
+
+  const r = Object.entries(results).reduce((prev, [key, value]) => {
+    prev[key] = Result.value(value).value
+    return prev
+  }, {} as any)
+  return Result.success(r, isRefreshing)
+}
