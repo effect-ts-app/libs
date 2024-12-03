@@ -1,5 +1,11 @@
 # @effect-app/vue
 
+## 2.15.1
+
+### Patch Changes
+
+- e1f3850: fix typos
+
 ## 2.15.0
 
 ### Minor Changes
