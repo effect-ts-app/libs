@@ -1,16 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Sentry from "@sentry/browser"
-import type { Either } from "effect-app"
-import { Cause, Effect, Match, Runtime, S } from "effect-app"
-import { type SupportedErrors } from "effect-app/client"
+import { Cause, Effect, Exit, Match, Option, Runtime, S, Struct } from "effect-app"
+import type { SupportedErrors } from "effect-app/client"
+import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
 import { flow, pipe, tuple } from "effect-app/Function"
 import type { OperationFailure } from "effect-app/Operations"
 import { OperationSuccess } from "effect-app/Operations"
+import type { Schema } from "effect-app/Schema"
 import { dropUndefinedT } from "effect-app/utils"
-import { computed, type ComputedRef } from "vue"
+import type { ComputedRef, Ref, ShallowRef } from "vue"
+import { computed, ref, watch } from "vue"
+import { buildFieldInfoFromFieldsRoot } from "./form.js"
+import { getRuntime } from "./lib.js"
 import type { MakeIntlReturn } from "./makeIntl.js"
-import type { MakeMutation, MutationOptions, Res } from "./mutate.js"
-import { mutationResultToVue } from "./mutate.js"
+import { makeMutation2, mutationResultToVue } from "./mutate.js"
+import type { MutationOptions, Res } from "./mutate.js"
+import { makeQuery2 } from "./query.js"
 
 /**
  * Use this after handling an error yourself, still continueing on the Error track, but the error will not be reported.
@@ -21,7 +26,10 @@ export class SuppressErrors extends Cause.YieldableError {
 
 export type ResponseErrors = S.ParseResult.ParseError | SupportedErrors | SuppressErrors | OperationFailure
 
-export interface Opts<A, I = void> extends MutationOptions<A, I> {
+export interface Opts<
+  A,
+  I = void
+> extends MutationOptions<A, I> {
   suppressErrorToast?: boolean
   suppressSuccessToast?: boolean
 }
@@ -32,26 +40,28 @@ type WithAction<A> = A & {
 
 // computed() takes a getter function and returns a readonly reactive ref
 // object for the returned value from the getter.
-type Resp<I, E, A> = readonly [
+type Resp<I, A, E, R> = readonly [
   ComputedRef<Res<A, E>>,
-  WithAction<(I: I) => Promise<void>>
+  WithAction<(I: I) => Effect<Exit<A, E>, never, R>>
 ]
 
-type ActResp<E, A> = readonly [
+type ActResp<A, E, R> = readonly [
   ComputedRef<Res<A, E>>,
-  WithAction<() => Promise<void>>
+  WithAction<Effect<Exit<A, E>, never, R>>
 ]
 
-export const makeClient = <Locale extends string, R>(
+export const makeClient2 = <Locale extends string, R>(
   useIntl: MakeIntlReturn<Locale>["useIntl"],
   useToast: () => {
     error: (message: string) => void
     warning: (message: string) => void
     success: (message: string) => void
   },
-  useSafeMutation: MakeMutation<R>,
+  runtime: ShallowRef<Runtime.Runtime<R> | undefined>,
   messages: Record<string, string | undefined> = {}
 ) => {
+  const useSafeMutation = makeMutation2()
+  const useSafeQuery = makeQuery2(runtime)
   const useHandleRequestWithToast = () => {
     const toast = useToast()
     const { intl } = useIntl()
@@ -64,9 +74,10 @@ export const makeClient = <Locale extends string, R>(
     function handleRequestWithToast<
       E extends ResponseErrors,
       A,
+      R,
       Args extends unknown[]
     >(
-      f: (...args: Args) => Promise<Either<A, E>>,
+      f: Effect<A, E, R> | ((...args: Args) => Effect<A, E, R>),
       action: string,
       options: Opts<A> = { suppressErrorToast: false }
     ) {
@@ -83,70 +94,82 @@ export const makeClient = <Locale extends string, R>(
         { id: "handle.with_errors" },
         { action: message }
       )
-      return Object.assign(
-        flow(f, (p) =>
-          p.then(
-            (r) => {
-              if (r._tag === "Right") {
-                if (options.suppressSuccessToast) {
-                  return
-                }
-                return Promise
-                  .resolve(
-                    toast.success(
-                      successMessage
-                        + (S.is(OperationSuccess)(r.right) && r.right.message
-                          ? "\n" + r.right.message
-                          : "")
+      const handleEffect = (self: Effect<A, E, R>) =>
+        self.pipe(
+          Effect.exit,
+          Effect.tap(
+            Exit.matchEffect({
+              onSuccess: (r) =>
+                Effect.gen(function*() {
+                  if (options.suppressSuccessToast) {
+                    return
+                  }
+                  toast.success(
+                    successMessage
+                      + (S.is(OperationSuccess)(r) && r.message
+                        ? "\n" + r.message
+                        : "")
+                  )
+                }),
+              onFailure: (err) =>
+                Effect.gen(function*() {
+                  if (Cause.isInterruptedOnly(err)) {
+                    return
+                  }
+
+                  const fail = Cause.failureOption(err)
+                  if (Option.isSome(fail)) {
+                    if (fail.value._tag === "SuppressErrors") {
+                      return Effect.succeed(void 0)
+                    }
+
+                    if (fail.value._tag === "OperationFailure") {
+                      toast.warning(
+                        warnMessage + fail.value.message
+                          ? "\n" + fail.value.message
+                          : ""
+                      )
+                      return
+                    }
+
+                    if (!options.suppressErrorToast) {
+                      toast.error(`${errorMessage}:\n` + renderError(fail.value))
+                    }
+
+                    console.warn(fail, fail.toString())
+                    return
+                  }
+
+                  const extra = {
+                    action,
+                    message: `Unexpected Error trying to ${action}`
+                  }
+                  Sentry.captureException(err, { extra })
+                  console.error(err, extra)
+
+                  toast.error(
+                    intl.value.formatMessage(
+                      { id: "handle.unexpected_error" },
+                      {
+                        action: message,
+                        error: JSON.stringify(err, undefined, 2)
+                      }
                     )
                   )
-                  .then((_) => {})
-              }
-              if (r.left._tag === "SuppressErrors") {
-                return Promise.resolve(void 0)
-              }
-
-              if (r.left._tag === "OperationFailure") {
-                return toast.warning(
-                  warnMessage + r.left.message
-                    ? "\n" + r.left.message
-                    : ""
-                )
-              }
-              if (!options.suppressErrorToast) {
-                toast.error(`${errorMessage}:\n` + renderError(r.left))
-              }
-
-              console.warn(r.left, r.left.toString())
-            },
-            (err) => {
-              if (
-                Cause.isInterruptedException(err)
-                || (Runtime.isFiberFailure(err)
-                  && Cause.isInterruptedOnly(err[Runtime.FiberFailureCauseId]))
-              ) {
-                return
-              }
-              const extra = {
-                action,
-                message: `Unexpected Error trying to ${action}`
-              }
-              Sentry.captureException(err, {
-                extra
-              })
-              console.error(err, extra)
-
-              return toast.error(
-                intl.value.formatMessage(
-                  { id: "handle.unexpected_error" },
-                  {
-                    action: message,
-                    error: JSON.stringify(err, undefined, 2)
-                  }
-                )
-              )
-            }
-          )),
+                })
+            })
+          )
+        )
+      return Object.assign(
+        Effect.isEffect(f)
+          ? pipe(
+            f,
+            handleEffect
+          )
+          : flow(
+            f,
+            handleEffect
+          ),
         { action }
       )
     }
@@ -206,30 +229,25 @@ export const makeClient = <Locale extends string, R>(
   }
 
   /**
-   * Pass a function that returns an Effect, e.g from a client action, give it a name, and optionally pass an onSuccess callback.
+   * Pass a function that returns an Effect, e.g from a client action, give it a name, and optionally pass an onOperationSuccess callback.
    * Returns a tuple with state ref and execution function which reports errors as Toast.
    */
   const useAndHandleMutation: {
-    <I, E extends ResponseErrors, A>(
-      self: {
-        handler: (i: I) => Effect<A, E, R>
-        name: string
-      },
-      action: string,
-      options?: Opts<A, I>
-    ): Resp<I, A, E>
-    <E extends ResponseErrors, A>(
-      self: {
-        handler: Effect<A, E, R>
-        name: string
-      },
+    <I, E extends ResponseErrors, A, R, Request extends TaggedRequestClassAny>(
+      self: RequestHandlerWithInput<I, A, E, R, Request>,
       action: string,
       options?: Opts<A>
-    ): ActResp<E, A>
-  } = (self: any, action: any, options?: Opts<any>) => {
+    ): Resp<I, void, never, R>
+    <E extends ResponseErrors, A, R, Request extends TaggedRequestClassAny>(
+      self: RequestHandler<A, E, R, Request>,
+      action: string,
+      options?: Opts<A>
+    ): ActResp<void, never, R>
+  } = (self: any, action: any, options?: Opts<any>): any => {
     const handleRequestWithToast = useHandleRequestWithToast()
     const [a, b] = useSafeMutation(
       {
+        ...self,
         handler: Effect.isEffect(self.handler)
           ? (pipe(
             Effect.annotateCurrentSpan({ action }),
@@ -239,8 +257,7 @@ export const makeClient = <Locale extends string, R>(
             pipe(
               Effect.annotateCurrentSpan({ action }),
               Effect.andThen(self.handler(...args))
-            ),
-        name: self.name
+            )
       },
       options ? dropUndefinedT(options) : undefined
     )
@@ -252,48 +269,31 @@ export const makeClient = <Locale extends string, R>(
   }
 
   function makeUseAndHandleMutation(
-    onSuccess?: () => Promise<void>,
     defaultOptions?: Opts<any>
   ) {
     return ((self: any, action: any, options: any) => {
       return useAndHandleMutation(
-        {
-          handler: typeof self.handler === "function"
-            ? onSuccess
-              ? (i: any) => Effect.tap(self.handler(i), () => Effect.promise(onSuccess))
-              : self.handler
-            : onSuccess
-            ? (Effect.tap(self.handler, () => Effect.promise(onSuccess)) as any)
-            : self.handler,
-          name: self.name
-        },
+        self,
         action,
         { ...defaultOptions, ...options }
       )
-    }) as {
-      <I, E extends ResponseErrors, A>(
-        self: {
-          handler: (i: I) => Effect<A, E, R>
-          name: string
-        },
-        action: string,
-        options?: Opts<A, I>
-      ): Resp<I, A, E>
-      <E extends ResponseErrors, A>(
-        self: {
-          handler: Effect<A, E, R>
-          name: string
-        },
+    }) as unknown as {
+      <I, E extends ResponseErrors, A, R, Request extends TaggedRequestClassAny>(
+        self: RequestHandlerWithInput<I, A, E, R, Request>,
         action: string,
         options?: Opts<A>
-      ): ActResp<E, A>
+      ): Resp<I, A, E, R>
+      <E extends ResponseErrors, A, Request extends TaggedRequestClassAny>(
+        self: RequestHandler<A, E, R, Request>,
+        action: string,
+        options?: Opts<A>
+      ): ActResp<A, E, R>
     }
   }
 
-  const useSafeMutationWithState = <I, E, A>(self: {
-    handler: (i: I) => Effect<A, E, R>
-    name: string
-  }) => {
+  const useSafeMutationWithState = <I, E, A, Request extends TaggedRequestClassAny>(
+    self: RequestHandlerWithInput<I, A, E, R, Request>
+  ) => {
     const [a, b] = useSafeMutation(self)
 
     return tuple(
@@ -302,10 +302,69 @@ export const makeClient = <Locale extends string, R>(
     )
   }
 
+  const buildFormFromSchema = <
+    From extends Record<PropertyKey, any>,
+    To extends Record<PropertyKey, any>,
+    C extends Record<PropertyKey, any>,
+    OnSubmitA
+  >(
+    s:
+      & Schema<
+        To,
+        From,
+        R
+      >
+      & { new(c: C): any; fields: S.Struct.Fields },
+    state: Ref<Omit<From, "_tag">>,
+    onSubmit: (a: To) => Effect<OnSubmitA, never, R>
+  ) => {
+    const fields = buildFieldInfoFromFieldsRoot(s).fields
+    const schema = S.Struct(Struct.omit(s.fields, "_tag")) as any
+    const parse = S.decodeUnknown<any, any, R>(schema)
+    const isDirty = ref(false)
+    const isValid = ref(true)
+    const runPromise = Runtime.runPromise(getRuntime(runtime))
+
+    const submit1 =
+      (onSubmit: (a: To) => Effect<OnSubmitA, never, R>) => async <T extends Promise<{ valid: boolean }>>(e: T) => {
+        const r = await e
+        if (!r.valid) return
+        return runPromise(onSubmit(new s(await runPromise(parse(state.value)))))
+      }
+    const submit = submit1(onSubmit)
+
+    watch(
+      state,
+      (v) => {
+        // TODO: do better
+        isDirty.value = JSON.stringify(v) !== JSON.stringify(state.value)
+      },
+      { deep: true }
+    )
+
+    const submitFromState = Effect.gen(function*() {
+      if (!isValid.value) return
+      return yield* onSubmit(yield* parse(state.value))
+    }) // () => submit(Promise.resolve({ valid: isValid.value }))
+
+    return {
+      fields,
+      /** optimized for Vuetify v-form submit callback */
+      submit,
+      /** optimized for Native form submit callback or general use */
+      submitFromState,
+      isDirty,
+      isValid
+    }
+  }
+
   return {
     useSafeMutationWithState,
     useAndHandleMutation,
     makeUseAndHandleMutation,
-    useHandleRequestWithToast
+    useHandleRequestWithToast,
+    buildFormFromSchema,
+    useSafeQuery,
+    useSafeMutation
   }
 }
