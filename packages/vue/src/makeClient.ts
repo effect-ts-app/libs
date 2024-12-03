@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Sentry from "@sentry/browser"
 import { Cause, Effect, Exit, Match, Option, Runtime, S, Struct } from "effect-app"
-import type { SupportedErrors } from "effect-app/client"
+import { CauseException, type SupportedErrors } from "effect-app/client"
 import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
-import { flow, pipe, tuple } from "effect-app/Function"
+import { constant, pipe, tuple } from "effect-app/Function"
 import type { OperationFailure } from "effect-app/Operations"
 import { OperationSuccess } from "effect-app/Operations"
 import type { Schema } from "effect-app/Schema"
@@ -28,10 +28,53 @@ export type ResponseErrors = S.ParseResult.ParseError | SupportedErrors | Suppre
 
 export interface Opts<
   A,
-  I = void
-> extends MutationOptions<A, I> {
-  suppressErrorToast?: boolean
-  suppressSuccessToast?: boolean
+  E,
+  I = void,
+  ESuccess = never,
+  RSuccess = never,
+  EError = never,
+  RError = never,
+  EDefect = never,
+  RDefect = never
+> extends MutationOptions {
+  /** set to `undefined` to use default message */
+  successMessage?: ((a: A, i: I) => Effect<string | undefined, ESuccess, RSuccess>) | undefined
+  /** set to `undefined` to use default message */
+  failMessage?: ((e: E, i: I) => Effect<string | undefined, EError, RError>) | undefined
+  /** set to `undefined` to use default message */
+  defectMessage?: ((e: Cause.Cause<E>, i: I) => Effect<string | undefined, EDefect, RDefect>) | undefined
+}
+
+export interface LowOpts<
+  A,
+  E,
+  I = void,
+  ESuccess = never,
+  RSuccess = never,
+  EError = never,
+  RError = never,
+  EDefect = never,
+  RDefect = never
+> {
+  onSuccess: (a: A, i: I) => Effect<void, ESuccess, RSuccess>
+  onFail: (e: E, i: I) => Effect<void, EError, RError>
+  onDefect: (e: Cause.Cause<E>, i: I) => Effect<void, EDefect, RDefect>
+}
+
+export interface LowOptsOptional<
+  A,
+  E,
+  I = void,
+  ESuccess = never,
+  RSuccess = never,
+  EError = never,
+  RError = never,
+  EDefect = never,
+  RDefect = never
+> extends MutationOptions {
+  onSuccess?: (a: A, i: I) => Effect<void, ESuccess, RSuccess>
+  onFail?: (e: E, i: I) => Effect<void, EError, RError>
+  onDefect?: (e: Cause.Cause<E>, i: I) => Effect<void, EDefect, RDefect>
 }
 
 type WithAction<A> = A & {
@@ -49,6 +92,91 @@ type ActResp<A, E, R> = readonly [
   ComputedRef<Res<A, E>>,
   WithAction<Effect<Exit<A, E>, never, R>>
 ]
+
+export const suppressToast = constant(Effect.succeed(undefined))
+
+export function handleRequest<
+  E extends ResponseErrors,
+  A,
+  R,
+  I = void,
+  ESuccess = never,
+  RSuccess = never,
+  EError = never,
+  RError = never,
+  EDefect = never,
+  RDefect = never
+>(
+  f: Effect<A, E, R> | ((i: I) => Effect<A, E, R>),
+  action: string,
+  options: {
+    onSuccess: (a: A, i: I) => Effect<void, ESuccess, RSuccess>
+    onFail: (e: E, i: I) => Effect<void, EError, RError>
+    onDefect: (e: Cause.Cause<E>, i: I) => Effect<void, EDefect, RDefect>
+  }
+) {
+  const handleEffect = (i: any) => (self: Effect<A, E, R>) =>
+    self.pipe(
+      Effect.exit,
+      Effect.tap(
+        Exit.matchEffect({
+          onSuccess: (r) => options.onSuccess(r, i),
+          onFailure: (cause) =>
+            Effect.gen(function*() {
+              if (Cause.isInterruptedOnly(cause)) {
+                console.info(`Interrupted while trying to ${action}`)
+                return
+              }
+
+              const fail = Cause.failureOption(cause)
+              if (Option.isSome(fail)) {
+                if (fail.value._tag === "SuppressErrors") {
+                  console.info(`Suppressed error trying to ${action}`, fail.value)
+                  return
+                }
+                const message = `Failure trying to ${action}`
+                console.warn(message, fail.value)
+                Sentry.captureMessage(message, { extra: { action, error: fail.value } })
+                yield* options.onFail(fail.value, i)
+                return
+              }
+
+              const extra = {
+                action,
+                message: `Unexpected Error trying to ${action}`
+              }
+              console.error(extra.message, cause)
+              Sentry.captureException(new CauseException(cause, "defect"), { extra })
+
+              yield* options.onDefect(cause, i)
+            })
+        })
+      ),
+      Effect.tapErrorCause((cause) =>
+        Effect.sync(() => {
+          const extra = {
+            action,
+            message: `Unexpected Error trying to handle errors for ${action}`
+          }
+          Sentry.captureException(new CauseException(cause, "unhandled"), { extra })
+          console.error(Cause.pretty(cause), extra)
+        })
+      )
+    )
+  return Object.assign(
+    Effect.isEffect(f)
+      ? pipe(
+        f,
+        handleEffect(void 0)
+      )
+      : (i: I) =>
+        pipe(
+          f(i),
+          handleEffect(i)
+        ),
+    { action }
+  )
+}
 
 export const makeClient2 = <Locale extends string, R>(
   useIntl: MakeIntlReturn<Locale>["useIntl"],
@@ -75,103 +203,77 @@ export const makeClient2 = <Locale extends string, R>(
       E extends ResponseErrors,
       A,
       R,
-      Args extends unknown[]
+      I = void,
+      ESuccess = never,
+      RSuccess = never,
+      EError = never,
+      RError = never,
+      EDefect = never,
+      RDefect = never
     >(
-      f: Effect<A, E, R> | ((...args: Args) => Effect<A, E, R>),
+      f: Effect<A, E, R> | ((i: I) => Effect<A, E, R>),
       action: string,
-      options: Opts<A> = { suppressErrorToast: false }
+      options: Opts<A, E, I, ESuccess, RSuccess, EError, RError, EDefect, RDefect> = {}
     ) {
-      const message = messages[action] ?? action
-      const warnMessage = intl.value.formatMessage(
+      const actionMessage = messages[action] ?? action
+      const defaultWarnMessage = intl.value.formatMessage(
         { id: "handle.with_warnings" },
-        { action: message }
+        { action: actionMessage }
       )
-      const successMessage = intl.value.formatMessage(
+      const defaultSuccessMessage = intl.value.formatMessage(
         { id: "handle.success" },
-        { action: message }
+        { action: actionMessage }
       )
-      const errorMessage = intl.value.formatMessage(
+      const defaultErrorMessage = intl.value.formatMessage(
         { id: "handle.with_errors" },
-        { action: message }
+        { action: actionMessage }
       )
-      const handleEffect = (self: Effect<A, E, R>) =>
-        self.pipe(
-          Effect.exit,
-          Effect.tap(
-            Exit.matchEffect({
-              onSuccess: (r) =>
-                Effect.gen(function*() {
-                  if (options.suppressSuccessToast) {
-                    return
-                  }
-                  toast.success(
-                    successMessage
-                      + (S.is(OperationSuccess)(r) && r.message
-                        ? "\n" + r.message
-                        : "")
-                  )
-                }),
-              onFailure: (err) =>
-                Effect.gen(function*() {
-                  if (Cause.isInterruptedOnly(err)) {
-                    return
-                  }
 
-                  const fail = Cause.failureOption(err)
-                  if (Option.isSome(fail)) {
-                    if (fail.value._tag === "SuppressErrors") {
-                      return Effect.succeed(void 0)
-                    }
+      return handleRequest<E, A, R, any, ESuccess, RSuccess, EError, RError, EDefect, RDefect>(f, action, {
+        onSuccess: (a, i) =>
+          Effect.gen(function*() {
+            const message = options.successMessage ? yield* options.successMessage(a, i) : defaultSuccessMessage
+              + (S.is(OperationSuccess)(a) && a.message
+                ? "\n" + a.message
+                : "")
+            if (message) {
+              toast.success(message)
+            }
+          }),
+        onFail: (e, i) =>
+          Effect.gen(function*() {
+            if (!options.failMessage && e._tag === "OperationFailure") {
+              toast.warning(
+                defaultWarnMessage + e.message
+                  ? "\n" + e.message
+                  : ""
+              )
+              return
+            }
 
-                    if (fail.value._tag === "OperationFailure") {
-                      toast.warning(
-                        warnMessage + fail.value.message
-                          ? "\n" + fail.value.message
-                          : ""
-                      )
-                      return
-                    }
-
-                    if (!options.suppressErrorToast) {
-                      toast.error(`${errorMessage}:\n` + renderError(fail.value))
-                    }
-
-                    console.warn(fail, fail.toString())
-                    return
-                  }
-
-                  const extra = {
-                    action,
-                    message: `Unexpected Error trying to ${action}`
-                  }
-                  Sentry.captureException(err, { extra })
-                  console.error(err, extra)
-
-                  toast.error(
-                    intl.value.formatMessage(
-                      { id: "handle.unexpected_error" },
-                      {
-                        action: message,
-                        error: JSON.stringify(err, undefined, 2)
-                      }
-                    )
-                  )
-                })
-            })
-          )
-        )
-      return Object.assign(
-        Effect.isEffect(f)
-          ? pipe(
-            f,
-            handleEffect
-          )
-          : flow(
-            f,
-            handleEffect
-          ),
-        { action }
-      )
+            const message = options.failMessage
+              ? yield* options.failMessage(e, i)
+              : `${defaultErrorMessage}:\n` + renderError(e)
+            if (message) {
+              toast.error(message)
+            }
+          }),
+        onDefect: (cause, i) =>
+          Effect.gen(function*() {
+            const message = options.defectMessage
+              ? yield* options.defectMessage(cause, i)
+              : intl.value.formatMessage(
+                { id: "handle.unexpected_error" },
+                {
+                  action: actionMessage,
+                  error: Cause.pretty(cause)
+                }
+              )
+            if (message) {
+              toast.error(message)
+            }
+          })
+      })
     }
 
     function renderError(e: ResponseErrors): string {
@@ -229,38 +331,58 @@ export const makeClient2 = <Locale extends string, R>(
   }
 
   /**
-   * Pass a function that returns an Effect, e.g from a client action, give it a name, and optionally pass an onOperationSuccess callback.
-   * Returns a tuple with state ref and execution function which reports errors as Toast.
+   * Pass a function that returns an Effect, e.g from a client action, give it a name.
+   * Returns a tuple with state ref and execution function which reports success and errors as Toast.
    */
   const useAndHandleMutation: {
-    <I, E extends ResponseErrors, A, R, Request extends TaggedRequestClassAny>(
+    <
+      I,
+      E extends ResponseErrors,
+      A,
+      R,
+      Request extends TaggedRequestClassAny,
+      ESuccess = never,
+      RSuccess = never,
+      EError = never,
+      RError = never,
+      EDefect = never,
+      RDefect = never
+    >(
       self: RequestHandlerWithInput<I, A, E, R, Request>,
       action: string,
-      options?: Opts<A>
+      options?: Opts<A, E, I, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
     ): Resp<I, void, never, R>
-    <E extends ResponseErrors, A, R, Request extends TaggedRequestClassAny>(
+    <
+      E extends ResponseErrors,
+      A,
+      R,
+      Request extends TaggedRequestClassAny,
+      ESuccess = never,
+      RSuccess = never,
+      EError = never,
+      RError = never,
+      EDefect = never,
+      RDefect = never
+    >(
       self: RequestHandler<A, E, R, Request>,
       action: string,
-      options?: Opts<A>
+      options?: Opts<A, E, void, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
     ): ActResp<void, never, R>
-  } = (self: any, action: any, options?: Opts<any>): any => {
+  } = (self: any, action: any, options?: Opts<any, any, any, any, any, any, any, any, any>): any => {
     const handleRequestWithToast = useHandleRequestWithToast()
-    const [a, b] = useSafeMutation(
-      {
-        ...self,
-        handler: Effect.isEffect(self.handler)
-          ? (pipe(
+    const [a, b] = useSafeMutation({
+      ...self,
+      handler: Effect.isEffect(self.handler)
+        ? (pipe(
+          Effect.annotateCurrentSpan({ action }),
+          Effect.andThen(self.handler)
+        ) as any)
+        : (...args: any[]) =>
+          pipe(
             Effect.annotateCurrentSpan({ action }),
-            Effect.andThen(self.handler)
-          ) as any)
-          : (...args: any[]) =>
-            pipe(
-              Effect.annotateCurrentSpan({ action }),
-              Effect.andThen(self.handler(...args))
-            )
-      },
-      options ? dropUndefinedT(options) : undefined
-    )
+            Effect.andThen(self.handler(...args))
+          )
+    }, options ? dropUndefinedT(options) : undefined)
 
     return tuple(
       computed(() => mutationResultToVue(a.value)),
@@ -268,8 +390,116 @@ export const makeClient2 = <Locale extends string, R>(
     )
   }
 
+  /**
+   * The same as @see useAndHandleMutation, but does not display any toasts by default.
+   * Messages for success, error and defect toasts can be provided in the Options.
+   */
+  const useAndHandleMutationSilently: {
+    <
+      I,
+      E extends ResponseErrors,
+      A,
+      R,
+      Request extends TaggedRequestClassAny,
+      ESuccess = never,
+      RSuccess = never,
+      EError = never,
+      RError = never,
+      EDefect = never,
+      RDefect = never
+    >(
+      self: RequestHandlerWithInput<I, A, E, R, Request>,
+      action: string,
+      options?: Opts<A, E, I, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+    ): Resp<I, void, never, R>
+    <
+      E extends ResponseErrors,
+      A,
+      R,
+      Request extends TaggedRequestClassAny,
+      ESuccess = never,
+      RSuccess = never,
+      EError = never,
+      RError = never,
+      EDefect = never,
+      RDefect = never
+    >(
+      self: RequestHandler<A, E, R, Request>,
+      action: string,
+      options?: Opts<A, E, void, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+    ): ActResp<void, never, R>
+  } = makeUseAndHandleMutation({
+    successMessage: suppressToast,
+    failMessage: suppressToast,
+    defectMessage: suppressToast
+  }) as any
+
+  /**
+   * The same as @see useAndHandleMutation, but does not act on success, error or defect by default.
+   * Actions for success, error and defect can be provided in the Options.
+   */
+  const useAndHandleMutationCustom: {
+    <
+      I,
+      E extends ResponseErrors,
+      A,
+      R,
+      Request extends TaggedRequestClassAny,
+      ESuccess = never,
+      RSuccess = never,
+      EError = never,
+      RError = never,
+      EDefect = never,
+      RDefect = never
+    >(
+      self: RequestHandlerWithInput<I, A, E, R, Request>,
+      action: string,
+      options?: LowOptsOptional<A, E, I, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+    ): Resp<I, void, never, R>
+    <
+      E extends ResponseErrors,
+      A,
+      R,
+      Request extends TaggedRequestClassAny,
+      ESuccess = never,
+      RSuccess = never,
+      EError = never,
+      RError = never,
+      EDefect = never,
+      RDefect = never
+    >(
+      self: RequestHandler<A, E, R, Request>,
+      action: string,
+      options?: LowOptsOptional<A, E, void, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+    ): ActResp<void, never, R>
+  } = (self: any, action: string, options: any) => {
+    const [a, b] = useSafeMutation({
+      ...self,
+      handler: Effect.isEffect(self.handler)
+        ? (pipe(
+          Effect.annotateCurrentSpan({ action }),
+          Effect.andThen(self.handler)
+        ) as any)
+        : (...args: any[]) =>
+          pipe(
+            Effect.annotateCurrentSpan({ action }),
+            Effect.andThen(self.handler(...args))
+          )
+    }, options ? dropUndefinedT(options) : undefined)
+
+    return tuple(
+      computed(() => mutationResultToVue(a.value)),
+      handleRequest(b as any, action, {
+        onSuccess: suppressToast,
+        onDefect: suppressToast,
+        onFail: suppressToast,
+        ...options
+      })
+    ) as any
+  }
+
   function makeUseAndHandleMutation(
-    defaultOptions?: Opts<any>
+    defaultOptions?: Opts<any, any, any, any, any, any, any, any, any>
   ) {
     return ((self: any, action: any, options: any) => {
       return useAndHandleMutation(
@@ -278,15 +508,37 @@ export const makeClient2 = <Locale extends string, R>(
         { ...defaultOptions, ...options }
       )
     }) as unknown as {
-      <I, E extends ResponseErrors, A, R, Request extends TaggedRequestClassAny>(
+      <
+        I,
+        E extends ResponseErrors,
+        A,
+        R,
+        Request extends TaggedRequestClassAny,
+        ESuccess = never,
+        RSuccess = never,
+        EError = never,
+        RError = never,
+        EDefect = never,
+        RDefect = never
+      >(
         self: RequestHandlerWithInput<I, A, E, R, Request>,
         action: string,
-        options?: Opts<A>
+        options?: Opts<A, E, I, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
       ): Resp<I, A, E, R>
-      <E extends ResponseErrors, A, Request extends TaggedRequestClassAny>(
+      <
+        E extends ResponseErrors,
+        A,
+        Request extends TaggedRequestClassAny,
+        ESuccess = never,
+        RSuccess = never,
+        EError = never,
+        RError = never,
+        EDefect = never,
+        RDefect = never
+      >(
         self: RequestHandler<A, E, R, Request>,
         action: string,
-        options?: Opts<A>
+        options?: Opts<A, E, void, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
       ): ActResp<A, E, R>
     }
   }
@@ -361,6 +613,8 @@ export const makeClient2 = <Locale extends string, R>(
   return {
     useSafeMutationWithState,
     useAndHandleMutation,
+    useAndHandleMutationSilently,
+    useAndHandleMutationCustom,
     makeUseAndHandleMutation,
     useHandleRequestWithToast,
     buildFormFromSchema,
