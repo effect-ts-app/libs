@@ -1,5 +1,20 @@
 # @effect-app/vue
 
+## 2.15.0
+
+### Minor Changes
+
+- fc11754: remove obsolete onSuccess
+- 31574cc: drop client1
+- 73af8be: Cleanup legacy
+- adef1a5: add: useAndHandleMutationSilently and useAndHandleMutationCustom
+
+### Patch Changes
+
+- 5ef6481: update packages
+- Updated dependencies [5ef6481]
+  - effect-app@2.19.1
+
 ## 2.14.0
 
 ### Minor Changes
