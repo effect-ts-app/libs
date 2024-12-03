@@ -13,9 +13,9 @@ import { computed, ref, watch } from "vue"
 import { buildFieldInfoFromFieldsRoot } from "./form.js"
 import { getRuntime } from "./lib.js"
 import type { MakeIntlReturn } from "./makeIntl.js"
-import { makeMutation2, mutationResultToVue } from "./mutate.js"
+import { makeMutation, mutationResultToVue } from "./mutate.js"
 import type { MutationOptions, Res } from "./mutate.js"
-import { makeQuery2 } from "./query.js"
+import { makeQuery } from "./query.js"
 
 /**
  * Use this after handling an error yourself, still continueing on the Error track, but the error will not be reported.
@@ -178,7 +178,7 @@ export function handleRequest<
   )
 }
 
-export const makeClient2 = <Locale extends string, R>(
+export const makeClient = <Locale extends string, R>(
   useIntl: MakeIntlReturn<Locale>["useIntl"],
   useToast: () => {
     error: (message: string) => void
@@ -188,8 +188,8 @@ export const makeClient2 = <Locale extends string, R>(
   runtime: ShallowRef<Runtime.Runtime<R> | undefined>,
   messages: Record<string, string | undefined> = {}
 ) => {
-  const useSafeMutation = makeMutation2()
-  const useSafeQuery = makeQuery2(runtime)
+  const useSafeMutation = makeMutation()
+  const useSafeQuery = makeQuery(runtime)
   const useHandleRequestWithToast = () => {
     const toast = useToast()
     const { intl } = useIntl()

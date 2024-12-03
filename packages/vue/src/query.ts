@@ -36,7 +36,7 @@ export interface KnownFiberFailure<E> extends Runtime.FiberFailure {
   readonly [Runtime.FiberFailureCauseId]: Cause.Cause<E>
 }
 
-export const makeQuery2 = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>) => {
+export const makeQuery = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>) => {
   // TODO: options
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: UndefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryReturnType<TData, TError>;
   // declare function useQuery<TQueryFnData = unknown, TError = DefaultError, TData = TQueryFnData, TQueryKey extends QueryKey = QueryKey>(options: DefinedInitialQueryOptions<TQueryFnData, TError, TData, TQueryKey>, queryClient?: QueryClient): UseQueryDefinedReturnType<TData, TError>;
@@ -202,4 +202,4 @@ export const makeQuery2 = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface MakeQuery2<R> extends ReturnType<typeof makeQuery2<R>> {}
+export interface MakeQuery2<R> extends ReturnType<typeof makeQuery<R>> {}

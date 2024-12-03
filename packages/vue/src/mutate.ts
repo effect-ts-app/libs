@@ -120,7 +120,7 @@ export interface MutationOptions {
                 // }
                 */
 
-export const makeMutation2 = () => {
+export const makeMutation = () => {
   /**
    * Pass a function that returns an Effect, e.g from a client action, or an Effect
    * Returns a tuple with state ref and execution function which reports errors as Toast.
@@ -230,4 +230,4 @@ export const makeMutation2 = () => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface MakeMutation2 extends ReturnType<typeof makeMutation2> {}
+export interface MakeMutation2 extends ReturnType<typeof makeMutation> {}
