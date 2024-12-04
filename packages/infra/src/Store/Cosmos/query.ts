@@ -28,9 +28,6 @@ export function logQuery(q: {
     }))
 }
 
-const arrayContains = (v: any[]) => v.map((_) => JSON.stringify(_)).join(", ")
-const vAsArr = (v: string) => v as unknown as any[]
-
 export function buildWhereCosmosQuery3(
   idKey: PropertyKey,
   filter: readonly FilterResult[],
