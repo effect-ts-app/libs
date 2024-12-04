@@ -62,19 +62,19 @@ export function buildWhereCosmosQuery3(
         return `(NOT ARRAY_CONTAINS(${v}, ${k}))`
 
       case "includes":
-        return `ARRAY_CONTAINS(${k}, ${arrayContains(vAsArr(v))})`
+        return `ARRAY_CONTAINS(${k}, ${v})`
       case "notIncludes":
-        return `(NOT ARRAY_CONTAINS(${k}, ${arrayContains(vAsArr(v))}))`
+        return `(NOT ARRAY_CONTAINS(${k}, ${v}))`
 
       case "includes-any":
-        return `ARRAY_CONTAINS_ANY(${k}, ${arrayContains(vAsArr(v))})`
+        return `ARRAY_CONTAINS_ANY(${k}, ${v})`
       case "notIncludes-any":
-        return `(NOT ARRAY_CONTAINS_ANY(${k}, ${arrayContains(vAsArr(v))}))`
+        return `(NOT ARRAY_CONTAINS_ANY(${k}, ${v}))`
 
       case "includes-all":
-        return `ARRAY_CONTAINS_ALL(${k}, ${arrayContains(vAsArr(v))})`
+        return `ARRAY_CONTAINS_ALL(${k}, ${v})`
       case "notIncludes-all":
-        return `(NOT ARRAY_CONTAINS_ALL(${k}, ${arrayContains(vAsArr(v))}))`
+        return `(NOT ARRAY_CONTAINS_ALL(${k}, ${v}))`
 
       case "contains":
         return `CONTAINS(${k}, ${v}, true)`
