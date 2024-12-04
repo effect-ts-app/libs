@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.30.2
+
+### Patch Changes
+
+- 671a2a0: fix ARRAY_CONTAINS
+
 ## 2.30.1
 
 ### Patch Changes
