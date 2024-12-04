@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { Array, Effect, Equivalence, pipe } from "effect-app"
 import type { NonEmptyReadonlyArray } from "effect-app"
@@ -39,7 +40,7 @@ export function buildWhereCosmosQuery3(
   skip?: number,
   limit?: number
 ) {
-  const statement = (x: FilterR, i: number) => {
+  const statement = (x: FilterR, i: number, values: any[]) => {
     if (x.path === idKey) {
       x = { ...x, path: "id" }
     }
@@ -51,6 +52,8 @@ export function buildWhereCosmosQuery3(
     k = x.path in defaultValues ? `(${k} ?? ${JSON.stringify(defaultValues[x.path])})` : k
 
     const v = "@v" + i
+
+    const realValue = values[i]
 
     switch (x.op) {
       case "in":
@@ -64,14 +67,14 @@ export function buildWhereCosmosQuery3(
         return `(NOT ARRAY_CONTAINS(${k}, ${v}))`
 
       case "includes-any":
-        return `ARRAY_CONTAINS_ANY(${k}, ${v})`
+        return `ARRAY_CONTAINS_ANY(${k}, ${(realValue as any[]).map((_, i) => `${v}__${i}`).join(", ")})`
       case "notIncludes-any":
-        return `(NOT ARRAY_CONTAINS_ANY(${k}, ${v}))`
+        return `(NOT ARRAY_CONTAINS_ANY(${k}, ${(realValue as any[]).map((_, i) => `${v}__${i}`).join(", ")}))`
 
       case "includes-all":
-        return `ARRAY_CONTAINS_ALL(${k}, ${v})`
+        return `ARRAY_CONTAINS_ALL(${k}, ${(realValue as any[]).map((_, i) => `${v}__${i}`).join(", ")})`
       case "notIncludes-all":
-        return `(NOT ARRAY_CONTAINS_ALL(${k}, ${v}))`
+        return `(NOT ARRAY_CONTAINS_ALL(${k}, ${(realValue as any[]).map((_, i) => `${v}__${i}`).join(", ")}))`
 
       case "contains":
         return `CONTAINS(${k}, ${v}, true)`
@@ -114,7 +117,7 @@ export function buildWhereCosmosQuery3(
 
   let i = 0
 
-  const print = (state: readonly FilterResult[]) => {
+  const print = (state: readonly FilterResult[], values: any[]) => {
     let s = ""
     let l = 0
     const printN = (n: number) => {
@@ -123,29 +126,29 @@ export function buildWhereCosmosQuery3(
     for (const e of state) {
       switch (e.t) {
         case "where":
-          s += statement(e, i++)
+          s += statement(e, i++, values)
           break
         case "or":
-          s += ` OR ${statement(e, i++)}`
+          s += ` OR ${statement(e, i++, values)}`
           break
         case "and":
-          s += ` AND ${statement(e, i++)}`
+          s += ` AND ${statement(e, i++, values)}`
           break
         case "or-scope": {
           ++l
-          s += ` OR (\n${printN(l + 1)}${print(e.result)}\n${printN(l)})`
+          s += ` OR (\n${printN(l + 1)}${print(e.result, values)}\n${printN(l)})`
           --l
           break
         }
         case "and-scope": {
           ++l
-          s += ` AND (\n${printN(l + 1)}${print(e.result)}\n${printN(l)})`
+          s += ` AND (\n${printN(l + 1)}${print(e.result, values)}\n${printN(l)})`
           --l
           break
         }
         case "where-scope": {
           // ;++l
-          s += `(\n${printN(l + 1)}${print(e.result)}\n)`
+          s += `(\n${printN(l + 1)}${print(e.result, values)}\n)`
           // ;--l
           break
         }
@@ -198,16 +201,20 @@ export function buildWhereCosmosQuery3(
         .join("\n")
     }
 
-    WHERE f.id != @id ${filter.length ? `AND (${print(filter)})` : ""}
+    WHERE f.id != @id ${filter.length ? `AND (${print(filter, values.map((_) => _.value))})` : ""}
     ${order ? `ORDER BY ${order.map((_) => `f.${_.key} ${_.direction}`).join(", ")}` : ""}
     ${skip !== undefined || limit !== undefined ? `OFFSET ${skip ?? 0} LIMIT ${limit ?? 999999}` : ""}`,
     parameters: [
       { name: "@id", value: importedMarkerId },
       ...values
-        .map((x, i) => ({
-          name: `@v${i}`,
-          value: x.value
-        }))
+        .flatMap((x, i) =>
+          [{
+            name: `@v${i}`,
+            value: x.value as any
+          }]
+            // TODO: only for arrays that are used with _ANY or _ALL
+            .concat(Array.isArray(x.value) ? x.value.map((_, i2) => ({ name: `@v${i}__${i2}`, value: _ as any })) : [])
+        )
     ]
   }
 }
