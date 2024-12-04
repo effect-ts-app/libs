@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.30.3
+
+### Patch Changes
+
+- d846db3: fix query proper
+
 ## 2.30.2
 
 ### Patch Changes
