@@ -193,36 +193,25 @@ export const makeMutation = () => {
         .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
     })
 
+    const handle = (self: Effect<A, E, R>, name: string) =>
+      Effect
+        .sync(() => {
+          state.value = { _tag: "Loading" }
+        })
+        .pipe(
+          Effect.zipRight(
+            Effect.tapBoth(self, { onFailure: () => invalidateCache, onSuccess: () => invalidateCache })
+          ),
+          Effect.tapDefect(reportRuntimeError),
+          Effect.onExit(handleExit),
+          Effect.withSpan(`mutation ${name}`, { captureStackTrace: false })
+        )
+
     const handler = self.handler
-    const r = Effect.isEffect(handler)
-      ? tuple(
-        state,
-        Effect
-          .sync(() => {
-            state.value = { _tag: "Loading" }
-          })
-          .pipe(
-            Effect.zipRight(handler),
-            Effect.tap(invalidateCache),
-            Effect.tapDefect(reportRuntimeError),
-            Effect.onExit(handleExit),
-            Effect.withSpan(`mutation ${self.name}`, { captureStackTrace: false })
-          )
-      )
-      : tuple(state, (fst: I) => {
-        const effect = handler(fst)
-        return Effect
-          .sync(() => {
-            state.value = { _tag: "Loading" }
-          })
-          .pipe(
-            Effect.zipRight(effect),
-            Effect.tapBoth({ onFailure: () => invalidateCache, onSuccess: () => invalidateCache }),
-            Effect.tapDefect(reportRuntimeError),
-            Effect.onExit(handleExit),
-            Effect.withSpan(`mutation ${self.name}`, { captureStackTrace: false })
-          )
-      })
+    const r = tuple(
+      state,
+      Effect.isEffect(handler) ? handle(handler, self.name) : (fst: I) => handle(handler(fst), self.name)
+    )
 
     return r as any
   }
