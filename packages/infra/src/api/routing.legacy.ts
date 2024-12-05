@@ -436,7 +436,7 @@ export const makeRouter = <
             Context.omit(Tracer.ParentSpan as never)
           )
           yield* router
-            .all(
+            .post(
               "/",
               (httpApp
                 .pipe(HttpMiddleware.make(Effect.provide(services)))) as any,

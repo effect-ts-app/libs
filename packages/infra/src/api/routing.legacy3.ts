@@ -628,7 +628,7 @@ export const makeRouter = <
               .moduleName + "."
           })
           yield* router
-            .all(
+            .post(
               "/",
               httpApp as any,
               // TODO: not queries.

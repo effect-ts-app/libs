@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.30.4
+
+### Patch Changes
+
+- fix: only listen for post routes.
+
 ## 2.30.3
 
 ### Patch Changes
