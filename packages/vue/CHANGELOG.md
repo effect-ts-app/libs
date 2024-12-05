@@ -1,5 +1,15 @@
 # @effect-app/vue
 
+## 2.16.0
+
+### Minor Changes
+
+- 4a211b6: improve: add mapHandler to useSafeMutation options.
+
+### Patch Changes
+
+- 465ec78: fix: invalidate cache should also happen on invalidation
+
 ## 2.15.2
 
 ### Patch Changes
