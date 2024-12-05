@@ -1,5 +1,17 @@
 # @effect-app/infra
 
+## 2.31.0
+
+### Minor Changes
+
+- 2b39183: improve: Tighten Sendgrid types and enable isMultiple by default
+
+### Patch Changes
+
+- 1bfc3d8: update packages
+- Updated dependencies [1bfc3d8]
+  - effect-app@2.19.2
+
 ## 2.30.4
 
 ### Patch Changes
