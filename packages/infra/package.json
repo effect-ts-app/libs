@@ -18,7 +18,7 @@
   "devDependencies": {
     "@azure/cosmos": "^4.2.0",
     "@azure/service-bus": "^7.9.5",
-    "@babel/cli": "^7.25.9",
+    "@babel/cli": "^7.26.4",
     "@sentry/node": "^8.42.0",
     "@types/express": "^5.0.0",
     "@types/node": "~22.10.1",
@@ -38,17 +38,17 @@
   "peerDependencies": {
     "@azure/cosmos": "^4.2.0",
     "@azure/service-bus": "^7.9.5",
-    "@effect/experimental": "^0.33.2",
-    "@effect/platform": "^0.70.2",
-    "@effect/rpc-http": "^0.43.2",
-    "@effect/rpc": "^0.45.2",
-    "@effect/sql": "^0.22.2",
-    "@effect/vitest": "^0.14.2",
+    "@effect/experimental": "^0.33.4",
+    "@effect/platform": "^0.70.4",
+    "@effect/rpc-http": "^0.43.4",
+    "@effect/rpc": "^0.45.4",
+    "@effect/sql": "^0.22.4",
+    "@effect/vitest": "^0.14.3",
     "@sendgrid/helpers": "^8.0.0",
     "@sendgrid/mail": "^8.1.4",
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
-    "effect": "^3.11.2",
+    "effect": "^3.11.3",
     "express": "^4.21.1"
   },
   "typesVersions": {
