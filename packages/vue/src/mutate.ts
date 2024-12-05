@@ -102,7 +102,8 @@ type MaybeRefDeep<T> = MaybeRef<
     : T
 >
 
-export interface MutationOptions {
+export interface MutationOptions<A, E, R, A2 = A, E2 = E, R2 = R, I = void> {
+  mapHandler?: (handler: Effect<A, E, R>, input: I) => Effect<A2, E2, R2>
   queryInvalidation?: (defaultKey: string[], name: string) => {
     filters?: MaybeRefDeep<InvalidateQueryFilters> | undefined
     options?: MaybeRefDeep<InvalidateOptions> | undefined
@@ -126,33 +127,33 @@ export const makeMutation = () => {
    * Returns a tuple with state ref and execution function which reports errors as Toast.
    */
   const useSafeMutation: {
-    <I, E, A, R, Request extends TaggedRequestClassAny>(
+    <I, E, A, R, Request extends TaggedRequestClassAny, A2 = A, E2 = E, R2 = R>(
       self: RequestHandlerWithInput<I, A, E, R, Request>,
-      options?: MutationOptions
+      options?: MutationOptions<A, E, R, A2, E2, R2, I>
     ): readonly [
-      Readonly<Ref<MutationResult<A, E>>>,
-      (i: I) => Effect<A, E, R>
+      Readonly<Ref<MutationResult<A2, E2>>>,
+      (i: I) => Effect<A2, E2, R2>
     ]
-    <E, A, R, Request extends TaggedRequestClassAny>(
+    <E, A, R, Request extends TaggedRequestClassAny, A2 = A, E2 = E, R2 = R>(
       self: RequestHandler<A, E, R, Request>,
-      options?: MutationOptions
+      options?: MutationOptions<A, E, R, A2, E2, R2>
     ): readonly [
-      Readonly<Ref<MutationResult<A, E>>>,
-      Effect<A, E, R>
+      Readonly<Ref<MutationResult<A2, E2>>>,
+      Effect<A2, E2, R2>
     ]
-  } = <I, E, A, R, Request extends TaggedRequestClassAny>(
+  } = <I, E, A, R, Request extends TaggedRequestClassAny, A2 = A, E2 = E, R2 = R>(
     self: RequestHandlerWithInput<I, A, E, R, Request> | RequestHandler<A, E, R, Request>,
-    options?: MutationOptions
+    options?: MutationOptions<A, E, R, A2, E2, R2, I>
   ) => {
     const queryClient = useQueryClient()
-    const state: Ref<MutationResult<A, E>> = ref<MutationResult<A, E>>({ _tag: "Initial" }) as any
+    const state: Ref<MutationResult<A2, E2>> = ref<MutationResult<A2, E2>>({ _tag: "Initial" }) as any
 
     const invalidateQueries = (
       filters?: MaybeRefDeep<InvalidateQueryFilters>,
       options?: MaybeRefDeep<InvalidateOptions>
     ) => Effect.promise(() => queryClient.invalidateQueries(filters, options))
 
-    function handleExit(exit: Exit.Exit<A, E>) {
+    function handleExit(exit: Exit.Exit<A2, E2>) {
       return Effect.sync(() => {
         if (Exit.isSuccess(exit)) {
           state.value = { _tag: "Success", data: exit.value }
@@ -193,14 +194,19 @@ export const makeMutation = () => {
         .pipe(Effect.withSpan("client.query.invalidation", { captureStackTrace: false }))
     })
 
-    const handle = (self: Effect<A, E, R>, name: string) =>
+    const mapHandler = options?.mapHandler ?? ((_) => _)
+
+    const handle = (self: Effect<A, E, R>, name: string, i: I | void = void 0) =>
       Effect
         .sync(() => {
           state.value = { _tag: "Loading" }
         })
         .pipe(
           Effect.zipRight(
-            Effect.tapBoth(self, { onFailure: () => invalidateCache, onSuccess: () => invalidateCache })
+            mapHandler(
+              Effect.tapBoth(self, { onFailure: () => invalidateCache, onSuccess: () => invalidateCache }),
+              i as I
+            ) as Effect<A2, E2, R2>
           ),
           Effect.tapDefect(reportRuntimeError),
           Effect.onExit(handleExit),
@@ -210,7 +216,7 @@ export const makeMutation = () => {
     const handler = self.handler
     const r = tuple(
       state,
-      Effect.isEffect(handler) ? handle(handler, self.name) : (fst: I) => handle(handler(fst), self.name)
+      Effect.isEffect(handler) ? handle(handler, self.name) : (i: I) => handle(handler(i), self.name, i)
     )
 
     return r as any

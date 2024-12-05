@@ -45,6 +45,10 @@ export const getRuntime = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined
   return runtime.value
 }
 
+/**
+ * Maps the handler before more processing is done like refresh caches.
+ * use the `mapHandler` in options instead, as it will be executed *after* invalidating caches, instead of before.
+ */
 export const mapHandler: {
   <I, E, R, A, E2, A2, R2, Request extends TaggedRequestClassAny>(
     self: RequestHandlerWithInput<I, A, E, R, Request>,

@@ -29,20 +29,24 @@ export type ResponseErrors = S.ParseResult.ParseError | SupportedErrors | Suppre
 export interface Opts<
   A,
   E,
+  R,
   I = void,
+  A2 = A,
+  E2 = E,
+  R2 = R,
   ESuccess = never,
   RSuccess = never,
   EError = never,
   RError = never,
   EDefect = never,
   RDefect = never
-> extends MutationOptions {
+> extends MutationOptions<A, E, R, A2, E2, R2, I> {
   /** set to `undefined` to use default message */
-  successMessage?: ((a: A, i: I) => Effect<string | undefined, ESuccess, RSuccess>) | undefined
+  successMessage?: ((a: A2, i: I) => Effect<string | undefined, ESuccess, RSuccess>) | undefined
   /** set to `undefined` to use default message */
-  failMessage?: ((e: E, i: I) => Effect<string | undefined, EError, RError>) | undefined
+  failMessage?: ((e: E2, i: I) => Effect<string | undefined, EError, RError>) | undefined
   /** set to `undefined` to use default message */
-  defectMessage?: ((e: Cause.Cause<E>, i: I) => Effect<string | undefined, EDefect, RDefect>) | undefined
+  defectMessage?: ((e: Cause.Cause<E2>, i: I) => Effect<string | undefined, EDefect, RDefect>) | undefined
 }
 
 export interface LowOpts<
@@ -64,14 +68,18 @@ export interface LowOpts<
 export interface LowOptsOptional<
   A,
   E,
+  R,
   I = void,
+  A2 = A,
+  E2 = E,
+  R2 = R,
   ESuccess = never,
   RSuccess = never,
   EError = never,
   RError = never,
   EDefect = never,
   RDefect = never
-> extends MutationOptions {
+> extends MutationOptions<A, E, R, A2, E2, R2, I> {
   onSuccess?: (a: A, i: I) => Effect<void, ESuccess, RSuccess>
   onFail?: (e: E, i: I) => Effect<void, EError, RError>
   onDefect?: (e: Cause.Cause<E>, i: I) => Effect<void, EDefect, RDefect>
@@ -200,10 +208,13 @@ export const makeClient = <Locale extends string, R>(
      * Returns an execution function which reports errors as Toast.
      */
     function handleRequestWithToast<
-      E extends ResponseErrors,
       A,
+      E extends ResponseErrors,
       R,
       I = void,
+      A2 = A,
+      E2 extends ResponseErrors = E,
+      R2 = R,
       ESuccess = never,
       RSuccess = never,
       EError = never,
@@ -211,9 +222,9 @@ export const makeClient = <Locale extends string, R>(
       EDefect = never,
       RDefect = never
     >(
-      f: Effect<A, E, R> | ((i: I) => Effect<A, E, R>),
+      f: Effect<A2, E2, R2> | ((i: I) => Effect<A2, E2, R2>),
       action: string,
-      options: Opts<A, E, I, ESuccess, RSuccess, EError, RError, EDefect, RDefect> = {}
+      options: Opts<A, E, R, I, A2, E2, R2, ESuccess, RSuccess, EError, RError, EDefect, RDefect> = {}
     ) {
       const actionMessage = messages[action] ?? action
       const defaultWarnMessage = intl.value.formatMessage(
@@ -229,7 +240,7 @@ export const makeClient = <Locale extends string, R>(
         { action: actionMessage }
       )
 
-      return handleRequest<E, A, R, any, ESuccess, RSuccess, EError, RError, EDefect, RDefect>(f, action, {
+      return handleRequest<E2, A2, R2, any, ESuccess, RSuccess, EError, RError, EDefect, RDefect>(f, action, {
         onSuccess: (a, i) =>
           Effect.gen(function*() {
             const message = options.successMessage ? yield* options.successMessage(a, i) : defaultSuccessMessage
@@ -341,6 +352,9 @@ export const makeClient = <Locale extends string, R>(
       A,
       R,
       Request extends TaggedRequestClassAny,
+      A2 = A,
+      E2 extends ResponseErrors = E,
+      R2 = R,
       ESuccess = never,
       RSuccess = never,
       EError = never,
@@ -350,13 +364,16 @@ export const makeClient = <Locale extends string, R>(
     >(
       self: RequestHandlerWithInput<I, A, E, R, Request>,
       action: string,
-      options?: Opts<A, E, I, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
-    ): Resp<I, void, never, R>
+      options?: Opts<A, E, R, I, A2, E2, R2, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+    ): Resp<I, A2, E2, R2>
     <
       E extends ResponseErrors,
       A,
       R,
       Request extends TaggedRequestClassAny,
+      A2 = A,
+      E2 extends ResponseErrors = E,
+      R2 = R,
       ESuccess = never,
       RSuccess = never,
       EError = never,
@@ -366,9 +383,13 @@ export const makeClient = <Locale extends string, R>(
     >(
       self: RequestHandler<A, E, R, Request>,
       action: string,
-      options?: Opts<A, E, void, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
-    ): ActResp<void, never, R>
-  } = (self: any, action: any, options?: Opts<any, any, any, any, any, any, any, any, any>): any => {
+      options?: Opts<A, E, R, void, A2, E2, R2, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+    ): ActResp<A2, E2, R2>
+  } = (
+    self: any,
+    action: any,
+    options?: Opts<any, any, any, any, any, any, any, any, any, any, any, any, any>
+  ): any => {
     const handleRequestWithToast = useHandleRequestWithToast()
     const [a, b] = useSafeMutation({
       ...self,
@@ -401,6 +422,9 @@ export const makeClient = <Locale extends string, R>(
       A,
       R,
       Request extends TaggedRequestClassAny,
+      A2 = A,
+      E2 extends ResponseErrors = E,
+      R2 = R,
       ESuccess = never,
       RSuccess = never,
       EError = never,
@@ -410,13 +434,16 @@ export const makeClient = <Locale extends string, R>(
     >(
       self: RequestHandlerWithInput<I, A, E, R, Request>,
       action: string,
-      options?: Opts<A, E, I, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
-    ): Resp<I, void, never, R>
+      options?: Opts<A, E, R, I, A2, E2, R2, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+    ): Resp<I, A2, E2, R>
     <
       E extends ResponseErrors,
       A,
       R,
       Request extends TaggedRequestClassAny,
+      A2 = A,
+      E2 extends ResponseErrors = E,
+      R2 = R,
       ESuccess = never,
       RSuccess = never,
       EError = never,
@@ -426,7 +453,7 @@ export const makeClient = <Locale extends string, R>(
     >(
       self: RequestHandler<A, E, R, Request>,
       action: string,
-      options?: Opts<A, E, void, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+      options?: Opts<A, E, R, void, A2, E2, R2, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
     ): ActResp<void, never, R>
   } = makeUseAndHandleMutation({
     successMessage: suppressToast,
@@ -445,6 +472,9 @@ export const makeClient = <Locale extends string, R>(
       A,
       R,
       Request extends TaggedRequestClassAny,
+      A2 = A,
+      E2 extends ResponseErrors = E,
+      R2 = R,
       ESuccess = never,
       RSuccess = never,
       EError = never,
@@ -454,13 +484,16 @@ export const makeClient = <Locale extends string, R>(
     >(
       self: RequestHandlerWithInput<I, A, E, R, Request>,
       action: string,
-      options?: LowOptsOptional<A, E, I, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
-    ): Resp<I, void, never, R>
+      options?: LowOptsOptional<A, E, R, I, A2, E2, R2, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+    ): Resp<I, A2, E2, R2>
     <
       E extends ResponseErrors,
       A,
       R,
       Request extends TaggedRequestClassAny,
+      A2 = A,
+      E2 extends ResponseErrors = E,
+      R2 = R,
       ESuccess = never,
       RSuccess = never,
       EError = never,
@@ -470,8 +503,8 @@ export const makeClient = <Locale extends string, R>(
     >(
       self: RequestHandler<A, E, R, Request>,
       action: string,
-      options?: LowOptsOptional<A, E, void, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
-    ): ActResp<void, never, R>
+      options?: LowOptsOptional<A, E, R, void, A2, E2, R2, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+    ): ActResp<A2, E2, R2>
   } = (self: any, action: string, options: any) => {
     const [a, b] = useSafeMutation({
       ...self,
@@ -514,6 +547,9 @@ export const makeClient = <Locale extends string, R>(
         A,
         R,
         Request extends TaggedRequestClassAny,
+        A2 = A,
+        E2 extends ResponseErrors = E,
+        R2 = R,
         ESuccess = never,
         RSuccess = never,
         EError = never,
@@ -523,12 +559,15 @@ export const makeClient = <Locale extends string, R>(
       >(
         self: RequestHandlerWithInput<I, A, E, R, Request>,
         action: string,
-        options?: Opts<A, E, I, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
-      ): Resp<I, A, E, R>
+        options?: Opts<A, E, R, I, A2, E2, R2, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+      ): Resp<I, A2, E2, R2>
       <
         E extends ResponseErrors,
         A,
         Request extends TaggedRequestClassAny,
+        A2 = A,
+        E2 extends ResponseErrors = E,
+        R2 = R,
         ESuccess = never,
         RSuccess = never,
         EError = never,
@@ -538,8 +577,8 @@ export const makeClient = <Locale extends string, R>(
       >(
         self: RequestHandler<A, E, R, Request>,
         action: string,
-        options?: Opts<A, E, void, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
-      ): ActResp<A, E, R>
+        options?: Opts<A, E, R, void, A2, E2, R2, ESuccess, RSuccess, EError, RError, EDefect, RDefect>
+      ): ActResp<A2, E2, R2>
     }
   }
 
