@@ -1,4 +1,5 @@
 import type { EmailData } from "@sendgrid/helpers/classes/email-address.js"
+import type { MailContent } from "@sendgrid/helpers/classes/mail.js"
 import sgMail from "@sendgrid/mail"
 import { Array, Effect, Equivalence, Redacted } from "effect-app"
 import { dropUndefinedT } from "effect-app/utils"
@@ -22,7 +23,13 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
           const render = renderMessage(!realMail)
 
           const renderedMsg_ = render(msg)
-          const renderedMsg = { ...renderedMsg_, subject: `${subjectPrefix}${renderedMsg_.subject}` }
+          const renderedMsg = {
+            ...renderedMsg_ as Omit<typeof renderedMsg_, "content">,
+            subject: `${subjectPrefix}${renderedMsg_.subject}`,
+            ..."content" in renderedMsg_
+              ? { content: [...renderedMsg_.content] as [MailContent, ...MailContent[]] }
+              : {}
+          }
           yield* InfraLogger.logDebug("Sending email").pipe(Effect.annotateLogs("msg", inspect(renderedMsg, false, 5)))
 
           const ret = yield* Effect.async<
@@ -30,10 +37,14 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
             Error | sgMail.ResponseError
           >(
             (cb) =>
-              void sgMail.send(renderedMsg, false, (err, result) =>
-                err
-                  ? cb(Effect.fail(err))
-                  : cb(Effect.sync(() => result)))
+              void sgMail.send(
+                renderedMsg as any, // sue me
+                msg.isMultiple ?? true,
+                (err, result) =>
+                  err
+                    ? cb(Effect.fail(err))
+                    : cb(Effect.sync(() => result))
+              )
           )
 
           // const event = {
@@ -93,7 +104,7 @@ export function isTestAddress(to: EmailData) {
   )
 }
 
-function renderFake(addr: EmailData | EmailData[], makeId: () => number) {
+function renderFake(addr: EmailData | readonly EmailData[], makeId: () => number) {
   return {
     name: renderMailData(addr),
     email: `test+${makeId()}@nomizz.com`
@@ -106,7 +117,7 @@ const eq = Equivalence.mapInput(
 
 // TODO: should just not add any already added email address
 // https://stackoverflow.com/a/53603076/11595834
-function renderFakeIfTest(addr: EmailData | EmailData[], makeId: () => number) {
+function renderFakeIfTest(addr: EmailData | readonly EmailData[], makeId: () => number) {
   return Array.isArray(addr)
     ? Array.dedupeWith(
       addr
@@ -118,7 +129,7 @@ function renderFakeIfTest(addr: EmailData | EmailData[], makeId: () => number) {
     : addr
 }
 
-function renderMailData(md: NonNullable<EmailMsg["to"]>): string {
+function renderMailData(md: EmailData | readonly EmailData[]): string {
   if (Array.isArray(md)) {
     return md.map(renderMailData).join(", ")
   }

@@ -1,9 +1,8 @@
 import type { MailContent, MailData } from "@sendgrid/helpers/classes/mail.js"
 import type { ResponseError } from "@sendgrid/mail"
-import type sgMail from "@sendgrid/mail"
 import type { Effect, NonEmptyReadonlyArray, Redacted } from "effect-app"
 import { Context } from "effect-app"
-import type { Email, NonEmptyString255 } from "effect-app/Schema"
+import type { Email } from "effect-app/Schema"
 
 /**
  * @tsplus type Emailer
@@ -13,19 +12,42 @@ export class Emailer extends Context.TagId("effect-app/Emailer")<Emailer, {
   sendMail: (msg: EmailMsgOptionalFrom) => Effect<void, Error | ResponseError>
 }>() {}
 
+export type EmailData = Email | {
+  name?: string
+  email: Email
+}
+
 export interface SendgridConfig {
-  defaultReplyTo?: Email | { name?: NonEmptyString255; email: Email }
+  defaultReplyTo?: EmailData
   subjectPrefix: string
   realMail: boolean
-  defaultFrom: Email | { name?: NonEmptyString255; email: Email }
+  defaultFrom: EmailData
   apiKey: Redacted.Redacted<string>
 }
-export type EmailMsg = sgMail.MailDataRequired
 export type EmailTemplateMsg = MailData & { templateId: string }
 
-export type EmailMsgOptionalFrom =
-  & Omit<MailData, "from">
-  & (
-    { text: string } | { html: string } | { templateId: string } | { content: NonEmptyReadonlyArray<MailContent> }
-  )
-  & Partial<Pick<EmailMsg, "from">>
+export type EmailRecipients = EmailData | NonEmptyReadonlyArray<EmailData>
+
+export type EmailMsgBase =
+  & Omit<MailData, "from" | "to" | "bcc" | "cc" | "content">
+  & {
+    to: EmailData | NonEmptyReadonlyArray<EmailData>
+    cc?: EmailData | NonEmptyReadonlyArray<EmailData>
+    bcc?: EmailData | NonEmptyReadonlyArray<EmailData>
+    from: EmailData
+    /**
+     * should multiple `to` addresess be considered multiple emails?
+     * defaults to `true`, not to leak email addresses
+     */
+    isMultiple?: boolean
+  }
+
+export type EmailContent = { text: string } | { html: string } | { templateId: string } | {
+  content: NonEmptyReadonlyArray<MailContent>
+}
+
+export type EmailMsg =
+  & EmailMsgBase
+  & EmailContent
+
+export type EmailMsgOptionalFrom = Omit<EmailMsgBase, "from"> & Partial<Pick<EmailMsg, "from">> & EmailContent
