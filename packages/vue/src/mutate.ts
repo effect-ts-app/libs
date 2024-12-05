@@ -103,7 +103,15 @@ type MaybeRefDeep<T> = MaybeRef<
 >
 
 export interface MutationOptions<A, E, R, A2 = A, E2 = E, R2 = R, I = void> {
+  /**
+   * Map the handler; cache invalidation is already done in this handler.
+   * This is useful for e.g navigating, as you know caches have already updated.
+   */
   mapHandler?: (handler: Effect<A, E, R>, input: I) => Effect<A2, E2, R2>
+  /**
+   * By default we invalidate one level of the query key, e.g $project/$configuration.get, we invalidate $project.
+   * This can be overridden by providing a function that returns an array of filters and options.
+   */
   queryInvalidation?: (defaultKey: string[], name: string) => {
     filters?: MaybeRefDeep<InvalidateQueryFilters> | undefined
     options?: MaybeRefDeep<InvalidateOptions> | undefined
