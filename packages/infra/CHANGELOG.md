@@ -1,5 +1,14 @@
 # @effect-app/infra
 
+## 2.31.1
+
+### Patch Changes
+
+- 750b46a: update packages
+- e599644: fix: repeat SSE keep-alive
+- Updated dependencies [750b46a]
+  - effect-app@2.19.3
+
 ## 2.31.0
 
 ### Minor Changes
