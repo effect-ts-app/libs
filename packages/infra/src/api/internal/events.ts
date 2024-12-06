@@ -6,7 +6,7 @@ import { setupRequestContextFromCurrent } from "../setupRequest.js"
 
 // Tell the client to retry every 10 seconds if connectivity is lost
 const setRetry = Stream.succeed("retry: 10000")
-const keepAlive = Stream.schedule(Effect.succeed(":keep-alive"), Schedule.fixed(Duration.seconds(15)))
+const keepAlive = Stream.repeat(Effect.succeed(":keep-alive"), Schedule.fixed(Duration.seconds(15)))
 
 export const makeSSE = <A extends { id: any }, SI, SR>(
   schema: S.Schema<A, SI, SR>
