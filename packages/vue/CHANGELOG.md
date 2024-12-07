@@ -1,5 +1,16 @@
 # @effect-app/vue
 
+## 2.17.0
+
+### Minor Changes
+
+- 3d3f270: fix: useSafeQuery should have optional value if no initialData.
+
+### Patch Changes
+
+- Updated dependencies [47eb94e]
+  - effect-app@2.19.5
+
 ## 2.16.3
 
 ### Patch Changes

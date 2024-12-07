@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.19.5
+
+### Patch Changes
+
+- 47eb94e: cleanup legacy annotations
+
 ## 2.19.4
 
 ### Patch Changes
