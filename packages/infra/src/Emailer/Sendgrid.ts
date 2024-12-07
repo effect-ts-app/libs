@@ -5,7 +5,7 @@ import { Array, Effect, Equivalence, Redacted } from "effect-app"
 import { dropUndefinedT } from "effect-app/utils"
 import { inspect } from "util"
 import { InfraLogger } from "../logger.js"
-import { Emailer } from "./service.js"
+import { Emailer, SendMailError } from "./service.js"
 import type { EmailMsg, EmailMsgOptionalFrom, SendgridConfig } from "./service.js"
 
 const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPrefix }: SendgridConfig) =>
@@ -32,20 +32,22 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
           }
           yield* InfraLogger.logDebug("Sending email").pipe(Effect.annotateLogs("msg", inspect(renderedMsg, false, 5)))
 
-          const ret = yield* Effect.async<
-            [sgMail.ClientResponse, Record<string, unknown>],
-            Error | sgMail.ResponseError
-          >(
-            (cb) =>
-              void sgMail.send(
-                renderedMsg as any, // sue me
-                msg.isMultiple ?? true,
-                (err, result) =>
-                  err
-                    ? cb(Effect.fail(err))
-                    : cb(Effect.sync(() => result))
-              )
-          )
+          const ret = yield* Effect
+            .async<
+              [sgMail.ClientResponse, Record<string, unknown>],
+              Error | sgMail.ResponseError
+            >(
+              (cb) =>
+                void sgMail.send(
+                  renderedMsg as any, // sue me
+                  msg.isMultiple ?? true,
+                  (err, result) =>
+                    err
+                      ? cb(Effect.fail(err))
+                      : cb(Effect.sync(() => result))
+                )
+            )
+            .pipe(Effect.mapError((raw) => new SendMailError({ raw })))
 
           // const event = {
           //   name: "EmailSent",
