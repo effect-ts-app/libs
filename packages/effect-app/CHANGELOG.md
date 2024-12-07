@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.19.4
+
+### Patch Changes
+
+- fix: return type
+
 ## 2.19.3
 
 ### Patch Changes
