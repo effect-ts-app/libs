@@ -25,14 +25,8 @@ export type ServiceShape<T extends Context.TagClassShape<any, any>> = Omit<
   keyof Context.TagClassShape<any, any>
 >
 
-/**
- * @tsplus type ServiceTagged
- */
 export abstract class ServiceTagged<ServiceKey> extends PhantomTypeParameter<string, ServiceKey> {}
 
-/**
- * @tsplus static ServiceTagged make
- */
 export function makeService<T extends ServiceTagged<any>>(_: Omit<T, ServiceTag>) {
   return _ as T
 }

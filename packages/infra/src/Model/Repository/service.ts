@@ -6,9 +6,6 @@ import type { FieldValues, ResolveFirstLevel } from "../filter/types.js"
 import type { QAll, Query, QueryProjection } from "../query.js"
 import type { Mapped } from "./legacy.js"
 
-/**
- * @tsplus type Repository
- */
 export interface Repository<
   T,
   Encoded extends FieldValues,

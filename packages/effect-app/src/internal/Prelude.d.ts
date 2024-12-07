@@ -43,60 +43,46 @@ export type Layer<in ROut, out E = never, out RIn = never> = LAYER.Layer<ROut, E
 export declare namespace Either {
     export * from "effect/Either";
 }
-/** @tsplus type effect/data/Either */
 export type Either<R, L = never> = EITHER.Either<R, L>;
 export declare namespace Order {
     export * from "effect/Order";
 }
-/** @tsplus type effect/data/Order */
 export type Order<in A> = ORD.Order<A>;
 export declare namespace Ref {
     export * from "effect/Ref";
 }
-/** @tsplus type effect/data/Ref */
 export type Ref<in out A> = REF.Ref<A>;
 export declare namespace Duration {
     export * from "effect/Duration";
 }
-/** @tsplus type effect/data/Duration */
 export type Duration = DUR.Duration;
 export declare namespace Context {
     export * from "effect-app/Context";
 }
-/** @tsplus type effect/data/Context */
 export type Context<in Services> = CTX.Context<Services>;
 export declare namespace FiberRef {
     export * from "effect/FiberRef";
 }
-/** @tsplus type effect/data/FiberRef */
 export type FiberRef<in out A> = FR.FiberRef<A>;
 export declare namespace Cause {
     export * from "effect/Cause";
 }
-/** @tsplus type effect/data/Cause */
 export type Cause<A> = C.Cause<A>;
 export declare namespace Exit {
     export * from "effect/Exit";
 }
-/** @tsplus type effect/data/Exit */
 export type Exit<A, E = never> = EX.Exit<A, E>;
 export declare namespace HashMap {
     export * from "effect/HashMap";
 }
-/** @tsplus type effect/data/HashMap */
 export type HashMap<out Key, out Value> = HM.HashMap<Key, Value>;
 export declare namespace Scope {
     export * from "effect/Scope";
 }
-/** @tsplus type effect/data/Scope */
 export type Scope = SCOPE.Scope;
 export declare namespace Option {
     export * from "effect/Option";
 }
-/**
- * @tsplus companion effect/data/Option.Ops
- * @tsplus type effect/data/Option
- */
 export type Option<A> = O.Option<A>;
 export declare namespace Equivalence {
     export * from "effect/Equivalence";
@@ -113,15 +99,10 @@ export type Equal = EQL.Equal;
 export declare namespace Chunk {
     export * from "effect/Chunk";
 }
-/**
- * @tsplus companion effect/data/Chunk.Ops
- * @tsplus type effect/data/Chunk
- */
 export type Chunk<out A> = CNK.Chunk<A>;
 export declare namespace NonEmptySet {
     export * from "effect-app/NonEmptySet";
 }
-/** @tsplus type ets/NonEmptySet */
 export type NonEmptySet<A> = NS.NonEmptySet<A>;
 export declare namespace Record {
     export * from "effect/Record";
@@ -130,20 +111,10 @@ export type Record<K extends keyof any, T> = globalThis.Record<K, V>;
 export declare namespace Array {
     export * from "effect-app/Array";
 }
-/**
- * @tsplus type Array
- * @tsplus type Iterable
- * @tsplus companion effect/data/Array.Ops
- * @tsplus companion effect/data/Array.Ops
- */
 export type Array<A> = globalThis.ReadonlyArray<A>;
 export declare namespace ReadonlySet {
     export * from "effect-app/Set";
 }
-/**
- * @tsplus type ets/Set
- * @tsplus type ets/ReadonlySet
- */
 export type ReadonlySet<A> = SET.Set<A>;
 export declare namespace Schema {
     export * from "effect/Schema";
@@ -151,9 +122,5 @@ export declare namespace Schema {
     export type Encoded<S> = SCHEMA.Schema.Encoded<S>;
     export type Context<S> = SCHEMA.Schema.Context<S>;
 }
-/**
- * @tsplus type ets/Set
- * @tsplus type ets/Schema
- */
 export type Schema<in out A, in out I = A, out R = never> = SCHEMA.Schema<A, I, R>;
 //# sourceMappingURL=Prelude.d.ts.map

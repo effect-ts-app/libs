@@ -9,9 +9,6 @@ export interface RequestIdBrand extends StringIdBrand {
   readonly RequestId: unique symbol
 }
 
-/**
- * @tsplus type RequestId
- */
 export type RequestId = NonEmptyString255
 // a request id may be made from a span id, which does not comply with StringId schema.
 export const RequestId = extendM(
@@ -29,8 +26,5 @@ export const RequestId = extendM(
   .pipe(withDefaultMake)
 
 export interface UserProfileIdBrand extends Simplify<B.Brand<"UserProfileId"> & StringIdBrand> {}
-/**
- * @tsplus type UserProfileId
- */
 export type UserProfileId = StringId & UserProfileIdBrand
 export const UserProfileId = brandedStringId<UserProfileId>()

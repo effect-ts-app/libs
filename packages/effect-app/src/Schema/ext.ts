@@ -125,9 +125,6 @@ export const defaultMap = <A, A2, I, R>(s: Schema<ReadonlyMap<A, A2>, I, R>) =>
 export const defaultSet = <A, I, R>(s: Schema<ReadonlySet<A>, I, R>) =>
   s.pipe(withDefaultConstructor(() => new Set<A>()))
 
-/**
- * @tsplus getter effect/schema/Schema withDefaultMake
- */
 export const withDefaultMake = <Self extends S.Schema<any, any, never>>(s: Self) => {
   const a = Object.assign(S.decodeSync(s) as WithDefaults<Self>, s)
   Object.setPrototypeOf(a, s)

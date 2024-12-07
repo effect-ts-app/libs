@@ -15,9 +15,6 @@ import { InfraLogger } from "../logger.js"
 import { reportNonInterruptedFailure, reportNonInterruptedFailureCause, reportQueueError } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
-/**
- * @tsplus static QueueMaker.Ops makeServiceBus
- */
 export function makeServiceBusQueue<
   Evt extends { id: StringId; _tag: string },
   DrainEvt extends { id: StringId; _tag: string },
@@ -152,9 +149,6 @@ export function makeServiceBusQueue<
   })
 }
 
-/**
- * @tsplus static QueueMaker.Ops makeServiceBusLayers
- */
 export function makeServiceBusLayers(url: string, queueName: string, queueDrainName: string) {
   return Layer.merge(ServiceBusReceiverFactory.Live(queueDrainName), LiveSender(queueName)).pipe(
     Layer.provide(LiveServiceBusClient(url))

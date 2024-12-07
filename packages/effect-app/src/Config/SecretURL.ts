@@ -21,7 +21,6 @@ import * as internal from "./internal/configSecretURL.js"
 // export type SecretURLTypeId = typeof SecretURLTypeId
 
 /**
- * @tsplus type SecretURL
  * @since 1.0.0
  * @category models
  */
@@ -30,9 +29,6 @@ export interface SecretURL extends Redacted.Redacted, SecretURL.Proto, Equal.Equ
   readonly raw: Array<number>
 }
 
-/**
- * @tsplus type SecretURL.Ops
- */
 export interface SecretURLOps {}
 
 export const SecretURL: SecretURLOps = {}
@@ -52,7 +48,6 @@ export declare namespace SecretURL {
 }
 
 /**
- * @tsplus static SecretURL.Ops isSecretURL
  * @since 1.0.0
  * @category refinements
  * @deprecated
@@ -60,43 +55,35 @@ export declare namespace SecretURL {
 export const isSecretURL: (u: unknown) => u is SecretURL = internal.isSecretURL
 
 /**
- * @tsplus static SecretURL.Ops make
  * @since 1.0.0
  * @category constructors
  */
 export const make: (bytes: Array<number>) => SecretURL = internal.make
 
 /**
- * @tsplus static SecretURL.Ops fromChunk
  * @since 1.0.0
  * @category constructors
  */
 export const fromChunk: (chunk: Chunk.Chunk<string>) => SecretURL = internal.fromChunk
 
 /**
- * @tsplus static SecretURL.Ops fromString
  * @since 1.0.0
  * @category constructors
  */
 export const fromString: (text: string) => SecretURL = internal.fromString
 
 /**
- * @tsplus getter SecretURL value
  * @since 1.0.0
  * @category getters
  */
 export const value: (self: SecretURL) => string = internal.value
 
 /**
- * @tsplus fluent SecretURL unsafeWipe
  * @since 1.0.0
  * @category unsafe
  */
 export const unsafeWipe: (self: SecretURL) => void = internal.unsafeWipe
 
-/**
- * @tsplus static effect/io/Config.Ops secretURL
- */
 export const secretURL = (name?: string): Config.Config<SecretURL> => {
   const config = Config.primitive(
     "a secret property",

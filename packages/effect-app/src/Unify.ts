@@ -4,9 +4,6 @@
 import type { Chunk, Either, Option } from "effect"
 import type { Effect, EffectTypeId } from "effect/Effect"
 
-/**
- * @tsplus unify effect/io/Effect
- */
 export function unifyEffect<X extends { readonly [EffectTypeId]: Effect.VarianceStruct<any, any, any> }>(
   self: X
 ): Effect<
@@ -17,20 +14,12 @@ export function unifyEffect<X extends { readonly [EffectTypeId]: Effect.Variance
   return self as any
 }
 
-/**
- * @tsplus unify effect/data/Chunk
- */
 export function unifyChunk<X extends Chunk.Chunk<any>>(
   self: X
 ): Chunk.Chunk<[X] extends [Chunk.Chunk<infer A>] ? A : never> {
   return self
 }
 
-/**
- * @tsplus unify effect/data/Either
- * @tsplus unify effect/data/Either.Left
- * @tsplus unify effect/data/Either.Right
- */
 export function unifyEither<X extends Either.Either<any, any>>(
   self: X
 ): Either.Either<
@@ -40,11 +29,6 @@ export function unifyEither<X extends Either.Either<any, any>>(
   return self
 }
 
-/**
- * @tsplus unify effect/data/Option
- * @tsplus unify effect/data/Option.Some
- * @tsplus unify effect/data/Option.None
- */
 export function unifyOption<X extends Option.Option<any>>(
   self: X
 ): Option.Option<

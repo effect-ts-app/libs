@@ -3,9 +3,6 @@
 //  * immediately before the effect begins execution and releasing them
 //  * delayed by duration after the effect completes execution, whether by success,
 //  * failure, or interruption.
-//  *
-//  * @tsplus static effect/stm/TSemaphore.Ops withPermitsDuration
-//  * @tsplus pipeable effect/stm/TSemaphore withPermitsDuration
 //  */
 // export function withPermitsDuration(permits: number, duration: Duration) {
 //   return (self: TSemaphore): <R, E, A>(effect: Effect<R, E, A>) => Effect<R, E, A> => {
@@ -32,9 +29,6 @@ import type { Semaphore } from "effect-app/Effect"
  * immediately before the effect begins execution and releasing them
  * delayed by duration after the effect completes execution, whether by success,
  * failure, or interruption.
- *
- * @tsplus static effect/io/Effect/Semaphore.Ops withPermitsDuration
- * @tsplus pipeable effect/io/Effect/Semaphore withPermitsDuration
  */
 export function SEM_withPermitsDuration(permits: number, duration: Duration) {
   return (self: Semaphore): <R, E, A>(effect: Effect<A, E, R>) => Effect<A, E, R> => {
@@ -52,10 +46,6 @@ export function SEM_withPermitsDuration(permits: number, duration: Duration) {
   }
 }
 
-/**
- * @tsplus pipeable Iterable batchPar
- * @tsplus static Collection.Ops batchPar
- */
 export function batchPar<R, E, A, R2, E2, A2, T>(
   n: number,
   forEachItem: (item: T, iWithinBatch: number, batchI: number) => Effect<A, E, R>,
@@ -72,10 +62,6 @@ export function batchPar<R, E, A, R2, E2, A2, T>(
     )
 }
 
-/**
- * @tsplus pipeable Iterable batch
- * @tsplus static Collection.Ops batch
- */
 export function batch<R, E, A, R2, E2, A2, T>(
   n: number,
   forEachItem: (item: T, iWithinBatch: number, batchI: number) => Effect<A, E, R>,
@@ -91,10 +77,6 @@ export function batch<R, E, A, R2, E2, A2, T>(
     )
 }
 
-// /**
-//  * @tsplus pipeable Iterable rateLimit
-//  * @tsplus static Collection.Ops rateLimit
-//  */
 // export function rateLimit(
 //   n: number,
 //   d: DUR
@@ -110,11 +92,6 @@ export function batch<R, E, A, R2, E2, A2, T>(
 //         .mapChunksEffect(_ => _.forEachEffectPar(forEachItem).tap(forEachBatch))
 //         .runCollect
 // }
-
-/**
- * @tsplus pipeable Iterable naiveRateLimit
- * @tsplus static Collection.Ops naiveRateLimit
- */
 
 export function naiveRateLimit(
   n: number,

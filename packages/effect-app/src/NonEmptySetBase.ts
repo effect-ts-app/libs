@@ -23,9 +23,6 @@ export interface NonEmptyBrand {
   readonly NonEmpty: unique symbol
 }
 
-/**
- * @tsplus type ets/NESet
- */
 export type NonEmptySet<A> = Set<A> & NonEmptyBrand
 
 function make_<A>(ord: Order.Order<A>, eq_?: Equivalence.Equivalence<A>) {

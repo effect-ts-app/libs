@@ -91,10 +91,6 @@ export interface Store<
   remove: (e: Encoded) => Effect<void>
 }
 
-/**
- * @tsplus type StoreMaker
- * @tsplus companion StoreMaker.Ops
- */
 export class StoreMaker extends Context.TagId("effect-app/StoreMaker")<StoreMaker, {
   make: <IdKey extends keyof Encoded, Encoded extends FieldValues, R = never, E = never>(
     name: string,
@@ -172,10 +168,6 @@ export const makeContextMap = () => {
 
 const makeMap = Effect.sync(() => makeContextMap())
 
-/**
- * @tsplus type ContextMap
- * @tsplus companion ContextMap.Ops
- */
 export class ContextMap extends Context.TagMakeId("effect-app/ContextMap", makeMap)<ContextMap>() {
 }
 

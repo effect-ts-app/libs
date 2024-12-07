@@ -11,16 +11,10 @@ const rnd = new Random(rand.congruential32(5))
 
 setFaker(faker)
 
-/**
- * @tsplus getter FastCheck generateRandom
- */
 export function generate<T>(arb: FastCheck.Arbitrary<T>) {
   return arb.generate(rnd, undefined)
 }
 
-/**
- * @tsplus getter effect/schema/Arbitrary generate
- */
 export function generateFromArbitrary<T>(arb: A.LazyArbitrary<T>) {
   return generate(arb(FastCheck))
 }

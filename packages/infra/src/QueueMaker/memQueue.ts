@@ -7,9 +7,6 @@ import { InfraLogger } from "../logger.js"
 import { reportNonInterruptedFailure } from "./errors.js"
 import { type QueueBase, QueueMeta } from "./service.js"
 
-/**
- * @tsplus static QueueMaker.Ops makeMem
- */
 export function makeMemQueue<
   Evt extends { id: S.StringId; _tag: string },
   DrainEvt extends { id: S.StringId; _tag: string },

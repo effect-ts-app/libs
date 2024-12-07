@@ -17,10 +17,6 @@ const make = Effect
     }
   })
 
-/**
- * @tsplus type MemQueue
- * @tsplus companion MemQueue.Ops
- */
 export class MemQueue extends Context.TagMakeId("effect-app/MemQueue", make)<MemQueue>() {
   static readonly Live = this.toLayer()
 }

@@ -15,7 +15,4 @@ const makeFake = InfraLogger
     })
   ))
 
-/**
- * @tsplus static Emailer.Ops Fake
- */
 export const FakeSendgrid = Emailer.toLayer(makeFake)

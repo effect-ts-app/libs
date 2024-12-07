@@ -6,9 +6,6 @@ import { not } from "effect/Predicate"
 import type { Predicate, Refinement } from "./Function.js"
 import { identity, pipe, tuple } from "./Function.js"
 
-/**
- * @tsplus fluent ets/Set find
- */
 export function find_<A, B extends A>(
   as: ReadonlySet<A>,
   refinement: Refinement<A, B>
@@ -18,9 +15,6 @@ export function find_<A>(set: ReadonlySet<A>, predicate: Predicate<A>) {
   return [...set].find(predicate)
 }
 
-/**
- * @tsplus fluent ets/Set findFirst
- */
 export function findFirst_<A, B extends A>(
   set: ReadonlySet<A>,
   refinement: Refinement<A, B>
@@ -30,9 +24,6 @@ export function findFirst_<A>(set: ReadonlySet<A>, predicate: Predicate<A>): Opt
   return Option.fromNullable([...set].find(predicate))
 }
 
-/**
- * @tsplus fluent ets/Set findFirstMap
- */
 export function findFirstMap_<A, B>(
   set: ReadonlySet<A>,
   f: (a: A) => Option.Option<B>
@@ -152,7 +143,6 @@ export function some<A>(predicate: Predicate<A>): (set: Set<A>) => boolean {
 
 /**
  * true if one or more elements match predicate
- * @tsplus fluent ets/Set some
  */
 export function some_<A>(set: Set<A>, predicate: Predicate<A>): boolean {
   return some(predicate)(set)
@@ -256,7 +246,6 @@ export function filter<A>(predicate: Predicate<A>): (set: Set<A>) => Set<A> {
 
 /**
  * Filter set values using predicate
- * @tsplus fluent ets/Set filter
  */
 export function filter_<A, B extends A>(
   set: Set<A>,

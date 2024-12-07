@@ -64,9 +64,6 @@ const makeSendgrid = ({ apiKey, defaultFrom, defaultReplyTo, realMail, subjectPr
     })
   })
 
-/**
- * @tsplus static Emailer.Ops SendgridLayer
- */
 export function Sendgrid(config: SendgridConfig) {
   return Emailer.toLayer(makeSendgrid(config))
 }

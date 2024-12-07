@@ -25,9 +25,6 @@ export type AllDSL<T, Evt> =
   ) => Effect<A, E, FixEnv<R, Evt, S1[], S2[]>>)
   & AllDSLExt<T, Evt>
 
-/**
- * @tsplus type DSLExt
- */
 export interface AllDSLExt<T, Evt> {
   modify: <R, E, A, S1 extends T, S2 extends T>(
     pure: (items: readonly S1[], dsl: PureDSL<readonly S1[], readonly S2[], Evt>) => Effect<A, E, R>
@@ -51,9 +48,6 @@ export type OneDSL<T, Evt> =
   ) => Effect<A, E, FixEnv<R, Evt, S1, S2>>)
   & OneDSLExt<T, Evt>
 
-/**
- * @tsplus type DSLExt
- */
 export interface OneDSLExt<T, Evt> {
   modify: <R, E, A, S1 extends T, S2 extends T>(
     pure: (items: S1, dsl: PureDSL<S1, S2, Evt>) => Effect<A, E, FixEnv<R, Evt, S1, S2>>
@@ -128,9 +122,6 @@ export function ifAny<T, R, E, A>(fn: (items: NonEmptyReadonlyArray<T>) => Effec
   return (items: Iterable<T>) => Effect.flatMapOption(Effect.sync(() => toNonEmptyArray([...items])), fn)
 }
 
-/**
- * @tsplus fluent Iterable ifAny
- */
 export function ifAny_<T, R, E, A>(items: Iterable<T>, fn: (items: NonEmptyReadonlyArray<T>) => Effect<A, E, R>) {
   return Effect.flatMapOption(Effect.sync(() => toNonEmptyArray([...items])), fn)
 }

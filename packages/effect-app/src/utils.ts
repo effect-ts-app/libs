@@ -651,22 +651,10 @@ function anyOp_$<T>(self: T) {
   }
 }
 
-/**
- * @tsplus getter Object $$
- * @tsplus getter number $$
- * @tsplus getter bigint $$
- * @tsplus getter boolean $$
- * @tsplus getter regexp $$
- * @tsplus getter string $$
- */
 export function anyOp$<T>(self: T): AnyOps<T> {
   return anyOp_$(self)
 }
 
-/**
- * @tsplus type Any.Ops
- * @tsplus type Object.Ops
- */
 export interface AnyOps<T> {
   subject: T
 }
@@ -693,10 +681,6 @@ export const copy = dual<
   }
 >(2, <A>(self: A, f: Partial<A> | ((a: A) => Partial<A>)) => clone(self, { ...self, ...(isFunction(f) ? f(self) : f) }))
 
-/**
- * @tsplus fluent Any.Ops debug
- * @tsplus fluent Object.Ops debug
- */
 export function debug<A>(a: AnyOps<A>, name: string) {
   let r: string | A = a.subject
   try {
@@ -711,10 +695,6 @@ export function debug<A>(a: AnyOps<A>, name: string) {
     )
 }
 
-/**
- * @tsplus fluent Any.Ops debugUnsafe
- * @tsplus fluent Object.Ops debugUnsafe
- */
 export function debugUnsafe<A>(a: AnyOps<A>, name: string) {
   console.log(name, a.subject)
   return a.subject

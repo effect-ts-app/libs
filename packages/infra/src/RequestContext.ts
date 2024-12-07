@@ -7,10 +7,6 @@ export type Locale = typeof Locale.Type
 
 export const LocaleRef = FiberRef.unsafeMake<Locale>("en")
 
-/**
- * @tsplus type RequestContext
- * @tsplus companion RequestContext.Ops
- */
 export class RequestContext extends S.ExtendedClass<
   RequestContext,
   RequestContext.Encoded

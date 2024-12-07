@@ -8,29 +8,17 @@ import * as Option from "effect/Option"
 
 export * from "effect/Option"
 
-/**
- * @tsplus getter effect/data/Option value
- */
 export const getOrUndefined = value
 
-/**
- * @tsplus static effect/data/Option.Ops omitableToNullable
- */
 export function omitableToNullable<T>(om: Option.Option<T> | undefined) {
   return om ?? Option.fromNullable(om)
 }
 
-/**
- * @tsplus static effect/data/Option.Ops toBool
- */
 export const toBool = Option.match({
   onNone: () => false,
   onSome: () => true
 })
 
-/**
- * @tsplus static effect/data/Option.Ops fromBool
- */
 export const fromBool = (b: boolean) => (b ? Option.some(true) : Option.none())
 
 /**
@@ -64,7 +52,6 @@ function raisePartial<X>(): X {
 
 /**
  * Simulates a partial function
- * @tsplus static effect/data/Option.Ops partial
  */
 export function partial<ARGS extends any[], A>(
   f: (miss: <X>() => X) => (...args: ARGS) => A

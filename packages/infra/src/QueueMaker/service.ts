@@ -11,9 +11,6 @@ export interface QueueBase<Evt, DrainEvt> {
   ) => Effect<void>
 }
 
-/**
- * @tsplus type QueueMaker.Ops
- */
 export interface QueueMakerOps {}
 export const QueueMaker: QueueMakerOps = {}
 

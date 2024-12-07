@@ -15,10 +15,6 @@ export { ServiceStrict as Service } from "effect/Effect"
 
 export * from "effect/Effect"
 
-/**
- * @macro traced
- * @tsplus fluent effect/io/Effect flatMapOpt
- */
 export function flatMapOption<R, E, A, R2, E2, A2>(
   self: Effect.Effect<Option.Option<A>, E, R>,
   fm: (a: A) => Effect.Effect<A2, E2, R2>
@@ -30,10 +26,6 @@ export function flatMapOption<R, E, A, R2, E2, A2>(
     }))
 }
 
-/**
- * @macro traced
- * @tsplus fluent effect/io/Effect tapOpt
- */
 export function tapOption<R, E, A, R2, E2, A2>(
   self: Effect.Effect<Option.Option<A>, E, R>,
   fm: (a: A) => Effect.Effect<A2, E2, R2>
@@ -45,10 +37,6 @@ export function tapOption<R, E, A, R2, E2, A2>(
     }))
 }
 
-/**
- * @macro traced
- * @tsplus fluent effect/io/Effect zipRightOpt
- */
 export function zipRightOption<R, E, A, R2, E2, A2>(
   self: Effect.Effect<Option.Option<A>, E, R>,
   fm: Effect.Effect<A2, E2, R2>
@@ -60,10 +48,6 @@ export function zipRightOption<R, E, A, R2, E2, A2>(
     }))
 }
 
-/**
- * @macro traced
- * @tsplus fluent effect/io/Effect mapOpt
- */
 export function mapOption<R, E, A, A2>(
   self: Effect.Effect<Option.Option<A>, E, R>,
   fm: (a: A) => A2
@@ -110,15 +94,10 @@ export function ifDiff<I, R, E, A>(n: I, orig: I) {
 }
 
 // NOTE: await extension doesnt work via tsplus somehow
-/**
- * @tsplus static effect/io/Deferred.Ops await
- * @tsplus getter effect/io/Deferred await
- */
 export const await_ = Def.await
 
 /**
  * Ref has atomic modify support if synchronous, for Effect we need a Semaphore.
- * @tsplus fluent effect/io/Ref modifyWithEffect
  */
 export function modifyWithPermitWithEffect<A>(ref: Ref.Ref<A>, semaphore: Semaphore) {
   const withPermit = semaphore.withPermits(1)
@@ -133,10 +112,6 @@ export function modifyWithPermitWithEffect<A>(ref: Ref.Ref<A>, semaphore: Semaph
     )
 }
 
-/**
- * @tsplus getter Iterable joinAll
- * @tsplus static effect/io/Effect.Ops joinAll
- */
 export function joinAll<E, A>(fibers: Iterable<Fiber.Fiber<A, E>>): Effect.Effect<readonly A[], E> {
   return Fiber.join(Fiber.all(fibers))
 }
@@ -174,9 +149,6 @@ export type LowerServices<T extends Record<string, Context.Tag<any, any> | Effec
   [key in keyof T as LowerFirst<key>]: ServiceA<T[key]>
 }
 
-/**
- * @tsplus static effect/io/Effect.Ops allLower
- */
 export function allLower<T extends Record<string, Context.Tag<any, any> | Effect.Effect<any, any, any>>>(
   services: T
 ) {
@@ -190,9 +162,6 @@ export function allLower<T extends Record<string, Context.Tag<any, any> | Effect
   ) as any as Effect.Effect<LowerServices<T>, ValuesE<T>, ValuesR<T>>
 }
 
-/**
- * @tsplus static effect/io/Effect.Ops allLowerWith
- */
 export function allLowerWith<T extends Record<string, Context.Tag<any, any> | Effect.Effect<any, any, any>>, A>(
   services: T,
   fn: (services: LowerServices<T>) => A
@@ -200,9 +169,6 @@ export function allLowerWith<T extends Record<string, Context.Tag<any, any> | Ef
   return Effect.map(allLower(services), fn)
 }
 
-/**
- * @tsplus static effect/io/Effect.Ops allLowerWithEffect
- */
 export function allLowerWithEffect<
   T extends Record<string, Context.Tag<any, any> | Effect.Effect<any, any, any>>,
   R,
@@ -217,9 +183,6 @@ export function allLowerWithEffect<
 
 /**
  * Recovers from all errors.
- *
- * @tsplus static effect/io/Effect.Ops catchAllMap
- * @tsplus pipeable effect/io/Effect catchAllMap
  */
 export function catchAllMap<E, A2>(f: (e: E) => A2) {
   return <R, A>(self: Effect.Effect<A, E, R>): Effect.Effect<A2 | A, never, R> =>
@@ -228,8 +191,6 @@ export function catchAllMap<E, A2>(f: (e: E) => A2) {
 
 /**
  * Annotates each log in this scope with the specified log annotation.
- *
- * @tsplus static effect/io/Effect.Ops annotateLogscoped
  */
 export function annotateLogscoped(key: string, value: string) {
   return FiberRef
@@ -247,8 +208,6 @@ export function annotateLogscoped(key: string, value: string) {
 
 /**
  * Annotates each log in this scope with the specified log annotations.
- *
- * @tsplus static effect/io/Effect.Ops annotateLogsScoped
  */
 export function annotateLogsScoped(kvps: Record<string, string>) {
   return FiberRef
