@@ -151,53 +151,56 @@ export const makeQuery = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>
     return Result.initial(r.isValidating)
   }
 
-  function useSafeQuery<E, A, Request extends TaggedRequestClassAny>(
-    self: RequestHandler<A, E, R, Request>,
-    options?: QueryObserverOptionsCustom<A, E> & { initialData: A | InitialDataFunction<A> }
-  ): readonly [
-    ComputedRef<Result.Result<A, E>>,
-    ComputedRef<A>,
-    (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
-    UseQueryReturnType<any, any>
-  ]
-  function useSafeQuery<Arg, E, A, Request extends TaggedRequestClassAny>(
-    self: RequestHandlerWithInput<Arg, A, E, R, Request>,
-    arg: Arg | WatchSource<Arg>,
-    options?: QueryObserverOptionsCustom<A, E> & { initialData: A | InitialDataFunction<A> }
-  ): readonly [
-    ComputedRef<Result.Result<A, E>>,
-    ComputedRef<A>,
-    (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
-    UseQueryReturnType<any, any>
-  ]
-  function useSafeQuery<E, A, Request extends TaggedRequestClassAny>(
-    self: RequestHandler<A, E, R, Request>,
-    options?: QueryObserverOptionsCustom<A, E>
-  ): readonly [
-    ComputedRef<Result.Result<A, E>>,
-    ComputedRef<A | undefined>,
-    (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
-    UseQueryReturnType<any, any>
-  ]
-  function useSafeQuery<Arg, E, A, Request extends TaggedRequestClassAny>(
-    self: RequestHandlerWithInput<Arg, A, E, R, Request>,
-    arg: Arg | WatchSource<Arg>,
-    options?: QueryObserverOptionsCustom<A, E>
-  ): readonly [
-    ComputedRef<Result.Result<A, E>>,
-    ComputedRef<A | undefined>,
-    (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
-    UseQueryReturnType<any, any>
-  ]
-  function useSafeQuery(
+  const useSafeQuery: {
+    // required options, with initialData
+    <E, A, Request extends TaggedRequestClassAny>(
+      self: RequestHandler<A, E, R, Request>,
+      options: QueryObserverOptionsCustom<A, E> & { initialData: A | InitialDataFunction<A> }
+    ): readonly [
+      ComputedRef<Result.Result<A, E>>,
+      ComputedRef<A>,
+      (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
+      UseQueryReturnType<any, any>
+    ]
+    <Arg, E, A, Request extends TaggedRequestClassAny>(
+      self: RequestHandlerWithInput<Arg, A, E, R, Request>,
+      arg: Arg | WatchSource<Arg>,
+      options: QueryObserverOptionsCustom<A, E> & { initialData: A | InitialDataFunction<A> }
+    ): readonly [
+      ComputedRef<Result.Result<A, E>>,
+      ComputedRef<A>,
+      (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
+      UseQueryReturnType<any, any>
+    ]
+
+    // optional options, optional A
+    <E, A, Request extends TaggedRequestClassAny>(
+      self: RequestHandler<A, E, R, Request>,
+      options?: QueryObserverOptionsCustom<A, E>
+    ): readonly [
+      ComputedRef<Result.Result<A, E>>,
+      ComputedRef<A | undefined>,
+      (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
+      UseQueryReturnType<any, any>
+    ]
+    <Arg, E, A, Request extends TaggedRequestClassAny>(
+      self: RequestHandlerWithInput<Arg, A, E, R, Request>,
+      arg: Arg | WatchSource<Arg>,
+      options?: QueryObserverOptionsCustom<A, E>
+    ): readonly [
+      ComputedRef<Result.Result<A, E>>,
+      ComputedRef<A | undefined>,
+      (options?: RefetchOptions) => Effect<QueryObserverResult<A, KnownFiberFailure<E>>>,
+      UseQueryReturnType<any, any>
+    ]
+  } = (
     self: any,
     argOrOptions?: any,
     options?: any
-  ) {
-    return Effect.isEffect(self.handler)
+  ) =>
+    Effect.isEffect(self.handler)
       ? useSafeQuery_(self, undefined, argOrOptions)
       : useSafeQuery_(self, argOrOptions, options)
-  }
   return useSafeQuery
 }
 
