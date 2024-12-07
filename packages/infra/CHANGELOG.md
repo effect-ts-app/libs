@@ -1,5 +1,11 @@
 # @effect-app/infra
 
+## 2.32.0
+
+### Minor Changes
+
+- f727eab: fix: Wrap Error in Emailer
+
 ## 2.31.2
 
 ### Patch Changes
