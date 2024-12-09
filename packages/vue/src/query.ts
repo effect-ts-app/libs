@@ -16,7 +16,7 @@ import { Array, Cause, Effect, Option, Runtime, S } from "effect-app"
 import { ServiceUnavailableError } from "effect-app/client"
 import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
 import { isHttpRequestError, isHttpResponseError } from "effect-app/http/http-client"
-import { computed, ref, watch } from "vue"
+import { computed, ref, shallowRef, watch } from "vue"
 import type { ComputedRef, ShallowRef, WatchSource } from "vue"
 import { getRuntime, makeQueryKey, reportRuntimeError } from "./lib.js"
 
@@ -113,7 +113,7 @@ export const makeQuery = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>
         }
     )
 
-    const latestSuccess = ref<A>()
+    const latestSuccess = shallowRef<A>()
     const result = computed((): Result.Result<A, E> =>
       swrToQuery({
         error: r.error.value ?? undefined,
@@ -126,7 +126,7 @@ export const makeQuery = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>
 
     return [
       result,
-      latestSuccess,
+      computed(() => latestSuccess.value),
       // one thing to keep in mind is that span will be disconnected as Context does not pass from outside.
       // TODO: consider how we should handle the Result here which is `QueryObserverResult<A, KnownFiberFailure<E>>`
       // and always ends up in the success channel, even when error..
