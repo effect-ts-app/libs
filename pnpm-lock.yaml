@@ -9,7 +9,7 @@ overrides:
   fast-check: ^3.23.1
   vue: ^3.5.13
 
-pnpmfileChecksum: oyuangim7tj4755jkrxem3bgui
+pnpmfileChecksum: btguetx6qxypudldeqk34zzb7a
 
 patchedDependencies:
   '@phaphoso/eslint-plugin-dprint@0.5.2':

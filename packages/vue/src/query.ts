@@ -113,10 +113,10 @@ export const makeQuery = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>
         }
     )
 
-    const result = computed(() =>
+    const result = computed((): Result.Result<A, E> =>
       swrToQuery({
         error: r.error.value ?? undefined,
-        data: r.data.value,
+        data: r.data.value ?? latestSuccess?.value, // we fall back to existing data
         isValidating: r.isFetching.value
       })
     )
