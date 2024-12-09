@@ -16,7 +16,7 @@ import { Array, Cause, Effect, Option, Runtime, S } from "effect-app"
 import { ServiceUnavailableError } from "effect-app/client"
 import type { RequestHandler, RequestHandlerWithInput, TaggedRequestClassAny } from "effect-app/client/clientFor"
 import { isHttpRequestError, isHttpResponseError } from "effect-app/http/http-client"
-import { computed, ref } from "vue"
+import { computed, ref, watch } from "vue"
 import type { ComputedRef, ShallowRef, WatchSource } from "vue"
 import { getRuntime, makeQueryKey, reportRuntimeError } from "./lib.js"
 
@@ -113,14 +113,17 @@ export const makeQuery = <R>(runtime: ShallowRef<Runtime.Runtime<R> | undefined>
         }
     )
 
+    const latestSuccess = ref<A>()
     const result = computed((): Result.Result<A, E> =>
       swrToQuery({
         error: r.error.value ?? undefined,
-        data: r.data.value ?? latestSuccess?.value, // we fall back to existing data
+        data: r.data.value ?? latestSuccess.value, // we fall back to existing data, as tanstack query might loose it when the key changes
         isValidating: r.isFetching.value
       })
     )
-    const latestSuccess = computed(() => Option.getOrUndefined(Result.value(result.value)))
+    // not using `computed` here as we have a circular dependency
+    watch(result, (value) => latestSuccess.value = Option.getOrUndefined(Result.value(value)), { immediate: true })
+
     return [
       result,
       latestSuccess,
