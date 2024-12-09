@@ -1,5 +1,11 @@
 # @effect-app/vue
 
+## 2.17.1
+
+### Patch Changes
+
+- 094eb02: workaround: fall back to existing data
+
 ## 2.17.0
 
 ### Minor Changes
