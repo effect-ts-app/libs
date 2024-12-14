@@ -41,7 +41,8 @@ export declare namespace Struct {
   export type Fields = S.Struct.Fields
   export type Type<F extends Fields> = S.Struct.Type<F>
   export type Encoded<F extends Fields> = S.Struct.Encoded<F>
-  export type Context<F extends Fields> = Schema.Context<F[keyof F]>
+  export type Context<F extends Fields> = S.Struct.Context<F>
+  export type Constructor<F extends Fields> = S.Struct.Constructor<F>
 }
 
 /**

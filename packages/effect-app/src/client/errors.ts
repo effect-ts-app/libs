@@ -24,6 +24,12 @@ export class NotFoundError<ItemType = string> extends TaggedError<NotFoundError<
   type: S.String,
   id: S.Unknown
 }) {
+  constructor(
+    props: S.Struct.Constructor<typeof NotFoundError.fields> & { cause?: unknown },
+    disableValidation?: boolean
+  ) {
+    super(props, disableValidation)
+  }
   override get message() {
     return `Didn't find ${this.type}#${JSON.stringify(this.id)}`
   }
@@ -35,7 +41,7 @@ const messageFallback = (messageOrObject?: string | { message: string }) =>
 export class InvalidStateError extends TaggedError<InvalidStateError>()("InvalidStateError", {
   message: S.String
 }) {
-  constructor(messageOrObject: string | { message: string }, disableValidation?: boolean) {
+  constructor(messageOrObject: string | { message: string; cause?: unknown }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
   }
 }
@@ -43,7 +49,7 @@ export class InvalidStateError extends TaggedError<InvalidStateError>()("Invalid
 export class ServiceUnavailableError extends TaggedError<ServiceUnavailableError>()("ServiceUnavailableError", {
   message: S.String
 }) {
-  constructor(messageOrObject: string | { message: string }, disableValidation?: boolean) {
+  constructor(messageOrObject: string | { message: string; cause?: unknown }, disableValidation?: boolean) {
     super(typeof messageOrObject === "object" ? messageOrObject : { message: messageOrObject }, disableValidation)
   }
 }
@@ -51,6 +57,12 @@ export class ServiceUnavailableError extends TaggedError<ServiceUnavailableError
 export class ValidationError extends TaggedError<ValidationError>()("ValidationError", {
   errors: S.Array(S.Unknown)
 }) {
+  constructor(
+    props: S.Struct.Constructor<typeof ValidationError.fields> & { cause?: unknown },
+    disableValidation?: boolean
+  ) {
+    super(props, disableValidation)
+  }
   override get message() {
     return `Validation failed: ${this.errors.map((e) => JSON.stringify(e, undefined, 2)).join(",\n")}`
   }
@@ -59,7 +71,7 @@ export class ValidationError extends TaggedError<ValidationError>()("ValidationE
 export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLoggedInError", {
   message: S.String
 }) {
-  constructor(messageOrObject?: string | { message: string }, disableValidation?: boolean) {
+  constructor(messageOrObject?: string | { message: string; cause?: unknown }, disableValidation?: boolean) {
     super(messageFallback(messageOrObject), disableValidation)
   }
 }
@@ -70,7 +82,7 @@ export class NotLoggedInError extends TaggedError<NotLoggedInError>()("NotLogged
 export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
   message: S.String
 }) {
-  constructor(messageOrObject?: string | { message: string }, disableValidation?: boolean) {
+  constructor(messageOrObject?: string | { message: string; cause?: unknown }, disableValidation?: boolean) {
     super(messageFallback(messageOrObject), disableValidation)
   }
 }
@@ -78,7 +90,7 @@ export class LoginError extends TaggedError<LoginError>()("NotLoggedInError", {
 export class UnauthorizedError extends TaggedError<UnauthorizedError>()("UnauthorizedError", {
   message: S.String
 }) {
-  constructor(messageOrObject?: string | { message: string }, disableValidation?: boolean) {
+  constructor(messageOrObject?: string | { message: string; cause?: unknown }, disableValidation?: boolean) {
     super(messageFallback(messageOrObject), disableValidation)
   }
 }
@@ -97,7 +109,9 @@ export class OptimisticConcurrencyException extends TaggedError<OptimisticConcur
 ) {
   readonly details?: OptimisticConcurrencyDetails
   constructor(
-    args: OptimisticConcurrencyDetails | { message: string },
+    args:
+      | OptimisticConcurrencyDetails
+      | (S.Struct.Constructor<typeof OptimisticConcurrencyException.fields> & { cause?: unknown }),
     disableValidation?: boolean
   ) {
     super("message" in args ? args : { message: `Existing ${args.type} ${args.id} record changed` }, disableValidation)
