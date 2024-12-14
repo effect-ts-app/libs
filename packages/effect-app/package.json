@@ -4,8 +4,8 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "@effect/rpc": "^0.45.4",
-    "@effect/rpc-http": "^0.43.4",
+    "@effect/rpc": "^0.46.2",
+    "@effect/rpc-http": "^0.44.2",
     "@tsconfig/strictest": "^2.0.5",
     "date-fns": "^4.1.0",
     "nanoid": "^5.0.9",
@@ -19,16 +19,16 @@
   "devDependencies": {
     "@babel/cli": "^7.26.4",
     "@faker-js/faker": "^8.4.1",
-    "@types/node": "~22.10.1",
+    "@types/node": "~22.10.2",
     "@types/uuid": "^10.0.0",
     "@types/validator": "^13.12.2",
-    "fast-check": "~3.23.1",
+    "fast-check": "~3.23.2",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   },
   "peerDependencies": {
-    "@effect/platform": "^0.70.4",
-    "effect": "^3.11.3"
+    "@effect/platform": "^0.71.2",
+    "effect": "^3.11.7"
   },
   "typesVersions": {
     "*": {
