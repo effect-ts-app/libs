@@ -1,5 +1,15 @@
 # @effect-app/prelude
 
+## 2.20.0
+
+### Minor Changes
+
+- 3388736: feat: add `cause` support to errors
+
+### Patch Changes
+
+- 9f504c6: update packages
+
 ## 2.19.5
 
 ### Patch Changes
