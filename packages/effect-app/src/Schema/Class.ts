@@ -13,6 +13,14 @@ type _OptionalKeys<O> = {
 
 type FilterOptionalKeys<A> = Omit<A, _OptionalKeys<A>>
 
+type ClassAnnotations<Self, A> =
+  | S.Annotations.Schema<Self>
+  | readonly [
+    S.Annotations.Schema<Self> | undefined,
+    S.Annotations.Schema<Self>?,
+    S.Annotations.Schema<A>?
+  ]
+
 export interface EnhancedClass<Self, Fields extends Struct.Fields, I, R, C, Inherited, Proto>
   extends Schema<Self, I, R>, PropsExtensions<Fields>
 {
@@ -25,76 +33,76 @@ export interface EnhancedClass<Self, Fields extends Struct.Fields, I, R, C, Inhe
 
   readonly fields: Simplify<Fields>
 
-  readonly extend: <Extended = never>(identifier?: string) => <newFields extends Struct.Fields>(
-    newFieldsOr: newFields | HasFields<newFields>,
-    annotations?: S.Annotations.Schema<Extended>
+  readonly extend: <Extended = never>(identifier?: string) => <NewFields extends Struct.Fields>(
+    newFieldsOr: NewFields | HasFields<NewFields>,
+    annotations?: ClassAnnotations<Extended, Struct.Type<Fields & NewFields>>
   ) => [Extended] extends [never] ? MissingSelfGeneric<"Base.extend">
     : EnhancedClass<
       Extended,
-      Fields & newFields,
-      Simplify<I & Struct.Encoded<newFields>>,
-      R | Struct.Context<newFields>,
-      Simplify<C & S.Struct.Constructor<newFields>>,
+      Fields & NewFields,
+      Simplify<I & Struct.Encoded<NewFields>>,
+      R | Struct.Context<NewFields>,
+      Simplify<C & S.Struct.Constructor<NewFields>>,
       Self,
       Proto
     >
 
   readonly transformOrFail: <Transformed = never>(identifier?: string) => <
-    newFields extends Struct.Fields,
+    NewFields extends Struct.Fields,
     R2,
     R3
   >(
-    fields: newFields,
+    fields: NewFields,
     options: {
       readonly decode: (
         input: Types.Simplify<Struct.Type<Fields>>,
         options: ParseOptions,
         ast: AST.Transformation
-      ) => Effect.Effect<Types.Simplify<Struct.Type<Fields & newFields>>, ParseResult.ParseIssue, R2>
+      ) => Effect.Effect<Types.Simplify<Struct.Type<Fields & NewFields>>, ParseResult.ParseIssue, R2>
       readonly encode: (
-        input: Types.Simplify<Struct.Type<Fields & newFields>>,
+        input: Types.Simplify<Struct.Type<Fields & NewFields>>,
         options: ParseOptions,
         ast: AST.Transformation
       ) => Effect.Effect<Struct.Type<Fields>, ParseResult.ParseIssue, R3>
     },
-    annotations?: S.Annotations.Schema<Transformed>
+    annotations?: ClassAnnotations<Transformed, Struct.Type<Fields & NewFields>>
   ) => [Transformed] extends [never] ? MissingSelfGeneric<"Base.transform">
     : EnhancedClass<
       Transformed,
-      Fields & newFields,
+      Fields & NewFields,
       I,
-      R | Struct.Context<newFields> | R2 | R3,
-      C & Struct.Constructor<newFields>,
+      R | Struct.Context<NewFields> | R2 | R3,
+      C & Struct.Constructor<NewFields>,
       Self,
       Proto
     >
 
   readonly transformOrFailFrom: <Transformed = never>(identifier?: string) => <
-    newFields extends Struct.Fields,
+    NewFields extends Struct.Fields,
     R2,
     R3
   >(
-    fields: newFields,
+    fields: NewFields,
     options: {
       readonly decode: (
         input: Types.Simplify<I>,
         options: ParseOptions,
         ast: AST.Transformation
-      ) => Effect.Effect<Types.Simplify<I & Struct.Encoded<newFields>>, ParseResult.ParseIssue, R2>
+      ) => Effect.Effect<Types.Simplify<I & Struct.Encoded<NewFields>>, ParseResult.ParseIssue, R2>
       readonly encode: (
-        input: Types.Simplify<I & Struct.Encoded<newFields>>,
+        input: Types.Simplify<I & Struct.Encoded<NewFields>>,
         options: ParseOptions,
         ast: AST.Transformation
       ) => Effect.Effect<I, ParseResult.ParseIssue, R3>
     },
-    annotations?: S.Annotations.Schema<Transformed>
+    annotations?: ClassAnnotations<Transformed, Struct.Type<Fields & NewFields>>
   ) => [Transformed] extends [never] ? MissingSelfGeneric<"Base.transformFrom">
     : EnhancedClass<
       Transformed,
-      Fields & newFields,
+      Fields & NewFields,
       I,
-      R | Struct.Context<newFields> | R2 | R3,
-      Simplify<C & S.Struct.Constructor<newFields>>,
+      R | Struct.Context<NewFields> | R2 | R3,
+      Simplify<C & S.Struct.Constructor<NewFields>>,
       Self,
       Proto
     >
@@ -148,7 +156,7 @@ type HasFields<Fields extends Struct.Fields> = {
 
 export const Class: <Self = never>(identifier?: string) => <Fields extends S.Struct.Fields>(
   fieldsOr: Fields | HasFields<Fields>,
-  annotations?: S.Annotations.Schema<Self>
+  annotations?: ClassAnnotations<Self, Struct.Type<Fields>>
 ) => [Self] extends [never] ? MissingSelfGeneric<"Class">
   : EnhancedClass<
     Self,
@@ -173,7 +181,7 @@ export const Class: <Self = never>(identifier?: string) => <Fields extends S.Str
 export const TaggedClass: <Self = never>(identifier?: string) => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
   fieldsOr: Fields | HasFields<Fields>,
-  annotations?: S.Annotations.Schema<Self>
+  annotations?: ClassAnnotations<Self, Struct.Type<Fields>>
 ) => [Self] extends [never] ? MissingSelfGeneric<"Class">
   : EnhancedClass<
     Self,
@@ -197,7 +205,7 @@ export const TaggedClass: <Self = never>(identifier?: string) => <Tag extends st
 
 export const ExtendedClass: <Self, SelfFrom>(identifier?: string) => <Fields extends S.Struct.Fields>(
   fieldsOr: Fields | HasFields<Fields>,
-  annotations?: S.Annotations.Schema<Self>
+  annotations?: ClassAnnotations<Self, Struct.Type<Fields>>
 ) => EnhancedClass<
   Self,
   Fields,
@@ -213,7 +221,7 @@ export const ExtendedTaggedClass: <Self, SelfFrom>(
 ) => <Tag extends string, Fields extends S.Struct.Fields>(
   tag: Tag,
   fieldsOr: Fields | HasFields<Fields>,
-  annotations?: S.Annotations.Schema<Self>
+  annotations?: ClassAnnotations<Self, Struct.Type<Fields>>
 ) => EnhancedClass<
   Self,
   { readonly _tag: S.tag<Tag> } & Fields,
