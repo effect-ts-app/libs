@@ -44,7 +44,7 @@ const makeApiClientFactory = (config: ApiConfig) =>
       )
     )
 
-    const makeClientFor_ = <M extends Requests>(resource: M, requestLevelLayers = Layer.empty) => {
+    const makeClientFor = <M extends Requests>(resource: M, requestLevelLayers = Layer.empty) => {
       type Filtered = {
         [K in keyof Requests as Requests[K] extends Req ? K : never]: Requests[K] extends Req ? Requests[K] : never
       }
@@ -145,7 +145,7 @@ const makeApiClientFactory = (config: ApiConfig) =>
         }, {} as Client<M>))
     }
 
-    function makeClientFor(requestLevelLayers: Layer.Layer<never, never, never>) {
+    function makeClientForCached(requestLevelLayers: Layer.Layer<never, never, never>) {
       const cache = new Map<any, Client<any>>()
 
       return <M extends Requests>(
@@ -155,13 +155,13 @@ const makeApiClientFactory = (config: ApiConfig) =>
         if (found) {
           return found
         }
-        const m = makeClientFor_(models, requestLevelLayers)
+        const m = makeClientFor(models, requestLevelLayers)
         cache.set(models, m)
         return m
       }
     }
 
-    return makeClientFor
+    return makeClientForCached
   })
 
 /**
@@ -170,12 +170,12 @@ const makeApiClientFactory = (config: ApiConfig) =>
 export class ApiClientFactory
   extends Context.TagId("ApiClientFactory")<ApiClientFactory, Effect.Success<ReturnType<typeof makeApiClientFactory>>>()
 {
-  static readonly layer = (apiConfig: ApiConfig) => this.toLayer(makeApiClientFactory(apiConfig))
+  static readonly layer = (config: ApiConfig) => this.toLayer(makeApiClientFactory(config))
   static readonly layerFromConfig = DefaultApiConfig.pipe(Effect.map(this.layer), Layer.unwrapEffect)
 
   static readonly makeFor =
     (requestLevelLayers: Layer.Layer<never, never, never>) => <M extends Requests>(resource: M) =>
-      this.use((apiClientFactory) => apiClientFactory(requestLevelLayers)).pipe(
-        Effect.map((clientFor) => clientFor(resource))
-      )
+      this
+        .use((apiClientFactory) => apiClientFactory(requestLevelLayers))
+        .pipe(Effect.map((clientFor) => clientFor(resource)))
 }
