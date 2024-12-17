@@ -34,7 +34,7 @@ type Req = S.Schema.All & {
   config?: Record<string, any>
 }
 
-const apiClientFactory = (config: ApiConfig) =>
+const makeApiClientFactory = (config: ApiConfig) =>
   Effect.gen(function*() {
     const baseClient = yield* HttpClient.HttpClient
     const client = baseClient.pipe(
@@ -44,7 +44,7 @@ const apiClientFactory = (config: ApiConfig) =>
       )
     )
 
-    const clientFor_ = <M extends Requests>(resource: M, requestLevelLayers = Layer.empty) => {
+    const makeClientFor_ = <M extends Requests>(resource: M, requestLevelLayers = Layer.empty) => {
       type Filtered = {
         [K in keyof Requests as Requests[K] extends Req ? K : never]: Requests[K] extends Req ? Requests[K] : never
       }
@@ -145,7 +145,7 @@ const apiClientFactory = (config: ApiConfig) =>
         }, {} as Client<M>))
     }
 
-    function makeFor(requestLevelLayers: Layer.Layer<never, never, never>) {
+    function makeClientFor(requestLevelLayers: Layer.Layer<never, never, never>) {
       const cache = new Map<any, Client<any>>()
 
       return <M extends Requests>(
@@ -155,22 +155,22 @@ const apiClientFactory = (config: ApiConfig) =>
         if (found) {
           return found
         }
-        const m = clientFor_(models, requestLevelLayers)
+        const m = makeClientFor_(models, requestLevelLayers)
         cache.set(models, m)
         return m
       }
     }
 
-    return makeFor
+    return makeClientFor
   })
 
 /**
  * Used to create clients for resource modules.
  */
 export class ApiClientFactory
-  extends Context.TagId("ApiClientFactory")<ApiClientFactory, Effect.Success<ReturnType<typeof apiClientFactory>>>()
+  extends Context.TagId("ApiClientFactory")<ApiClientFactory, Effect.Success<ReturnType<typeof makeApiClientFactory>>>()
 {
-  static readonly layer = (apiConfig: ApiConfig) => this.toLayer(apiClientFactory(apiConfig))
+  static readonly layer = (apiConfig: ApiConfig) => this.toLayer(makeApiClientFactory(apiConfig))
   static readonly layerFromConfig = DefaultApiConfig.pipe(Effect.map(this.layer), Layer.unwrapEffect)
 
   static readonly makeFor =
