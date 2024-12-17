@@ -408,14 +408,14 @@
         "default": "./_cjs/client.cjs"
       }
     },
-    "./client/apiClient": {
+    "./client/apiClientFactory": {
       "import": {
-        "types": "./dist/client/apiClient.d.ts",
-        "default": "./dist/client/apiClient.js"
+        "types": "./dist/client/apiClientFactory.d.ts",
+        "default": "./dist/client/apiClientFactory.js"
       },
       "require": {
-        "types": "./dist/client/apiClient.d.ts",
-        "default": "./_cjs/client/apiClient.cjs"
+        "types": "./dist/client/apiClientFactory.d.ts",
+        "default": "./_cjs/client/apiClientFactory.cjs"
       }
     },
     "./client/clientFor": {
