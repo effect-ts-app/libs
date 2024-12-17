@@ -1,5 +1,11 @@
 # @effect-app/prelude
 
+## 2.21.0
+
+### Minor Changes
+
+- b1396c9: refactor: rename ApiClient to ApiClientFactory
+
 ## 2.20.0
 
 ### Minor Changes
