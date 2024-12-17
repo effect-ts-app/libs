@@ -34,7 +34,7 @@ type Req = S.Schema.All & {
   config?: Record<string, any>
 }
 
-const apiClient = (config: ApiConfig) =>
+const apiClientFactory = (config: ApiConfig) =>
   Effect.gen(function*() {
     const baseClient = yield* HttpClient.HttpClient
     const client = baseClient.pipe(
@@ -44,22 +44,22 @@ const apiClient = (config: ApiConfig) =>
       )
     )
 
-    const clientFor_ = <M extends Requests>(models: M, requestLevelLayers = Layer.empty) => {
+    const clientFor_ = <M extends Requests>(resource: M, requestLevelLayers = Layer.empty) => {
       type Filtered = {
         [K in keyof Requests as Requests[K] extends Req ? K : never]: Requests[K] extends Req ? Requests[K] : never
       }
       // TODO: Record.filter
-      const filtered = typedKeysOf(models).reduce((acc, cur) => {
+      const filtered = typedKeysOf(resource).reduce((acc, cur) => {
         if (
-          Predicate.isObject(models[cur])
-          && (models[cur].success)
+          Predicate.isObject(resource[cur])
+          && (resource[cur].success)
         ) {
-          acc[cur as keyof Filtered] = models[cur]
+          acc[cur as keyof Filtered] = resource[cur]
         }
         return acc
       }, {} as Record<keyof Filtered, Req>)
 
-      const meta = (models as any).meta as { moduleName: string }
+      const meta = (resource as any).meta as { moduleName: string }
       if (!meta) throw new Error("No meta defined in Resource!")
 
       const resolver = flow(
@@ -161,13 +161,21 @@ const apiClient = (config: ApiConfig) =>
       }
     }
 
-    return { for_: clientFor_, makeFor_: makeFor }
+    return makeFor
   })
 
-export class ApiClient extends Context.TagId("ApiClient")<ApiClient, Effect.Success<ReturnType<typeof apiClient>>>() {
-  static readonly layer = (apiConfig: ApiConfig) => this.toLayer(apiClient(apiConfig))
+/**
+ * Used to create clients for resource modules.
+ */
+export class ApiClientFactory
+  extends Context.TagId("ApiClientFactory")<ApiClientFactory, Effect.Success<ReturnType<typeof apiClientFactory>>>()
+{
+  static readonly layer = (apiConfig: ApiConfig) => this.toLayer(apiClientFactory(apiConfig))
   static readonly layerFromConfig = DefaultApiConfig.pipe(Effect.map(this.layer), Layer.unwrapEffect)
 
-  static readonly makeFor = (requestLevelLayers: Layer.Layer<never, never, never>) => <M extends Requests>(models: M) =>
-    this.use((_) => _.makeFor_(requestLevelLayers)).pipe(Effect.map((_) => _(models)))
+  static readonly makeFor =
+    (requestLevelLayers: Layer.Layer<never, never, never>) => <M extends Requests>(resource: M) =>
+      this.use((apiClientFactory) => apiClientFactory(requestLevelLayers)).pipe(
+        Effect.map((clientFor) => clientFor(resource))
+      )
 }
