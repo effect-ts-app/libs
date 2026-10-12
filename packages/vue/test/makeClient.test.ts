@@ -89,7 +89,7 @@ it("TaggedRequestFor .moduleName and request .id / .moduleName", () => {
     success: S.FiniteFromString
   }, (_queryKey, _resources, input, result) => {
     expectTypeOf(input).toEqualTypeOf<{ readonly id: string }>()
-    expectTypeOf(result).toEqualTypeOf<Exit.Exit<number, never>>()
+    expectTypeOf(result).toEqualTypeOf<Exit.Exit<number, S.SchemaError>>()
     return []
   }) {}
   void TypeInferenceWithSuccess
@@ -102,7 +102,7 @@ it("TaggedRequestFor .moduleName and request .id / .moduleName", () => {
     {},
     (_queryKey, _resources, input, result) => {
       expectTypeOf(input).toEqualTypeOf<{ readonly id: string }>()
-      expectTypeOf(result).toEqualTypeOf<Exit.Exit<void, never>>()
+      expectTypeOf(result).toEqualTypeOf<Exit.Exit<void, S.SchemaError>>()
       return []
     }
   ) {}
@@ -244,7 +244,7 @@ it("client[Key].Input — extracted input type per props variant", () => {
 
   const assertStreamQueryTypes = () => {
     const streamAtom = client.StreamQuery.atom({ id: "abc" })
-    expectTypeOf(streamAtom).toEqualTypeOf<Atom.Writable<Atom.PullResult<number, never>, void>>()
+    expectTypeOf(streamAtom).toEqualTypeOf<Atom.Writable<Atom.PullResult<number, S.SchemaError>, void>>()
     const streamView = client.StreamQuery.queryNew({ id: "abc" })
     expectTypeOf(streamView.items.value).toEqualTypeOf<ReadonlyArray<number>>()
     expectTypeOf(streamView.latest.value).toEqualTypeOf<number | undefined>()

@@ -17,6 +17,7 @@ import { DefaultGenericMiddlewares } from "effect-app/middleware"
 import { MiddlewareMaker } from "effect-app/rpc"
 import * as S from "effect-app/Schema"
 import { TaggedErrorClass } from "effect-app/Schema"
+import * as Cause from "effect/Cause"
 import * as Effect from "effect/Effect"
 import * as Exit from "effect/Exit"
 import { FetchHttpClient } from "effect/http"
@@ -97,6 +98,27 @@ class StreamNoSuccess extends Req.Command<StreamNoSuccess>()("StreamNoSuccess", 
   allowAnonymous: true
 }) {}
 
+class QuerySchemaFailure extends Req.Query<QuerySchemaFailure>()("QuerySchemaFailure", {}, {
+  allowAnonymous: true,
+  success: S.Number
+}) {}
+
+class CommandSchemaFailure extends Req.Command<CommandSchemaFailure>()("CommandSchemaFailure", {}, {
+  allowAnonymous: true,
+  success: S.Number
+}) {}
+
+class StreamSchemaFailure extends Req.Command<StreamSchemaFailure>()("StreamSchemaFailure", {}, {
+  stream: true,
+  allowAnonymous: true,
+  success: S.Number
+}) {}
+
+class QuerySchemaDefect extends Req.Query<QuerySchemaDefect>()("QuerySchemaDefect", {}, {
+  allowAnonymous: true,
+  success: S.Number
+}) {}
+
 // Defaults to allowAnonymous: false → AllowAnonymous middleware fails with NotLoggedInError
 // when the request lacks the `x-user` header.
 class StreamRequiresAuth extends Req.Command<StreamRequiresAuth>()("StreamRequiresAuth", {}, {
@@ -113,6 +135,10 @@ class QueryRequiresAuth extends Req.Query<QueryRequiresAuth>()("QueryRequiresAut
 }) {}
 
 const StreamyRsc = {
+  QuerySchemaFailure,
+  CommandSchemaFailure,
+  StreamSchemaFailure,
+  QuerySchemaDefect,
   StreamTicks,
   StreamCountTo,
   StreamRealtime,
@@ -130,6 +156,11 @@ const StreamyRsc = {
 const router = Router(StreamyRsc)({
   *effect(match) {
     return match({
+      QuerySchemaFailure: () => S.decodeUnknownEffect(S.Number)("bad"),
+      QuerySchemaDefect: () => S.decodeUnknownEffect(S.Number)("bad").pipe(Effect.orDie),
+      CommandSchemaFailure: () => S.decodeUnknownEffect(S.Number)("bad"),
+      StreamSchemaFailure: () =>
+        Stream.succeed(1).pipe(Stream.concat(Stream.fromEffect(S.decodeUnknownEffect(S.Number)("bad")))),
       StreamTicks: () => Stream.fromIterable([10, 20, 30]),
       StreamCountTo: ({ to }: { readonly to: number }) =>
         Effect
@@ -190,6 +221,46 @@ const ClientLayer = Layer
   .pipe(Layer.provide(NodeServerLayer))
 
 const TestLayer = Layer.mergeAll(ServerLayer, ClientLayer)
+
+for (const kind of ["query", "command", "stream"] as const) {
+  it.live(
+    `${kind} RPC preserves typed SchemaError failures through HTTP`,
+    Effect.fnUntraced(function*() {
+      const client = yield* ApiClientFactory.makeFor(Layer.empty)(StreamyRsc)
+      const call: Effect.Effect<unknown, S.SchemaError> = kind === "stream"
+        ? Stream.runCollect(client.StreamSchemaFailure.handler())
+        : kind === "command"
+        ? client.CommandSchemaFailure.handler()
+        : client.QuerySchemaFailure.handler()
+      const exit = yield* Effect.exit(call)
+      expect(Exit.isFailure(exit)).toBe(true)
+      if (!Exit.isFailure(exit)) return
+      expect(Cause.hasDies(exit.cause)).toBe(false)
+      const failure = Cause.findErrorOption(exit.cause)
+      expect(Option.isSome(failure)).toBe(true)
+      if (!Option.isSome(failure)) return
+      expect(S.isSchemaError(failure.value)).toBe(true)
+      if (S.isSchemaError(failure.value)) {
+        expect(failure.value.message).toBe("Expected number")
+        expect(failure.value).toBeInstanceOf(S.SchemaError)
+      }
+    }, Effect.provide(TestLayer)),
+    { timeout: 10_000 }
+  )
+}
+
+it.live(
+  "an explicitly raised SchemaError defect remains a defect through HTTP",
+  Effect.fnUntraced(function*() {
+    const client = yield* ApiClientFactory.makeFor(Layer.empty)(StreamyRsc)
+    const exit = yield* Effect.exit(client.QuerySchemaDefect.handler())
+    expect(Exit.isFailure(exit)).toBe(true)
+    if (!Exit.isFailure(exit)) return
+    expect(Cause.hasDies(exit.cause)).toBe(true)
+    expect(Cause.hasFails(exit.cause)).toBe(false)
+  }, Effect.provide(TestLayer)),
+  { timeout: 10_000 }
+)
 
 // ---------------------------------------------------------------------------
 // Tests

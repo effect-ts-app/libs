@@ -151,10 +151,11 @@ export const makeRpcClient = <
   // errors is now the middleware tag attached to the rpc on both server and
   // client (see `ApiClientFactory.makeFor({ middleware })`). `Rpc.exitSchema`
   // unions in `rpc.middlewares[*].error` automatically.
-  type MergeError<E> = [GeneralErrors] extends [never] ? SchemaOrFields<E> : S.Union<[SchemaOrFields<E>, GeneralErrors]>
+  type MergeError<E> = [GeneralErrors] extends [never] ? S.Union<[SchemaOrFields<E>, typeof S.SchemaErrorCodec]>
+    : S.Union<[SchemaOrFields<E>, typeof S.SchemaErrorCodec, GeneralErrors]>
   type ErrorResult<C> = C extends { error: infer E } ? MergeError<E>
-    : [GeneralErrors] extends [never] ? typeof S.Never
-    : GeneralErrors
+    : [GeneralErrors] extends [never] ? typeof S.SchemaErrorCodec
+    : S.Union<[typeof S.SchemaErrorCodec, GeneralErrors]>
 
   function makeRequestClass<Tag extends string, Fields extends S.Struct.Fields, C extends Partial<ServiceMap>>(
     tag: Tag,
@@ -163,7 +164,7 @@ export const makeRpcClient = <
   ) {
     const failureSchema = merge(
       config?.error ? S.isSchema(config.error) ? config.error : S.Struct(config.error) : undefined,
-      [generalErrors].filter(Boolean)
+      [S.SchemaErrorCodec, generalErrors].filter(Boolean)
     )
     const successSchema = config?.success
       ? S.isSchema(config.success)

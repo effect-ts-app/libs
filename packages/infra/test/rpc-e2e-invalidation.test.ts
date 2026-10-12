@@ -324,7 +324,7 @@ it.live(
       expect(Option.isSome(error)).toBe(true)
       if (Option.isSome(error)) {
         expect(error.value._tag).toBe("CmdBoom")
-        expect(error.value.reason).toBe("intentional failure")
+        if (error.value._tag === "CmdBoom") expect(error.value.reason).toBe("intentional failure")
       }
     }
     expect(keys).toStrictEqual([DynamicKey])

@@ -108,8 +108,6 @@ export const LoggerMiddlewareLive = Layer
           })
           .pipe(
             Effect.andThen(effect),
-            // TODO: support SchemaError if the error channel of the request allows it.. but who would want that?
-            Effect.catch((_) => Schema.isSchemaError(_) ? Effect.die(_) : Effect.fail(_)),
             Effect.tapCause((cause) => Cause.hasFails(cause) ? logRequestError(cause) : Effect.void),
             Effect.tapCauseIf(Cause.hasDies, (cause) =>
               Effect

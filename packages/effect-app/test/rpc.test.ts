@@ -51,10 +51,10 @@ test("Void decodes and encodes as void", () => {
     readonly newUsersLast24Hours: number
     readonly newUsersLastWeek: number
   }>()
-  // Resource error carries only `config.error` (and optional `generalErrors`); rcm-derived
+  // Resource error carries SchemaError, `config.error` and optional `generalErrors`; rcm-derived
   // middleware errors no longer leak into `resource.error` — they reach the wire via the
   // middleware tag attached to the rpc group (`rpc.middlewares[*].error` failure-union).
-  expectTypeOf<typeof _statsError>().toEqualTypeOf<never>()
+  expectTypeOf<typeof _statsError>().toEqualTypeOf<S.SchemaError>()
   expectTypeOf<typeof _statsRequestType>().toEqualTypeOf<"query">()
   expectTypeOf(statsFromMake).toEqualTypeOf<Stats>()
   expectTypeOf(statsFromMakeOption).toEqualTypeOf<Option.Option<Stats>>()
