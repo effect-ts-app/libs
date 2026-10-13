@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 4.0.2
+
+### Patch Changes
+
+- 76911ed: Add `suspendWaiting` so a command can park on a dialog without the spinner or the waiting toast. The button stays disabled. Both come back when the effect finishes and the rest of the command runs.
+- Updated dependencies [76911ed]
+- Updated dependencies [7a99d1b]
+  - effect-app@4.0.2
+
 ## 4.0.1
 
 ### Patch Changes

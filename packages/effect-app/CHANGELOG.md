@@ -1,5 +1,12 @@
 # @effect-app/prelude
 
+## 4.0.2
+
+### Patch Changes
+
+- 76911ed: Add `suspendWaiting` so a command can park on a dialog without the spinner or the waiting toast. The button stays disabled. Both come back when the effect finishes and the rest of the command runs.
+- 7a99d1b: Upgrade Effect packages to npm `4.0.2`.
+
 ## 4.0.1
 
 ### Patch Changes
