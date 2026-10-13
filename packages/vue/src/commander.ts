@@ -10,6 +10,7 @@ import * as Layer from "effect-app/Layer"
 import * as Option from "effect-app/Option"
 import * as S from "effect-app/Schema"
 import { isGeneratorFunction, wrapEffect } from "effect-app/utils"
+import { makeWaitingGate, suspendWaiting, WaitingGate } from "effect-app/waitingGate"
 import * as Cause from "effect/Cause"
 import type * as Exit from "effect/Exit"
 import type * as Fiber from "effect/Fiber"
@@ -2114,6 +2115,18 @@ export const CommanderStatic = {
   updateProgress: (progress: Progress | undefined): Effect.Effect<void> =>
     CommandProgress.use((s) => s.update(progress)),
 
+  /**
+   * Park on an effect without the spinner or the waiting toast.
+   * The button stays disabled. Chrome returns when the effect finishes.
+   * Stream commands pause the spinner only. `withDefaultToastStream` does not.
+   *
+   * ```ts
+   * const decision = yield* Command.suspendWaiting(ask(pickupDate))
+   * yield* close(orderId)
+   * ```
+   */
+  suspendWaiting,
+
   /** Version of @see confirmOrInterrupt that automatically includes the action name in the default messages */
   confirmOrInterrupt: Effect.fnUntraced(function*(
     message?: string
@@ -2509,6 +2522,30 @@ const unregisterWait = (id: string) => {
   }
 }
 
+/**
+ * `waiting` is the spinner. It drops while `suspendWaiting` is parked.
+ * `blocked` stays on for the whole run, including that pause.
+ */
+const commandChrome = (
+  ownRunning: () => boolean,
+  waitId: string | undefined,
+  blockId: string | undefined
+) => {
+  const quiet = ref(0)
+  const gate = makeWaitingGate((depth) => {
+    quiet.value = depth
+  })
+  const running = computed(() => ownRunning() || (waitId !== undefined && (waitState.value[waitId] ?? 0) > 0))
+  const waiting = computed(() => running.value && quiet.value === 0)
+  const blocked = computed(() => running.value || (blockId !== undefined && (waitState.value[blockId] ?? 0) > 0))
+  const provide = <A, E, R>(self: Effect.Effect<A, E, R>) =>
+    Effect.gen(function*() {
+      if (gate.depth !== 0) yield* gate.add(-gate.depth)
+      return yield* self.pipe(Effect.provideService(WaitingGate, gate))
+    })
+  return { waiting, blocked, provide }
+}
+
 const getStateValues = <
   const Id extends string,
   const I18nKey extends string,
@@ -2658,6 +2695,7 @@ export class CommanderImpl<RT, RTHooks> {
         const blockId = options?.blockKey ? options.blockKey(id) : undefined
 
         const [result, exec_] = asResult(theHandler)
+        const chrome = commandChrome(() => result.value.waiting, waitId, blockId)
 
         const exec = Effect
           .fnUntraced(
@@ -2666,7 +2704,7 @@ export class CommanderImpl<RT, RTHooks> {
               if (blockId !== undefined && blockId !== waitId) {
                 registerWait(blockId)
               }
-              return yield* exec_(...args)
+              return yield* chrome.provide(exec_(...args))
             },
             Effect.onExit(() =>
               Effect.sync(() => {
@@ -2678,13 +2716,7 @@ export class CommanderImpl<RT, RTHooks> {
             )
           )
 
-        const waiting = waitId !== undefined
-          ? computed(() => result.value.waiting || (waitState.value[waitId] ?? 0) > 0)
-          : computed(() => result.value.waiting)
-
-        const blocked = blockId !== undefined
-          ? computed(() => waiting.value || (waitState.value[blockId] ?? 0) > 0)
-          : computed(() => waiting.value)
+        const { blocked, waiting } = chrome
 
         const computeAllowed = options?.allowed
         const allowed = computeAllowed ? computed(() => computeAllowed(id, state)) : true
@@ -2992,6 +3024,7 @@ export class CommanderImpl<RT, RTHooks> {
         const blockId = options?.blockKey ? options.blockKey(id) : undefined
 
         const [result, exec_] = asStreamResult(theStreamHandler)
+        const chrome = commandChrome(() => result.value.waiting, waitId, blockId)
 
         const exec = Effect
           .fnUntraced(
@@ -3000,7 +3033,7 @@ export class CommanderImpl<RT, RTHooks> {
               if (blockId !== undefined && blockId !== waitId) {
                 registerWait(blockId)
               }
-              return yield* exec_(...args)
+              return yield* chrome.provide(exec_(...args))
             },
             Effect.onExit(() =>
               Effect.sync(() => {
@@ -3012,13 +3045,7 @@ export class CommanderImpl<RT, RTHooks> {
             )
           )
 
-        const waiting = waitId !== undefined
-          ? computed(() => result.value.waiting || (waitState.value[waitId] ?? 0) > 0)
-          : computed(() => result.value.waiting)
-
-        const blocked = blockId !== undefined
-          ? computed(() => waiting.value || (waitState.value[blockId] ?? 0) > 0)
-          : computed(() => waiting.value)
+        const { blocked, waiting } = chrome
 
         const computeAllowed = options?.allowed
         const allowed = computeAllowed ? computed(() => computeAllowed(id, state)) : true
