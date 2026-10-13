@@ -7,6 +7,7 @@ import type * as Option from "./Option.ts"
 import * as S from "./Schema.ts"
 import { CurrentToastId, Toast, type ToastId } from "./toast.ts"
 import { wrapEffect } from "./utils.ts"
+import { WaitingGate } from "./waitingGate.ts"
 
 export interface ToastOptions<A, E, Args extends ReadonlyArray<unknown>, WaiR, SucR, ErrR> {
   stableToastId?: undefined | string | ((...args: Args) => string | undefined)
@@ -66,12 +67,57 @@ export class WithToast extends Context.Service<WithToast>()("WithToast", {
           ? stableToastId
           : stableToastId ?? `wait-${Math.random().toString(36).slice(2)}`
 
-        const waitingFiber = t === null ? undefined : yield* Effect.forkChild(
-          Effect.sleep("1 seconds").pipe(
-            Effect.andThen(toast.info(t, { id: toastId!, timeout: Infinity, ...meta }))
+        const gate = yield* WaitingGate
+        let waitingFiber: Fiber.Fiber<void> | undefined
+        let toastShown = false
+        let unbind = () => {}
+
+        const armWaiting = () =>
+          Effect.gen(function*() {
+            if (waitingFiber !== undefined || t === null || toastId === undefined) return
+            waitingFiber = yield* Effect.forkChild(
+              Effect.sleep("1 seconds").pipe(
+                Effect.andThen(Effect.uninterruptible(Effect.gen(function*() {
+                  toastShown = true
+                  yield* toast.info(t, { id: toastId, timeout: Infinity, ...meta })
+                }))),
+                Effect.asVoid
+              )
+            )
+          })
+
+        const disarmWaiting = () =>
+          Effect.gen(function*() {
+            const fiber = waitingFiber
+            waitingFiber = undefined
+            if (fiber) yield* Fiber.interrupt(fiber)
+            if (toastShown && toastId !== undefined) {
+              toastShown = false
+              yield* toast.dismiss(toastId)
+            }
+          })
+
+        // An active gate pauses the toast while `suspendWaiting` is parked and
+        // starts a fresh one-second delay when work resumes. The inactive
+        // default keeps the original fork.
+        if (t !== null && gate.active) {
+          unbind = gate.bind((depth) => (depth === 0 ? armWaiting() : disarmWaiting()))
+          if (gate.depth === 0) yield* armWaiting()
+        } else if (t !== null) {
+          waitingFiber = yield* Effect.forkChild(
+            Effect.sleep("1 seconds").pipe(
+              Effect.andThen(toast.info(t, { id: toastId!, timeout: Infinity, ...meta })),
+              Effect.asVoid
+            )
           )
-        )
-        const interruptWaiting = waitingFiber ? Fiber.interrupt(waitingFiber) : Effect.void
+        }
+
+        const interruptWaiting = Effect.uninterruptible(Effect.gen(function*() {
+          unbind()
+          const fiber = waitingFiber
+          waitingFiber = undefined
+          if (fiber) yield* Fiber.interrupt(fiber)
+        }))
 
         return yield* self.pipe(
           Effect.tap(Effect.fnUntraced(function*(a) {
