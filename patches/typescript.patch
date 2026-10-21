@@ -1,3 +1,4 @@
+diff --git a/lib/typescript.js b/lib/typescript.js
 --- a/lib/typescript.js
 +++ b/lib/typescript.js
 @@ -159873,9 +159873,128 @@
