@@ -8,22 +8,22 @@ allowBuilds:
   msgpackr-extract: false
   vue-demi: false
 minimumReleaseAgeExclude:
-  - "@effect/tsgo-darwin-arm64@0.47.2"
-  - "@effect/tsgo-darwin-x64@0.47.2"
-  - "@effect/tsgo-linux-arm64@0.47.2"
-  - "@effect/tsgo-linux-arm@0.47.2"
-  - "@effect/tsgo-linux-x64@0.47.2"
-  - "@effect/tsgo-win32-arm64@0.47.2"
-  - "@effect/tsgo-win32-x64@0.47.2"
-  - "@effect/tsgo@0.47.2"
-  - "@effect/language-service@0.87.3"
-  - "@effect/atom-vue@4.0.2"
-  - "@effect/platform-browser@4.0.2"
-  - "@effect/platform-node-shared@4.0.2"
-  - "@effect/platform-node@4.0.2"
-  - "@effect/sql-sqlite-node@4.0.2"
-  - "@effect/vitest@4.0.2"
-  - effect@4.0.2
+  - "@effect/tsgo-darwin-arm64@0.56.0"
+  - "@effect/tsgo-darwin-x64@0.56.0"
+  - "@effect/tsgo-linux-arm64@0.56.0"
+  - "@effect/tsgo-linux-arm@0.56.0"
+  - "@effect/tsgo-linux-x64@0.56.0"
+  - "@effect/tsgo-win32-arm64@0.56.0"
+  - "@effect/tsgo-win32-x64@0.56.0"
+  - "@effect/tsgo@0.56.0"
+  - "@effect/language-service@0.87.5"
+  - "@effect/atom-vue@4.0.5"
+  - "@effect/platform-browser@4.0.5"
+  - "@effect/platform-node-shared@4.0.5"
+  - "@effect/platform-node@4.0.5"
+  - "@effect/sql-sqlite-node@4.0.5"
+  - "@effect/vitest@4.0.5"
+  - effect@4.0.5
 overrides:
   date-fns: ^4.4.0
   fast-check: ^4.9.0

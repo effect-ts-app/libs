@@ -263,7 +263,7 @@ export const make = (
     })
 
     const connection = yield* makeConnection
-    const { acquirer, onCommitFailure, transactionAcquirer } = Client.makeSqliteAcquirers({
+    const { acquirer, borrower, onCommitFailure, transactionAcquirer } = Client.makeSqliteAcquirers({
       connection: Effect.succeed(connection),
       semaphore: yield* Semaphore.make(1),
       isTransaction: (conn) => conn.isTransaction()
@@ -272,6 +272,7 @@ export const make = (
     const client: SqliteClient = Object.assign(
       (yield* Client.make({
         acquirer,
+        borrower,
         compiler,
         transactionAcquirer,
         onCommitFailure,
@@ -289,9 +290,9 @@ export const make = (
         export: Effect.withFiber((fiber) =>
           Context.getOption(fiber.context, client.transactionService)._tag === "Some"
             ? connection.export
-            : Effect.flatMap(acquirer, (_) => _.export)
+            : Effect.scoped(Effect.flatMap(acquirer, (_) => _.export))
         ),
-        loadExtension: (path: string) => Effect.flatMap(acquirer, (_) => _.loadExtension(path))
+        loadExtension: (path: string) => Effect.scoped(Effect.flatMap(acquirer, (_) => _.loadExtension(path)))
       }
     )
     return client

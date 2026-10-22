@@ -466,8 +466,28 @@ type TaggedUnionWithTags<Members extends TaggedUnionMembers> = S.toTaggedUnion<"
   ) => PropertyGuardsFor<Members, K, A>
 }
 
+// Mirrors effect `Schema.toTaggedUnion`: duplicate `_tag` values, including `1` and `"1"`, are rejected.
+type TaggedFor<Tag extends PropertyKey> = { readonly Type: { readonly [K in Tag]: PropertyKey } }
+type FlattenTaggedMembers<Schemas> = Schemas extends readonly [infer Head, ...infer Tail]
+  ? Head extends S.Union<infer Inner> ? [...FlattenTaggedMembers<Inner>, ...FlattenTaggedMembers<Tail>]
+  : [Head, ...FlattenTaggedMembers<Tail>]
+  : []
+type DiscriminantKey<T extends PropertyKey> = T extends number ? `${T}` : T
+type EnsureUniqueDiscriminants<Tags extends ReadonlyArray<PropertyKey>, Seen = never> = Tags extends
+  readonly [infer Head extends PropertyKey, ...infer Tail extends ReadonlyArray<PropertyKey>]
+  ? [DiscriminantKey<Head> & Seen] extends [never] ? EnsureUniqueDiscriminants<Tail, Seen | DiscriminantKey<Head>>
+  : never
+  : unknown
+type TaggedDiscriminants<
+  Members extends ReadonlyArray<TaggedFor<"_tag">>,
+  Flattened extends ReadonlyArray<TaggedFor<"_tag">> = FlattenTaggedMembers<Members>
+> = { readonly [I in keyof Flattened]: Flattened[I]["Type"]["_tag"] }
+type UniqueTaggedUnion<Members extends TaggedUnionMembers> =
+  & S.Union<Members>
+  & NoInfer<EnsureUniqueDiscriminants<TaggedDiscriminants<Members>>>
+
 const extendTaggedUnionWithTags = <Members extends TaggedUnionMembers>(
-  schema: S.Union<Members>
+  schema: UniqueTaggedUnion<Members>
 ): TaggedUnionWithTags<Members> =>
   extendM(schema.pipe(S.toTaggedUnion("_tag")), (tagged) => {
     const makeGuards = (property: string) => {
@@ -491,9 +511,13 @@ const extendTaggedUnionWithTags = <Members extends TaggedUnionMembers>(
   })
 
 export const ExtendTaggedUnion = <Members extends TaggedUnionMembers>(
-  schema: S.Union<Members>
+  schema: UniqueTaggedUnion<Members>
 ): TaggedUnionWithTags<Members> => extendTaggedUnionWithTags(schema)
 
 export const TaggedUnion = <
   Members extends TaggedUnionMembers
->(members: Members): TaggedUnionWithTags<Members> => extendTaggedUnionWithTags(S.Union(members))
+>(
+  members: Members & NoInfer<EnsureUniqueDiscriminants<TaggedDiscriminants<Members>>>
+): TaggedUnionWithTags<Members> =>
+  // `Schema.Union` does not carry the uniqueness proof checked on `members`.
+  extendTaggedUnionWithTags(S.Union(members) as UniqueTaggedUnion<Members>)

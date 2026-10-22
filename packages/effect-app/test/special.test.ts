@@ -1108,7 +1108,8 @@ describe("Post-processing integration — real Effect Schema types", () => {
     const doc = specialJsonSchemaDocument(AppSchema.PositiveInt)
     expect(doc.definitions["PositiveInt"]).toStrictEqual({
       type: "integer",
-      exclusiveMinimum: 0
+      exclusiveMinimum: 0,
+      maximum: Number.MAX_SAFE_INTEGER
     })
   })
 
@@ -1152,7 +1153,8 @@ describe("Post-processing integration — real Effect Schema types", () => {
     const doc = specialJsonSchemaDocument(AppSchema.NonNegativeInt)
     expect(doc.definitions["NonNegativeInt"]).toStrictEqual({
       type: "integer",
-      minimum: 0
+      minimum: 0,
+      maximum: Number.MAX_SAFE_INTEGER
     })
   })
 

@@ -13,6 +13,13 @@
     "effecttsgo/lazy-effect": "off",
     "effecttsgo/return-effect-in-gen": "off",
     "effecttsgo/run-effect-inside-effect": "off",
+    // Stays off. A Schema brand type argument (`{ readonly brand: unique symbol }`)
+    // is the wrong nominal marker here. If we brand a class, use a protected field
+    // so a plain object is not a class instance unless it comes from `new` / `.make`:
+    //   class Foo extends Schema.TaggedClass<Foo>()("Foo", { /* fields */ }) {
+    //     declare protected "~brand~": never
+    //   }
+    "effecttsgo/schema-class-missing-brand": "off",
     "effecttsgo/schema-sync-in-effect": "off",
     "effecttsgo/strict-effect-provide": "off",
     "effecttsgo/unsafe-effect-type-assertion": "off",
