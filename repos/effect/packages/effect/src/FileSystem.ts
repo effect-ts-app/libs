@@ -220,12 +220,17 @@ export interface FileSystem {
    * **Details**
    *
    * The file handle will be automatically closed when the scope is closed.
+   *
+   * `noFollow` rejects symlinks at the final path component, not in parent
+   * directories. Node and Bun support it on POSIX; unsupported platforms,
+   * including Windows and Deno, fail with `BadArgument`.
    */
   readonly open: (
     path: string,
     options?: {
       readonly flag?: OpenFlag | undefined
       readonly mode?: number | undefined
+      readonly noFollow?: boolean | undefined
     }
   ) => Effect.Effect<File, PlatformError, Scope>
   /**
@@ -827,6 +832,10 @@ export const isFile = (u: unknown): u is File => hasProperty(u, FileTypeId)
  * cursor. Outside append mode, `truncate` clamps a cursor past the new length
  * to that length.
  *
+ * Positional reads leave the cursor unchanged and may run concurrently on
+ * one handle. Cursor operations (`seek`, reads without a position, and writes)
+ * must not run concurrently with each other.
+ *
  * **Example** (Working with file handles)
  *
  * ```ts import.meta.vitest
@@ -877,8 +886,20 @@ export interface File {
    */
   readonly seek: (offset: bigint, from: SeekMode) => Effect.Effect<bigint, PlatformError>
   readonly sync: Effect.Effect<void, PlatformError>
-  readonly read: (buffer: Uint8Array) => Effect.Effect<number, PlatformError>
-  readonly readAlloc: (size: number) => Effect.Effect<Option.Option<Uint8Array>, PlatformError>
+  /**
+   * Reads into `buffer`, returning the byte count or `0` at EOF. Advances the
+   * cursor unless `options.position` is set (see `File.ReadOptions`).
+   */
+  readonly read: (buffer: Uint8Array, options?: File.ReadOptions) => Effect.Effect<number, PlatformError>
+  /**
+   * Reads up to `size` bytes into a new buffer, returning `Option.none()` at
+   * EOF. Advances the cursor unless `options.position` is set (see
+   * `File.ReadOptions`).
+   */
+  readonly readAlloc: (
+    size: number,
+    options?: File.ReadOptions
+  ) => Effect.Effect<Option.Option<Uint8Array>, PlatformError>
   readonly truncate: (length?: number) => Effect.Effect<void, PlatformError>
   readonly write: (buffer: Uint8Array) => Effect.Effect<number, PlatformError>
   readonly writeAll: (buffer: Uint8Array) => Effect.Effect<void, PlatformError>
@@ -892,6 +913,31 @@ export interface File {
  * @since 4.0.0
  */
 export declare namespace File {
+  /**
+   * Options for `File.read` and `File.readAlloc`.
+   *
+   * **Details**
+   *
+   * `position` is a byte offset from the start of the file. It leaves the
+   * cursor unchanged, fails with `BadArgument` if negative, and reads nothing
+   * at or past EOF.
+   *
+   * **Example** (Reading a byte range without moving the cursor)
+   *
+   * ```ts import.meta.vitest
+   * import type { FileSystem } from "effect"
+   *
+   * const options: FileSystem.File.ReadOptions = { position: BigInt(1024) }
+   * options.position // => 1024n
+   * ```
+   *
+   * @category models
+   * @since 4.1.0
+   */
+  export interface ReadOptions {
+    readonly position?: bigint | undefined
+  }
+
   /**
    * Enumeration of possible file system entry types.
    *
@@ -922,9 +968,17 @@ export declare namespace File {
    * permissions, and size information. This structure is returned by file
    * stat operations.
    *
-   * Node and Bun preserve `size` and `blksize` exactly. Optional `number`
-   * metadata is `Option.none()` when absent or outside the safe integer range.
-   * Unsafe `dev` or `mode` values fail the stat operation with `BadArgument`.
+   * `dev`, `ino`, `rdev`, `nlink`, and `blocks` are `bigint` values, so
+   * 64-bit device identifiers, inode numbers, and counts are not limited to
+   * the safe integer range. `mode`, `uid`, and `gid` are 32-bit values and
+   * remain `number`. Optional metadata is `Option.none()` only when the
+   * platform does not report it.
+   *
+   * Node and Bun report all fields exactly, with `dev`, `ino`, `rdev`, and
+   * `nlink` interpreted as unsigned 64-bit integers. Unsafe `mode` values fail
+   * the stat operation with `BadArgument`. Deno reports these fields as
+   * `number`, so on Deno values above `Number.MAX_SAFE_INTEGER` are already
+   * rounded before they are converted to `bigint`.
    *
    * **Example** (Inspecting file information)
    *
@@ -936,7 +990,7 @@ export declare namespace File {
    *   mtime: Option.none(),
    *   atime: Option.none(),
    *   birthtime: Option.none(),
-   *   dev: 1,
+   *   dev: 1n,
    *   ino: Option.none(),
    *   mode: 0o644,
    *   nlink: Option.none(),
@@ -968,16 +1022,16 @@ export declare namespace File {
     readonly mtime: Option.Option<Date>
     readonly atime: Option.Option<Date>
     readonly birthtime: Option.Option<Date>
-    readonly dev: number
-    readonly ino: Option.Option<number>
+    readonly dev: bigint
+    readonly ino: Option.Option<bigint>
     readonly mode: number
-    readonly nlink: Option.Option<number>
+    readonly nlink: Option.Option<bigint>
     readonly uid: Option.Option<number>
     readonly gid: Option.Option<number>
-    readonly rdev: Option.Option<number>
+    readonly rdev: Option.Option<bigint>
     readonly size: ByteSize.ByteSize
     readonly blksize: Option.Option<ByteSize.ByteSize>
-    readonly blocks: Option.Option<number>
+    readonly blocks: Option.Option<bigint>
   }
 }
 
@@ -1015,6 +1069,12 @@ export interface WatchOptions {
    * When `true`, changes in subdirectories are also reported.
    */
   readonly recursive?: boolean | undefined
+  /**
+   * Called once the underlying watcher is installed and can buffer events.
+   * Stream construction alone does not install a watcher. Custom watch
+   * backends must also call this callback after installation, when supplied.
+   */
+  readonly onReady?: (() => void) | undefined
 }
 
 /**

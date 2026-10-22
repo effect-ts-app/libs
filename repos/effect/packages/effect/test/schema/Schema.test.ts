@@ -35,6 +35,7 @@ import {
 import { TestSchema } from "effect/testing"
 import { produce } from "immer"
 import { deepStrictEqual, fail, strictEqual } from "node:assert"
+import { inspect } from "node:util"
 import {
   assertExitSuccess,
   assertFalse,
@@ -99,6 +100,35 @@ describe("Schema", () => {
   })
 
   describe("SchemaError", () => {
+    it("serializes as a tagged formatted message", () => {
+      const schema = Schema.Struct({ profile: Schema.Struct({ email: Schema.String }) })
+      const result = Schema.decodeUnknownResult(schema)({ profile: { email: null } })
+      assertTrue(Result.isFailure(result))
+      const error = result.failure
+      const expected = {
+        _tag: "SchemaError",
+        message: "Expected string\n  at [\"profile\"][\"email\"]"
+      }
+
+      deepStrictEqual(error.toJSON(), expected)
+      deepStrictEqual(JSON.parse(JSON.stringify(error)), expected)
+    })
+
+    it("inspects as a tagged formatted message", () => {
+      const result = Schema.decodeUnknownResult(Schema.String)(null)
+      assertTrue(Result.isFailure(result))
+      const error = result.failure
+      const expected = {
+        _tag: "SchemaError",
+        message: "Expected string"
+      }
+
+      strictEqual(
+        inspect(error, { depth: null }),
+        inspect(expected, { depth: null })
+      )
+    })
+
     it("extends Error and exposes the issue", () => {
       const result = SchemaParser.decodeUnknownResult(Schema.String)(null)
       assertTrue(Result.isFailure(result))
@@ -9589,7 +9619,10 @@ pointed message
                 Schema.Struct({ event: Schema.Literal("B"), b: Schema.String }),
                 Schema.Struct({ event: Schema.Literal("A"), c: Schema.String })
               ])
-            ]).pipe(Schema.toTaggedUnion("event")),
+            ]).pipe(
+              // @ts-expect-error Duplicate discriminants are also rejected at compile time.
+              Schema.toTaggedUnion("event")
+            ),
           "Duplicate discriminant: A"
         )
         throws(
@@ -9597,7 +9630,10 @@ pointed message
             Schema.Union([
               Schema.Struct({ event: Schema.Literal(1) }),
               Schema.Struct({ event: Schema.Literal("1") })
-            ]).pipe(Schema.toTaggedUnion("event")),
+            ]).pipe(
+              // @ts-expect-error Numeric and string discriminants share the same property key.
+              Schema.toTaggedUnion("event")
+            ),
           "Duplicate discriminant: 1"
         )
       })
@@ -9714,6 +9750,16 @@ pointed message
   })
 
   describe("withDecodingDefaultKey", () => {
+    it("keeps successful decoding defaults eager", () => {
+      const schema = Schema.Struct({
+        a: Schema.FiniteFromString.pipe(Schema.withDecodingDefaultKey(Effect.succeed("1")))
+      })
+      const effect = Schema.decodeUnknownEffect(schema)({})
+
+      assertTrue(Exit.isExit(effect))
+      assertExitSuccess(effect, { a: 1 })
+    })
+
     it("should return a decoding default value if the key is missing", async () => {
       const schema = Schema.Struct({
         a: Schema.FiniteFromString.pipe(Schema.withDecodingDefaultKey(Effect.succeed("1")))

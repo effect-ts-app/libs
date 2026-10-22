@@ -36,10 +36,12 @@ const bigint1e3 = BigInt(1_000)
 const bigint1e6 = BigInt(1_000_000)
 const bigint1e9 = BigInt(1_000_000_000)
 
-const roundTiesAwayFromZero = (input: number): bigint =>
-  BigInt(input < 0 ? Math.ceil(input - 0.5) : Math.floor(input + 0.5))
+const roundTiesAwayFromZero = (input: number): bigint => BigInt(Math.sign(input) * Math.round(Math.abs(input)))
 
-const roundMillisToNanos = (millis: number): bigint => roundTiesAwayFromZero(millis * 1_000_000)
+const roundMillisToNanos = (millis: number): bigint =>
+  Number.isInteger(millis) ? BigInt(millis) * bigint1e6 : roundTiesAwayFromZero(millis * 1_000_000)
+
+const fromNanosNumber = (nanos: number): Duration => make(Number.isFinite(nanos) ? roundTiesAwayFromZero(nanos) : nanos)
 
 const parseNanos = (input: string, scale: bigint): bigint => {
   const decimalIndex = input.indexOf(".")
@@ -51,9 +53,13 @@ const parseNanos = (input: string, scale: bigint): bigint => {
   const scaled = (
     BigInt(input.slice(isNegative ? 1 : 0, decimalIndex)) * fractionalScale + BigInt(fractional)
   ) * scale
-  const rounded = scaled / fractionalScale +
-    (scaled % fractionalScale * bigint2 >= fractionalScale ? bigint1 : bigint0)
-  return isNegative ? -rounded : rounded
+  return divideTiesAwayFromZero(isNegative ? -scaled : scaled, fractionalScale)
+}
+
+const divideTiesAwayFromZero = (numerator: bigint, denominator: bigint): bigint => {
+  const absolute = numerator < bigint0 ? -numerator : numerator
+  const rounded = absolute / denominator + (absolute % denominator * bigint2 >= denominator ? bigint1 : bigint0)
+  return numerator < bigint0 ? -rounded : rounded
 }
 
 const nanosToHrTime = (nanos: bigint): [seconds: number, nanos: number] => {
@@ -307,7 +313,7 @@ export const fromInputUnsafe = (input: Input): Duration => {
         if (input[0] === Infinity || input[1] === Infinity) {
           return infinity
         }
-        return make(roundTiesAwayFromZero(input[0] * 1_000_000_000 + input[1]))
+        return fromNanosNumber(input[0] * 1_000_000_000 + input[1])
       }
       const obj = input as DurationObject
       let millis = 0
@@ -319,9 +325,7 @@ export const fromInputUnsafe = (input: Input): Duration => {
       if (obj.seconds) millis += obj.seconds * 1_000
       if (obj.milliseconds) millis += obj.milliseconds
       if (!obj.microseconds && !obj.nanoseconds) return make(millis)
-      return make(roundTiesAwayFromZero(
-        millis * 1_000_000 + (obj.microseconds ?? 0) * 1_000 + (obj.nanoseconds ?? 0)
-      ))
+      return fromNanosNumber(millis * 1_000_000 + (obj.microseconds ?? 0) * 1_000 + (obj.nanoseconds ?? 0))
     }
   }
   return invalid(input)
@@ -362,10 +366,8 @@ const DurationProto: Omit<Duration, "value"> = {
     // Hash equal finite durations using the same canonical nanoseconds
     // representation used by `equals`.
     switch (this.value._tag) {
-      case "Millis": {
-        const nanos = this.value.millis * 1_000_000
-        return Number.isFinite(nanos) ? Hash.hash(roundTiesAwayFromZero(nanos)) : Hash.number(this.value.millis)
-      }
+      case "Millis":
+        return Hash.hash(roundMillisToNanos(this.value.millis))
       case "Nanos":
         return Hash.hash(this.value.nanos)
       default:
@@ -1434,8 +1436,8 @@ export const divideUnsafe: {
  *
  * **Details**
  *
- * For nanosecond-backed durations, the multiplier must be convertible to a
- * `bigint`; fractional or non-finite multipliers can throw. Infinite
+ * Fractional multipliers on nanosecond-backed durations round the result to
+ * the nearest nanosecond, with ties rounding away from zero. Infinite
  * durations return positive infinity, negative infinity, or zero depending on
  * the multiplier sign.
  *
@@ -1459,7 +1461,24 @@ export const times: {
   (self: Duration, times: number): Duration =>
     match(self, {
       onMillis: (millis) => make(millis * times),
-      onNanos: (nanos) => make(nanos * BigInt(times)),
+      onNanos: (nanos) => {
+        if (Number.isInteger(times)) return make(nanos * BigInt(times))
+        const nanosNumber = Number(nanos)
+        const scaled = nanosNumber * times
+        if (
+          !Number.isFinite(times) ||
+          (Number.isSafeInteger(nanosNumber) && Math.abs(scaled) <= Number.MAX_SAFE_INTEGER)
+        ) {
+          return fromNanosNumber(scaled)
+        }
+        let numerator = times
+        let denominator = bigint1
+        while (!Number.isInteger(numerator)) {
+          numerator *= 2
+          denominator *= bigint2
+        }
+        return make(divideTiesAwayFromZero(nanos * BigInt(numerator), denominator))
+      },
       onInfinity: () => times > 0 ? infinity : times < 0 ? negativeInfinity : zero,
       onNegativeInfinity: () => times > 0 ? negativeInfinity : times < 0 ? infinity : zero
     })

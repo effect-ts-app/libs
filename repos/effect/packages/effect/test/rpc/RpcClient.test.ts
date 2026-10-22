@@ -1,5 +1,19 @@
 import { assert, describe, it } from "@effect/vitest"
-import { Cause, Deferred, Effect, Exit, Fiber, Layer, Queue, Schedule, Schema, Stream, Tracer } from "effect"
+import {
+  Cause,
+  Clock,
+  Deferred,
+  Duration,
+  Effect,
+  Exit,
+  Fiber,
+  Layer,
+  Queue,
+  Schedule,
+  Schema,
+  Stream,
+  Tracer
+} from "effect"
 import * as HttpClient from "effect/http/HttpClient"
 import * as HttpClientResponse from "effect/http/HttpClientResponse"
 import { Rpc, RpcClient, RpcGroup, RpcMessage, RpcSchema, RpcSerialization, RpcServer } from "effect/rpc"
@@ -383,6 +397,61 @@ describe("RpcClient", () => {
       assert.isUndefined(streamFiber.pollUnsafe())
     }))
 
+  it.effect("keeps a slow unary request alive when default ping ticks run slightly late", () =>
+    Effect.gen(function*() {
+      const clock = yield* Clock.Clock
+      const requestSent = yield* Deferred.make<void>()
+      const frames = yield* Queue.unbounded<string>()
+      let pings = 0
+      const write: Socket.Writer["write"] = (data) =>
+        Effect.gen(function*() {
+          if (Socket.isCloseEvent(data)) return
+          const message = JSON.parse(typeof data === "string" ? data : new TextDecoder().decode(data))
+          if (message._tag === "Ping") {
+            pings++
+            yield* Queue.offer(frames, JSON.stringify({ _tag: "Pong" }) + "\n")
+          } else if (message._tag === "Request") {
+            yield* Deferred.succeed(requestSent, void 0)
+          }
+        })
+      const socket = Socket.make({
+        reader: Effect.succeed({
+          pull: Queue.take(frames).pipe(Effect.map((frame) => [frame] as const)),
+          upgrade: Socket.SocketUpgradeError.unsupported
+        }),
+        writer: Effect.succeed({
+          write,
+          writeAll: (chunks) => Effect.forEach(chunks, write, { discard: true })
+        })
+      })
+      const protocol = yield* RpcClient.makeProtocolSocket().pipe(
+        Effect.provideService(Socket.Socket, socket),
+        Effect.provide(RpcSerialization.layerNdjson),
+        // Model scheduler overhead deterministically: sleeps resume 1ms late.
+        Effect.provideService(Clock.Clock, {
+          ...clock,
+          sleep: (duration) => clock.sleep(Duration.sum(duration, Duration.millis(1)))
+        })
+      )
+      const client = yield* RpcClient.make(TestGroup, {
+        generateRequestId: () => RpcMessage.RequestId("0")
+      }).pipe(Effect.provideService(RpcClient.Protocol, protocol))
+      const response = yield* client.Ping().pipe(Effect.exit, Effect.forkChild)
+
+      yield* Deferred.await(requestSent)
+      yield* TestClock.adjust("12 seconds")
+      yield* Queue.offer(
+        frames,
+        JSON.stringify({
+          _tag: "Exit",
+          requestId: "0",
+          exit: { _tag: "Success", value: "slow result" }
+        }) + "\n"
+      )
+      assert.deepStrictEqual(yield* Fiber.join(response), Exit.succeed("slow result"))
+      assert.isAtLeast(pings, 2)
+    }))
+
   it.effect("fails in-flight streams on a missed pong while retrying socket errors", () =>
     Effect.gen(function*() {
       const requestSent = yield* Deferred.make<void>()
@@ -508,6 +577,101 @@ describe("RpcClient", () => {
       const error = Cause.squash(exit.cause)
       assert.instanceOf(error, RpcClientError)
       assert.strictEqual(error.reason._tag, "SocketReadError")
+    }))
+
+  it.effect("runs onPingTimeout only when a ping timeout drops the socket", () =>
+    Effect.gen(function*() {
+      const requestSent = yield* Deferred.make<void>()
+      const events: Array<string> = []
+      const record = (event: string) => Effect.sync(() => events.push(event))
+      const closeError = new Socket.SocketError({
+        reason: new Socket.SocketCloseError({ code: 1006 })
+      })
+      let connections = 0
+      const write = () => Effect.asVoid(Deferred.succeed(requestSent, void 0))
+      const socket = Socket.make({
+        // The server closes the first connection; the reconnected one goes silent.
+        reader: Effect.sync(() => ({
+          pull: ++connections === 1
+            ? Deferred.await(requestSent).pipe(Effect.andThen(Effect.fail(closeError)))
+            : Effect.never,
+          upgrade: Socket.SocketUpgradeError.unsupported
+        })),
+        writer: Effect.succeed({ write, writeAll: write })
+      })
+      const protocol = yield* RpcClient.makeProtocolSocket({
+        retryPolicy: Schedule.spaced("20 seconds"),
+        onPingTimeout: record("ping timeout")
+      }).pipe(
+        Effect.provideService(Socket.Socket, socket),
+        Effect.provideService(RpcClient.ConnectionHooks, {
+          onConnect: Effect.asVoid(record("connect")),
+          onDisconnect: Effect.asVoid(record("disconnect"))
+        }),
+        Effect.provide(RpcSerialization.layerNdjson)
+      )
+      const client = yield* RpcClient.make(TestGroup).pipe(
+        Effect.provideService(RpcClient.Protocol, protocol)
+      )
+
+      const closedFiber = yield* client.Events().pipe(Stream.runDrain, Effect.flip, Effect.forkChild)
+      const closed = yield* Fiber.join(closedFiber)
+      assert.strictEqual(closed.reason._tag, "SocketCloseError")
+
+      // Stay disconnected past the ping timeout, then reconnect at 20s.
+      yield* TestClock.adjust("20 seconds")
+      assert.deepStrictEqual(events, ["connect", "disconnect", "connect"])
+
+      const streamFiber = yield* client.Events().pipe(
+        Stream.runDrain,
+        Effect.tapError(() => record("stream failed")),
+        Effect.flip,
+        Effect.forkChild
+      )
+      yield* TestClock.adjust("10 seconds")
+      const timedOut = yield* Fiber.join(streamFiber)
+
+      assert.strictEqual(timedOut.reason._tag, "SocketReadError")
+      assert.deepStrictEqual(events, [
+        "connect",
+        "disconnect",
+        "connect",
+        "ping timeout",
+        "disconnect",
+        "stream failed"
+      ])
+    }))
+
+  it.effect("does not run onPingTimeout when the ping timeout fires before the socket opens", () =>
+    Effect.gen(function*() {
+      const events: Array<string> = []
+      const record = (event: string) => Effect.sync(() => events.push(event))
+      const write = () => Effect.void
+      const socket = Socket.make({
+        reader: Effect.never,
+        writer: Effect.succeed({ write, writeAll: write })
+      })
+      const protocol = yield* RpcClient.makeProtocolSocket({
+        retryPolicy: Schedule.spaced("1 hour"),
+        onPingTimeout: record("ping timeout")
+      }).pipe(
+        Effect.provideService(Socket.Socket, socket),
+        Effect.provideService(RpcClient.ConnectionHooks, {
+          onConnect: Effect.asVoid(record("connect")),
+          onDisconnect: Effect.asVoid(record("disconnect"))
+        }),
+        Effect.provide(RpcSerialization.layerNdjson)
+      )
+      const client = yield* RpcClient.make(TestGroup).pipe(
+        Effect.provideService(RpcClient.Protocol, protocol)
+      )
+      const streamFiber = yield* client.Events().pipe(Stream.runDrain, Effect.flip, Effect.forkChild)
+
+      yield* TestClock.adjust("11 seconds")
+      const error = yield* Fiber.join(streamFiber)
+
+      assert.strictEqual(error.reason._tag, "SocketReadError")
+      assert.deepStrictEqual(events, ["disconnect"])
     }))
 
   it.effect("fails in-flight streams when transient retries are exhausted", () =>
