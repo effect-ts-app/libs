@@ -225,6 +225,7 @@ patchedDependencies:
   "@changesets/cli@2.31.0": c9b080d02343ec5517f97d61b809f935de0d61aa5406ff37449ef3e5fae12086
   "@sendgrid/mail": 3d2dd1cd5f52d3eef1772e4be48776258a596f9277c00adf0a471f54fcd3e21a
   "@tanstack/query-core": c98953cf4906c12283dbf72aa23b2066fccbe5186c91cf2ae01043004cf0e3f2
+  effect@4.0.5: a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8
   ts-plugin-sort-import-suggestions: 4664506575d0f4e799401cb7140b6f15f34a6fe213da6314d68439f7e8d30561
   typescript@6.0.3: d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54
 
@@ -255,13 +256,13 @@ importers:
         version: 0.87.5
       "@effect/platform-node":
         specifier: 4.0.5
-        version: 4.0.5(effect@4.0.5)(redis@6.2.1(@opentelemetry/api@1.9.1))
+        version: 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(redis@6.2.1(@opentelemetry/api@1.9.1))
       "@effect/tsgo":
         specifier: ^0.56.0
         version: 0.56.0
       "@effect/vitest":
         specifier: 4.0.5
-        version: 4.0.5(effect@4.0.5)(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.27.2)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))
+        version: 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.27.2)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))
       "@tsconfig/strictest":
         specifier: ^2.0.8
         version: 2.0.8
@@ -282,7 +283,7 @@ importers:
         version: 0.54.0
       effect:
         specifier: 4.0.5
-        version: 4.0.5
+        version: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       effect-app:
         specifier: workspace:*
         version: link:packages/effect-app
@@ -327,10 +328,10 @@ importers:
     dependencies:
       "@effect/platform-node":
         specifier: 4.0.5
-        version: 4.0.5(effect@4.0.5)(redis@6.2.1(@opentelemetry/api@1.9.1))
+        version: 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(redis@6.2.1(@opentelemetry/api@1.9.1))
       effect:
         specifier: 4.0.5
-        version: 4.0.5
+        version: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       js-yaml:
         specifier: 4.2.0
         version: 4.2.0
@@ -364,13 +365,13 @@ importers:
     devDependencies:
       "@effect/atom-vue":
         specifier: ^4.0.5
-        version: 4.0.5(effect@4.0.5)(vue@3.5.35(typescript@6.0.3(patch_hash=d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54)))
+        version: 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(vue@3.5.35(typescript@6.0.3(patch_hash=d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54)))
       "@effect/platform-node":
         specifier: 4.0.5
-        version: 4.0.5(effect@4.0.5)(redis@6.2.1(@opentelemetry/api@1.9.1))
+        version: 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(redis@6.2.1(@opentelemetry/api@1.9.1))
       "@effect/vitest":
         specifier: 4.0.5
-        version: 4.0.5(effect@4.0.5)(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.28.0)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))
+        version: 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.28.0)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))
       "@tanstack/vue-query":
         specifier: 5.96.2
         version: 5.96.2(vue@3.5.35(typescript@6.0.3(patch_hash=d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54)))
@@ -382,7 +383,7 @@ importers:
         version: 6.0.7(vite@8.0.15(@types/node@25.9.1)(esbuild@0.28.0)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0))(vue@3.5.35(typescript@6.0.3(patch_hash=d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54)))
       effect:
         specifier: ^4.0.5
-        version: 4.0.5
+        version: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       typescript:
         specifier: ~6.0.3
         version: 6.0.3(patch_hash=d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54)
@@ -400,7 +401,7 @@ importers:
         version: 2.0.8
       effect:
         specifier: ^4.0.5
-        version: 4.0.5
+        version: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       nanoid:
         specifier: ^5.1.11
         version: 5.1.11
@@ -541,7 +542,7 @@ importers:
     dependencies:
       "@effect/vitest":
         specifier: ^4.0.5
-        version: 4.0.5(effect@4.0.5)(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.28.0)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))
+        version: 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.28.0)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))
       "@faker-js/faker":
         specifier: ^8.4.1
         version: 8.4.1
@@ -556,7 +557,7 @@ importers:
         version: 10.55.0(supports-color@7.2.0)
       effect:
         specifier: ^4.0.5
-        version: 4.0.5
+        version: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       effect-app:
         specifier: workspace:*
         version: link:../effect-app
@@ -584,7 +585,7 @@ importers:
         version: 7.9.5(supports-color@7.2.0)
       "@effect/sql-sqlite-node":
         specifier: 4.0.5
-        version: 4.0.5(effect@4.0.5)
+        version: 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))
       "@sentry/opentelemetry":
         specifier: 10.55.0
         version: 10.55.0(@opentelemetry/api@1.9.1)(@opentelemetry/core@2.6.1(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.6.1(@opentelemetry/api@1.9.1))(@opentelemetry/semantic-conventions@1.40.0)
@@ -631,10 +632,10 @@ importers:
     dependencies:
       "@effect/atom-vue":
         specifier: ^4.0.5
-        version: 4.0.5(effect@4.0.5)(vue@3.5.35(typescript@6.0.3(patch_hash=d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54)))
+        version: 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(vue@3.5.35(typescript@6.0.3(patch_hash=d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54)))
       "@effect/platform-browser":
         specifier: ^4.0.5
-        version: 4.0.5(effect@4.0.5)
+        version: 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))
       "@formatjs/intl":
         specifier: ^4.1.12
         version: 4.1.12
@@ -652,7 +653,7 @@ importers:
         version: 5.4.4
       effect:
         specifier: ^4.0.5
-        version: 4.0.5
+        version: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       effect-app:
         specifier: workspace:*
         version: link:../effect-app
@@ -665,7 +666,7 @@ importers:
     devDependencies:
       "@effect/vitest":
         specifier: 4.0.5
-        version: 4.0.5(effect@4.0.5)(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.28.0)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))
+        version: 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.28.0)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))
       "@formatjs/icu-messageformat-parser":
         specifier: ^3.5.10
         version: 3.5.10
@@ -706,7 +707,7 @@ importers:
         version: 1.32.0(vue@3.5.35(typescript@6.0.3(patch_hash=d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54)))
       effect:
         specifier: ^4.0.5
-        version: 4.0.5
+        version: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       effect-app:
         specifier: workspace:*
         version: link:../effect-app
@@ -10312,39 +10313,39 @@ snapshots:
   "@dprint/win32-x64@0.54.0":
     optional: true
 
-  "@effect/atom-vue@4.0.5(effect@4.0.5)(vue@3.5.35(typescript@6.0.3(patch_hash=d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54)))":
+  "@effect/atom-vue@4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(vue@3.5.35(typescript@6.0.3(patch_hash=d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54)))":
     dependencies:
-      effect: 4.0.5
+      effect: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       vue: 3.5.35(typescript@6.0.3(patch_hash=d2a2f8424c52b9d75deeb15b1f2367352c31126ecb19c4b469da7b943f946a54))
 
   "@effect/language-service@0.87.5": {}
 
-  "@effect/platform-browser@4.0.5(effect@4.0.5)":
+  "@effect/platform-browser@4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))":
     dependencies:
-      effect: 4.0.5
+      effect: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
 
-  "@effect/platform-node-shared@4.0.5(effect@4.0.5)":
+  "@effect/platform-node-shared@4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))":
     dependencies:
       "@types/ws": 8.18.2
-      effect: 4.0.5
+      effect: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       ws: 8.22.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  "@effect/platform-node@4.0.5(effect@4.0.5)(redis@6.2.1(@opentelemetry/api@1.9.1))":
+  "@effect/platform-node@4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(redis@6.2.1(@opentelemetry/api@1.9.1))":
     dependencies:
-      "@effect/platform-node-shared": 4.0.5(effect@4.0.5)
-      effect: 4.0.5
+      "@effect/platform-node-shared": 4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))
+      effect: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       redis: 6.2.1(@opentelemetry/api@1.9.1)
       undici: 8.11.2
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  "@effect/sql-sqlite-node@4.0.5(effect@4.0.5)":
+  "@effect/sql-sqlite-node@4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))":
     dependencies:
-      effect: 4.0.5
+      effect: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
 
   "@effect/tsgo-darwin-arm64@0.56.0":
     optional: true
@@ -10377,14 +10378,14 @@ snapshots:
       "@effect/tsgo-win32-arm64": 0.56.0
       "@effect/tsgo-win32-x64": 0.56.0
 
-  "@effect/vitest@4.0.5(effect@4.0.5)(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.27.2)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))":
+  "@effect/vitest@4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.27.2)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))":
     dependencies:
-      effect: 4.0.5
+      effect: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       vitest: 5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.27.2)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0))
 
-  "@effect/vitest@4.0.5(effect@4.0.5)(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.28.0)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))":
+  "@effect/vitest@4.0.5(effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8))(vitest@5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.28.0)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0)))":
     dependencies:
-      effect: 4.0.5
+      effect: 4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8)
       vitest: 5.0.5(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(jsdom@29.1.1)(vite@8.0.15(@types/node@25.9.1)(esbuild@0.28.0)(sass@1.100.0)(terser@5.45.0)(tsx@4.22.4)(yaml@2.9.0))
 
   "@emnapi/core@1.10.0":
@@ -12986,7 +12987,7 @@ snapshots:
       minimatch: 9.0.1
       semver: 7.7.3
 
-  effect@4.0.5: {}
+  effect@4.0.5(patch_hash=a26412103069235122ff372aa85f452d503744f7345e40097d762afbb5fd6cc8): {}
 
   electron-to-chromium@1.5.267:
     optional: true

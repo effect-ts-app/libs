@@ -15,6 +15,7 @@ import * as DataDependencies from "../DataDependencies.ts"
 import * as Effect from "../Effect.ts"
 import { HttpClient, HttpClientRequest } from "../http.ts"
 import { Invalidation } from "../rpc.ts"
+import { annotateRpcParseOptions } from "../rpc/RpcParseOptions.ts"
 import type * as S from "../Schema.ts"
 import type { Client, ClientForOptions, ExtractModuleName, RequestsAny } from "./clientFor.ts"
 import { InvalidationKeysFromServer } from "./InvalidationKeys.ts"
@@ -155,7 +156,7 @@ export const makeRpcGroupFromRequestsAndModuleName = <M extends RequestsAny, con
   const rpcs = (middleware ? baseRpcs.middleware(middleware) : baseRpcs) as unknown as RpcGroup.RpcGroup<
     Rpc.Prefixed<RpcHandlers<newM>[keyof newM], `${ModuleName}.`>
   >
-  return rpcs
+  return annotateRpcParseOptions(rpcs)
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
