@@ -43,8 +43,8 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          # Major pin = latest 24.x (CI uses `latest`). npm@12 needs Node >= 24.15.
-          node-version: 24
+          # Latest 24.x. npm@12 needs Node >= 24.15.
+          node-version: 24.22.1
           registry-url: https://registry.npmjs.org
 
       # Trusted publishing requires npm CLI >= 11.5.1; keep CLI current on this Node line.
