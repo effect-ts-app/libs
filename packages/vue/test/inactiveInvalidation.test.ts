@@ -69,11 +69,10 @@ const mountSuspense = (atom: any) => {
   return { app, getPromise: () => promise }
 }
 
-const settle = (p: Promise<any> | undefined) =>
-  Promise.race([
-    Promise.resolve(p).then(() => "resolved" as const, () => "rejected" as const),
-    new Promise<"pending">((resolve) => setTimeout(() => resolve("pending"), 40))
-  ])
+const settle = async (promise: Promise<unknown> | undefined) => {
+  expect(promise).toBeDefined()
+  await promise
+}
 
 const fullKeyOf = (self: { id: string }) => [...makeQueryKey(self), undefined]
 
