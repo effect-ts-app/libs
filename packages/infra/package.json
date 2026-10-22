@@ -34,7 +34,7 @@
     "redis": "^3.1.2",
     "redlock": "^4.2.0",
     "typescript": "~6.0.3",
-    "vitest": "^4.1.7"
+    "vitest": "^5.0.5"
   },
   "peerDependencies": {
     "@azure/cosmos": "^4.9.3",

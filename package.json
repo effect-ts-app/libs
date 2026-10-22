@@ -48,8 +48,8 @@
     "@effect-app/cli": "workspace:*",
     "@effect-app/eslint-codegen-model": "workspace:*",
     "@effect-app/infra": "workspace:*",
-    "@effect/language-service": "0.87.3",
-    "@effect/tsgo": "^0.47.2",
+    "@effect/language-service": "0.87.5",
+    "@effect/tsgo": "^0.56.0",
     "@effect/platform-node": "4.0.5",
     "@effect/vitest": "4.0.5",
     "@tsconfig/strictest": "^2.0.8",
@@ -65,12 +65,12 @@
     "lint-staged": "^17.3.0",
     "madge": "^8.0.0",
     "npm-check-updates": "^22.2.1",
-    "oxlint": "1.82.0",
-    "oxlint-tsgolint": "7.0.2001",
+    "oxlint": "1.89.0",
+    "oxlint-tsgolint": "7.0.2004",
     "pkg-pr-new": "0.0.75",
     "ts-plugin-sort-import-suggestions": "^1.0.4",
     "typescript": "~6.0.3",
     "vite": "^8.0.15",
-    "vitest": "^4.1.7"
+    "vitest": "^5.0.5"
   }
 }

@@ -13,6 +13,7 @@
     "effecttsgo/lazy-effect": "off",
     "effecttsgo/return-effect-in-gen": "off",
     "effecttsgo/run-effect-inside-effect": "off",
+    "effecttsgo/schema-class-missing-brand": "off",
     "effecttsgo/schema-sync-in-effect": "off",
     "effecttsgo/strict-effect-provide": "off",
     "effecttsgo/unsafe-effect-type-assertion": "off",
