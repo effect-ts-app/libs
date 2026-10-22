@@ -34,6 +34,8 @@
         nodejsSrc = nodejsSources.${system} or (throw "no nodejs ${nodejsVersion} binary for ${system}");
         nodejs = pkgs.stdenv.mkDerivation {
           pname = "nodejs";
+          passthru.python = pkgs.python3;
+          meta.platforms = builtins.attrNames nodejsSources;
           version = nodejsVersion;
           src = pkgs.fetchurl nodejsSrc;
           sourceRoot = "node-v${nodejsVersion}-${
@@ -94,6 +96,10 @@
             ln $out/bin/pnpm $out/bin/pnpx
             runHook postInstall
           '';
+        };
+        # keep generated compiler launchers on the patched runtime
+        typescript = pkgs.typescript.override {
+          buildNpmPackage = pkgs.buildNpmPackage.override { inherit nodejs; };
         };
         tools = with pkgs; [
           git
