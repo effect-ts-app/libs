@@ -63,15 +63,6 @@ export const DefaultParseOptions: SchemaAST.ParseOptions = {
   concurrency: Option.getOrElse(concurrencySetting, () => "unbounded" as const)
 }
 
-/**
- * Parse-options annotation used on schema constructors for decode paths where callers
- * cannot currently pass parse options (notably some RPC / HttpApi integration paths).
- *
- * Keep this annotation in place so those framework-managed decodes still run with
- * unbounded concurrency by default.
- */
-export const concurrencyUnbounded = { parseOptions: DefaultParseOptions } as const
-
 type DecodeLike = (schema: any) => (input: any, options?: SchemaAST.ParseOptions) => any
 
 export const withDefaultParseOptions = <Decode extends DecodeLike>(
@@ -245,7 +236,7 @@ export const Literals = <const Literals extends NonEmptyReadonlyArray<AST.Litera
 /** Like the default Schema `Array` but with default helpers. */
 export function Array<ValueSchema extends S.Top>(value: ValueSchema) {
   return pipe(
-    S.Array(value).annotate(concurrencyUnbounded),
+    S.Array(value),
     (s) =>
       Object.assign(s, {
         /**
@@ -273,7 +264,7 @@ export function Array<ValueSchema extends S.Top>(value: ValueSchema) {
 export const ReadonlySetFromArray = <ValueSchema extends S.Top>(value: ValueSchema) => {
   const from = S
     .Array(value)
-    .annotate({ ...concurrencyUnbounded, expected: "an array of unique items that will be decoded as a ReadonlySet" })
+    .annotate({ expected: "an array of unique items that will be decoded as a ReadonlySet" })
   const to = S.instanceOf(Set) as S.instanceOf<ReadonlySet<ValueSchema["Type"]>>
   const schema = from.pipe(
     S.decodeTo(
@@ -297,7 +288,6 @@ export const ReadonlyMapFromArray = <KeySchema extends S.Top, ValueSchema extend
   const from = S
     .Array(S.Tuple([pair.key, pair.value]))
     .annotate({
-      ...concurrencyUnbounded,
       expected: "an array of key-value tuples that will be decoded as a ReadonlyMap"
     })
   const to = S.instanceOf(Map) as S.instanceOf<

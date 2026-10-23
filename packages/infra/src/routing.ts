@@ -10,7 +10,7 @@ import * as DataDependencies from "effect-app/DataDependencies"
 import * as Effect from "effect-app/Effect"
 import { type HttpHeaders } from "effect-app/http"
 import * as Layer from "effect-app/Layer"
-import { Invalidation } from "effect-app/rpc"
+import { annotateRpcParseOptions, Invalidation } from "effect-app/rpc"
 import { type GetEffectContext, type GetEffectError, type RpcContextMap } from "effect-app/rpc/RpcContextMap"
 import * as S from "effect-app/Schema"
 import { type TypeTestId } from "effect-app/TypeTest"
@@ -622,36 +622,38 @@ export const makeRouter = <Live extends Layer.Layer<any, any, any> = Layer.Layer
             ]
           }
 
-          const rpcs = RpcGroup
-            .make(
-              ...(Object.values(mapped) as Array<(typeof mapped)[keyof typeof mapped]>).map(([resource]) => {
-                const isStream = resource.stream
-                const isCommand = resource.type === "command"
-                return (isCommand
-                  ? isStream
-                    ? Invalidation.makeStreamRpc(resource._tag, {
+          const rpcs = annotateRpcParseOptions(
+            RpcGroup
+              .make(
+                ...(Object.values(mapped) as Array<(typeof mapped)[keyof typeof mapped]>).map(([resource]) => {
+                  const isStream = resource.stream
+                  const isCommand = resource.type === "command"
+                  return (isCommand
+                    ? isStream
+                      ? Invalidation.makeStreamRpc(resource._tag, {
+                        payload: resource,
+                        success: resource.success,
+                        error: resource.error,
+                        stream: true as const
+                      })
+                      : Invalidation.makeCommandRpc(resource._tag, {
+                        payload: resource,
+                        success: resource.success,
+                        error: resource.error
+                      })
+                    : Rpc.make(resource._tag, {
                       payload: resource,
-                      success: resource.success,
+                      success: isStream ? resource.success : Invalidation.QueryResponseWithMetaData(resource.success),
                       error: resource.error,
-                      stream: true as const
-                    })
-                    : Invalidation.makeCommandRpc(resource._tag, {
-                      payload: resource,
-                      success: resource.success,
-                      error: resource.error
-                    })
-                  : Rpc.make(resource._tag, {
-                    payload: resource,
-                    success: isStream ? resource.success : Invalidation.QueryResponseWithMetaData(resource.success),
-                    error: resource.error,
-                    stream: isStream
-                  }))
-                  .annotate(mw.requestContext, resource.config ?? {})
-                  .annotate(RequestTypeAnnotation, resource.type)
-              })
-            )
-            .prefix(`${meta.moduleName}.`)
-            .middleware(mw)
+                      stream: isStream
+                    }))
+                    .annotate(mw.requestContext, resource.config ?? {})
+                    .annotate(RequestTypeAnnotation, resource.type)
+                })
+              )
+              .prefix(`${meta.moduleName}.`)
+              .middleware(mw)
+          )
 
           const rpc = rpcs
             .toLayer(Effect.gen(function*() {

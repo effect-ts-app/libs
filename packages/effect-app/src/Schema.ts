@@ -6,7 +6,7 @@ import type { RequiredKeys } from "effect/Types"
 import type { Arbitrary as FastCheckArbitrary } from "fast-check"
 import type { NonEmptyReadonlyArray } from "./Array.ts"
 import { Email as EmailT, type Email as EmailType } from "./Schema/email.ts"
-import { concurrencyUnbounded, withDefaultMake, withDefaultParseOptions } from "./Schema/ext.ts"
+import { withDefaultMake, withDefaultParseOptions } from "./Schema/ext.ts"
 import type { FC } from "./Schema/FastCheck.ts"
 import { PhoneNumber as PhoneNumberT, type PhoneNumber as PhoneNumberType } from "./Schema/phoneNumber.ts"
 import { type AST } from "./Schema/schema.ts"
@@ -156,7 +156,7 @@ export const Void: Void = S.Void
 export function Struct<const Fields extends S.Struct.Fields>(
   fields: Fields
 ): Struct<Fields> {
-  const result = S.Struct(fields).annotate(concurrencyUnbounded)
+  const result = S.Struct(fields)
   const allowVoidMake = (schema: any): any => {
     // Normalize omitted input to an empty object so optional/default-only structs can be constructed with make().
     // Do not read schema.make first: Effect 4 caches it as a non-writable own property.
@@ -194,7 +194,7 @@ export function Struct<const Fields extends S.Struct.Fields>(
   }
   ;(result as any).mapFields = function(this: any, f: any, options?: any) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const mapped = origMapFields.call(this, f, options).annotate(concurrencyUnbounded)
+    const mapped = origMapFields.call(this, f, options)
     return preserveCopyAndMethods(mapped)
   }
   ;(result as any).annotate = function(this: any, annotations?: any) {
@@ -296,7 +296,7 @@ export type StructNestedEncoded<T> = T extends { fields: infer Fields extends S.
   : StructNestedEncodedError<T>
 
 export function NonEmptyArray<Value extends S.Top>(value: Value): S.NonEmptyArray<Value> {
-  return S.NonEmptyArray(value).annotate(concurrencyUnbounded)
+  return S.NonEmptyArray(value)
 }
 
 export function TaggedStruct<const Tag extends SchemaAST.LiteralValue, const Fields extends S.Struct.Fields>(
@@ -336,7 +336,7 @@ export function Record<Key extends S.Record.Key, Value extends S.Top>(
   key: Key,
   value: Value
 ): S.$Record<Key, Value> {
-  return S.Record(key, value).annotate(concurrencyUnbounded)
+  return S.Record(key, value)
 }
 export declare namespace Record {
   export type Key = S.Record.Key

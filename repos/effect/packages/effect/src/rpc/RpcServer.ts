@@ -12,6 +12,7 @@
  * @since 4.0.0
  */
 import type { NonEmptyReadonlyArray } from "../Array.ts"
+import * as Bytes from "../Bytes.ts"
 import * as Cause from "../Cause.ts"
 import * as Context from "../Context.ts"
 import * as Deferred from "../Deferred.ts"
@@ -513,14 +514,16 @@ const rpcCodecs = (codecFor: RpcSerialization.CodecFor, rpc: Rpc.AnyWithProps): 
   let codecs = shared ? sharedRpcCodecs.get(rpc) : undefined
   if (codecs === undefined) {
     const streamSchemas = RpcSchema.getStreamSchemas(rpc.successSchema)
+    const parseOptions = Context.get(rpc.annotations, Rpc.ParseOptions)
     codecs = {
-      decode: Schema.decodeUnknownEffect(codecFor(rpc.payloadSchema)) as any,
+      decode: Schema.decodeUnknownEffect(codecFor(rpc.payloadSchema), parseOptions) as any,
       encodeChunk: Schema.encodeUnknownEffect(
         codecFor(
           Schema.NonEmptyArray(Option.isSome(streamSchemas) ? streamSchemas.value.success : Schema.Any)
-        )
+        ),
+        parseOptions
       ) as any,
-      encodeExit: Schema.encodeUnknownEffect(codecFor(Rpc.exitSchema(rpc as any))) as any
+      encodeExit: Schema.encodeUnknownEffect(codecFor(Rpc.exitSchema(rpc as any)), parseOptions) as any
     }
     if (shared) sharedRpcCodecs.set(rpc, codecs)
   }
@@ -1246,8 +1249,9 @@ export const makeProtocolWithHttpEffect: (
 
     yield* writeRequest(id, constEof)
 
+    // Allow request aborts during response waits without unmasking response construction.
     if (!includesFraming) {
-      const responses = yield* Queue.collect(queue)
+      const responses = yield* Effect.interruptible(Queue.collect(queue))
       // Notification-only batches encode without a response body.
       const encoded = parser.encode(responses)
       return HttpServerResponse.text(encoded === undefined ? "" : encoded as string, {
@@ -1255,12 +1259,12 @@ export const makeProtocolWithHttpEffect: (
       })
     }
 
-    const initialChunk = yield* Pull.catchDone(
+    const initialChunk = yield* Effect.interruptible(Pull.catchDone(
       Queue.takeAll(queue as Queue.Dequeue<Uint8Array, Cause.Done>),
       () => Effect.succeed([])
-    )
+    ))
     if (queue.state._tag === "Done") {
-      return HttpServerResponse.uint8Array(mergeUint8Arrays(initialChunk), {
+      return HttpServerResponse.uint8Array(initialChunk.length === 1 ? initialChunk[0] : Bytes.concat(initialChunk), {
         contentType: serialization.contentType
       })
     }
@@ -1301,19 +1305,6 @@ export const makeProtocolWithHttpEffect: (
 
   return { protocol, httpEffect } as const
 })
-
-const mergeUint8Arrays = (arrays: ReadonlyArray<Uint8Array>) => {
-  if (arrays.length === 0) return new Uint8Array(0)
-  if (arrays.length === 1) return arrays[0]
-  const length = arrays.reduce((acc, arr) => acc + arr.length, 0)
-  const result = new Uint8Array(length)
-  let offset = 0
-  for (const arr of arrays) {
-    result.set(arr, offset)
-    offset += arr.length
-  }
-  return result
-}
 
 /**
  * Creates an HTTP server `Protocol` and registers its request handler as a POST

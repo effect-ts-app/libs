@@ -992,7 +992,8 @@ export function Boolean<E>(): Getter<boolean, E> {
  * **Details**
  *
  * - Delegates to `globalThis.BigInt`.
- * - Throws at runtime if the input cannot be converted (e.g. non-numeric string).
+ * - Fails with `SchemaIssue.InvalidValue` if the input cannot be converted
+ *   (e.g. a non-numeric string or a non-integer number).
  *
  * **Example** (Coercing to a bigint)
  *
@@ -1008,7 +1009,19 @@ export function Boolean<E>(): Getter<boolean, E> {
  * @since 4.0.0
  */
 export function BigInt<E extends string | number | bigint | boolean>(): Getter<bigint, E> {
-  return transform(globalThis.BigInt)
+  return transformEffect((input, options) => {
+    try {
+      return Effect.succeed(globalThis.BigInt(input))
+    } catch {
+      return Effect.fail(
+        new SchemaIssue.InvalidValue(
+          { expected: "a value that can be converted to a bigint" },
+          input,
+          options
+        )
+      )
+    }
+  })
 }
 
 /**
@@ -1510,7 +1523,8 @@ export function encodeBase64<E extends Uint8Array | string>(): Getter<string, E>
  *
  * **Details**
  *
- * The getter is pure and never fails.
+ * The getter is pure and never fails. The output is unpadded unless
+ * `padding` is `true`.
  *
  * **Example** (Encoding to Base64Url)
  *
@@ -1530,8 +1544,11 @@ export function encodeBase64<E extends Uint8Array | string>(): Getter<string, E>
  * @category encoding
  * @since 4.0.0
  */
-export function encodeBase64Url<E extends Uint8Array | string>(): Getter<string, E> {
-  return transform(Base64Url.encode)
+export function encodeBase64Url<E extends Uint8Array | string>(options?: {
+  /** Keep the `=` padding. Defaults to `false`. */
+  readonly padding?: boolean | undefined
+}): Getter<string, E> {
+  return transform(options?.padding ? Base64Url.encodePadded : Base64Url.encode)
 }
 
 /**

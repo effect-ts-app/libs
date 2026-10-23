@@ -851,6 +851,68 @@ describe("WorkflowEngine", () => {
       assert.deepStrictEqual(compensated, ["a"])
     }))
 
+  it.effect("layerMemory compensates a completed activity only once after replay", () =>
+    Effect.gen(function*() {
+      const gate = DurableDeferred.make("WorkflowEngine/CompensationReplay/Gate", { error: Schema.String })
+      const events: Array<string> = []
+      let runs = 0
+      const Order = Workflow.make("WorkflowEngine/CompensationReplay", {
+        payload: { id: Schema.String },
+        error: Schema.String,
+        idempotencyKey: ({ id }) => id
+      })
+      const layer = Order.toLayer(() =>
+        Effect.gen(function*() {
+          runs++
+          yield* Activity.make({
+            name: "charge",
+            success: Schema.String,
+            execute: Effect.sync(() => {
+              events.push("charge")
+              return "ch_1"
+            })
+          }).pipe(
+            Order.withCompensation((id) => Effect.sync(() => events.push(`refund ${id}`)))
+          )
+          yield* DurableDeferred.await(gate)
+        })
+      ).pipe(Layer.provideMerge(WorkflowEngine.layerMemory))
+
+      yield* Effect.gen(function*() {
+        const executionId = yield* Order.execute({ id: "one" }, { discard: true })
+        let result = yield* Order.poll(executionId)
+        while (Option.isNone(result) || result.value._tag !== "Suspended") {
+          yield* Effect.yieldNow
+          result = yield* Order.poll(executionId)
+        }
+        assert.deepStrictEqual(events, ["charge"])
+
+        yield* Order.resume(executionId)
+        result = yield* Order.poll(executionId)
+        while (Option.isNone(result) || result.value._tag !== "Suspended") {
+          yield* Effect.yieldNow
+          result = yield* Order.poll(executionId)
+        }
+        assert.strictEqual(runs, 2)
+        assert.deepStrictEqual(events, ["charge"])
+
+        const token = DurableDeferred.tokenFromExecutionId(gate, { workflow: Order, executionId })
+        yield* DurableDeferred.fail(gate, { token, error: "rejected" })
+        while (Option.isNone(result) || result.value._tag !== "Complete") {
+          yield* Effect.yieldNow
+          result = yield* Order.poll(executionId)
+        }
+
+        assert(Exit.isFailure(result.value.exit))
+        assert.strictEqual(result.value.exit.cause.reasons.length, 1)
+        const reason = result.value.exit.cause.reasons[0]
+        assert(Cause.isFailReason(reason))
+        assert.strictEqual(reason.error, "rejected")
+        assert.strictEqual(runs, 3)
+        assert.deepStrictEqual(events, ["charge", "refund ch_1"])
+      }).pipe(Effect.provide(layer))
+    }))
+
   it.effect("layerMemory closes finalizers registered before suspension", () =>
     Effect.gen(function*() {
       const gate = DurableDeferred.make("WorkflowEngine/SuspendedScope/Gate")
@@ -882,6 +944,58 @@ describe("WorkflowEngine", () => {
         yield* Suspends.execute(payload)
 
         assert.deepStrictEqual(finalized, [2, 1])
+      }).pipe(Effect.provide(layer))
+    }))
+
+  it.effect("layerMemory closes every suspended run scope when a finalizer dies", () =>
+    Effect.gen(function*() {
+      const gate = DurableDeferred.make("WorkflowEngine/SuspendedScopeDefect/Gate")
+      const finalized: Array<number> = []
+      let runs = 0
+      const Suspends = Workflow.make("WorkflowEngine/SuspendedScopeDefect", {
+        payload: {},
+        idempotencyKey: () => "one"
+      })
+      const layer = Suspends.toLayer(() =>
+        Effect.gen(function*() {
+          const run = ++runs
+          yield* Workflow.addFinalizer(() =>
+            Effect.gen(function*() {
+              finalized.push(run)
+              if (run === 2) return yield* Effect.die("finalizer defect")
+            })
+          )
+          yield* DurableDeferred.await(gate)
+        })
+      ).pipe(Layer.provideMerge(WorkflowEngine.layerMemory))
+
+      yield* Effect.gen(function*() {
+        const executionId = yield* Suspends.execute({}, { discard: true })
+        let result = yield* Suspends.poll(executionId)
+        while (Option.isNone(result) || result.value._tag !== "Suspended") {
+          yield* Effect.yieldNow
+          result = yield* Suspends.poll(executionId)
+        }
+
+        yield* Suspends.resume(executionId)
+        result = yield* Suspends.poll(executionId)
+        while (Option.isNone(result) || result.value._tag !== "Suspended") {
+          yield* Effect.yieldNow
+          result = yield* Suspends.poll(executionId)
+        }
+        assert.strictEqual(runs, 2)
+
+        const token = DurableDeferred.tokenFromExecutionId(gate, { workflow: Suspends, executionId })
+        yield* DurableDeferred.succeed(gate, { token, value: void 0 })
+        let exit = yield* Effect.exit(Suspends.poll(executionId))
+        while (Exit.isSuccess(exit) && (Option.isNone(exit.value) || exit.value.value._tag !== "Complete")) {
+          yield* Effect.yieldNow
+          exit = yield* Effect.exit(Suspends.poll(executionId))
+        }
+
+        assert.strictEqual(runs, 3)
+        assert(Exit.hasDies(exit))
+        assert.deepStrictEqual(finalized, [3, 2, 1])
       }).pipe(Effect.provide(layer))
     }))
 
@@ -955,6 +1069,99 @@ describe("WorkflowEngine", () => {
         assert.deepStrictEqual(yield* Ref.get(observed), [true])
       }).pipe(Effect.provide(layer))
     }))
+
+  for (const lastStep of [true, false]) {
+    it.effect(
+      `layerMemory applies safe interruption during ${
+        lastStep ? "the last activity" : "an activity before another step"
+      } only on suspension`,
+      () =>
+        Effect.gen(function*() {
+          const started = yield* Latch.make()
+          const release = yield* Latch.make()
+          const events: Array<string> = []
+          const Running = Workflow.make(`WorkflowEngine/InterruptRunningActivity/${lastStep}`, {
+            payload: {},
+            success: Schema.String,
+            idempotencyKey: () => "one"
+          })
+          const layer = Running.toLayer(Effect.fnUntraced(function*() {
+            yield* Activity.make({
+              name: "running",
+              execute: started.open.pipe(Effect.andThen(release.await))
+            }).pipe(Running.withCompensation(() => Effect.sync(() => events.push("compensated"))))
+            if (!lastStep) {
+              yield* Activity.make({ name: "next", execute: Effect.sync(() => events.push("next")) })
+            }
+            return "done"
+          })).pipe(Layer.provideMerge(WorkflowEngine.layerMemory))
+
+          yield* Effect.gen(function*() {
+            const executionId = yield* Running.execute({}, { discard: true })
+            yield* started.await
+            yield* Running.interrupt(executionId)
+            yield* release.open
+            let result = yield* Running.poll(executionId)
+            while (Option.isNone(result) || result.value._tag !== "Complete") {
+              yield* Effect.yieldNow
+              result = yield* Running.poll(executionId)
+            }
+
+            // Safe interruption takes effect at the next suspension, not at normal completion.
+            assert.deepStrictEqual(
+              { interrupted: Exit.hasInterrupts(result.value.exit), events },
+              lastStep ? { interrupted: false, events: [] } : { interrupted: true, events: ["compensated"] }
+            )
+            if (lastStep) assert.deepStrictEqual(result.value.exit, Exit.succeed("done"))
+          }).pipe(Effect.provide(layer))
+        })
+    )
+  }
+
+  for (const state of ["running", "suspended"] as const) {
+    it.effect(`layerMemory interruptUnsafe completes a ${state} workflow without an external wake`, () =>
+      Effect.gen(function*() {
+        const started = yield* Deferred.make<void>()
+        const gate = DurableDeferred.make("WorkflowEngine/InterruptUnsafeNoWake/Gate")
+        const workflow = Workflow.make("WorkflowEngine/InterruptUnsafeNoWake", {
+          payload: {},
+          idempotencyKey: () => "one"
+        })
+        const layer = workflow.toLayer(() =>
+          state === "running"
+            ? Activity.make({
+              name: "blocked",
+              execute: Deferred.succeed(started, undefined).pipe(Effect.andThen(Effect.never))
+            })
+            : DurableDeferred.await(gate)
+        ).pipe(Layer.provideMerge(WorkflowEngine.layerMemory))
+
+        yield* Effect.gen(function*() {
+          const engine = yield* WorkflowEngine.WorkflowEngine
+          const executionId = yield* workflow.execute({}, { discard: true })
+          if (state === "running") {
+            yield* Deferred.await(started)
+          } else {
+            let result = yield* workflow.poll(executionId)
+            for (let i = 0; i < 1000 && !(Option.isSome(result) && result.value._tag === "Suspended"); i++) {
+              yield* Effect.yieldNow
+              result = yield* workflow.poll(executionId)
+            }
+            assert(Option.isSome(result) && result.value._tag === "Suspended", "workflow must suspend first")
+          }
+
+          yield* engine.interruptUnsafe(workflow, executionId)
+          // Do not complete the gate or explicitly resume: interruption must supply its own wake.
+          let result = yield* workflow.poll(executionId)
+          for (let i = 0; i < 1000 && !(Option.isSome(result) && result.value._tag === "Complete"); i++) {
+            yield* Effect.yieldNow
+            result = yield* workflow.poll(executionId)
+          }
+          assert(Option.isSome(result) && result.value._tag === "Complete", "interruption must complete the workflow")
+          assert(Exit.hasInterrupts(result.value.exit))
+        }).pipe(Effect.provide(layer))
+      }))
+  }
 
   it.effect("layerMemory preserves interruptUnsafe across a suspended replay", () =>
     Effect.gen(function*() {

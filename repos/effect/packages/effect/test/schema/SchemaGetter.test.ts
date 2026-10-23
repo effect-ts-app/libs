@@ -17,6 +17,19 @@ function makeAsserts<T, E>(getter: SchemaGetter.Getter<T, E>) {
 }
 
 describe("SchemaGetter", () => {
+  it.effect("BigInt rejects invalid strings and numbers with InvalidValue", () =>
+    Effect.gen(function*() {
+      const getter = SchemaGetter.BigInt()
+      for (const input of ["abc", 1.5]) {
+        const issue = yield* SchemaGetter.run(getter, Option.some(input), {
+          reportInput: true
+        }).pipe(Effect.flip)
+        assert.instanceOf(issue, SchemaIssue.InvalidValue)
+        assert(SchemaIssue.hasInput(issue))
+        assert.strictEqual(issue.input, input)
+      }
+    }))
+
   it.effect("forbiddenEncoding", () =>
     Effect.gen(function*() {
       const getter: SchemaGetter.Getter<string, number> = SchemaGetter.forbiddenEncoding
@@ -101,6 +114,11 @@ describe("SchemaGetter", () => {
     await decoding("2020-02-01T11:17:00+1100", DateTime.makeUnsafe("2020-02-01T00:17:00.000Z"))
     // should support strings with explicit GMT zone
     await decoding("Tue, 27 Jan 2026 17:14:06 GMT", DateTime.makeUnsafe("2026-01-27T17:14:06.000Z"))
+  })
+
+  it("encodeBase64Url with padding", async () => {
+    const encoding = makeAsserts(SchemaGetter.encodeBase64Url<string>({ padding: true }))
+    await encoding("f", "Zg==")
   })
 
   describe("makeTreeRecord", () => {

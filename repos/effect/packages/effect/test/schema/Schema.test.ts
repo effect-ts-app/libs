@@ -28,6 +28,8 @@ import {
   SchemaIssue,
   SchemaParser,
   SchemaTransformation,
+  SemVer,
+  SemVerRange,
   String as Str,
   Struct,
   Tuple
@@ -3463,12 +3465,12 @@ Expected a value between -2147483648 and 2147483647`
       await decoding.fail(
         Cause.fail("a"),
         `Expected a finite number
-  at ["failures"][0]["error"]`
+  at ["reasons"][0]["error"]`
       )
       await decoding.fail(
         Cause.die("a"),
         `Expected a finite number
-  at ["failures"][0]["defect"]`
+  at ["reasons"][0]["defect"]`
       )
 
       const encoding = asserts.encoding()
@@ -3479,12 +3481,12 @@ Expected a value between -2147483648 and 2147483647`
       await encoding.fail(
         Cause.fail("a"),
         `Expected number
-  at ["failures"][0]["error"]`
+  at ["reasons"][0]["error"]`
       )
       await encoding.fail(
         Cause.die("a"),
         `Expected number
-  at ["failures"][0]["defect"]`
+  at ["reasons"][0]["defect"]`
       )
     })
   })
@@ -3561,7 +3563,7 @@ Expected a value between -2147483648 and 2147483647`
       await decoding.fail(
         Exit.fail(null),
         `Expected string
-  at ["cause"]["failures"][0]["error"]`
+  at ["cause"]["reasons"][0]["error"]`
       )
     })
 
@@ -5855,6 +5857,48 @@ Expected a value between -2147483648 and 2147483647`
     )
   })
 
+  it("SemVer", async () => {
+    const asserts = new TestSchema.Asserts(Schema.SemVer)
+    if (verifyGeneration) asserts.arbitrary().verifyGeneration()
+    await asserts.decoding().fail("1.2.3", "Expected SemVer")
+
+    const json = new TestSchema.Asserts(Schema.toCodecJson(Schema.SemVer))
+    await json.decoding().succeed("1.2.3-rc.1+001", SemVer.parseUnsafe("1.2.3-rc.1+001"))
+    await json.encoding().succeed(SemVer.parseUnsafe("1.2.3-rc.1+001"), "1.2.3-rc.1+001")
+  })
+
+  it("SemVerFromString", async () => {
+    const asserts = new TestSchema.Asserts(Schema.SemVerFromString)
+    await asserts.verifyRoundTrip()
+    await asserts.decoding().succeed("1.0.0-beta+exp.sha.5114f85", SemVer.parseUnsafe("1.0.0-beta+exp.sha.5114f85"))
+    await asserts.decoding().fail(
+      "v1.2.3",
+      `Invalid SemVer "v1.2.3": major must be a non-negative integer without leading zeros, received "v1"`
+    )
+    await asserts.encoding().succeed(SemVer.parseUnsafe("1.2.3+build"), "1.2.3+build")
+  })
+
+  it("SemVerRange", async () => {
+    const asserts = new TestSchema.Asserts(Schema.SemVerRange)
+    if (verifyGeneration) asserts.arbitrary().verifyGeneration()
+    await asserts.decoding().fail("^1.2.3", "Expected SemVerRange")
+
+    const json = new TestSchema.Asserts(Schema.toCodecJson(Schema.SemVerRange))
+    await json.decoding().succeed("^1.2 || 2.x", SemVerRange.parseUnsafe("^1.2 || 2"))
+    await json.encoding().succeed(SemVerRange.parseUnsafe(">= 1.2.3 <2.x"), ">=1.2.3 <2")
+  })
+
+  it("SemVerRangeFromString", async () => {
+    const asserts = new TestSchema.Asserts(Schema.SemVerRangeFromString)
+    await asserts.verifyRoundTrip()
+    await asserts.decoding().succeed("~1.2.3-beta.1", SemVerRange.parseUnsafe("~1.2.3-beta.1"))
+    await asserts.decoding().fail(
+      "^v1",
+      `Invalid SemVer range "^v1": major must be a non-negative integer without leading zeros, received "v1"`
+    )
+    await asserts.encoding().succeed(SemVerRange.parseUnsafe("1.2.3 - 2.x"), "1.2.3 - 2")
+  })
+
   it("BigDecimal", async () => {
     const schema = Schema.BigDecimal
     const asserts = new TestSchema.Asserts(schema)
@@ -6146,6 +6190,14 @@ Expected a value between -2147483648 and 2147483647`
   at ["a"]["b"]`
       )
     })
+  })
+
+  it("FormData guard", () => {
+    const is = Schema.is(Schema.FormData)
+    assertTrue(is(new FormData()))
+    for (const value of [undefined, null, {}, [], { append() {}, entries() {} }]) {
+      assertFalse(is(value))
+    }
   })
 
   it("fromFormData", async () => {
@@ -9619,10 +9671,7 @@ pointed message
                 Schema.Struct({ event: Schema.Literal("B"), b: Schema.String }),
                 Schema.Struct({ event: Schema.Literal("A"), c: Schema.String })
               ])
-            ]).pipe(
-              // @ts-expect-error Duplicate discriminants are also rejected at compile time.
-              Schema.toTaggedUnion("event")
-            ),
+            ]).pipe(Schema.toTaggedUnion("event")),
           "Duplicate discriminant: A"
         )
         throws(
@@ -9630,10 +9679,7 @@ pointed message
             Schema.Union([
               Schema.Struct({ event: Schema.Literal(1) }),
               Schema.Struct({ event: Schema.Literal("1") })
-            ]).pipe(
-              // @ts-expect-error Numeric and string discriminants share the same property key.
-              Schema.toTaggedUnion("event")
-            ),
+            ]).pipe(Schema.toTaggedUnion("event")),
           "Duplicate discriminant: 1"
         )
       })
@@ -10397,12 +10443,37 @@ describe("Getter", () => {
 })
 
 describe("Check", () => {
-  it("isStringFinite", async () => {
+  describe("isStringFinite", () => {
     const schema = Schema.String.check(Schema.isStringFinite())
+    const isFiniteString = Schema.is(schema)
+    // Number record keys also accept the non-finite literals
+    const decodeNumberKeys = Schema.decodeUnknownSync(Schema.Record(Schema.Number, Schema.String))
+    const isNumberKey = (s: string) => Object.keys(decodeNumberKeys({ [s]: "" })).length === 1
 
-    deepStrictEqual(Schema.resolveAnnotations(schema)?.representation, {
-      id: "effect/schema/isStringFinite",
-      payload: null
+    it("representation", () => {
+      deepStrictEqual(Schema.resolveAnnotations(schema)?.representation, {
+        id: "effect/schema/isStringFinite",
+        payload: null
+      })
+    })
+
+    it("accepts finite number strings", () => {
+      for (const s of ["1", "-1", "+01", "1.5", ".5", "1e5", "-.5E+5"]) {
+        assertTrue(isFiniteString(s), s)
+      }
+      for (const s of ["", ".", "1.", "1..5", "1e", "e5", "1.e5", " 1", "Infinity", "NaN"]) {
+        assertFalse(isFiniteString(s), s)
+      }
+    })
+
+    it("rejects long digit runs in linear time", () => {
+      const digits = "1".repeat(100_000)
+      for (const s of [`${digits}x`, `${digits}.`, `${digits}e`, `-${digits}x`]) {
+        assertFalse(isFiniteString(s))
+        assertFalse(isNumberKey(s))
+      }
+      assertTrue(isFiniteString(digits))
+      assertTrue(isNumberKey(digits))
     })
   })
 
@@ -10509,20 +10580,48 @@ describe("Check", () => {
 
   it("isBase64", async () => {
     const schema = Schema.String.check(Schema.isBase64())
+    const asserts = new TestSchema.Asserts(schema)
+
+    if (verifyGeneration) {
+      asserts.arbitrary().verifyGeneration()
+    }
 
     deepStrictEqual(Schema.resolveAnnotations(schema)?.representation, {
       id: "effect/schema/isBase64",
       payload: null
     })
+
+    const decoding = asserts.decoding()
+    await decoding.succeed("")
+    await decoding.succeed("Zm9v+/==")
+    await decoding.succeed("Zm8=")
+    await decoding.succeed("A".repeat(8_000_000))
+    await decoding.fail("Zm8", `Expected a base64 encoded string`)
+    await decoding.fail("Zg=", `Expected a base64 encoded string`)
+    await decoding.fail("Zm9v-_==", `Expected a base64 encoded string`)
   })
 
   it("isBase64Url", async () => {
     const schema = Schema.String.check(Schema.isBase64Url())
+    const asserts = new TestSchema.Asserts(schema)
+
+    if (verifyGeneration) {
+      asserts.arbitrary().verifyGeneration()
+    }
 
     deepStrictEqual(Schema.resolveAnnotations(schema)?.representation, {
       id: "effect/schema/isBase64Url",
       payload: null
     })
+
+    const decoding = asserts.decoding()
+    await decoding.succeed("")
+    await decoding.succeed("Zm9v-_")
+    await decoding.succeed("Zg==")
+    await decoding.succeed("A".repeat(8_000_000))
+    await decoding.fail("Zm9vZ", `Expected a base64url encoded string`)
+    await decoding.fail("Zg=", `Expected a base64url encoded string`)
+    await decoding.fail("Zm9v+/", `Expected a base64url encoded string`)
   })
 
   describe("brand", () => {
