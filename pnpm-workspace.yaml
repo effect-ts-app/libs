@@ -17,13 +17,13 @@ minimumReleaseAgeExclude:
   - "@effect/tsgo-win32-x64@0.56.0"
   - "@effect/tsgo@0.56.0"
   - "@effect/language-service@0.87.5"
-  - "@effect/atom-vue@4.0.5"
-  - "@effect/platform-browser@4.0.5"
-  - "@effect/platform-node-shared@4.0.5"
-  - "@effect/platform-node@4.0.5"
-  - "@effect/sql-sqlite-node@4.0.5"
-  - "@effect/vitest@4.0.5"
-  - effect@4.0.5
+  - "@effect/atom-vue@4.0.6"
+  - "@effect/platform-browser@4.0.6"
+  - "@effect/platform-node-shared@4.0.6"
+  - "@effect/platform-node@4.0.6"
+  - "@effect/sql-sqlite-node@4.0.6"
+  - "@effect/vitest@4.0.6"
+  - effect@4.0.6
 overrides:
   date-fns: ^4.4.0
   fast-check: ^4.9.0
@@ -34,4 +34,3 @@ patchedDependencies:
   typescript@6.0.3: patches/typescript.patch
   "@sendgrid/mail": patches/@sendgrid__mail.patch
   "@changesets/cli@2.31.0": patches/@changesets__cli@2.31.0.patch
-  effect@4.0.5: patches/effect@4.0.5.patch
