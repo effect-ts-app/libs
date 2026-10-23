@@ -113,6 +113,36 @@ describe("Duration", () => {
     )
   })
 
+  it("fromInputUnsafe preserves nanoseconds in large decimal second strings", () => {
+    strictEqual(
+      Duration.toNanosUnsafe(Duration.fromInputUnsafe("17280000.000000001 seconds")),
+      17_280_000_000_000_001n
+    )
+    strictEqual(
+      Duration.toNanosUnsafe(Duration.fromInputUnsafe("-17280000.000000001 seconds")),
+      -17_280_000_000_000_001n
+    )
+  })
+
+  it.each([1, -1])("converts large finite millisecond strings without overflow (sign %s)", (sign) => {
+    const input = `${sign < 0 ? "-" : ""}1${"0".repeat(302)}1 millis` as Duration.Input
+    assertTrue(Duration.isFinite(Duration.fromInputUnsafe(input)))
+    deepStrictEqual([Duration.toMillis(input), Duration.toSeconds(input)], [sign * 1e303, sign * 1e300])
+  })
+
+  it("fromInputUnsafe preserves integer nanoseconds in large tuple and object inputs", () => {
+    deepStrictEqual(Duration.fromInputUnsafe([10_368_000, 123_456_789]), Duration.nanos(10_368_000_123_456_789n))
+    deepStrictEqual(Duration.fromInputUnsafe({ days: 200, nanoseconds: 1 }), Duration.nanos(17_280_000_000_000_001n))
+    deepStrictEqual(
+      Duration.fromInputUnsafe({ days: 200_000_000, milliseconds: 1, nanoseconds: 1 }),
+      Duration.nanos(17_280_000_000_000_001_000_001n)
+    )
+    deepStrictEqual(
+      Duration.fromInputUnsafe({ days: 200_000_000, milliseconds: 1 }),
+      Duration.nanos(17_280_000_000_000_001_000_000n)
+    )
+  })
+
   it("fromInputUnsafe normalizes infinite nanosecond totals", () => {
     deepStrictEqual(Duration.fromInputUnsafe([1e300, 1]), Duration.infinity)
     deepStrictEqual(Duration.fromInputUnsafe({ seconds: -Infinity, nanoseconds: 1 }), Duration.negativeInfinity)

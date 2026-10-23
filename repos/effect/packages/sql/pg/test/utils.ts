@@ -1,6 +1,6 @@
 import { PgClient, type PgConnection } from "@effect/sql-pg"
 import { PostgreSqlContainer } from "@testcontainers/postgresql"
-import { Context, Data, Effect, Layer, Redacted, type Scope, String } from "effect"
+import { Clock, Context, Data, Effect, Layer, Redacted, type Scope, String } from "effect"
 import * as Fs from "node:fs"
 import { inspect } from "node:util"
 import { getContainerRuntimeClient } from "testcontainers"
@@ -33,13 +33,18 @@ const lifecycleLog = (id: string, step: string, state: string, ms: number, error
   }
 }
 
-const lifecycle = async <A>(id: string, step: string, run: () => Promise<A>): Promise<A> => {
+const lifecycle = async <A>(id: string, step: string, run: () => Promise<A>, signal?: AbortSignal): Promise<A> => {
   if (!lifecycleEnabled) return run()
   const started = Date.now()
   const log = (state: string) => lifecycleLog(id, step, state, Date.now() - started)
   log("start")
   const pending = setInterval(() => log("pending"), 5_000)
   pending.unref()
+  const interrupted = () => {
+    clearInterval(pending)
+    log("interrupted")
+  }
+  signal?.addEventListener("abort", interrupted, { once: true })
   try {
     const value = await run()
     log("done")
@@ -49,6 +54,7 @@ const lifecycle = async <A>(id: string, step: string, run: () => Promise<A>): Pr
     throw error
   } finally {
     clearInterval(pending)
+    signal?.removeEventListener("abort", interrupted)
   }
 }
 
@@ -66,24 +72,41 @@ const instrumentClient = <A, E, R>(
     inner.pipe(Layer.tap(() => Effect.addFinalizer(() => marker(containerId, `${name} disposal start`))))
   )
 
+// Shared with the regression tests so they exercise the real container finalizer.
+export const releasePgContainer = Effect.fnUntraced(
+  function*(container: {
+    getId(): string
+    stop(options: { remove: boolean }): Promise<unknown>
+  }) {
+    const id = container.getId()
+    lifecycleLog(id, "container-release", "start", 0)
+    yield* Effect.promise(() => lifecycle(id, "stop", () => container.stop({ remove: false })))
+    const client = yield* Effect.promise(() => lifecycle(id, "runtime-client", () => getContainerRuntimeClient()))
+    const handle = client.container.getById(container.getId())
+    // Stop can return before the daemon processes the exit event; wait before removing.
+    // docker-modem can leave an aborted response pending forever. Abort each
+    // timed-out request and retry this read-only wait, never the whole release.
+    yield* Effect.tryPromise((signal) =>
+      lifecycle(id, "wait-not-running", () => handle.wait({ condition: "not-running", abortSignal: signal }), signal)
+    ).pipe(Effect.timeout("5 seconds"), Effect.retry({ times: 2 }))
+    yield* Effect.promise(() => lifecycle(id, "remove", () => client.container.remove(handle, { removeVolumes: true })))
+    lifecycleLog(id, "container-release", "done", 0)
+  },
+  // Bound the entire release below the existing 30s hook limit, including
+  // stop and removal. Exhausted retries and timeouts remain visible defects.
+  Effect.timeout("20 seconds"),
+  (_) => Effect.orDie(_),
+  // Fixture finalizers inherit TestClock from it.layer; cleanup must use real deadlines.
+  Effect.provideService(Clock.Clock, Clock.Clock.defaultValue())
+)
+
 export class PgContainer extends Context.Service<PgContainer>()("test/PgContainer", {
   make: Effect.acquireRelease(
     Effect.tryPromise({
-      try: () => lifecycle("new", "container-start", () => new PostgreSqlContainer("postgres:alpine").start()),
+      try: () => lifecycle("new", "container-start", () => new PostgreSqlContainer("postgres:14-alpine").start()),
       catch: (cause) => new ContainerError({ cause })
     }).pipe(Effect.tap((container) => marker(container.getId(), "container-started"))),
-    (container) =>
-      Effect.promise(async () => {
-        const id = container.getId()
-        lifecycleLog(id, "container-release", "start", 0)
-        await lifecycle(id, "stop", () => container.stop({ remove: false }))
-        const client = await lifecycle(id, "runtime-client", () => getContainerRuntimeClient())
-        const handle = client.container.getById(container.getId())
-        // Stop can return before the daemon processes the exit event; wait before removing.
-        await lifecycle(id, "wait-not-running", () => handle.wait({ condition: "not-running" }))
-        await lifecycle(id, "remove", () => client.container.remove(handle, { removeVolumes: true }))
-        lifecycleLog(id, "container-release", "done", 0)
-      })
+    releasePgContainer
   )
 }) {
   static readonly layer = Layer.effect(this)(this.make)
@@ -178,8 +201,8 @@ export class PgContainer extends Context.Service<PgContainer>()("test/PgContaine
 export const realSleep = Effect.promise(() => new Promise((resolve) => setTimeout(resolve, 10)))
 const activeTimeoutMs = 10_000
 
-export const waitUntilActive = (observer: PgConnection.PgConnection, pid: number, advisoryLock = false) =>
-  Effect.gen(function*() {
+export const waitUntilActive = Effect.fnUntraced(
+  function*(observer: PgConnection.PgConnection, pid: number, advisoryLock = false) {
     const startedAt = Date.now()
     while (Date.now() - startedAt < activeTimeoutMs) {
       const active = yield* observer.query(
@@ -198,7 +221,8 @@ export const waitUntilActive = (observer: PgConnection.PgConnection, pid: number
         } within 10 seconds`
       )
     )
-  })
+  }
+)
 
 // Parse can report active before Execute starts. Cancellation needs the query to be waiting on the lock.
 export const waitUntilAdvisoryLock = (observer: PgConnection.PgConnection, pid: number) =>

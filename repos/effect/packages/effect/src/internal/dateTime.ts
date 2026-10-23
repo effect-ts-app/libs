@@ -238,8 +238,12 @@ export const makeUnsafe = <A extends DateTime.DateTime.Input>(input: A): DateTim
  * so `makeUnsafe` appends "Z" to force UTC interpretation.
  * This check prevents appending "Z" to strings that already have a zone
  * (e.g. "2024-01-01T12:00:00Z", "...+05:30", "...GMT"), which would produce invalid dates.
+ * `Date.parse` also accepts a trailing `z` or `gmt` in any case. Only that trailing
+ * match is case-insensitive, so lowercase letters in a comment like "(xyz)" do not
+ * count as a zone.
  */
-const hasZone = (input: string): boolean => /Z|GMT|[+-]\d{2}$|[+-]\d{2}:?\d{2}$|\]$/.test(input)
+const hasZone = (input: string): boolean =>
+  /Z|GMT|[+-]\d{2}$|[+-]\d{2}:?\d{2}$|\]$/.test(input) || /z$|gmt$/i.test(input)
 
 const minEpochMillis = -8640000000000000 + (12 * 60 * 60 * 1000)
 const maxEpochMillis = 8640000000000000 - (14 * 60 * 60 * 1000)
@@ -364,6 +368,7 @@ const formatOptions: Intl.DateTimeFormatOptions = {
   day: "numeric",
   month: "numeric",
   year: "numeric",
+  era: "short",
   hour: "numeric",
   minute: "numeric",
   second: "numeric",
@@ -428,7 +433,7 @@ export const zoneMakeNamedEffect = (zoneId: string): Effect.Effect<DateTime.Time
 export const zoneMakeLocal = (): DateTime.TimeZone.Named =>
   zoneMakeIntl(new Intl.DateTimeFormat("en-US", formatOptions))
 
-const offsetZoneRegExp = /^(?:GMT|[+-])/
+const offsetZoneRegExp = /^(?:GMT)?[+-]/
 
 /** @internal */
 export const zoneFromString = (zone: string): Option.Option<DateTime.TimeZone> => {
@@ -564,10 +569,18 @@ export const toDate = (self: DateTime.DateTime): Date => {
   } else if (self.adjustedEpochMilliseconds !== undefined) {
     return new Date(self.adjustedEpochMilliseconds)
   }
-  const parts = self.zone.format.formatToParts(self.epochMilliseconds).filter((_) => _.type !== "literal")
+  let bc = false
+  const parts = self.zone.format.formatToParts(self.epochMilliseconds).filter((_) => {
+    if (_.type === "era") {
+      bc = _.value === "BC"
+      return false
+    }
+    return _.type !== "literal"
+  })
+  const year = Number(parts[2].value)
   const date = new Date(0)
   date.setUTCFullYear(
-    Number(parts[2].value),
+    bc ? 1 - year : year,
     Number(parts[0].value) - 1,
     Number(parts[1].value)
   )
@@ -814,7 +827,7 @@ const makeZonedFromAdjusted = (
   return makeZonedProto(adjustedMillis - afterOffset, zone)
 }
 
-const offsetRegExp = /([+-])(\d{2}):(\d{2})$/
+const offsetRegExp = /([+-])(\d{2}):?(\d{2})$/
 const parseOffset = (offset: string): number | null => {
   const match = offsetRegExp.exec(offset)
   if (match === null) {
@@ -1261,10 +1274,10 @@ export const formatIntl: {
 export const formatIso = (self: DateTime.DateTime): string => toDateUtc(self).toISOString()
 
 /** @internal */
-export const formatIsoDate = (self: DateTime.DateTime): string => toDate(self).toISOString().slice(0, 10)
+export const formatIsoDate = (self: DateTime.DateTime): string => toDate(self).toISOString().split("T")[0]
 
 /** @internal */
-export const formatIsoDateUtc = (self: DateTime.DateTime): string => toDateUtc(self).toISOString().slice(0, 10)
+export const formatIsoDateUtc = (self: DateTime.DateTime): string => toDateUtc(self).toISOString().split("T")[0]
 
 /** @internal */
 export const formatIsoOffset = (self: DateTime.DateTime): string => {

@@ -53,6 +53,21 @@ const makeRedirectClient = Effect.fnUntraced(function*(status: number, location:
 const RateLimiterTestLayer = RateLimiter.layer.pipe(Layer.provide(RateLimiter.layerStoreMemory))
 
 describe("HttpClient", () => {
+  it.effect("preserves the response stream after JSON serialization", () =>
+    Effect.gen(function*() {
+      const response = HttpClientResponse.fromWeb(
+        HttpClientRequest.get("https://example.com"),
+        new Response("data: hello\n\n", { headers: { "content-type": "text/event-stream" } })
+      )
+
+      JSON.stringify(response)
+
+      const bytes = yield* Stream.runFold(response.stream, () =>
+        Array<number>(), (bytes, chunk) =>
+        bytes.concat(Array.from(chunk)))
+      assert.deepStrictEqual(bytes, Array.from(new TextEncoder().encode("data: hello\n\n")))
+    }))
+
   it.skipIf(process.versions.bun !== undefined || process.versions.deno !== undefined)(
     "does not retain unread responses without FinalizationRegistry",
     async () => {
@@ -82,6 +97,93 @@ describe("HttpClient", () => {
       }
     }
   )
+
+  it("does not throw when unread response cleanup runs outside a Cloudflare request", async () => {
+    const cleanups: Array<() => void> = []
+    vi.stubGlobal("navigator", { userAgent: "Cloudflare-Workers" })
+    vi.stubGlobal(
+      "FinalizationRegistry",
+      class<T> {
+        constructor(readonly cleanup: (value: T) => void) {}
+        register(_target: object, value: T) {
+          cleanups.push(() => this.cleanup(value))
+        }
+        unregister(_token: object) {
+          return true
+        }
+      }
+    )
+    let abort: ReturnType<typeof vi.spyOn> | undefined
+    try {
+      // Select the runtime registry on import, then drive GC cleanup deterministically.
+      vi.resetModules()
+      const { Effect } = await import("effect")
+      const { FetchHttpClient, HttpClient } = await import("effect/http")
+      const status = await Effect.runPromise(
+        HttpClient.get("https://example.test/").pipe(
+          Effect.map((response) => response.status),
+          Effect.provide(FetchHttpClient.layer),
+          Effect.provideService(
+            FetchHttpClient.Fetch,
+            Object.assign(async () => new Response("unread"), { preconnect: () => {} })
+          )
+        )
+      )
+      assert.strictEqual(status, 200)
+
+      // workerd disallows aborting request I/O from a finalizer outside its request.
+      abort = vi.spyOn(AbortController.prototype, "abort").mockImplementation(() => {
+        throw new Error("Disallowed operation called within global scope")
+      })
+      assert.doesNotThrow(() => {
+        for (const cleanup of cleanups) cleanup()
+      })
+    } finally {
+      abort?.mockRestore()
+      vi.unstubAllGlobals()
+      vi.resetModules()
+    }
+  })
+
+  // Stubbing globals and resetting modules would race with the concurrent tests.
+  describe("toWeb", { concurrent: false }, () => {
+    it("keeps unread response cleanup when toWeb finds no Web response", async () => {
+      const cleanups = new Map<object, () => void>()
+      vi.stubGlobal(
+        "FinalizationRegistry",
+        class<T> {
+          constructor(readonly cleanup: (value: T) => void) {}
+          register(_target: object, value: T, token: object) {
+            cleanups.set(token, () => this.cleanup(value))
+          }
+          unregister(token: object) {
+            return cleanups.delete(token)
+          }
+        }
+      )
+      try {
+        // Select the runtime registry on import, then drive GC cleanup deterministically.
+        vi.resetModules()
+        const { Effect, Option } = await import("effect")
+        const { HttpClient, HttpClientResponse, HttpServerResponse } = await import("effect/http")
+        let signal: AbortSignal | undefined
+        const client = HttpClient.make((request, _url, requestSignal) =>
+          Effect.sync(() => {
+            signal = requestSignal
+            return HttpServerResponse.toClientResponse(HttpServerResponse.text("unread"), { request })
+          })
+        )
+        const response = await Effect.runPromise(client.get("https://example.test/"))
+
+        assert.isTrue(Option.isNone(HttpClientResponse.toWeb(response)))
+        for (const cleanup of cleanups.values()) cleanup()
+        assert.isTrue(signal!.aborted)
+      } finally {
+        vi.unstubAllGlobals()
+        vi.resetModules()
+      }
+    })
+  })
 
   it.effect("applies JSON revivers to response schema decoders", () =>
     Effect.gen(function*() {
@@ -529,6 +631,16 @@ Missing key
         assert.strictEqual(redirected.headers.authorization, "Bearer secret")
       }))
 
+    it.effect("returns the redirect response when the location is invalid", () =>
+      Effect.gen(function*() {
+        const { client, requests } = yield* makeRedirectClient(302, "http://exa mple.com/")
+        const response = yield* client.get("https://origin.test/start")
+
+        assert.strictEqual(response.status, 302)
+        assert.strictEqual(response.headers.location, "http://exa mple.com/")
+        assert.strictEqual((yield* Ref.get(requests)).length, 1)
+      }))
+
     it.effect("switches 303 requests to GET and drops the body", () =>
       Effect.gen(function*() {
         const { client, requests } = yield* makeRedirectClient(303, "/destination")
@@ -593,7 +705,10 @@ Missing key
       { name: "a five-minute Retry-After", header: "300", status: 429, delay: 300_000 },
       { name: "HTTP date on an errors-only retry", header: "date", status: 429, delay: 30_000 },
       { name: "a longer schedule", header: "5", status: 503, delay: 60_000, scheduled: true },
-      { name: "no header", status: 503, delay: 0 }
+      { name: "no header", status: 503, delay: 0 },
+      // invalid values are ignored rather than parsed as dates or fractions
+      { name: "a negative Retry-After", header: "-5", status: 503, delay: 0 },
+      { name: "a fractional Retry-After", header: "1.5", status: 503, delay: 0 }
     ])(
       "honors the retry delay for $name",
       ({ delay, header, scheduled, status }) =>
