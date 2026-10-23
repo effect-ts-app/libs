@@ -1,5 +1,14 @@
 # @effect-app/vue
 
+## 4.0.4
+
+### Patch Changes
+
+- bf6a79e: Update Effect dependencies to 4.0.6.
+- Updated dependencies [bf6a79e]
+- Updated dependencies [bf6a79e]
+  - effect-app@4.0.4
+
 ## 4.0.3
 
 ### Patch Changes

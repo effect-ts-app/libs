@@ -1,5 +1,11 @@
 # @effect-app/cli
 
+## 2.1.3
+
+### Patch Changes
+
+- bf6a79e: Update Effect dependencies to 4.0.6.
+
 ## 2.1.2
 
 ### Patch Changes
